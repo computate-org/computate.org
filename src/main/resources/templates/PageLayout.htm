@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+{% block htmHead %}
+{% block htmTitle %}
+    <title>computate-smart-laptop-challenge</title>
+{% endblock htmTitle %}
+{% block htmMeta %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock htmMeta %}
+{% block htmStyle %}
+    <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.2/dist/themes/default.css" />
+    <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-alpha.2/dist/webawesome.loader.js"></script>
+    <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site-enUS.css"/>
+{% endblock htmStyle %}
+{% block htmScripts %}
+{% if FONTAWESOME_KIT is defined %}
+    <script src="{{ FONTAWESOME_KIT }}"></script>
+{% endif %}
+    <!-- <script src="{{ STATIC_BASE_URL }}/js/site-enUS.js"></script> -->
+    <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <!-- from web awesome documentation page -->
+    <script type="module" src="https://backers.webawesome.com/assets/scripts/color-scheme.js"></script>
+{% endblock htmScripts %}
+{% block htmScript %}
+{% endblock htmScript %}
+{% endblock htmHead %}
+  </head>
+  <body>
+    <wa-page>
+{% block htmBody %}
+{% block htmBodyStart %}
+      <header id="top-bar">
+        <wa-button data-toggle-nav class="only-mobile" label="open menu" appearance="text" size="small">
+          <wa-icon name="bars"></wa-icon>
+        </wa-button>
+        <wa-input placeholder="search" size="small">
+          <wa-icon name="magnifying-glass" slot="prefix"></wa-icon>
+        </wa-input>
+        <wa-dropdown id="color-scheme-selector">
+          <wa-button slot="trigger" caret appearance="tinted" variant="brand" size="small">
+            <wa-icon class="only-light" slot="prefix" name="sun" variant="regular"></wa-icon>
+            <wa-icon class="only-dark" slot="prefix" name="moon" variant="regular"></wa-icon>
+            <span class="only-light only-desktop">Light</span>
+            <span class="only-dark only-desktop">Dark</span>
+          </wa-button>
+          <wa-menu>
+            <wa-menu-item type="checkbox" value="light">
+              Light
+            </wa-menu-item>
+            <wa-menu-item type="checkbox" value="dark">
+              Dark
+            </wa-menu-item>
+            <wa-divider></wa-divider>
+            <wa-menu-item type="checkbox" value="auto">
+              System
+            </wa-menu-item>
+          </wa-menu>
+        </wa-dropdown>
+      </header>
+{% block htmBodyMenu %}
+      <aside slot="navigation" id="sidebar">
+        <a id="img-keys-a" href="/">
+          <img id="img-keys-img" src="https://computate.neocities.org/svg/computate-keys.svg"/>
+        </a>
+        <wa-icon-button id="sidebar-close-button" name="xmark" label="Close" data-drawer="close" class="only-mobile"></wa-icon-button>
+        <ul>
+          <li>
+            <a href="{{ SITE_BASE_URL }}">home</a>
+          </li>
+          <li>
+            <a href="/en-us/events">events</a>
+          </li>
+          <li>
+            <a href="/en-us/hackathons">hackathons</a>
+          </li>
+          <li>
+            <a href="/en-us/courses">courses</a>
+          </li>
+          <li>
+            <a href="">Youtube</a>
+          </li>
+          <li>
+            <a href="https://github.com/computate/">Github</a>
+          </li>
+          <li>
+            <a href="/">research</a>
+          </li>
+          <li>
+            <a href="/">websites</a>
+          </li>
+        </ul>
+{% block htmMenuItems %}
+{% if userKey is defined %}
+        <wa-dropdown id="user-dropdown">
+          <wa-button slot="trigger" caret variant="brand">
+            <wa-icon slot="prefix" name="house-user" variant="duotone"></wa-icon>
+            <span>{{userName}}</span>
+          </wa-button>
+          <wa-menu>
+            <wa-menu-item type="checkbox" value="light">
+              <wa-button variant="brand" href="/user/{{ userKey }}">
+                <wa-icon slot="prefix" name="house-user" variant="duotone"></wa-icon>
+                <span>my user page</span>
+              </wa-button>
+            </wa-menu-item>
+            <wa-menu-item type="checkbox" value="dark">
+              <wa-button variant="brand" href="{{ logoutUrl }}">
+                <wa-icon slot="prefix" name="sign-out-alt" variant="duotone"></wa-icon>
+                <span>sign out</span>
+              </wa-button>
+            </wa-menu-item>
+          </wa-menu>
+        </wa-dropdown>
+{% else %}
+        <sl-button href="{{ SITE_BASE_URL }}/user">
+          <i class="fad fa-house-user "></i> login
+        </sl-button>
+{% endif %}
+{% endblock htmMenuItems %}
+      </aside>
+{% endblock htmBodyMenu %}
+{% endblock htmBodyStart %}
+{% block htmBodyMiddle %}
+      <main>override htmBodyMiddle</main>
+{% endblock htmBodyMiddle %}
+{% block htmBodyEnd %}
+{% if GITHUB_ORG is defined %}
+    <footer class="opposite-color " id="footer-open-source">
+      <div>
+        <span>This site is open source. </span>
+      </div>
+      <div class="flex-align-center">
+        <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github <img src="{{ STATIC_BASE_URL }}/svg/github.svg" alt="GitHub logo" class="inline-image">. </a>
+      </div>
+    </footer>
+{% endif %}
+    <footer id="footer-powered-by">
+{% if SITE_POWERED_BY_URL is defined %}
+      <div>
+        <a href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+          <span>Powered by </span>
+          <span>{{ SITE_POWERED_BY_NAME }}</span>
+          <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}" class="inline-image"/>
+        </a>
+      </div>
+{% endif %}
+      <div>
+        <a href="https://www.computate.org/" target="_blank">
+          <span>Generated with </span>
+          <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" class="inline-image"/>
+        </a>
+      </div>
+    </footer>
+{% endblock htmBodyEnd %}
+{% endblock htmBody %}
+    </wa-page>
+  </body>
+</html>
