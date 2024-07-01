@@ -86,8 +86,12 @@ SITE_CONFIG_KEYS_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.config"
 SITE_REQUEST_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.request"
 # The Java Package containing the project base model class. 
 SITE_BASE_MODEL_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.model"
+# The Java Package containing the project base result class. 
+SITE_BASE_RESULT_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.result"
 # The Java Package containing the project page layout class. 
 SITE_PAGE_LAYOUT_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.page"
+# The Java Package containing the project site page reader class. 
+SITE_PAGE_READER_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.page.reader"
 # The Java Package containing the project site user class. 
 SITE_USER_PACKAGE: "{{ SITE_JAVA_PACKAGE }}.user"
 # The /src/main/java folder for the main Java source code. 
@@ -165,6 +169,9 @@ STATIC_PATH: "{{ (SITE_SRC + '/../' + SITE_STATIC_NAME) | realpath }}"
 STATIC_BASE_URL: "{{ SITE_BASE_URL }}/static"
 # The path to the template files. 
 TEMPLATE_PATH: "{{ SITE_SRC }}/src/main/resources/templates"
+# The path to the site page templates. 
+DYNAMIC_PAGE_PATHS:
+  - "enUS/article"
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
 FONTAWESOME_KIT: 
 
@@ -219,21 +226,25 @@ SOLR_NAME: solr
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL: true
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME: "solr-solr-solrcloud.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The default port that Solr runs. 
 SOLR_PORT: 443
 # The solr pod name to connect and create Solr configsets and collections. 
-SOLR_POD_NAME: "solr-solrcloud-0"
+SOLR_POD_NAME: "solr-0"
 # The solr collection to use for the site. 
 SOLR_COLLECTION: "{{ SITE_SHORT_NAME }}"
 # The solr configset to use for the site. 
 SOLR_CONFIGSET: "computate"
+# The Solr admin username
+SOLR_USERNAME: admin
+# The Solr admin password
+SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr', namespace='solr')[0].data['solr-password'] | b64decode }}"
 # The URL to the Solr collection. 
 SOLR_URL: "https://{{ SOLR_HOST_NAME }}:{{ SOLR_PORT }}/solr/{{ SOLR_COLLECTION }}"
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL_COMPUTATE: true
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME_COMPUTATE: "solr-solr-solrcloud.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME_COMPUTATE: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The default port that Solr runs. 
 SOLR_PORT_COMPUTATE: 443
 # The solr collection to use for the site. 
@@ -338,7 +349,7 @@ SMART_DATA_MODELS_SRC: "{{ (SITE_SRC + '/../smart-data-models') | realpath }}"
 ##############
 
 # Enable Kafka message integration. 
-ENABLE_KAFKA: true
+ENABLE_KAFKA: false
 # The namespace in OpenShift where Kafka will run. 
 KAFKA_NAMESPACE: kafka
 # The Kafka SSL KeyStore secret name. 

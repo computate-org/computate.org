@@ -5,9 +5,9 @@
 {% block htmTitle %}
     <title>computate-smart-laptop-challenge</title>
 {% endblock htmTitle %}
-{% block htmMeta %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% block htmMeta %}
 {% endblock htmMeta %}
 {% block htmStyle %}
     <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
@@ -132,12 +132,13 @@
 {% endblock htmBodyMiddle %}
 {% block htmBodyEnd %}
 {% if GITHUB_ORG is defined %}
-    <footer class="opposite-color " id="footer-open-source">
+    <footer class="opposite-color " id="footer-open-source" class="display-flex">
+      <wa-icon name="square-github" family="brands" style="size: 10rem; "></wa-icon>
       <div>
         <span>This site is open source. </span>
       </div>
       <div class="flex-align-center">
-        <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github <img src="{{ STATIC_BASE_URL }}/svg/github.svg" alt="GitHub logo" class="inline-image">. </a>
+        <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github. </a>
       </div>
     </footer>
 {% endif %}
