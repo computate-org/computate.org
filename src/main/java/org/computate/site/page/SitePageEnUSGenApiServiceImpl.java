@@ -111,8 +111,45 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void searchSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ConfigKeys.AUTH_PORT)
+					, config.getString(ConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "decision")
+							.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "Search"))
+			).onFailure(ex -> {
+				String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
 				try {
-					{
+					if(!authorizationDecision.bodyAsJsonObject().getBoolean("result")) {
+						String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(401, "UNAUTHORIZED",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "401")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200SearchSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -130,6 +167,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					LOG.error(String.format("searchSitePage failed. "), ex);
 					error(null, eventHandler, ex);
 				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -237,8 +275,45 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void getSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ConfigKeys.AUTH_PORT)
+					, config.getString(ConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "decision")
+							.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"))
+			).onFailure(ex -> {
+				String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
 				try {
-					{
+					if(!authorizationDecision.bodyAsJsonObject().getBoolean("result")) {
+						String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(401, "UNAUTHORIZED",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "401")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200GETSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -256,6 +331,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					LOG.error(String.format("getSitePage failed. "), ex);
 					error(null, eventHandler, ex);
 				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1034,8 +1110,45 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void searchpageSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ConfigKeys.AUTH_PORT)
+					, config.getString(ConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "decision")
+							.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "SearchPage"))
+			).onFailure(ex -> {
+				String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
 				try {
-					{
+					if(!authorizationDecision.bodyAsJsonObject().getBoolean("result")) {
+						String msg = String.format("401 UNAUTHORIZED user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(401, "UNAUTHORIZED",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "401")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200SearchPageSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1053,6 +1166,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					LOG.error(String.format("searchpageSitePage failed. "), ex);
 					error(null, eventHandler, ex);
 				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {

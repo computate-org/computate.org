@@ -15,3 +15,13 @@ ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS archived boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS deleted boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS sessionId text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userKey bigint;
+
+CREATE TABLE IF NOT EXISTS ComputateEvent();
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS location point;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS userKey bigint;

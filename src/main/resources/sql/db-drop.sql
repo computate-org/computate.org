@@ -1,1 +1,2 @@
 DROP TABLE SiteUser CASCADE;
+DROP TABLE ComputateEvent CASCADE;

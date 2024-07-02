@@ -107,6 +107,8 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.model.event.ComputateEventEnUSGenApiService;
 
 
 /**
@@ -507,7 +509,7 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureData() {
 		Promise<Void> promise = Promise.promise();
 		try {
-			if(false) {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_DATABASE))) {
 				PgConnectOptions pgOptions = new PgConnectOptions();
 				pgOptions.setPort(config().getInteger(ConfigKeys.DATABASE_PORT));
 				pgOptions.setHost(config().getString(ConfigKeys.DATABASE_HOST));
@@ -865,6 +867,7 @@ public class MainVerticle extends AbstractVerticle {
 		try {
 			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
 			SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
+			ComputateEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();

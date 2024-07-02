@@ -259,7 +259,7 @@ SOLR_NAMESPACE: solr
 #####################
 
 # Enable the connections to the database. 
-DATABASE_ENABLED: true
+ENABLE_DATABASE: true
 # The namespace of the database in OpenShift. 
 DATABASE_NAMESPACE: postgres
 # The database secret containing the user password to connect to the database. 
@@ -302,7 +302,7 @@ AUTH_ADMIN_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_na
 # The Auth URL. 
 AUTH_URL: "https://{{ AUTH_HOST_NAME }}"
 # The Auth URL to retrieve tokens. 
-AUTH_TOKEN_URI: "/auth/realms/{{ AUTH_REALM }}/protocol/openid-connect/token"
+AUTH_TOKEN_URI: "/realms/{{ AUTH_REALM }}/protocol/openid-connect/token"
 # The OpenAPI ID for the openId spec. 
 AUTH_OPEN_API_ID: openIdConnect
 # The auth callback URI. 
