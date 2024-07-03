@@ -413,14 +413,3 @@ ENABLE_OPENID_CONNECT: true
 WRITE_API: true
 # Write code comments into generated code. 
 WRITE_COMMENTS: true
-
-##########################
-# Site specific defaults #
-##########################
-
-ENABLE_PAGE_SEARCH_SitePage: true
-
-ENABLE_MENU_Article: false
-ENABLE_MENU_Course: false
-ENABLE_MENU_SiteHtm: false
-ENABLE_MENU_PixelArt: false
