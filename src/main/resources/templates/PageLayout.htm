@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en-US">
+<!DOCTYPE html class="sl-theme-dark">
+<html lang="en-US" class="sl-theme-dark">
   <head>
 {% block htmHead %}
 {% block htmTitle %}
@@ -12,36 +12,36 @@
 {% block htmStyle %}
     <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <!-- <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.2/dist/themes/default.css" />
-    <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-alpha.2/dist/webawesome.loader.js"></script> -->
 
-        <link
-          rel="stylesheet"
-          media="(prefers-color-scheme:light)"
-          href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/light.css"
-        />
-        <link
-          rel="stylesheet"
-          media="(prefers-color-scheme:dark)"
-          href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css"
-          onload="document.documentElement.classList.add('sl-theme-dark');"
-        />
-        <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css" />
 
     <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site-enUS.css"/>
 {% endblock htmStyle %}
 {% block htmScripts %}
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/shoelace-autoloader.js"></script>
 {% if FONTAWESOME_KIT is defined %}
     <script src="{{ FONTAWESOME_KIT }}"></script>
+    <script type="module">
+      import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js';
+    
+      registerIconLibrary('fa', {
+        resolver: name => {
+          const filename = name.replace(/^fa[rbs]-/, '');
+          let folder = 'regular';
+          if (name.substring(0, 4) === 'fas-') folder = 'solid';
+          if (name.substring(0, 4) === 'fab-') folder = 'brands';
+          console.log(`https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/${folder}/${filename}.svg`);
+          return `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/${folder}/${filename}.svg`;
+        },
+        mutator: svg => svg.setAttribute('fill', 'currentColor')
+      });
+    </script>
 {% endif %}
-    <!-- <script src="{{ STATIC_BASE_URL }}/js/site-enUS.js"></script> -->
+    <script type="module" src="{{ STATIC_BASE_URL }}/js/site-enUS.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <!-- from web awesome documentation page -->
-    <script type="module" src="https://backers.webawesome.com/assets/scripts/color-scheme.js"></script>
 {% endblock htmScripts %}
 {% block htmScript %}
 {% endblock htmScript %}
@@ -51,40 +51,12 @@
     <div id="sl-page">
 {% block htmBody %}
 {% block htmBodyStart %}
-      <header id="top-bar">
-        <sl-button data-toggle-nav class="only-mobile" label="open menu" appearance="text" size="small">
-          <sl-icon name="bars"></sl-icon>
-        </sl-button>
-        <sl-input placeholder="search" size="small">
-          <sl-icon name="magnifying-glass" slot="prefix"></sl-icon>
-        </sl-input>
-        <sl-dropdown id="color-scheme-selector">
-          <sl-button slot="trigger" caret appearance="tinted" variant="brand" size="small">
-            <sl-icon class="only-light" slot="prefix" name="sun" variant="regular"></sl-icon>
-            <sl-icon class="only-dark" slot="prefix" name="moon" variant="regular"></sl-icon>
-            <span class="only-light only-desktop">Light</span>
-            <span class="only-dark only-desktop">Dark</span>
-          </sl-button>
-          <sl-menu>
-            <sl-menu-item type="checkbox" value="light">
-              Light
-            </sl-menu-item>
-            <sl-menu-item type="checkbox" value="dark">
-              Dark
-            </sl-menu-item>
-            <sl-divider></sl-divider>
-            <sl-menu-item type="checkbox" value="auto">
-              System
-            </sl-menu-item>
-          </sl-menu>
-        </sl-dropdown>
-      </header>
 {% block htmBodyMenu %}
-      <aside slot="navigation" id="sidebar">
+      <aside slot="navigation" id="sidebar" class="float-left hide-mobile ">
         <a id="img-keys-a" href="/">
           <img id="img-keys-img" src="https://computate.neocities.org/svg/computate-keys.svg"/>
         </a>
-        <sl-icon-button id="sidebar-close-button" name="xmark" label="Close" data-drawer="close" class="only-mobile"></sl-icon-button>
+        <sl-icon-button id="sidebar-close-button" library="fa" name="fas-xmark" label="Close" data-drawer="close" class="hide-desktop"></sl-icon-button>
         <ul>
           <li>
             <a href="{{ SITE_BASE_URL }}">home</a>
@@ -142,38 +114,51 @@
       </aside>
 {% endblock htmBodyMenu %}
 {% endblock htmBodyStart %}
+      <main class="float-left ">
+        <header id="top-bar">
+          <sl-icon-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text" size="small" library="fa" name="fas-bars"></sl-icon-button>
+          <sl-input placeholder="search">
+            <sl-icon library="fa" name="fas-magnifying-glass" slot="prefix"></sl-icon>
+          </sl-input>
+        </header>
 {% block htmBodyMiddle %}
-      <main>override htmBodyMiddle</main>
 {% endblock htmBodyMiddle %}
+      </main>
 {% block htmBodyEnd %}
 {% if GITHUB_ORG is defined %}
-    <footer class="opposite-color " id="footer-open-source" class="display-flex">
-      <sl-icon name="square-github" family="brands" style="size: 10rem; "></sl-icon>
+    <footer id="footer-open-source" class="display-flex-center ">
+      <sl-icon library="fa" name="fab-square-github" family="brands"></sl-icon>
       <div>
-        <span>This site is open source. </span>
-      </div>
-      <div class="flex-align-center">
-        <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github. </a>
+        <div>
+          <span>This site is open source. </span>
+        </div>
+        <div>
+          <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github. </a>
+        </div>
       </div>
     </footer>
 {% endif %}
-    <footer id="footer-powered-by">
-{% if SITE_POWERED_BY_URL is defined %}
-      <div>
-        <a href="{{ SITE_POWERED_BY_URL }}" target="_blank">
-          <span>Powered by </span>
-          <span>{{ SITE_POWERED_BY_NAME }}</span>
-          <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}" class="inline-image"/>
-        </a>
-      </div>
-{% endif %}
+    <footer id="footer-generated-by">
       <div>
         <a href="https://www.computate.org/" target="_blank">
           <span>Generated with </span>
+        </a>
+      </div>
+      <div>
+        <a href="https://www.computate.org/" target="_blank">
           <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" class="inline-image"/>
         </a>
       </div>
     </footer>
+{% if SITE_POWERED_BY_URL is defined %}
+    <footer id="footer-powered-by" class="display-flex-center ">
+      <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}" class="inline-image"/>
+      <a href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+        <span>Powered by </span>
+        <span>{{ SITE_POWERED_BY_NAME }}</span>
+      </a>
+    </footer>
+{% endif %}
 {% endblock htmBodyEnd %}
 {% endblock htmBody %}
     </div>
