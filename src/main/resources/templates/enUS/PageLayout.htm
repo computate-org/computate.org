@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+	<head>
+{% block htmHeadPageLayout %}
+{% block htmTitlePageLayout %}
+		<title>computate-smart-laptop-challenge</title>
+{% endblock htmTitlePageLayout %}
+{%- block htmMetaPageLayout %}
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+{%- endblock htmMetaPageLayout %}
+{%- block htmStylePageLayout %}
+		<link rel="icon" href="{{staticBaseUrl}}/favicon.ico" />
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+		<link rel="stylesheet" href="{{staticBaseUrl}}/css/site.css"/>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+		<!-- shoelace -->
+		<link
+		  rel="stylesheet"
+		  media="(prefers-color-scheme:light)"
+		  href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css"
+		/>
+		<link
+		  rel="stylesheet"
+		  media="(prefers-color-scheme:dark)"
+		  href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/dark.css"
+		  onload="document.documentElement.classList.add('sl-theme-dark');"
+		/>
+{%- endblock htmStylePageLayout %}
+{%- block htmScriptsPageLayout %}
+{%- if FONTAWESOME_KIT is defined %}
+		<script src="{{ FONTAWESOME_KIT }}"></script>
+{%- endif %}
+		<script src="{{staticBaseUrl}}/js/site-enUS.js"></script>
+		<script src="{{staticBaseUrl}}/js/sockjs.js"></script>
+		<script src="{{staticBaseUrl}}/js/vertx-eventbus.js"></script>
+		<script src="{{staticBaseUrl}}/js/plotly-2.9.0.min.js"></script>
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+		<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+{%- endblock htmScriptsPageLayout %}
+{%- block htmScriptPageLayout %}
+{%- endblock htmScriptPageLayout %}
+{%- endblock htmHeadPageLayout %}
+	</head>
+	<body style="height: 100%;">
+{% block htmBodyPageLayout %}
+{% block htmBodyStartPageLayout %}
+		<div class="w3-center ">
+{% block htmBodyMenuPageLayout %}
+		<div class="w3-bar w3-hide-small ">
+			<sl-button-group class="w3-padding w3-hide-small ">
+				<sl-button href="{{ SITE_BASE_URL }}">
+					<i class="fad fa-house "></i> home
+				</sl-button>
+{% block htmMenuItemsPageLayout %}
+{% if userKey is defined %}
+				<div class="site-bar-item w3-bar-item ">
+					<div class="w3-dropdown-hover ">
+						<div class="">
+							<i class="fad fa-house-user w3-text-2017-shaded-spruce "></i> {{userName}}
+						</div>
+						<div class="w3-dropdown-content w3-card-4 w3-padding ">
+							<div class="w3-cell-row ">
+								<a href="/user/{{ userKey }}" class="header-icon-a w3-hover-opacity w3-center w3-text-2017-shaded-spruce "><i class="fad fa-house-user w3-text-2017-shaded-spruce "></i> my user page</a>
+							</div>
+							<div class="w3-cell-row ">
+								<a href="{{ logoutUrl }}" class="header-icon-a w3-hover-opacity w3-center w3-text-2017-shaded-spruce "><i class="fad fa-sign-out-alt w3-text-2017-shaded-spruce "></i> logout</a>
+							</div>
+						</div>
+					</div>
+				</div>
+{% else %}
+				<sl-button href="{{ SITE_BASE_URL }}/user">
+					<i class="fad fa-house-user "></i> login
+				</sl-button>
+{% endif %}
+{% endblock htmMenuItemsPageLayout %}
+		</sl-button-group>
+		<div class="w3-bar w3-hide-medium w3-hide-large ">
+			<div class="site-bar-item w3-bar-item ">
+				<a class="w3-bar-item " href="{{ siteBaseUrl }}"><i class="fad fa-house "></i> home</a>
+			</div>
+			<div class="w3-dropdown-hover ">
+				<button class="w3-button w3-text-black "><i class="fad fa-bars w3-text-black "></i> Menu</button>
+				<div class="w3-dropdown-content w3-bar-block w3-card-4 ">
+htmMenuItems
+				</div>
+			</div>
+		</div>
+{% endblock htmBodyMenuPageLayout %}
+		</div>
+{% endblock htmBodyStartPageLayout %}
+{% block htmBodyMiddlePageLayout %}
+	<div class="pageContent w3-content ">
+	  put stuff here
+	</div>
+{% endblock htmBodyMiddlePageLayout %}
+{% block htmBodyEndPageLayout %}
+
+		<footer class="w3-content w3-center w3-padding-32 ">
+			<h3>Share this page. </h3>
+			<div class="w3-cell-row ">
+				<div class="blog-publication-social-div w3-cell ">
+					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/facebook.svg">
+					<div>
+						<div id="fb-root"></div>
+						<div class="fb-like" data-href="{{ siteBaseUrl }}{{ pageUri }}" data-width="" data-layout="box_count" data-action="like" data-size="small" data-share="true"></div>
+					</div>
+				</div>
+				<div class="blog-publication-social-div w3-cell ">
+					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/twitter.svg">
+					<div>
+						<a href="https://twitter.com/share" class="twitter-share-button " data-show-count="false"></a>
+						<script async="" src="//platform.twitter.com/widgets.js"></script>
+					</div>
+				</div>
+				<div class="blog-publication-social-div w3-cell ">
+					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/pinterest.svg">
+					<div class="pinterest-div ">
+						<script async="" defer="" src="//assets.pinterest.com/js/pinit_main.js?0.8726554954646004"></script>
+						<a data-pin-media="{{ staticBaseUrl }}{{ pageImageUri }}" data-pin-description="{{ pageTitle }}" data-pin-url="{{ siteBaseUrl }}{{ pageUri }}" data-pin-id="" href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonPin">
+							<img alt="" src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png"/>
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+	 	<div class="w3-center ">
+htmBodyMenu
+		</div>
+		<footer class="w3-center w3-black w3-text-white w3-padding-24 ">
+{% if GITHUB_ORG is defined %}
+			<div class="w3-margin ">
+				<div class="grow-20 ">
+					<div class="w3-xxlarge ">
+						<a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">This site is open source. </a>
+					</div>
+					<div class="w3-large ">
+						<a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on GitHub. </a>
+					</div>
+				</div>
+			</div>
+{% endif %}
+{% if SITE_POWERED_BY_URL is defined %}
+			<div class="w3-margin ">
+				<div class="grow-20 ">
+					<a class="w3-bar-item grow-20 w3-margin w3-text-white w3-large " href="{{ SITE_POWERED_BY_URL }}" target="_blank"><span class="w3-large ">Powered by </span>{% if SITE_POWERED_BY_IMAGE_URI %}<img alt="" class="w3-image " style="display: inline-block; width: 200px; margin: 0 10px;" src="{{ staticBaseUrl }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>{% else %}{% if SITE_POWERED_BY_NAME%}{{ SITE_POWERED_BY_NAME }}{% endif %}{% endif %}</a>
+				</div>
+			</div>
+{% endif %}
+			<div class="w3-margin ">
+				<div class="grow-20 ">
+					<div class="w3-row ">
+						<div class="w3-half " style="line-height: 1em; ">
+							<a class="w3-bar-item w3-margin w3-text-white w3-large " href="https://www.redhat.com/en/about/social-innovation" target="_blank">
+								<span class="w3-medium ">Leveraging our Red Hat super powers <br/>to contribute to socially impactful <br/>open source projects </span>
+							</a>
+						</div>
+						<div class="w3-half ">
+							<a class="w3-bar-item w3-margin w3-text-white w3-large " href="https://www.redhat.com/en/about/social-innovation" target="_blank">
+								<img alt="" class="w3-image " style="display: inline-block; width: 200px; margin: 0 10px;" src="{{ staticBaseUrl }}/png/rh-impact-logo-white-text.png"/>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="w3-margin ">
+				<div class="grow-20 ">
+					<a class="w3-bar-item grow-20 w3-margin w3-text-white w3-large " href="https://www.computate.org/" target="_blank"><span class="w3-large ">Generated with </span><img alt="" class="w3-image " style="display: inline-block; width: 300px; margin: 0 10px;" src="{{ staticBaseUrl }}/svg/computate-keys.svg"/></a>
+				</div>
+			</div>
+		</footer>
+{% endblock htmBodyEndPageLayout %}
+{% endblock htmBodyPageLayout %}
+	</body>
+</html>

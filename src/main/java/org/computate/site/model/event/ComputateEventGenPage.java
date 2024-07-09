@@ -489,26 +489,12 @@ public class ComputateEventGenPage extends ComputateEventGenPageGen<BaseModelPag
 
 	@Override
 	protected void _pageUri(Wrap<String> c) {
-		c.o("/api/event");
+		c.o("/event");
 	}
 
 	@Override
 	protected void _apiUri(Wrap<String> c) {
 		c.o("/api/event");
-	}
-
-	@Override
-	protected void _roles(List<String> l) {
-		if(siteRequest_ != null) {
-			l.addAll(Stream.concat(siteRequest_.getUserResourceRoles().stream(), siteRequest_.getUserRealmRoles().stream()).distinct().collect(Collectors.toList()));
-		}
-	}
-
-	@Override
-	protected void _roleForWrite(List<String> l) {
-		Optional.ofNullable(siteRequest_.getConfig().getString(ConfigKeys.AUTH_ROLE_REQUIRED + "_ComputateEvent")).ifPresent(v -> {
-			l.add(v);
-		});
 	}
 
 	@Override
@@ -523,7 +509,7 @@ public class ComputateEventGenPage extends ComputateEventGenPageGen<BaseModelPag
 
 	@Override
 	protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/api/event-999.png");
+			c.o("/png/event-999.png");
 	}
 
 	@Override
@@ -537,6 +523,6 @@ public class ComputateEventGenPage extends ComputateEventGenPageGen<BaseModelPag
 	}
 
 	protected void _pageUriComputateEvent(Wrap<String> c) {
-			c.o("/api/event");
+			c.o("/event");
 	}
 }

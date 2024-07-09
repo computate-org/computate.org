@@ -12,7 +12,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.ext.web.api.service.WebApiServiceGen;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.ext.web.api.service.ServiceResponse;
-import io.vertx.ext.web.templ.handlebars.HandlebarsTemplateEngine;
+import com.hubspot.jinjava.Jinjava;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.pgclient.PgPool;
 import io.vertx.kafka.client.producer.KafkaProducer;
@@ -27,8 +27,8 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @WebApiServiceGen
 @ProxyGen
 public interface ComputateEventEnUSGenApiService {
-	static void registerService(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, HandlebarsTemplateEngine templateEngine, Vertx vertx) {
-		new ServiceBinder(vertx).setAddress(ComputateEvent.getClassApiAddress()).register(ComputateEventEnUSGenApiService.class, new ComputateEventEnUSApiServiceImpl(eventBus, config, workerExecutor, pgPool, kafkaProducer, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine));
+	static void registerService(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava, Vertx vertx) {
+		new ServiceBinder(vertx).setAddress(ComputateEvent.getClassApiAddress()).register(ComputateEventEnUSGenApiService.class, new ComputateEventEnUSApiServiceImpl(eventBus, config, workerExecutor, pgPool, kafkaProducer, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava));
 	}
 
 	public void searchComputateEvent(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

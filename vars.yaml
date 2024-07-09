@@ -309,8 +309,10 @@ AUTH_OPEN_API_ID: openIdConnect
 AUTH_CALLBACK_URI: /callback
 # The auth logout URI. 
 AUTH_LOGOUT_URI: /logout
-# The Auth roles required to be an admin in the site. 
-AUTH_ROLES_ADMIN: [ SiteAdmin ]
+# The Auth scope required to be an admin in the site. 
+AUTH_SCOPE_ADMIN: Admin
+# The Auth scope required to be a super-admin in the site. 
+AUTH_SCOPE_SUPER_ADMIN: SuperAdmin
 # Enables authorization fine-grained resource permissions. 
 AUTH_FINE_GRAINED_POLICY_PERMISSIONS: true
 

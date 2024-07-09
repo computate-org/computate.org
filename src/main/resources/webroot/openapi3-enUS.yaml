@@ -262,7 +262,97 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTComputateEventResponse'
+  /api/event-import:
+    put:
+      operationId: putimportComputateEvent
+      x-vertx-event-bus: computate.org-enUS-ComputateEvent
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - Computate Event
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTImportComputateEventRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PUTImportComputateEventResponse'
   /api/event/{id}:
+    get:
+      operationId: getComputateEvent
+      x-vertx-event-bus: computate.org-enUS-ComputateEvent
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - Computate Event
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GETComputateEventResponse'
+  /event/{id}:
     get:
       operationId: searchpageComputateEventId
       x-vertx-event-bus: computate.org-enUS-ComputateEvent
@@ -447,6 +537,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageComputateEventResponse'
+  /event:
     get:
       operationId: searchpageComputateEvent
       x-vertx-event-bus: computate.org-enUS-ComputateEvent
@@ -625,95 +716,6 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageComputateEventResponse'
-  /api/event-import:
-    put:
-      operationId: putimportComputateEvent
-      x-vertx-event-bus: computate.org-enUS-ComputateEvent
-      security:
-        - openIdConnect:
-          - profile
-      description: >+
-      summary: >+
-      tags:
-        - Computate Event
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: var
-          description: 'The var parameters are additional optional variables and values to pass into the application. '
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PUTImportComputateEventRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/PUTImportComputateEventResponse'
-    get:
-      operationId: getComputateEvent
-      x-vertx-event-bus: computate.org-enUS-ComputateEvent
-      security:
-        - openIdConnect:
-          - profile
-      description: >+
-      summary: >+
-      tags:
-        - Computate Event
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: id
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/GETComputateEventResponse'
   /api/page:
     get:
       operationId: searchSitePage
@@ -2152,11 +2154,6 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTComputateEventResponse'
-    SearchPageComputateEventResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchPageComputateEventResponse'
     PUTImportComputateEventRequest:
       content:
         application/json:
@@ -2172,6 +2169,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/GETComputateEventResponse'
+    SearchPageComputateEventResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageComputateEventResponse'
     SearchSitePageResponse:
       content:
         application/json; charset=utf-8:
@@ -2332,9 +2334,6 @@ components:
               type: string
             location:
               type: object
-    SearchPageComputateEventResponse:
-      allOf:
-        - type: string
     PUTImportComputateEventRequest:
       allOf:
         - type: object
@@ -2364,6 +2363,9 @@ components:
               type: string
             location:
               type: object
+    SearchPageComputateEventResponse:
+      allOf:
+        - type: string
     SearchSitePageResponse:
       allOf:
         - type: object

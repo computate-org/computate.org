@@ -493,20 +493,6 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 	}
 
 	@Override
-	protected void _roles(List<String> l) {
-		if(siteRequest_ != null) {
-			l.addAll(Stream.concat(siteRequest_.getUserResourceRoles().stream(), siteRequest_.getUserRealmRoles().stream()).distinct().collect(Collectors.toList()));
-		}
-	}
-
-	@Override
-	protected void _roleForWrite(List<String> l) {
-		Optional.ofNullable(siteRequest_.getConfig().getString(ConfigKeys.AUTH_ROLE_REQUIRED + "_SitePage")).ifPresent(v -> {
-			l.add(v);
-		});
-	}
-
-	@Override
 	protected void _promiseAfter(Promise<Void> promise) {
 		promise.complete();
 	}

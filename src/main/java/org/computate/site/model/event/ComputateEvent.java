@@ -19,15 +19,15 @@ import io.vertx.pgclient.data.Point;
  * ApiTag:  Computate Event
  * ApiUri: /api/event
  * 
- * ApiMethod.enUS: Search
- * ApiMethod: GET
- * ApiMethod: PATCH
- * ApiMethod: POST
- * ApiMethod: PUTImport
- * 
- * ApiMethod: SearchPage
- * Page.SearchPage: ComputateEventPage
- * ApiUri.SearchPage: /event
+ * ApiMethod:
+ *   Search:
+ *   GET:
+ *   PATCH:
+ *   POST:
+ *   PUTImport:
+ *   SearchPage:
+ *     Page: ComputateEventPage
+ *     ApiUri: /event
  * 
  * Role: SiteAdmin
  * 

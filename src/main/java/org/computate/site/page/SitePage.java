@@ -38,15 +38,15 @@ import io.vertx.core.Promise;
  * ApiTag.enUS: Page
  * ApiUri.enUS: /api/page
  * 
- * ApiMethod: Search
- * ApiMethod: GET
- * ApiMethod: POST
- * ApiMethod: PATCH
- * ApiMethod: PUTImport
- * 
- * ApiMethod: SearchPage
- * Page.SearchPage.enUS: SitePagePage
- * ApiUri.SearchPage.enUS: /page
+ * ApiMethod:
+ *   Search:
+ *   GET:
+ *   POST:
+ *   PATCH:
+ *   PUTImport:
+ *   SearchPage:
+ *     Page: SitePagePage
+ *     ApiUri: /page
  * 
  * AName.enUS: an article
  * Color: 2017-shaded-spruce

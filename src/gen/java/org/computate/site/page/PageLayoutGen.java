@@ -1597,78 +1597,78 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return PageLayout.staticSearchPageTitle(siteRequest_, PageLayout.staticSetPageTitle(siteRequest_, o)).toString();
 	}
 
-	///////////
-	// roles //
-	///////////
+	////////////
+	// scopes //
+	////////////
 
 
-	/**	 The entity roles
+	/**	 The entity scopes
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
 	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> roles = new ArrayList<String>();
+	protected List<String> scopes = new ArrayList<String>();
 
-	/**	<br> The entity roles
+	/**	<br> The entity scopes
 	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:roles">Find the entity roles in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:scopes">Find the entity scopes in Solr</a>
 	 * <br>
 	 * @param l is the entity already constructed. 
 	 **/
-	protected abstract void _roles(List<String> l);
+	protected abstract void _scopes(List<String> l);
 
-	public List<String> getRoles() {
-		return roles;
+	public List<String> getScopes() {
+		return scopes;
 	}
 
-	public void setRoles(List<String> roles) {
-		this.roles = roles;
+	public void setScopes(List<String> scopes) {
+		this.scopes = scopes;
 	}
-	public void setRoles(String o) {
-		String l = PageLayout.staticSetRoles(siteRequest_, o);
+	public void setScopes(String o) {
+		String l = PageLayout.staticSetScopes(siteRequest_, o);
 		if(l != null)
-			addRoles(l);
+			addScopes(l);
 	}
-	public static String staticSetRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSetScopes(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	public PageLayout addRoles(String...objects) {
+	public PageLayout addScopes(String...objects) {
 		for(String o : objects) {
-			addRoles(o);
+			addScopes(o);
 		}
 		return (PageLayout)this;
 	}
-	public PageLayout addRoles(String o) {
+	public PageLayout addScopes(String o) {
 		if(o != null)
-			this.roles.add(o);
+			this.scopes.add(o);
 		return (PageLayout)this;
 	}
 	@JsonIgnore
-	public void setRoles(JsonArray objects) {
-		roles.clear();
+	public void setScopes(JsonArray objects) {
+		scopes.clear();
 		if(objects == null)
 			return;
 		for(int i = 0; i < objects.size(); i++) {
 			String o = objects.getString(i);
-			addRoles(o);
+			addScopes(o);
 		}
 	}
-	protected PageLayout rolesInit() {
-		_roles(roles);
+	protected PageLayout scopesInit() {
+		_scopes(scopes);
 		return (PageLayout)this;
 	}
 
-	public static String staticSearchRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSearchScopes(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrScopes(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqRoles(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchRoles(siteRequest_, PageLayout.staticSetRoles(siteRequest_, o)).toString();
+	public static String staticSearchFqScopes(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchScopes(siteRequest_, PageLayout.staticSetScopes(siteRequest_, o)).toString();
 	}
 
 	//////////////////
@@ -1819,152 +1819,108 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return PageLayout.staticSearchRoleForRead(siteRequest_, PageLayout.staticSetRoleForRead(siteRequest_, o)).toString();
 	}
 
-	///////////////////
-	// authRoleAdmin //
-	///////////////////
+	////////////////////
+	// authScopeAdmin //
+	////////////////////
 
 
-	/**	 The entity authRoleAdmin
-	 *	 It is constructed before being initialized with the constructor by default. 
+	/**	 The entity authScopeAdmin
+	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
-	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> authRoleAdmin = new ArrayList<String>();
+	protected String authScopeAdmin;
 
-	/**	<br> The entity authRoleAdmin
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authRoleAdmin">Find the entity authRoleAdmin in Solr</a>
+	/**	<br> The entity authScopeAdmin
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authScopeAdmin">Find the entity authScopeAdmin in Solr</a>
 	 * <br>
-	 * @param l is the entity already constructed. 
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _authRoleAdmin(List<String> l);
+	protected abstract void _authScopeAdmin(Wrap<String> w);
 
-	public List<String> getAuthRoleAdmin() {
-		return authRoleAdmin;
+	public String getAuthScopeAdmin() {
+		return authScopeAdmin;
 	}
-
-	public void setAuthRoleAdmin(List<String> authRoleAdmin) {
-		this.authRoleAdmin = authRoleAdmin;
+	public void setAuthScopeAdmin(String o) {
+		this.authScopeAdmin = PageLayout.staticSetAuthScopeAdmin(siteRequest_, o);
 	}
-	public void setAuthRoleAdmin(String o) {
-		String l = PageLayout.staticSetAuthRoleAdmin(siteRequest_, o);
-		if(l != null)
-			addAuthRoleAdmin(l);
-	}
-	public static String staticSetAuthRoleAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSetAuthScopeAdmin(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	public PageLayout addAuthRoleAdmin(String...objects) {
-		for(String o : objects) {
-			addAuthRoleAdmin(o);
+	protected PageLayout authScopeAdminInit() {
+		Wrap<String> authScopeAdminWrap = new Wrap<String>().var("authScopeAdmin");
+		if(authScopeAdmin == null) {
+			_authScopeAdmin(authScopeAdminWrap);
+			Optional.ofNullable(authScopeAdminWrap.getO()).ifPresent(o -> {
+				setAuthScopeAdmin(o);
+			});
 		}
 		return (PageLayout)this;
 	}
-	public PageLayout addAuthRoleAdmin(String o) {
-		if(o != null)
-			this.authRoleAdmin.add(o);
-		return (PageLayout)this;
-	}
-	@JsonIgnore
-	public void setAuthRoleAdmin(JsonArray objects) {
-		authRoleAdmin.clear();
-		if(objects == null)
-			return;
-		for(int i = 0; i < objects.size(); i++) {
-			String o = objects.getString(i);
-			addAuthRoleAdmin(o);
-		}
-	}
-	protected PageLayout authRoleAdminInit() {
-		_authRoleAdmin(authRoleAdmin);
-		return (PageLayout)this;
-	}
 
-	public static String staticSearchAuthRoleAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSearchAuthScopeAdmin(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrAuthRoleAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrAuthScopeAdmin(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqAuthRoleAdmin(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchAuthRoleAdmin(siteRequest_, PageLayout.staticSetAuthRoleAdmin(siteRequest_, o)).toString();
+	public static String staticSearchFqAuthScopeAdmin(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchAuthScopeAdmin(siteRequest_, PageLayout.staticSetAuthScopeAdmin(siteRequest_, o)).toString();
 	}
 
-	////////////////////////
-	// authRoleSuperAdmin //
-	////////////////////////
+	/////////////////////////
+	// authScopeSuperAdmin //
+	/////////////////////////
 
 
-	/**	 The entity authRoleSuperAdmin
-	 *	 It is constructed before being initialized with the constructor by default. 
+	/**	 The entity authScopeSuperAdmin
+	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
-	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> authRoleSuperAdmin = new ArrayList<String>();
+	protected String authScopeSuperAdmin;
 
-	/**	<br> The entity authRoleSuperAdmin
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authRoleSuperAdmin">Find the entity authRoleSuperAdmin in Solr</a>
+	/**	<br> The entity authScopeSuperAdmin
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authScopeSuperAdmin">Find the entity authScopeSuperAdmin in Solr</a>
 	 * <br>
-	 * @param l is the entity already constructed. 
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _authRoleSuperAdmin(List<String> l);
+	protected abstract void _authScopeSuperAdmin(Wrap<String> w);
 
-	public List<String> getAuthRoleSuperAdmin() {
-		return authRoleSuperAdmin;
+	public String getAuthScopeSuperAdmin() {
+		return authScopeSuperAdmin;
 	}
-
-	public void setAuthRoleSuperAdmin(List<String> authRoleSuperAdmin) {
-		this.authRoleSuperAdmin = authRoleSuperAdmin;
+	public void setAuthScopeSuperAdmin(String o) {
+		this.authScopeSuperAdmin = PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o);
 	}
-	public void setAuthRoleSuperAdmin(String o) {
-		String l = PageLayout.staticSetAuthRoleSuperAdmin(siteRequest_, o);
-		if(l != null)
-			addAuthRoleSuperAdmin(l);
-	}
-	public static String staticSetAuthRoleSuperAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSetAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	public PageLayout addAuthRoleSuperAdmin(String...objects) {
-		for(String o : objects) {
-			addAuthRoleSuperAdmin(o);
+	protected PageLayout authScopeSuperAdminInit() {
+		Wrap<String> authScopeSuperAdminWrap = new Wrap<String>().var("authScopeSuperAdmin");
+		if(authScopeSuperAdmin == null) {
+			_authScopeSuperAdmin(authScopeSuperAdminWrap);
+			Optional.ofNullable(authScopeSuperAdminWrap.getO()).ifPresent(o -> {
+				setAuthScopeSuperAdmin(o);
+			});
 		}
 		return (PageLayout)this;
 	}
-	public PageLayout addAuthRoleSuperAdmin(String o) {
-		if(o != null)
-			this.authRoleSuperAdmin.add(o);
-		return (PageLayout)this;
-	}
-	@JsonIgnore
-	public void setAuthRoleSuperAdmin(JsonArray objects) {
-		authRoleSuperAdmin.clear();
-		if(objects == null)
-			return;
-		for(int i = 0; i < objects.size(); i++) {
-			String o = objects.getString(i);
-			addAuthRoleSuperAdmin(o);
-		}
-	}
-	protected PageLayout authRoleSuperAdminInit() {
-		_authRoleSuperAdmin(authRoleSuperAdmin);
-		return (PageLayout)this;
-	}
 
-	public static String staticSearchAuthRoleSuperAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSearchAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrAuthRoleSuperAdmin(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqAuthRoleSuperAdmin(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchAuthRoleSuperAdmin(siteRequest_, PageLayout.staticSetAuthRoleSuperAdmin(siteRequest_, o)).toString();
+	public static String staticSearchFqAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchAuthScopeSuperAdmin(siteRequest_, PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o)).toString();
 	}
 
 	///////////
@@ -4379,11 +4335,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			try {
 				classSimpleNameInit();
 				pageTitleInit();
-				rolesInit();
+				scopesInit();
 				roleForWriteInit();
 				roleForReadInit();
-				authRoleAdminInit();
-				authRoleSuperAdminInit();
+				authScopeAdminInit();
+				authScopeSuperAdminInit();
 				statsInit();
 				facetCountsInit();
 				paginationInit();
@@ -4548,16 +4504,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.classSimpleName;
 			case "pageTitle":
 				return oPageLayout.pageTitle;
-			case "roles":
-				return oPageLayout.roles;
+			case "scopes":
+				return oPageLayout.scopes;
 			case "roleForWrite":
 				return oPageLayout.roleForWrite;
 			case "roleForRead":
 				return oPageLayout.roleForRead;
-			case "authRoleAdmin":
-				return oPageLayout.authRoleAdmin;
-			case "authRoleSuperAdmin":
-				return oPageLayout.authRoleSuperAdmin;
+			case "authScopeAdmin":
+				return oPageLayout.authScopeAdmin;
+			case "authScopeSuperAdmin":
+				return oPageLayout.authScopeSuperAdmin;
 			case "stats":
 				return oPageLayout.stats;
 			case "facetCounts":
@@ -4727,16 +4683,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetClassSimpleName(siteRequest_, o);
 		case "pageTitle":
 			return PageLayout.staticSetPageTitle(siteRequest_, o);
-		case "roles":
-			return PageLayout.staticSetRoles(siteRequest_, o);
+		case "scopes":
+			return PageLayout.staticSetScopes(siteRequest_, o);
 		case "roleForWrite":
 			return PageLayout.staticSetRoleForWrite(siteRequest_, o);
 		case "roleForRead":
 			return PageLayout.staticSetRoleForRead(siteRequest_, o);
-		case "authRoleAdmin":
-			return PageLayout.staticSetAuthRoleAdmin(siteRequest_, o);
-		case "authRoleSuperAdmin":
-			return PageLayout.staticSetAuthRoleSuperAdmin(siteRequest_, o);
+		case "authScopeAdmin":
+			return PageLayout.staticSetAuthScopeAdmin(siteRequest_, o);
+		case "authScopeSuperAdmin":
+			return PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o);
 		case "pagination":
 			return PageLayout.staticSetPagination(siteRequest_, o);
 		case "defaultFieldListVars":
@@ -4871,16 +4827,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchClassSimpleName(siteRequest_, (String)o);
 		case "pageTitle":
 			return PageLayout.staticSearchPageTitle(siteRequest_, (String)o);
-		case "roles":
-			return PageLayout.staticSearchRoles(siteRequest_, (String)o);
+		case "scopes":
+			return PageLayout.staticSearchScopes(siteRequest_, (String)o);
 		case "roleForWrite":
 			return PageLayout.staticSearchRoleForWrite(siteRequest_, (String)o);
 		case "roleForRead":
 			return PageLayout.staticSearchRoleForRead(siteRequest_, (String)o);
-		case "authRoleAdmin":
-			return PageLayout.staticSearchAuthRoleAdmin(siteRequest_, (String)o);
-		case "authRoleSuperAdmin":
-			return PageLayout.staticSearchAuthRoleSuperAdmin(siteRequest_, (String)o);
+		case "authScopeAdmin":
+			return PageLayout.staticSearchAuthScopeAdmin(siteRequest_, (String)o);
+		case "authScopeSuperAdmin":
+			return PageLayout.staticSearchAuthScopeSuperAdmin(siteRequest_, (String)o);
 		case "pagination":
 			return PageLayout.staticSearchPagination(siteRequest_, (JsonObject)o);
 		case "defaultFieldListVars":
@@ -5015,16 +4971,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrClassSimpleName(siteRequest_, (String)o);
 		case "pageTitle":
 			return PageLayout.staticSearchStrPageTitle(siteRequest_, (String)o);
-		case "roles":
-			return PageLayout.staticSearchStrRoles(siteRequest_, (String)o);
+		case "scopes":
+			return PageLayout.staticSearchStrScopes(siteRequest_, (String)o);
 		case "roleForWrite":
 			return PageLayout.staticSearchStrRoleForWrite(siteRequest_, (String)o);
 		case "roleForRead":
 			return PageLayout.staticSearchStrRoleForRead(siteRequest_, (String)o);
-		case "authRoleAdmin":
-			return PageLayout.staticSearchStrAuthRoleAdmin(siteRequest_, (String)o);
-		case "authRoleSuperAdmin":
-			return PageLayout.staticSearchStrAuthRoleSuperAdmin(siteRequest_, (String)o);
+		case "authScopeAdmin":
+			return PageLayout.staticSearchStrAuthScopeAdmin(siteRequest_, (String)o);
+		case "authScopeSuperAdmin":
+			return PageLayout.staticSearchStrAuthScopeSuperAdmin(siteRequest_, (String)o);
 		case "pagination":
 			return PageLayout.staticSearchStrPagination(siteRequest_, (String)o);
 		case "defaultFieldListVars":
@@ -5159,16 +5115,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqClassSimpleName(siteRequest_, o);
 		case "pageTitle":
 			return PageLayout.staticSearchFqPageTitle(siteRequest_, o);
-		case "roles":
-			return PageLayout.staticSearchFqRoles(siteRequest_, o);
+		case "scopes":
+			return PageLayout.staticSearchFqScopes(siteRequest_, o);
 		case "roleForWrite":
 			return PageLayout.staticSearchFqRoleForWrite(siteRequest_, o);
 		case "roleForRead":
 			return PageLayout.staticSearchFqRoleForRead(siteRequest_, o);
-		case "authRoleAdmin":
-			return PageLayout.staticSearchFqAuthRoleAdmin(siteRequest_, o);
-		case "authRoleSuperAdmin":
-			return PageLayout.staticSearchFqAuthRoleSuperAdmin(siteRequest_, o);
+		case "authScopeAdmin":
+			return PageLayout.staticSearchFqAuthScopeAdmin(siteRequest_, o);
+		case "authScopeSuperAdmin":
+			return PageLayout.staticSearchFqAuthScopeSuperAdmin(siteRequest_, o);
 		case "pagination":
 			return PageLayout.staticSearchFqPagination(siteRequest_, o);
 		case "defaultFieldListVars":
@@ -5284,11 +5240,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_promiseBefore = "promiseBefore";
 	public static final String VAR_classSimpleName = "classSimpleName";
 	public static final String VAR_pageTitle = "pageTitle";
-	public static final String VAR_roles = "roles";
+	public static final String VAR_scopes = "scopes";
 	public static final String VAR_roleForWrite = "roleForWrite";
 	public static final String VAR_roleForRead = "roleForRead";
-	public static final String VAR_authRoleAdmin = "authRoleAdmin";
-	public static final String VAR_authRoleSuperAdmin = "authRoleSuperAdmin";
+	public static final String VAR_authScopeAdmin = "authScopeAdmin";
+	public static final String VAR_authScopeSuperAdmin = "authScopeSuperAdmin";
 	public static final String VAR_stats = "stats";
 	public static final String VAR_facetCounts = "facetCounts";
 	public static final String VAR_pagination = "pagination";
@@ -5359,11 +5315,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_promiseBefore = "";
 	public static final String DISPLAY_NAME_classSimpleName = "";
 	public static final String DISPLAY_NAME_pageTitle = "";
-	public static final String DISPLAY_NAME_roles = "";
+	public static final String DISPLAY_NAME_scopes = "";
 	public static final String DISPLAY_NAME_roleForWrite = "";
 	public static final String DISPLAY_NAME_roleForRead = "";
-	public static final String DISPLAY_NAME_authRoleAdmin = "";
-	public static final String DISPLAY_NAME_authRoleSuperAdmin = "";
+	public static final String DISPLAY_NAME_authScopeAdmin = "";
+	public static final String DISPLAY_NAME_authScopeSuperAdmin = "";
 	public static final String DISPLAY_NAME_stats = "";
 	public static final String DISPLAY_NAME_facetCounts = "";
 	public static final String DISPLAY_NAME_pagination = "";
@@ -5467,16 +5423,16 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_classSimpleName;
 		case VAR_pageTitle:
 			return DISPLAY_NAME_pageTitle;
-		case VAR_roles:
-			return DISPLAY_NAME_roles;
+		case VAR_scopes:
+			return DISPLAY_NAME_scopes;
 		case VAR_roleForWrite:
 			return DISPLAY_NAME_roleForWrite;
 		case VAR_roleForRead:
 			return DISPLAY_NAME_roleForRead;
-		case VAR_authRoleAdmin:
-			return DISPLAY_NAME_authRoleAdmin;
-		case VAR_authRoleSuperAdmin:
-			return DISPLAY_NAME_authRoleSuperAdmin;
+		case VAR_authScopeAdmin:
+			return DISPLAY_NAME_authScopeAdmin;
+		case VAR_authScopeSuperAdmin:
+			return DISPLAY_NAME_authScopeSuperAdmin;
 		case VAR_stats:
 			return DISPLAY_NAME_stats;
 		case VAR_facetCounts:

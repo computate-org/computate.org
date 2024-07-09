@@ -19,15 +19,15 @@ import org.computate.site.request.SiteRequest;
  * ApiTag.enUS: User
  * ApiUri.enUS: /api/user
  * 
- * ApiMethod: Search
- * ApiMethod: PATCH
- * ApiMethod: POST
- * ApiMethod: PUTImport
- * 
- * ApiMethod: SearchPage
- * Page.SearchPage.enUS: SiteUserPage
- * PageSuper.SearchPage.enUS: BaseModelPage
- * ApiUri.SearchPage.enUS: /user
+ * ApiMethod:
+ *   Search:
+ *   PATCH:
+ *   POST:
+ *   PUTImport:
+ *   SearchPage:
+ *     Page: SiteUserPage
+ *     SuperPage: BaseModelPage
+ *     ApiUri: /user
  * 
  * Keyword: classSimpleNameSiteUser
  * Role.enUS: SiteAdmin

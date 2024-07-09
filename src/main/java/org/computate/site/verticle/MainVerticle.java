@@ -19,24 +19,17 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.tool.SearchTool;
 import org.computate.vertx.config.ComputateConfigKeys;
-import org.computate.vertx.handlebars.AuthHelpers;
-import org.computate.vertx.handlebars.DateHelpers;
-import org.computate.vertx.handlebars.SiteHelpers;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.openapi.OpenApi3Generator;
 import org.computate.vertx.search.list.SearchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Jackson2Helper;
-import com.github.jknack.handlebars.helper.ConditionalHelpers;
-import com.github.jknack.handlebars.helper.StringHelpers;
-import com.github.jknack.handlebars.internal.lang3.BooleanUtils;
 import com.google.common.io.Resources;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.loader.FileLocator;
@@ -93,7 +86,6 @@ import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.sstore.LocalSessionStore;
-import io.vertx.ext.web.templ.handlebars.HandlebarsTemplateEngine;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
@@ -137,12 +129,6 @@ public class MainVerticle extends AbstractVerticle {
 	private OAuth2Auth oauth2AuthenticationProvider;
 
 	private AuthorizationProvider authorizationProvider;
-
-	private HandlebarsTemplateEngine templateEngine;
-
-	private Handlebars handlebars;
-
-	private TemplateHandler templateHandler;
 
 	private MqttClient mqttClient;
 
@@ -474,7 +460,7 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Jinjava> promise = Promise.promise();
 
 		try {
-			jinjava = new Jinjava();
+			jinjava = ComputateConfigKeys.getJinjava();
 			String templatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
 			if(!StringUtils.isBlank(templatePath))
 				jinjava.setResourceLocator(new FileLocator(new File(templatePath)));
@@ -761,7 +747,8 @@ public class MainVerticle extends AbstractVerticle {
 
 			String configVarsPath = System.getenv(ComputateConfigKeys.VARS_PATH);
 			if(StringUtils.isNotBlank(configVarsPath)) {
-				JsonObject config = ComputateConfigKeys.getConfig();
+				Jinjava jinjava = ComputateConfigKeys.getJinjava();
+				JsonObject config = ComputateConfigKeys.getConfig(jinjava);
 				ConfigStoreOptions configOptions = new ConfigStoreOptions().setType("json").setConfig(config);
 				retrieverOptions.addStore(configOptions);
 			}
@@ -865,9 +852,9 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureApi() {
 		Promise<Void> promise = Promise.promise();
 		try {
-			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
-			SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
-			ComputateEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, templateEngine, vertx);
+			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			ComputateEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();
@@ -887,18 +874,21 @@ public class MainVerticle extends AbstractVerticle {
 
 			router.get("/").handler(handler -> {
 				try {
-					String template = Resources.toString(Resources.getResource("templates/HomePage.htm"), StandardCharsets.UTF_8);
+					String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
+					String pageTemplateUri = "templates/enUS/HomePage.htm";
+					Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+					String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
 
 					JsonObject ctx = new JsonObject();
-						ctx.put(ConfigKeys.STATIC_BASE_URL, config().getString(ConfigKeys.STATIC_BASE_URL));
-						ctx.put(ConfigKeys.SITE_BASE_URL, config().getString(ConfigKeys.SITE_BASE_URL));
-						ctx.put(ConfigKeys.GITHUB_ORG, config().getString(ConfigKeys.GITHUB_ORG));
-						ctx.put(ConfigKeys.SITE_NAME, config().getString(ConfigKeys.SITE_NAME));
-						ctx.put(ConfigKeys.SITE_DISPLAY_NAME, config().getString(ConfigKeys.SITE_DISPLAY_NAME));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_URL, config().getString(ConfigKeys.SITE_POWERED_BY_URL));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_NAME, config().getString(ConfigKeys.SITE_POWERED_BY_NAME));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_IMAGE_URI, config().getString(ConfigKeys.SITE_POWERED_BY_IMAGE_URI));
-						ctx.put(ConfigKeys.FONTAWESOME_KIT, config().getString(ConfigKeys.FONTAWESOME_KIT));
+					ctx.put(ConfigKeys.STATIC_BASE_URL, config().getString(ConfigKeys.STATIC_BASE_URL));
+					ctx.put(ConfigKeys.SITE_BASE_URL, config().getString(ConfigKeys.SITE_BASE_URL));
+					ctx.put(ConfigKeys.GITHUB_ORG, config().getString(ConfigKeys.GITHUB_ORG));
+					ctx.put(ConfigKeys.SITE_NAME, config().getString(ConfigKeys.SITE_NAME));
+					ctx.put(ConfigKeys.SITE_DISPLAY_NAME, config().getString(ConfigKeys.SITE_DISPLAY_NAME));
+					ctx.put(ConfigKeys.SITE_POWERED_BY_URL, config().getString(ConfigKeys.SITE_POWERED_BY_URL));
+					ctx.put(ConfigKeys.SITE_POWERED_BY_NAME, config().getString(ConfigKeys.SITE_POWERED_BY_NAME));
+					ctx.put(ConfigKeys.SITE_POWERED_BY_IMAGE_URI, config().getString(ConfigKeys.SITE_POWERED_BY_IMAGE_URI));
+					ctx.put(ConfigKeys.FONTAWESOME_KIT, config().getString(ConfigKeys.FONTAWESOME_KIT));
 
 					String renderedTemplate = jinjava.render(template, ctx.getMap());
 					Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -945,7 +935,7 @@ public class MainVerticle extends AbstractVerticle {
 						String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
 						String pageTemplateUri = result.getTemplateUri();
 						Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-						String template = Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+						String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
 
 						JsonObject ctx = new JsonObject();
 						ctx.put(ConfigKeys.STATIC_BASE_URL, config().getString(ConfigKeys.STATIC_BASE_URL));
@@ -1222,29 +1212,5 @@ public class MainVerticle extends AbstractVerticle {
 
 	public void setAuthorizationProvider(AuthorizationProvider authorizationProvider) {
 		this.authorizationProvider = authorizationProvider;
-	}
-
-	public HandlebarsTemplateEngine getTemplateEngine() {
-		return templateEngine;
-	}
-
-	public void setTemplateEngine(HandlebarsTemplateEngine templateEngine) {
-		this.templateEngine = templateEngine;
-	}
-
-	public Handlebars getHandlebars() {
-		return handlebars;
-	}
-
-	public void setHandlebars(Handlebars handlebars) {
-		this.handlebars = handlebars;
-	}
-
-	public TemplateHandler getTemplateHandler() {
-		return templateHandler;
-	}
-
-	public void setTemplateHandler(TemplateHandler templateHandler) {
-		this.templateHandler = templateHandler;
 	}
 }

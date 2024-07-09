@@ -173,13 +173,9 @@ public class SiteRequest extends SiteRequestGen<Object> implements ComputateSite
 
 	/**
 	 * {@inheritDoc}
-	 * Description: The user's roles within the SSO realm
+	 * Description: The user auth scopes for the current request within the SSO realm
 	 **/
-	protected void _userRealmRoles(List<String> o) {
-		JsonArray roles = Optional.ofNullable(user).map(user -> user.attributes()).map(attributes -> attributes.getJsonObject("accessToken")).map(o1 -> o1.getJsonObject("realm_access")).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
-		roles.stream().forEach(r -> {
-			addUserRealmRoles((String)r);
-		});
+	protected void _scopes(List<String> o) {
 	}
 
 	/**
@@ -190,17 +186,6 @@ public class SiteRequest extends SiteRequestGen<Object> implements ComputateSite
 		String authResource = config.getString("authResource");
 		JsonObject o = Optional.ofNullable(user).map(user -> user.attributes()).map(p -> p.getJsonObject("resource_access")).map(o1 -> o1.getJsonObject(authResource)).orElse(new JsonObject());
 		c.o(o);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Description: The user's roles for the resource
-	 **/
-	protected void _userResourceRoles(List<String> o) {
-		JsonArray roles = Optional.ofNullable(userResource).map(o2 -> o2.getJsonArray("roles")).orElse(new JsonArray());
-		roles.stream().forEach(r -> {
-			addUserResourceRoles((String)r);
-		});
 	}
 
 	/**

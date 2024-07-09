@@ -963,78 +963,78 @@ public abstract class SiteRequestGen<DEV> extends Object {
 		return SiteRequest.staticSearchUserEmail(siteRequest_, SiteRequest.staticSetUserEmail(siteRequest_, o)).toString();
 	}
 
-	////////////////////
-	// userRealmRoles //
-	////////////////////
+	////////////
+	// scopes //
+	////////////
 
 
-	/**	 The entity userRealmRoles
+	/**	 The entity scopes
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
 	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
 	@JsonInclude(Include.NON_NULL)
-	protected List<String> userRealmRoles = new ArrayList<String>();
+	protected List<String> scopes = new ArrayList<String>();
 
-	/**	<br> The entity userRealmRoles
+	/**	<br> The entity scopes
 	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userRealmRoles">Find the entity userRealmRoles in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:scopes">Find the entity scopes in Solr</a>
 	 * <br>
 	 * @param o is the entity already constructed. 
 	 **/
-	protected abstract void _userRealmRoles(List<String> o);
+	protected abstract void _scopes(List<String> o);
 
-	public List<String> getUserRealmRoles() {
-		return userRealmRoles;
+	public List<String> getScopes() {
+		return scopes;
 	}
 
-	public void setUserRealmRoles(List<String> userRealmRoles) {
-		this.userRealmRoles = userRealmRoles;
+	public void setScopes(List<String> scopes) {
+		this.scopes = scopes;
 	}
-	public void setUserRealmRoles(String o) {
-		String l = SiteRequest.staticSetUserRealmRoles(siteRequest_, o);
+	public void setScopes(String o) {
+		String l = SiteRequest.staticSetScopes(siteRequest_, o);
 		if(l != null)
-			addUserRealmRoles(l);
+			addScopes(l);
 	}
-	public static String staticSetUserRealmRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSetScopes(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	public SiteRequest addUserRealmRoles(String...objects) {
+	public SiteRequest addScopes(String...objects) {
 		for(String o : objects) {
-			addUserRealmRoles(o);
+			addScopes(o);
 		}
 		return (SiteRequest)this;
 	}
-	public SiteRequest addUserRealmRoles(String o) {
+	public SiteRequest addScopes(String o) {
 		if(o != null)
-			this.userRealmRoles.add(o);
+			this.scopes.add(o);
 		return (SiteRequest)this;
 	}
 	@JsonIgnore
-	public void setUserRealmRoles(JsonArray objects) {
-		userRealmRoles.clear();
+	public void setScopes(JsonArray objects) {
+		scopes.clear();
 		if(objects == null)
 			return;
 		for(int i = 0; i < objects.size(); i++) {
 			String o = objects.getString(i);
-			addUserRealmRoles(o);
+			addScopes(o);
 		}
 	}
-	protected SiteRequest userRealmRolesInit() {
-		_userRealmRoles(userRealmRoles);
+	protected SiteRequest scopesInit() {
+		_scopes(scopes);
 		return (SiteRequest)this;
 	}
 
-	public static String staticSearchUserRealmRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSearchScopes(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrUserRealmRoles(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrScopes(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqUserRealmRoles(SiteRequest siteRequest_, String o) {
-		return SiteRequest.staticSearchUserRealmRoles(siteRequest_, SiteRequest.staticSetUserRealmRoles(siteRequest_, o)).toString();
+	public static String staticSearchFqScopes(SiteRequest siteRequest_, String o) {
+		return SiteRequest.staticSearchScopes(siteRequest_, SiteRequest.staticSetScopes(siteRequest_, o)).toString();
 	}
 
 	//////////////////
@@ -1095,80 +1095,6 @@ public abstract class SiteRequestGen<DEV> extends Object {
 
 	public static String staticSearchFqUserResource(SiteRequest siteRequest_, String o) {
 		return SiteRequest.staticSearchUserResource(siteRequest_, SiteRequest.staticSetUserResource(siteRequest_, o)).toString();
-	}
-
-	///////////////////////
-	// userResourceRoles //
-	///////////////////////
-
-
-	/**	 The entity userResourceRoles
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-	@JsonInclude(Include.NON_NULL)
-	protected List<String> userResourceRoles = new ArrayList<String>();
-
-	/**	<br> The entity userResourceRoles
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userResourceRoles">Find the entity userResourceRoles in Solr</a>
-	 * <br>
-	 * @param o is the entity already constructed. 
-	 **/
-	protected abstract void _userResourceRoles(List<String> o);
-
-	public List<String> getUserResourceRoles() {
-		return userResourceRoles;
-	}
-
-	public void setUserResourceRoles(List<String> userResourceRoles) {
-		this.userResourceRoles = userResourceRoles;
-	}
-	public void setUserResourceRoles(String o) {
-		String l = SiteRequest.staticSetUserResourceRoles(siteRequest_, o);
-		if(l != null)
-			addUserResourceRoles(l);
-	}
-	public static String staticSetUserResourceRoles(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	public SiteRequest addUserResourceRoles(String...objects) {
-		for(String o : objects) {
-			addUserResourceRoles(o);
-		}
-		return (SiteRequest)this;
-	}
-	public SiteRequest addUserResourceRoles(String o) {
-		if(o != null)
-			this.userResourceRoles.add(o);
-		return (SiteRequest)this;
-	}
-	@JsonIgnore
-	public void setUserResourceRoles(JsonArray objects) {
-		userResourceRoles.clear();
-		if(objects == null)
-			return;
-		for(int i = 0; i < objects.size(); i++) {
-			String o = objects.getString(i);
-			addUserResourceRoles(o);
-		}
-	}
-	protected SiteRequest userResourceRolesInit() {
-		_userResourceRoles(userResourceRoles);
-		return (SiteRequest)this;
-	}
-
-	public static String staticSearchUserResourceRoles(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUserResourceRoles(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUserResourceRoles(SiteRequest siteRequest_, String o) {
-		return SiteRequest.staticSearchUserResourceRoles(siteRequest_, SiteRequest.staticSetUserResourceRoles(siteRequest_, o)).toString();
 	}
 
 	///////////////
@@ -1577,9 +1503,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 				userFirstNameInit();
 				userFullNameInit();
 				userEmailInit();
-				userRealmRolesInit();
+				scopesInit();
 				userResourceInit();
-				userResourceRolesInit();
 				siteUser_Init();
 				langInit();
 				requestPkInit();
@@ -1663,12 +1588,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 				return oSiteRequest.userFullName;
 			case "userEmail":
 				return oSiteRequest.userEmail;
-			case "userRealmRoles":
-				return oSiteRequest.userRealmRoles;
+			case "scopes":
+				return oSiteRequest.scopes;
 			case "userResource":
 				return oSiteRequest.userResource;
-			case "userResourceRoles":
-				return oSiteRequest.userResourceRoles;
 			case "siteUser_":
 				return oSiteRequest.siteUser_;
 			case "lang":
@@ -1748,12 +1671,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSetUserFullName(siteRequest_, o);
 		case "userEmail":
 			return SiteRequest.staticSetUserEmail(siteRequest_, o);
-		case "userRealmRoles":
-			return SiteRequest.staticSetUserRealmRoles(siteRequest_, o);
+		case "scopes":
+			return SiteRequest.staticSetScopes(siteRequest_, o);
 		case "userResource":
 			return SiteRequest.staticSetUserResource(siteRequest_, o);
-		case "userResourceRoles":
-			return SiteRequest.staticSetUserResourceRoles(siteRequest_, o);
 		case "lang":
 			return SiteRequest.staticSetLang(siteRequest_, o);
 		case "requestPk":
@@ -1800,12 +1721,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchUserFullName(siteRequest_, (String)o);
 		case "userEmail":
 			return SiteRequest.staticSearchUserEmail(siteRequest_, (String)o);
-		case "userRealmRoles":
-			return SiteRequest.staticSearchUserRealmRoles(siteRequest_, (String)o);
+		case "scopes":
+			return SiteRequest.staticSearchScopes(siteRequest_, (String)o);
 		case "userResource":
 			return SiteRequest.staticSearchUserResource(siteRequest_, (JsonObject)o);
-		case "userResourceRoles":
-			return SiteRequest.staticSearchUserResourceRoles(siteRequest_, (String)o);
 		case "lang":
 			return SiteRequest.staticSearchLang(siteRequest_, (String)o);
 		case "requestPk":
@@ -1852,12 +1771,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchStrUserFullName(siteRequest_, (String)o);
 		case "userEmail":
 			return SiteRequest.staticSearchStrUserEmail(siteRequest_, (String)o);
-		case "userRealmRoles":
-			return SiteRequest.staticSearchStrUserRealmRoles(siteRequest_, (String)o);
+		case "scopes":
+			return SiteRequest.staticSearchStrScopes(siteRequest_, (String)o);
 		case "userResource":
 			return SiteRequest.staticSearchStrUserResource(siteRequest_, (String)o);
-		case "userResourceRoles":
-			return SiteRequest.staticSearchStrUserResourceRoles(siteRequest_, (String)o);
 		case "lang":
 			return SiteRequest.staticSearchStrLang(siteRequest_, (String)o);
 		case "requestPk":
@@ -1904,12 +1821,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchFqUserFullName(siteRequest_, o);
 		case "userEmail":
 			return SiteRequest.staticSearchFqUserEmail(siteRequest_, o);
-		case "userRealmRoles":
-			return SiteRequest.staticSearchFqUserRealmRoles(siteRequest_, o);
+		case "scopes":
+			return SiteRequest.staticSearchFqScopes(siteRequest_, o);
 		case "userResource":
 			return SiteRequest.staticSearchFqUserResource(siteRequest_, o);
-		case "userResourceRoles":
-			return SiteRequest.staticSearchFqUserResourceRoles(siteRequest_, o);
 		case "lang":
 			return SiteRequest.staticSearchFqLang(siteRequest_, o);
 		case "requestPk":
@@ -1950,9 +1865,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public static final String VAR_userFirstName = "userFirstName";
 	public static final String VAR_userFullName = "userFullName";
 	public static final String VAR_userEmail = "userEmail";
-	public static final String VAR_userRealmRoles = "userRealmRoles";
+	public static final String VAR_scopes = "scopes";
 	public static final String VAR_userResource = "userResource";
-	public static final String VAR_userResourceRoles = "userResourceRoles";
 	public static final String VAR_siteUser_ = "siteUser_";
 	public static final String VAR_lang = "lang";
 	public static final String VAR_requestPk = "requestPk";
@@ -1979,9 +1893,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_userFirstName = "";
 	public static final String DISPLAY_NAME_userFullName = "";
 	public static final String DISPLAY_NAME_userEmail = "";
-	public static final String DISPLAY_NAME_userRealmRoles = "";
+	public static final String DISPLAY_NAME_scopes = "";
 	public static final String DISPLAY_NAME_userResource = "";
-	public static final String DISPLAY_NAME_userResourceRoles = "";
 	public static final String DISPLAY_NAME_siteUser_ = "";
 	public static final String DISPLAY_NAME_lang = "";
 	public static final String DISPLAY_NAME_requestPk = "";
@@ -2030,12 +1943,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return DISPLAY_NAME_userFullName;
 		case VAR_userEmail:
 			return DISPLAY_NAME_userEmail;
-		case VAR_userRealmRoles:
-			return DISPLAY_NAME_userRealmRoles;
+		case VAR_scopes:
+			return DISPLAY_NAME_scopes;
 		case VAR_userResource:
 			return DISPLAY_NAME_userResource;
-		case VAR_userResourceRoles:
-			return DISPLAY_NAME_userResourceRoles;
 		case VAR_siteUser_:
 			return DISPLAY_NAME_siteUser_;
 		case VAR_lang:

@@ -1,7 +1,7 @@
 package org.computate.site.user;
 
-import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModelPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -495,20 +495,6 @@ public class SiteUserGenPage extends SiteUserGenPageGen<BaseModelPage> {
 	@Override
 	protected void _apiUri(Wrap<String> c) {
 		c.o("/api/user");
-	}
-
-	@Override
-	protected void _roles(List<String> l) {
-		if(siteRequest_ != null) {
-			l.addAll(Stream.concat(siteRequest_.getUserResourceRoles().stream(), siteRequest_.getUserRealmRoles().stream()).distinct().collect(Collectors.toList()));
-		}
-	}
-
-	@Override
-	protected void _roleForWrite(List<String> l) {
-		Optional.ofNullable(siteRequest_.getConfig().getString(ConfigKeys.AUTH_ROLE_REQUIRED + "_SiteUser")).ifPresent(v -> {
-			l.add(v);
-		});
 	}
 
 	@Override

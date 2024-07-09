@@ -210,7 +210,7 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 	public static final String ComputateEvent_ThePluralName_enUS = "the events";
 	public static final String ComputateEvent_NoNameFound_enUS = "no event found";
 	public static final String ComputateEvent_ApiUri_enUS = "/api/event";
-	public static final String ComputateEvent_ApiUriSearchPage_enUS = "/api/event";
+	public static final String ComputateEvent_ApiUriSearchPage_enUS = "/event";
 	public static final String ComputateEvent_OfName_enUS = "of event";
 	public static final String ComputateEvent_ANameAdjective_enUS = "an event";
 	public static final String ComputateEvent_NameAdjectiveSingular_enUS = "event";
@@ -225,8 +225,8 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 	public static final String POST_enUS_ImageUri = "/png/api/event-999.png";
 	public static final String PUTImport_enUS_Uri = "/api/event-import";
 	public static final String PUTImport_enUS_ImageUri = "/png/api/event-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/api/event";
-	public static final String SearchPage_enUS_ImageUri = "/png/api/event-999.png";
+	public static final String SearchPage_enUS_Uri = "/event";
+	public static final String SearchPage_enUS_ImageUri = "/png/event-999.png";
 
 	public static final String ComputateEvent_IconGroup = "duotone";
 	public static final String ComputateEvent_IconName = "map-location-dot";
