@@ -184,34 +184,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	/**
-	 * Description: A helper field for the long number 0
-	 */
-	protected void _long0(Wrap<Long> w) {
-		w.o(0L);
-	}
-
-	/**
-	 * Description: A helper field for the long number 1
-	 */
-	protected void _long1(Wrap<Long> w) {
-		w.o(1L);
-	}
-
-	/**
-	 * Description: A helper field for the integer number 0
-	 */
-	protected void _int0(Wrap<Integer> w) {
-		w.o(0);
-	}
-
-	/**
-	 * Description: A helper field for the integer number 1
-	 */
-	protected void _int1(Wrap<Integer> w) {
-		w.o(1);
-	}
-
-	/**
 	 * Ignore: true
 	 * Description: A method that can be overridden at the start of the request that makes this main template be initialized with a Vert.x promise for reactive initialization
 	**/
@@ -249,20 +221,6 @@ public class PageLayout extends PageLayoutGen<Object> {
 	 * Description: The required roles to access this page
 	 */
 	protected void _roleForRead(List<String> l) {
-	}
-
-	/**
-	 * Description: The admin scope required to access this page
-	 */
-	protected void _authScopeAdmin(Wrap<String> w) {
-		w.o(siteRequest_.getConfig().getString(ConfigKeys.AUTH_SCOPE_ADMIN));
-	}
-
-	/**
-	 * Description: The super-admin scope required to access this page
-	 */
-	protected void _authScopeSuperAdmin(Wrap<String> w) {
-		w.o(siteRequest_.getConfig().getString(ConfigKeys.AUTH_SCOPE_SUPER_ADMIN));
 	}
 
 	protected void _stats(Wrap<SolrResponse.Stats> w) {

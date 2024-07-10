@@ -1,177 +1,168 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
-	<head>
+<html lang="{{ SITE_LOCALE }}" class="sl-theme-{{ SITE_THEME }}">
+  <head>
 {% block htmHeadPageLayout %}
 {% block htmTitlePageLayout %}
-		<title>computate-smart-laptop-challenge</title>
+    <title>computate-smart-laptop-challenge</title>
 {% endblock htmTitlePageLayout %}
-{%- block htmMetaPageLayout %}
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-{%- endblock htmMetaPageLayout %}
-{%- block htmStylePageLayout %}
-		<link rel="icon" href="{{staticBaseUrl}}/favicon.ico" />
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-		<link rel="stylesheet" href="{{staticBaseUrl}}/css/site.css"/>
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
-		<!-- shoelace -->
-		<link
-		  rel="stylesheet"
-		  media="(prefers-color-scheme:light)"
-		  href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/light.css"
-		/>
-		<link
-		  rel="stylesheet"
-		  media="(prefers-color-scheme:dark)"
-		  href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/themes/dark.css"
-		  onload="document.documentElement.classList.add('sl-theme-dark');"
-		/>
-{%- endblock htmStylePageLayout %}
-{%- block htmScriptsPageLayout %}
-{%- if FONTAWESOME_KIT is defined %}
-		<script src="{{ FONTAWESOME_KIT }}"></script>
-{%- endif %}
-		<script src="{{staticBaseUrl}}/js/site-enUS.js"></script>
-		<script src="{{staticBaseUrl}}/js/sockjs.js"></script>
-		<script src="{{staticBaseUrl}}/js/vertx-eventbus.js"></script>
-		<script src="{{staticBaseUrl}}/js/plotly-2.9.0.min.js"></script>
-		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-		<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
-{%- endblock htmScriptsPageLayout %}
-{%- block htmScriptPageLayout %}
-{%- endblock htmScriptPageLayout %}
-{%- endblock htmHeadPageLayout %}
-	</head>
-	<body style="height: 100%;">
+{% block htmMetaPageLayout %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+    <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
+    <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/w3.css"> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site.css"/>
+{% endblock htmStylePageLayout %}
+{% block htmScriptsPageLayout %}
+{% if FONTAWESOME_KIT is defined %}
+    <script src="{{ FONTAWESOME_KIT }}"></script>
+{% endif %}
+    <script type="module">
+      import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js';
+    
+      registerIconLibrary('fa', {
+        resolver: name => {
+          const filename = name.replace(/^fa[rbs]-/, '');
+          let folder = 'regular';
+          if (name.substring(0, 4) === 'fas-') folder = 'solid';
+          if (name.substring(0, 4) === 'fab-') folder = 'brands';
+          console.log(`https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/${folder}/${filename}.svg`);
+          return `https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/svgs/${folder}/${filename}.svg`;
+        },
+        mutator: svg => svg.setAttribute('fill', 'currentColor')
+      });
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/site.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+{% endblock htmScriptsPageLayout %}
+{% block htmScriptPageLayout %}
+{% endblock htmScriptPageLayout %}
+{% endblock htmHeadPageLayout %}
+  </head>
+  <body style="height: 100%;">
+    <div id="sl-page">
 {% block htmBodyPageLayout %}
 {% block htmBodyStartPageLayout %}
-		<div class="w3-center ">
 {% block htmBodyMenuPageLayout %}
-		<div class="w3-bar w3-hide-small ">
-			<sl-button-group class="w3-padding w3-hide-small ">
-				<sl-button href="{{ SITE_BASE_URL }}">
-					<i class="fad fa-house "></i> home
-				</sl-button>
+      <aside slot="navigation" id="sidebar" class="float-left hide-mobile ">
+        <a id="img-keys-a" href="/">
+          <img id="img-keys-img" src="https://computate.neocities.org/svg/computate-keys.svg"/>
+        </a>
+        <sl-icon-button id="sidebar-close-button" library="fa" name="fas-xmark" label="Close" data-drawer="close" class="hide-desktop"></sl-icon-button>
+        <ul>
+          <li>
+            <a href="{{ SITE_BASE_URL }}">home</a>
+          </li>
+          <li>
+            <a href="{{ SITE_BASE_URL }}/en-us/events">events</a>
+          </li>
+          <li>
+            <a href="{{ SITE_BASE_URL }}/en-us/hackathons">hackathons</a>
+          </li>
+          <li>
+            <a href="{{ SITE_BASE_URL }}/en-us/courses">courses</a>
+          </li>
+          <li>
+            <a href="">Youtube</a>
+          </li>
+          <li>
+            <a href="https://github.com/computate/">Github</a>
+          </li>
+          <li>
+            <a href="/">research</a>
+          </li>
+          <li>
+            <a href="/">websites</a>
+          </li>
+        </ul>
 {% block htmMenuItemsPageLayout %}
 {% if userKey is defined %}
-				<div class="site-bar-item w3-bar-item ">
-					<div class="w3-dropdown-hover ">
-						<div class="">
-							<i class="fad fa-house-user w3-text-2017-shaded-spruce "></i> {{userName}}
-						</div>
-						<div class="w3-dropdown-content w3-card-4 w3-padding ">
-							<div class="w3-cell-row ">
-								<a href="/user/{{ userKey }}" class="header-icon-a w3-hover-opacity w3-center w3-text-2017-shaded-spruce "><i class="fad fa-house-user w3-text-2017-shaded-spruce "></i> my user page</a>
-							</div>
-							<div class="w3-cell-row ">
-								<a href="{{ logoutUrl }}" class="header-icon-a w3-hover-opacity w3-center w3-text-2017-shaded-spruce "><i class="fad fa-sign-out-alt w3-text-2017-shaded-spruce "></i> logout</a>
-							</div>
-						</div>
-					</div>
-				</div>
+        <sl-dropdown id="user-dropdown">
+          <sl-button slot="trigger" caret variant="brand">
+            <sl-icon slot="prefix" name="house-user" variant="duotone"></sl-icon>
+            <span>{{userName}}</span>
+          </sl-button>
+          <sl-menu>
+            <sl-menu-item type="checkbox" value="light">
+              <sl-button variant="brand" href="/user/{{ userKey }}">
+                <sl-icon slot="prefix" name="house-user" variant="duotone"></sl-icon>
+                <span>my user page</span>
+              </sl-button>
+            </sl-menu-item>
+            <sl-menu-item type="checkbox" value="dark">
+              <sl-button variant="brand" href="{{ logoutUrl }}">
+                <sl-icon slot="prefix" name="sign-out-alt" variant="duotone"></sl-icon>
+                <span>sign out</span>
+              </sl-button>
+            </sl-menu-item>
+          </sl-menu>
+        </sl-dropdown>
 {% else %}
-				<sl-button href="{{ SITE_BASE_URL }}/user">
-					<i class="fad fa-house-user "></i> login
-				</sl-button>
+        <sl-button href="{{ SITE_BASE_URL }}/user">
+          <i class="fad fa-house-user "></i> login
+        </sl-button>
 {% endif %}
 {% endblock htmMenuItemsPageLayout %}
-		</sl-button-group>
-		<div class="w3-bar w3-hide-medium w3-hide-large ">
-			<div class="site-bar-item w3-bar-item ">
-				<a class="w3-bar-item " href="{{ siteBaseUrl }}"><i class="fad fa-house "></i> home</a>
-			</div>
-			<div class="w3-dropdown-hover ">
-				<button class="w3-button w3-text-black "><i class="fad fa-bars w3-text-black "></i> Menu</button>
-				<div class="w3-dropdown-content w3-bar-block w3-card-4 ">
-htmMenuItems
-				</div>
-			</div>
-		</div>
+      </aside>
 {% endblock htmBodyMenuPageLayout %}
-		</div>
+      <main class="float-left ">
+        <header id="top-bar">
+          <sl-icon-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text" size="small" library="fa" name="fas-bars"></sl-icon-button>
+          <sl-input placeholder="search">
+            <sl-icon library="fa" name="fas-magnifying-glass" slot="prefix"></sl-icon>
+          </sl-input>
+        </header>
 {% endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}
-	<div class="pageContent w3-content ">
-	  put stuff here
-	</div>
+        <div class="pageContent w3-content ">
+          put stuff here
+        </div>
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
-
-		<footer class="w3-content w3-center w3-padding-32 ">
-			<h3>Share this page. </h3>
-			<div class="w3-cell-row ">
-				<div class="blog-publication-social-div w3-cell ">
-					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/facebook.svg">
-					<div>
-						<div id="fb-root"></div>
-						<div class="fb-like" data-href="{{ siteBaseUrl }}{{ pageUri }}" data-width="" data-layout="box_count" data-action="like" data-size="small" data-share="true"></div>
-					</div>
-				</div>
-				<div class="blog-publication-social-div w3-cell ">
-					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/twitter.svg">
-					<div>
-						<a href="https://twitter.com/share" class="twitter-share-button " data-show-count="false"></a>
-						<script async="" src="//platform.twitter.com/widgets.js"></script>
-					</div>
-				</div>
-				<div class="blog-publication-social-div w3-cell ">
-					<img alt="" class="blog-publication-social-img" src="{{ staticBaseUrl }}/svg/pinterest.svg">
-					<div class="pinterest-div ">
-						<script async="" defer="" src="//assets.pinterest.com/js/pinit_main.js?0.8726554954646004"></script>
-						<a data-pin-media="{{ staticBaseUrl }}{{ pageImageUri }}" data-pin-description="{{ pageTitle }}" data-pin-url="{{ siteBaseUrl }}{{ pageUri }}" data-pin-id="" href="https://www.pinterest.com/pin/create/button/" data-pin-do="buttonPin">
-							<img alt="" src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png"/>
-						</a>
-					</div>
-				</div>
-			</div>
-		</footer>
-	 	<div class="w3-center ">
-htmBodyMenu
-		</div>
-		<footer class="w3-center w3-black w3-text-white w3-padding-24 ">
-{% if GITHUB_ORG is defined %}
-			<div class="w3-margin ">
-				<div class="grow-20 ">
-					<div class="w3-xxlarge ">
-						<a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">This site is open source. </a>
-					</div>
-					<div class="w3-large ">
-						<a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on GitHub. </a>
-					</div>
-				</div>
-			</div>
-{% endif %}
-{% if SITE_POWERED_BY_URL is defined %}
-			<div class="w3-margin ">
-				<div class="grow-20 ">
-					<a class="w3-bar-item grow-20 w3-margin w3-text-white w3-large " href="{{ SITE_POWERED_BY_URL }}" target="_blank"><span class="w3-large ">Powered by </span>{% if SITE_POWERED_BY_IMAGE_URI %}<img alt="" class="w3-image " style="display: inline-block; width: 200px; margin: 0 10px;" src="{{ staticBaseUrl }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>{% else %}{% if SITE_POWERED_BY_NAME%}{{ SITE_POWERED_BY_NAME }}{% endif %}{% endif %}</a>
-				</div>
-			</div>
-{% endif %}
-			<div class="w3-margin ">
-				<div class="grow-20 ">
-					<div class="w3-row ">
-						<div class="w3-half " style="line-height: 1em; ">
-							<a class="w3-bar-item w3-margin w3-text-white w3-large " href="https://www.redhat.com/en/about/social-innovation" target="_blank">
-								<span class="w3-medium ">Leveraging our Red Hat super powers <br/>to contribute to socially impactful <br/>open source projects </span>
-							</a>
-						</div>
-						<div class="w3-half ">
-							<a class="w3-bar-item w3-margin w3-text-white w3-large " href="https://www.redhat.com/en/about/social-innovation" target="_blank">
-								<img alt="" class="w3-image " style="display: inline-block; width: 200px; margin: 0 10px;" src="{{ staticBaseUrl }}/png/rh-impact-logo-white-text.png"/>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="w3-margin ">
-				<div class="grow-20 ">
-					<a class="w3-bar-item grow-20 w3-margin w3-text-white w3-large " href="https://www.computate.org/" target="_blank"><span class="w3-large ">Generated with </span><img alt="" class="w3-image " style="display: inline-block; width: 300px; margin: 0 10px;" src="{{ staticBaseUrl }}/svg/computate-keys.svg"/></a>
-				</div>
-			</div>
-		</footer>
+      </main>
+      {% if GITHUB_ORG is defined %}
+        <footer id="footer-open-source" class="display-flex-center ">
+          <sl-icon library="fa" name="fab-square-github" family="brands"></sl-icon>
+          <div>
+            <div>
+              <span>This site is open source. </span>
+            </div>
+            <div>
+              <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github. </a>
+            </div>
+          </div>
+        </footer>
+      {% endif %}
+      <footer id="footer-generated-by">
+        <div>
+          <a href="https://www.computate.org/" target="_blank">
+            <span>Generated with </span>
+          </a>
+        </div>
+        <div>
+          <a href="https://www.computate.org/" target="_blank">
+            <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" class="inline-image"/>
+          </a>
+        </div>
+      </footer>
+      {% if SITE_POWERED_BY_URL is defined %}
+        <footer id="footer-powered-by" class="display-flex-center ">
+          <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}" class="inline-image"/>
+          <a href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+            <span>Powered by </span>
+            <span>{{ SITE_POWERED_BY_NAME }}</span>
+          </a>
+        </footer>
+      {% endif %}
+    </div>
 {% endblock htmBodyEndPageLayout %}
 {% endblock htmBodyPageLayout %}
-	</body>
+  </body>
 </html>

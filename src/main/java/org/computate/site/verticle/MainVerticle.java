@@ -875,21 +875,10 @@ public class MainVerticle extends AbstractVerticle {
 			router.get("/").handler(handler -> {
 				try {
 					String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
-					String pageTemplateUri = "templates/enUS/HomePage.htm";
+					String pageTemplateUri = "enUS/HomePage.htm";
 					Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 					String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-
-					JsonObject ctx = new JsonObject();
-					ctx.put(ConfigKeys.STATIC_BASE_URL, config().getString(ConfigKeys.STATIC_BASE_URL));
-					ctx.put(ConfigKeys.SITE_BASE_URL, config().getString(ConfigKeys.SITE_BASE_URL));
-					ctx.put(ConfigKeys.GITHUB_ORG, config().getString(ConfigKeys.GITHUB_ORG));
-					ctx.put(ConfigKeys.SITE_NAME, config().getString(ConfigKeys.SITE_NAME));
-					ctx.put(ConfigKeys.SITE_DISPLAY_NAME, config().getString(ConfigKeys.SITE_DISPLAY_NAME));
-					ctx.put(ConfigKeys.SITE_POWERED_BY_URL, config().getString(ConfigKeys.SITE_POWERED_BY_URL));
-					ctx.put(ConfigKeys.SITE_POWERED_BY_NAME, config().getString(ConfigKeys.SITE_POWERED_BY_NAME));
-					ctx.put(ConfigKeys.SITE_POWERED_BY_IMAGE_URI, config().getString(ConfigKeys.SITE_POWERED_BY_IMAGE_URI));
-					ctx.put(ConfigKeys.FONTAWESOME_KIT, config().getString(ConfigKeys.FONTAWESOME_KIT));
-
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config());
 					String renderedTemplate = jinjava.render(template, ctx.getMap());
 					Buffer buffer = Buffer.buffer(renderedTemplate);
 					handler.response().putHeader("Content-Type", "text/html");
@@ -936,18 +925,7 @@ public class MainVerticle extends AbstractVerticle {
 						String pageTemplateUri = result.getTemplateUri();
 						Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 						String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-
-						JsonObject ctx = new JsonObject();
-						ctx.put(ConfigKeys.STATIC_BASE_URL, config().getString(ConfigKeys.STATIC_BASE_URL));
-						ctx.put(ConfigKeys.SITE_BASE_URL, config().getString(ConfigKeys.SITE_BASE_URL));
-						ctx.put(ConfigKeys.GITHUB_ORG, config().getString(ConfigKeys.GITHUB_ORG));
-						ctx.put(ConfigKeys.SITE_NAME, config().getString(ConfigKeys.SITE_NAME));
-						ctx.put(ConfigKeys.SITE_DISPLAY_NAME, config().getString(ConfigKeys.SITE_DISPLAY_NAME));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_URL, config().getString(ConfigKeys.SITE_POWERED_BY_URL));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_NAME, config().getString(ConfigKeys.SITE_POWERED_BY_NAME));
-						ctx.put(ConfigKeys.SITE_POWERED_BY_IMAGE_URI, config().getString(ConfigKeys.SITE_POWERED_BY_IMAGE_URI));
-						ctx.put(ConfigKeys.FONTAWESOME_KIT, config().getString(ConfigKeys.FONTAWESOME_KIT));
-
+						JsonObject ctx = ComputateConfigKeys.getPageContext(config());
 						Matcher m = Pattern.compile("<meta property=\"([^\"]+)\"\\s+content=\"([^\"]*)\"/>", Pattern.MULTILINE).matcher(template);
 						boolean trouve = m.find();
 						while (trouve) {

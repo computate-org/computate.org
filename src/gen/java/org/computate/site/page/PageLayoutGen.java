@@ -37,7 +37,6 @@ import java.lang.String;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.core.json.JsonObject;
 import java.lang.Long;
-import java.lang.Integer;
 import java.lang.Void;
 import io.vertx.core.json.JsonArray;
 import org.computate.search.response.solr.SolrResponse.Stats;
@@ -53,6 +52,7 @@ import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.lang.Integer;
 import java.math.BigDecimal;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
@@ -1210,246 +1210,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return PageLayout.staticSearchLogoutUrl(siteRequest_, PageLayout.staticSetLogoutUrl(siteRequest_, o)).toString();
 	}
 
-	///////////
-	// long0 //
-	///////////
-
-
-	/**	 The entity long0
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long long0;
-
-	/**	<br> The entity long0
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:long0">Find the entity long0 in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _long0(Wrap<Long> w);
-
-	public Long getLong0() {
-		return long0;
-	}
-
-	public void setLong0(Long long0) {
-		this.long0 = long0;
-	}
-	@JsonIgnore
-	public void setLong0(String o) {
-		this.long0 = PageLayout.staticSetLong0(siteRequest_, o);
-	}
-	public static Long staticSetLong0(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Long.parseLong(o);
-		return null;
-	}
-	protected PageLayout long0Init() {
-		Wrap<Long> long0Wrap = new Wrap<Long>().var("long0");
-		if(long0 == null) {
-			_long0(long0Wrap);
-			Optional.ofNullable(long0Wrap.getO()).ifPresent(o -> {
-				setLong0(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static Long staticSearchLong0(SiteRequest siteRequest_, Long o) {
-		return o;
-	}
-
-	public static String staticSearchStrLong0(SiteRequest siteRequest_, Long o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqLong0(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchLong0(siteRequest_, PageLayout.staticSetLong0(siteRequest_, o)).toString();
-	}
-
-	///////////
-	// long1 //
-	///////////
-
-
-	/**	 The entity long1
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long long1;
-
-	/**	<br> The entity long1
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:long1">Find the entity long1 in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _long1(Wrap<Long> w);
-
-	public Long getLong1() {
-		return long1;
-	}
-
-	public void setLong1(Long long1) {
-		this.long1 = long1;
-	}
-	@JsonIgnore
-	public void setLong1(String o) {
-		this.long1 = PageLayout.staticSetLong1(siteRequest_, o);
-	}
-	public static Long staticSetLong1(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Long.parseLong(o);
-		return null;
-	}
-	protected PageLayout long1Init() {
-		Wrap<Long> long1Wrap = new Wrap<Long>().var("long1");
-		if(long1 == null) {
-			_long1(long1Wrap);
-			Optional.ofNullable(long1Wrap.getO()).ifPresent(o -> {
-				setLong1(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static Long staticSearchLong1(SiteRequest siteRequest_, Long o) {
-		return o;
-	}
-
-	public static String staticSearchStrLong1(SiteRequest siteRequest_, Long o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqLong1(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchLong1(siteRequest_, PageLayout.staticSetLong1(siteRequest_, o)).toString();
-	}
-
-	//////////
-	// int0 //
-	//////////
-
-
-	/**	 The entity int0
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer int0;
-
-	/**	<br> The entity int0
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:int0">Find the entity int0 in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _int0(Wrap<Integer> w);
-
-	public Integer getInt0() {
-		return int0;
-	}
-
-	public void setInt0(Integer int0) {
-		this.int0 = int0;
-	}
-	@JsonIgnore
-	public void setInt0(String o) {
-		this.int0 = PageLayout.staticSetInt0(siteRequest_, o);
-	}
-	public static Integer staticSetInt0(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected PageLayout int0Init() {
-		Wrap<Integer> int0Wrap = new Wrap<Integer>().var("int0");
-		if(int0 == null) {
-			_int0(int0Wrap);
-			Optional.ofNullable(int0Wrap.getO()).ifPresent(o -> {
-				setInt0(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static Integer staticSearchInt0(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
-
-	public static String staticSearchStrInt0(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqInt0(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchInt0(siteRequest_, PageLayout.staticSetInt0(siteRequest_, o)).toString();
-	}
-
-	//////////
-	// int1 //
-	//////////
-
-
-	/**	 The entity int1
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer int1;
-
-	/**	<br> The entity int1
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:int1">Find the entity int1 in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _int1(Wrap<Integer> w);
-
-	public Integer getInt1() {
-		return int1;
-	}
-
-	public void setInt1(Integer int1) {
-		this.int1 = int1;
-	}
-	@JsonIgnore
-	public void setInt1(String o) {
-		this.int1 = PageLayout.staticSetInt1(siteRequest_, o);
-	}
-	public static Integer staticSetInt1(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected PageLayout int1Init() {
-		Wrap<Integer> int1Wrap = new Wrap<Integer>().var("int1");
-		if(int1 == null) {
-			_int1(int1Wrap);
-			Optional.ofNullable(int1Wrap.getO()).ifPresent(o -> {
-				setInt1(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static Integer staticSearchInt1(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
-
-	public static String staticSearchStrInt1(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqInt1(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchInt1(siteRequest_, PageLayout.staticSetInt1(siteRequest_, o)).toString();
-	}
-
 	///////////////////
 	// promiseBefore //
 	///////////////////
@@ -1817,110 +1577,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String staticSearchFqRoleForRead(SiteRequest siteRequest_, String o) {
 		return PageLayout.staticSearchRoleForRead(siteRequest_, PageLayout.staticSetRoleForRead(siteRequest_, o)).toString();
-	}
-
-	////////////////////
-	// authScopeAdmin //
-	////////////////////
-
-
-	/**	 The entity authScopeAdmin
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String authScopeAdmin;
-
-	/**	<br> The entity authScopeAdmin
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authScopeAdmin">Find the entity authScopeAdmin in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _authScopeAdmin(Wrap<String> w);
-
-	public String getAuthScopeAdmin() {
-		return authScopeAdmin;
-	}
-	public void setAuthScopeAdmin(String o) {
-		this.authScopeAdmin = PageLayout.staticSetAuthScopeAdmin(siteRequest_, o);
-	}
-	public static String staticSetAuthScopeAdmin(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected PageLayout authScopeAdminInit() {
-		Wrap<String> authScopeAdminWrap = new Wrap<String>().var("authScopeAdmin");
-		if(authScopeAdmin == null) {
-			_authScopeAdmin(authScopeAdminWrap);
-			Optional.ofNullable(authScopeAdminWrap.getO()).ifPresent(o -> {
-				setAuthScopeAdmin(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static String staticSearchAuthScopeAdmin(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrAuthScopeAdmin(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAuthScopeAdmin(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchAuthScopeAdmin(siteRequest_, PageLayout.staticSetAuthScopeAdmin(siteRequest_, o)).toString();
-	}
-
-	/////////////////////////
-	// authScopeSuperAdmin //
-	/////////////////////////
-
-
-	/**	 The entity authScopeSuperAdmin
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String authScopeSuperAdmin;
-
-	/**	<br> The entity authScopeSuperAdmin
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:authScopeSuperAdmin">Find the entity authScopeSuperAdmin in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _authScopeSuperAdmin(Wrap<String> w);
-
-	public String getAuthScopeSuperAdmin() {
-		return authScopeSuperAdmin;
-	}
-	public void setAuthScopeSuperAdmin(String o) {
-		this.authScopeSuperAdmin = PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o);
-	}
-	public static String staticSetAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected PageLayout authScopeSuperAdminInit() {
-		Wrap<String> authScopeSuperAdminWrap = new Wrap<String>().var("authScopeSuperAdmin");
-		if(authScopeSuperAdmin == null) {
-			_authScopeSuperAdmin(authScopeSuperAdminWrap);
-			Optional.ofNullable(authScopeSuperAdminWrap.getO()).ifPresent(o -> {
-				setAuthScopeSuperAdmin(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static String staticSearchAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAuthScopeSuperAdmin(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchAuthScopeSuperAdmin(siteRequest_, PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o)).toString();
 	}
 
 	///////////
@@ -4313,10 +3969,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				userNameInit();
 				userEmailInit();
 				logoutUrlInit();
-				long0Init();
-				long1Init();
-				int0Init();
-				int1Init();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -4338,8 +3990,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				scopesInit();
 				roleForWriteInit();
 				roleForReadInit();
-				authScopeAdminInit();
-				authScopeSuperAdminInit();
 				statsInit();
 				facetCountsInit();
 				paginationInit();
@@ -4490,14 +4140,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.userEmail;
 			case "logoutUrl":
 				return oPageLayout.logoutUrl;
-			case "long0":
-				return oPageLayout.long0;
-			case "long1":
-				return oPageLayout.long1;
-			case "int0":
-				return oPageLayout.int0;
-			case "int1":
-				return oPageLayout.int1;
 			case "promiseBefore":
 				return oPageLayout.promiseBefore;
 			case "classSimpleName":
@@ -4510,10 +4152,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.roleForWrite;
 			case "roleForRead":
 				return oPageLayout.roleForRead;
-			case "authScopeAdmin":
-				return oPageLayout.authScopeAdmin;
-			case "authScopeSuperAdmin":
-				return oPageLayout.authScopeSuperAdmin;
 			case "stats":
 				return oPageLayout.stats;
 			case "facetCounts":
@@ -4671,14 +4309,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetUserEmail(siteRequest_, o);
 		case "logoutUrl":
 			return PageLayout.staticSetLogoutUrl(siteRequest_, o);
-		case "long0":
-			return PageLayout.staticSetLong0(siteRequest_, o);
-		case "long1":
-			return PageLayout.staticSetLong1(siteRequest_, o);
-		case "int0":
-			return PageLayout.staticSetInt0(siteRequest_, o);
-		case "int1":
-			return PageLayout.staticSetInt1(siteRequest_, o);
 		case "classSimpleName":
 			return PageLayout.staticSetClassSimpleName(siteRequest_, o);
 		case "pageTitle":
@@ -4689,10 +4319,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetRoleForWrite(siteRequest_, o);
 		case "roleForRead":
 			return PageLayout.staticSetRoleForRead(siteRequest_, o);
-		case "authScopeAdmin":
-			return PageLayout.staticSetAuthScopeAdmin(siteRequest_, o);
-		case "authScopeSuperAdmin":
-			return PageLayout.staticSetAuthScopeSuperAdmin(siteRequest_, o);
 		case "pagination":
 			return PageLayout.staticSetPagination(siteRequest_, o);
 		case "defaultFieldListVars":
@@ -4815,14 +4441,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchUserEmail(siteRequest_, (String)o);
 		case "logoutUrl":
 			return PageLayout.staticSearchLogoutUrl(siteRequest_, (String)o);
-		case "long0":
-			return PageLayout.staticSearchLong0(siteRequest_, (Long)o);
-		case "long1":
-			return PageLayout.staticSearchLong1(siteRequest_, (Long)o);
-		case "int0":
-			return PageLayout.staticSearchInt0(siteRequest_, (Integer)o);
-		case "int1":
-			return PageLayout.staticSearchInt1(siteRequest_, (Integer)o);
 		case "classSimpleName":
 			return PageLayout.staticSearchClassSimpleName(siteRequest_, (String)o);
 		case "pageTitle":
@@ -4833,10 +4451,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchRoleForWrite(siteRequest_, (String)o);
 		case "roleForRead":
 			return PageLayout.staticSearchRoleForRead(siteRequest_, (String)o);
-		case "authScopeAdmin":
-			return PageLayout.staticSearchAuthScopeAdmin(siteRequest_, (String)o);
-		case "authScopeSuperAdmin":
-			return PageLayout.staticSearchAuthScopeSuperAdmin(siteRequest_, (String)o);
 		case "pagination":
 			return PageLayout.staticSearchPagination(siteRequest_, (JsonObject)o);
 		case "defaultFieldListVars":
@@ -4959,14 +4573,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrUserEmail(siteRequest_, (String)o);
 		case "logoutUrl":
 			return PageLayout.staticSearchStrLogoutUrl(siteRequest_, (String)o);
-		case "long0":
-			return PageLayout.staticSearchStrLong0(siteRequest_, (Long)o);
-		case "long1":
-			return PageLayout.staticSearchStrLong1(siteRequest_, (Long)o);
-		case "int0":
-			return PageLayout.staticSearchStrInt0(siteRequest_, (Integer)o);
-		case "int1":
-			return PageLayout.staticSearchStrInt1(siteRequest_, (Integer)o);
 		case "classSimpleName":
 			return PageLayout.staticSearchStrClassSimpleName(siteRequest_, (String)o);
 		case "pageTitle":
@@ -4977,10 +4583,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrRoleForWrite(siteRequest_, (String)o);
 		case "roleForRead":
 			return PageLayout.staticSearchStrRoleForRead(siteRequest_, (String)o);
-		case "authScopeAdmin":
-			return PageLayout.staticSearchStrAuthScopeAdmin(siteRequest_, (String)o);
-		case "authScopeSuperAdmin":
-			return PageLayout.staticSearchStrAuthScopeSuperAdmin(siteRequest_, (String)o);
 		case "pagination":
 			return PageLayout.staticSearchStrPagination(siteRequest_, (String)o);
 		case "defaultFieldListVars":
@@ -5103,14 +4705,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqUserEmail(siteRequest_, o);
 		case "logoutUrl":
 			return PageLayout.staticSearchFqLogoutUrl(siteRequest_, o);
-		case "long0":
-			return PageLayout.staticSearchFqLong0(siteRequest_, o);
-		case "long1":
-			return PageLayout.staticSearchFqLong1(siteRequest_, o);
-		case "int0":
-			return PageLayout.staticSearchFqInt0(siteRequest_, o);
-		case "int1":
-			return PageLayout.staticSearchFqInt1(siteRequest_, o);
 		case "classSimpleName":
 			return PageLayout.staticSearchFqClassSimpleName(siteRequest_, o);
 		case "pageTitle":
@@ -5121,10 +4715,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqRoleForWrite(siteRequest_, o);
 		case "roleForRead":
 			return PageLayout.staticSearchFqRoleForRead(siteRequest_, o);
-		case "authScopeAdmin":
-			return PageLayout.staticSearchFqAuthScopeAdmin(siteRequest_, o);
-		case "authScopeSuperAdmin":
-			return PageLayout.staticSearchFqAuthScopeSuperAdmin(siteRequest_, o);
 		case "pagination":
 			return PageLayout.staticSearchFqPagination(siteRequest_, o);
 		case "defaultFieldListVars":
@@ -5233,18 +4823,12 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_userName = "userName";
 	public static final String VAR_userEmail = "userEmail";
 	public static final String VAR_logoutUrl = "logoutUrl";
-	public static final String VAR_long0 = "long0";
-	public static final String VAR_long1 = "long1";
-	public static final String VAR_int0 = "int0";
-	public static final String VAR_int1 = "int1";
 	public static final String VAR_promiseBefore = "promiseBefore";
 	public static final String VAR_classSimpleName = "classSimpleName";
 	public static final String VAR_pageTitle = "pageTitle";
 	public static final String VAR_scopes = "scopes";
 	public static final String VAR_roleForWrite = "roleForWrite";
 	public static final String VAR_roleForRead = "roleForRead";
-	public static final String VAR_authScopeAdmin = "authScopeAdmin";
-	public static final String VAR_authScopeSuperAdmin = "authScopeSuperAdmin";
 	public static final String VAR_stats = "stats";
 	public static final String VAR_facetCounts = "facetCounts";
 	public static final String VAR_pagination = "pagination";
@@ -5308,18 +4892,12 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_userName = "";
 	public static final String DISPLAY_NAME_userEmail = "";
 	public static final String DISPLAY_NAME_logoutUrl = "";
-	public static final String DISPLAY_NAME_long0 = "";
-	public static final String DISPLAY_NAME_long1 = "";
-	public static final String DISPLAY_NAME_int0 = "";
-	public static final String DISPLAY_NAME_int1 = "";
 	public static final String DISPLAY_NAME_promiseBefore = "";
 	public static final String DISPLAY_NAME_classSimpleName = "";
 	public static final String DISPLAY_NAME_pageTitle = "";
 	public static final String DISPLAY_NAME_scopes = "";
 	public static final String DISPLAY_NAME_roleForWrite = "";
 	public static final String DISPLAY_NAME_roleForRead = "";
-	public static final String DISPLAY_NAME_authScopeAdmin = "";
-	public static final String DISPLAY_NAME_authScopeSuperAdmin = "";
 	public static final String DISPLAY_NAME_stats = "";
 	public static final String DISPLAY_NAME_facetCounts = "";
 	public static final String DISPLAY_NAME_pagination = "";
@@ -5409,14 +4987,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_userEmail;
 		case VAR_logoutUrl:
 			return DISPLAY_NAME_logoutUrl;
-		case VAR_long0:
-			return DISPLAY_NAME_long0;
-		case VAR_long1:
-			return DISPLAY_NAME_long1;
-		case VAR_int0:
-			return DISPLAY_NAME_int0;
-		case VAR_int1:
-			return DISPLAY_NAME_int1;
 		case VAR_promiseBefore:
 			return DISPLAY_NAME_promiseBefore;
 		case VAR_classSimpleName:
@@ -5429,10 +4999,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_roleForWrite;
 		case VAR_roleForRead:
 			return DISPLAY_NAME_roleForRead;
-		case VAR_authScopeAdmin:
-			return DISPLAY_NAME_authScopeAdmin;
-		case VAR_authScopeSuperAdmin:
-			return DISPLAY_NAME_authScopeSuperAdmin;
 		case VAR_stats:
 			return DISPLAY_NAME_stats;
 		case VAR_facetCounts:

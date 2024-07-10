@@ -838,7 +838,7 @@
 			</div>
 		</div>
 		<div class="pageContent w3-content ">
-			{% if computateEventCount == int0 %}
+			{% if computateEventCount == 0 %}
 				<h1>
 					<a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
 						{% if classIconCssClasses is defined %}
@@ -856,7 +856,7 @@
 					</span>
 				</h2>
 			{% else %}
-				{% if computateEventCount == int1 %}
+				{% if computateEventCount == 1 %}
 					{% if id is defined %}
 						<h1>
 							<a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
@@ -894,22 +894,36 @@
 			{% endif %}
 			{%- endblock htmFormComputateEventPage %}
 			{%- block htmFormsComputateEventPage %}
-			{% if authScopeSuperAdmin in scopes %}
-				{% if computateEventCount == int1 %}
-					<button
-							class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-							id="refreshThisComputateEventGenPage"
-						onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow($('#refreshThisComputateEventGenPage')); }, function() { addError($('#refreshThisComputateEventGenPage')); }); return false; ">
-						<i class="fas fa-sync-alt "></i>
-						refresh this event
-					</button>
+			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+				{% if "PATCH" in scopes %}
+					{% if computateEventCount == 1 %}
+						<button
+								class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
+								id="refreshThisComputateEventGenPage"
+								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow($('#refreshThisComputateEventGenPage')); }, function() { addError($('#refreshThisComputateEventGenPage')); }); return false; ">
+							<i class="fas fa-sync-alt "></i>
+							refresh this event
+						</button>
+					{% endif %}
+					{% if computateEventCount > 0 %}
+						<div class="">
+							<button id="refreshAllComputateEventGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
+									onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow($('#refreshAllComputateEventGenPage{{id}}')); }, function() { addError($('#refreshAllComputateEventGenPage{{id}}')); }); "
+									>
+								<i class="fas fa-sync-alt "></i>
+								refresh all the events
+							</button>
+						</div>
+					{% endif %}
 				{% endif %}
 			{% endif %}
-			{% if authScopeSuperAdmin in scopes %}
-				{{ htmButton_patchComputateEvent() }}
-				{{ htmForm_patchComputateEvent() }}
+			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+				{% if computateEventCount > 0 %}
+					{{ htmButton_patchComputateEvent() }}
+					{{ htmForm_patchComputateEvent() }}
+				{% endif %}
 			{% endif %}
-			{% if authScopeAdmin in scopes %}
+			{% if AUTH_SCOPE_ADMIN in scopes %}
 				{% if computateEventCount == int1 %}
 					{% if id is defined %}
 					{% else %}
@@ -921,9 +935,9 @@
 					{{ htmForm_postComputateEvent() }}
 				{% endif %}
 			{% endif %}
-			{% if authScopeSuperAdmin in scopes %}
-				{{ htmButton_putimportComputateEvent() }}
-				{{ htmForm_putimportComputateEvent() }}
+			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+					{{ htmButton_putimportComputateEvent() }}
+					{{ htmForm_putimportComputateEvent() }}
 			{% endif %}
 			{%- block htmSuggestedComputateEventPage %}{%- endblock %}
 			{%- endblock htmFormsComputateEventPage %}
@@ -936,16 +950,6 @@
 		{%- endblock htmBodyEndComputateEventPage %}
 		{%- endblock htmBodyEndBaseModelPage %}
 		{%- block htmSuggestedComputateEventPage %}
-		{% if "PATCH" in scopes %}
-			<div class="">
-				<button id="refreshAllComputateEventGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-						onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow($('#refreshAllComputateEventGenPage{{id}}')); }, function() { addError($('#refreshAllComputateEventGenPage{{id}}')); }); "
-						>
-					<i class="fas fa-sync-alt "></i>
-							refresh all the events
-				</button>
-			</div>
-		{% endif %}
 		<div class="w3-cell-row ">
 			<div class="w3-cell ">
 				<span>
