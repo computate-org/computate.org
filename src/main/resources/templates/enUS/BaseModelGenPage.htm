@@ -15,8 +15,7 @@
 
 {%- block htmScriptPageLayout %}
 {%- block htmScriptBaseModelPage %}
-		<script>
-			$('#site-calendar-box').accordion({ collapsible: true, active: false });
+		<script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
 			window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
 {% endif %}
@@ -24,7 +23,10 @@
 			window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
 			window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
-			$(document).ready(function() {
+			Promise.all([
+				customElements.whenDefined('sl-button')
+				, customElements.whenDefined('sl-input')
+			]).then(() => {
 				document.onkeydown = function(evt) {
 					evt = evt || window.event;
 					var isEscape = false;
@@ -34,27 +36,24 @@
 						isEscape = (evt.keyCode === 27);
 					}
 					if (isEscape) {
-						$('.w3-modal:visible').hide();
+						document.querySelector('.w3-modal:visible').classList.add('display-none');
 					}
 				};
 				window.eventBus = new EventBus('/eventbus');
 				var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 				if(pk != null) {
-					window.baseModel = JSON.parse($('.pageForm .baseModel').val());
+					window.baseModel = JSON.parse(document.querySelector('.pageForm .baseModel')?.value);
 				}
-					window.listBaseModel = JSON.parse($('.pageForm .listBaseModel').val());
-				window.varsFq = JSON.parse(decodeURIComponent('{{ varsFq | urlencode() }}'));
-				window.varsRange = JSON.parse(decodeURIComponent('{{ varsRange | urlencode() }}'));
+				window.listBaseModel = JSON.parse(document.querySelector('.pageForm .listBaseModel')?.value);
+				window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+				window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
 				window.defaultRangeVar = '{{ defaultRangeVar }}';
 				pageGraphBaseModel();
 
-				var calendarEl = document.getElementById('site-calendar');
-				var calendar = new FullCalendar.Calendar(calendarEl, {
-					initialView: 'dayGridMonth'
-				});
-				//calendar.render();
 {%- block websocketBaseModelPage %}{%- endblock %}
 			});
+		</script>
+		<script>
 
 			function jsWebsocketBaseModel(pk, vars, $response) {
 {%- block jsWebsocketBaseModelPage %}{%- endblock %}
@@ -74,7 +73,7 @@
 {%- block jsLegendBaseModelPage %}
 				var div = L.DomUtil.create('div', 'info legend');
 				var htm = '';
-				$.each( window.listBaseModel, function(index, baseModel) {
+				window.listBaseModel.forEach((baseModel, index) => {
 					if(baseModel.) {
 						var shapes = [];
 						if(Array.isArray(baseModel.))
@@ -175,7 +174,7 @@
 								{% else %}
 									<i class="fas fa-arrow-square-left w3-opacity "></i>
 								{% endif %}
-								{% if pagination.rowsPrevious >= pagination.1L %}
+								{% if pagination.rowsPrevious >= pagination['1L'] %}
 									<a href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}">
 										<i class="fas fa-minus-square "></i>
 									</a>
@@ -194,43 +193,31 @@
 								{% endif %}
 								<span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
 							</div>
-							{%- block table1BaseModelPage %}
 							<div class="w3-responsive ">
 								<table class="w3-table w3-bordered w3-striped w3-border w3-hoverable ">
-									{%- block table2BaseModelPage %}
-									{%- block thead1BaseModelPage %}
 									<thead class="w3- w3-hover-">
-										{%- block thead2BaseModelPage %}
 										<tr>
 											<th>created</th>
 											<th></th>
 										</tr>
-										{%- endblock thead2BaseModelPage %}
 									</thead>
-									{%- endblock thead1BaseModelPage %}
-									{%- block tbody1BaseModelPage %}
 									<tbody>
-										{%- block tbody2BaseModelPage %}
 										{% for item in listBaseModel%}
 											<tr>
 												<td>
-													<a href="{{pageUrlPk}}">
-														<span class="white-space-pre-wrap ">{{siteZonedDateTimeFormat created "MMM d, yyyy h:mm:ss a" siteLocale}}</span>
+													<a href="item.{{pageUrlPk}}">
+														<span class="white-space-pre-wrap ">{{ siteZonedDateTimeFormat(item.created, "MMM d, yyyy h:mm:ss a", defaultLocaleId) }}</span>
 													</a>
 												</td>
 												<td>
-													<a href="{{pageUrlPk}}">
-														<span class="white-space-pre-wrap ">{{objectTitle}}</span>
+													<a href="item.{{pageUrlPk}}">
+														<span class="white-space-pre-wrap ">item.{{objectTitle}}</span>
 													</a>
 												</td>
 											</tr>
 										{% endfor %}
-										{%- endblock tbody2BaseModelPage %}
 									</tbody>
-									{%- endblock tbody1BaseModelPage %}
-									{%- block tfoot1BaseModelPage %}
 									<tfoot class="w3- w3-hover-">
-										{%- block tfoot2BaseModelPage %}
 										<tr>
 											{% if getColumnCreated is defined %}
 												<td>
@@ -241,39 +228,34 @@
 												</td>
 											{% endif %}
 										</tr>
-										{%- endblock tfoot2BaseModelPage %}
 									</tfoot>
-									{%- endblock tfoot1BaseModelPage %}
-									{%- endblock table2BaseModelPage %}
 								</table>
 							</div>
-							{%- endblock table1BaseModelPage %}
 						</div>
-						{%- endmacro %}
+						{%- endmacro htmBodyAllBaseModelPage() %}
 
-{%- block htmBodyStartPageLayout %}
-{%- block htmBodyStartBaseModelPage %}
-{%- endblock htmBodyStartBaseModelPage %}
-{%- endblock htmBodyStartPageLayout %}
+		{%- block htmBodyStartPageLayout %}
+		{{ super() }}
+		{%- block htmBodyStartBaseModelPage %}
+		{%- endblock htmBodyStartBaseModelPage %}
+		{%- endblock htmBodyStartPageLayout %}
 
-{%- block htmBodyMiddlePageLayout %}
-{%- block htmBodyMiddleBaseModelPage %}
+		{%- block htmBodyMiddlePageLayout %}
+		{%- block htmBodyMiddleBaseModelPage %}
 		<div class="w3-bar w3-content ">
 			{%- block htmBodySidebarBaseModelPage %}
 			<div class="w3-dropdown-click w3-bar-block min-width-300px ">
-				<div class="min-width-300px ">
-					<span title="Search" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleStats').hide(); $('.siteSidebarToggleFieldList').hide(); $('.siteSidebarToggleFilters').hide(); $('.siteSidebarToggleRange').hide(); $('.siteSidebarTogglePivot').hide(); $('.siteSidebarToggleSearch').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); "><i class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> Search</span>
-					<span title="Filters" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleStats').hide(); $('.siteSidebarToggleFieldList').hide(); $('.siteSidebarToggleSearch').hide(); $('.siteSidebarToggleRange').hide(); $('.siteSidebarTogglePivot').hide(); $('.siteSidebarToggleFilters').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); "><i class="fad fa-filters hover-box-shadow w3-xlarge "></i> Filters</span>
-					<span title="Range" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleStats').hide(); $('.siteSidebarToggleFieldList').hide(); $('.siteSidebarToggleSearch').hide(); $('.siteSidebarToggleFilters').hide(); $('.siteSidebarTogglePivot').hide(); $('.siteSidebarToggleRange').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); "><i class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> Range</span>
-					<span title="Pivot" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleStats').hide(); $('.siteSidebarToggleFieldList').hide(); $('.siteSidebarToggleSearch').hide(); $('.siteSidebarToggleFilters').hide(); $('.siteSidebarToggleRange').hide(); $('.siteSidebarTogglePivot').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); "><i class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> Pivot</span>
-					<span title="FieldList" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleStats').hide(); $('.siteSidebarTogglePivot').hide(); $('.siteSidebarToggleSearch').hide(); $('.siteSidebarToggleFilters').hide(); $('.siteSidebarToggleRange').hide(); $('.siteSidebarToggleFieldList').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); "><i class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> FieldList</span>
-					<span
- title="Stats" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " onclick="$('.siteSidebarToggleFieldList').hide(); $('.siteSidebarTogglePivot').hide(); $('.siteSidebarToggleSearch').hide(); $('.siteSidebarToggleFilters').hide(); $('.siteSidebarToggleRange').hide(); $('.siteSidebarToggleStats').toggle(); $('.siteSidebarToggle').removeClass('w3-black'); $('.siteSidebarToggle').addClass('w3-'); $(this).addClass('w3-black'); $(this).removeClass('w3-'); ">						<i class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> Stats
-					</span>
-					<a title="API" class="siteSidebarToggle w3-padding-small w3-hover-black w3- " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> API</a>
-				</div>
+				<sl-button-group label="Search">
+					<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> Search</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> Filters</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> Range</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> Pivot</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> FieldList</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> Stats</sl-button>
+					<sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> Api</sl-button>
+				</sl-button-group>
 				<div class=" ">
-					<div class="siteSidebarToggle siteSidebarToggleSearch w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					<sl-drawer placement="end" id="siteSidebarToggleSearch">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 							<i class="fad fa-magnifying-glass "></i> Search</span>
@@ -289,7 +271,7 @@
 									</div>
 									<div class="w3-cell-row ">
 										<div class="w3-cell w3-cell-top ">
-											<input id="qBaseModel_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('BaseModel', value); " data-var="{{ var }}" autocomplete="off="/>
+											<sl-input id="qBaseModel_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('BaseModel', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
 											<div class="pageSearchVal w3-tiny "></div>
 										</div>
 									</div>
@@ -301,7 +283,7 @@
 								</div>
 								<div class="w3-cell-row ">
 									<div class="w3-cell w3-cell-top ">
-										<input id="qBaseModel_start" placeholder="{{ displayName }}" class="" onchange="paramChange('BaseModel', this); " data-var="start" autocomplete="off=" value="{{ start }}"/>
+										<sl-input id="qBaseModel_start" placeholder="{{ displayName }}" class="" onchange="paramChange('BaseModel', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
 										<div class="pageSearchVal w3-tiny ">start={{ start }}</div>
 									</div>
 								</div>
@@ -312,15 +294,15 @@
 								</div>
 								<div class="w3-cell-row ">
 									<div class="w3-cell w3-cell-top ">
-										<input id="qBaseModel_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('BaseModel', this); " data-var="rows" autocomplete="off" value="{{ rows }}"/>
+										<sl-input id="qBaseModel_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('BaseModel', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
 										<div class="pageSearchVal w3-tiny ">rows={{ rows }}</div>
 									</div>
 								</div>
 							</div>
 							{%- endblock htmBodySearchBaseModelPage %}
 						</div>
-					</div>
-					<div  class="siteSidebarToggle siteSidebarToggleFilters w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					</sl-drawer>
+					<sl-drawer placement="end" id="siteSidebarToggleFilters">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 							<i class="fad fa-filters "></i> Filters</span>
@@ -336,7 +318,7 @@
 												<button id="buttonFacetBaseModel_{{ key }}" class="" onclick="facetFieldChange('BaseModel', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
 											</div>
 											<div class="w3-cell w3-cell-top ">
-												<input id="fqBaseModel_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('BaseModel', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"/>
+												<sl-input id="fqBaseModel_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('BaseModel', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
 											</div>
 										</div>
 									</div>
@@ -353,8 +335,8 @@
 							</div>
 							{%- endblock htmBodyFiltersBaseModelPage %}
 						</div>
-					</div>
-					<div  class="siteSidebarToggle siteSidebarToggleRange w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					</sl-drawer>
+					<sl-drawer placement="end" id="siteSidebarToggleRange">
 						<div class="w3-bar w3-  ">
 							<span class="w3-bar-item ">
 							<i class="fad fa-calendar-range "></i> Range</span>
@@ -377,15 +359,15 @@
 										<span>Range Gap</span>
 									</td>
 									<td class="">
-										<select name="facet.range.gap" id="pageFacetRangeGap-BaseModel" onchange="facetRangeGapChange('BaseModel', this); ">
-											<option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</option>
-											<option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</option>
-											<option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</option>
-											<option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</option>
-											<option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</option>
-											<option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</option>
-											<option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</option>
-										</select>
+										<sl-select name="facet.range.gap" id="pageFacetRangeGap-BaseModel" onchange="facetRangeGapChange('BaseModel', this); ">
+											<sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
+											<sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
+											<sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
+											<sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
+											<sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
+											<sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
+											<sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
+										</sl-select>
 									</td>
 								</tr>
 								<tr class="">
@@ -395,7 +377,7 @@
 								</tr>
 								<tr class="">
 									<td class="" colspan="2">
-										<span><input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-BaseModel" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('BaseModel', this); "/></span>
+										<span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-BaseModel" value="{{ formatZonedDateTimeTz(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('BaseModel', this); "></sl-input></span>
 									</td>
 								</tr>
 								<tr class="">
@@ -405,7 +387,7 @@
 								</tr>
 								<tr class="">
 									<td class="" colspan="2">
-										<span><input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-BaseModel" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('BaseModel', this); "/></span>
+										<span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-BaseModel" value="{{ formatZonedDateTimeTz(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('BaseModel', this); "></sl-input></span>
 									</td>
 								</tr>
 							</table>
@@ -413,7 +395,7 @@
 								{% for key, value in varsRange.items() %}
 									<tr class="">
 										<td class="">
-											<span><input type="radio" name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeBaseModel_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('BaseModel', value); "/></span>
+											<span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeBaseModel_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('BaseModel', value); "></sl-radio></span>
 										</td>
 										<td class="">
 											<label for="pageFacetRangeBaseModel_{{ key }}">{{ displayName }}</label>
@@ -423,8 +405,8 @@
 							</table>
 							{%- endblock htmBodyRangeBaseModelPage %}
 						</div>
-					</div>
-					<div  class="siteSidebarToggle siteSidebarTogglePivot w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					</sl-drawer>
+					<sl-drawer placement="end" id="siteSidebarTogglePivot">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 							<i class="fad fa-table-pivot "></i> Pivot</span>
@@ -445,7 +427,7 @@
 								{% for key, value in varsFq.items() %}
 									<tr class="">
 										<td class="">
-											<span><input type="checkbox" name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('BaseModel', value); "/></span>
+											<span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('BaseModel', value); ">{{ displayName }}</sl-checkbox>
 										</td>
 										<td class="w3-cell ">
 											<label for="pageFacetPivotBaseModel_{{ key }}">{{ displayName }}</label>
@@ -455,8 +437,8 @@
 							</table>
 							{%- endblock htmBodyPivotBaseModelPage %}
 						</div>
-					</div>
-					<div  class="siteSidebarToggle siteSidebarToggleFieldList w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					</sl-drawer>
+					<sl-drawer placement="end" id="siteSidebarToggleFieldList">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 							<i class="fad fa-list-ul "></i> Field List</span>
@@ -478,7 +460,7 @@
 								{% for key, value in varsFq.items() %}
 									<tr class="">
 										<td class="">
-											<span><input type="checkbox" name="pageFieldList" class="pageFieldList " id="pageFieldListBaseModel_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('BaseModel', value); "/></span>
+											<span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListBaseModel_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('BaseModel', value); ">{{ displayName }}</sl-checkbox></span>
 										</td>
 										<td class="w3-cell ">
 											<label for="pageFieldListBaseModel_{{ key }}">{{ displayName }}</label>
@@ -488,8 +470,8 @@
 							</table>
 							{%- endblock htmBodyFieldListBaseModelPage %}
 						</div>
-					</div>
-					<div  class="siteSidebarToggle siteSidebarToggleStats w3-dropdown-content min-width-300px w3-white w3-border w3-border- " style="display: none; ">
+					</sl-drawer>
+					<sl-drawer placement="end" id="siteSidebarToggleStats">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 								<i class="fad fa-chart-candlestick "></i>								 Stats</span>
@@ -515,7 +497,7 @@
 									{% if enableStats is defined %}
 										<tr class="">
 											<td class="">
-												<span><input type="checkbox" name="pageStats" class="pageStats " id="pageStatsBaseModel_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('BaseModel', value); "/></span>
+												<span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsBaseModel_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('BaseModel', value); ">{{ displayName }}</sl-checkbox></span>
 											</td>
 											<td class="w3-cell ">
 												<div>
@@ -531,13 +513,13 @@
 														{% if value.stats.max is defined %}
 															<div>
 																<span> step </span>
-																<input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "/>
+																<sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
 																<span> min </span>
-																<input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "/>
+																<sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
 																<span> max </span>
-																<input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "/>
+																<sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
 																<span> speed in seconds </span>
-																<input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "/>
+																<sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
 																<button onclick="animateStats(); ">animate</button>
 															</div>
 														{% endif %}
@@ -550,7 +532,7 @@
 							</table>
 						{%- endblock htmBodyStatsBaseModelPage %}
 						</div>
-					</div>
+					</sl-drawer>
 				</div>
 			</div>
 			{%- endblock htmBodySidebarBaseModelPage %}
@@ -612,12 +594,12 @@
 			{%- block htmFormBaseModelPage %}
 			<form action="" id="BaseModelForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
 				{% if pk is defined %}
-					<input name="pk" class="valuePk" type="hidden" value="{{pk}}"/>
+					<sl-input name="pk" class="valuePk" type="hidden" value="{{pk}}"></sl-input>
 				{% endif %}
-				<input name="focusId" type="hidden"/>
-				<input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-				<input name="baseModel" id="baseModel" class="baseModel"  value='{{ toJsonObjectStringInApostrophes(baseModel_) }}' type="hidden"/>
-				<input name="listBaseModel" id="listBaseModel" class="listBaseModel"  value='{{ toJsonArrayStringInApostrophes(listBaseModel) }}' type="hidden"/>
+				<sl-input name="focusId" type="hidden"></sl-input>
+				<sl-input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"></sl-input>
+				<sl-input name="baseModel" id="baseModel" class="baseModel"  value='{{ toJsonObjectStringInApostrophes(baseModel_) }}' type="hidden"></sl-input>
+				<sl-input name="listBaseModel" id="listBaseModel" class="listBaseModel"  value='{{ toJsonArrayStringInApostrophes(listBaseModel) }}' type="hidden"></sl-input>
 			</form>
 			{% if id is defined %}
 				{{ htmButton_searchpageBaseModel() }}
@@ -631,7 +613,7 @@
 						<button
 								class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
 								id="refreshBaseModelGenPage"
-								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow($('#refreshBaseModelGenPage')); }, function() { addError($('#refreshBaseModelGenPage')); }); return false; ">
+								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow(document.querySelector('#refreshBaseModelGenPage')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage')); }); return false; ">
 							<i class="fas fa-sync-alt "></i>
 							refresh 
 						</button>
@@ -639,7 +621,7 @@
 					{% if baseModelCount > 0 %}
 						<div class="">
 							<button id="refreshBaseModelGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-									onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow($('#refreshBaseModelGenPage{{id}}')); }, function() { addError($('#refreshBaseModelGenPage{{id}}')); }); "
+									onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow(document.querySelector('#refreshBaseModelGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage{{id}}')); }); "
 									>
 								<i class="fas fa-sync-alt "></i>
 								refresh 
@@ -655,6 +637,7 @@
 		{%- endblock htmBodyMiddlePageLayout %}
 
 		{%- block htmBodyEndPageLayout %}
+{{ super() }}
 		{%- block htmBodyEndBaseModelPage %}
 		{%- endblock htmBodyEndBaseModelPage %}
 		{%- endblock htmBodyEndPageLayout %}
@@ -667,18 +650,18 @@
 			</div>
 		</div>
 		<div class="w3-bar ">
-			<input
+			<sl-input
 					type="text"
 					class="suggestBaseModel w3-input w3-border w3-bar-item "
 					name="suggestBaseModel"
 					id="suggestBaseModel{{id}}"
 					autocomplete="off"
-					oninput="suggestBaseModelObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + $(this).val() }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'classCanonicalName,pk,pageUrlPk,objectTitle' } ], $('#suggestListBaseModel{{id}}'), {{pk}}; "
+					oninput="suggestBaseModelObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + this.value }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'classCanonicalName,pk,pageUrlPk,objectTitle' } ], document.querySelector('#suggestListBaseModel{{id}}'), {{pk}}; "
 					onkeyup="if (event.keyCode === 13) { event.preventDefault(); window.location.href = 'null?q={{ query1 }}:' + encodeURIComponent(this.value) + '{{fqs}}{{sorts}}&amp;rows={{start2}}&amp;rows={{rows1}}"
 				{% if listBaseModel is defined %}
 					value="{{query2}}"
 				{% endif %}
-				/>
+				></sl-input>
 				<button
 					class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3- "
 					onclick="window.location.href = 'null?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
@@ -726,7 +709,7 @@
 
 {%- macro inputCreatedBaseModelPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_created" class="varBaseModel{{pk}}Created varBaseModelCreated " title="{{ formatZonedDateTime(baseModel_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(baseModel_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
+														<span id="{{classApiMethodMethod}}_created" class="varBaseModel{{pk}}Created varBaseModelCreated " title="{{ formatZonedDateTimeTz(baseModel_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTimeTz(baseModel_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
 	{% endif %}
 {%- endmacro %}
 
@@ -751,7 +734,7 @@
 
 {%- macro inputModifiedBaseModelPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_modified" class="varBaseModel{{pk}}Modified varBaseModelModified " title="{{ formatZonedDateTime(baseModel_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(baseModel_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
+														<span id="{{classApiMethodMethod}}_modified" class="varBaseModel{{pk}}Modified varBaseModelModified " title="{{ formatZonedDateTimeTz(baseModel_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTimeTz(baseModel_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
 	{% endif %}
 {%- endmacro %}
 
@@ -802,12 +785,11 @@
 {%- macro inputArchivedBaseModelPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
 	{% if 'Page' == classApiMethodMethod %}
-															<input
-																type="checkbox"
+															<sl-checkbox
 																id="{{classApiMethodMethod}}_archived"
 																value="true"
 	{% else %}
-														<select
+														<sl-select
 															id="{{classApiMethodMethod}}_archived"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
@@ -823,19 +805,19 @@
 		{% endif %}
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', $(this).prop('checked'), function() { addGlow($('.{{classApiMethodMethod}}_archived')); }, function() { addError($('.{{classApiMethodMethod}}_archived')); }); }"
+															onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_archived')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_archived')); }); }"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 		{% if baseModel_.archived is defined %}
 																checked="checked"
 		{% endif %}
-																/>
+																></sl-checkbox>
 	{% else %}
 															>
-															<option value="" selected="selected"></option>
-															<option value="true">true</option>
-															<option value="false">false</option>
-														</select>
+															<sl-option value="" selected="selected"></sl-option>
+															<sl-option value="true">true</sl-option>
+															<sl-option value="false">false</sl-option>
+														</sl-select>
 	{% endif %}
 
 		{% else %}
@@ -865,12 +847,11 @@
 {%- macro inputDeletedBaseModelPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
 	{% if 'Page' == classApiMethodMethod %}
-															<input
-																type="checkbox"
+															<sl-checkbox
 																id="{{classApiMethodMethod}}_deleted"
 																value="true"
 	{% else %}
-														<select
+														<sl-select
 															id="{{classApiMethodMethod}}_deleted"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
@@ -886,19 +867,19 @@
 		{% endif %}
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', $(this).prop('checked'), function() { addGlow($('.{{classApiMethodMethod}}_deleted')); }, function() { addError($('.{{classApiMethodMethod}}_deleted')); }); }"
+															onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_deleted')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_deleted')); }); }"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 		{% if baseModel_.deleted is defined %}
 																checked="checked"
 		{% endif %}
-																/>
+																></sl-checkbox>
 	{% else %}
 															>
-															<option value="" selected="selected"></option>
-															<option value="true">true</option>
-															<option value="false">false</option>
-														</select>
+															<sl-option value="" selected="selected"></sl-option>
+															<sl-option value="true">true</sl-option>
+															<sl-option value="false">false</sl-option>
+														</sl-select>
 	{% endif %}
 
 		{% else %}

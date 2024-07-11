@@ -11,14 +11,14 @@
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
     <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
-    <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/w3.css"> 
+    <!-- <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/w3.css">  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site.css"/>
 {% endblock htmStylePageLayout %}
 {% block htmScriptsPageLayout %}
 {% if FONTAWESOME_KIT is defined %}
-    <script src="{{ FONTAWESOME_KIT }}"></script>
+    {{ FONTAWESOME_KIT }}
 {% endif %}
     <script type="module">
       import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js';
@@ -36,7 +36,7 @@
       });
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
-    <script src="{{ STATIC_BASE_URL }}/js/site.js"></script>
+    <script type="module" src="{{ STATIC_BASE_URL }}/js/site.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
@@ -50,7 +50,6 @@
     <div id="sl-page">
 {% block htmBodyPageLayout %}
 {% block htmBodyStartPageLayout %}
-{% block htmBodyMenuPageLayout %}
       <aside slot="navigation" id="sidebar" class="float-left hide-mobile ">
         <a id="img-keys-a" href="/">
           <img id="img-keys-img" src="https://computate.neocities.org/svg/computate-keys.svg"/>
@@ -82,7 +81,6 @@
             <a href="/">websites</a>
           </li>
         </ul>
-{% block htmMenuItemsPageLayout %}
 {% if userKey is defined %}
         <sl-dropdown id="user-dropdown">
           <sl-button slot="trigger" caret variant="brand">
@@ -109,9 +107,7 @@
           <i class="fad fa-house-user "></i> login
         </sl-button>
 {% endif %}
-{% endblock htmMenuItemsPageLayout %}
       </aside>
-{% endblock htmBodyMenuPageLayout %}
       <main class="float-left ">
         <header id="top-bar">
           <sl-icon-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text" size="small" library="fa" name="fas-bars"></sl-icon-button>

@@ -47,10 +47,10 @@ import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.BeanDescription;
 import java.util.stream.Collectors;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
-import io.vertx.core.json.JsonArray;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 
@@ -386,6 +386,284 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		return location;
 	}
 
+	////////////////////
+	// locationColors //
+	////////////////////
+
+
+	/**	 The entity locationColors
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> locationColors = new ArrayList<String>();
+
+	/**	<br> The entity locationColors
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.ComputateEvent&fq=entiteVar_enUS_indexed_string:locationColors">Find the entity locationColors in Solr</a>
+	 * <br>
+	 * @param l is the entity already constructed. 
+	 **/
+	protected abstract void _locationColors(List<String> l);
+
+	public List<String> getLocationColors() {
+		return locationColors;
+	}
+
+	public void setLocationColors(List<String> locationColors) {
+		this.locationColors = locationColors;
+	}
+	public void setLocationColors(String o) {
+		String l = ComputateEvent.staticSetLocationColors(siteRequest_, o);
+		if(l != null)
+			addLocationColors(l);
+	}
+	public static String staticSetLocationColors(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public ComputateEvent addLocationColors(String...objects) {
+		for(String o : objects) {
+			addLocationColors(o);
+		}
+		return (ComputateEvent)this;
+	}
+	public ComputateEvent addLocationColors(String o) {
+		if(o != null)
+			this.locationColors.add(o);
+		return (ComputateEvent)this;
+	}
+	@JsonIgnore
+	public void setLocationColors(JsonArray objects) {
+		locationColors.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addLocationColors(o);
+		}
+	}
+	protected ComputateEvent locationColorsInit() {
+		_locationColors(locationColors);
+		return (ComputateEvent)this;
+	}
+
+	public static String staticSearchLocationColors(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrLocationColors(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLocationColors(SiteRequest siteRequest_, String o) {
+		return ComputateEvent.staticSearchLocationColors(siteRequest_, ComputateEvent.staticSetLocationColors(siteRequest_, o)).toString();
+	}
+
+	////////////////////
+	// locationTitles //
+	////////////////////
+
+
+	/**	 The entity locationTitles
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> locationTitles = new ArrayList<String>();
+
+	/**	<br> The entity locationTitles
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.ComputateEvent&fq=entiteVar_enUS_indexed_string:locationTitles">Find the entity locationTitles in Solr</a>
+	 * <br>
+	 * @param l is the entity already constructed. 
+	 **/
+	protected abstract void _locationTitles(List<String> l);
+
+	public List<String> getLocationTitles() {
+		return locationTitles;
+	}
+
+	public void setLocationTitles(List<String> locationTitles) {
+		this.locationTitles = locationTitles;
+	}
+	public void setLocationTitles(String o) {
+		String l = ComputateEvent.staticSetLocationTitles(siteRequest_, o);
+		if(l != null)
+			addLocationTitles(l);
+	}
+	public static String staticSetLocationTitles(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public ComputateEvent addLocationTitles(String...objects) {
+		for(String o : objects) {
+			addLocationTitles(o);
+		}
+		return (ComputateEvent)this;
+	}
+	public ComputateEvent addLocationTitles(String o) {
+		if(o != null)
+			this.locationTitles.add(o);
+		return (ComputateEvent)this;
+	}
+	@JsonIgnore
+	public void setLocationTitles(JsonArray objects) {
+		locationTitles.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addLocationTitles(o);
+		}
+	}
+	protected ComputateEvent locationTitlesInit() {
+		_locationTitles(locationTitles);
+		return (ComputateEvent)this;
+	}
+
+	public static String staticSearchLocationTitles(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrLocationTitles(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLocationTitles(SiteRequest siteRequest_, String o) {
+		return ComputateEvent.staticSearchLocationTitles(siteRequest_, ComputateEvent.staticSetLocationTitles(siteRequest_, o)).toString();
+	}
+
+	///////////////////
+	// locationLinks //
+	///////////////////
+
+
+	/**	 The entity locationLinks
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> locationLinks = new ArrayList<String>();
+
+	/**	<br> The entity locationLinks
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.ComputateEvent&fq=entiteVar_enUS_indexed_string:locationLinks">Find the entity locationLinks in Solr</a>
+	 * <br>
+	 * @param l is the entity already constructed. 
+	 **/
+	protected abstract void _locationLinks(List<String> l);
+
+	public List<String> getLocationLinks() {
+		return locationLinks;
+	}
+
+	public void setLocationLinks(List<String> locationLinks) {
+		this.locationLinks = locationLinks;
+	}
+	public void setLocationLinks(String o) {
+		String l = ComputateEvent.staticSetLocationLinks(siteRequest_, o);
+		if(l != null)
+			addLocationLinks(l);
+	}
+	public static String staticSetLocationLinks(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public ComputateEvent addLocationLinks(String...objects) {
+		for(String o : objects) {
+			addLocationLinks(o);
+		}
+		return (ComputateEvent)this;
+	}
+	public ComputateEvent addLocationLinks(String o) {
+		if(o != null)
+			this.locationLinks.add(o);
+		return (ComputateEvent)this;
+	}
+	@JsonIgnore
+	public void setLocationLinks(JsonArray objects) {
+		locationLinks.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addLocationLinks(o);
+		}
+	}
+	protected ComputateEvent locationLinksInit() {
+		_locationLinks(locationLinks);
+		return (ComputateEvent)this;
+	}
+
+	public static String staticSearchLocationLinks(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrLocationLinks(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLocationLinks(SiteRequest siteRequest_, String o) {
+		return ComputateEvent.staticSearchLocationLinks(siteRequest_, ComputateEvent.staticSetLocationLinks(siteRequest_, o)).toString();
+	}
+
+	///////////////
+	// eventName //
+	///////////////
+
+
+	/**	 The entity eventName
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String eventName;
+
+	/**	<br> The entity eventName
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.ComputateEvent&fq=entiteVar_enUS_indexed_string:eventName">Find the entity eventName in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _eventName(Wrap<String> w);
+
+	public String getEventName() {
+		return eventName;
+	}
+	public void setEventName(String o) {
+		this.eventName = ComputateEvent.staticSetEventName(siteRequest_, o);
+	}
+	public static String staticSetEventName(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected ComputateEvent eventNameInit() {
+		Wrap<String> eventNameWrap = new Wrap<String>().var("eventName");
+		if(eventName == null) {
+			_eventName(eventNameWrap);
+			Optional.ofNullable(eventNameWrap.getO()).ifPresent(o -> {
+				setEventName(o);
+			});
+		}
+		return (ComputateEvent)this;
+	}
+
+	public static String staticSearchEventName(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrEventName(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqEventName(SiteRequest siteRequest_, String o) {
+		return ComputateEvent.staticSearchEventName(siteRequest_, ComputateEvent.staticSetEventName(siteRequest_, o)).toString();
+	}
+
+	public String sqlEventName() {
+		return eventName;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -417,6 +695,10 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			try {
 				idInit();
 				locationInit();
+				locationColorsInit();
+				locationTitlesInit();
+				locationLinksInit();
+				eventNameInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -474,6 +756,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 				return oComputateEvent.id;
 			case "location":
 				return oComputateEvent.location;
+			case "locationColors":
+				return oComputateEvent.locationColors;
+			case "locationTitles":
+				return oComputateEvent.locationTitles;
+			case "locationLinks":
+				return oComputateEvent.locationLinks;
+			case "eventName":
+				return oComputateEvent.eventName;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -517,6 +807,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return ComputateEvent.staticSetId(siteRequest_, o);
 		case "location":
 			return ComputateEvent.staticSetLocation(siteRequest_, o);
+		case "locationColors":
+			return ComputateEvent.staticSetLocationColors(siteRequest_, o);
+		case "locationTitles":
+			return ComputateEvent.staticSetLocationTitles(siteRequest_, o);
+		case "locationLinks":
+			return ComputateEvent.staticSetLocationLinks(siteRequest_, o);
+		case "eventName":
+			return ComputateEvent.staticSetEventName(siteRequest_, o);
 			default:
 				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -535,6 +833,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return ComputateEvent.staticSearchId(siteRequest_, (String)o);
 		case "location":
 			return ComputateEvent.staticSearchLocation(siteRequest_, (Point)o);
+		case "locationColors":
+			return ComputateEvent.staticSearchLocationColors(siteRequest_, (String)o);
+		case "locationTitles":
+			return ComputateEvent.staticSearchLocationTitles(siteRequest_, (String)o);
+		case "locationLinks":
+			return ComputateEvent.staticSearchLocationLinks(siteRequest_, (String)o);
+		case "eventName":
+			return ComputateEvent.staticSearchEventName(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -553,6 +859,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return ComputateEvent.staticSearchStrId(siteRequest_, (String)o);
 		case "location":
 			return ComputateEvent.staticSearchStrLocation(siteRequest_, (Point)o);
+		case "locationColors":
+			return ComputateEvent.staticSearchStrLocationColors(siteRequest_, (String)o);
+		case "locationTitles":
+			return ComputateEvent.staticSearchStrLocationTitles(siteRequest_, (String)o);
+		case "locationLinks":
+			return ComputateEvent.staticSearchStrLocationLinks(siteRequest_, (String)o);
+		case "eventName":
+			return ComputateEvent.staticSearchStrEventName(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -571,6 +885,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return ComputateEvent.staticSearchFqId(siteRequest_, o);
 		case "location":
 			return ComputateEvent.staticSearchFqLocation(siteRequest_, o);
+		case "locationColors":
+			return ComputateEvent.staticSearchFqLocationColors(siteRequest_, o);
+		case "locationTitles":
+			return ComputateEvent.staticSearchFqLocationTitles(siteRequest_, o);
+		case "locationLinks":
+			return ComputateEvent.staticSearchFqLocationLinks(siteRequest_, o);
+		case "eventName":
+			return ComputateEvent.staticSearchFqEventName(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -605,6 +927,12 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 				}
 				saves.add("location");
 				return val;
+			} else if("eventname".equals(varLower)) {
+				if(val instanceof String) {
+					setEventName((String)val);
+				}
+				saves.add("eventName");
+				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -627,6 +955,30 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 				if(location != null)
 					oComputateEvent.setLocation(location);
 			}
+
+			if(saves.contains("locationColors")) {
+				List<String> locationColors = (List<String>)doc.get("locationColors_indexedstored_strings");
+				if(locationColors != null)
+					oComputateEvent.locationColors.addAll(locationColors);
+			}
+
+			if(saves.contains("locationTitles")) {
+				List<String> locationTitles = (List<String>)doc.get("locationTitles_indexedstored_strings");
+				if(locationTitles != null)
+					oComputateEvent.locationTitles.addAll(locationTitles);
+			}
+
+			if(saves.contains("locationLinks")) {
+				List<String> locationLinks = (List<String>)doc.get("locationLinks_indexedstored_strings");
+				if(locationLinks != null)
+					oComputateEvent.locationLinks.addAll(locationLinks);
+			}
+
+			if(saves.contains("eventName")) {
+				String eventName = (String)doc.get("eventName_docvalues_string");
+				if(eventName != null)
+					oComputateEvent.setEventName(eventName);
+			}
 		}
 
 		super.populateBaseModel(doc);
@@ -636,6 +988,30 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		if(location != null) {
 			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
 		}
+		if(locationColors != null) {
+			JsonArray l = new JsonArray();
+			doc.put("locationColors_indexedstored_strings", l);
+			for(String o : locationColors) {
+				l.add(o);
+			}
+		}
+		if(locationTitles != null) {
+			JsonArray l = new JsonArray();
+			doc.put("locationTitles_indexedstored_strings", l);
+			for(String o : locationTitles) {
+				l.add(o);
+			}
+		}
+		if(locationLinks != null) {
+			JsonArray l = new JsonArray();
+			doc.put("locationLinks_indexedstored_strings", l);
+			for(String o : locationLinks) {
+				l.add(o);
+			}
+		}
+		if(eventName != null) {
+			doc.put("eventName_docvalues_string", eventName);
+		}
 		super.indexBaseModel(doc);
 
 	}
@@ -644,6 +1020,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "location":
 				return "location_docvalues_location";
+			case "locationColors":
+				return "locationColors_indexedstored_strings";
+			case "locationTitles":
+				return "locationTitles_indexedstored_strings";
+			case "locationLinks":
+				return "locationLinks_indexedstored_strings";
+			case "eventName":
+				return "eventName_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -653,6 +1037,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "location":
 				return "location_docvalues_location";
+			case "locationColors":
+				return "locationColors_indexedstored_strings";
+			case "locationTitles":
+				return "locationTitles_indexedstored_strings";
+			case "locationLinks":
+				return "locationLinks_indexedstored_strings";
+			case "eventName":
+				return "eventName_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -662,6 +1054,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		switch(searchVar) {
 			case "location_docvalues_location":
 				return "location";
+			case "locationColors_indexedstored_strings":
+				return "locationColors";
+			case "locationTitles_indexedstored_strings":
+				return "locationTitles";
+			case "locationLinks_indexedstored_strings":
+				return "locationLinks";
+			case "eventName_docvalues_string":
+				return "eventName";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -693,6 +1093,16 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		SiteRequest siteRequest = oComputateEvent.getSiteRequest_();
 
 		oComputateEvent.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
+		Optional.ofNullable((List<?>)doc.get("locationColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+			oComputateEvent.addLocationColors(ComputateEvent.staticSetLocationColors(siteRequest, v.toString()));
+		});
+		Optional.ofNullable((List<?>)doc.get("locationTitles_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+			oComputateEvent.addLocationTitles(ComputateEvent.staticSetLocationTitles(siteRequest, v.toString()));
+		});
+		Optional.ofNullable((List<?>)doc.get("locationLinks_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+			oComputateEvent.addLocationLinks(ComputateEvent.staticSetLocationLinks(siteRequest, v.toString()));
+		});
+		oComputateEvent.setEventName(Optional.ofNullable(doc.get("eventName_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -708,6 +1118,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			ComputateEvent original = (ComputateEvent)o;
 			if(!Objects.equals(location, original.getLocation()))
 				apiRequest.addVars("location");
+			if(!Objects.equals(locationColors, original.getLocationColors()))
+				apiRequest.addVars("locationColors");
+			if(!Objects.equals(locationTitles, original.getLocationTitles()))
+				apiRequest.addVars("locationTitles");
+			if(!Objects.equals(locationLinks, original.getLocationLinks()))
+				apiRequest.addVars("locationLinks");
+			if(!Objects.equals(eventName, original.getEventName()))
+				apiRequest.addVars("eventName");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -720,6 +1138,10 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(locationColors).map(v -> "locationColors: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(locationTitles).map(v -> "locationTitles: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(locationLinks).map(v -> "locationLinks: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(eventName).map(v -> "eventName: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -730,6 +1152,10 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 	}
 	public static final String VAR_id = "id";
 	public static final String VAR_location = "location";
+	public static final String VAR_locationColors = "locationColors";
+	public static final String VAR_locationTitles = "locationTitles";
+	public static final String VAR_locationLinks = "locationLinks";
+	public static final String VAR_eventName = "eventName";
 
 	public static List<String> varsQForClass() {
 		return ComputateEvent.varsQComputateEvent(new ArrayList<String>());
@@ -744,6 +1170,7 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 	}
 	public static List<String> varsFqComputateEvent(List<String> vars) {
 		vars.add(VAR_location);
+		vars.add(VAR_eventName);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
 	}
@@ -759,6 +1186,10 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_location = "map location";
+	public static final String DISPLAY_NAME_locationColors = "location colors";
+	public static final String DISPLAY_NAME_locationTitles = "location titles";
+	public static final String DISPLAY_NAME_locationLinks = "location links";
+	public static final String DISPLAY_NAME_eventName = "event name";
 
 	public static String displayNameForClass(String var) {
 		return ComputateEvent.displayNameComputateEvent(var);
@@ -769,6 +1200,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_id;
 		case VAR_location:
 			return DISPLAY_NAME_location;
+		case VAR_locationColors:
+			return DISPLAY_NAME_locationColors;
+		case VAR_locationTitles:
+			return DISPLAY_NAME_locationTitles;
+		case VAR_locationLinks:
+			return DISPLAY_NAME_locationLinks;
+		case VAR_eventName:
+			return DISPLAY_NAME_eventName;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
@@ -776,6 +1215,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 
 	public static String descriptionComputateEvent(String var) {
 		switch(var) {
+		case VAR_locationColors:
+			return "The colors of each location Points. ";
+		case VAR_locationTitles:
+			return "The titles of each location Paths. ";
+		case VAR_locationLinks:
+			return "The links of each location Paths. ";
+		case VAR_eventName:
+			return "The event name. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -787,6 +1234,14 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_location:
 			return "Point";
+		case VAR_locationColors:
+			return "List";
+		case VAR_locationTitles:
+			return "List";
+		case VAR_locationLinks:
+			return "List";
+		case VAR_eventName:
+			return "String";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
 		}
@@ -803,6 +1258,8 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_location:
 			return 3;
+		case VAR_eventName:
+			return 3;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -812,6 +1269,8 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_location:
 			return 1;
+		case VAR_eventName:
+			return 2;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

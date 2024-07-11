@@ -720,6 +720,9 @@ paths:
     get:
       operationId: searchSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
+      security:
+        - openIdConnect:
+          - profile
       description: >+
       summary: >+
       tags:
@@ -1033,6 +1036,9 @@ paths:
     get:
       operationId: getSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
+      security:
+        - openIdConnect:
+          - profile
       description: >+
       summary: >+
       tags:
@@ -1063,6 +1069,9 @@ paths:
     get:
       operationId: searchpageSitePageId
       x-vertx-event-bus: computate.org-enUS-SitePage
+      security:
+        - openIdConnect:
+          - profile
       description: >+
       summary: >+
       tags:
@@ -1245,6 +1254,9 @@ paths:
     get:
       operationId: searchpageSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
+      security:
+        - openIdConnect:
+          - profile
       description: >+
       summary: >+
       tags:
@@ -2282,6 +2294,20 @@ components:
                     type: string
                   location:
                     type: object
+                  locationColors:
+                    type: array
+                    items:
+                      type: string
+                  locationTitles:
+                    type: array
+                    items:
+                      type: string
+                  locationLinks:
+                    type: array
+                    items:
+                      type: string
+                  eventName:
+                    type: string
     PATCHComputateEventRequest:
       allOf:
         - type: object
@@ -2300,6 +2326,64 @@ components:
               type: object
             removeAllLocation:
               type: object
+            setLocationColors:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationColors:
+              type: string
+            removeAllLocationColors:
+              type: array
+              items:
+                type: string
+            addLocationColors:
+              type: string
+            addAllLocationColors:
+              type: array
+              items:
+                type: string
+            setLocationTitles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationTitles:
+              type: string
+            removeAllLocationTitles:
+              type: array
+              items:
+                type: string
+            addLocationTitles:
+              type: string
+            addAllLocationTitles:
+              type: array
+              items:
+                type: string
+            setLocationLinks:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationLinks:
+              type: string
+            removeAllLocationLinks:
+              type: array
+              items:
+                type: string
+            addLocationLinks:
+              type: string
+            addAllLocationLinks:
+              type: array
+              items:
+                type: string
+            setEventName:
+              type: string
+              nullable: true
+            removeEventName:
+              type: string
+            removeAllEventName:
+              type: string
     PATCHComputateEventResponse:
       allOf:
         - type: object
@@ -2318,6 +2402,64 @@ components:
               type: object
             removeAllLocation:
               type: object
+            setLocationColors:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationColors:
+              type: string
+            removeAllLocationColors:
+              type: array
+              items:
+                type: string
+            addLocationColors:
+              type: string
+            addAllLocationColors:
+              type: array
+              items:
+                type: string
+            setLocationTitles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationTitles:
+              type: string
+            removeAllLocationTitles:
+              type: array
+              items:
+                type: string
+            addLocationTitles:
+              type: string
+            addAllLocationTitles:
+              type: array
+              items:
+                type: string
+            setLocationLinks:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLocationLinks:
+              type: string
+            removeAllLocationLinks:
+              type: array
+              items:
+                type: string
+            addLocationLinks:
+              type: string
+            addAllLocationLinks:
+              type: array
+              items:
+                type: string
+            setEventName:
+              type: string
+              nullable: true
+            removeEventName:
+              type: string
+            removeAllEventName:
+              type: string
     POSTComputateEventRequest:
       allOf:
         - type: object
@@ -2326,6 +2468,20 @@ components:
               type: string
             location:
               type: object
+            locationColors:
+              type: array
+              items:
+                type: string
+            locationTitles:
+              type: array
+              items:
+                type: string
+            locationLinks:
+              type: array
+              items:
+                type: string
+            eventName:
+              type: string
     POSTComputateEventResponse:
       allOf:
         - type: object
@@ -2334,6 +2490,20 @@ components:
               type: string
             location:
               type: object
+            locationColors:
+              type: array
+              items:
+                type: string
+            locationTitles:
+              type: array
+              items:
+                type: string
+            locationLinks:
+              type: array
+              items:
+                type: string
+            eventName:
+              type: string
     PUTImportComputateEventRequest:
       allOf:
         - type: object
@@ -2347,6 +2517,20 @@ components:
                     type: string
                   location:
                     type: object
+                  locationColors:
+                    type: array
+                    items:
+                      type: string
+                  locationTitles:
+                    type: array
+                    items:
+                      type: string
+                  locationLinks:
+                    type: array
+                    items:
+                      type: string
+                  eventName:
+                    type: string
     PUTImportComputateEventResponse:
       allOf:
         - type: object
@@ -2355,6 +2539,20 @@ components:
                     type: string
                   location:
                     type: object
+                  locationColors:
+                    type: array
+                    items:
+                      type: string
+                  locationTitles:
+                    type: array
+                    items:
+                      type: string
+                  locationLinks:
+                    type: array
+                    items:
+                      type: string
+                  eventName:
+                    type: string
     GETComputateEventResponse:
       allOf:
         - type: object
@@ -2363,6 +2561,20 @@ components:
               type: string
             location:
               type: object
+            locationColors:
+              type: array
+              items:
+                type: string
+            locationTitles:
+              type: array
+              items:
+                type: string
+            locationLinks:
+              type: array
+              items:
+                type: string
+            eventName:
+              type: string
     SearchPageComputateEventResponse:
       allOf:
         - type: string

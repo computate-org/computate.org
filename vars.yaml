@@ -173,7 +173,7 @@ TEMPLATE_PATH: "{{ SITE_SRC }}/src/main/resources/templates"
 DYNAMIC_PAGE_PATHS:
   - "enUS/article"
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
-FONTAWESOME_KIT: 
+FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
 # Site default theme, light or dark. 
 SITE_THEME: dark
 
@@ -347,6 +347,10 @@ OPERATOR_SYSTEM_DEPENDENCY_LIST: "{{ OPERATOR_REDHAT_DEPENDENCY_LIST if ansible_
 ENABLE_FIWARE: false
 # FIWARE Smart Data Model source code directory. 
 SMART_DATA_MODELS_SRC: "{{ (SITE_SRC + '/../smart-data-models') | realpath }}"
+# Map default latitude,longitude. 
+DEFAULT_MAP_LOCATION: "55.63379,13.49261"
+# Map default zoom level. 
+DEFAULT_MAP_ZOOM: "17"
 
 ##############
 # Kafka vars #
