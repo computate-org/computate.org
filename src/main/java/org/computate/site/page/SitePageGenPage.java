@@ -499,7 +499,7 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _pageDescription(Wrap<String> c) {
-			c.o("An article in the site. ");
+			c.o("Read the latest computate articles to learn more. ");
 	}
 
 	@Override

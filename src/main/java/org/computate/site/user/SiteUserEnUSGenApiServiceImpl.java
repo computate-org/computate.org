@@ -1616,11 +1616,16 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.setSearchListSiteUser_(listSiteUser);
 			page.setSiteRequest_(siteRequest);
 			page.promiseDeepSiteUserPage(siteRequest).onSuccess(a -> {
-				JsonObject ctx = ComputateConfigKeys.getPageContext(config);
-				ctx.mergeIn(JsonObject.mapFrom(page));
-				String renderedTemplate = jinjava.render(template, ctx.getMap());
-				Buffer buffer = Buffer.buffer(renderedTemplate);
-				promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200SearchPageSiteUser failed. "), ex);
+					promise.fail(ex);
+				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});

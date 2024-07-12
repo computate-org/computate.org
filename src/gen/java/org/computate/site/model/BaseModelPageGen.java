@@ -129,11 +129,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseBaseModelPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
+			promise.complete();
 		}).onFailure(ex -> {
 			promise.fail(ex);
 		});
@@ -157,7 +153,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepBaseModelPage(siteRequest_);
 	}
 
@@ -166,7 +162,6 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	/////////////////
 
 	public void siteRequestBaseModelPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -177,7 +172,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	// obtain //
 	/////////////
 
-	@Override public Object obtainForClass(String var) {
+	public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -198,7 +193,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		BaseModelPage oBaseModelPage = (BaseModelPage)this;
 		switch(var) {
 			default:
-				return super.obtainBaseModelGenPage(var);
+				return null;
 		}
 	}
 
@@ -206,7 +201,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	// relate //
 	///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
+	public boolean relateForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -223,7 +218,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		BaseModelPage oBaseModelPage = (BaseModelPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelGenPage(var, val);
+				return null;
 		}
 	}
 
@@ -237,7 +232,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	public static Object staticSetBaseModelPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSetBaseModelGenPage(entityVar,  siteRequest_, o);
+				return null;
 		}
 	}
 
@@ -251,7 +246,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	public static Object staticSearchBaseModelPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchBaseModelGenPage(entityVar,  siteRequest_, o);
+				return null;
 		}
 	}
 
@@ -265,7 +260,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	public static String staticSearchStrBaseModelPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchStrBaseModelGenPage(entityVar,  siteRequest_, o);
+				return null;
 		}
 	}
 
@@ -279,7 +274,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	public static String staticSearchFqBaseModelPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchFqBaseModelGenPage(entityVar,  siteRequest_, o);
+				return null;
 		}
 	}
 
@@ -289,7 +284,6 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
 		return sb.toString();
 	}
 
@@ -302,7 +296,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	public static String displayNameBaseModelPage(String var) {
 		switch(var) {
 		default:
-			return BaseModelGenPage.displayNameBaseModelGenPage(var);
+			return null;
 		}
 	}
 }

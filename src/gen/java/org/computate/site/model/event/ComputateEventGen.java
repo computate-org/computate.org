@@ -195,7 +195,7 @@ import org.computate.search.response.solr.SolrResponse;
 public abstract class ComputateEventGen<DEV> extends BaseModel {
 	protected static final Logger LOG = LoggerFactory.getLogger(ComputateEvent.class);
 
-	public static final String ComputateEvent_Description_enUS = "An event";
+	public static final String ComputateEvent_Description_enUS = "See the upcoming computate in-person and online events";
 	public static final String ComputateEvent_AName_enUS = "an event";
 	public static final String ComputateEvent_This_enUS = "this ";
 	public static final String ComputateEvent_ThisName_enUS = "this event";

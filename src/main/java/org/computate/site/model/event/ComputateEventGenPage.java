@@ -504,7 +504,7 @@ public class ComputateEventGenPage extends ComputateEventGenPageGen<BaseModelPag
 
 	@Override
 	protected void _pageDescription(Wrap<String> c) {
-			c.o("An event");
+			c.o("See the upcoming computate in-person and online events");
 	}
 
 	@Override

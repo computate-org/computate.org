@@ -16,7 +16,7 @@ import io.vertx.pgclient.data.Point;
  * Page: true
  * SuperPage.enUS: BaseModelPage
  * Indexed: true
- * Description: An event
+ * Description: See the upcoming computate in-person and online events
  * 
  * ApiTag:  Computate Event
  * ApiUri: /api/event

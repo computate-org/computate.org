@@ -1250,17 +1250,16 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.setSearchListSitePage_(listSitePage);
 			page.setSiteRequest_(siteRequest);
 			page.promiseDeepSitePagePage(siteRequest).onSuccess(a -> {
-				JsonObject ctx = JsonObject.mapFrom(page);
-				ctx.put(ConfigKeys.STATIC_BASE_URL, config.getString(ConfigKeys.STATIC_BASE_URL));
-				ctx.put(ConfigKeys.GITHUB_ORG, config.getString(ConfigKeys.GITHUB_ORG));
-				ctx.put(ConfigKeys.SITE_NAME, config.getString(ConfigKeys.SITE_NAME));
-				ctx.put(ConfigKeys.SITE_DISPLAY_NAME, config.getString(ConfigKeys.SITE_DISPLAY_NAME));
-				ctx.put(ConfigKeys.SITE_POWERED_BY_URL, config.getString(ConfigKeys.SITE_POWERED_BY_URL));
-				ctx.put(ConfigKeys.SITE_POWERED_BY_NAME, config.getString(ConfigKeys.SITE_POWERED_BY_NAME));
-				ctx.put(ConfigKeys.SITE_POWERED_BY_IMAGE_URI, config.getString(ConfigKeys.SITE_POWERED_BY_IMAGE_URI));
-				String renderedTemplate = jinjava.render(template, ctx.getMap());
-				Buffer buffer = Buffer.buffer(renderedTemplate);
-				promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200SearchPageSitePage failed. "), ex);
+					promise.fail(ex);
+				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});

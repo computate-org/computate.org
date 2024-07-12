@@ -162,35 +162,24 @@
 								<span class=""></span>
 							</a>
 						</h1>
+						{{ htmSearchButtonsBaseModelPage() }}
 						<div id="site-calendar-box">
 							<div id="site-calendar"><!-- // --></div>
 						</div>
 						<div class="">
 							<div>
-								{% if pagination.pagePrevious is defined %}
-									<a href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}">
-										<i class="fas fa-arrow-square-left "></i>
-									</a>
-								{% else %}
-									<i class="fas fa-arrow-square-left w3-opacity "></i>
-								{% endif %}
-								{% if pagination.rowsPrevious >= pagination['1L'] %}
-									<a href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}">
-										<i class="fas fa-minus-square "></i>
-									</a>
-								{% else %}
-									<i class="fas fa-minus-square w3-opacity "></i>
-								{% endif %}
-								<a href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-									<i class="fas fa-plus-square "></i>
-								</a>
-								{% if pagination.pageNext is defined %}
-									<a href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}">
-										<i class="fas fa-arrow-square-right "></i>
-									</a>
-								{% else %}
-									<i class="fas fa-arrow-square-right w3-opacity "></i>
-								{% endif %}
+									<sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+										<i slot="prefix" class="fas fa-arrow-square-left "></i>
+									</sl-button>
+									<sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+										<i slot="prefix" class="fas fa-minus-square "></i>
+									</sl-button>
+<sl-tooltip placement="top" content="Double the number of null shown">									<sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+									<i slot="prefix" class="fas fa-plus-square "></i>
+								</sl-button>
+									<sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+										<i slot="prefix" class="fas fa-arrow-square-right "></i>
+									</sl-button>
 								<span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
 							</div>
 							<div class="w3-responsive ">
@@ -233,6 +222,9 @@
 							</div>
 						</div>
 						{%- endmacro htmBodyAllBaseModelPage() %}
+{%- macro htmSearchButtonsBaseModelPage() %}
+			<div><sl-tooltip placement="top" content="Advanced search for "><sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> Search</sl-button></sl-tooltip><sl-tooltip placement="top" content="Filters and facet counts for "><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> Filters</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for "><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> Range</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for "><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> Pivot</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for "><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> FieldList</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for "><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> Stats</sl-button></sl-tooltip><sl-tooltip placement="top" content="Query the JSON REST API for "><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> Api</sl-button></sl-tooltip></div>
+{%- endmacro htmSearchButtonsBaseModelPage() %}
 
 		{%- block htmBodyStartPageLayout %}
 		{{ super() }}
@@ -244,17 +236,8 @@
 		{%- block htmBodyMiddleBaseModelPage %}
 		<div class="w3-bar w3-content ">
 			{%- block htmBodySidebarBaseModelPage %}
-			<div class="w3-dropdown-click w3-bar-block min-width-300px ">
-				<sl-button-group label="Search">
-					<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> Search</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> Filters</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> Range</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> Pivot</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> FieldList</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> Stats</sl-button>
-					<sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> Api</sl-button>
-				</sl-button-group>
-				<div class=" ">
+			<div>
+				<div>
 					<sl-drawer placement="end" id="siteSidebarToggleSearch">
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
@@ -560,6 +543,7 @@
 						<span class=""></span>
 					</a>
 				</h1>
+				{{ htmSearchButtonsBaseModelPage() }}
 				<h2>
 					<span class="w3-bar-item w3-padding w3-center w3-block w3-">
 						{% if classIconCssClasses is defined %}
@@ -579,6 +563,7 @@
 								<span class=""></span>
 							</a>
 						</h1>
+						{{ htmSearchButtonsBaseModelPage() }}
 						<h2 class="w3-center ">
 							<span class="w3-bar-item w3-padding w3-center w3-block w3-">
 								<span class="">{{baseModel_.objectTitle}}</span>

@@ -54,7 +54,9 @@
         <a id="img-keys-a" href="/">
           <img id="img-keys-img" src="https://computate.neocities.org/svg/computate-keys.svg"/>
         </a>
-        <sl-icon-button id="sidebar-close-button" library="fa" name="fas-xmark" label="Close" data-drawer="close" class="hide-desktop"></sl-icon-button>
+        <sl-button id="sidebar-close-button" label="Close" data-drawer="close" class="hide-desktop">
+          <i slot="prefix" class="fas fa-xmark"></i>
+        </sl-button>
         <ul>
           <li>
             <a href="{{ SITE_BASE_URL }}">home</a>
@@ -81,36 +83,66 @@
             <a href="/">websites</a>
           </li>
         </ul>
+        <sl-separator></sl-separator>
+        <ul>
+          <li>
+            <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
+              <sl-button href="http://localhost:10200/event">
+                <i slot="prefix" class="fad fa-map-location-dot "></i>
+                events
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="Read the latest computate articles to learn more. ">
+              <sl-button href="http://localhost:10200/page">
+                <i slot="prefix" class="fad fa-newspaper "></i>
+                articles
+              </sl-button>
+            </sl-tooltip>
+          </li>
+        </ul>
+        <sl-divider></sl-divider>
+        <ul>
 {% if userKey is defined %}
-        <sl-dropdown id="user-dropdown">
-          <sl-button slot="trigger" caret variant="brand">
-            <sl-icon slot="prefix" name="house-user" variant="duotone"></sl-icon>
-            <span>{{userName}}</span>
-          </sl-button>
-          <sl-menu>
-            <sl-menu-item type="checkbox" value="light">
-              <sl-button variant="brand" href="/user/{{ userKey }}">
-                <sl-icon slot="prefix" name="house-user" variant="duotone"></sl-icon>
-                <span>my user page</span>
+          <li>
+            <sl-tooltip placement="right" content="Update your user profile, or log out of the site. ">
+            <sl-dropdown>
+              <sl-button slot="trigger" caret>
+                <i slot="prefix" class="fad fa-user"></i>
+                user: {{userName}}
               </sl-button>
-            </sl-menu-item>
-            <sl-menu-item type="checkbox" value="dark">
-              <sl-button variant="brand" href="{{ logoutUrl }}">
-                <sl-icon slot="prefix" name="sign-out-alt" variant="duotone"></sl-icon>
-                <span>sign out</span>
-              </sl-button>
-            </sl-menu-item>
-          </sl-menu>
-        </sl-dropdown>
+              <sl-menu>
+                <sl-menu-item>{{ userFullName }}</sl-menu-item>
+                <sl-menu-item>{{ userEmail }}</sl-menu-item>
+                <sl-menu-item>
+                  <sl-button variant="brand" href="/user/{{ userKey }}">
+                    <i slot="prefix" class="fad fa-house-user"></i>
+                    <span>my user page</span>
+                  </sl-button>
+                </sl-menu-item>
+                <sl-menu-item>
+                  <sl-button variant="brand" href="{{ logoutUrl }}">
+                    <i slot="prefix" class="fad fa-sign-out-alt"></i>
+                    <span>sign out</span>
+                  </sl-button>
+                </sl-menu-item>
+              </sl-menu>
+            </sl-dropdown>
+            </sl-tooltip>
+          </li>
 {% else %}
         <sl-button href="{{ SITE_BASE_URL }}/user">
           <i class="fad fa-house-user "></i> login
         </sl-button>
 {% endif %}
+        </ul>
       </aside>
       <main class="float-left ">
         <header id="top-bar">
-          <sl-icon-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text" size="small" library="fa" name="fas-bars"></sl-icon-button>
+          <sl-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text">
+            <i slot="prefix" class="fas fa-bars"></i>
+          </sl-button>
           <sl-input placeholder="search">
             <sl-icon library="fa" name="fas-magnifying-glass" slot="prefix"></sl-icon>
           </sl-input>
@@ -123,6 +155,8 @@
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
       </main>
+      <sl-drawer label="Drawer" placement="end" id="search-drawer">
+      </sl-drawer>
       {% if GITHUB_ORG is defined %}
         <footer id="footer-open-source" class="display-flex-center ">
           <sl-icon library="fa" name="fab-square-github" family="brands"></sl-icon>
