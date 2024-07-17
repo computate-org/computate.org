@@ -127,11 +127,11 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>By adding a class comment "{@inheritDoc}", the ComputateEvent class will inherit the helpful inherited class comments from the super class ComputateEventGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 1</h2>
- * <p>This class contains a comment <b>"Order: 1"</b>, which means this class will be sorted by the given number 1 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 2</h2>
+ * <p>This class contains a comment <b>"Order: 2"</b>, which means this class will be sorted by the given number 2 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 1</h2>
- * <p>This class contains a comment <b>"SqlOrder: 1"</b>, which means this class will be sorted by the given number 1 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 2</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 2"</b>, which means this class will be sorted by the given number 2 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -201,8 +201,8 @@ public abstract class ComputateEventGen<DEV> extends BaseModel {
 	public static final String ComputateEvent_ThisName_enUS = "this event";
 	public static final String ComputateEvent_A_enUS = "a ";
 	public static final String ComputateEvent_TheName_enUS = "theevent";
-	public static final String ComputateEvent_NameSingular_enUS = "event";
-	public static final String ComputateEvent_NamePlural_enUS = "events";
+	public static final String ComputateEvent_SingularName_enUS = "event";
+	public static final String ComputateEvent_PluralName_enUS = "events";
 	public static final String ComputateEvent_NameActual_enUS = "current event";
 	public static final String ComputateEvent_AllName_enUS = "all the events";
 	public static final String ComputateEvent_SearchAllNameBy_enUS = "search events by ";

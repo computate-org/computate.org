@@ -189,7 +189,7 @@ import io.vertx.core.json.JsonObject;
 public abstract class SitePageGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(SitePage.class);
 
-	public static final String SitePage_Description_enUS = "Read the latest computate articles to learn more. ";
+	public static final String SitePage_Description_enUS = "Read the latest computate articles to learn more";
 	public static final String SitePage_AName_enUS = "an article";
 	public static final String SitePage_This_enUS = "this ";
 	public static final String SitePage_ThisName_enUS = "this article";

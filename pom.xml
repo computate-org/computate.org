@@ -569,6 +569,7 @@
 		<profile>
 			<id>deploy</id>
 			<build>
+				<defaultGoal>install</defaultGoal>
 				<plugins>
 					<!-- Source plugin -->
 					<plugin>

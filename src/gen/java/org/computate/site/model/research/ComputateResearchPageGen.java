@@ -1,7 +1,7 @@
-package org.computate.site.model;
+package org.computate.site.model.research;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelGenPage;
+import org.computate.site.model.research.ComputateResearchGenPage;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -41,23 +41,23 @@ import io.vertx.core.json.JsonArray;
 /**
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
- * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these BaseModelPage objects in a RESTful API. 
- * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class BaseModelPageGen into the class BaseModelPage. 
+ * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these ComputateResearchPage objects in a RESTful API. 
+ * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class ComputateResearchPageGen into the class ComputateResearchPage. 
  * </li>
- * <h3>About the BaseModelPage class and it's generated class BaseModelPageGen&lt;BaseModelGenPage&gt;: </h3>extends BaseModelPageGen
+ * <h3>About the ComputateResearchPage class and it's generated class ComputateResearchPageGen&lt;ComputateResearchGenPage&gt;: </h3>extends ComputateResearchPageGen
  * <p>
- * This Java class extends a generated Java class BaseModelPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
+ * This Java class extends a generated Java class ComputateResearchPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelPage">Find the class BaseModelPage in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.ComputateResearchPage">Find the class ComputateResearchPage in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends BaseModelPageGen<BaseModelGenPage>
- * <p>This <code>class BaseModelPage extends BaseModelPageGen&lt;BaseModelGenPage&gt;</code>, which means it extends a newly generated BaseModelPageGen. 
- * The generated <code>class BaseModelPageGen extends BaseModelGenPage</code> which means that BaseModelPage extends BaseModelPageGen which extends BaseModelGenPage. 
+ * extends ComputateResearchPageGen<ComputateResearchGenPage>
+ * <p>This <code>class ComputateResearchPage extends ComputateResearchPageGen&lt;ComputateResearchGenPage&gt;</code>, which means it extends a newly generated ComputateResearchPageGen. 
+ * The generated <code>class ComputateResearchPageGen extends ComputateResearchGenPage</code> which means that ComputateResearchPage extends ComputateResearchPageGen which extends ComputateResearchGenPage. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -68,7 +68,7 @@ import io.vertx.core.json.JsonArray;
  * <h2>IconName: null</h2>
  * <h2>Indexed: true</h2>
  * <h2>{@inheritDoc}</h2>
- * <p>By adding a class comment "{@inheritDoc}", the BaseModelPage class will inherit the helpful inherited class comments from the super class BaseModelPageGen. 
+ * <p>By adding a class comment "{@inheritDoc}", the ComputateResearchPage class will inherit the helpful inherited class comments from the super class ComputateResearchPageGen. 
  * </p>
  * <h2>Rows: null</h2>
  * <h2>Model: true</h2>
@@ -78,7 +78,7 @@ import io.vertx.core.json.JsonArray;
  * <p>
  *   This class contains a comment <b>"Promise: true"</b>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
- *   This means that the BaseModelPage Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
+ *   This means that the ComputateResearchPage Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
  * <p>
  *   Adding protected void methods beginning with an underscore with a Promise as the only parameter will automatically set `Promise: true`. 
@@ -99,12 +99,12 @@ import io.vertx.core.json.JsonArray;
  * </p>
  * <h2>AName.enUS: null</h2>
  * <p>
- * Delete the class BaseModelPage in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelPage&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * Delete the class ComputateResearchPage in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.ComputateResearchPage&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
  * </p>
  * <p>
- * Delete  the package org.computate.site.model in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * Delete  the package org.computate.site.model.research in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.research&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
@@ -112,24 +112,24 @@ import io.vertx.core.json.JsonArray;
  * </p>
  * Generated: true
  **/
-public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(BaseModelPage.class);
+public abstract class ComputateResearchPageGen<DEV> extends ComputateResearchGenPage {
+	protected static final Logger LOG = LoggerFactory.getLogger(ComputateResearchPage.class);
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepBaseModelPage(SiteRequest siteRequest_) {
+	public Future<Void> promiseDeepComputateResearchPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		return promiseDeepBaseModelPage();
+		return promiseDeepComputateResearchPage();
 	}
 
-	public Future<Void> promiseDeepBaseModelPage() {
+	public Future<Void> promiseDeepComputateResearchPage() {
 		Promise<Void> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
-		promiseBaseModelPage(promise2);
+		promiseComputateResearchPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelGenPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepComputateResearchGenPage(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -140,7 +140,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		return promise.future();
 	}
 
-	public Future<Void> promiseBaseModelPage(Promise<Void> promise) {
+	public Future<Void> promiseComputateResearchPage(Promise<Void> promise) {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
@@ -158,19 +158,19 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	}
 
 	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepBaseModelPage(siteRequest_);
+		return promiseDeepComputateResearchPage(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestBaseModelPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelGenPage(siteRequest_);
+	public void siteRequestComputateResearchPage(SiteRequest siteRequest_) {
+			super.siteRequestComputateResearchGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestBaseModelPage(siteRequest_);
+		siteRequestComputateResearchPage(siteRequest_);
 	}
 
 	/////////////
@@ -182,7 +182,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainBaseModelPage(v);
+				o = obtainComputateResearchPage(v);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.obtainForClass(v);
@@ -194,11 +194,11 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		}
 		return o;
 	}
-	public Object obtainBaseModelPage(String var) {
-		BaseModelPage oBaseModelPage = (BaseModelPage)this;
+	public Object obtainComputateResearchPage(String var) {
+		ComputateResearchPage oComputateResearchPage = (ComputateResearchPage)this;
 		switch(var) {
 			default:
-				return super.obtainBaseModelGenPage(var);
+				return super.obtainComputateResearchGenPage(var);
 		}
 	}
 
@@ -211,7 +211,7 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = relateBaseModelPage(v, val);
+				o = relateComputateResearchPage(v, val);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.relateForClass(v, val);
@@ -219,11 +219,11 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		}
 		return o != null;
 	}
-	public Object relateBaseModelPage(String var, Object val) {
-		BaseModelPage oBaseModelPage = (BaseModelPage)this;
+	public Object relateComputateResearchPage(String var, Object val) {
+		ComputateResearchPage oComputateResearchPage = (ComputateResearchPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelGenPage(var, val);
+				return super.relateComputateResearchGenPage(var, val);
 		}
 	}
 
@@ -232,12 +232,12 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	///////////////
 
 	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetBaseModelPage(entityVar,  siteRequest_, o);
+		return staticSetComputateResearchPage(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSetBaseModelPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetComputateResearchPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSetBaseModelGenPage(entityVar,  siteRequest_, o);
+				return ComputateResearchGenPage.staticSetComputateResearchGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -246,12 +246,12 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	////////////////
 
 	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+		return staticSearchComputateResearchPage(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSearchBaseModelPage(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static Object staticSearchComputateResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchBaseModelGenPage(entityVar,  siteRequest_, o);
+				return ComputateResearchGenPage.staticSearchComputateResearchGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -260,12 +260,12 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	///////////////////
 
 	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+		return staticSearchStrComputateResearchPage(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchStrBaseModelPage(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static String staticSearchStrComputateResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchStrBaseModelGenPage(entityVar,  siteRequest_, o);
+				return ComputateResearchGenPage.staticSearchStrComputateResearchGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -274,12 +274,12 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 	//////////////////
 
 	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+		return staticSearchFqComputateResearchPage(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchFqBaseModelPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static String staticSearchFqComputateResearchPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return BaseModelGenPage.staticSearchFqBaseModelGenPage(entityVar,  siteRequest_, o);
+				return ComputateResearchGenPage.staticSearchFqComputateResearchGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -293,16 +293,16 @@ public abstract class BaseModelPageGen<DEV> extends BaseModelGenPage {
 		return sb.toString();
 	}
 
-	public static final String CLASS_SIMPLE_NAME = "BaseModelPage";
+	public static final String CLASS_SIMPLE_NAME = "ComputateResearchPage";
 
 
 	public static String displayNameForClass(String var) {
-		return BaseModelPage.displayNameBaseModelPage(var);
+		return ComputateResearchPage.displayNameComputateResearchPage(var);
 	}
-	public static String displayNameBaseModelPage(String var) {
+	public static String displayNameComputateResearchPage(String var) {
 		switch(var) {
 		default:
-			return BaseModelGenPage.displayNameBaseModelGenPage(var);
+			return ComputateResearchGenPage.displayNameComputateResearchGenPage(var);
 		}
 	}
 }

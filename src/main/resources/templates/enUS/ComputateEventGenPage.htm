@@ -5,6 +5,10 @@
 		<title>{% if searchListComputateEvent_ is defined %}{% if computateEventCount == int1 %}{% if id is defined %}event{% else %}event{% endif %}{% else %}no event found{% endif %}{% else %}events{% endif %}</title>
 {%- endblock htmTitleComputateEventPage %}
 {%- endblock htmTitleBaseModelPage %}
+{%- block htmStylesBaseModelPage %}
+{%- block htmStylesComputateEventPage %}{%- endblock htmStylesComputateEventPage %}{%- block htmStylesBaseModelPage %}
+{%- block htmStyleBaseModelPage %}
+{%- block htmStyleComputateEventPage %}{%- endblock htmStyleComputateEventPage %}{%- block htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
 {{ super() }}
@@ -43,6 +47,168 @@
 				var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 				if(pk != null) {
 					window.computateEvent = JSON.parse(document.querySelector('.pageForm .computateEvent')?.value);
+				{% if pk is defined %}
+					// PATCH created
+					document.querySelector('#Page_created')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_created');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setCreated', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_created')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_created')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_created');
+						const valid = form.reportValidity();
+					});
+					// PATCH archived
+					document.querySelector('#Page_archived')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_archived');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setArchived', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_archived')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_archived')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_archived');
+						const valid = form.reportValidity();
+					});
+					// PATCH deleted
+					document.querySelector('#Page_deleted')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_deleted');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setDeleted', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_deleted')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_deleted')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_deleted');
+						const valid = form.reportValidity();
+					});
+					// PATCH location
+					document.querySelector('#Page_location')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_location');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setLocation', event.currentTarget.value == '' ? null : JSON.parse(event.currentTarget.value)
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_location')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_location')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_location');
+						const valid = form.reportValidity();
+					});
+					// PATCH eventName
+					document.querySelector('#Page_eventName')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_eventName');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setEventName', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_eventName')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_eventName')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_eventName');
+						const valid = form.reportValidity();
+					});
+					// PATCH inheritPk
+					document.querySelector('#Page_inheritPk')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_inheritPk');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setInheritPk', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_inheritPk')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_inheritPk')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_inheritPk');
+						const valid = form.reportValidity();
+					});
+					// PATCH sessionId
+					document.querySelector('#Page_sessionId')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_sessionId');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setSessionId', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_sessionId')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_sessionId')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_sessionId');
+						const valid = form.reportValidity();
+					});
+					// PATCH userKey
+					document.querySelector('#Page_userKey')?.addEventListener('sl-change', (event) => {
+						const form = document.querySelector('#PageForm_userKey');
+						const valid = form.checkValidity();
+						if(valid) {
+							patchComputateEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+									, 'setUserKey', event.currentTarget.value
+									, event.currentTarget
+									, function(response, target) { addGlow(target); }
+									, function(response, target) { addError(target); }
+									);
+						}
+					});
+					document.querySelector('#Page_userKey')?.addEventListener('sl-focus', (event) => {
+						removeGlow(event.currentTarget);
+					});
+					document.querySelector('#Page_userKey')?.addEventListener('sl-blur', (event) => {
+						const form = document.querySelector('#PageForm_userKey');
+						const valid = form.reportValidity();
+					});
+				{% endif %}
 				}
 				window.listComputateEvent = JSON.parse(document.querySelector('.pageForm .listComputateEvent')?.value);
 				window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
@@ -185,69 +351,57 @@
 
 {%- macro htmForm_patchComputateEvent() %}
 		<sl-dialog id="patchComputateEventModal" label="Modify event">
-			<form id="htmForm_patchComputateEvent">
 				<div>
 					<div class="" id="patchComputateEventFormValues">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
 {% if "PATCH" in scopes %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+{% endif %}
+{% endif %}
+{% if "PATCH" in scopes %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+{% else %}
+{% if "GET" scopes %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+{% else %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+{% endif %}
+{% endif %}
+{% if "PATCH" in scopes %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+{% else %}
+{% if "GET" scopes %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+{% else %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 							</div>
 						{{ htmFormButton_patchComputateEvent() }}
 					</div>
 				</div>
-			</form>
 		</sl-dialog>
 {%- endmacro %}
 
@@ -266,29 +420,26 @@
 
 {%- macro htmForm_postComputateEvent() %}
 		<sl-dialog id="postComputateEventModal" label="Create an event">
-			<form id="htmForm_postComputateEvent">
 				<div>
 						<div class="">You can override any default values below: </div>
 					<div class="" id="postComputateEventFormValues">
 						<div id="postComputateEventForm">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
 {% if "PATCH" in scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmLocationComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmLocationComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmLocationComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 							</div>
@@ -296,7 +447,6 @@
 						{{ htmFormButton_postComputateEvent() }}
 					</div>
 				</div>
-			</form>
 		</sl-dialog>
 {%- endmacro %}
 
@@ -315,7 +465,6 @@
 
 {%- macro htmForm_putimportComputateEvent() %}
 		<sl-dialog id="putimportComputateEventModal" label="Import events">
-			<form id="htmForm_putimportComputateEvent">
 				<div>
 					<div class="" id="putimportComputateEventFormValues">
 						<div class="w3-cell-row ">
@@ -328,7 +477,6 @@
 						{{ htmFormButton_putimportComputateEvent() }}
 					</div>
 				</div>
-			</form>
 		</sl-dialog>
 {%- endmacro %}
 
@@ -341,90 +489,79 @@
 
 {%- macro htmForm_searchpageComputateEvent() %}
 		<div id="searchpageComputateEventModal" label="Search events">
-			<form id="htmForm_searchpageComputateEvent">
 				<div>
 					<div class="" id="searchpageComputateEventFormValues">
 						<div id="searchpageComputateEventForm">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
 {% if "PATCH" in scopes %}
-{{ htmPkComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmPkComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmPkComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmPkComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmPkComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmPkComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmCreatedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmCreatedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmModifiedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmModifiedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmModifiedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmModifiedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmModifiedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmModifiedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmObjectIdComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmObjectIdComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmObjectIdComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmObjectIdComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmObjectIdComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmArchivedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmObjectIdComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmDeletedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmArchivedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 {% if "PATCH" in scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=true, roleForReadBool=true) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
 {% else %}
 {% if "GET" scopes %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=true) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
 {% else %}
-{{ htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=false) }}
+{{ htmDeletedComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+{% endif %}
+{% endif %}
+{% if "PATCH" in scopes %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+{% else %}
+{% if "GET" scopes %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+{% else %}
+{{ htmLocationComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+{% endif %}
+{% endif %}
+{% if "PATCH" in scopes %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+{% else %}
+{% if "GET" scopes %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+{% else %}
+{{ htmEventNameComputateEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
 {% endif %}
 {% endif %}
 							</div>
@@ -432,7 +569,6 @@
 						{{ htmFormButton_searchpageComputateEvent() }}
 					</div>
 				</div>
-			</form>
 		</div>
 {%- endmacro %}
 						{%- macro htmBodyAllComputateEventPage() %}
@@ -450,18 +586,26 @@
 						</div>
 						<div class="">
 							<div>
-									<sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-										<i slot="prefix" class="fas fa-arrow-square-left "></i>
-									</sl-button>
-									<sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-										<i slot="prefix" class="fas fa-minus-square "></i>
-									</sl-button>
-<sl-tooltip placement="top" content="Double the number of events shown">									<sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-									<i slot="prefix" class="fas fa-plus-square "></i>
-								</sl-button>
-									<sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-										<i slot="prefix" class="fas fa-arrow-square-right "></i>
-									</sl-button>
+									<sl-tooltip placement="top" content="Double the number of events shown">
+										<sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+											<i slot="prefix" class="fas fa-arrow-square-left "></i>
+										</sl-button>
+									</sl-tooltip>
+									<sl-tooltip placement="top" content="Double the number of events shown">
+										<sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+											<i slot="prefix" class="fas fa-minus-square "></i>
+										</sl-button>
+									</sl-tooltip>
+									<sl-tooltip placement="top" content="Double the number of events shown">
+										<sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+											<i slot="prefix" class="fas fa-plus-square "></i>
+										</sl-button>
+									</sl-tooltip>
+									<sl-tooltip placement="top" content="Double the number of events shown">
+										<sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+											<i slot="prefix" class="fas fa-arrow-square-right "></i>
+										</sl-button>
+									</sl-tooltip>
 								<span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
 							</div>
 							<div class="w3-responsive ">
@@ -476,14 +620,14 @@
 										{% for item in listComputateEvent%}
 											<tr>
 												<td>
-													<a href="item.{{pageUrlPk}}">
-														<span class="white-space-pre-wrap ">{{ siteZonedDateTimeFormat(item.created, "MMM d, yyyy h:mm:ss a", defaultLocaleId) }}</span>
+													<a href="{{ item.pageUrlPk }}">
+														<span class="white-space-pre-wrap "><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></span>
 													</a>
 												</td>
 												<td>
-													<a href="item.{{pageUrlPk}}">
+													<a href="{{ item.pageUrlPk }}">
 														<i class="fad fa-map-location-dot "></i>
-														<span class="white-space-pre-wrap ">item.{{objectTitle}}</span>
+														<span class="white-space-pre-wrap ">{{ item.objectTitle }}</span>
 													</a>
 												</td>
 											</tr>
@@ -643,7 +787,7 @@
 								</tr>
 								<tr class="">
 									<td class="" colspan="2">
-										<span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-ComputateEvent" value="{{ formatZonedDateTimeTz(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('ComputateEvent', this); "></sl-input></span>
+										<span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-ComputateEvent" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('ComputateEvent', this); "></sl-input></span>
 									</td>
 								</tr>
 								<tr class="">
@@ -653,7 +797,7 @@
 								</tr>
 								<tr class="">
 									<td class="" colspan="2">
-										<span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-ComputateEvent" value="{{ formatZonedDateTimeTz(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('ComputateEvent', this); "></sl-input></span>
+										<span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-ComputateEvent" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('ComputateEvent', this); "></sl-input></span>
 									</td>
 								</tr>
 							</table>
@@ -693,7 +837,7 @@
 								{% for key, value in varsFq.items() %}
 									<tr class="">
 										<td class="">
-											<span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotComputateEvent_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('ComputateEvent', value); ">{{ displayName }}</sl-checkbox>
+											<span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotComputateEvent_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('ComputateEvent', value); ">{{ displayName }}</sl-checkbox></span>
 										</td>
 										<td class="w3-cell ">
 											<label for="pageFacetPivotComputateEvent_{{ key }}">{{ displayName }}</label>
@@ -741,7 +885,6 @@
 						<div class="w3-bar w3- ">
 							<span class="w3-bar-item ">
 								<i class="fad fa-chart-candlestick "></i>								 Stats</span>
-							</span>
 						</div>
 						<div class="w3-bar-block ">
 							{%- block htmBodyStatsComputateEventPage %}
@@ -862,12 +1005,12 @@
 			{%- block htmFormComputateEventPage %}
 			<form action="/api/event" id="ComputateEventForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
 				{% if pk is defined %}
-					<sl-input name="pk" class="valuePk" type="hidden" value="{{pk}}"></sl-input>
+					<input name="pk" class="valuePk" type="hidden" value="{{pk}}"/>
 				{% endif %}
-				<sl-input name="focusId" type="hidden"></sl-input>
-				<sl-input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"></sl-input>
-				<sl-input name="computateEvent" id="computateEvent" class="computateEvent"  value='{{ toJsonObjectStringInApostrophes(computateEvent_) }}' type="hidden"></sl-input>
-				<sl-input name="listComputateEvent" id="listComputateEvent" class="listComputateEvent"  value='{{ toJsonArrayStringInApostrophes(listComputateEvent) }}' type="hidden"></sl-input>
+				<input name="focusId" type="hidden"/>
+				<input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+				<input name="computateEvent" id="computateEvent" class="computateEvent"  value='{{ toJsonObjectStringInApostrophes(computateEvent_) }}' type="hidden"/>
+				<input name="listComputateEvent" id="listComputateEvent" class="listComputateEvent"  value='{{ toJsonArrayStringInApostrophes(listComputateEvent) }}' type="hidden"/>
 			</form>
 			{% if id is defined %}
 				{{ htmButton_searchpageComputateEvent() }}
@@ -881,7 +1024,7 @@
 						<button
 								class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
 								id="refreshThisComputateEventGenPage"
-								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow(document.querySelector('#refreshThisComputateEventGenPage')); }, function() { addError(document.querySelector('#refreshThisComputateEventGenPage')); }); return false; ">
+								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisComputateEventGenPage')); }, function() { addError(document.querySelector('#refreshThisComputateEventGenPage')); }); return false; ">
 							<i class="fas fa-sync-alt "></i>
 							refresh this event
 						</button>
@@ -889,7 +1032,7 @@
 					{% if computateEventCount > 0 %}
 						<div class="">
 							<button id="refreshAllComputateEventGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-									onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow(document.querySelector('#refreshAllComputateEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllComputateEventGenPage{{id}}')); }); "
+									onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllComputateEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllComputateEventGenPage{{id}}')); }); "
 									>
 								<i class="fas fa-sync-alt "></i>
 								refresh all the events
@@ -973,108 +1116,51 @@
 				</div>
 				{%- endblock htmSuggestedComputateEventPage %}
 
-{%- macro inputPkComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputPkComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
 														<span id="{{classApiMethodMethod}}_pk" class="varComputateEvent{{pk}}Pk varComputateEventPk ">{{computateEvent_.pk}}</span>
 	{% endif %}
 {%- endmacro %}
 
-{% macro htmPkComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventPk">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_pk">primary key</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputPkComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmPkComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputPkComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputCreatedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputCreatedComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_created" class="varComputateEvent{{pk}}Created varComputateEventCreated " title="{{ formatZonedDateTimeTz(computateEvent_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTimeTz(computateEvent_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
+														<span id="{{classApiMethodMethod}}_created" class="varComputateEvent{{pk}}Created varComputateEventCreated " title="{{ formatZonedDateTime(computateEvent_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateEvent_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
 	{% endif %}
 {%- endmacro %}
 
-{% macro htmCreatedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventCreated">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_created">created</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputCreatedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmCreatedComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputCreatedComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputModifiedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputModifiedComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_modified" class="varComputateEvent{{pk}}Modified varComputateEventModified " title="{{ formatZonedDateTimeTz(computateEvent_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTimeTz(computateEvent_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
+														<span id="{{classApiMethodMethod}}_modified" class="varComputateEvent{{pk}}Modified varComputateEventModified " title="{{ formatZonedDateTime(computateEvent_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateEvent_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
 	{% endif %}
 {%- endmacro %}
 
-{% macro htmModifiedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventModified">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_modified">modified</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputModifiedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmModifiedComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputModifiedComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputObjectIdComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 	{% if 'Page' == classApiMethodMethod %}
 														<span id="{{classApiMethodMethod}}_objectId" class="varComputateEvent{{pk}}ObjectId varComputateEventObjectId ">{{computateEvent_.objectId}}</span>
 	{% endif %}
 {%- endmacro %}
 
-{% macro htmObjectIdComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventObjectId">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_objectId">ID</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputObjectIdComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmObjectIdComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputObjectIdComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputArchivedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputArchivedComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
+	{% if 'Page' == classApiMethodMethod %}
+															<form id="PageForm_archived">
+	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 															<sl-checkbox
 																id="{{classApiMethodMethod}}_archived"
@@ -1083,26 +1169,28 @@
 														<sl-select
 															id="{{classApiMethodMethod}}_archived"
 	{% endif %}
+																placeholder="archived"
+																help-text="For archiving this record"
 	{% if 'Page' == classApiMethodMethod %}
-															class="{{classApiMethodMethod}}_archived classComputateEvent inputComputateEvent{{pk}}Archived w3-input w3-border "
+															class="label-on-left {{classApiMethodMethod}}_archived classComputateEvent inputComputateEvent{{pk}}Archived "
 															name="setArchived"
 	{% else %}
 		{% if 'Page' == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_archived classComputateEvent inputComputateEvent{{pk}}Archived w3-input w3-border "
+																class="label-on-left {{classApiMethodMethod}}_archived classComputateEvent inputComputateEvent{{pk}}Archived "
 																name="setArchived"
 		{% else %}
-																class="{{classApiMethodMethod}}_archived setArchived valueArchived classComputateEvent inputComputateEvent{{pk}}Archived w3-input w3-border "
+																class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classComputateEvent inputComputateEvent{{pk}}Archived "
 																name="setArchived"
 		{% endif %}
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_archived')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_archived')); }); }"
+															onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', this.checked, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_archived')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_archived')); }); }"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 		{% if computateEvent_.archived is defined %}
 																checked="checked"
 		{% endif %}
-																></sl-checkbox>
+																>archived</sl-checkbox>
 	{% else %}
 															>
 															<sl-option value="" selected="selected"></sl-option>
@@ -1111,6 +1199,9 @@
 														</sl-select>
 	{% endif %}
 
+	{% if 'Page' == classApiMethodMethod %}
+															</form>
+	{% endif %}
 													{% else %}
 														{% if userKey in computateEvent_.userKeys %}
 															<span class="varComputateEvent{{pk}}Archived varComputateEventArchived ">{{computateEvent_.archived}}</span>
@@ -1120,27 +1211,15 @@
 		{% endif %}
 {%- endmacro %}
 
-{% macro htmArchivedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventArchived">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_archived">archived</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputArchivedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmArchivedComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputArchivedComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputDeletedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputDeletedComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
+	{% if 'Page' == classApiMethodMethod %}
+															<form id="PageForm_deleted">
+	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 															<sl-checkbox
 																id="{{classApiMethodMethod}}_deleted"
@@ -1149,26 +1228,28 @@
 														<sl-select
 															id="{{classApiMethodMethod}}_deleted"
 	{% endif %}
+																placeholder="deleted"
+																help-text="For deleting this record"
 	{% if 'Page' == classApiMethodMethod %}
-															class="{{classApiMethodMethod}}_deleted classComputateEvent inputComputateEvent{{pk}}Deleted w3-input w3-border "
+															class="label-on-left {{classApiMethodMethod}}_deleted classComputateEvent inputComputateEvent{{pk}}Deleted "
 															name="setDeleted"
 	{% else %}
 		{% if 'Page' == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_deleted classComputateEvent inputComputateEvent{{pk}}Deleted w3-input w3-border "
+																class="label-on-left {{classApiMethodMethod}}_deleted classComputateEvent inputComputateEvent{{pk}}Deleted "
 																name="setDeleted"
 		{% else %}
-																class="{{classApiMethodMethod}}_deleted setDeleted valueDeleted classComputateEvent inputComputateEvent{{pk}}Deleted w3-input w3-border "
+																class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classComputateEvent inputComputateEvent{{pk}}Deleted "
 																name="setDeleted"
 		{% endif %}
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_deleted')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_deleted')); }); }"
+															onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', this.checked, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_deleted')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_deleted')); }); }"
 	{% endif %}
 	{% if 'Page' == classApiMethodMethod %}
 		{% if computateEvent_.deleted is defined %}
 																checked="checked"
 		{% endif %}
-																></sl-checkbox>
+																>deleted</sl-checkbox>
 	{% else %}
 															>
 															<sl-option value="" selected="selected"></sl-option>
@@ -1177,6 +1258,9 @@
 														</sl-select>
 	{% endif %}
 
+	{% if 'Page' == classApiMethodMethod %}
+															</form>
+	{% endif %}
 													{% else %}
 														{% if userKey in computateEvent_.userKeys %}
 															<span class="varComputateEvent{{pk}}Deleted varComputateEventDeleted ">{{computateEvent_.deleted}}</span>
@@ -1186,52 +1270,42 @@
 		{% endif %}
 {%- endmacro %}
 
-{% macro htmDeletedComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventDeleted">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_deleted">deleted</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputDeletedComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmDeletedComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputDeletedComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputLocationComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputLocationComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
+	{% if 'Page' == classApiMethodMethod %}
+															<form id="PageForm_location">
+	{% endif %}
 														<sl-input
+															clearable
 															type="text"
 															placeholder="map location"
+															label="map location"
 															id="{{classApiMethodMethod}}_location"
 	{% if "Page" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_location setLocation classComputateEvent inputComputateEvent{{pk}}Location w3-input w3-border "
-																name="setLocation"
+															data-pk="{{ pk }}"
+															class="label-on-left {{classApiMethodMethod}}_location setLocation classComputateEvent inputComputateEvent{{pk}}Location "
+															name="setLocation"
 	{% else %}
 		{% if "PATCH" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_location setLocation classComputateEvent inputComputateEvent{{pk}}Location w3-input w3-border "
-																name="setLocation"
+															class="label-on-left {{classApiMethodMethod}}_location setLocation classComputateEvent inputComputateEvent{{pk}}Location "
+															name="setLocation"
 		{% else %}
-																class="{{classApiMethodMethod}}_location valueLocation w3-input w3-border classComputateEvent inputComputateEvent{{pk}}Location w3-input w3-border "
-																name="location"
+															class="label-on-left {{classApiMethodMethod}}_location valueLocation w3-input w3-border classComputateEvent inputComputateEvent{{pk}}Location "
+															name="location"
 		{% endif %}
-	{% endif %}
-	{% if "Page" == classApiMethodMethod %}
-																onclick="removeGlow(this); "
-																onchange="patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setLocation', this.value == '' ? null : JSON.parse(this.value), function() { addGlow(document.querySelector('#{{classApiMethodMethod}}_location')); }, function() { addError(document.querySelector('#{{classApiMethodMethod}}_location')); }); "
 	{% endif %}
 	{% if "Page" == classApiMethodMethod %}
 															value="{{toJsonObjectString computateEvent_.location}}"
 	{% endif %}
 														></sl-input>
 
+	{% if 'Page' == classApiMethodMethod %}
+															</form>
+	{% endif %}
 													{% else %}
 														{% if userKey in computateEvent_.userKeys %}
 															<span class="varComputateEvent{{pk}}Location varComputateEventLocation ">{{computateEvent_.location}}</span>
@@ -1241,52 +1315,44 @@
 		{% endif %}
 {%- endmacro %}
 
-{% macro htmLocationComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventLocation">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_location">map location</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputLocationComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmLocationComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputLocationComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputEventNameComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputEventNameComputateEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
 		{% if roleForWriteBool == true %}
+	{% if 'Page' == classApiMethodMethod %}
+															<form id="PageForm_eventName">
+	{% endif %}
 														<sl-input
+															clearable
 															type="text"
 															placeholder="event name"
-															title="The event name. "															id="{{classApiMethodMethod}}_eventName"
+															label="event name"
+															help-text="
+The event name. "
+															id="{{classApiMethodMethod}}_eventName"
 	{% if "Page" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_eventName setEventName classComputateEvent inputComputateEvent{{pk}}EventName w3-input w3-border "
-																name="setEventName"
+															data-pk="{{ pk }}"
+															class="label-on-left {{classApiMethodMethod}}_eventName setEventName classComputateEvent inputComputateEvent{{pk}}EventName "
+															name="setEventName"
 	{% else %}
 		{% if "PATCH" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_eventName setEventName classComputateEvent inputComputateEvent{{pk}}EventName w3-input w3-border "
-																name="setEventName"
+															class="label-on-left {{classApiMethodMethod}}_eventName setEventName classComputateEvent inputComputateEvent{{pk}}EventName "
+															name="setEventName"
 		{% else %}
-																class="{{classApiMethodMethod}}_eventName valueEventName w3-input w3-border classComputateEvent inputComputateEvent{{pk}}EventName w3-input w3-border "
-																name="eventName"
+															class="label-on-left {{classApiMethodMethod}}_eventName valueEventName w3-input w3-border classComputateEvent inputComputateEvent{{pk}}EventName "
+															name="eventName"
 		{% endif %}
-	{% endif %}
-	{% if "Page" == classApiMethodMethod %}
-																onclick="removeGlow(this); "
-																onchange="patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setEventName', this.value, function() { addGlow(document.querySelector('#{{classApiMethodMethod}}_eventName')); }, function() { addError(document.querySelector('#{{classApiMethodMethod}}_eventName')); }); "
 	{% endif %}
 	{% if "Page" == classApiMethodMethod %}
 															value="{{computateEvent_.eventName}}"
 	{% endif %}
 														></sl-input>
 
+	{% if 'Page' == classApiMethodMethod %}
+															</form>
+	{% endif %}
 													{% else %}
 														{% if userKey in computateEvent_.userKeys %}
 															<span class="varComputateEvent{{pk}}EventName varComputateEventEventName ">{{computateEvent_.eventName}}</span>
@@ -1296,21 +1362,6 @@
 		{% endif %}
 {%- endmacro %}
 
-{% macro htmEventNameComputateEventPage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateEventEventName">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_eventName">event name</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputEventNameComputateEventPage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{% macro htmEventNameComputateEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+														{{ inputEventNameComputateEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

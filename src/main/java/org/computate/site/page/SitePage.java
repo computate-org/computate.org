@@ -58,7 +58,7 @@ import io.vertx.core.Promise;
  * 
  * PublicRead: true
  * Role.enUS: SiteAdmin
- * Description: Read the latest computate articles to learn more. 
+ * Description: Read the latest computate articles to learn more
  */
 public class SitePage extends SitePageGen<BaseResult> {
 

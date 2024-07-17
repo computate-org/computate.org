@@ -1,7 +1,7 @@
-package org.computate.site.page;
+package org.computate.site.model.website;
 
 import org.computate.site.page.PageLayout;
-import org.computate.site.result.BaseResultPage;
+import org.computate.site.model.BaseModelPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -47,37 +47,37 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
+public class ComputateWebsiteGenPage extends ComputateWebsiteGenPageGen<BaseModelPage> {
 
 	/**
 	 * {@inheritDoc}
 	 * Ignore: true
 	 **/
-	protected void _searchListSitePage_(Wrap<SearchList<SitePage>> w) {
+	protected void _searchListComputateWebsite_(Wrap<SearchList<ComputateWebsite>> w) {
 	}
 
 	@Override
 	protected void _pageResponse(Wrap<String> w) {
-		if(searchListSitePage_ != null)
-			w.o(JsonObject.mapFrom(searchListSitePage_.getResponse()).toString());
+		if(searchListComputateWebsite_ != null)
+			w.o(JsonObject.mapFrom(searchListComputateWebsite_.getResponse()).toString());
 	}
 
 	@Override
 	protected void _stats(Wrap<SolrResponse.Stats> w) {
-		w.o(searchListSitePage_.getResponse().getStats());
+		w.o(searchListComputateWebsite_.getResponse().getStats());
 	}
 
 	@Override
 	protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-		w.o(searchListSitePage_.getResponse().getFacetCounts());
+		w.o(searchListComputateWebsite_.getResponse().getFacetCounts());
 	}
 
 	@Override
 	protected void _pagination(JsonObject pagination) {
 		JsonArray pages = new JsonArray();
-		Long start = searchListSitePage_.getStart().longValue();
-		Long rows = searchListSitePage_.getRows().longValue();
-		Long foundNum = searchListSitePage_.getResponse().getResponse().getNumFound().longValue();
+		Long start = searchListComputateWebsite_.getStart().longValue();
+		Long rows = searchListComputateWebsite_.getRows().longValue();
+		Long foundNum = searchListComputateWebsite_.getResponse().getResponse().getNumFound().longValue();
 		Long startNum = start + 1L;
 		Long endNum = start + rows;
 		Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -119,12 +119,12 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _varsQ(JsonObject vars) {
-		SitePage.varsQForClass().forEach(var -> {
+		ComputateWebsite.varsQForClass().forEach(var -> {
 			JsonObject json = new JsonObject();
 			json.put("var", var);
-			json.put("displayName", Optional.ofNullable(SitePage.displayNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("classSimpleName", Optional.ofNullable(SitePage.classSimpleNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("val", Optional.ofNullable(searchListSitePage_.getRequest().getQuery()).filter(fq -> fq.startsWith(SitePage.varIndexedSitePage(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+			json.put("displayName", Optional.ofNullable(ComputateWebsite.displayNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("classSimpleName", Optional.ofNullable(ComputateWebsite.classSimpleNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("val", Optional.ofNullable(searchListComputateWebsite_.getRequest().getQuery()).filter(fq -> fq.startsWith(ComputateWebsite.varIndexedComputateWebsite(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
 			vars.put(var, json);
 		});
 	}
@@ -132,17 +132,17 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 	@Override
 	protected void _varsFq(JsonObject vars) {
 		Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-		SitePage.varsFqForClass().forEach(var -> {
-			String varIndexed = SitePage.varIndexedSitePage(var);
-			String varStored = SitePage.varStoredSitePage(var);
+		ComputateWebsite.varsFqForClass().forEach(var -> {
+			String varIndexed = ComputateWebsite.varIndexedComputateWebsite(var);
+			String varStored = ComputateWebsite.varStoredComputateWebsite(var);
 			JsonObject json = new JsonObject();
 			json.put("var", var);
 			json.put("varStored", varStored);
 			json.put("varIndexed", varIndexed);
 			String type = StringUtils.substringAfterLast(varIndexed, "_");
-			json.put("displayName", Optional.ofNullable(SitePage.displayNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("classSimpleName", Optional.ofNullable(SitePage.classSimpleNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("val", searchListSitePage_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SitePage.varIndexedSitePage(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+			json.put("displayName", Optional.ofNullable(ComputateWebsite.displayNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("classSimpleName", Optional.ofNullable(ComputateWebsite.classSimpleNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("val", searchListComputateWebsite_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(ComputateWebsite.varIndexedComputateWebsite(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
 			Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
 				json.put("stats", JsonObject.mapFrom(stat));
 			});
@@ -204,13 +204,13 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _varsRange(JsonObject vars) {
-		SitePage.varsRangeForClass().forEach(var -> {
-			String varIndexed = SitePage.varIndexedSitePage(var);
+		ComputateWebsite.varsRangeForClass().forEach(var -> {
+			String varIndexed = ComputateWebsite.varIndexedComputateWebsite(var);
 			JsonObject json = new JsonObject();
 			json.put("var", var);
-			json.put("displayName", Optional.ofNullable(SitePage.displayNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("classSimpleName", Optional.ofNullable(SitePage.classSimpleNameSitePage(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-			json.put("val", searchListSitePage_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SitePage.varIndexedSitePage(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+			json.put("displayName", Optional.ofNullable(ComputateWebsite.displayNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("classSimpleName", Optional.ofNullable(ComputateWebsite.classSimpleNameComputateWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+			json.put("val", searchListComputateWebsite_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(ComputateWebsite.varIndexedComputateWebsite(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
 			vars.put(var, json);
 		});
 	}
@@ -221,7 +221,7 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 		JsonObject params = serviceRequest.getParams();
 
 		JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-		Long num = searchListSitePage_.getResponse().getResponse().getNumFound().longValue();
+		Long num = searchListComputateWebsite_.getResponse().getResponse().getNumFound().longValue();
 		String q = "*:*";
 		String q1 = "objectText";
 		String q2 = "";
@@ -249,28 +249,28 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 		}
 		query.put("q", q);
 
-		Long rows1 = Optional.ofNullable(searchListSitePage_).map(l -> l.getRows()).orElse(10L);
-		Long start1 = Optional.ofNullable(searchListSitePage_).map(l -> l.getStart()).orElse(1L);
+		Long rows1 = Optional.ofNullable(searchListComputateWebsite_).map(l -> l.getRows()).orElse(10L);
+		Long start1 = Optional.ofNullable(searchListComputateWebsite_).map(l -> l.getStart()).orElse(1L);
 		Long start2 = start1 - rows1;
 		Long start3 = start1 + rows1;
 		Long rows2 = rows1 / 2;
 		Long rows3 = rows1 * 2;
 		start2 = start2 < 0 ? 0 : start2;
 		JsonObject fqs = new JsonObject();
-		for(String fq : Optional.ofNullable(searchListSitePage_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
+		for(String fq : Optional.ofNullable(searchListComputateWebsite_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
 			if(!StringUtils.contains(fq, "(")) {
-				String fq1 = SitePage.searchVarSitePage(StringUtils.substringBefore(fq, ":"));
+				String fq1 = ComputateWebsite.searchVarComputateWebsite(StringUtils.substringBefore(fq, ":"));
 				String fq2 = StringUtils.substringAfter(fq, ":");
 				if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
-					fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", SitePage.displayNameForClass(fq1)));
+					fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", ComputateWebsite.displayNameForClass(fq1)));
 				}
 			}
 		query.put("fq", fqs);
 
 		JsonArray sorts = new JsonArray();
-		for(String sort : Optional.ofNullable(searchListSitePage_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
-			String sort1 = SitePage.searchVarSitePage(StringUtils.substringBefore(sort, " "));
-			sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", SitePage.displayNameForClass(sort1)));
+		for(String sort : Optional.ofNullable(searchListComputateWebsite_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+			String sort1 = ComputateWebsite.searchVarComputateWebsite(StringUtils.substringBefore(sort, " "));
+			sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", ComputateWebsite.displayNameForClass(sort1)));
 		}
 		query.put("sort", sorts);
 	}
@@ -304,31 +304,31 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 	@Override
 	protected void _rows(Wrap<Long> w) {
 		if(serviceRequest.getParams().getJsonObject("query").getString("rows", null) != null)
-			w.o(searchListSitePage_.getRows());
+			w.o(searchListComputateWebsite_.getRows());
 	}
 
 	@Override
 	protected void _start(Wrap<Long> w) {
 		if(serviceRequest.getParams().getJsonObject("query").getString("start", null) != null)
-			w.o(searchListSitePage_.getStart());
+			w.o(searchListComputateWebsite_.getStart());
 	}
 
 	@Override
 	protected void _rangeGap(Wrap<String> w) {
 		if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.gap", null) != null)
-			w.o(Optional.ofNullable(searchListSitePage_.getFacetRangeGap()).orElse(null));
+			w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetRangeGap()).orElse(null));
 	}
 
 	@Override
 	protected void _rangeEnd(Wrap<ZonedDateTime> w) {
 		if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.end", null) != null)
-			w.o(Optional.ofNullable(searchListSitePage_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+			w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
 	}
 
 	@Override
 	protected void _rangeStart(Wrap<ZonedDateTime> w) {
 		if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.start", null) != null)
-			w.o(Optional.ofNullable(searchListSitePage_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+			w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
 	}
 
 	@Override
@@ -348,27 +348,27 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _defaultRangeVar(Wrap<String> w) {
-		w.o(Optional.ofNullable(searchListSitePage_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return SitePage.searchVarSitePage(v); }).orElse("created"));
+		w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return ComputateWebsite.searchVarComputateWebsite(v); }).orElse("created"));
 	}
 
 	@Override
 	protected void _defaultFacetSort(Wrap<String> w) {
-		w.o(Optional.ofNullable(searchListSitePage_.getFacetSort()).orElse("index"));
+		w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetSort()).orElse("index"));
 	}
 
 	@Override
 	protected void _defaultFacetLimit(Wrap<Integer> w) {
-		w.o(Optional.ofNullable(searchListSitePage_.getFacetLimit()).orElse(1));
+		w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetLimit()).orElse(1));
 	}
 
 	@Override
 	protected void _defaultFacetMinCount(Wrap<Integer> w) {
-		w.o(Optional.ofNullable(searchListSitePage_.getFacetMinCount()).orElse(1));
+		w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetMinCount()).orElse(1));
 	}
 
 	@Override
 	protected void _defaultPivotMinCount(Wrap<Integer> w) {
-		w.o(Optional.ofNullable(searchListSitePage_.getFacetPivotMinCount()).orElse(0));
+		w.o(Optional.ofNullable(searchListComputateWebsite_.getFacetPivotMinCount()).orElse(0));
 	}
 
 	@Override
@@ -390,14 +390,14 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _defaultFieldListVars(List<String> l) {
-		Optional.ofNullable(searchListSitePage_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
+		Optional.ofNullable(searchListComputateWebsite_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
 			String varStored2 = varStored;
 			if(StringUtils.contains(varStored2, "}"))
 				varStored2 = StringUtils.substringAfterLast(varStored2, "}");
 			String[] parts = varStored2.split(",");
 			for(String part : parts) {
 				if(StringUtils.isNotBlank(part)) {
-					String var = SitePage.searchVarSitePage(part);
+					String var = ComputateWebsite.searchVarComputateWebsite(part);
 					if(StringUtils.isNotBlank(var))
 						l.add(var);
 				}
@@ -407,14 +407,14 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _defaultStatsVars(List<String> l) {
-		Optional.ofNullable(searchListSitePage_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
+		Optional.ofNullable(searchListComputateWebsite_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
 			String varIndexed2 = varIndexed;
 			if(StringUtils.contains(varIndexed2, "}"))
 				varIndexed2 = StringUtils.substringAfterLast(varIndexed2, "}");
 			String[] parts = varIndexed2.split(",");
 			for(String part : parts) {
 				if(StringUtils.isNotBlank(part)) {
-					String var = SitePage.searchVarSitePage(part);
+					String var = ComputateWebsite.searchVarComputateWebsite(part);
 					if(StringUtils.isNotBlank(var))
 						l.add(var);
 				}
@@ -424,14 +424,14 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _defaultPivotVars(List<String> l) {
-		Optional.ofNullable(searchListSitePage_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
+		Optional.ofNullable(searchListComputateWebsite_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
 			String facetPivot2 = facetPivot;
 			if(StringUtils.contains(facetPivot2, "}"))
 				facetPivot2 = StringUtils.substringAfterLast(facetPivot2, "}");
 			String[] parts = facetPivot2.split(",");
 			for(String part : parts) {
 				if(StringUtils.isNotBlank(part)) {
-					String var = SitePage.searchVarSitePage(part);
+					String var = ComputateWebsite.searchVarComputateWebsite(part);
 					if(StringUtils.isNotBlank(var))
 						l.add(var);
 				}
@@ -442,22 +442,27 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 	/**
 	 * {@inheritDoc}
 	 **/
-	protected void _listSitePage(JsonArray l) {
-		Optional.ofNullable(searchListSitePage_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
+	protected void _listComputateWebsite(JsonArray l) {
+		Optional.ofNullable(searchListComputateWebsite_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
 	}
 
-	protected void _sitePageCount(Wrap<Integer> w) {
-		w.o(searchListSitePage_ == null ? 0 : searchListSitePage_.size());
+	protected void _computateWebsiteCount(Wrap<Integer> w) {
+		w.o(searchListComputateWebsite_ == null ? 0 : searchListComputateWebsite_.size());
 	}
 
-	protected void _sitePage_(Wrap<SitePage> w) {
-		if(sitePageCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
-			w.o(searchListSitePage_.get(0));
+	protected void _computateWebsite_(Wrap<ComputateWebsite> w) {
+		if(computateWebsiteCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+			w.o(searchListComputateWebsite_.get(0));
+	}
+
+	protected void _pk(Wrap<Long> w) {
+		if(computateWebsite_ != null)
+			w.o(computateWebsite_.getPk());
 	}
 
 	protected void _id(Wrap<String> w) {
-		if(sitePage_ != null)
-			w.o(sitePage_.getId());
+		if(computateWebsite_ != null)
+			w.o(computateWebsite_.getId());
 	}
 
 	@Override
@@ -467,29 +472,29 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _classSimpleName(Wrap<String> w) {
-		w.o("SitePage");
+		w.o("ComputateWebsite");
 	}
 
 	@Override
 	protected void _pageTitle(Wrap<String> c) {
-		if(sitePage_ != null && sitePage_.getObjectTitle() != null)
-			c.o(sitePage_.getObjectTitle());
-		else if(sitePage_ != null)
-			c.o("articles");
-		else if(searchListSitePage_ == null || sitePageCount == 0)
-			c.o("no article found");
+		if(computateWebsite_ != null && computateWebsite_.getObjectTitle() != null)
+			c.o(computateWebsite_.getObjectTitle());
+		else if(computateWebsite_ != null)
+			c.o("websites");
+		else if(searchListComputateWebsite_ == null || computateWebsiteCount == 0)
+			c.o("no website found");
 		else
-			c.o("articles");
+			c.o("websites");
 	}
 
 	@Override
 	protected void _pageUri(Wrap<String> c) {
-		c.o("/page");
+		c.o("/website");
 	}
 
 	@Override
 	protected void _apiUri(Wrap<String> c) {
-		c.o("/api/page");
+		c.o("/api/website");
 	}
 
 	@Override
@@ -499,25 +504,25 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
 	@Override
 	protected void _pageDescription(Wrap<String> c) {
-			c.o("Read the latest computate articles to learn more");
+			c.o("See the live websites built with computate");
 	}
 
 	@Override
 	protected void _pageImageUri(Wrap<String> c) {
-			c.o("/png/page-999.png");
+			c.o("/png/website-999.png");
 	}
 
 	@Override
 	protected void _classIconGroup(Wrap<String> c) {
-			c.o("duotone");
+			c.o("regular");
 	}
 
 	@Override
 	protected void _classIconName(Wrap<String> c) {
-			c.o("newspaper");
+			c.o("globe-pointer");
 	}
 
-	protected void _pageUriSitePage(Wrap<String> c) {
-			c.o("/page");
+	protected void _pageUriComputateWebsite(Wrap<String> c) {
+			c.o("/website");
 	}
 }

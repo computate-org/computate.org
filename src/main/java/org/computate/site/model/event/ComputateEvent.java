@@ -8,9 +8,9 @@ import org.computate.site.model.BaseModel;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 1
+ * Order: 2
  * Model: true
- * SqlOrder: 1
+ * SqlOrder: 2
  * 
  * Api: true
  * Page: true

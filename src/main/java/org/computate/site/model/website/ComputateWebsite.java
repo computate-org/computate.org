@@ -1,0 +1,52 @@
+package org.computate.site.model.website;
+
+import org.computate.site.model.BaseModel;
+import org.computate.search.wrap.Wrap;
+import io.vertx.pgclient.data.Point;
+
+/**
+ * Order: 5
+ * Model: true
+ * SqlOrder: 5
+ * 
+ * Api: true
+ * Page: true
+ * SuperPage.enUS: BaseModelPage
+ * Indexed: true
+ * Description: See the live websites built with computate
+ * 
+ * ApiTag: website
+ * ApiUri: /api/website
+ * 
+ * ApiMethod:
+ *   Search:
+ *   GET:
+ *   PATCH:
+ *   POST:
+ *   PUTImport:
+ *   SearchPage:
+ *     Page: ComputateWebsitePage
+ *     ApiUri: /website
+ * 
+ * Role: SiteAdmin
+ * 
+ * AName: a website
+ * PluralName: websites
+ * IconGroup: regular
+ * IconName: globe-pointer
+ */
+public class ComputateWebsite extends ComputateWebsiteGen<BaseModel> {
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: website name
+   * Description: The website name. 
+   * HtmRow: 3
+   * HtmCell: 2
+   * Facet: true
+   */
+  protected void _name(Wrap<String> w) {
+  }
+}

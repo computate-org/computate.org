@@ -1,0 +1,10 @@
+{% extends "enUS/ComputateCourseGenPage.htm" %}
+{%- block htmStyleComputateCoursePage %}
+      {{ super() }}
+      #htmForm_searchpageComputateCourse {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+        column-gap: 10px;
+        row-gap: 10px;
+      }
+{%- endblock htmStyleComputateCoursePage %}
