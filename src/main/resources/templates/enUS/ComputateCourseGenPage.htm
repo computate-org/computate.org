@@ -39,6 +39,7 @@
         customElements.whenDefined('sl-button')
         , customElements.whenDefined('sl-input')
       ]).then(() => {
+
         document.onkeydown = function(evt) {
           evt = evt || window.event;
           var isEscape = false;
@@ -53,7 +54,21 @@
         };
         window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
-        if(pk != null) {
+
+        if(pk == null) {
+          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
           window.computateCourse = JSON.parse(document.querySelector('.pageForm .computateCourse')?.value);
         {% if pk is defined %}
           // PATCH created
@@ -435,6 +450,16 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
+                {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmCreatedComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" scopes %}
@@ -451,16 +476,6 @@
                   {{ htmModifiedComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmModifiedComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmObjectIdComputateCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -520,73 +535,92 @@
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-            <div class="">
-              <div>
-                  <sl-tooltip placement="top" content="Double the number of courses shown">
-                    <sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of courses shown">
-                    <sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-minus-square "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of courses shown">
-                    <sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                      <i slot="prefix" class="fas fa-plus-square "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of courses shown">
-                    <sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                <span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
+              {{ htmPaginationButtonsComputateCoursePage() }}
+            <div class="grid-mode-details" id="site-results-grid">
+            <div>
+                <i class="far fa-notebook site-result-icon "></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>course name</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by course name ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by course name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>course description</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by course description ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by course description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
-              <div class="w3-responsive ">
-                <table class="w3-table w3-bordered w3-striped w3-border w3-hoverable ">
-                  <thead class="w3- w3-hover-">
-                    <tr>
-                      <th>created</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for item in listComputateCourse%}
-                      <tr>
-                        <td>
-                          <a href="{{ item.pageUrlPk }}">
-                            <span class="white-space-pre-wrap "><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></span>
-                          </a>
-                        </td>
-                        <td>
-                          <a href="{{ item.pageUrlPk }}">
-                            <i class="far fa-notebook "></i>
-                            <span class="white-space-pre-wrap ">{{ item.objectTitle }}</span>
-                          </a>
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                  <tfoot class="w3- w3-hover-">
-                    <tr>
+              {% for item in listComputateCourse%}
+              <a href="{{ item.pageUrlPk }}">
+                <i class="far fa-notebook site-result-icon "></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
+                <div>{{ item.courseName }}</div>
+                <div>{{ item.objectTitle }}</div>
+                <div>{{ item.courseDescription }}</div>
+              </a>
+              {% endfor %}
                       {% if getColumnCreated is defined %}
-                        <td>
-                        </td>
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnCourseName is defined %}
+                        <div>
+                        </div>
                       {% endif %}
                       {% if getColumnObjectTitle is defined %}
-                        <td>
-                        </td>
+                        <div>
+                        </div>
                       {% endif %}
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
+                      {% if getColumnCourseDescription is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
             </div>
             {%- endmacro htmBodyAllComputateCoursePage() %}
 {%- macro htmSearchButtonsComputateCoursePage() %}
-        <div>
+        <sl-button-group id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for courses">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
               <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
@@ -631,8 +665,48 @@
               Api
             </sl-button>
           </sl-tooltip>
-        </div>
+        </sl-button-group>
 {%- endmacro htmSearchButtonsComputateCoursePage() %}
+
+{%- macro htmPaginationButtonsComputateCoursePage() %}
+            <div id="htmPaginationButtons">
+              <sl-button-group id="htmPaginationButtons">
+                <sl-tooltip placement="top" content="Double the number of courses shown">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of courses shown">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of courses shown">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of courses shown">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              </sl-button-group>
+              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-button id="grid-toggle-details">
+                  <i class="fa-solid fa-list"></i>
+                </sl-button>
+                <sl-button id="grid-toggle-list">
+                  <i class="fa-solid fa-bars"></i>
+                </sl-button>
+                <sl-button id="grid-toggle-card">
+                  <i class="fa-solid fa-grid"></i>
+                </sl-button>
+              </sl-button-group>
+            </div>
+{%- endmacro htmPaginationButtonsComputateCoursePage() %}
 
     {%- block htmBodyStartBaseModelPage %}
     {{ super() }}
@@ -1096,18 +1170,113 @@
 
 {%- macro inputPkComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_pk" class="varComputateCourse{{pk}}Pk varComputateCoursePk ">{{computateCourse_.pk}}</span>
-{%- endif %}
+            <form id="PageForm_pk">
+  {%- endif %}
+              <sl-input
+                  readonly
+                  placeholder="primary key"
+                  label="primary key"
+                  help-text="
+The primary key of this object in the database"
+                  id="{{classApiMethodMethod}}_pk"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classComputateCourse inputComputateCourse{{pk}}Pk "
+                  name="setPk"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classComputateCourse inputComputateCourse{{pk}}Pk "
+                  name="setPk"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classComputateCourse inputComputateCourse{{pk}}Pk "
+                  name="pk"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{computateCourse_.pk}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateCourse_.userKeys %}
+            <span class="varComputateCourse{{pk}}Pk varComputateCoursePk ">{{computateCourse_.pk}}</span>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPkComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputPkComputateCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
+{%- macro inputObjectIdComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_objectId">
+  {%- endif %}
+              <sl-input
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="ID"
+                  label="ID"
+                  help-text="
+A URL friendly unique ID for this object"
+                  id="{{classApiMethodMethod}}_objectId"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classComputateCourse inputComputateCourse{{pk}}ObjectId "
+                  name="setObjectId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classComputateCourse inputComputateCourse{{pk}}ObjectId "
+                  name="setObjectId"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classComputateCourse inputComputateCourse{{pk}}ObjectId "
+                  name="objectId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{computateCourse_.objectId}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateCourse_.userKeys %}
+            <span class="varComputateCourse{{pk}}ObjectId varComputateCourseObjectId ">{{computateCourse_.objectId}}</span>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmObjectIdComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputObjectIdComputateCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
 {%- macro inputCreatedComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_created" class="varComputateCourse{{pk}}Created varComputateCourseCreated " title="{{ formatZonedDateTime(computateCourse_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateCourse_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-{%- endif %}
+            <form id="PageForm_created">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="created"
+                  help-text="A created timestamp for this record in the database"
+                  label="created"
+                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classComputateCourse inputComputateCourse{{pk}}Created "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_created"
+                  value="{%- if computateCourse_.created is defined %}{{ formatZonedDateTime(computateCourse_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+                  onclick="removeGlow(this); ";
+                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setCreated', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_created')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_created')); }); } "
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateCourse_.userKeys %}
+            <span class="varComputateCourse{{pk}}Created varComputateCourseCreated ">{{computateCourse_.created}}</span>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmCreatedComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1116,26 +1285,38 @@
 
 {%- macro inputModifiedComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_modified" class="varComputateCourse{{pk}}Modified varComputateCourseModified " title="{{ formatZonedDateTime(computateCourse_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateCourse_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-{%- endif %}
+            <form id="PageForm_modified">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="modified"
+                  help-text="A modified timestamp for this record in the database"
+                  label="modified"
+                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classComputateCourse inputComputateCourse{{pk}}Modified "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_modified"
+                  value="{%- if computateCourse_.modified is defined %}{{ formatZonedDateTime(computateCourse_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+                  onclick="removeGlow(this); ";
+                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setModified', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_modified')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_modified')); }); } "
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateCourse_.userKeys %}
+            <span class="varComputateCourse{{pk}}Modified varComputateCourseModified ">{{computateCourse_.modified}}</span>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmModifiedComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputModifiedComputateCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_objectId" class="varComputateCourse{{pk}}ObjectId varComputateCourseObjectId ">{{computateCourse_.objectId}}</span>
-{%- endif %}
-{%- endmacro %}
-
-{%- macro htmObjectIdComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputObjectIdComputateCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputArchivedComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_archived">
   {%- endif %}
@@ -1147,6 +1328,7 @@
               <sl-select
                   id="{{classApiMethodMethod}}_archived"
   {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="archived"
                   help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
@@ -1183,9 +1365,6 @@
   {%- if userKey in computateCourse_.userKeys %}
             <span class="varComputateCourse{{pk}}Archived varComputateCourseArchived ">{{computateCourse_.archived}}</span>
   {%- endif %}
-{%- else %}
-            <span class="varComputateCourse{{pk}}Archived varComputateCourseArchived ">{{computateCourse_.archived}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmArchivedComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1193,7 +1372,6 @@
 {%- endmacro %}
 
 {%- macro inputDeletedComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_deleted">
   {%- endif %}
@@ -1205,6 +1383,7 @@
               <sl-select
                   id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="deleted"
                   help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
@@ -1241,9 +1420,6 @@
   {%- if userKey in computateCourse_.userKeys %}
             <span class="varComputateCourse{{pk}}Deleted varComputateCourseDeleted ">{{computateCourse_.deleted}}</span>
   {%- endif %}
-{%- else %}
-            <span class="varComputateCourse{{pk}}Deleted varComputateCourseDeleted ">{{computateCourse_.deleted}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmDeletedComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1251,13 +1427,11 @@
 {%- endmacro %}
 
 {%- macro inputCourseNameComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_courseName">
   {%- endif %}
               <sl-input
-                  clearable
-                  type="text"
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="course name"
                   label="course name"
                   help-text="
@@ -1288,9 +1462,6 @@ The course name. "
   {%- if userKey in computateCourse_.userKeys %}
             <span class="varComputateCourse{{pk}}CourseName varComputateCourseCourseName ">{{computateCourse_.courseName}}</span>
   {%- endif %}
-{%- else %}
-            <span class="varComputateCourse{{pk}}CourseName varComputateCourseCourseName ">{{computateCourse_.courseName}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmCourseNameComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1298,11 +1469,11 @@ The course name. "
 {%- endmacro %}
 
 {%- macro inputCourseDescriptionComputateCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_courseDescription">
   {%- endif %}
               <sl-textarea
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="course description"
                   label="course description"
                   help-text="
@@ -1329,9 +1500,6 @@ The course description. "
   {%- if userKey in computateCourse_.userKeys %}
             <span class="varComputateCourse{{pk}}CourseDescription varComputateCourseCourseDescription ">{{computateCourse_.courseDescription}}</span>
   {%- endif %}
-{%- else %}
-            <span class="varComputateCourse{{pk}}CourseDescription varComputateCourseCourseDescription ">{{computateCourse_.courseDescription}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmCourseDescriptionComputateCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

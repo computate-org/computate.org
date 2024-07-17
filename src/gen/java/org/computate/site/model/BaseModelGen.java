@@ -2589,15 +2589,15 @@ public abstract class BaseModelGen<DEV> extends Object {
 		case VAR_pk:
 			return 1;
 		case VAR_created:
-			return 2;
-		case VAR_modified:
 			return 3;
+		case VAR_modified:
+			return 4;
 		case VAR_archived:
 			return 1;
 		case VAR_deleted:
 			return 2;
 		case VAR_objectId:
-			return 4;
+			return 2;
 			default:
 				return null;
 		}

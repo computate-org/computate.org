@@ -46,6 +46,7 @@ public class ComputateCourse extends ComputateCourseGen<BaseModel> {
    * HtmCell: 1
    * Facet: true
    * Required: true
+	 * HtmColumn: 1
    */
   protected void _courseName(Wrap<String> w) {
   }
@@ -60,6 +61,7 @@ public class ComputateCourse extends ComputateCourseGen<BaseModel> {
    * HtmCell: 2
    * Facet: true
    * Multiline: true
+	 * HtmColumn: 2
    */
   protected void _courseDescription(Wrap<String> w) {
   }

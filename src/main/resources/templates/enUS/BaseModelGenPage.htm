@@ -39,6 +39,7 @@
         customElements.whenDefined('sl-button')
         , customElements.whenDefined('sl-input')
       ]).then(() => {
+
         document.onkeydown = function(evt) {
           evt = evt || window.event;
           var isEscape = false;
@@ -53,7 +54,21 @@
         };
         window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
-        if(pk != null) {
+
+        if(pk == null) {
+          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
           window.baseModel = JSON.parse(document.querySelector('.pageForm .baseModel')?.value);
         {% if pk is defined %}
           // PATCH created
@@ -227,72 +242,56 @@
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-            <div class="">
-              <div>
-                  <sl-tooltip placement="top" content="Double the number of null shown">
-                    <sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of null shown">
-                    <sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-minus-square "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of null shown">
-                    <sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                      <i slot="prefix" class="fas fa-plus-square "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                  <sl-tooltip placement="top" content="Double the number of null shown">
-                    <sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                      <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                    </sl-button>
-                  </sl-tooltip>
-                <span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
+              {{ htmPaginationButtonsBaseModelPage() }}
+            <div class="grid-mode-details" id="site-results-grid">
+            <div>
+                <i class="fa fa- site-result-icon "></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
-              <div class="w3-responsive ">
-                <table class="w3-table w3-bordered w3-striped w3-border w3-hoverable ">
-                  <thead class="w3- w3-hover-">
-                    <tr>
-                      <th>created</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for item in listBaseModel%}
-                      <tr>
-                        <td>
-                          <a href="{{ item.pageUrlPk }}">
-                            <span class="white-space-pre-wrap "><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></span>
-                          </a>
-                        </td>
-                        <td>
-                          <a href="{{ item.pageUrlPk }}">
-                            <span class="white-space-pre-wrap ">{{ item.objectTitle }}</span>
-                          </a>
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                  <tfoot class="w3- w3-hover-">
-                    <tr>
+              {% for item in listBaseModel%}
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa fa- site-result-icon "></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
+                <div>{{ item.objectTitle }}</div>
+              </a>
+              {% endfor %}
                       {% if getColumnCreated is defined %}
-                        <td>
-                        </td>
+                        <div>
+                        </div>
                       {% endif %}
                       {% if getColumnObjectTitle is defined %}
-                        <td>
-                        </td>
+                        <div>
+                        </div>
                       {% endif %}
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
             </div>
             {%- endmacro htmBodyAllBaseModelPage() %}
 {%- macro htmSearchButtonsBaseModelPage() %}
-        <div>
+        <sl-button-group id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for ">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
               <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
@@ -337,8 +336,48 @@
               Api
             </sl-button>
           </sl-tooltip>
-        </div>
+        </sl-button-group>
 {%- endmacro htmSearchButtonsBaseModelPage() %}
+
+{%- macro htmPaginationButtonsBaseModelPage() %}
+            <div id="htmPaginationButtons">
+              <sl-button-group id="htmPaginationButtons">
+                <sl-tooltip placement="top" content="Double the number of null shown">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of null shown">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of null shown">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Double the number of null shown">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              </sl-button-group>
+              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-button id="grid-toggle-details">
+                  <i class="fa-solid fa-list"></i>
+                </sl-button>
+                <sl-button id="grid-toggle-list">
+                  <i class="fa-solid fa-bars"></i>
+                </sl-button>
+                <sl-button id="grid-toggle-card">
+                  <i class="fa-solid fa-grid"></i>
+                </sl-button>
+              </sl-button-group>
+            </div>
+{%- endmacro htmPaginationButtonsBaseModelPage() %}
 
     {%- block htmBodyStartPageLayout %}
     {{ super() }}
@@ -779,18 +818,104 @@
 
 {%- macro inputPkBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_pk" class="varBaseModel{{pk}}Pk varBaseModelPk ">{{baseModel_.pk}}</span>
-{%- endif %}
+            <form id="PageForm_pk">
+  {%- endif %}
+              <sl-input
+                  readonly
+                  placeholder="primary key"
+                  label="primary key"
+                  help-text="
+The primary key of this object in the database"
+                  id="{{classApiMethodMethod}}_pk"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classBaseModel inputBaseModel{{pk}}Pk "
+                  name="setPk"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classBaseModel inputBaseModel{{pk}}Pk "
+                  name="setPk"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classBaseModel inputBaseModel{{pk}}Pk "
+                  name="pk"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{baseModel_.pk}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPkBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputPkBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
+{%- macro inputObjectIdBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_objectId">
+  {%- endif %}
+              <sl-input
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="ID"
+                  label="ID"
+                  help-text="
+A URL friendly unique ID for this object"
+                  id="{{classApiMethodMethod}}_objectId"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseModel inputBaseModel{{pk}}ObjectId "
+                  name="setObjectId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseModel inputBaseModel{{pk}}ObjectId "
+                  name="setObjectId"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classBaseModel inputBaseModel{{pk}}ObjectId "
+                  name="objectId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{baseModel_.objectId}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmObjectIdBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputObjectIdBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
 {%- macro inputCreatedBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_created" class="varBaseModel{{pk}}Created varBaseModelCreated " title="{{ formatZonedDateTime(baseModel_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(baseModel_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-{%- endif %}
+            <form id="PageForm_created">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="created"
+                  help-text="A created timestamp for this record in the database"
+                  label="created"
+                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classBaseModel inputBaseModel{{pk}}Created "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_created"
+                  value="{%- if baseModel_.created is defined %}{{ formatZonedDateTime(baseModel_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+                  onclick="removeGlow(this); ";
+                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setCreated', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_created')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_created')); }); } "
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmCreatedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -799,26 +924,35 @@
 
 {%- macro inputModifiedBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_modified" class="varBaseModel{{pk}}Modified varBaseModelModified " title="{{ formatZonedDateTime(baseModel_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(baseModel_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-{%- endif %}
+            <form id="PageForm_modified">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="modified"
+                  help-text="A modified timestamp for this record in the database"
+                  label="modified"
+                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classBaseModel inputBaseModel{{pk}}Modified "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_modified"
+                  value="{%- if baseModel_.modified is defined %}{{ formatZonedDateTime(baseModel_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+                  onclick="removeGlow(this); ";
+                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setModified', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_modified')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_modified')); }); } "
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmModifiedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputModifiedBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-            <span id="{{classApiMethodMethod}}_objectId" class="varBaseModel{{pk}}ObjectId varBaseModelObjectId ">{{baseModel_.objectId}}</span>
-{%- endif %}
-{%- endmacro %}
-
-{%- macro htmObjectIdBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputObjectIdBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputArchivedBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_archived">
   {%- endif %}
@@ -830,6 +964,7 @@
               <sl-select
                   id="{{classApiMethodMethod}}_archived"
   {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="archived"
                   help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
@@ -863,9 +998,6 @@
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-{%- else %}
-            <span class="varBaseModel{{pk}}Archived varBaseModelArchived ">{{baseModel_.archived}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmArchivedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -873,7 +1005,6 @@
 {%- endmacro %}
 
 {%- macro inputDeletedBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-{%- if roleForWriteBool == true %}
   {%- if 'Page' == classApiMethodMethod %}
             <form id="PageForm_deleted">
   {%- endif %}
@@ -885,6 +1016,7 @@
               <sl-select
                   id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                   placeholder="deleted"
                   help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
@@ -918,9 +1050,6 @@
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-{%- else %}
-            <span class="varBaseModel{{pk}}Deleted varBaseModelDeleted ">{{baseModel_.deleted}}</span>
-{%- endif %}
 {%- endmacro %}
 
 {%- macro htmDeletedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

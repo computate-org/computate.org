@@ -767,6 +767,10 @@ public abstract class ComputateCourseGen<DEV> extends BaseModel {
 
 	public static Integer htmColumnComputateCourse(String var) {
 		switch(var) {
+		case VAR_courseName:
+			return 1;
+		case VAR_courseDescription:
+			return 2;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}
