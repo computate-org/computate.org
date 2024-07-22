@@ -200,8 +200,8 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String SiteUser_ThisName_enUS = "this site user";
 	public static final String SiteUser_A_enUS = "a ";
 	public static final String SiteUser_TheName_enUS = "the site user";
-	public static final String SiteUser_NameSingular_enUS = "site user";
-	public static final String SiteUser_NamePlural_enUS = "site users";
+	public static final String SiteUser_SingularName_enUS = "site user";
+	public static final String SiteUser_PluralName_enUS = "site users";
 	public static final String SiteUser_NameActual_enUS = "current site user";
 	public static final String SiteUser_AllName_enUS = "all the site users";
 	public static final String SiteUser_SearchAllNameBy_enUS = "search site users by ";

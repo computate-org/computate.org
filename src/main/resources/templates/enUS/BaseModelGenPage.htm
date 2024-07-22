@@ -76,12 +76,21 @@
             const form = document.querySelector('#PageForm_created');
             const valid = form.checkValidity();
             if(valid) {
-              patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setCreated', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
+              var timeZone = event.currentTarget.value.split('[').pop().split(']')[0];
+              var t1 = moment(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a');
+              var t2 = moment.tz(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone);
+              var t3 = new Date(t1._d);
+              t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime());
+              var t = moment(t3);
+              if(t) {
+                var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
+                patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setCreated', s)
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
             }
           });
           document.querySelector('#Page_created')?.addEventListener('sl-focus', (event) => {
@@ -96,12 +105,15 @@
             const form = document.querySelector('#PageForm_archived');
             const valid = form.checkValidity();
             if(valid) {
-              patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setArchived', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
+              var confirmResponse = confirm('Are you sure you want to archive that?'); 
+              if(confirmResponse) { 
+                patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setArchived', event.currentTarget.checked
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
             }
           });
           document.querySelector('#Page_archived')?.addEventListener('sl-focus', (event) => {
@@ -116,12 +128,15 @@
             const form = document.querySelector('#PageForm_deleted');
             const valid = form.checkValidity();
             if(valid) {
-              patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setDeleted', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
+              var confirmResponse = confirm('Are you sure you want to delete that?'); 
+              if(confirmResponse) { 
+                patchBaseModelVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setDeleted', event.currentTarget.checked
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
             }
           });
           document.querySelector('#Page_deleted')?.addEventListener('sl-focus', (event) => {
@@ -342,22 +357,22 @@
 {%- macro htmPaginationButtonsBaseModelPage() %}
             <div id="htmPaginationButtons">
               <sl-button-group id="htmPaginationButtons">
-                <sl-tooltip placement="top" content="Double the number of null shown">
+                <sl-tooltip placement="top" content="Show the previous results">
                   <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
-                <sl-tooltip placement="top" content="Double the number of null shown">
+                <sl-tooltip placement="top" content="Show half the results">
                   <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-minus-square "></i>
                   </sl-button>
                 </sl-tooltip>
-                <sl-tooltip placement="top" content="Double the number of null shown">
+                <sl-tooltip placement="top" content="Show double the results">
                   <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
                     <i slot="prefix" class="fas fa-plus-square "></i>
                   </sl-button>
                 </sl-tooltip>
-                <sl-tooltip placement="top" content="Double the number of null shown">
+                <sl-tooltip placement="top" content="Show the next results">
                   <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
@@ -366,15 +381,21 @@
               </sl-button-group>
               <sl-divider vertical></sl-divider>
               <sl-button-group>
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
+                <sl-tooltip placement="top" content="Show the results as details">
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards">
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
               </sl-button-group>
             </div>
 {%- endmacro htmPaginationButtonsBaseModelPage() %}
@@ -908,8 +929,6 @@ A URL friendly unique ID for this object"
                   id="{{classApiMethodMethod}}_created"
                   value="{%- if baseModel_.created is defined %}{{ formatZonedDateTime(baseModel_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
-                  onclick="removeGlow(this); ";
-                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setCreated', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_created')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_created')); }); } "
   {%- endif %}
                   >
               </sl-input>
@@ -938,8 +957,6 @@ A URL friendly unique ID for this object"
                   id="{{classApiMethodMethod}}_modified"
                   value="{%- if baseModel_.modified is defined %}{{ formatZonedDateTime(baseModel_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
-                  onclick="removeGlow(this); ";
-                  onchange="var timeZone = this.value.split('[').pop().split(']')[0]; var t1 = moment(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a'); var t2 = moment.tz(this.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone); var t3 = new Date(t1._d); t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime()); var t = moment(t3); if(t) { var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']'; patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setModified', s, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_modified')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_modified')); }); } "
   {%- endif %}
                   >
               </sl-input>
@@ -980,7 +997,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', this.checked, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_archived')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_archived')); }); }"
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if baseModel_.archived is defined %}
@@ -1032,7 +1048,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', this.checked, this, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_deleted')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_deleted')); }); }"
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if baseModel_.deleted is defined %}

@@ -45,6 +45,13 @@ import org.computate.site.request.SiteRequest;
 public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUser {
 
 	/**
+	 * Modify: false
+	 */
+	@Override
+	protected void _archived(Wrap<Boolean> w) {
+	}
+
+	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Description: User keys that relate to this user

@@ -7,6 +7,8 @@
 SITE_NAME: computate.org
 # The source code directory for the project. 
 SITE_SRC: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}"
+# The parent source directory. 
+PARENT_SRC: "{{ (SITE_SRC + '/..') | realpath }}"
 # The vars.yaml filename to load when running in development. 
 VARS_FILENAME: vars.yaml
 # The vars.yaml path to load when running in development. 
@@ -101,11 +103,11 @@ SUFFIX_SRC_GEN_JAVA: /src/gen/java
 # The relative paths in the project to watch for changes. 
 RELATIVE_PATHS_TO_WATCH: "src/main/java/{{ SITE_JAVA_PACKAGE | replace('.', '/') }}"
 # The default source code directory for the computate application which helps generate and translate most the code. 
-COMPUTATE_SRC: "{{ (SITE_SRC + '/../computate') | realpath }}"
+COMPUTATE_SRC: "{{ (PARENT_SRC + '/computate') | realpath }}"
 # The default source code directory for the computate-search application. 
-COMPUTATE_SEARCH_SRC: "{{ (SITE_SRC + '/../computate-search') | realpath }}"
+COMPUTATE_SEARCH_SRC: "{{ (PARENT_SRC + '/computate-search') | realpath }}"
 # The default source code directory for the computate-vertx application. 
-COMPUTATE_VERTX_SRC: "{{ (SITE_SRC + '/../computate-vertx') | realpath }}"
+COMPUTATE_VERTX_SRC: "{{ (PARENT_SRC + '/computate-vertx') | realpath }}"
 # The paths to the internationalization for this project. 
 I18N_PATHS: ["{{ SITE_PREFIX }}/computate/src/main/resources/org/computate/i18n/i18n_enUS.yaml"]
 # The Java main class of the site. 
@@ -164,7 +166,7 @@ SITE_STATIC_NAME: "{{ SITE_NAME }}-static"
 # The static files git repository for the project. 
 SITE_STATIC_REPO: "git@github.com:{{ GITHUB_ORG }}/{{ SITE_STATIC_NAME }}.git"
 # The path to the static files. 
-STATIC_PATH: "{{ (SITE_SRC + '/../' + SITE_STATIC_NAME) | realpath }}"
+STATIC_PATH: "{{ (PARENT_SRC + '/' + SITE_STATIC_NAME) | realpath }}"
 # The base URL to the static files. 
 STATIC_BASE_URL: "{{ SITE_BASE_URL }}/static"
 # The path to the template files. 
@@ -325,7 +327,7 @@ AUTH_FINE_GRAINED_POLICY_PERMISSIONS: true
 # The name of the operator used to deploy data as YAML. 
 OPERATOR_NAME: "{{ SITE_NAME }}-operator"
 # The name of the operator used to deploy data as YAML. 
-OPERATOR_SRC: "{{ (SITE_SRC + '/../' + OPERATOR_NAME) | realpath }}"
+OPERATOR_SRC: "{{ (PARENT_SRC + '/' + OPERATOR_NAME) | realpath }}"
 OPERATOR_DOMAIN_NAME: "{{ DOMAIN_NAME }}"
 OPERATOR_REPO: "git@github.com:{{ GITHUB_ORG }}/{{ OPERATOR_NAME }}.git"
 OPERATOR_PYTHON_DEPENDENCY_LIST:
@@ -346,7 +348,7 @@ OPERATOR_SYSTEM_DEPENDENCY_LIST: "{{ OPERATOR_REDHAT_DEPENDENCY_LIST if ansible_
 # Enable FIWARE Smart Data Model integrations. 
 ENABLE_FIWARE: false
 # FIWARE Smart Data Model source code directory. 
-SMART_DATA_MODELS_SRC: "{{ (SITE_SRC + '/../smart-data-models') | realpath }}"
+SMART_DATA_MODELS_SRC: "{{ (PARENT_SRC + '/smart-data-models') | realpath }}"
 # Map default latitude,longitude. 
 DEFAULT_MAP_LOCATION: "55.63379,13.49261"
 # Map default zoom level. 

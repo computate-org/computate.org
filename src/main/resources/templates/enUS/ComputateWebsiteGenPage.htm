@@ -2,1241 +2,1396 @@
 
 {%- block htmTitleBaseModelPage %}
 {%- block htmTitleComputateWebsitePage %}
-		<title>{% if searchListComputateWebsite_ is defined %}{% if computateWebsiteCount == int1 %}{% if id is defined %}website{% else %}website{% endif %}{% else %}no website found{% endif %}{% else %}websites{% endif %}</title>
+    <title>{% if searchListComputateWebsite_ is defined %}{% if computateWebsiteCount == int1 %}{% if id is defined %}website{% else %}website{% endif %}{% else %}no website found{% endif %}{% else %}websites{% endif %}</title>
 {%- endblock htmTitleComputateWebsitePage %}
 {%- endblock htmTitleBaseModelPage %}
+
+{%- block htmStylesBaseModelPage %}
+{{ super() }}
+{%- block htmStylesComputateWebsitePage %}
+{%- endblock htmStylesComputateWebsitePage %}
+{%- endblock htmStylesBaseModelPage %}
+
+{%- block htmStyleBaseModelPage %}
+{{ super() }}
+{%- block htmStyleComputateWebsitePage %}
+{%- endblock htmStyleComputateWebsitePage %}
+{%- endblock htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
 {{ super() }}
 {%- block htmScriptsComputateWebsitePage %}
-		<script src="{{staticBaseUrl}}/js/enUS/ComputateWebsitePage.js"></script>
+    <script src="{{staticBaseUrl}}/js/enUS/ComputateWebsitePage.js"></script>
 {%- endblock htmScriptsComputateWebsitePage %}
 {%- endblock htmScriptsBaseModelPage %}
 
 {%- block htmScriptBaseModelPage %}
 {%- block htmScriptComputateWebsitePage %}
-		<script type="module">
+    <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-			window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
-			window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
-			window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
-			Promise.all([
-				customElements.whenDefined('sl-button')
-				, customElements.whenDefined('sl-input')
-			]).then(() => {
-				document.onkeydown = function(evt) {
-					evt = evt || window.event;
-					var isEscape = false;
-					if ('key' in evt) {
-						isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
-					} else {
-						isEscape = (evt.keyCode === 27);
-					}
-					if (isEscape) {
-						document.querySelector('.w3-modal:visible').classList.add('display-none');
-					}
-				};
-				window.eventBus = new EventBus('/eventbus');
-				var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
-				if(pk != null) {
-					window.computateWebsite = JSON.parse(document.querySelector('.pageForm .computateWebsite')?.value);
-				}
-				window.listComputateWebsite = JSON.parse(document.querySelector('.pageForm .listComputateWebsite')?.value);
-				window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
-				window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
-				window.defaultRangeVar = '{{ defaultRangeVar }}';
-				pageGraphComputateWebsite();
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
 
-{%- block websocketComputateWebsitePage %}{%- endblock %}
-				document.querySelector('#htmForm_patchComputateWebsite')?.addEventListener('submit', event => {
-					event.preventDefault();
-					patchComputateWebsite(null, document.querySelector('#patchComputateWebsiteFormValues'));
-				});
-				document.querySelector('#htmForm_postComputateWebsite')?.addEventListener('submit', event => {
-					event.preventDefault();
-					postComputateWebsite(document.querySelector('#postComputateWebsiteForm'));
-				});
-				document.querySelector('#htmForm_putimportComputateWebsite')?.addEventListener('submit', event => {
-					event.preventDefault();
-					putimportComputateWebsite(document.querySelector('#putimportComputateWebsiteFormValues'));
-				});
-				document.querySelector('#htmForm_searchpageComputateWebsite')?.addEventListener('submit', event => {
-					event.preventDefault();
-					searchpageComputateWebsite();
-				});
-			});
-		</script>
-		<script>
+        document.onkeydown = function(evt) {
+          evt = evt || window.event;
+          var isEscape = false;
+          if ('key' in evt) {
+            isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
+          } else {
+            isEscape = (evt.keyCode === 27);
+          }
+          if (isEscape) {
+            document.querySelector('.w3-modal:visible').classList.add('display-none');
+          }
+        };
+        window.eventBus = new EventBus('/eventbus');
+        var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
-			function jsWebsocketComputateWebsite(pk, vars, $response) {
-{%- block jsWebsocketComputateWebsitePage %}{%- endblock %}
-			}
+        if(pk == null) {
+          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          window.computateWebsite = JSON.parse(document.querySelector('.pageForm .computateWebsite')?.value);
+        {% if pk is defined %}
+          // PATCH created
+          document.querySelector('#Page_created')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_created');
+            const valid = form.checkValidity();
+            if(valid) {
+              var timeZone = event.currentTarget.value.split('[').pop().split(']')[0];
+              var t1 = moment(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a');
+              var t2 = moment.tz(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone);
+              var t3 = new Date(t1._d);
+              t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime());
+              var t = moment(t3);
+              if(t) {
+                var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
+                patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setCreated', s)
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
+            }
+          });
+          document.querySelector('#Page_created')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_created')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_created');
+            const valid = form.reportValidity();
+          });
+          // PATCH archived
+          document.querySelector('#Page_archived')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_archived');
+            const valid = form.checkValidity();
+            if(valid) {
+              var confirmResponse = confirm('Are you sure you want to archive that?'); 
+              if(confirmResponse) { 
+                patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setArchived', event.currentTarget.checked
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
+            }
+          });
+          document.querySelector('#Page_archived')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_archived')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_archived');
+            const valid = form.reportValidity();
+          });
+          // PATCH deleted
+          document.querySelector('#Page_deleted')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_deleted');
+            const valid = form.checkValidity();
+            if(valid) {
+              var confirmResponse = confirm('Are you sure you want to delete that?'); 
+              if(confirmResponse) { 
+                patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                    , 'setDeleted', event.currentTarget.checked
+                    , event.currentTarget
+                    , function(response, target) { addGlow(target); }
+                    , function(response, target) { addError(target); }
+                    );
+              }
+            }
+          });
+          document.querySelector('#Page_deleted')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_deleted')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_deleted');
+            const valid = form.reportValidity();
+          });
+          // PATCH name
+          document.querySelector('#Page_name')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_name');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setName', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_name')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_name')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_name');
+            const valid = form.reportValidity();
+          });
+          // PATCH inheritPk
+          document.querySelector('#Page_inheritPk')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_inheritPk');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setInheritPk', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_inheritPk')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_inheritPk')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_inheritPk');
+            const valid = form.reportValidity();
+          });
+          // PATCH sessionId
+          document.querySelector('#Page_sessionId')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_sessionId');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setSessionId', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_sessionId')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_sessionId')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_sessionId');
+            const valid = form.reportValidity();
+          });
+          // PATCH userKey
+          document.querySelector('#Page_userKey')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_userKey');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchComputateWebsiteVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setUserKey', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_userKey')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_userKey')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_userKey');
+            const valid = form.reportValidity();
+          });
+        {% endif %}
+        }
+        window.listComputateWebsite = JSON.parse(document.querySelector('.pageForm .listComputateWebsite')?.value);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphComputateWebsite();
 
-			function jsTooltipComputateWebsite(e, feature) {
-{%- block jsTooltipComputateWebsitePage %}{%- endblock %}
-			}
+        {%- block websocketComputateWebsitePage %}{%- endblock %}
+        document.querySelector('#htmForm_patchComputateWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          patchComputateWebsite(null, document.querySelector('#htmForm_patchComputateWebsite'));
+        });
+        document.querySelector('#htmForm_postComputateWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          postComputateWebsite(document.querySelector('#htmForm_postComputateWebsite'));
+        });
+        document.querySelector('#htmForm_putimportComputateWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          putimportComputateWebsite(document.querySelector('#htmForm_putimportComputateWebsite'));
+        });
+        document.querySelector('#htmForm_searchpageComputateWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          searchpageComputateWebsite();
+        });
+      });
+    </script>
+    <script>
 
-			function htmTooltipComputateWebsite(feature, layer) {
-				return `{%- block htmTooltipComputateWebsitePage %}
+      function jsWebsocketComputateWebsite(pk, vars, $response) {
+        {%- block jsWebsocketComputateWebsitePage %}{%- endblock %}
+      }
+
+      function jsTooltipComputateWebsite(e, feature) {
+        {%- block jsTooltipComputateWebsitePage %}{%- endblock %}
+      }
+
+      function htmTooltipComputateWebsite(feature, layer) {
+        return `{%- block htmTooltipComputateWebsitePage %}
 <h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
 {%- endblock htmTooltipComputateWebsitePage %}`;
-			}
-
-			function jsLegendComputateWebsite(map) {
-{%- block jsLegendComputateWebsitePage %}
-				var div = L.DomUtil.create('div', 'info legend');
-				var htm = '';
-				window.listComputateWebsite.forEach((computateWebsite, index) => {
-					if(computateWebsite.) {
-						var shapes = [];
-						if(Array.isArray(computateWebsite.))
-							shapes = shapes.concat(computateWebsite.);
-						else
-							shapes.push(computateWebsite.);
-						shapes.forEach(function(shape, index) {
-							htm += htmLegendComputateWebsite(map, shape, computateWebsite, index, shapes.length);
-						});
-					}
-				});
-				div.innerHTML = htm;
-				return div;
-{%- endblock jsLegendComputateWebsitePage %}
-			}
-
-			function htmLegendComputateWebsite(map, shape, computateWebsite, index, count) {
-				var color = computateWebsite.[index];
-				var title = computateWebsite.[index];
-				var url = computateWebsite.[index];
-				var htm = '';
-				htm += `<div class="w3-white w3-padding w3-border w3-opacity w3-hover-opacity-off cursor-pointer " style="max-width: 400px; ">
-`;
-				htm += `{%- block htmLegendComputateWebsitePage %}
-		<div class="w3-row " title="${quoteattr(title)}">
-		<div class="w3-col " style="width: 20px; ">
-			<i class="fa-light fa-circle" style="color: ${color}; "></i>
-		</div>
-		<div class="w3-rest text-overflow-ellipsis ">
-			<span class="" data-id="${computateWebsite.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
-		</div>
-		</div>
-{%- endblock htmLegendComputateWebsitePage %}`;
-				htm += `
-</div>
-`;
-				return htm;
-			}
-
-			function jsStyleComputateWebsite(feature) {
-{%- block jsStyleComputateWebsitePage %}
-				if(feature.geometry.type == 'Point') {
-					return {
-						radius: 8
-						, fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-						, color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-						, weight: 1
-						, opacity: 0.7
-						, fillOpacity: 0.7
-					};
-				} else if(feature.geometry.type == 'LineString') {
-					return {
-						color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-						, weight: 5
-						, opacity: 0.7
-					};
-				} else {
-					return {
-						 fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-						, color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-						, weight: 3
-						, opacity: 0.7
-						, fillOpacity: 0.7
-					};
-				}
-{%- endblock jsStyleComputateWebsitePage %}
-			}
-		</script>
+      }
+    </script>
 {%- endblock htmScriptComputateWebsitePage %}
 {%- endblock htmScriptBaseModelPage %}
 
 {%- block websocketBaseModelPage %}
 {{ super() }}
 {%- block websocketComputateWebsitePage %}
-				websocketComputateWebsite(websocketComputateWebsiteInner);
+        websocketComputateWebsite(websocketComputateWebsiteInner);
 {%- endblock websocketComputateWebsitePage %}
 {%- endblock websocketBaseModelPage %}
 
 {%- block htmUrlComputateWebsitePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlComputateWebsitePage %}
 
 {%- macro htmButton_patchComputateWebsite() %}
-		<sl-button
-			onclick="document.querySelector('#patchComputateWebsiteModal').show(); "
-			>
-			<i class="fas fa-edit "></i>
-			Modify website
-		</sl-button>
+        <sl-button
+            onclick="document.querySelector('#patchComputateWebsiteDialog').show(); "
+            >
+          <i class="fas fa-edit "></i>
+          Modify website
+        </sl-button>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchComputateWebsite() %}
-						<sl-button type="submit" variant="primary">Modify website</sl-button>
+            <sl-button type="submit" variant="primary">Modify website</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchComputateWebsite() %}
-		<sl-dialog id="patchComputateWebsiteModal" label="Modify website">
-			<form id="htmForm_patchComputateWebsite">
-				<div>
-					<div class="" id="patchComputateWebsiteFormValues">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-{% if "PATCH" in scopes %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-							</div>
-						{{ htmFormButton_patchComputateWebsite() }}
-					</div>
-				</div>
-			</form>
-		</sl-dialog>
+        <sl-dialog id="patchComputateWebsiteDialog" label="Modify website">
+          <form id="htmForm_patchComputateWebsite">
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmCreatedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmArchivedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmDeletedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmNameComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+            {{ htmFormButton_patchComputateWebsite() }}
+          </form>
+        </sl-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_postComputateWebsite() %}
-		<sl-button
-			onclick="document.querySelector('#postComputateWebsiteModal').show(); "
-			>
-			<i class="fas fa-file-plus "></i>
-			Create a website
-		</sl-button>
+        <sl-button
+            onclick="document.querySelector('#postComputateWebsiteDialog').show(); "
+            >
+          <i class="fas fa-file-plus "></i>
+          Create a website
+        </sl-button>
 {%- endmacro %}
 
 {%- macro htmFormButton_postComputateWebsite() %}
-						<sl-button type="submit" variant="primary">Create a website</sl-button>
+            <sl-button type="submit" variant="primary">Create a website</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postComputateWebsite() %}
-		<sl-dialog id="postComputateWebsiteModal" label="Create a website">
-			<form id="htmForm_postComputateWebsite">
-				<div>
-						<div class="">You can override any default values below: </div>
-					<div class="" id="postComputateWebsiteFormValues">
-						<div id="postComputateWebsiteForm">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-							</div>
-						</div>
-						{{ htmFormButton_postComputateWebsite() }}
-					</div>
-				</div>
-			</form>
-		</sl-dialog>
+        <sl-dialog id="postComputateWebsiteDialog" label="Create a website">
+          <form id="htmForm_postComputateWebsite">
+            <div class="">You can override any default values below: </div>
+
+              {% if "PATCH" in scopes %}
+                {{ htmNameComputateWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+            {{ htmFormButton_postComputateWebsite() }}
+          </form>
+        </sl-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_putimportComputateWebsite() %}
-		<sl-button
-			onclick="document.querySelector('#putimportComputateWebsiteModal').show(); "
-			>
-			<i class="fas fa-file-import "></i>
-			Import websites
-		</sl-button>
+        <sl-button
+            onclick="document.querySelector('#putimportComputateWebsiteDialog').show(); "
+            >
+          <i class="fas fa-file-import "></i>
+          Import websites
+        </sl-button>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportComputateWebsite() %}
-						<sl-button type="submit" variant="primary">Import websites</sl-button>
+            <sl-button type="submit" variant="primary">Import websites</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportComputateWebsite() %}
-		<sl-dialog id="putimportComputateWebsiteModal" label="Import websites">
-			<form id="htmForm_putimportComputateWebsite">
-				<div>
-					<div class="" id="putimportComputateWebsiteFormValues">
-						<div class="w3-cell-row ">
-							<sl-textarea
-								class="PUTImport_searchList w3-input w3-border "
-								style="height: 300px; "
-								placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
-								></sl-textarea>
-						</div>
-						{{ htmFormButton_putimportComputateWebsite() }}
-					</div>
-				</div>
-			</form>
-		</sl-dialog>
+        <sl-dialog id="putimportComputateWebsiteDialog" label="Import websites">
+          <form id="htmForm_putimportComputateWebsite">
+            <div class="w3-cell-row ">
+              <sl-textarea
+                  class="PUTImport_searchList w3-input w3-border "
+                  style="height: 300px; "
+                  placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
+                  >
+              </sl-textarea>
+            </div>
+            {{ htmFormButton_putimportComputateWebsite() }}
+          </form>
+        </sl-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_searchpageComputateWebsite() %}
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageComputateWebsite() %}
-						<sl-button type="submit" variant="primary">Search websites</sl-button>
+            <sl-button type="submit" variant="primary">Search websites</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageComputateWebsite() %}
-		<div id="searchpageComputateWebsiteModal" label="Search websites">
-			<form id="htmForm_searchpageComputateWebsite">
-				<div>
-					<div class="" id="searchpageComputateWebsiteFormValues">
-						<div id="searchpageComputateWebsiteForm">
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmPkComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmPkComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmPkComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-{% if "PATCH" in scopes %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmCreatedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-{% if "PATCH" in scopes %}
-{{ htmModifiedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmModifiedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmModifiedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-{% if "PATCH" in scopes %}
-{{ htmObjectIdComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmObjectIdComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmObjectIdComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmArchivedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-{% if "PATCH" in scopes %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmDeletedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-								<!-- entiteHtmLigneVerticaleAncien == null || !entiteHtmLigneVerticaleAncien -->
-							</div>
-							<!-- BooleanUtils.isFalse(entiteHtmLigneVerticale) -->
-							<div class="w3-cell-row HtmRow">
-{% if "PATCH" in scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=true, roleForReadBool=true) }}
-{% else %}
-{% if "GET" scopes %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=true) }}
-{% else %}
-{{ htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) }}
-{% endif %}
-{% endif %}
-							</div>
-						</div>
-						{{ htmFormButton_searchpageComputateWebsite() }}
-					</div>
-				</div>
-			</form>
-		</div>
+        <div id="searchpageComputateWebsiteDialog" label="Search websites">
+          <div id="htmForm_searchpageComputateWebsite">
+
+              {% if "PATCH" in scopes %}
+                {{ htmPkComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmPkComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPkComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmObjectIdComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmObjectIdComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmCreatedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmModifiedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmArchivedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmDeletedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmNameComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameComputateWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+            {{ htmFormButton_searchpageComputateWebsite() }}
+          </div>
+        </div>
 {%- endmacro %}
-						{%- macro htmBodyAllComputateWebsitePage() %}
-						<h1>
-							<a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-								{% if classIconCssClasses is defined %}
-									<i class="{{ classIconCssClasses }} site-menu-icon "></i>
-								{% endif %}
-								<span class="">websites</span>
-							</a>
-						</h1>
-						{{ htmSearchButtonsComputateWebsitePage() }}
-						<div id="site-calendar-box">
-							<div id="site-calendar"><!-- // --></div>
-						</div>
-						<div class="">
-							<div>
-									<sl-tooltip placement="top" content="Double the number of websites shown">
-										<sl-button size="small"{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-											<i slot="prefix" class="fas fa-arrow-square-left "></i>
-										</sl-button>
-									</sl-tooltip>
-									<sl-tooltip placement="top" content="Double the number of websites shown">
-										<sl-button size="small"{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-											<i slot="prefix" class="fas fa-minus-square "></i>
-										</sl-button>
-									</sl-tooltip>
-									<sl-tooltip placement="top" content="Double the number of websites shown">
-										<sl-button size="small" href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-											<i slot="prefix" class="fas fa-plus-square "></i>
-										</sl-button>
-									</sl-tooltip>
-									<sl-tooltip placement="top" content="Double the number of websites shown">
-										<sl-button size="small"{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-											<i slot="prefix" class="fas fa-arrow-square-right "></i>
-										</sl-button>
-									</sl-tooltip>
-								<span>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</span>
-							</div>
-							<div class="w3-responsive ">
-								<table class="w3-table w3-bordered w3-striped w3-border w3-hoverable ">
-									<thead class="w3- w3-hover-">
-										<tr>
-											<th>created</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										{% for item in listComputateWebsite%}
-											<tr>
-												<td>
-													<a href="{{ item.pageUrlPk }}">
-														<span class="white-space-pre-wrap "><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></span>
-													</a>
-												</td>
-												<td>
-													<a href="{{ item.pageUrlPk }}">
-														<i class="far fa-globe-pointer "></i>
-														<span class="white-space-pre-wrap ">{{ item.objectTitle }}</span>
-													</a>
-												</td>
-											</tr>
-										{% endfor %}
-									</tbody>
-									<tfoot class="w3- w3-hover-">
-										<tr>
-											{% if getColumnCreated is defined %}
-												<td>
-												</td>
-											{% endif %}
-											{% if getColumnObjectTitle is defined %}
-												<td>
-												</td>
-											{% endif %}
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-						</div>
-						{%- endmacro htmBodyAllComputateWebsitePage() %}
+            {%- macro htmBodyAllComputateWebsitePage() %}
+            <h1>
+              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
+                {% if classIconCssClasses is defined %}
+                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
+                {% endif %}
+                <span class="">websites</span>
+              </a>
+            </h1>
+            {{ htmSearchButtonsComputateWebsitePage() }}
+            <div id="site-calendar-box">
+              <div id="site-calendar"><!-- // --></div>
+            </div>
+              {{ htmPaginationButtonsComputateWebsitePage() }}
+            <div class="grid-mode-details" id="site-results-grid">
+            <div>
+                <i class="far fa-globe-pointer site-result-icon "></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              </div>
+              {% for item in listComputateWebsite%}
+              <a href="{{ item.pageUrlPk }}">
+                <i class="far fa-globe-pointer site-result-icon "></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
+                <div>{{ item.objectTitle }}</div>
+              </a>
+              {% endfor %}
+                      {% if getColumnCreated is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnObjectTitle is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+            </div>
+            {%- endmacro htmBodyAllComputateWebsitePage() %}
 {%- macro htmSearchButtonsComputateWebsitePage() %}
-			<div><sl-tooltip placement="top" content="Advanced search for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> Search</sl-button></sl-tooltip><sl-tooltip placement="top" content="Filters and facet counts for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> Filters</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> Range</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for websites"><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> Pivot</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> FieldList</sl-button></sl-tooltip><sl-tooltip placement="top" content="Advanced search for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> Stats</sl-button></sl-tooltip><sl-tooltip placement="top" content="Query the JSON REST API for websites"><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> Api</sl-button></sl-tooltip></div>
+        <sl-button-group id="htmSearchButtons">
+          <sl-tooltip placement="top" content="Advanced search for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
+              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
+              Search
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Filters and facet counts for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
+              <i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> 
+              Filters
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
+              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> 
+              Range
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
+              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> 
+              Pivot
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
+              <i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> 
+              FieldList
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
+              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> 
+              Stats
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Query the JSON REST API for websites">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
+                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
+                >
+              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> 
+              Api
+            </sl-button>
+          </sl-tooltip>
+        </sl-button-group>
 {%- endmacro htmSearchButtonsComputateWebsitePage() %}
 
-		{%- block htmBodyStartBaseModelPage %}
-		{{ super() }}
-		{%- block htmBodyStartComputateWebsitePage %}
-		{%- endblock htmBodyStartComputateWebsitePage %}
-		{%- endblock htmBodyStartBaseModelPage %}
+{%- macro htmPaginationButtonsComputateWebsitePage() %}
+            <div id="htmPaginationButtons">
+              <sl-button-group id="htmPaginationButtons">
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              </sl-button-group>
+              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details">
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards">
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+            </div>
+{%- endmacro htmPaginationButtonsComputateWebsitePage() %}
 
-		{%- block htmBodyMiddleBaseModelPage %}
-		{%- block htmBodyMiddleComputateWebsitePage %}
-		<div class="w3-bar w3-content ">
-			{%- block htmBodySidebarComputateWebsitePage %}
-			<div>
-				<div>
-					<sl-drawer placement="end" id="siteSidebarToggleSearch">
-						<div class="w3-bar w3- ">
-							<span class="w3-bar-item ">
-							<i class="fad fa-magnifying-glass "></i> Search</span>
-						</div>
-						<div class="w3-bar-block ">
+    {%- block htmBodyStartBaseModelPage %}
+    {{ super() }}
+    {%- block htmBodyStartComputateWebsitePage %}
+    {%- endblock htmBodyStartComputateWebsitePage %}
+    {%- endblock htmBodyStartBaseModelPage %}
+
+    {%- block htmBodyMiddleBaseModelPage %}
+    {%- block htmBodyMiddleComputateWebsitePage %}
+        <div class="htmBodySidebarComputateWebsitePage ">
+          {%- block htmBodySidebarComputateWebsitePage %}
+          <sl-drawer placement="end" id="siteSidebarToggleSearch">
+            <div class="w3-bar w3- ">
+              <span class="w3-bar-item ">
+              <i class="fad fa-magnifying-glass "></i> Search</span>
+            </div>
+            <div class="w3-bar-block ">
 {%- block htmBodySearchComputateWebsitePage %}
-							<div>
-								{% for key, value in varsQ.items() %}
-									<div class="w3-cell-row ">
-										<div class="w3-cell w3-cell-top ">
-											<label for="qComputateWebsite_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
-										</div>
-									</div>
-									<div class="w3-cell-row ">
-										<div class="w3-cell w3-cell-top ">
-											<sl-input id="qComputateWebsite_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('ComputateWebsite', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-											<div class="pageSearchVal w3-tiny "></div>
-										</div>
-									</div>
-								{% endfor %}
-								<div class="w3-cell-row ">
-									<div class="w3-cell w3-cell-top ">
-										<label for="qComputateWebsite_Start">start<sup class="w3-tiny "> (Long)</sup></label>
-									</div>
-								</div>
-								<div class="w3-cell-row ">
-									<div class="w3-cell w3-cell-top ">
-										<sl-input id="qComputateWebsite_start" placeholder="{{ displayName }}" class="" onchange="paramChange('ComputateWebsite', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-										<div class="pageSearchVal w3-tiny ">start={{ start }}</div>
-									</div>
-								</div>
-								<div class="w3-cell-row ">
-									<div class="w3-cell w3-cell-top ">
-										<label for="qComputateWebsite_Rows">rows<sup class="w3-tiny "> (Long)</sup></label>
-									</div>
-								</div>
-								<div class="w3-cell-row ">
-									<div class="w3-cell w3-cell-top ">
-										<sl-input id="qComputateWebsite_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('ComputateWebsite', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-										<div class="pageSearchVal w3-tiny ">rows={{ rows }}</div>
-									</div>
-								</div>
-							</div>
-							{%- endblock htmBodySearchComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-					<sl-drawer placement="end" id="siteSidebarToggleFilters">
-						<div class="w3-bar w3- ">
-							<span class="w3-bar-item ">
-							<i class="fad fa-filters "></i> Filters</span>
-						</div>
-						<div class="w3-bar-block ">
-							{%- block htmBodyFiltersComputateWebsitePage %}
-							<div>
-								{% for key, value in varsFq.items() %}
-									<div class="">
-										<label for="fqComputateWebsite_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
-										<div class="w3-cell-row ">
-											<div class="w3-cell w3-cell-top ">
-												<button id="buttonFacetComputateWebsite_{{ key }}" class="" onclick="facetFieldChange('ComputateWebsite', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
-											</div>
-											<div class="w3-cell w3-cell-top ">
-												<sl-input id="fqComputateWebsite_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('ComputateWebsite', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
-											</div>
-										</div>
-									</div>
-									<div class="w3-tiny ">
-										<div class="pageSearchVal " id="pageSearchVal-fqComputateWebsite_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
-										<div class="pageSearchVal " id="pageSearchVal-buttonFacetComputateWebsite_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
-										<ol class="pageFacetField w3-small pageFacetFieldComputateWebsite_{{ key }} " id="pageFacetFieldComputateWebsite_{{ key }}">
+              <div>
+                {% for key, value in varsQ.items() %}
+                  <div class="w3-cell-row ">
+                    <div class="w3-cell w3-cell-top ">
+                      <label for="qComputateWebsite_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
+                    </div>
+                  </div>
+                  <div class="w3-cell-row ">
+                    <div class="w3-cell w3-cell-top ">
+                      <sl-input id="qComputateWebsite_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('ComputateWebsite', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
+                      <div class="pageSearchVal w3-tiny "></div>
+                    </div>
+                  </div>
+                {% endfor %}
+                <div class="w3-cell-row ">
+                  <div class="w3-cell w3-cell-top ">
+                    <label for="qComputateWebsite_Start">start<sup class="w3-tiny "> (Long)</sup></label>
+                  </div>
+                </div>
+                <div class="w3-cell-row ">
+                  <div class="w3-cell w3-cell-top ">
+                    <sl-input id="qComputateWebsite_start" placeholder="{{ displayName }}" class="" onchange="paramChange('ComputateWebsite', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div class="pageSearchVal w3-tiny ">start={{ start }}</div>
+                  </div>
+                </div>
+                <div class="w3-cell-row ">
+                  <div class="w3-cell w3-cell-top ">
+                    <label for="qComputateWebsite_Rows">rows<sup class="w3-tiny "> (Long)</sup></label>
+                  </div>
+                </div>
+                <div class="w3-cell-row ">
+                  <div class="w3-cell w3-cell-top ">
+                    <sl-input id="qComputateWebsite_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('ComputateWebsite', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div class="pageSearchVal w3-tiny ">rows={{ rows }}</div>
+                  </div>
+                </div>
+              </div>
+              {%- endblock htmBodySearchComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFilters">
+            <div class="w3-bar w3- ">
+              <span class="w3-bar-item ">
+              <i class="fad fa-filters "></i> Filters</span>
+            </div>
+            <div class="w3-bar-block ">
+              {%- block htmBodyFiltersComputateWebsitePage %}
+              <div>
+                {% for key, value in varsFq.items() %}
+                  <div class="">
+                    <label for="fqComputateWebsite_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
+                    <div class="w3-cell-row ">
+                      <div class="w3-cell w3-cell-top ">
+                        <button id="buttonFacetComputateWebsite_{{ key }}" class="" onclick="facetFieldChange('ComputateWebsite', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
+                      </div>
+                      <div class="w3-cell w3-cell-top ">
+                        <sl-input id="fqComputateWebsite_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('ComputateWebsite', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w3-tiny ">
+                    <div class="pageSearchVal " id="pageSearchVal-fqComputateWebsite_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetComputateWebsite_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <ol class="pageFacetField w3-small pageFacetFieldComputateWebsite_{{ key }} " id="pageFacetFieldComputateWebsite_{{ key }}">
 {% for item in facetField.counts %}
-											<li class="cursor-pointer " data-class="ComputateWebsite" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('ComputateWebsite', item.value); ">{{ item.key }}: {{ item.value }}</li>
+                      <li class="cursor-pointer " data-class="ComputateWebsite" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('ComputateWebsite', item.value); ">{{ item.key }}: {{ item.value }}</li>
 {% endfor %}
-										</ol>
-									</div>
-								{% endfor %}
-							</div>
-							{%- endblock htmBodyFiltersComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-					<sl-drawer placement="end" id="siteSidebarToggleRange">
-						<div class="w3-bar w3-  ">
-							<span class="w3-bar-item ">
-							<i class="fad fa-calendar-range "></i> Range</span>
-						</div>
-						<div class="w3-bar-block ">
-							{%- block htmBodyRangeComputateWebsitePage %}
-							<table class="w3-padding ">
-								<tr>
-									<td class="w3-padding w3-tiny " colspan="2">
-										<div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-ComputateWebsite">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
-										<div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-ComputateWebsite">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
-										<div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-ComputateWebsite">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
-										<div class="pageSearchVal " id="pageSearchVal-pageFacetRangeVar-ComputateWebsite">{% if defaultRangeVar is defined %}facet.range={!tag=r1}{{ defaultRangeVar | urlencode() }}{% endif %}</div>
-									</td>
-								</tr>
-							</table>
-							<table class="w3-padding ">
-								<tr class="">
-									<td class="">
-										<span>Range Gap</span>
-									</td>
-									<td class="">
-										<sl-select name="facet.range.gap" id="pageFacetRangeGap-ComputateWebsite" onchange="facetRangeGapChange('ComputateWebsite', this); ">
-											<sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
-											<sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
-											<sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
-											<sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
-											<sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
-											<sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
-											<sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
-										</sl-select>
-									</td>
-								</tr>
-								<tr class="">
-									<td class="" colspan="2">
-										<span>Range Start</span>
-									</td>
-								</tr>
-								<tr class="">
-									<td class="" colspan="2">
-										<span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-ComputateWebsite" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('ComputateWebsite', this); "></sl-input></span>
-									</td>
-								</tr>
-								<tr class="">
-									<td class="" colspan="2">
-										<span>Range End</span>
-									</td>
-								</tr>
-								<tr class="">
-									<td class="" colspan="2">
-										<span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-ComputateWebsite" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('ComputateWebsite', this); "></sl-input></span>
-									</td>
-								</tr>
-							</table>
-							<table class="w3-padding ">
-								{% for key, value in varsRange.items() %}
-									<tr class="">
-										<td class="">
-											<span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeComputateWebsite_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('ComputateWebsite', value); "></sl-radio></span>
-										</td>
-										<td class="">
-											<label for="pageFacetRangeComputateWebsite_{{ key }}">{{ displayName }}</label>
-										</td>
-									</tr>
-								{% endfor %}
-							</table>
-							{%- endblock htmBodyRangeComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-					<sl-drawer placement="end" id="siteSidebarTogglePivot">
-						<div class="w3-bar w3- ">
-							<span class="w3-bar-item ">
-							<i class="fad fa-table-pivot "></i> Pivot</span>
-						</div>
-						<div class="w3-bar-block ">
-							{%- block htmBodyPivotComputateWebsitePage %}
-							<div style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-PivotComputateWebsiteHidden">
-								{% for item in defaultPivotVars %}
-									<div class="pageSearchVal-PivotComputateWebsiteHidden " id="pageSearchVal-PivotComputateWebsiteHidden_{{ item }}">{{ item }}</div>
-								{% endfor %}
-							</div>
-							<div class="w3-padding w3-tiny " id="pageSearchVal-PivotComputateWebsite">
-								{% if defaultPivotVars is defined %}
-									<div class="pageSearchVal pageSearchVal-PivotComputateWebsite " id="pageSearchVal-PivotComputateWebsite_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
-								{% endif %}
-							</div>
-							<table class="w3-table ">
-								{% for key, value in varsFq.items() %}
-									<tr class="">
-										<td class="">
-											<span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotComputateWebsite_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox>
-										</td>
-										<td class="w3-cell ">
-											<label for="pageFacetPivotComputateWebsite_{{ key }}">{{ displayName }}</label>
-										</td>
-									</tr>
-								{% endfor %}
-							</table>
-							{%- endblock htmBodyPivotComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-					<sl-drawer placement="end" id="siteSidebarToggleFieldList">
-						<div class="w3-bar w3- ">
-							<span class="w3-bar-item ">
-							<i class="fad fa-list-ul "></i> Field List</span>
-						</div>
-						<div class="w3-bar-block ">
-							{%- block htmBodyFieldListComputateWebsitePage %}
-							<div
+                    </ol>
+                  </div>
+                {% endfor %}
+              </div>
+              {%- endblock htmBodyFiltersComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleRange">
+            <div class="w3-bar w3-  ">
+              <span class="w3-bar-item ">
+              <i class="fad fa-calendar-range "></i> Range</span>
+            </div>
+            <div class="w3-bar-block ">
+              {%- block htmBodyRangeComputateWebsitePage %}
+              <table class="w3-padding ">
+                <tr>
+                  <td class="w3-padding w3-tiny " colspan="2">
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-ComputateWebsite">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-ComputateWebsite">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-ComputateWebsite">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeVar-ComputateWebsite">{% if defaultRangeVar is defined %}facet.range={!tag=r1}{{ defaultRangeVar | urlencode() }}{% endif %}</div>
+                  </td>
+                </tr>
+              </table>
+              <table class="w3-padding ">
+                <tr class="">
+                  <td class="">
+                    <span>Range Gap</span>
+                  </td>
+                  <td class="">
+                    <sl-select name="facet.range.gap" id="pageFacetRangeGap-ComputateWebsite" onchange="facetRangeGapChange('ComputateWebsite', this); ">
+                      <sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
+                      <sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
+                      <sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
+                      <sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
+                      <sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
+                      <sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
+                      <sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
+                    </sl-select>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range Start</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-ComputateWebsite" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('ComputateWebsite', this); "></sl-input></span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range End</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-ComputateWebsite" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('ComputateWebsite', this); "></sl-input></span>
+                  </td>
+                </tr>
+              </table>
+              <table class="w3-padding ">
+                {% for key, value in varsRange.items() %}
+                  <tr class="">
+                    <td class="">
+                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeComputateWebsite_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('ComputateWebsite', value); "></sl-radio-group></span>
+                    </td>
+                    <td class="">
+                      <label for="pageFacetRangeComputateWebsite_{{ key }}">{{ displayName }}</label>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </table>
+              {%- endblock htmBodyRangeComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarTogglePivot">
+            <div class="w3-bar w3- ">
+              <span class="w3-bar-item ">
+              <i class="fad fa-table-pivot "></i> Pivot</span>
+            </div>
+            <div class="w3-bar-block ">
+              {%- block htmBodyPivotComputateWebsitePage %}
+              <div style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-PivotComputateWebsiteHidden">
+                {% for item in defaultPivotVars %}
+                  <div class="pageSearchVal-PivotComputateWebsiteHidden " id="pageSearchVal-PivotComputateWebsiteHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div class="w3-padding w3-tiny " id="pageSearchVal-PivotComputateWebsite">
+                {% if defaultPivotVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-PivotComputateWebsite " id="pageSearchVal-PivotComputateWebsite_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              <table class="w3-table ">
+                {% for key, value in varsFq.items() %}
+                  <tr class="">
+                    <td class="">
+                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotComputateWebsite_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox></span>
+                    </td>
+                    <td class="w3-cell ">
+                      <label for="pageFacetPivotComputateWebsite_{{ key }}">{{ displayName }}</label>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </table>
+              {%- endblock htmBodyPivotComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFieldList">
+            <div class="w3-bar w3- ">
+              <span class="w3-bar-item ">
+              <i class="fad fa-list-ul "></i> Field List</span>
+            </div>
+            <div class="w3-bar-block ">
+              {%- block htmBodyFieldListComputateWebsitePage %}
+              <div
  style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-FieldListComputateWebsiteHidden">
-								{% for item in defaultFieldListVars %}
-									<div class="pageSearchVal-FieldListComputateWebsiteHidden " id="pageSearchVal-FieldListComputateWebsiteHidden_{{ item }}">{{ item }}</div>
-								{% endfor %}
-							</div>
-							<div class="w3-padding w3-tiny " id="pageSearchVal-FieldListComputateWebsite">
-								{% if defaultFieldListVars is defined %}
-									<div class="pageSearchVal pageSearchVal-FieldListComputateWebsite " id="pageSearchVal-FieldListComputateWebsite_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
-								{% endif %}
-							</div>
-							<table class="w3-table ">
-								{% for key, value in varsFq.items() %}
-									<tr class="">
-										<td class="">
-											<span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListComputateWebsite_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox></span>
-										</td>
-										<td class="w3-cell ">
-											<label for="pageFieldListComputateWebsite_{{ key }}">{{ displayName }}</label>
-										</td>
-									</tr>
-								{% endfor %}
-							</table>
-							{%- endblock htmBodyFieldListComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-					<sl-drawer placement="end" id="siteSidebarToggleStats">
-						<div class="w3-bar w3- ">
-							<span class="w3-bar-item ">
-								<i class="fad fa-chart-candlestick "></i>								 Stats</span>
-							</span>
-						</div>
-						<div class="w3-bar-block ">
-							{%- block htmBodyStatsComputateWebsitePage %}
-							<div
+                {% for item in defaultFieldListVars %}
+                  <div class="pageSearchVal-FieldListComputateWebsiteHidden " id="pageSearchVal-FieldListComputateWebsiteHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListComputateWebsite">
+                {% if defaultFieldListVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-FieldListComputateWebsite " id="pageSearchVal-FieldListComputateWebsite_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              <table class="w3-table ">
+                {% for key, value in varsFq.items() %}
+                  <tr class="">
+                    <td class="">
+                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListComputateWebsite_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox></span>
+                    </td>
+                    <td class="w3-cell ">
+                      <label for="pageFieldListComputateWebsite_{{ key }}">{{ displayName }}</label>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </table>
+              {%- endblock htmBodyFieldListComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleStats">
+            <div class="w3-bar w3- ">
+              <span class="w3-bar-item ">
+                <i class="fad fa-chart-candlestick "></i>                 Stats</span>
+            </div>
+            <div class="w3-bar-block ">
+              {%- block htmBodyStatsComputateWebsitePage %}
+              <div
  style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-StatsComputateWebsiteHidden">
-								{% for item in defaultStatsVars %}
-									<div class="pageSearchVal-StatsComputateWebsiteHidden " id="pageSearchVal-StatsComputateWebsiteHidden_{{ item }}">{{ item }}</div>
-								{% endfor %}
-							</div>
-							<div class="w3-padding w3-tiny " id="pageSearchVal-StatsComputateWebsite">
-								{% if defaultStatsVars is defined %}
-									{% for item in defaultStatsVars %}
-										<div class="pageSearchVal pageSearchVal-StatsComputateWebsite_{{ item }} " id="pageSearchVal-StatsComputateWebsite_{{ item }}">stats.field={{ item }}										</div>
-									{% endfor %}
-								{% endif %}
-							</div>
-							<table class="w3-table ">
-								{% for key, value in varsFq.items() %}
-									{% if enableStats is defined %}
-										<tr class="">
-											<td class="">
-												<span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsComputateWebsite_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox></span>
-											</td>
-											<td class="w3-cell ">
-												<div>
-													<label for="pageStatsComputateWebsite_{{ key }}">{{ displayName }}</label>
-												</div>
-												<div class="pageStatsField w3-small pageStatsFieldComputateWebsite_{{ key }} " id="pageStatsFieldComputateWebsite_{{ key }}">
-													{% if value.stats is defined %}
-														{% for item in value.stats %}
-															{% if item.key == 'name' %}{% else %}
-																<div data-class="ComputateWebsite" data-var="{{ item.var }}" data-val="{{ item.key }}">{{ item.key }}: {{ item }}</div>
-															{% endif %}
-														{% endfor %}
-														{% if value.stats.max is defined %}
-															<div>
-																<span> step </span>
-																<sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
-																<span> min </span>
-																<sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
-																<span> max </span>
-																<sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
-																<span> speed in seconds </span>
-																<sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-																<button onclick="animateStats(); ">animate</button>
-															</div>
-														{% endif %}
-													{% endif %}
-												</div>
-											</td>
-										</tr>
-									{% endif %}
-								{% endfor %}
-							</table>
-						{%- endblock htmBodyStatsComputateWebsitePage %}
-						</div>
-					</sl-drawer>
-				</div>
-			</div>
-			{%- endblock htmBodySidebarComputateWebsitePage %}
-		</div>
+                {% for item in defaultStatsVars %}
+                  <div class="pageSearchVal-StatsComputateWebsiteHidden " id="pageSearchVal-StatsComputateWebsiteHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div class="w3-padding w3-tiny " id="pageSearchVal-StatsComputateWebsite">
+                {% if defaultStatsVars is defined %}
+                  {% for item in defaultStatsVars %}
+                    <div class="pageSearchVal pageSearchVal-StatsComputateWebsite_{{ item }} " id="pageSearchVal-StatsComputateWebsite_{{ item }}">stats.field={{ item }}                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <table class="w3-table ">
+                {% for key, value in varsFq.items() %}
+                  {% if enableStats is defined %}
+                    <tr class="">
+                      <td class="">
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsComputateWebsite_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('ComputateWebsite', value); ">{{ displayName }}</sl-checkbox></span>
+                      </td>
+                      <td class="w3-cell ">
+                        <div>
+                          <label for="pageStatsComputateWebsite_{{ key }}">{{ displayName }}</label>
+                        </div>
+                        <div class="pageStatsField w3-small pageStatsFieldComputateWebsite_{{ key }} " id="pageStatsFieldComputateWebsite_{{ key }}">
+                          {% if value.stats is defined %}
+                            {% for item in value.stats %}
+                              {% if item.key == 'name' %}{% else %}
+                                <div data-class="ComputateWebsite" data-var="{{ item.var }}" data-val="{{ item.key }}">{{ item.key }}: {{ item }}</div>
+                              {% endif %}
+                            {% endfor %}
+                            {% if value.stats.max is defined %}
+                              <div>
+                                <span> step </span>
+                                <sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
+                                <span> min </span>
+                                <sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
+                                <span> max </span>
+                                <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
+                                <span> speed in seconds </span>
+                                <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
+                                <button onclick="animateStats(); ">animate</button>
+                              </div>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+            {%- endblock htmBodyStatsComputateWebsitePage %}
+            </div>
+          </sl-drawer>
+          {%- endblock htmBodySidebarComputateWebsitePage %}
+        </div>
 
-		{%- block htmBodyGraphLocationComputateWebsitePage %}
-		<div id="htmBodyGraphLocationComputateWebsitePage" class="w3-content htmBodyGraphLocation "></div>
-		{%- endblock htmBodyGraphLocationComputateWebsitePage %}
+        {%- block htmBodyGraphLocationComputateWebsitePage %}
+        <div id="htmBodyGraphLocationComputateWebsitePage" class="w3-content htmBodyGraphLocation "></div>
+        {%- endblock htmBodyGraphLocationComputateWebsitePage %}
 
-		{%- block htmBodyGraphComputateWebsitePage %}
-		<div id="htmBodyGraphBaseModelPage" class="w3-content htmBodyGraph "></div>
-		{%- endblock htmBodyGraphComputateWebsitePage %}
-		<div class="pageContent w3-content ">
-			<div id="site-calendar-box">
-				<div id="site-calendar"><!-- // --></div>
-			</div>
-		</div>
-		<div class="pageContent w3-content ">
-			{% if computateWebsiteCount == 0 %}
-				<h1>
-					<a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-						{% if classIconCssClasses is defined %}
-							<i class="{{ classIconCssClasses }} site-menu-icon "></i>
-						{% endif %}
-						<span class="">websites</span>
-					</a>
-				</h1>
-				{{ htmSearchButtonsComputateWebsitePage() }}
-				<h2>
-					<span class="w3-bar-item w3-padding w3-center w3-block w3-">
-						{% if classIconCssClasses is defined %}
-							<i class="{{ classIconCssClasses }}  site-menu-icon "></i>
-						{% endif %}
-						<span class="">no website found</span>
-					</span>
-				</h2>
-			{% else %}
-				{% if computateWebsiteCount == 1 %}
-					{% if id is defined %}
-						<h1>
-							<a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-								{% if classIconCssClasses is defined %}
-									<i class="{{ classIconCssClasses }} site-menu-icon "></i>
-								{% endif %}
-								<span class="">website</span>
-							</a>
-						</h1>
-						{{ htmSearchButtonsComputateWebsitePage() }}
-						<h2 class="w3-center ">
-							<span class="w3-bar-item w3-padding w3-center w3-block w3-">
-								<span class="">{{computateWebsite_.objectTitle}}</span>
-							</span>
-						</h2>
-					{% else %}
-					{{ htmBodyAllComputateWebsitePage() }}
-					{% endif %}
-				{% else %}
-					{{ htmBodyAllComputateWebsitePage() }}
-				{% endif %}
-			{% endif %}
-			{%- block htmFormComputateWebsitePage %}
-			<form action="/api/website" id="ComputateWebsiteForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
-				{% if pk is defined %}
-					<input name="pk" class="valuePk" type="hidden" value="{{pk}}"/>
-				{% endif %}
-				<input name="focusId" type="hidden"/>
-				<input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-				<input name="computateWebsite" id="computateWebsite" class="computateWebsite"  value='{{ toJsonObjectStringInApostrophes(computateWebsite_) }}' type="hidden"/>
-				<input name="listComputateWebsite" id="listComputateWebsite" class="listComputateWebsite"  value='{{ toJsonArrayStringInApostrophes(listComputateWebsite) }}' type="hidden"/>
-			</form>
-			{% if id is defined %}
-				{{ htmButton_searchpageComputateWebsite() }}
-				{{ htmForm_searchpageComputateWebsite() }}
-			{% endif %}
-			{%- endblock htmFormComputateWebsitePage %}
-			{%- block htmFormsComputateWebsitePage %}
-			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-				{% if "PATCH" in scopes %}
-					{% if computateWebsiteCount == 1 %}
-						<button
-								class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-								id="refreshThisComputateWebsiteGenPage"
-								onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, function() { addGlow(document.querySelector('#refreshThisComputateWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisComputateWebsiteGenPage')); }); return false; ">
-							<i class="fas fa-sync-alt "></i>
-							refresh this website
-						</button>
-					{% endif %}
-					{% if computateWebsiteCount > 0 %}
-						<div class="">
-							<button id="refreshAllComputateWebsiteGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-									onclick="patch{{classSimpleName}}Vals([], {}, function() { addGlow(document.querySelector('#refreshAllComputateWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllComputateWebsiteGenPage{{id}}')); }); "
-									>
-								<i class="fas fa-sync-alt "></i>
-								refresh all the websites
-							</button>
-						</div>
-					{% endif %}
-				{% endif %}
-			{% endif %}
-			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-				{% if computateWebsiteCount > 0 %}
-					{{ htmButton_patchComputateWebsite() }}
-					{{ htmForm_patchComputateWebsite() }}
-				{% endif %}
-			{% endif %}
-			{% if AUTH_SCOPE_ADMIN in scopes %}
-				{% if computateWebsiteCount == int1 %}
-					{% if id is defined %}
-					{% else %}
-						{{ htmButton_postComputateWebsite() }}
-						{{ htmForm_postComputateWebsite() }}
-					{% endif %}
-				{% else %}
-					{{ htmButton_postComputateWebsite() }}
-					{{ htmForm_postComputateWebsite() }}
-				{% endif %}
-			{% endif %}
-			{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-					{{ htmButton_putimportComputateWebsite() }}
-					{{ htmForm_putimportComputateWebsite() }}
-			{% endif %}
-			{%- block htmSuggestedComputateWebsitePage %}{%- endblock %}
-			{%- endblock htmFormsComputateWebsitePage %}
-		</div>
-		{%- endblock htmBodyMiddleComputateWebsitePage %}
-		{%- endblock htmBodyMiddleBaseModelPage %}
+        {%- block htmBodyGraphComputateWebsitePage %}
+        <div id="htmBodyGraphBaseModelPage" class="w3-content htmBodyGraph "></div>
+        {%- endblock htmBodyGraphComputateWebsitePage %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+        </div>
+{% if computateWebsiteCount == 0 %}
+        <h1>
+          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
+  {% if classIconCssClasses is defined %}
+              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
+  {% endif %}
+            <span class="">websites</span>
+          </a>
+        </h1>
+        {{ htmSearchButtonsComputateWebsitePage() }}
+        <h2>
+          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no website found</span>
+          </span>
+        </h2>
+{% else %}
+  {% if computateWebsiteCount == 1 %}
+    {% if id is defined %}
+        <h1>
+          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
+      {% if classIconCssClasses is defined %}
+              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
+      {% endif %}
+            <span class="">website</span>
+          </a>
+        </h1>
+        {{ htmSearchButtonsComputateWebsitePage() }}
+        <h2 class="w3-center ">
+          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+            <span class="">{{computateWebsite_.objectTitle}}</span>
+          </span>
+        </h2>
+    {% else %}
+        {{ htmBodyAllComputateWebsitePage() }}
+    {% endif %}
+  {% else %}
+        {{ htmBodyAllComputateWebsitePage() }}
+  {% endif %}
+{% endif %}
+        {%- block htmFormComputateWebsitePage %}
+        <form action="/api/website" id="ComputateWebsiteForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+{% if pk is defined %}
+          <input name="pk" class="valuePk" type="hidden" value="{{pk}}"/>
+          {% endif %}
+          <input name="focusId" type="hidden"/>
+          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+          <input name="computateWebsite" id="computateWebsite" class="computateWebsite"  value='{{ toJsonObjectStringInApostrophes(computateWebsite_) }}' type="hidden"/>
+          <input name="listComputateWebsite" id="listComputateWebsite" class="listComputateWebsite"  value='{{ toJsonArrayStringInApostrophes(listComputateWebsite) }}' type="hidden"/>
+        </form>
+  {% if id is defined %}
+        {{ htmButton_searchpageComputateWebsite() }}
+        {{ htmForm_searchpageComputateWebsite() }}
+  {% endif %}
+        {%- endblock htmFormComputateWebsitePage %}
+        {%- block htmFormsComputateWebsitePage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if computateWebsiteCount == 1 %}
+        <button
+            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
+            id="refreshThisComputateWebsiteGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisComputateWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisComputateWebsiteGenPage')); }); return false; ">
+          <i class="fas fa-sync-alt "></i>
+          refresh this website
+        </button>
+      {% endif %}
+      {% if computateWebsiteCount > 0 %}
+        <div class="">
+          <button id="refreshAllComputateWebsiteGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllComputateWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllComputateWebsiteGenPage{{id}}')); }); "
+              >
+            <i class="fas fa-sync-alt "></i>
+            refresh all the websites
+          </button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if computateWebsiteCount > 0 %}
+        {{ htmButton_patchComputateWebsite() }}
+        {{ htmForm_patchComputateWebsite() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if computateWebsiteCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postComputateWebsite() }}
+        {{ htmForm_postComputateWebsite() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postComputateWebsite() }}
+        {{ htmForm_postComputateWebsite() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportComputateWebsite() }}
+        {{ htmForm_putimportComputateWebsite() }}
+  {% endif %}
+        {%- block htmSuggestedComputateWebsitePage %}{%- endblock %}
+        {%- endblock htmFormsComputateWebsitePage %}
+      {%- endblock htmBodyMiddleComputateWebsitePage %}
+      {%- endblock htmBodyMiddleBaseModelPage %}
 
-		{%- block htmBodyEndBaseModelPage %}
-{{ super() }}
-		{%- block htmBodyEndComputateWebsitePage %}
-		{%- endblock htmBodyEndComputateWebsitePage %}
-		{%- endblock htmBodyEndBaseModelPage %}
-		{%- block htmSuggestedComputateWebsitePage %}
-		<div class="w3-cell-row ">
-			<div class="w3-cell ">
-				<span>
-					search websites: 
-				</span>
-			</div>
-		</div>
-		<div class="w3-bar ">
-			<sl-input
-					type="text"
-					class="suggestComputateWebsite w3-input w3-border w3-bar-item "
-					name="suggestComputateWebsite"
-					id="suggestComputateWebsite{{id}}"
-					autocomplete="off"
-					oninput="suggestComputateWebsiteObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + this.value }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'classCanonicalName,pk,pageUrlPk,objectTitle' } ], document.querySelector('#suggestListComputateWebsite{{id}}'), {{pk}}; "
-					onkeyup="if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/website?q={{ query1 }}:' + encodeURIComponent(this.value) + '{{fqs}}{{sorts}}&amp;rows={{start2}}&amp;rows={{rows1}}"
-				{% if listComputateWebsite is defined %}
-					value="{{query2}}"
-				{% endif %}
-				></sl-input>
-				<button
-					class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3- "
-					onclick="window.location.href = '/website?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
-					>
-				<i class="fas fa-search "></i>
-			</button>
-			<div>
-				<div class="w3-cell-row ">
-					<div class="w3-cell w3-left-align w3-cell-top ">
-						<ul class="w3-ul w3-hoverable " id="suggestListComputateWebsite{{id}}">
-						</ul>
-					</div>
-				</div>
-				<div class="">
-					<a href="/website" class="">
-						<i class="far fa-globe-pointer"></i>
-						see all the websites
-					</a>
-				</div>
-				{%- endblock htmSuggestedComputateWebsitePage %}
+      {%- block htmBodyEndBaseModelPage %}
+      {{ super() }}
+      {%- block htmBodyEndComputateWebsitePage %}
+      {%- endblock htmBodyEndComputateWebsitePage %}
+      {%- endblock htmBodyEndBaseModelPage %}
+{%- block htmSuggestedComputateWebsitePage %}
+        <div class="w3-cell-row ">
+          <div class="w3-cell ">
+            <span>
+              search websites: 
+            </span>
+          </div>
+        </div>
+        <div class="w3-bar ">
+          <sl-input
+              type="text"
+              class="suggestComputateWebsite w3-input w3-border w3-bar-item "
+              name="suggestComputateWebsite"
+              id="suggestComputateWebsite{{id}}"
+              autocomplete="off"
+              oninput="suggestComputateWebsiteObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + this.value }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'classCanonicalName,pk,pageUrlPk,objectTitle' } ], document.querySelector('#suggestListComputateWebsite{{id}}'), {{pk}}; "
+              onkeyup="if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/website?q={{ query1 }}:' + encodeURIComponent(this.value) + '{{fqs}}{{sorts}}&amp;rows={{start2}}&amp;rows={{rows1}}"
+  {% if listComputateWebsite is defined %}
+              value="{{query2}}"
+  {% endif %}
+              >
+          </sl-input>
+          <button
+              class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3- "
+              onclick="window.location.href = '/website?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
+              >
+            <i class="fas fa-search "></i>
+          </button>
+          <div>
+            <div class="w3-cell-row ">
+              <div class="w3-cell w3-left-align w3-cell-top ">
+                <ul class="w3-ul w3-hoverable " id="suggestListComputateWebsite{{id}}">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <a href="/website" class="">
+              <i class="far fa-globe-pointer"></i>
+              see all the websites
+            </a>
+          </div>
+        </div>
+{%- endblock htmSuggestedComputateWebsitePage %}
 
-{%- macro inputPkComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_pk" class="varComputateWebsite{{pk}}Pk varComputateWebsitePk ">{{computateWebsite_.pk}}</span>
-	{% endif %}
+{%- macro inputPkComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_pk">
+  {%- endif %}
+              <sl-input
+                  readonly
+                  placeholder="primary key"
+                  label="primary key"
+                  help-text="
+The primary key of this object in the database"
+                  id="{{classApiMethodMethod}}_pk"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classComputateWebsite inputComputateWebsite{{pk}}Pk "
+                  name="setPk"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_pk setPk classComputateWebsite inputComputateWebsite{{pk}}Pk "
+                  name="setPk"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classComputateWebsite inputComputateWebsite{{pk}}Pk "
+                  name="pk"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{computateWebsite_.pk}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Pk varComputateWebsitePk ">{{computateWebsite_.pk}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmPkComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsitePk">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_pk">primary key</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputPkComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmPkComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputPkComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputCreatedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_created" class="varComputateWebsite{{pk}}Created varComputateWebsiteCreated " title="{{ formatZonedDateTime(computateWebsite_.created, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateWebsite_.created, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-	{% endif %}
+{%- macro inputObjectIdComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_objectId">
+  {%- endif %}
+              <sl-input
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="ID"
+                  label="ID"
+                  help-text="
+A URL friendly unique ID for this object"
+                  id="{{classApiMethodMethod}}_objectId"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classComputateWebsite inputComputateWebsite{{pk}}ObjectId "
+                  name="setObjectId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classComputateWebsite inputComputateWebsite{{pk}}ObjectId "
+                  name="setObjectId"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classComputateWebsite inputComputateWebsite{{pk}}ObjectId "
+                  name="objectId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{computateWebsite_.objectId}}"
+  {%- endif %}
+                  ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}ObjectId varComputateWebsiteObjectId ">{{computateWebsite_.objectId}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmCreatedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteCreated">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_created">created</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputCreatedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmObjectIdComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputObjectIdComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputModifiedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_modified" class="varComputateWebsite{{pk}}Modified varComputateWebsiteModified " title="{{ formatZonedDateTime(computateWebsite_.modified, 'EEEE MMMM d yyyy H:mm:ss.SSS zz VV', defaultLocaleId, defaultZoneId) }}">{{ formatZonedDateTime(computateWebsite_.modified, 'EEE MMM d yyyy h:mm a zz', defaultLocaleId, defaultZoneId) }}</span>
-	{% endif %}
+{%- macro inputCreatedComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_created">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="created"
+                  help-text="A created timestamp for this record in the database"
+                  label="created"
+                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classComputateWebsite inputComputateWebsite{{pk}}Created "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_created"
+                  value="{%- if computateWebsite_.created is defined %}{{ formatZonedDateTime(computateWebsite_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Created varComputateWebsiteCreated ">{{computateWebsite_.created}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmModifiedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteModified">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_modified">modified</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputModifiedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmCreatedComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputCreatedComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-	{% if 'Page' == classApiMethodMethod %}
-														<span id="{{classApiMethodMethod}}_objectId" class="varComputateWebsite{{pk}}ObjectId varComputateWebsiteObjectId ">{{computateWebsite_.objectId}}</span>
-	{% endif %}
+{%- macro inputModifiedComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_modified">
+  {%- endif %}
+              <sl-input
+                  type="text"
+                  readonly
+                  placeholder="modified"
+                  help-text="A modified timestamp for this record in the database"
+                  label="modified"
+                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classComputateWebsite inputComputateWebsite{{pk}}Modified "
+                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                  id="{{classApiMethodMethod}}_modified"
+                  value="{%- if computateWebsite_.modified is defined %}{{ formatZonedDateTime(computateWebsite_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                  >
+              </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Modified varComputateWebsiteModified ">{{computateWebsite_.modified}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmObjectIdComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteObjectId">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_objectId">ID</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputObjectIdComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmModifiedComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputModifiedComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputArchivedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-		{% if roleForWriteBool == true %}
-	{% if 'Page' == classApiMethodMethod %}
-															<sl-checkbox
-																id="{{classApiMethodMethod}}_archived"
-																value="true"
-	{% else %}
-														<sl-select
-															id="{{classApiMethodMethod}}_archived"
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-															class="{{classApiMethodMethod}}_archived classComputateWebsite inputComputateWebsite{{pk}}Archived w3-input w3-border "
-															name="setArchived"
-	{% else %}
-		{% if 'Page' == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_archived classComputateWebsite inputComputateWebsite{{pk}}Archived w3-input w3-border "
-																name="setArchived"
-		{% else %}
-																class="{{classApiMethodMethod}}_archived setArchived valueArchived classComputateWebsite inputComputateWebsite{{pk}}Archived w3-input w3-border "
-																name="setArchived"
-		{% endif %}
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to archive that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setArchived', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_archived')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_archived')); }); }"
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-		{% if computateWebsite_.archived is defined %}
-																checked="checked"
-		{% endif %}
-																></sl-checkbox>
-	{% else %}
-															>
-															<sl-option value="" selected="selected"></sl-option>
-															<sl-option value="true">true</sl-option>
-															<sl-option value="false">false</sl-option>
-														</sl-select>
-	{% endif %}
+{%- macro inputArchivedComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+              <sl-checkbox
+                  id="{{classApiMethodMethod}}_archived"
+                  value="true"
+  {%- else %}
+              <sl-select
+                  id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="archived"
+                  help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_archived classComputateWebsite inputComputateWebsite{{pk}}Archived "
+                  name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_archived classComputateWebsite inputComputateWebsite{{pk}}Archived "
+                  name="setArchived"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classComputateWebsite inputComputateWebsite{{pk}}Archived "
+                  name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if computateWebsite_.archived is defined %}
+                  checked="checked"
+    {%- endif %}
+                  >archived</sl-checkbox>
+  {%- else %}
+                  >
+                <sl-option value="" selected="selected"></sl-option>
+                <sl-option value="true">true</sl-option>
+                <sl-option value="false">false</sl-option>
+              </sl-select>
+  {%- endif %}
 
-													{% else %}
-														{% if userKey in computateWebsite_.userKeys %}
-															<span class="varComputateWebsite{{pk}}Archived varComputateWebsiteArchived ">{{computateWebsite_.archived}}</span>
-			{% endif %}
-		{% else %}
-														<span class="varComputateWebsite{{pk}}Archived varComputateWebsiteArchived ">{{computateWebsite_.archived}}</span>
-		{% endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Archived varComputateWebsiteArchived ">{{computateWebsite_.archived}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmArchivedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteArchived">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_archived">archived</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputArchivedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmArchivedComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputArchivedComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputDeletedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-		{% if roleForWriteBool == true %}
-	{% if 'Page' == classApiMethodMethod %}
-															<sl-checkbox
-																id="{{classApiMethodMethod}}_deleted"
-																value="true"
-	{% else %}
-														<sl-select
-															id="{{classApiMethodMethod}}_deleted"
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-															class="{{classApiMethodMethod}}_deleted classComputateWebsite inputComputateWebsite{{pk}}Deleted w3-input w3-border "
-															name="setDeleted"
-	{% else %}
-		{% if 'Page' == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_deleted classComputateWebsite inputComputateWebsite{{pk}}Deleted w3-input w3-border "
-																name="setDeleted"
-		{% else %}
-																class="{{classApiMethodMethod}}_deleted setDeleted valueDeleted classComputateWebsite inputComputateWebsite{{pk}}Deleted w3-input w3-border "
-																name="setDeleted"
-		{% endif %}
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-															onchange="var confirmResponse = confirm('Are you sure you want to delete that?'); if(confirmResponse) { patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setDeleted', this.checked, function() { addGlow(document.querySelector('.{{classApiMethodMethod}}_deleted')); }, function() { addError(document.querySelector('.{{classApiMethodMethod}}_deleted')); }); }"
-	{% endif %}
-	{% if 'Page' == classApiMethodMethod %}
-		{% if computateWebsite_.deleted is defined %}
-																checked="checked"
-		{% endif %}
-																></sl-checkbox>
-	{% else %}
-															>
-															<sl-option value="" selected="selected"></sl-option>
-															<sl-option value="true">true</sl-option>
-															<sl-option value="false">false</sl-option>
-														</sl-select>
-	{% endif %}
+{%- macro inputDeletedComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_deleted">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+              <sl-checkbox
+                  id="{{classApiMethodMethod}}_deleted"
+                  value="true"
+  {%- else %}
+              <sl-select
+                  id="{{classApiMethodMethod}}_deleted"
+  {%- endif %}
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="deleted"
+                  help-text="For deleting this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_deleted classComputateWebsite inputComputateWebsite{{pk}}Deleted "
+                  name="setDeleted"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_deleted classComputateWebsite inputComputateWebsite{{pk}}Deleted "
+                  name="setDeleted"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classComputateWebsite inputComputateWebsite{{pk}}Deleted "
+                  name="setDeleted"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if computateWebsite_.deleted is defined %}
+                  checked="checked"
+    {%- endif %}
+                  >deleted</sl-checkbox>
+  {%- else %}
+                  >
+                <sl-option value="" selected="selected"></sl-option>
+                <sl-option value="true">true</sl-option>
+                <sl-option value="false">false</sl-option>
+              </sl-select>
+  {%- endif %}
 
-													{% else %}
-														{% if userKey in computateWebsite_.userKeys %}
-															<span class="varComputateWebsite{{pk}}Deleted varComputateWebsiteDeleted ">{{computateWebsite_.deleted}}</span>
-			{% endif %}
-		{% else %}
-														<span class="varComputateWebsite{{pk}}Deleted varComputateWebsiteDeleted ">{{computateWebsite_.deleted}}</span>
-		{% endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Deleted varComputateWebsiteDeleted ">{{computateWebsite_.deleted}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmDeletedComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteDeleted">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_deleted">deleted</label>
-												</div>
-												<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputDeletedComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmDeletedComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDeletedComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputNameComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-		{% if roleForWriteBool == true %}
-														<sl-input
-															type="text"
-															placeholder="website name"
-															title="The website name. "															id="{{classApiMethodMethod}}_name"
-	{% if "Page" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_name setName classComputateWebsite inputComputateWebsite{{pk}}Name w3-input w3-border "
-																name="setName"
-	{% else %}
-		{% if "PATCH" == classApiMethodMethod %}
-																class="{{classApiMethodMethod}}_name setName classComputateWebsite inputComputateWebsite{{pk}}Name w3-input w3-border "
-																name="setName"
-		{% else %}
-																class="{{classApiMethodMethod}}_name valueName w3-input w3-border classComputateWebsite inputComputateWebsite{{pk}}Name w3-input w3-border "
-																name="name"
-		{% endif %}
-	{% endif %}
-	{% if "Page" == classApiMethodMethod %}
-																onclick="removeGlow(this); "
-																onchange="patch{{classSimpleName}}Val([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:{{pk}}' }], 'setName', this.value, function() { addGlow(document.querySelector('#{{classApiMethodMethod}}_name')); }, function() { addError(document.querySelector('#{{classApiMethodMethod}}_name')); }); "
-	{% endif %}
-	{% if "Page" == classApiMethodMethod %}
-															value="{{computateWebsite_.name}}"
-	{% endif %}
-														></sl-input>
+{%- macro inputNameComputateWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+            <form id="PageForm_name">
+  {%- endif %}
+              <sl-input
+                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                  placeholder="website name"
+                  label="website name"
+                  help-text="
+The website name. "
+                  id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                  data-pk="{{ pk }}"
+                  class="label-on-left {{classApiMethodMethod}}_name setName classComputateWebsite inputComputateWebsite{{pk}}Name "
+                  name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                  class="label-on-left {{classApiMethodMethod}}_name setName classComputateWebsite inputComputateWebsite{{pk}}Name "
+                  name="setName"
+    {%- else %}
+                  class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classComputateWebsite inputComputateWebsite{{pk}}Name "
+                  name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                  value="{{computateWebsite_.name}}"
+  {%- endif %}
+                  ></sl-input>
 
-													{% else %}
-														{% if userKey in computateWebsite_.userKeys %}
-															<span class="varComputateWebsite{{pk}}Name varComputateWebsiteName ">{{computateWebsite_.name}}</span>
-			{% endif %}
-		{% else %}
-														<span class="varComputateWebsite{{pk}}Name varComputateWebsiteName ">{{computateWebsite_.name}}</span>
-		{% endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+            </form>
+  {%- endif %}
+  {%- if userKey in computateWebsite_.userKeys %}
+            <span class="varComputateWebsite{{pk}}Name varComputateWebsiteName ">{{computateWebsite_.name}}</span>
+  {%- endif %}
 {%- endmacro %}
 
-{% macro htmNameComputateWebsitePage(roleForWriteBool=false, roleForReadBool=false) %}
-								<div class="w3-cell w3-cell-top w3-center w3-mobile ">
-									<div class="w3-padding ">
-										<div id="suggest{{classApiMethodMethod}}ComputateWebsiteName">
-											<div class="w3-card ">
-												<div class="w3-cell-row w3-">
-													<label for="{{classApiMethodMethod}}_name">website name</label>
-												</div>
-											<div class="w3-cell-row w3-padding ">
-													<div class="w3-cell ">
-														{{ inputNameComputateWebsitePage(roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+{%- macro htmNameComputateWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNameComputateWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

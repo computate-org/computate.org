@@ -195,8 +195,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String SitePage_ThisName_enUS = "this article";
 	public static final String SitePage_A_enUS = "a ";
 	public static final String SitePage_TheName_enUS = "thearticle";
-	public static final String SitePage_NameSingular_enUS = "article";
-	public static final String SitePage_NamePlural_enUS = "articles";
+	public static final String SitePage_SingularName_enUS = "article";
+	public static final String SitePage_PluralName_enUS = "articles";
 	public static final String SitePage_NameActual_enUS = "current article";
 	public static final String SitePage_AllName_enUS = "all the articles";
 	public static final String SitePage_SearchAllNameBy_enUS = "search articles by ";

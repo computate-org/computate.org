@@ -686,6 +686,22 @@ public class ComputateCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
+					case "setCourseName":
+							o2.setCourseName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(ComputateCourse.VAR_courseName + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCourseName());
+						break;
+					case "setCourseDescription":
+							o2.setCourseDescription(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(ComputateCourse.VAR_courseDescription + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCourseDescription());
+						break;
 					case "setInheritPk":
 							o2.setInheritPk(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -733,22 +749,6 @@ public class ComputateCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(ComputateCourse.VAR_userKey + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUserKey());
-						break;
-					case "setCourseName":
-							o2.setCourseName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(ComputateCourse.VAR_courseName + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCourseName());
-						break;
-					case "setCourseDescription":
-							o2.setCourseDescription(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(ComputateCourse.VAR_courseDescription + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCourseDescription());
 						break;
 				}
 			}
@@ -1069,6 +1069,24 @@ public class ComputateCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case ComputateCourse.VAR_courseName:
+						o2.setCourseName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(ComputateCourse.VAR_courseName + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCourseName());
+						break;
+					case ComputateCourse.VAR_courseDescription:
+						o2.setCourseDescription(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(ComputateCourse.VAR_courseDescription + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCourseDescription());
+						break;
 					case ComputateCourse.VAR_inheritPk:
 						o2.setInheritPk(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1122,24 +1140,6 @@ public class ComputateCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(ComputateCourse.VAR_userKey + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUserKey());
-						break;
-					case ComputateCourse.VAR_courseName:
-						o2.setCourseName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(ComputateCourse.VAR_courseName + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCourseName());
-						break;
-					case ComputateCourse.VAR_courseDescription:
-						o2.setCourseDescription(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(ComputateCourse.VAR_courseDescription + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCourseDescription());
 						break;
 					}
 				}
