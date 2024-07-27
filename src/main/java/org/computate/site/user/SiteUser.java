@@ -11,13 +11,13 @@ import org.computate.site.request.SiteRequest;
  * Model: true
  * Api: true
  * Page: true
- * SuperPage.enUS: BaseModelPage
+ * SuperPage: BaseModelPage
  * Indexed: true
  * SqlOrder: 1
  * Order: 3
  * 
- * ApiTag.enUS: User
- * ApiUri.enUS: /api/user
+ * ApiTag: User
+ * ApiUri: /api/user
  * 
  * ApiMethod:
  *   Search:
@@ -30,16 +30,16 @@ import org.computate.site.request.SiteRequest;
  *     ApiUri: /user
  * 
  * Keyword: classSimpleNameSiteUser
- * Role.enUS: SiteAdmin
+ * Role: SiteAdmin
  * Filter: userId
  * 
- * AName.enUS: a site user
+ * AName: a site user
  * Color: 2017-shaded-spruce
  * IconGroup: regular
  * IconName: user-cog
  * 
  * RoleUser: true
- * Role.enUS: SiteAdmin
+ * Role: SiteAdmin
  * Description: A user record for each site user
  */
 public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUser {
@@ -120,7 +120,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * Persist: true
 	 * HtmRow: 3
 	 * HtmCell: 2
-	 * DisplayName.enUS: see archived
+	 * DisplayName: see archived
 	 * Description: A user field allowing a user to see archived records
 	 */
 	protected void _seeArchived(Wrap<Boolean> c) {
@@ -133,7 +133,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * Persist: true
 	 * HtmRow: 3
 	 * HtmCell: 3
-	 * DisplayName.enUS: see deleted
+	 * DisplayName: see deleted
 	 * Description: A user field allowing a user to see deleted records
 	 */
 	protected void _seeDeleted(Wrap<Boolean> c) {

@@ -70,7 +70,7 @@
           });
         } else {
           window.sitePage = JSON.parse(document.querySelector('.pageForm .sitePage')?.value);
-        {% if  is defined %}
+        {% if id is defined %}
           // PATCH created
           document.querySelector('#Page_created')?.addEventListener('sl-change', (event) => {
             const form = document.querySelector('#PageForm_created');
@@ -891,32 +891,19 @@
               <div id="site-calendar"><!-- // --></div>
             </div>
               {{ htmPaginationButtonsSitePagePage() }}
-            <div class="grid-mode-details" id="site-results-grid">
+            <div class="grid-mode-details">
             <div>
                 <i class="fad fa-newspaper site-result-icon "></i>
               <sl-dropdown>
-                <sl-button slot="trigger" caret>ID</sl-button>
+                <sl-button slot="trigger" caret>title</sl-button>
                 <sl-menu>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by ID ascending
+                    sort by title ascending
                   </sl-menu-item>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by ID descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
+                    sort by title descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -933,42 +920,21 @@
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>URL</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by URL ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by URL descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
+            </div>
+            <div class="grid-mode-details" id="site-results-grid">
               {% for item in listSitePage%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fad fa-newspaper site-result-icon "></i>
-                <div>{{ item.objectId }}</div>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
-                <div>{{ item.url }}</div>
+                <div>{{ item.title }}</div>
+                <div>{{ item.pageUrlId }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnObjectId is defined %}
+                      {% if getColumnTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnUrl is defined %}
+                      {% if getColumnPageUrlId is defined %}
                         <div>
                         </div>
                       {% endif %}

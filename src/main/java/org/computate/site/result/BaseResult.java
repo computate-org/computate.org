@@ -53,7 +53,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * VarCreated: true
 	 * HtmRow: 1
 	 * HtmCell: 2
-	 * HtmColumn: 2
 	 * DisplayName.enUS: created
 	 * FormatHtm: MMM d, yyyy h:mm:ss a
 	 * Description: A created timestamp for this record in the database
@@ -168,7 +167,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * VarTitle: true
-	 * HtmColumn: 3
 	 * Description: The title of this object
 	 */
 	protected void _objectTitle(Wrap<String> w) {
@@ -179,10 +177,8 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * Persist: true
 	 * DocValues: true
 	 * VarId: true
-	 * UrlVar: pageUrlId
 	 * HtmRow: 1
 	 * HtmCell: 4
-	 * HtmColumn: 1
 	 * DisplayName.enUS: ID
 	 * Description: A URL friendly unique ID for this object
 	 */

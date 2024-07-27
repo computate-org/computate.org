@@ -30,13 +30,14 @@ import io.vertx.core.Promise;
 /**
  * Api: true
  * Page: true
- * SuperPage.enUS: BaseResultPage
+ * SuperPage: BaseResultPage
+ * PageTemplates: enUS/article
  * Indexed: true
  * SqlOrder: 100
  * Order: 100
  * 
- * ApiTag.enUS: Page
- * ApiUri.enUS: /api/page
+ * ApiTag: Page
+ * ApiUri: /api/page
  * 
  * ApiMethod:
  *   Search:
@@ -48,7 +49,7 @@ import io.vertx.core.Promise;
  *     Page: SitePagePage
  *     ApiUri: /page
  * 
- * AName.enUS: an article
+ * AName: an article
  * Color: 2017-shaded-spruce
  * IconGroup: duotone
  * IconName: newspaper
@@ -57,7 +58,7 @@ import io.vertx.core.Promise;
  * Sort.desc: lessonNum
  * 
  * PublicRead: true
- * Role.enUS: SiteAdmin
+ * Role: SiteAdmin
  * Description: Read the latest computate articles to learn more
  */
 public class SitePage extends SitePageGen<BaseResult> {
@@ -215,7 +216,6 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * Persist: true
 	 * HtmRow: 3
 	 * HtmCell: 2
-	 * HtmColumn: 4
 	 * Facet: true
 	 * DisplayName: URL
 	 * Description: The URL for this page. 
@@ -249,6 +249,8 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * Persist: true
 	 * DisplayName: title
 	 * Description: The title of this page. 
+	 * UrlVar: pageUrlId
+	 * HtmColumn: 1
 	 */
 	protected void _title(Wrap<String> w) {
 		StringBuilder b = new StringBuilder();
@@ -266,7 +268,7 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * HtmRow: 3
 	 * HtmCell: 3
 	 * Facet: true
-	 * DisplayName.enUS: author
+	 * DisplayName: author
 	 * Description: The author
 	 */
 	protected void _author(Wrap<String> w) {
@@ -279,7 +281,7 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * HtmRow: 4
 	 * HtmCell: 1
 	 * Facet: true
-	 * DisplayName.enUS: imageUri
+	 * DisplayName: imageUri
 	 * Description: The page image URI
 	 */
 	protected void _pageImageUri(Wrap<String> w) {
@@ -332,13 +334,11 @@ public class SitePage extends SitePageGen<BaseResult> {
 		w.o(String.format("%s_%s", SitePage.CLASS_SIMPLE_NAME, pageId));
 	}
 
+	/**
+	 * HtmColumn: 2
+	 */
 	@Override
 	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
-	}
-
-	@Override
-	protected void _pageUrlPk(Wrap<String> w) {
 		w.o(url);
 	}
 }

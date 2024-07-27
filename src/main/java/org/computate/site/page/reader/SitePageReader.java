@@ -331,6 +331,7 @@ public class SitePageReader extends SitePageReaderGen<Object> {
 				page.persistForClass(SitePage.VAR_author, ctx.getString(SitePage.VAR_author));
 				page.persistForClass(SitePage.VAR_uri, uri);
 				page.persistForClass(SitePage.VAR_url, url);
+				page.persistForClass(SitePage.VAR_title, ctx.getString(SitePage.VAR_title));
 				page.persistForClass(SitePage.VAR_pageId, ctx.getString(SitePage.VAR_pageId));
 				page.persistForClass(SitePage.VAR_pageImageUri, ctx.getString(SitePage.VAR_pageImageUri));
 				page.promiseDeepForClass(siteRequest).onSuccess(a -> {

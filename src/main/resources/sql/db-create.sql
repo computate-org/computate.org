@@ -1,4 +1,46 @@
 
+CREATE TABLE IF NOT EXISTS CompanyEvent();
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS location point;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS eventName text;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyEvent ADD COLUMN IF NOT EXISTS userKey bigint;
+
+CREATE TABLE IF NOT EXISTS CompanyCourse();
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS courseName text;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS courseDescription text;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyCourse ADD COLUMN IF NOT EXISTS userKey bigint;
+
+CREATE TABLE IF NOT EXISTS CompanyResearch();
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyResearch ADD COLUMN IF NOT EXISTS userKey bigint;
+
+CREATE TABLE IF NOT EXISTS CompanyWebsite();
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyWebsite ADD COLUMN IF NOT EXISTS userKey bigint;
+
 CREATE TABLE IF NOT EXISTS SiteUser();
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userId text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userName text;
@@ -16,44 +58,18 @@ ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS deleted boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS sessionId text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userKey bigint;
 
-CREATE TABLE IF NOT EXISTS ComputateCourse();
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS courseName text;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS courseDescription text;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS pk bigserial primary key;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS inheritPk text;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS created timestamp with time zone;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS archived boolean;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS deleted boolean;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS sessionId text;
-ALTER TABLE ComputateCourse ADD COLUMN IF NOT EXISTS userKey bigint;
-
-CREATE TABLE IF NOT EXISTS ComputateResearch();
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS name text;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS pk bigserial primary key;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS inheritPk text;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS created timestamp with time zone;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS archived boolean;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS deleted boolean;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS sessionId text;
-ALTER TABLE ComputateResearch ADD COLUMN IF NOT EXISTS userKey bigint;
-
-CREATE TABLE IF NOT EXISTS ComputateEvent();
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS location point;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS eventName text;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS pk bigserial primary key;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS inheritPk text;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS created timestamp with time zone;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS archived boolean;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS deleted boolean;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS sessionId text;
-ALTER TABLE ComputateEvent ADD COLUMN IF NOT EXISTS userKey bigint;
-
-CREATE TABLE IF NOT EXISTS ComputateWebsite();
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS name text;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS pk bigserial primary key;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS inheritPk text;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS created timestamp with time zone;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS archived boolean;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS deleted boolean;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS sessionId text;
-ALTER TABLE ComputateWebsite ADD COLUMN IF NOT EXISTS userKey bigint;
+CREATE TABLE IF NOT EXISTS CompanyProduct();
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS pageId text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS resourceUri text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS templateUri text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS uri text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS url text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS title text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS deleted boolean;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyProduct ADD COLUMN IF NOT EXISTS userKey bigint;

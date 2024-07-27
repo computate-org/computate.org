@@ -99,11 +99,12 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.model.event.ComputateEventEnUSGenApiService;
-import org.computate.site.model.course.ComputateCourseEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.model.research.ComputateResearchEnUSGenApiService;
-import org.computate.site.model.website.ComputateWebsiteEnUSGenApiService;
+import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 
 
 /**
@@ -856,11 +857,12 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			ComputateEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			ComputateCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			ComputateResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			ComputateWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();

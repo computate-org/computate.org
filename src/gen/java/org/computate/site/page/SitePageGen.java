@@ -2795,8 +2795,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
 	public static Integer htmColumnSitePage(String var) {
 		switch(var) {
-		case VAR_url:
-			return 4;
+		case VAR_title:
+			return 1;
 			default:
 				return BaseResult.htmColumnBaseResult(var);
 		}

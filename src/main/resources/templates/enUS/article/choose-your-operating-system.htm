@@ -3,7 +3,11 @@
 {% block htmMeta %}
     <meta property="site:pageId" content="choose-your-operating-system"/>
     <meta property="site:uri" content="/en-us/{{ pageId }}"/>
+    <meta property="site:title" content="Choose your operating system"/>
 {% endblock htmMeta %}
+{% block htmTitle %}
+    <title>{{ title }}</title>
+{% endblock htmTitle %}
 {% block htmBodyMiddle %}
       <main>
       <div class="w3-padding">

@@ -109,20 +109,8 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 	public static final String configureKafkaSuccess1 = "The Kafka producer was initialized successfully. ";
 	public static final String configureKafkaSuccess = configureKafkaSuccess1;
 
-	public static final String importTimerScheduling1 = "Scheduling the %s import at %s";
-	public static final String importTimerScheduling = importTimerScheduling1;
-	public static final String importTimerSkip1 = "Skip importing %s data. ";
-	public static final String importTimerSkip = importTimerSkip1;
-	public static final String importTimerFail1 = "Scheduling the import of %s data failed. ";
-	public static final String importTimerFail = importTimerFail1;
-
 	public static final String importDataSkip1 = "The data import is disabled. ";
 	public static final String importDataSkip = importDataSkip1;
-
-	public static final String importDataClassComplete1 = "Configuring the import of %s data completed. ";
-	public static final String importDataClassComplete = importDataClassComplete1;
-	public static final String importDataClassFail1 = "Configuring the import of %s data failed. ";
-	public static final String importDataClassFail = importDataClassFail1;
 
 
 	//////////////
@@ -264,7 +252,7 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] WorkerVerticleVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureSharedWorkerExecutorFail1, configureSharedWorkerExecutorComplete1, configureKafkaSuccess1, importTimerScheduling1, importTimerSkip1, importTimerFail1, importDataSkip1, importDataClassComplete1, importDataClassFail1 };
+	public static final String[] WorkerVerticleVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureSharedWorkerExecutorFail1, configureSharedWorkerExecutorComplete1, configureKafkaSuccess1, importDataSkip1 };
 
 	public static final String CLASS_SIMPLE_NAME = "WorkerVerticle";
 
