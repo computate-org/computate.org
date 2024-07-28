@@ -51,6 +51,7 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import com.google.common.io.Resources;
 import java.nio.charset.StandardCharsets;
+import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -1598,7 +1599,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 	}
 
 	public String templateSearchPageCompanyEvent() {
-		return "/enUS/CompanyEventPage.htm";
+		return "/en-us/CompanyEventPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyEvent(SearchList<CompanyEvent> listCompanyEvent) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1616,6 +1617,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 				siteRequest.setRequestPk(listCompanyEvent.get(0).getPk());
 			page.setSearchListCompanyEvent_(listCompanyEvent);
 			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
 			page.promiseDeepCompanyEventPage(siteRequest).onSuccess(a -> {
 				try {
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config);

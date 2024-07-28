@@ -99,12 +99,20 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
-import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.page.SitePageEnUSApiServiceImpl;
+import org.computate.site.page.SitePage;
 
 
 /**
@@ -857,12 +865,14 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
+			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
 			LOG.info("The API was configured properly.");
 			promise.complete();
@@ -883,7 +893,7 @@ public class MainVerticle extends AbstractVerticle {
 			router.get("/").handler(handler -> {
 				try {
 					String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
-					String pageTemplateUri = "enUS/HomePage.htm";
+					String pageTemplateUri = "/en-us/HomePage.htm";
 					Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 					String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config());
@@ -895,76 +905,6 @@ public class MainVerticle extends AbstractVerticle {
 					LOG.error("Failed to load page. ", ex);
 					handler.fail(ex);
 				}
-			});
-
-			router.getWithRegex("(?<uri>\\/(?<lang>(?<lang1>[a-z][a-z])-(?<lang2>[a-z][a-z]))\\/.*)").handler(handler -> {
-				String uri = handler.pathParam("uri");
-				String url = String.format("%s%s", config().getString(ConfigKeys.SITE_BASE_URL), uri);
-				String lang = String.format("%s%s", handler.pathParam("lang1"), handler.pathParam("lang2").toUpperCase());
-				JsonObject query = new JsonObject();
-				MultiMap queryParams = handler.queryParams();
-				for(String name : queryParams.names()) {
-					JsonArray array = query.getJsonArray(name);
-					List<String> vals = queryParams.getAll(name);
-					if(array == null) {
-						array = new JsonArray();
-						query.put(name, array);
-					}
-					for(String val : vals) {
-						array.add(val);
-					}
-				}
-				SiteRequest siteRequest = new SiteRequest();
-				siteRequest.setConfig(config());
-				siteRequest.setWebClient(webClient);
-				siteRequest.setServiceRequest(null);
-				siteRequest.setRequestHeaders(handler.request().headers());
-				siteRequest.initDeepSiteRequest();
-				SearchList<SitePage> l = new SearchList<>();
-				l.q("*:*");
-				l.setC(SitePage.class);
-				l.fq(String.format("%s_docvalues_string:%s", SitePage.VAR_uri, SearchTool.escapeQueryChars(uri)));
-				l.setStore(true);
-				handler.response().headers().add("Content-Type", "text/html");
-				l.promiseDeepForClass(siteRequest).onSuccess(a -> {
-					SitePage result = l.first();
-					try {
-						String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
-						String pageTemplateUri = result.getTemplateUri();
-						Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-						String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-						JsonObject ctx = ComputateConfigKeys.getPageContext(config());
-						Matcher m = Pattern.compile("<meta property=\"([^\"]+)\"\\s+content=\"([^\"]*)\"/>", Pattern.MULTILINE).matcher(template);
-						boolean trouve = m.find();
-						while (trouve) {
-							String siteKey = m.group(1);
-							if(siteKey.startsWith("site:")) {
-								String key = StringUtils.substringAfter(siteKey, "site:");
-								String val = m.group(2);
-								if(val instanceof String) {
-									String rendered = jinjava.render(val, ctx.getMap());
-									ctx.put(key, rendered);
-								} else {
-									ctx.put(key, val);
-								}
-								trouve = m.find();
-							}
-							trouve = m.find();
-						}
-
-						String renderedTemplate = jinjava.render(template, ctx.getMap());
-						Buffer buffer = Buffer.buffer(renderedTemplate);
-						handler.response().putHeader("Content-Type", "text/html");
-						handler.end(buffer);
-					} catch (Exception ex) {
-						LOG.error(String.format("Failed to render page %s", uri), ex);
-						handler.fail(ex);
-					}
-					
-				}).onFailure(ex -> {
-					LOG.error(String.format("Failed to render page %s", uri), ex);
-					handler.fail(ex);
-				});
 			});
 
 			StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(false);

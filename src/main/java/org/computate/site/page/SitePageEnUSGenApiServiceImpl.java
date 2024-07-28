@@ -1082,7 +1082,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateSearchPageSitePage() {
-		return "/enUS/SitePagePage.htm";
+		return "en-us/SitePagePage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageSitePage(SearchList<SitePage> listSitePage) {
 		Promise<ServiceResponse> promise = Promise.promise();

@@ -36,18 +36,18 @@ import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.reader.SitePageReader;
-import org.computate.site.model.event.CompanyEvent;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
 import org.computate.site.model.course.CompanyCourse;
 import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEvent;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
 import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
-import org.computate.site.page.SitePage;
-import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.page.SitePage;
+import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -301,10 +301,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			siteRequest.setWebClient(webClient);
 			siteRequest.initDeepSiteRequest(siteRequest);
 			String templatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
-			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, webClient, null, null, jinjava);
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, webClient, null, null, jinjava);
-			apiSitePage.importTimer(Paths.get(templatePath, "enUS/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q1 -> {
-				apiCompanyProduct.importTimer(Paths.get(templatePath, "enUS/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q2 -> {
+			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, webClient, null, null, jinjava);
+			apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q1 -> {
+				apiSitePage.importTimer(Paths.get(templatePath, "/en-us/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q2 -> {
 					LOG.info("data import complete");
 					promise.complete();
 				}).onFailure(ex -> promise.fail(ex));

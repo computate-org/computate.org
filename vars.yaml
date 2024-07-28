@@ -173,7 +173,7 @@ STATIC_BASE_URL: "{{ SITE_BASE_URL }}/static"
 TEMPLATE_PATH: "{{ SITE_SRC }}/src/main/resources/templates"
 # The path to the site page templates. 
 DYNAMIC_PAGE_PATHS:
-  - "enUS/article"
+  - "en-us/article"
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
 FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
 # Site default theme, light or dark. 
@@ -423,6 +423,3 @@ ENABLE_OPENID_CONNECT: true
 WRITE_API: true
 # Write code comments into generated code. 
 WRITE_COMMENTS: true
-
-ENABLE_IMPORT_DATA_SitePage: true
-ENABLE_IMPORT_DATA_CompanyProduct: true

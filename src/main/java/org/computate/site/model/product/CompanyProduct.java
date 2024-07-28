@@ -10,7 +10,7 @@ import io.vertx.pgclient.data.Point;
  * 
  * Api: true
  * Page: true
- * PageTemplates: enUS/product
+ * PageTemplates: /en-us/product
  * SuperPage: BaseResultPage
  * Indexed: true
  * Description: See the computate products that will help you build your own data-driven platforms
