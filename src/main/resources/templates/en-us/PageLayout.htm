@@ -2,13 +2,13 @@
 <html lang="{{ SITE_LOCALE }}" class="sl-theme-{{ SITE_THEME }}">
   <head>
 {% block htmHeadPageLayout %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+{% block htmMetaPageLayout %}
+{% endblock htmMetaPageLayout %}
 {% block htmTitlePageLayout %}
     <title>computate-smart-laptop-challenge</title>
 {% endblock htmTitlePageLayout %}
-{% block htmMetaPageLayout %}
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-{% endblock htmMetaPageLayout %}
 {% block htmStylesPageLayout %}
     <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
     <!-- <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/w3.css">  -->
