@@ -94,14 +94,6 @@
         <sl-separator></sl-separator>
         <ul>
           <li>
-            <sl-tooltip placement="right" content="Read the latest computate articles to learn more">
-              <sl-button href="http://localhost:10200/page">
-                <i slot="prefix" class="fad fa-newspaper "></i>
-                articles
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
             <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
               <sl-button href="http://localhost:10200/course">
                 <i slot="prefix" class="far fa-notebook "></i>
@@ -110,10 +102,10 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="See the live websites built with computate">
-              <sl-button href="http://localhost:10200/website">
-                <i slot="prefix" class="far fa-globe-pointer "></i>
-                websites
+            <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
+              <sl-button href="http://localhost:10200/event">
+                <i slot="prefix" class="fad fa-map-location-dot "></i>
+                events
               </sl-button>
             </sl-tooltip>
           </li>
@@ -126,10 +118,18 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
-              <sl-button href="http://localhost:10200/event">
-                <i slot="prefix" class="fad fa-map-location-dot "></i>
-                events
+            <sl-tooltip placement="right" content="See the live websites built with computate">
+              <sl-button href="http://localhost:10200/website">
+                <i slot="prefix" class="far fa-globe-pointer "></i>
+                websites
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="Read the latest computate articles to learn more">
+              <sl-button href="http://localhost:10200/page">
+                <i slot="prefix" class="fad fa-newspaper "></i>
+                articles
               </sl-button>
             </sl-tooltip>
           </li>
@@ -195,42 +195,40 @@
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
       </main>
-      <sl-drawer label="Drawer" placement="end" id="search-drawer">
-      </sl-drawer>
-      {% if GITHUB_ORG is defined %}
-        <footer id="footer-open-source" class="display-flex-center ">
-          <sl-icon library="fa" name="fab-square-github" family="brands"></sl-icon>
+      <footer class="split-block ">
+        {% if GITHUB_ORG is defined %}
+        <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
           <div>
             <div>
-              <span>This site is open source. </span>
+              <i class="fa-brands fa-github fa-5x "></i>
             </div>
             <div>
-              <a href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">View the source code here on Github. </a>
+              This site is open source. 
             </div>
           </div>
-        </footer>
-      {% endif %}
-      <footer id="footer-generated-by">
-        <div>
-          <a href="https://www.computate.org/" target="_blank">
-            <span>Generated with </span>
-          </a>
-        </div>
-        <div>
-          <a href="https://www.computate.org/" target="_blank">
-            <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" class="inline-image"/>
-          </a>
-        </div>
+        </sl-button>
+        {% endif %}
+        <sl-button size="large" id="footer-generated-by" href="https://www.computate.org/" target="_blank">
+          <div>
+            <div>Generated with </div>
+            <div>
+              <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg"/>
+            </div>
+          </div>
+        </sl-button>
+        {% if SITE_POWERED_BY_URL is defined %}
+        <sl-button size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+          <div>
+            <div>
+              <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>
+            </div>
+            <div>
+              Powered by {{ SITE_POWERED_BY_NAME }}
+            </div>
+          </div>
+        </sl-button>
+        {% endif %}
       </footer>
-      {% if SITE_POWERED_BY_URL is defined %}
-        <footer id="footer-powered-by" class="display-flex-center ">
-          <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}" class="inline-image"/>
-          <a href="{{ SITE_POWERED_BY_URL }}" target="_blank">
-            <span>Powered by </span>
-            <span>{{ SITE_POWERED_BY_NAME }}</span>
-          </a>
-        </footer>
-      {% endif %}
     </div>
 {% endblock htmBodyEndPageLayout %}
 {% endblock htmBodyPageLayout %}

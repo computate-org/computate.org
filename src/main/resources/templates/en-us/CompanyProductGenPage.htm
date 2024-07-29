@@ -21,7 +21,7 @@
 {%- block htmScriptsBaseResultPage %}
 {{ super() }}
 {%- block htmScriptsCompanyProductPage %}
-    <script src="{{staticBaseUrl}}/js/en-us/CompanyProductPage.js"></script>
+    <script src="{{staticBaseUrl}}/js/enUS/CompanyProductPage.js"></script>
 {%- endblock htmScriptsCompanyProductPage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -811,7 +811,7 @@
             </div>
             {%- endmacro htmBodyAllCompanyProductPage() %}
 {%- macro htmSearchButtonsCompanyProductPage() %}
-        <sl-button-group id="htmSearchButtons">
+        <div id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for products">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
               <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
@@ -856,52 +856,49 @@
               Api
             </sl-button>
           </sl-tooltip>
-        </sl-button-group>
+        </div>
 {%- endmacro htmSearchButtonsCompanyProductPage() %}
 
 {%- macro htmPaginationButtonsCompanyProductPage() %}
             <div id="htmPaginationButtons">
-              <sl-button-group id="htmPaginationButtons">
-                <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show half the results">
-                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-minus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show double the results">
-                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                    <i slot="prefix" class="fas fa-plus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the results as details">
+                <sl-button id="grid-toggle-details">
+                  <i class="fa-solid fa-list"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as a list">
+                <sl-button id="grid-toggle-list">
+                  <i class="fa-solid fa-bars"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as cards">
+                <sl-button id="grid-toggle-card">
+                  <i class="fa-solid fa-grid"></i>
+                </sl-button>
+              </sl-tooltip>
               <sl-divider vertical></sl-divider>
-              <sl-button-group>
-                <sl-tooltip placement="top" content="Show the results as details">
-                  <sl-button id="grid-toggle-details">
-                    <i class="fa-solid fa-list"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as a list">
-                  <sl-button id="grid-toggle-list">
-                    <i class="fa-solid fa-bars"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as cards">
-                  <sl-button id="grid-toggle-card">
-                    <i class="fa-solid fa-grid"></i>
-                  </sl-button>
-                </sl-tooltip>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the previous results">
+                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show half the results">
+                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-minus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show double the results">
+                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                  <i slot="prefix" class="fas fa-plus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the next results">
+                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-divider vertical></sl-divider>
+              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyProductPage() %}
 
