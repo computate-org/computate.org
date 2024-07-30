@@ -381,6 +381,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Description: The name of this item
 	 * HtmRow: 10
 	 * HtmCell: 2
+	 * HtmColumn: 1
 	 * Facet: true
 	 **/
 	protected void _name(Wrap<String> w) {}

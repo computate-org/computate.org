@@ -27,6 +27,95 @@
 
 {%- block htmScriptBaseModelPage %}
 {%- block htmScriptWeatherObservedPage %}
+    <script>
+
+      function jsWebsocketWeatherObserved(pk, vars, $response) {
+        {%- block jsWebsocketWeatherObservedPage %}{%- endblock %}
+      }
+
+      function jsTooltipWeatherObserved(e, feature) {
+        {%- block jsTooltipWeatherObservedPage %}{%- endblock %}
+      }
+
+      function htmTooltipWeatherObserved(feature, layer) {
+        return `{%- block htmTooltipWeatherObservedPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipWeatherObservedPage %}`;
+      }
+
+      function jsLegendWeatherObserved(map) {
+{%- block jsLegendWeatherObservedPage %}
+        var div = L.DomUtil.create('div', 'info legend');
+        var htm = '';
+        window.listWeatherObserved.forEach((weatherObserved, index) => {
+          if(weatherObserved.areaServed) {
+            var shapes = [];
+            if(Array.isArray(weatherObserved.areaServed))
+              shapes = shapes.concat(weatherObserved.areaServed);
+            else
+              shapes.push(weatherObserved.areaServed);
+            shapes.forEach(function(shape, index) {
+              htm += htmLegendWeatherObserved(map, shape, weatherObserved, index, shapes.length);
+            });
+          }
+        });
+        div.innerHTML = htm;
+        return div;
+{%- endblock jsLegendWeatherObservedPage %}
+      }
+
+      function htmLegendWeatherObserved(map, shape, weatherObserved, index, count) {
+        var color = weatherObserved.areaServedColors[index];
+        var title = weatherObserved.areaServedTitles[index];
+        var url = weatherObserved.areaServedLinks[index];
+        var htm = '';
+        htm += `<div class="w3-white w3-padding w3-border w3-opacity w3-hover-opacity-off cursor-pointer " style="max-width: 400px; ">
+`;
+        htm += `{%- block htmLegendWeatherObservedPage %}
+    <div class="w3-row " title="${quoteattr(title)}">
+    <div class="w3-col " style="width: 20px; ">
+      <i class="fa-light fa-circle" style="color: ${color}; "></i>
+    </div>
+    <div class="w3-rest text-overflow-ellipsis ">
+      <span class="" data-id="${weatherObserved.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
+    </div>
+    </div>
+{%- endblock htmLegendWeatherObservedPage %}`;
+        htm += `
+</div>
+`;
+        return htm;
+      }
+
+      function jsStyleWeatherObserved(feature) {
+{%- block jsStyleWeatherObservedPage %}
+        if(feature.geometry.type == 'Point') {
+          return {
+            radius: 8
+            , fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 1
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        } else if(feature.geometry.type == 'LineString') {
+          return {
+            color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 5
+            , opacity: 0.7
+          };
+        } else {
+          return {
+             fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 3
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        }
+{%- endblock jsStyleWeatherObservedPage %}
+      }
+    </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
       window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
@@ -56,15 +145,15 @@
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
-          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-details');
           });
-          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-list');
           });
-          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
             document.querySelector('#site-results-grid').classList.add('grid-mode-card');
           });
@@ -85,7 +174,7 @@
               if(t) {
                 var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
                 patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setCreated', s)
+                    , 'setCreated', s
                     , event.currentTarget
                     , function(response, target) { addGlow(target); }
                     , function(response, target) { addError(target); }
@@ -1092,95 +1181,6 @@
           searchpageWeatherObserved();
         });
       });
-    </script>
-    <script>
-
-      function jsWebsocketWeatherObserved(pk, vars, $response) {
-        {%- block jsWebsocketWeatherObservedPage %}{%- endblock %}
-      }
-
-      function jsTooltipWeatherObserved(e, feature) {
-        {%- block jsTooltipWeatherObservedPage %}{%- endblock %}
-      }
-
-      function htmTooltipWeatherObserved(feature, layer) {
-        return `{%- block htmTooltipWeatherObservedPage %}
-<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
-{%- endblock htmTooltipWeatherObservedPage %}`;
-      }
-
-      function jsLegendWeatherObserved(map) {
-{%- block jsLegendWeatherObservedPage %}
-        var div = L.DomUtil.create('div', 'info legend');
-        var htm = '';
-        window.listWeatherObserved.forEach((weatherObserved, index) => {
-          if(weatherObserved.areaServed) {
-            var shapes = [];
-            if(Array.isArray(weatherObserved.areaServed))
-              shapes = shapes.concat(weatherObserved.areaServed);
-            else
-              shapes.push(weatherObserved.areaServed);
-            shapes.forEach(function(shape, index) {
-              htm += htmLegendWeatherObserved(map, shape, weatherObserved, index, shapes.length);
-            });
-          }
-        });
-        div.innerHTML = htm;
-        return div;
-{%- endblock jsLegendWeatherObservedPage %}
-      }
-
-      function htmLegendWeatherObserved(map, shape, weatherObserved, index, count) {
-        var color = weatherObserved.areaServedColors[index];
-        var title = weatherObserved.areaServedTitles[index];
-        var url = weatherObserved.areaServedLinks[index];
-        var htm = '';
-        htm += `<div class="w3-white w3-padding w3-border w3-opacity w3-hover-opacity-off cursor-pointer " style="max-width: 400px; ">
-`;
-        htm += `{%- block htmLegendWeatherObservedPage %}
-    <div class="w3-row " title="${quoteattr(title)}">
-    <div class="w3-col " style="width: 20px; ">
-      <i class="fa-light fa-circle" style="color: ${color}; "></i>
-    </div>
-    <div class="w3-rest text-overflow-ellipsis ">
-      <span class="" data-id="${weatherObserved.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
-    </div>
-    </div>
-{%- endblock htmLegendWeatherObservedPage %}`;
-        htm += `
-</div>
-`;
-        return htm;
-      }
-
-      function jsStyleWeatherObserved(feature) {
-{%- block jsStyleWeatherObservedPage %}
-        if(feature.geometry.type == 'Point') {
-          return {
-            radius: 8
-            , fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 1
-            , opacity: 0.7
-            , fillOpacity: 0.7
-          };
-        } else if(feature.geometry.type == 'LineString') {
-          return {
-            color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 5
-            , opacity: 0.7
-          };
-        } else {
-          return {
-             fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 3
-            , opacity: 0.7
-            , fillOpacity: 0.7
-          };
-        }
-{%- endblock jsStyleWeatherObservedPage %}
-      }
     </script>
 {%- endblock htmScriptWeatherObservedPage %}
 {%- endblock htmScriptBaseModelPage %}
@@ -2677,14 +2677,32 @@
             <div class="grid-mode-details">
             <div>
                 <i class="fas fa-cloud-bolt-sun site-result-icon "></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>name</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by name ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listWeatherObserved%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fas fa-cloud-bolt-sun site-result-icon "></i>
+                <div>{{ item.name }}</div>
               </a>
               {% endfor %}
+                      {% if getColumnName is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
             </div>
             {%- endmacro htmBodyAllWeatherObservedPage() %}
 {%- macro htmSearchButtonsWeatherObservedPage() %}
@@ -3516,7 +3534,7 @@ The mailing address"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.address}}"
+                  value="{{ toJsonObjectString(weatherObserved_.address) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -3721,7 +3739,7 @@ Air temperature time series aggregation"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.airTemperatureTSA}}"
+                  value="{{ toJsonObjectString(weatherObserved_.airTemperatureTSA) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -3885,7 +3903,7 @@ The geographic area where a service or offered item is provided"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.areaServed}}"
+                  value="{{ toJsonObjectString(weatherObserved_.areaServed) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -4418,7 +4436,7 @@ Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint,
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.location}}"
+                  value="{{ toJsonObjectString(weatherObserved_.location) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -4500,7 +4518,7 @@ A List containing a JSON encoded sequence of characters referencing the unique I
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.owner}}"
+                  value="{{ toJsonObjectString(weatherObserved_.owner) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -4623,7 +4641,7 @@ Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be ex
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.pressureTendency}}"
+                  value="{{ toJsonObjectString(weatherObserved_.pressureTendency) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -4664,7 +4682,7 @@ A reference to the device(s) which captured this observation"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.refDevice}}"
+                  value="{{ toJsonObjectString(weatherObserved_.refDevice) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -4828,7 +4846,7 @@ list of uri pointing to additional resources about the item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.seeAlso}}"
+                  value="{{ toJsonObjectString(weatherObserved_.seeAlso) }}"
   {%- endif %}
                   ></sl-input>
 
@@ -5115,7 +5133,7 @@ Categories of visibility"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString weatherObserved_.visibility}}"
+                  value="{{ toJsonObjectString(weatherObserved_.visibility) }}"
   {%- endif %}
                   ></sl-input>
 

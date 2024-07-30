@@ -6041,6 +6041,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static Integer htmColumnWeatherObserved(String var) {
 		switch(var) {
+		case VAR_name:
+			return 1;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}
