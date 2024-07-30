@@ -1429,6 +1429,824 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyEventResponse'
+  /api/weather-observed:
+    get:
+      operationId: searchWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchWeatherObservedResponse'
+    patch:
+      operationId: patchWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHWeatherObservedRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PATCHWeatherObservedResponse'
+    post:
+      operationId: postWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTWeatherObservedRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/POSTWeatherObservedResponse'
+  /api/weather-observed-import:
+    put:
+      operationId: putimportWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTImportWeatherObservedRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PUTImportWeatherObservedResponse'
+  /api/weather-observed/{id}:
+    get:
+      operationId: getWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GETWeatherObservedResponse'
+  /weather-observed/{id}:
+    get:
+      operationId: searchpageWeatherObservedId
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchPageWeatherObservedResponse'
+  /weather-observed:
+    get:
+      operationId: searchpageWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchPageWeatherObservedResponse'
   /api/product:
     get:
       operationId: searchCompanyProduct
@@ -5050,6 +5868,51 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageCompanyEventResponse'
+    SearchWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchWeatherObservedResponse'
+    PATCHWeatherObservedRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHWeatherObservedRequest'
+    PATCHWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHWeatherObservedResponse'
+    POSTWeatherObservedRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTWeatherObservedRequest'
+    POSTWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTWeatherObservedResponse'
+    PUTImportWeatherObservedRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTImportWeatherObservedRequest'
+    PUTImportWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTImportWeatherObservedResponse'
+    GETWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETWeatherObservedResponse'
+    SearchPageWeatherObservedResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageWeatherObservedResponse'
     SearchCompanyProductResponse:
       content:
         application/json; charset=utf-8:
@@ -5293,6 +6156,8 @@ components:
                     type: string
                   courseDescription:
                     type: string
+                  objectTitle:
+                    type: string
     PATCHCompanyCourseRequest:
       allOf:
         - type: object
@@ -5310,6 +6175,13 @@ components:
             removeCourseDescription:
               type: string
             removeAllCourseDescription:
+              type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
               type: string
     PATCHCompanyCourseResponse:
       allOf:
@@ -5329,6 +6201,13 @@ components:
               type: string
             removeAllCourseDescription:
               type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
     POSTCompanyCourseRequest:
       allOf:
         - type: object
@@ -5337,6 +6216,8 @@ components:
               type: string
             courseDescription:
               type: string
+            objectTitle:
+              type: string
     POSTCompanyCourseResponse:
       allOf:
         - type: object
@@ -5344,6 +6225,8 @@ components:
             courseName:
               type: string
             courseDescription:
+              type: string
+            objectTitle:
               type: string
     PUTImportCompanyCourseRequest:
       allOf:
@@ -5358,6 +6241,8 @@ components:
                     type: string
                   courseDescription:
                     type: string
+                  objectTitle:
+                    type: string
     PUTImportCompanyCourseResponse:
       allOf:
         - type: object
@@ -5366,6 +6251,8 @@ components:
                     type: string
                   courseDescription:
                     type: string
+                  objectTitle:
+                    type: string
     GETCompanyCourseResponse:
       allOf:
         - type: object
@@ -5373,6 +6260,8 @@ components:
             courseName:
               type: string
             courseDescription:
+              type: string
+            objectTitle:
               type: string
     SearchPageCompanyCourseResponse:
       allOf:
@@ -5683,6 +6572,1430 @@ components:
     SearchPageCompanyEventResponse:
       allOf:
         - type: string
+    SearchWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            startNum:
+              type: integer
+              minimum: 0
+            foundNum:
+              type: integer
+              minimum: 0
+            returnedNum:
+              type: integer
+              minimum: 0
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  areaServedColors:
+                    type: array
+                    items:
+                      type: string
+                  areaServedTitles:
+                    type: array
+                    items:
+                      type: string
+                  areaServedLinks:
+                    type: array
+                    items:
+                      type: string
+                  areaServed:
+                    type: object
+                  atmosphericPressure:
+                    type: string
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  description:
+                    type: string
+                  dewPoint:
+                    type: string
+                  diffuseIrradiation:
+                    type: string
+                  directIrradiation:
+                    type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
+                  illuminance:
+                    type: string
+                  location:
+                    type: object
+                  name:
+                    type: string
+                  owner:
+                    type: object
+                  precipitation:
+                    type: string
+                  precipitationForecast:
+                    type: string
+                  pressureTendency:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: object
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: object
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
+                    type: string
+                  entityId:
+                    type: string
+                  entityShortId:
+                    type: string
+                  objectTitle:
+                    type: string
+                  objectId:
+                    type: string
+    PATCHWeatherObservedRequest:
+      allOf:
+        - type: object
+          properties:
+            setAddress:
+              type: object
+              nullable: true
+            removeAddress:
+              type: object
+            removeAllAddress:
+              type: object
+            setAirQualityIndex:
+              type: string
+              nullable: true
+            removeAirQualityIndex:
+              type: string
+            removeAllAirQualityIndex:
+              type: string
+            setAirQualityIndexForecast:
+              type: string
+              nullable: true
+            removeAirQualityIndexForecast:
+              type: string
+            removeAllAirQualityIndexForecast:
+              type: string
+            setAirTemperatureForecast:
+              type: string
+              nullable: true
+            removeAirTemperatureForecast:
+              type: string
+            removeAllAirTemperatureForecast:
+              type: string
+            setAirTemperatureTSA:
+              type: object
+              nullable: true
+            removeAirTemperatureTSA:
+              type: object
+            removeAllAirTemperatureTSA:
+              type: object
+            setAlternateName:
+              type: string
+              nullable: true
+            removeAlternateName:
+              type: string
+            removeAllAlternateName:
+              type: string
+            setAqiMajorPollutant:
+              type: string
+              nullable: true
+            removeAqiMajorPollutant:
+              type: string
+            removeAllAqiMajorPollutant:
+              type: string
+            setAqiMajorPollutantForecast:
+              type: string
+              nullable: true
+            removeAqiMajorPollutantForecast:
+              type: string
+            removeAllAqiMajorPollutantForecast:
+              type: string
+            setAreaServedColors:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedColors:
+              type: string
+            removeAllAreaServedColors:
+              type: array
+              items:
+                type: string
+            addAreaServedColors:
+              type: string
+            addAllAreaServedColors:
+              type: array
+              items:
+                type: string
+            setAreaServedTitles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedTitles:
+              type: string
+            removeAllAreaServedTitles:
+              type: array
+              items:
+                type: string
+            addAreaServedTitles:
+              type: string
+            addAllAreaServedTitles:
+              type: array
+              items:
+                type: string
+            setAreaServedLinks:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedLinks:
+              type: string
+            removeAllAreaServedLinks:
+              type: array
+              items:
+                type: string
+            addAreaServedLinks:
+              type: string
+            addAllAreaServedLinks:
+              type: array
+              items:
+                type: string
+            setAreaServed:
+              type: object
+              nullable: true
+            removeAreaServed:
+              type: object
+            removeAllAreaServed:
+              type: object
+            setAtmosphericPressure:
+              type: string
+              nullable: true
+            removeAtmosphericPressure:
+              type: string
+            removeAllAtmosphericPressure:
+              type: string
+            setDataProvider:
+              type: string
+              nullable: true
+            removeDataProvider:
+              type: string
+            removeAllDataProvider:
+              type: string
+            setDateCreated:
+              type: string
+              nullable: true
+            removeDateCreated:
+              type: string
+            removeAllDateCreated:
+              type: string
+            setDateModified:
+              type: string
+              nullable: true
+            removeDateModified:
+              type: string
+            removeAllDateModified:
+              type: string
+            setDateObserved:
+              type: string
+              nullable: true
+            removeDateObserved:
+              type: string
+            removeAllDateObserved:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setDewPoint:
+              type: string
+              nullable: true
+            removeDewPoint:
+              type: string
+            removeAllDewPoint:
+              type: string
+            setDiffuseIrradiation:
+              type: string
+              nullable: true
+            removeDiffuseIrradiation:
+              type: string
+            removeAllDiffuseIrradiation:
+              type: string
+            setDirectIrradiation:
+              type: string
+              nullable: true
+            removeDirectIrradiation:
+              type: string
+            removeAllDirectIrradiation:
+              type: string
+            setFeelsLikeTemperature:
+              type: string
+              nullable: true
+            removeFeelsLikeTemperature:
+              type: string
+            removeAllFeelsLikeTemperature:
+              type: string
+            setGustSpeed:
+              type: string
+              nullable: true
+            removeGustSpeed:
+              type: string
+            removeAllGustSpeed:
+              type: string
+            setIlluminance:
+              type: string
+              nullable: true
+            removeIlluminance:
+              type: string
+            removeAllIlluminance:
+              type: string
+            setLocation:
+              type: object
+              nullable: true
+            removeLocation:
+              type: object
+            removeAllLocation:
+              type: object
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setOwner:
+              type: object
+              nullable: true
+            removeOwner:
+              type: object
+            removeAllOwner:
+              type: object
+            setPrecipitation:
+              type: string
+              nullable: true
+            removePrecipitation:
+              type: string
+            removeAllPrecipitation:
+              type: string
+            setPrecipitationForecast:
+              type: string
+              nullable: true
+            removePrecipitationForecast:
+              type: string
+            removeAllPrecipitationForecast:
+              type: string
+            setPressureTendency:
+              type: object
+              nullable: true
+            removePressureTendency:
+              type: object
+            removeAllPressureTendency:
+              type: object
+            setRefDevice:
+              type: object
+              nullable: true
+            removeRefDevice:
+              type: object
+            removeAllRefDevice:
+              type: object
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setRelativeHumidity:
+              type: string
+              nullable: true
+            removeRelativeHumidity:
+              type: string
+            removeAllRelativeHumidity:
+              type: string
+            setRelativeHumidityForecast:
+              type: string
+              nullable: true
+            removeRelativeHumidityForecast:
+              type: string
+            removeAllRelativeHumidityForecast:
+              type: string
+            setSeeAlso:
+              type: object
+              nullable: true
+            removeSeeAlso:
+              type: object
+            removeAllSeeAlso:
+              type: object
+            setSnowHeight:
+              type: string
+              nullable: true
+            removeSnowHeight:
+              type: string
+            removeAllSnowHeight:
+              type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
+              type: string
+            setUVIndexMax:
+              type: string
+              nullable: true
+            removeUVIndexMax:
+              type: string
+            removeAllUVIndexMax:
+              type: string
+            setVisibility:
+              type: object
+              nullable: true
+            removeVisibility:
+              type: object
+            removeAllVisibility:
+              type: object
+            setWeatherType:
+              type: string
+              nullable: true
+            removeWeatherType:
+              type: string
+            removeAllWeatherType:
+              type: string
+            setWindDirection:
+              type: string
+              nullable: true
+            removeWindDirection:
+              type: string
+            removeAllWindDirection:
+              type: string
+            setWindSpeed:
+              type: string
+              nullable: true
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
+              type: string
+            setEntityId:
+              type: string
+              nullable: true
+            removeEntityId:
+              type: string
+            removeAllEntityId:
+              type: string
+            setEntityShortId:
+              type: string
+              nullable: true
+            removeEntityShortId:
+              type: string
+            removeAllEntityShortId:
+              type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
+            setObjectId:
+              type: string
+              nullable: true
+            removeObjectId:
+              type: string
+            removeAllObjectId:
+              type: string
+    PATCHWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            setAddress:
+              type: object
+              nullable: true
+            removeAddress:
+              type: object
+            removeAllAddress:
+              type: object
+            setAirQualityIndex:
+              type: string
+              nullable: true
+            removeAirQualityIndex:
+              type: string
+            removeAllAirQualityIndex:
+              type: string
+            setAirQualityIndexForecast:
+              type: string
+              nullable: true
+            removeAirQualityIndexForecast:
+              type: string
+            removeAllAirQualityIndexForecast:
+              type: string
+            setAirTemperatureForecast:
+              type: string
+              nullable: true
+            removeAirTemperatureForecast:
+              type: string
+            removeAllAirTemperatureForecast:
+              type: string
+            setAirTemperatureTSA:
+              type: object
+              nullable: true
+            removeAirTemperatureTSA:
+              type: object
+            removeAllAirTemperatureTSA:
+              type: object
+            setAlternateName:
+              type: string
+              nullable: true
+            removeAlternateName:
+              type: string
+            removeAllAlternateName:
+              type: string
+            setAqiMajorPollutant:
+              type: string
+              nullable: true
+            removeAqiMajorPollutant:
+              type: string
+            removeAllAqiMajorPollutant:
+              type: string
+            setAqiMajorPollutantForecast:
+              type: string
+              nullable: true
+            removeAqiMajorPollutantForecast:
+              type: string
+            removeAllAqiMajorPollutantForecast:
+              type: string
+            setAreaServedColors:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedColors:
+              type: string
+            removeAllAreaServedColors:
+              type: array
+              items:
+                type: string
+            addAreaServedColors:
+              type: string
+            addAllAreaServedColors:
+              type: array
+              items:
+                type: string
+            setAreaServedTitles:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedTitles:
+              type: string
+            removeAllAreaServedTitles:
+              type: array
+              items:
+                type: string
+            addAreaServedTitles:
+              type: string
+            addAllAreaServedTitles:
+              type: array
+              items:
+                type: string
+            setAreaServedLinks:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeAreaServedLinks:
+              type: string
+            removeAllAreaServedLinks:
+              type: array
+              items:
+                type: string
+            addAreaServedLinks:
+              type: string
+            addAllAreaServedLinks:
+              type: array
+              items:
+                type: string
+            setAreaServed:
+              type: object
+              nullable: true
+            removeAreaServed:
+              type: object
+            removeAllAreaServed:
+              type: object
+            setAtmosphericPressure:
+              type: string
+              nullable: true
+            removeAtmosphericPressure:
+              type: string
+            removeAllAtmosphericPressure:
+              type: string
+            setDataProvider:
+              type: string
+              nullable: true
+            removeDataProvider:
+              type: string
+            removeAllDataProvider:
+              type: string
+            setDateCreated:
+              type: string
+              nullable: true
+            removeDateCreated:
+              type: string
+            removeAllDateCreated:
+              type: string
+            setDateModified:
+              type: string
+              nullable: true
+            removeDateModified:
+              type: string
+            removeAllDateModified:
+              type: string
+            setDateObserved:
+              type: string
+              nullable: true
+            removeDateObserved:
+              type: string
+            removeAllDateObserved:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setDewPoint:
+              type: string
+              nullable: true
+            removeDewPoint:
+              type: string
+            removeAllDewPoint:
+              type: string
+            setDiffuseIrradiation:
+              type: string
+              nullable: true
+            removeDiffuseIrradiation:
+              type: string
+            removeAllDiffuseIrradiation:
+              type: string
+            setDirectIrradiation:
+              type: string
+              nullable: true
+            removeDirectIrradiation:
+              type: string
+            removeAllDirectIrradiation:
+              type: string
+            setFeelsLikeTemperature:
+              type: string
+              nullable: true
+            removeFeelsLikeTemperature:
+              type: string
+            removeAllFeelsLikeTemperature:
+              type: string
+            setGustSpeed:
+              type: string
+              nullable: true
+            removeGustSpeed:
+              type: string
+            removeAllGustSpeed:
+              type: string
+            setIlluminance:
+              type: string
+              nullable: true
+            removeIlluminance:
+              type: string
+            removeAllIlluminance:
+              type: string
+            setLocation:
+              type: object
+              nullable: true
+            removeLocation:
+              type: object
+            removeAllLocation:
+              type: object
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setOwner:
+              type: object
+              nullable: true
+            removeOwner:
+              type: object
+            removeAllOwner:
+              type: object
+            setPrecipitation:
+              type: string
+              nullable: true
+            removePrecipitation:
+              type: string
+            removeAllPrecipitation:
+              type: string
+            setPrecipitationForecast:
+              type: string
+              nullable: true
+            removePrecipitationForecast:
+              type: string
+            removeAllPrecipitationForecast:
+              type: string
+            setPressureTendency:
+              type: object
+              nullable: true
+            removePressureTendency:
+              type: object
+            removeAllPressureTendency:
+              type: object
+            setRefDevice:
+              type: object
+              nullable: true
+            removeRefDevice:
+              type: object
+            removeAllRefDevice:
+              type: object
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setRelativeHumidity:
+              type: string
+              nullable: true
+            removeRelativeHumidity:
+              type: string
+            removeAllRelativeHumidity:
+              type: string
+            setRelativeHumidityForecast:
+              type: string
+              nullable: true
+            removeRelativeHumidityForecast:
+              type: string
+            removeAllRelativeHumidityForecast:
+              type: string
+            setSeeAlso:
+              type: object
+              nullable: true
+            removeSeeAlso:
+              type: object
+            removeAllSeeAlso:
+              type: object
+            setSnowHeight:
+              type: string
+              nullable: true
+            removeSnowHeight:
+              type: string
+            removeAllSnowHeight:
+              type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
+              type: string
+            setUVIndexMax:
+              type: string
+              nullable: true
+            removeUVIndexMax:
+              type: string
+            removeAllUVIndexMax:
+              type: string
+            setVisibility:
+              type: object
+              nullable: true
+            removeVisibility:
+              type: object
+            removeAllVisibility:
+              type: object
+            setWeatherType:
+              type: string
+              nullable: true
+            removeWeatherType:
+              type: string
+            removeAllWeatherType:
+              type: string
+            setWindDirection:
+              type: string
+              nullable: true
+            removeWindDirection:
+              type: string
+            removeAllWindDirection:
+              type: string
+            setWindSpeed:
+              type: string
+              nullable: true
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
+              type: string
+            setEntityId:
+              type: string
+              nullable: true
+            removeEntityId:
+              type: string
+            removeAllEntityId:
+              type: string
+            setEntityShortId:
+              type: string
+              nullable: true
+            removeEntityShortId:
+              type: string
+            removeAllEntityShortId:
+              type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
+            setObjectId:
+              type: string
+              nullable: true
+            removeObjectId:
+              type: string
+            removeAllObjectId:
+              type: string
+    POSTWeatherObservedRequest:
+      allOf:
+        - type: object
+          properties:
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            areaServedColors:
+              type: array
+              items:
+                type: string
+            areaServedTitles:
+              type: array
+              items:
+                type: string
+            areaServedLinks:
+              type: array
+              items:
+                type: string
+            areaServed:
+              type: object
+            atmosphericPressure:
+              type: string
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            description:
+              type: string
+            dewPoint:
+              type: string
+            diffuseIrradiation:
+              type: string
+            directIrradiation:
+              type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
+            illuminance:
+              type: string
+            location:
+              type: object
+            name:
+              type: string
+            owner:
+              type: object
+            precipitation:
+              type: string
+            precipitationForecast:
+              type: string
+            pressureTendency:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: object
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: object
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
+              type: string
+            entityId:
+              type: string
+            entityShortId:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
+    POSTWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            areaServedColors:
+              type: array
+              items:
+                type: string
+            areaServedTitles:
+              type: array
+              items:
+                type: string
+            areaServedLinks:
+              type: array
+              items:
+                type: string
+            areaServed:
+              type: object
+            atmosphericPressure:
+              type: string
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            description:
+              type: string
+            dewPoint:
+              type: string
+            diffuseIrradiation:
+              type: string
+            directIrradiation:
+              type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
+            illuminance:
+              type: string
+            location:
+              type: object
+            name:
+              type: string
+            owner:
+              type: object
+            precipitation:
+              type: string
+            precipitationForecast:
+              type: string
+            pressureTendency:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: object
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: object
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
+              type: string
+            entityId:
+              type: string
+            entityShortId:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
+    PUTImportWeatherObservedRequest:
+      allOf:
+        - type: object
+          properties:
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  areaServedColors:
+                    type: array
+                    items:
+                      type: string
+                  areaServedTitles:
+                    type: array
+                    items:
+                      type: string
+                  areaServedLinks:
+                    type: array
+                    items:
+                      type: string
+                  areaServed:
+                    type: object
+                  atmosphericPressure:
+                    type: string
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  description:
+                    type: string
+                  dewPoint:
+                    type: string
+                  diffuseIrradiation:
+                    type: string
+                  directIrradiation:
+                    type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
+                  illuminance:
+                    type: string
+                  location:
+                    type: object
+                  name:
+                    type: string
+                  owner:
+                    type: object
+                  precipitation:
+                    type: string
+                  precipitationForecast:
+                    type: string
+                  pressureTendency:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: object
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: object
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
+                    type: string
+                  entityId:
+                    type: string
+                  entityShortId:
+                    type: string
+                  objectTitle:
+                    type: string
+                  objectId:
+                    type: string
+    PUTImportWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  areaServedColors:
+                    type: array
+                    items:
+                      type: string
+                  areaServedTitles:
+                    type: array
+                    items:
+                      type: string
+                  areaServedLinks:
+                    type: array
+                    items:
+                      type: string
+                  areaServed:
+                    type: object
+                  atmosphericPressure:
+                    type: string
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  description:
+                    type: string
+                  dewPoint:
+                    type: string
+                  diffuseIrradiation:
+                    type: string
+                  directIrradiation:
+                    type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
+                  illuminance:
+                    type: string
+                  location:
+                    type: object
+                  name:
+                    type: string
+                  owner:
+                    type: object
+                  precipitation:
+                    type: string
+                  precipitationForecast:
+                    type: string
+                  pressureTendency:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: object
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: object
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
+                    type: string
+                  entityId:
+                    type: string
+                  entityShortId:
+                    type: string
+                  objectTitle:
+                    type: string
+                  objectId:
+                    type: string
+    GETWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            areaServedColors:
+              type: array
+              items:
+                type: string
+            areaServedTitles:
+              type: array
+              items:
+                type: string
+            areaServedLinks:
+              type: array
+              items:
+                type: string
+            areaServed:
+              type: object
+            atmosphericPressure:
+              type: string
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            description:
+              type: string
+            dewPoint:
+              type: string
+            diffuseIrradiation:
+              type: string
+            directIrradiation:
+              type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
+            illuminance:
+              type: string
+            location:
+              type: object
+            name:
+              type: string
+            owner:
+              type: object
+            precipitation:
+              type: string
+            precipitationForecast:
+              type: string
+            pressureTendency:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: object
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: object
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
+              type: string
+            entityId:
+              type: string
+            entityShortId:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
+    SearchPageWeatherObservedResponse:
+      allOf:
+        - type: string
     SearchCompanyProductResponse:
       allOf:
         - type: object
@@ -7009,6 +9322,8 @@ components:
               items:
                 type: object
                 properties:
+                  archived:
+                    type: boolean
                   userKeys:
                     type: array
                     items:
@@ -7029,10 +9344,19 @@ components:
                     type: boolean
                   seeDeleted:
                     type: boolean
+                  objectTitle:
+                    type: string
     PATCHSiteUserRequest:
       allOf:
         - type: object
           properties:
+            setArchived:
+              type: boolean
+              nullable: true
+            removeArchived:
+              type: boolean
+            removeAllArchived:
+              type: boolean
             setUserKeys:
               type: array
               nullable: true
@@ -7106,10 +9430,24 @@ components:
               type: boolean
             removeAllSeeDeleted:
               type: boolean
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
     PATCHSiteUserResponse:
       allOf:
         - type: object
           properties:
+            setArchived:
+              type: boolean
+              nullable: true
+            removeArchived:
+              type: boolean
+            removeAllArchived:
+              type: boolean
             setUserKeys:
               type: array
               nullable: true
@@ -7183,10 +9521,19 @@ components:
               type: boolean
             removeAllSeeDeleted:
               type: boolean
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
     POSTSiteUserRequest:
       allOf:
         - type: object
           properties:
+            archived:
+              type: boolean
             userKeys:
               type: array
               items:
@@ -7207,10 +9554,14 @@ components:
               type: boolean
             seeDeleted:
               type: boolean
+            objectTitle:
+              type: string
     POSTSiteUserResponse:
       allOf:
         - type: object
           properties:
+            archived:
+              type: boolean
             userKeys:
               type: array
               items:
@@ -7231,6 +9582,8 @@ components:
               type: boolean
             seeDeleted:
               type: boolean
+            objectTitle:
+              type: string
     PUTImportSiteUserRequest:
       allOf:
         - type: object
@@ -7240,6 +9593,8 @@ components:
               items:
                 type: object
                 properties:
+                  archived:
+                    type: boolean
                   userKeys:
                     type: array
                     items:
@@ -7260,10 +9615,14 @@ components:
                     type: boolean
                   seeDeleted:
                     type: boolean
+                  objectTitle:
+                    type: string
     PUTImportSiteUserResponse:
       allOf:
         - type: object
           properties:
+                  archived:
+                    type: boolean
                   userKeys:
                     type: array
                     items:
@@ -7284,6 +9643,8 @@ components:
                     type: boolean
                   seeDeleted:
                     type: boolean
+                  objectTitle:
+                    type: string
     SearchPageSiteUserResponse:
       allOf:
         - type: string

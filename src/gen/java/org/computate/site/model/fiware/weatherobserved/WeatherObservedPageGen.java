@@ -1,7 +1,7 @@
-package org.computate.site.model.course;
+package org.computate.site.model.fiware.weatherobserved;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.course.CompanyCourseGenPage;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -41,23 +41,23 @@ import io.vertx.core.json.JsonArray;
 /**
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
- * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyCoursePage objects in a RESTful API. 
- * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyCoursePageGen into the class CompanyCoursePage. 
+ * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these WeatherObservedPage objects in a RESTful API. 
+ * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class WeatherObservedPageGen into the class WeatherObservedPage. 
  * </li>
- * <h3>About the CompanyCoursePage class and it's generated class CompanyCoursePageGen&lt;CompanyCourseGenPage&gt;: </h3>extends CompanyCoursePageGen
+ * <h3>About the WeatherObservedPage class and it's generated class WeatherObservedPageGen&lt;WeatherObservedGenPage&gt;: </h3>extends WeatherObservedPageGen
  * <p>
- * This Java class extends a generated Java class CompanyCoursePageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
+ * This Java class extends a generated Java class WeatherObservedPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCoursePage">Find the class CompanyCoursePage in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedPage">Find the class WeatherObservedPage in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyCoursePageGen<CompanyCourseGenPage>
- * <p>This <code>class CompanyCoursePage extends CompanyCoursePageGen&lt;CompanyCourseGenPage&gt;</code>, which means it extends a newly generated CompanyCoursePageGen. 
- * The generated <code>class CompanyCoursePageGen extends CompanyCourseGenPage</code> which means that CompanyCoursePage extends CompanyCoursePageGen which extends CompanyCourseGenPage. 
+ * extends WeatherObservedPageGen<WeatherObservedGenPage>
+ * <p>This <code>class WeatherObservedPage extends WeatherObservedPageGen&lt;WeatherObservedGenPage&gt;</code>, which means it extends a newly generated WeatherObservedPageGen. 
+ * The generated <code>class WeatherObservedPageGen extends WeatherObservedGenPage</code> which means that WeatherObservedPage extends WeatherObservedPageGen which extends WeatherObservedGenPage. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -68,7 +68,7 @@ import io.vertx.core.json.JsonArray;
  * <h2>IconName: null</h2>
  * <h2>Indexed: true</h2>
  * <h2>{@inheritDoc}</h2>
- * <p>By adding a class comment "{@inheritDoc}", the CompanyCoursePage class will inherit the helpful inherited class comments from the super class CompanyCoursePageGen. 
+ * <p>By adding a class comment "{@inheritDoc}", the WeatherObservedPage class will inherit the helpful inherited class comments from the super class WeatherObservedPageGen. 
  * </p>
  * <h2>Rows: null</h2>
  * <h2>Model: true</h2>
@@ -78,7 +78,7 @@ import io.vertx.core.json.JsonArray;
  * <p>
  *   This class contains a comment <b>"Promise: true"</b>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
- *   This means that the CompanyCoursePage Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
+ *   This means that the WeatherObservedPage Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
  * <p>
  *   Adding protected void methods beginning with an underscore with a Promise as the only parameter will automatically set `Promise: true`. 
@@ -99,12 +99,12 @@ import io.vertx.core.json.JsonArray;
  * </p>
  * <h2>AName.enUS: null</h2>
  * <p>
- * Delete the class CompanyCoursePage in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCoursePage&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * Delete the class WeatherObservedPage in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedPage&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
  * </p>
  * <p>
- * Delete  the package org.computate.site.model.course in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.course&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * Delete  the package org.computate.site.model.fiware.weatherobserved in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
@@ -112,31 +112,35 @@ import io.vertx.core.json.JsonArray;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCoursePage.class);
+public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage {
+	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObservedPage.class);
 
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyCoursePage(SiteRequest siteRequest_) {
+	public Future<Void> promiseDeepWeatherObservedPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyCoursePage();
+		return promiseDeepWeatherObservedPage();
 	}
 
-	public Future<Void> promiseDeepCompanyCoursePage() {
+	public Future<Void> promiseDeepWeatherObservedPage() {
 		Promise<Void> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyCoursePage(promise2);
+		promiseWeatherObservedPage(promise2);
 		promise2.future().onSuccess(a -> {
-			promise.complete();
+			super.promiseDeepWeatherObservedGenPage(siteRequest_).onSuccess(b -> {
+				promise.complete();
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
 		}).onFailure(ex -> {
 			promise.fail(ex);
 		});
 		return promise.future();
 	}
 
-	public Future<Void> promiseCompanyCoursePage(Promise<Void> promise) {
+	public Future<Void> promiseWeatherObservedPage(Promise<Void> promise) {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
@@ -153,31 +157,32 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 		return promise.future();
 	}
 
-	public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyCoursePage(siteRequest_);
+	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+		return promiseDeepWeatherObservedPage(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestCompanyCoursePage(SiteRequest siteRequest_) {
+	public void siteRequestWeatherObservedPage(SiteRequest siteRequest_) {
+			super.siteRequestWeatherObservedGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyCoursePage(siteRequest_);
+		siteRequestWeatherObservedPage(siteRequest_);
 	}
 
 	/////////////
 	// obtain //
 	/////////////
 
-	public Object obtainForClass(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainCompanyCoursePage(v);
+				o = obtainWeatherObservedPage(v);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.obtainForClass(v);
@@ -189,11 +194,11 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 		}
 		return o;
 	}
-	public Object obtainCompanyCoursePage(String var) {
-		CompanyCoursePage oCompanyCoursePage = (CompanyCoursePage)this;
+	public Object obtainWeatherObservedPage(String var) {
+		WeatherObservedPage oWeatherObservedPage = (WeatherObservedPage)this;
 		switch(var) {
 			default:
-				return null;
+				return super.obtainWeatherObservedGenPage(var);
 		}
 	}
 
@@ -201,12 +206,12 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	// relate //
 	///////////////
 
-	public boolean relateForClass(String var, Object val) {
+	@Override public boolean relateForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = relateCompanyCoursePage(v, val);
+				o = relateWeatherObservedPage(v, val);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.relateForClass(v, val);
@@ -214,11 +219,11 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 		}
 		return o != null;
 	}
-	public Object relateCompanyCoursePage(String var, Object val) {
-		CompanyCoursePage oCompanyCoursePage = (CompanyCoursePage)this;
+	public Object relateWeatherObservedPage(String var, Object val) {
+		WeatherObservedPage oWeatherObservedPage = (WeatherObservedPage)this;
 		switch(var) {
 			default:
-				return null;
+				return super.relateWeatherObservedGenPage(var, val);
 		}
 	}
 
@@ -227,12 +232,12 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	///////////////
 
 	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyCoursePage(entityVar,  siteRequest_, o);
+		return staticSetWeatherObservedPage(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSetCompanyCoursePage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetWeatherObservedPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return WeatherObservedGenPage.staticSetWeatherObservedGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -241,12 +246,12 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	////////////////
 
 	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyCoursePage(entityVar,  siteRequest_, o);
+		return staticSearchWeatherObservedPage(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSearchCompanyCoursePage(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static Object staticSearchWeatherObservedPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return WeatherObservedGenPage.staticSearchWeatherObservedGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -255,12 +260,12 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	///////////////////
 
 	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyCoursePage(entityVar,  siteRequest_, o);
+		return staticSearchStrWeatherObservedPage(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchStrCompanyCoursePage(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static String staticSearchStrWeatherObservedPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return WeatherObservedGenPage.staticSearchStrWeatherObservedGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -269,12 +274,12 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	//////////////////
 
 	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyCoursePage(entityVar,  siteRequest_, o);
+		return staticSearchFqWeatherObservedPage(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchFqCompanyCoursePage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static String staticSearchFqWeatherObservedPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return WeatherObservedGenPage.staticSearchFqWeatherObservedGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -284,19 +289,20 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
 		return sb.toString();
 	}
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyCoursePage";
+	public static final String CLASS_SIMPLE_NAME = "WeatherObservedPage";
 
 
 	public static String displayNameForClass(String var) {
-		return CompanyCoursePage.displayNameCompanyCoursePage(var);
+		return WeatherObservedPage.displayNameWeatherObservedPage(var);
 	}
-	public static String displayNameCompanyCoursePage(String var) {
+	public static String displayNameWeatherObservedPage(String var) {
 		switch(var) {
 		default:
-			return null;
+			return WeatherObservedGenPage.displayNameWeatherObservedGenPage(var);
 		}
 	}
 }

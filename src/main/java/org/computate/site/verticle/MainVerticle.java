@@ -99,20 +99,22 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
-import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
-import org.computate.site.model.event.CompanyEventEnUSGenApiService;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
-import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
-import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
+import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 
 
 /**
@@ -865,14 +867,15 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
+			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
+			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();

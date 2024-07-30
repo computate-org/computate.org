@@ -2,13 +2,116 @@
 {% block htmMetaPageLayout %}
     <meta property="site:pageId" content="smart-device-platform-builder"/>
     <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
-    <meta property="site:title" content="Computate Smart Device Platform Builder 5"/>
+    <meta property="site:title" content="Computate Smart Device Platform Builder"/>
 {% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+.intro-background {
+	background-color: var(--sl-color-purple-300);
+	color: white;
+	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
+}
+.intro-content {
+	max-width: var(--content-width);
+	margin-inline: auto;
+	padding-inline: var(--sl-spacing-2x-large);
+}
+.intro-details {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	background-color: var(--sl-color-gray-200);
+	border-radius: 0.75rem;
+	font-size: 0.875rem;
+	padding: 1.5rem;
+}
+
+.summary-wrapper {
+	max-width: var(--content-width);
+	margin-block: var(--sl-spacing-3x-large);
+	margin-inline: auto;
+	padding-inline: var(--sl-spacing-3x-large);
+}
+.summary {
+	background-color: var(--sl-color-gray-200);
+	border-radius: 1.125rem;
+	color: white;
+	padding: var(--sl-spacing-2x-large);
+}
+.summary {
+  & > * + * {
+    margin-block-start: 2rem;
+  }
+}
+.summary-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+	gap: 2rem;
+}
+{% endblock htmStylePageLayout %}
 {% block htmTitlePageLayout %}
     <title>{{ title }}</title>
 {% endblock htmTitlePageLayout %}
 {% block htmBodyMiddlePageLayout %}
-        <div>
-          Smart Device 5
+
+        <div class="intro-background">
+          <div class="intro-content">
+            <div class="wa-crown">
+              <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
+            </div>
+            <h1 class="brand-font">
+              Build a custom data-driven website for your own ideas
+            </h1>
+            <h2 class="brand-font">
+              with the Computate Smart Device Platform Builder
+            </h2>
+            <div class="intro-details">
+              <div>Download your own customizable website building toolkit to launch your own data-driven website here: </div>
+              <sl-button class="wa-theme-default-dark" size="small" href="https://store.computate.org/computate-smart-device-platform-builder" data-wa-optional="" data-wa-valid="" value="" variant="neutral" appearance="filled">
+                <i class="fa-solid fa-person-running-fast"></i>
+                Order the Smart Device Platform Builder
+              </sl-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-wrapper">
+          <div class="summary">
+            <h2 class="brand-font anchor-heading" id="whats-web-awesome">
+              What is the Computate Smart Device Platform Builder?
+            </h2>
+            <p>
+              Teaching tools and automation for easily building a custom website with the models and data that you care about using the best in open source software. 
+            </p>
+
+            <div class="summary-grid">
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-code"></i>
+                  <h3>
+                    Modern development tools
+                  </h3>
+                </div>
+                <p>
+                  Learn how to install all the latest software development tools on your own computer like VSCode, Jupyter, Ansible, OpenJDK, Helm, and OpenShift, 
+                  and start writing code like a real cloud-native developer. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <h3>
+                    Cloud-native microservices
+                  </h3>
+                </div>
+                <p>
+                  Deploy cloud microservices in a Red Hat OpenShift Local cloud environment on your own computer 
+                  for certificate management, event bus application clustering, databases, a search engine, and single sign-on server for securing and scaling your data-driven website. 
+                </p>
+              </div>
+            </div>
+
+          </div>
         </div>
 {% endblock %}
