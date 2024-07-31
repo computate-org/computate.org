@@ -57,6 +57,42 @@
         },
         mutator: svg => svg.setAttribute('fill', 'currentColor')
       });
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+        document.querySelector('#siteSearchInput')?.addEventListener('sl-input', (event) => {
+          var filters = [];
+          if(event.target.value == '')
+            filters.push({ name: 'q', value: 'objectSuggest:*:*' });
+          else
+            filters.push({ name: 'q', value: 'objectSuggest:' + event.target.value });
+
+          fetch(
+            '/search?' + filters.map(function(m) { return m.name + '=' + encodeURIComponent(m.value) }).join('&')
+            , {
+              headers: {'Content-Type':'application/json; charset=utf-8'}
+            }).then(response => {
+              if(response.ok) {
+                var dropdown = document.querySelector('#siteSearchDropdown');
+                response.json().then(function(body) {
+                  dropdown.innerHTML = '';
+                  body.list.forEach((o) => {
+                    var menuItem = document.createElement('sl-menu-item');
+                    menuItem.innerText = o.objectTitle;
+                    menuItem.setAttribute('data-href', o.pageUrlId);
+                    dropdown.appendChild(menuItem);
+                    menuItem.addEventListener('click', (event) => window.location.href = event.target.getAttribute('data-href') );
+                  });
+                  dropdown.show();
+                });
+              } else {
+                error(response, event.target);
+              }
+            })
+            .catch(response => error(response, event.target));
+        });
+      });
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
     <script type="module" src="{{ STATIC_BASE_URL }}/js/site.js"></script>
@@ -94,14 +130,6 @@
         <sl-separator></sl-separator>
         <ul>
           <li>
-            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-              <sl-button href="http://localhost:10200/product">
-                <i slot="prefix" class="far fa-conveyor-belt "></i>
-                products
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
             <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
               <sl-button href="http://localhost:10200/event">
                 <i slot="prefix" class="fad fa-map-location-dot "></i>
@@ -126,14 +154,6 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="Read the latest computate articles to learn more">
-              <sl-button href="http://localhost:10200/page">
-                <i slot="prefix" class="fad fa-newspaper "></i>
-                articles
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
             <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
               <sl-button href="http://localhost:10200/course">
                 <i slot="prefix" class="far fa-notebook "></i>
@@ -146,6 +166,22 @@
               <sl-button href="http://localhost:10200/weather-observed">
                 <i slot="prefix" class="fas fa-cloud-bolt-sun "></i>
                 weather observed devices
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="Read the latest computate articles to learn more">
+              <sl-button href="http://localhost:10200/page">
+                <i slot="prefix" class="fad fa-newspaper "></i>
+                articles
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
+              <sl-button href="http://localhost:10200/product">
+                <i slot="prefix" class="far fa-conveyor-belt "></i>
+                products
               </sl-button>
             </sl-tooltip>
           </li>
@@ -191,9 +227,18 @@
           <sl-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text">
             <i slot="prefix" class="fas fa-bars"></i>
           </sl-button>
-          <sl-input placeholder="search">
-            <i slot="prefix" class="fa-duotone fa-magnifying-glass"></i>
-          </sl-input>
+          <form class="display-flex ">
+            <sl-input placeholder="search" id="siteSearchInput">
+              <i slot="prefix" class="fa-duotone fa-magnifying-glass"></i>
+            </sl-input>
+            <sl-button type="submit" variant="primary" size="medium" slot="trigger" caret>Search</sl-button>
+            <sl-dropdown id="siteSearchDropdown">
+              <sl-menu>
+                <sl-menu-item>Dropdown Item 1</sl-menu-item>
+                <sl-menu-item>Dropdown Item 2</sl-menu-item>
+              </sl-menu>
+            </sl-dropdown>
+          </form>
         </header>
 {% endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}

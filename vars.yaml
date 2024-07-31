@@ -424,5 +424,5 @@ WRITE_API: true
 # Write code comments into generated code. 
 WRITE_COMMENTS: true
 
-IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
-IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
+#IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
+#IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds

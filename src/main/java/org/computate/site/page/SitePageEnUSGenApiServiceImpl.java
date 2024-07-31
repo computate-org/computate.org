@@ -1532,7 +1532,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.setSiteRequest_((SiteRequest)siteRequest);
 			page.persistForClass(SitePage.VAR_resourceUri, resourceUri);
 			page.persistForClass(SitePage.VAR_templateUri, templateUri);
-			page.persistForClass(SitePage.VAR_pageId, pageId);
 
 			page.persistForClass(SitePage.VAR_inheritPk, SitePage.staticSetInheritPk(siteRequest2, ctx.getString(SitePage.VAR_inheritPk)));
 			page.persistForClass(SitePage.VAR_created, SitePage.staticSetCreated(siteRequest2, ctx.getString(SitePage.VAR_created)));
@@ -1544,6 +1543,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_id, SitePage.staticSetId(siteRequest2, ctx.getString(SitePage.VAR_id)));
 			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, ctx.getString(SitePage.VAR_courseNum)));
 			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, ctx.getString(SitePage.VAR_lessonNum)));
+			page.persistForClass(SitePage.VAR_title, SitePage.staticSetTitle(siteRequest2, ctx.getString(SitePage.VAR_title)));
+			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, ctx.getString(SitePage.VAR_author)));
 			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, ctx.getString(SitePage.VAR_pageId)));
 			page.persistForClass(SitePage.VAR_resourceUri, SitePage.staticSetResourceUri(siteRequest2, ctx.getString(SitePage.VAR_resourceUri)));
 			page.persistForClass(SitePage.VAR_templateUri, SitePage.staticSetTemplateUri(siteRequest2, ctx.getString(SitePage.VAR_templateUri)));
@@ -1551,8 +1552,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_url, SitePage.staticSetUrl(siteRequest2, ctx.getString(SitePage.VAR_url)));
 			page.persistForClass(SitePage.VAR_h1, SitePage.staticSetH1(siteRequest2, ctx.getString(SitePage.VAR_h1)));
 			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, ctx.getString(SitePage.VAR_h2)));
-			page.persistForClass(SitePage.VAR_title, SitePage.staticSetTitle(siteRequest2, ctx.getString(SitePage.VAR_title)));
-			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, ctx.getString(SitePage.VAR_author)));
 			page.persistForClass(SitePage.VAR_pageImageUri, SitePage.staticSetPageImageUri(siteRequest2, ctx.getString(SitePage.VAR_pageImageUri)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

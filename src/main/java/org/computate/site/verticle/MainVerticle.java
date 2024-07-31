@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -95,10 +96,12 @@ import io.vertx.sqlclient.Tuple;
 import io.vertx.tracing.opentelemetry.OpenTelemetryOptions;
 
 import org.computate.site.config.ConfigKeys;
-import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.user.SiteUser;
+import org.computate.site.user.SiteUserEnUSGenApiService;
+import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
@@ -108,13 +111,13 @@ import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.page.SitePageEnUSApiServiceImpl;
-import org.computate.site.page.SitePage;
 import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
 import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.page.SitePageEnUSApiServiceImpl;
+import org.computate.site.page.SitePage;
 
 
 /**
@@ -866,16 +869,27 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureApi() {
 		Promise<Void> promise = Promise.promise();
 		try {
-			SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			List<String> authResources = Arrays.asList("CompanyProduct","CompanyEvent","CompanyWebsite","CompanyResearch","CompanyCourse","WeatherObserved","SitePage");
+			List<String> publicResources = Arrays.asList("CompanyProduct","SitePage");
+			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
+			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
+
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
+
 			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
 			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
 			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
 			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
-			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();

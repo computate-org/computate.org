@@ -51,6 +51,7 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import com.google.common.io.Resources;
 import java.nio.charset.StandardCharsets;
+import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
@@ -1345,7 +1346,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateSearchPageSiteUser() {
-		return "/en-us/SiteUserPage.htm";
+		return "en-us/SiteUserPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1363,6 +1364,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				siteRequest.setRequestPk(listSiteUser.get(0).getPk());
 			page.setSearchListSiteUser_(listSiteUser);
 			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
 			page.promiseDeepSiteUserPage(siteRequest).onSuccess(a -> {
 				try {
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config);

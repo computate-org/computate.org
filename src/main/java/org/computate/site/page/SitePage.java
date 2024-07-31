@@ -22,6 +22,7 @@ import org.computate.search.wrap.Wrap;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
 import org.computate.site.result.BaseResult;
+import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.site.request.SiteRequest;
 
 import io.vertx.core.Promise;
@@ -30,8 +31,8 @@ import io.vertx.core.Promise;
 /**
  * Api: true
  * Page: true
- * SuperPage: BaseResultPage
  * PageTemplates: /en-us/article
+ * SuperPage: BaseResultPage
  * Indexed: true
  * SqlOrder: 100
  * Order: 100
@@ -166,6 +167,31 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
+	 * DisplayName: title
+	 * Description: The title of this page. 
+	 * UrlVar: pageUrlId
+	 * HtmColumn: 1
+	 */
+	protected void _title(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * HtmRow: 3
+	 * HtmCell: 3
+	 * Facet: true
+	 * DisplayName: author
+	 * Description: The author
+	 */
+	protected void _author(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
 	 * HtmRow: 3
 	 * HtmCell: 1
 	 * Facet: true
@@ -173,6 +199,7 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * Description: The ID for this page. 
 	 */
 	protected void _pageId(Wrap<String> w) {
+		toId(title);
 	}
 
 	/**
@@ -221,6 +248,7 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * Description: The URL for this page. 
 	 */
 	protected void _url(Wrap<String> w) {
+		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
 	}
 
 	/**
@@ -241,37 +269,6 @@ public class SitePage extends SitePageGen<BaseResult> {
 	 * Description: The 2nd header of this page. 
 	 */
 	protected void _h2(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: title
-	 * Description: The title of this page. 
-	 * UrlVar: pageUrlId
-	 * HtmColumn: 1
-	 */
-	protected void _title(Wrap<String> w) {
-		StringBuilder b = new StringBuilder();
-		if(h1 != null)
-			b.append(" ").append(h1);
-		if(h2 != null)
-			b.append(" ").append(h2);
-		w.o(b.toString());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 3
-	 * Facet: true
-	 * DisplayName: author
-	 * Description: The author
-	 */
-	protected void _author(Wrap<String> w) {
 	}
 
 	/**

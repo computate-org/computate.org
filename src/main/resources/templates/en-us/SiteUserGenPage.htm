@@ -21,12 +21,28 @@
 {%- block htmScriptsBaseModelPage %}
 {{ super() }}
 {%- block htmScriptsSiteUserPage %}
-    <script src="{{staticBaseUrl}}/js/en-us/SiteUserPage.js"></script>
+    <script src="{{staticBaseUrl}}/js/enUS/SiteUserPage.js"></script>
 {%- endblock htmScriptsSiteUserPage %}
 {%- endblock htmScriptsBaseModelPage %}
 
 {%- block htmScriptBaseModelPage %}
 {%- block htmScriptSiteUserPage %}
+    <script>
+
+      function jsWebsocketSiteUser(pk, vars, $response) {
+        {%- block jsWebsocketSiteUserPage %}{%- endblock %}
+      }
+
+      function jsTooltipSiteUser(e, feature) {
+        {%- block jsTooltipSiteUserPage %}{%- endblock %}
+      }
+
+      function htmTooltipSiteUser(feature, layer) {
+        return `{%- block htmTooltipSiteUserPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipSiteUserPage %}`;
+      }
+    </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
       window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
@@ -56,15 +72,15 @@
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
-          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-details');
           });
-          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-list');
           });
-          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
             document.querySelector('#site-results-grid').classList.add('grid-mode-card');
           });
@@ -85,7 +101,7 @@
               if(t) {
                 var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
                 patchSiteUserVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setCreated', s)
+                    , 'setCreated', s
                     , event.currentTarget
                     , function(response, target) { addGlow(target); }
                     , function(response, target) { addError(target); }
@@ -393,22 +409,6 @@
         });
       });
     </script>
-    <script>
-
-      function jsWebsocketSiteUser(pk, vars, $response) {
-        {%- block jsWebsocketSiteUserPage %}{%- endblock %}
-      }
-
-      function jsTooltipSiteUser(e, feature) {
-        {%- block jsTooltipSiteUserPage %}{%- endblock %}
-      }
-
-      function htmTooltipSiteUser(feature, layer) {
-        return `{%- block htmTooltipSiteUserPage %}
-<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
-{%- endblock htmTooltipSiteUserPage %}`;
-      }
-    </script>
 {%- endblock htmScriptSiteUserPage %}
 {%- endblock htmScriptBaseModelPage %}
 
@@ -671,55 +671,21 @@
               <div id="site-calendar"><!-- // --></div>
             </div>
               {{ htmPaginationButtonsSiteUserPage() }}
-            <div class="grid-mode-details" id="site-results-grid">
+            <div class="grid-mode-details">
             <div>
                 <i class="far fa-user-cog site-result-icon "></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
+            </div>
+            <div class="grid-mode-details" id="site-results-grid">
               {% for item in listSiteUser%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="far fa-user-cog site-result-icon "></i>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
             </div>
             {%- endmacro htmBodyAllSiteUserPage() %}
 {%- macro htmSearchButtonsSiteUserPage() %}
-        <sl-button-group id="htmSearchButtons">
+        <div id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for site users">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
               <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
@@ -764,52 +730,49 @@
               Api
             </sl-button>
           </sl-tooltip>
-        </sl-button-group>
+        </div>
 {%- endmacro htmSearchButtonsSiteUserPage() %}
 
 {%- macro htmPaginationButtonsSiteUserPage() %}
             <div id="htmPaginationButtons">
-              <sl-button-group id="htmPaginationButtons">
-                <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show half the results">
-                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-minus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show double the results">
-                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                    <i slot="prefix" class="fas fa-plus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the results as details">
+                <sl-button id="grid-toggle-details">
+                  <i class="fa-solid fa-list"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as a list">
+                <sl-button id="grid-toggle-list">
+                  <i class="fa-solid fa-bars"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as cards">
+                <sl-button id="grid-toggle-card">
+                  <i class="fa-solid fa-grid"></i>
+                </sl-button>
+              </sl-tooltip>
               <sl-divider vertical></sl-divider>
-              <sl-button-group>
-                <sl-tooltip placement="top" content="Show the results as details">
-                  <sl-button id="grid-toggle-details">
-                    <i class="fa-solid fa-list"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as a list">
-                  <sl-button id="grid-toggle-list">
-                    <i class="fa-solid fa-bars"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as cards">
-                  <sl-button id="grid-toggle-card">
-                    <i class="fa-solid fa-grid"></i>
-                  </sl-button>
-                </sl-tooltip>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the previous results">
+                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show half the results">
+                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-minus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show double the results">
+                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                  <i slot="prefix" class="fas fa-plus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the next results">
+                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-divider vertical></sl-divider>
+              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsSiteUserPage() %}
 
@@ -824,7 +787,7 @@
         <div class="htmBodySidebarSiteUserPage ">
           {%- block htmBodySidebarSiteUserPage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
@@ -871,7 +834,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-filters "></i> Filters</span>
             </div>
@@ -975,7 +938,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
@@ -1007,7 +970,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
@@ -1040,7 +1003,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
