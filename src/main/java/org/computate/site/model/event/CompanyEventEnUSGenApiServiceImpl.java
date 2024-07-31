@@ -1599,7 +1599,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 	}
 
 	public String templateSearchPageCompanyEvent() {
-		return "/en-us/CompanyEventPage.htm";
+		return "en-us/CompanyEventPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyEvent(SearchList<CompanyEvent> listCompanyEvent) {
 		Promise<ServiceResponse> promise = Promise.promise();

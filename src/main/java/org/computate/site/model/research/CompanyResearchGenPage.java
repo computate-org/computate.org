@@ -513,13 +513,8 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseModelP
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("duotone");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("school");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-duotone fa-solid fa-school\"></i>");
   }
 
   protected void _pageUriCompanyResearch(Wrap<String> c) {

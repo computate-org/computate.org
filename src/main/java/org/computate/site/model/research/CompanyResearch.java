@@ -32,8 +32,7 @@ import io.vertx.pgclient.data.Point;
  * 
  * AName: a research
  * PluralName: research
- * IconGroup: duotone
- * IconName: school
+ * Icon: <i class="fa-duotone fa-solid fa-school"></i>
  */
 public class CompanyResearch extends CompanyResearchGen<BaseModel> {
 

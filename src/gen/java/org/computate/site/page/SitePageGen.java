@@ -79,11 +79,11 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: GET</h2>
  * <p>This class contains a comment <b>"ApiMethod: GET"</b>, which creates an API "GET". 
  * </p>
- * <h2>ApiMethode: POST</h2>
- * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
- * </p>
  * <h2>ApiMethode: PATCH</h2>
  * <p>This class contains a comment <b>"ApiMethod: PATCH"</b>, which creates an API "PATCH". 
+ * </p>
+ * <h2>ApiMethode: POST</h2>
+ * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
  * </p>
  * <h2>ApiMethode: PUTImport</h2>
  * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
@@ -97,25 +97,7 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiUri.enUS: /api/page</h2>
  * <p>This class contains a comment <b>"ApiUri: /api/page"</b>, which defines the base API URI for SitePage objects as "/api/page" in the OpenAPI spec. 
  * </p>
- * <h2>Color: 2017-shaded-spruce</h2>
- * <p>This class contains a comment <b>"Color: 2017-shaded-spruce"</b>, which styles the SitePage page "2017-shaded-spruce". 
- * This will reference a CSS class defined by the stylesheets in the project that starts with "w3-". 
- * A css class of "w3-2017-shaded-spruce" is expected to exist in the project stylesheets, and is inspired by W3 CSS colors. 
- * See: <a href="https://www.w3schools.com/w3css/w3css_colors.asp">https://www.w3schools.com/w3css/w3css_colors.asp</a>. 
- * </p>
- * <h2>IconGroup: duotone</h2>
- * <p>This class contains a comment <b>"IconGroup: duotone"</b>, which adds icons on the SitePage page with a group of "duotone". 
- * This will reference a Font Awesome icon group that starts with "fa-" followed by the icon group "duotone", together is "fa-duotone". 
- * A Font Awesome icon group of "duotone" is expected to exist. 
- * The Font Awesome groups currently supported include: solid, regular, light, thin, duotone, sharp, and kit. 
- * See: <a href="https://fontawesome.com/docs/web/dig-deeper/styles">https://fontawesome.com/docs/web/dig-deeper/styles</a>. 
- * </p>
- * <h2>IconName: newspaper</h2>
- * <p>This class contains a comment <b>"IconName: newspaper"</b>, which adds icons on the SitePage page with a name of "newspaper". 
- * This will reference a Font Awesome icon that starts with the icon group "fa-duotone fa-" followed by the icon name, which is "fa-duotone fa-newspaper". 
- * A Font Awesome icon of "fa-duotone fa-newspaper" is expected to exist. 
- * See: <a href="https://fontawesome.com/icons">https://fontawesome.com/icons</a>. 
- * </p>
+ * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
  * <p>This class contains a comment <b>"Indexed: true"</b>, which means this class will be indexed in the search engine. 
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
@@ -189,7 +171,7 @@ import io.vertx.core.json.JsonObject;
 public abstract class SitePageGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(SitePage.class);
 
-	public static final String SitePage_Description_enUS = "Read the latest computate articles to learn more";
+	public static final String SitePage_Description_enUS = "Read the latest articles to learn more";
 	public static final String SitePage_AName_enUS = "an article";
 	public static final String SitePage_This_enUS = "this ";
 	public static final String SitePage_ThisName_enUS = "this article";
@@ -213,18 +195,16 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String Search_enUS_ImageUri = "/png/api/page-999.png";
 	public static final String GET_enUS_Uri = "/api/page/{id}";
 	public static final String GET_enUS_ImageUri = "/png/api/page/{id}-999.png";
-	public static final String POST_enUS_Uri = "/api/page";
-	public static final String POST_enUS_ImageUri = "/png/api/page-999.png";
 	public static final String PATCH_enUS_Uri = "/api/page";
 	public static final String PATCH_enUS_ImageUri = "/png/api/page-999.png";
+	public static final String POST_enUS_Uri = "/api/page";
+	public static final String POST_enUS_ImageUri = "/png/api/page-999.png";
 	public static final String PUTImport_enUS_Uri = "/api/page-import";
 	public static final String PUTImport_enUS_ImageUri = "/png/api/page-import-999.png";
 	public static final String SearchPage_enUS_Uri = "/page";
 	public static final String SearchPage_enUS_ImageUri = "/png/page-999.png";
 
-	public static final String SitePage_Color = "2017-shaded-spruce";
-	public static final String SitePage_IconGroup = "duotone";
-	public static final String SitePage_IconName = "newspaper";
+	public static final String SitePage_Icon = "<i class=\"fa-duotone fa-solid fa-newspaper\"></i>";
 
 	/////////////
 	// article //

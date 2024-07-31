@@ -513,13 +513,8 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseModelPag
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("regular");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("globe-pointer");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-regular fa-globe-pointer\"></i>");
   }
 
   protected void _pageUriCompanyWebsite(Wrap<String> c) {

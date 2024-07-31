@@ -1,7 +1,7 @@
 package org.computate.site.user;
 
-import org.computate.site.model.BaseModelPage;
 import org.computate.site.page.PageLayout;
+import org.computate.site.model.BaseModelPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -513,13 +513,8 @@ public class SiteUserGenPage extends SiteUserGenPageGen<BaseModelPage> {
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("regular");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("user-cog");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-duotone fa-solid fa-user-gear\"></i>");
   }
 
   protected void _pageUriSiteUser(Wrap<String> c) {

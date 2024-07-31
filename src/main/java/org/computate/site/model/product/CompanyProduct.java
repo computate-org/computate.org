@@ -33,8 +33,7 @@ import io.vertx.pgclient.data.Point;
  * 
  * AName: a product
  * PluralName: products
- * IconGroup: regular
- * IconName: conveyor-belt
+ * Icon: <i class="fa-regular fa-conveyor-belt"></i>
  */
 public class CompanyProduct extends CompanyProductGen<BaseResult> {
 
@@ -130,7 +129,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(title);
+		w.o(String.format("%s - %s", CompanyProduct_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

@@ -1,3 +1,4 @@
+
 package org.computate.site.user;
 
 import java.util.List;
@@ -26,7 +27,7 @@ import org.computate.site.request.SiteRequest;
  *   PUTImport:
  *   SearchPage:
  *     Page: SiteUserPage
- *     SuperPage: BaseModelPage
+ *     PageSuper: BaseModelPage
  *     ApiUri: /user
  * 
  * Keyword: classSimpleNameSiteUser
@@ -34,22 +35,13 @@ import org.computate.site.request.SiteRequest;
  * Filter: userId
  * 
  * AName: a site user
- * Color: 2017-shaded-spruce
- * IconGroup: regular
- * IconName: user-cog
+ * Icon: <i class="fa-duotone fa-solid fa-user-gear"></i>
  * 
  * RoleUser: true
  * Role: SiteAdmin
  * Description: A user record for each site user
  */
 public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUser {
-
-	/**
-	 * Modify: false
-	 */
-	@Override
-	protected void _archived(Wrap<Boolean> w) {
-	}
 
 	/**
 	 * {@inheritDoc}

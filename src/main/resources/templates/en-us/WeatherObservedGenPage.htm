@@ -2676,7 +2676,20 @@
               {{ htmPaginationButtonsWeatherObservedPage() }}
             <div class="grid-mode-details">
             <div>
-                <i class="fas fa-cloud-bolt-sun site-result-icon "></i>
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               <sl-dropdown>
                 <sl-button slot="trigger" caret>name</sl-button>
                 <sl-menu>
@@ -2690,16 +2703,57 @@
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listWeatherObserved%}
               <a href="{{ item.pageUrlPk }}">
-                <i class="fas fa-cloud-bolt-sun site-result-icon "></i>
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
                 <div>{{ item.name }}</div>
+                <div>{{ item.objectTitle }}</div>
+                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
+                      {% if getColumnCreated is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
                       {% if getColumnName is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnObjectTitle is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnObjectTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -2808,7 +2862,7 @@
         <div class="htmBodySidebarWeatherObservedPage ">
           {%- block htmBodySidebarWeatherObservedPage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
@@ -2855,7 +2909,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-filters "></i> Filters</span>
             </div>
@@ -2959,7 +3013,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
@@ -2991,7 +3045,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
@@ -3024,7 +3078,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
-            <div class="w3-bar w3-2017-shaded-spruce ">
+            <div>
               <span class="w3-bar-item ">
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
@@ -3250,7 +3304,7 @@
           </div>
           <div class="">
             <a href="/weather-observed" class="">
-              <i class="fas fa-cloud-bolt-sun"></i>
+              <i class="fa-regular fa-cloud-bolt-sun"></i>
               see all the weather observed devices
             </a>
           </div>

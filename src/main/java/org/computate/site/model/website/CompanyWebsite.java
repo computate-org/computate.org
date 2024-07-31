@@ -32,8 +32,7 @@ import io.vertx.pgclient.data.Point;
  * 
  * AName: a website
  * PluralName: websites
- * IconGroup: regular
- * IconName: globe-pointer
+ * Icon: <i class="fa-regular fa-globe-pointer"></i>
  */
 public class CompanyWebsite extends CompanyWebsiteGen<BaseModel> {
 

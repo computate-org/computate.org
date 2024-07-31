@@ -84,8 +84,6 @@ import io.vertx.core.Future;
  * <h2>ApiTag.enUS: true</h2>
  * <h2>ApiUri.enUS: null</h2>
  * <h2>Color: null</h2>
- * <h2>IconGroup: null</h2>
- * <h2>IconName: null</h2>
  * <h2>Indexed: true</h2>
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the PageLayout class will inherit the helpful inherited class comments from the super class PageLayoutGen. 
@@ -3715,160 +3713,56 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return PageLayout.staticSearchPageVideoId(siteRequest_, PageLayout.staticSetPageVideoId(siteRequest_, o)).toString();
 	}
 
-	////////////////////
-	// classIconGroup //
-	////////////////////
+	///////////////
+	// classIcon //
+	///////////////
 
 
-	/**	 The entity classIconGroup
+	/**	 The entity classIcon
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String classIconGroup;
+	protected String classIcon;
 
-	/**	<br> The entity classIconGroup
+	/**	<br> The entity classIcon
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:classIconGroup">Find the entity classIconGroup in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:classIcon">Find the entity classIcon in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _classIconGroup(Wrap<String> w);
+	protected abstract void _classIcon(Wrap<String> w);
 
-	public String getClassIconGroup() {
-		return classIconGroup;
+	public String getClassIcon() {
+		return classIcon;
 	}
-	public void setClassIconGroup(String o) {
-		this.classIconGroup = PageLayout.staticSetClassIconGroup(siteRequest_, o);
+	public void setClassIcon(String o) {
+		this.classIcon = PageLayout.staticSetClassIcon(siteRequest_, o);
 	}
-	public static String staticSetClassIconGroup(SiteRequest siteRequest_, String o) {
+	public static String staticSetClassIcon(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected PageLayout classIconGroupInit() {
-		Wrap<String> classIconGroupWrap = new Wrap<String>().var("classIconGroup");
-		if(classIconGroup == null) {
-			_classIconGroup(classIconGroupWrap);
-			Optional.ofNullable(classIconGroupWrap.getO()).ifPresent(o -> {
-				setClassIconGroup(o);
+	protected PageLayout classIconInit() {
+		Wrap<String> classIconWrap = new Wrap<String>().var("classIcon");
+		if(classIcon == null) {
+			_classIcon(classIconWrap);
+			Optional.ofNullable(classIconWrap.getO()).ifPresent(o -> {
+				setClassIcon(o);
 			});
 		}
 		return (PageLayout)this;
 	}
 
-	public static String staticSearchClassIconGroup(SiteRequest siteRequest_, String o) {
+	public static String staticSearchClassIcon(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrClassIconGroup(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrClassIcon(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqClassIconGroup(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchClassIconGroup(siteRequest_, PageLayout.staticSetClassIconGroup(siteRequest_, o)).toString();
-	}
-
-	///////////////////
-	// classIconName //
-	///////////////////
-
-
-	/**	 The entity classIconName
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String classIconName;
-
-	/**	<br> The entity classIconName
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:classIconName">Find the entity classIconName in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _classIconName(Wrap<String> w);
-
-	public String getClassIconName() {
-		return classIconName;
-	}
-	public void setClassIconName(String o) {
-		this.classIconName = PageLayout.staticSetClassIconName(siteRequest_, o);
-	}
-	public static String staticSetClassIconName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected PageLayout classIconNameInit() {
-		Wrap<String> classIconNameWrap = new Wrap<String>().var("classIconName");
-		if(classIconName == null) {
-			_classIconName(classIconNameWrap);
-			Optional.ofNullable(classIconNameWrap.getO()).ifPresent(o -> {
-				setClassIconName(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static String staticSearchClassIconName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrClassIconName(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqClassIconName(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchClassIconName(siteRequest_, PageLayout.staticSetClassIconName(siteRequest_, o)).toString();
-	}
-
-	/////////////////////////
-	// classIconCssClasses //
-	/////////////////////////
-
-
-	/**	 The entity classIconCssClasses
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String classIconCssClasses;
-
-	/**	<br> The entity classIconCssClasses
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:classIconCssClasses">Find the entity classIconCssClasses in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _classIconCssClasses(Wrap<String> w);
-
-	public String getClassIconCssClasses() {
-		return classIconCssClasses;
-	}
-	public void setClassIconCssClasses(String o) {
-		this.classIconCssClasses = PageLayout.staticSetClassIconCssClasses(siteRequest_, o);
-	}
-	public static String staticSetClassIconCssClasses(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected PageLayout classIconCssClassesInit() {
-		Wrap<String> classIconCssClassesWrap = new Wrap<String>().var("classIconCssClasses");
-		if(classIconCssClasses == null) {
-			_classIconCssClasses(classIconCssClassesWrap);
-			Optional.ofNullable(classIconCssClassesWrap.getO()).ifPresent(o -> {
-				setClassIconCssClasses(o);
-			});
-		}
-		return (PageLayout)this;
-	}
-
-	public static String staticSearchClassIconCssClasses(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrClassIconCssClasses(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqClassIconCssClasses(SiteRequest siteRequest_, String o) {
-		return PageLayout.staticSearchClassIconCssClasses(siteRequest_, PageLayout.staticSetClassIconCssClasses(siteRequest_, o)).toString();
+	public static String staticSearchFqClassIcon(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchClassIcon(siteRequest_, PageLayout.staticSetClassIcon(siteRequest_, o)).toString();
 	}
 
 	/////////////////////
@@ -4042,9 +3936,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				pageImageWidthInit();
 				pageImageHeightInit();
 				pageVideoIdInit();
-				classIconGroupInit();
-				classIconNameInit();
-				classIconCssClassesInit();
+				classIconInit();
 				pageDescriptionInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -4226,12 +4118,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pageImageHeight;
 			case "pageVideoId":
 				return oPageLayout.pageVideoId;
-			case "classIconGroup":
-				return oPageLayout.classIconGroup;
-			case "classIconName":
-				return oPageLayout.classIconName;
-			case "classIconCssClasses":
-				return oPageLayout.classIconCssClasses;
+			case "classIcon":
+				return oPageLayout.classIcon;
 			case "pageDescription":
 				return oPageLayout.pageDescription;
 			default:
@@ -4383,12 +4271,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetPageImageHeight(siteRequest_, o);
 		case "pageVideoId":
 			return PageLayout.staticSetPageVideoId(siteRequest_, o);
-		case "classIconGroup":
-			return PageLayout.staticSetClassIconGroup(siteRequest_, o);
-		case "classIconName":
-			return PageLayout.staticSetClassIconName(siteRequest_, o);
-		case "classIconCssClasses":
-			return PageLayout.staticSetClassIconCssClasses(siteRequest_, o);
+		case "classIcon":
+			return PageLayout.staticSetClassIcon(siteRequest_, o);
 		case "pageDescription":
 			return PageLayout.staticSetPageDescription(siteRequest_, o);
 			default:
@@ -4515,12 +4399,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchPageImageHeight(siteRequest_, (Integer)o);
 		case "pageVideoId":
 			return PageLayout.staticSearchPageVideoId(siteRequest_, (String)o);
-		case "classIconGroup":
-			return PageLayout.staticSearchClassIconGroup(siteRequest_, (String)o);
-		case "classIconName":
-			return PageLayout.staticSearchClassIconName(siteRequest_, (String)o);
-		case "classIconCssClasses":
-			return PageLayout.staticSearchClassIconCssClasses(siteRequest_, (String)o);
+		case "classIcon":
+			return PageLayout.staticSearchClassIcon(siteRequest_, (String)o);
 		case "pageDescription":
 			return PageLayout.staticSearchPageDescription(siteRequest_, (String)o);
 			default:
@@ -4647,12 +4527,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
 		case "pageVideoId":
 			return PageLayout.staticSearchStrPageVideoId(siteRequest_, (String)o);
-		case "classIconGroup":
-			return PageLayout.staticSearchStrClassIconGroup(siteRequest_, (String)o);
-		case "classIconName":
-			return PageLayout.staticSearchStrClassIconName(siteRequest_, (String)o);
-		case "classIconCssClasses":
-			return PageLayout.staticSearchStrClassIconCssClasses(siteRequest_, (String)o);
+		case "classIcon":
+			return PageLayout.staticSearchStrClassIcon(siteRequest_, (String)o);
 		case "pageDescription":
 			return PageLayout.staticSearchStrPageDescription(siteRequest_, (String)o);
 			default:
@@ -4779,12 +4655,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqPageImageHeight(siteRequest_, o);
 		case "pageVideoId":
 			return PageLayout.staticSearchFqPageVideoId(siteRequest_, o);
-		case "classIconGroup":
-			return PageLayout.staticSearchFqClassIconGroup(siteRequest_, o);
-		case "classIconName":
-			return PageLayout.staticSearchFqClassIconName(siteRequest_, o);
-		case "classIconCssClasses":
-			return PageLayout.staticSearchFqClassIconCssClasses(siteRequest_, o);
+		case "classIcon":
+			return PageLayout.staticSearchFqClassIcon(siteRequest_, o);
 		case "pageDescription":
 			return PageLayout.staticSearchFqPageDescription(siteRequest_, o);
 			default:
@@ -4866,9 +4738,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_pageImageWidth = "pageImageWidth";
 	public static final String VAR_pageImageHeight = "pageImageHeight";
 	public static final String VAR_pageVideoId = "pageVideoId";
-	public static final String VAR_classIconGroup = "classIconGroup";
-	public static final String VAR_classIconName = "classIconName";
-	public static final String VAR_classIconCssClasses = "classIconCssClasses";
+	public static final String VAR_classIcon = "classIcon";
 	public static final String VAR_pageDescription = "pageDescription";
 
 	public static final String DISPLAY_NAME_siteRequest_ = "";
@@ -4935,9 +4805,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_pageImageWidth = "";
 	public static final String DISPLAY_NAME_pageImageHeight = "";
 	public static final String DISPLAY_NAME_pageVideoId = "";
-	public static final String DISPLAY_NAME_classIconGroup = "";
-	public static final String DISPLAY_NAME_classIconName = "";
-	public static final String DISPLAY_NAME_classIconCssClasses = "";
+	public static final String DISPLAY_NAME_classIcon = "";
 	public static final String DISPLAY_NAME_pageDescription = "";
 
 	public static String displayNameForClass(String var) {
@@ -5073,12 +4941,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_pageImageHeight;
 		case VAR_pageVideoId:
 			return DISPLAY_NAME_pageVideoId;
-		case VAR_classIconGroup:
-			return DISPLAY_NAME_classIconGroup;
-		case VAR_classIconName:
-			return DISPLAY_NAME_classIconName;
-		case VAR_classIconCssClasses:
-			return DISPLAY_NAME_classIconCssClasses;
+		case VAR_classIcon:
+			return DISPLAY_NAME_classIcon;
 		case VAR_pageDescription:
 			return DISPLAY_NAME_pageDescription;
 		default:

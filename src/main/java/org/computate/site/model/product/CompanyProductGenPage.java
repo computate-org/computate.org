@@ -508,13 +508,8 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<BaseResultPa
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("regular");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("conveyor-belt");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-regular fa-conveyor-belt\"></i>");
   }
 
   protected void _pageUriCompanyProduct(Wrap<String> c) {

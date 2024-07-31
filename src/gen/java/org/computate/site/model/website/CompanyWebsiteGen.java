@@ -95,19 +95,6 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>This class contains a comment <b>"ApiUri: /api/website"</b>, which defines the base API URI for CompanyWebsite objects as "/api/website" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
- * <h2>IconGroup: regular</h2>
- * <p>This class contains a comment <b>"IconGroup: regular"</b>, which adds icons on the CompanyWebsite page with a group of "regular". 
- * This will reference a Font Awesome icon group that starts with "fa-" followed by the icon group "regular", together is "fa-regular". 
- * A Font Awesome icon group of "regular" is expected to exist. 
- * The Font Awesome groups currently supported include: solid, regular, light, thin, duotone, sharp, and kit. 
- * See: <a href="https://fontawesome.com/docs/web/dig-deeper/styles">https://fontawesome.com/docs/web/dig-deeper/styles</a>. 
- * </p>
- * <h2>IconName: globe-pointer</h2>
- * <p>This class contains a comment <b>"IconName: globe-pointer"</b>, which adds icons on the CompanyWebsite page with a name of "globe-pointer". 
- * This will reference a Font Awesome icon that starts with the icon group "fa-regular fa-" followed by the icon name, which is "fa-regular fa-globe-pointer". 
- * A Font Awesome icon of "fa-regular fa-globe-pointer" is expected to exist. 
- * See: <a href="https://fontawesome.com/icons">https://fontawesome.com/icons</a>. 
- * </p>
  * <h2>Indexed: true</h2>
  * <p>This class contains a comment <b>"Indexed: true"</b>, which means this class will be indexed in the search engine. 
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
@@ -217,8 +204,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseModel {
 	public static final String SearchPage_enUS_Uri = "/website";
 	public static final String SearchPage_enUS_ImageUri = "/png/website-999.png";
 
-	public static final String CompanyWebsite_IconGroup = "regular";
-	public static final String CompanyWebsite_IconName = "globe-pointer";
+	public static final String CompanyWebsite_Icon = "<i class=\"fa-regular fa-globe-pointer\"></i>";
 
 	//////////
 	// name //

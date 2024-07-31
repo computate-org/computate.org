@@ -27,6 +27,22 @@
 
 {%- block htmScriptBaseModelPage %}
 {%- block htmScriptCompanyCoursePage %}
+    <script>
+
+      function jsWebsocketCompanyCourse(pk, vars, $response) {
+        {%- block jsWebsocketCompanyCoursePage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyCourse(e, feature) {
+        {%- block jsTooltipCompanyCoursePage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyCourse(feature, layer) {
+        return `{%- block htmTooltipCompanyCoursePage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyCoursePage %}`;
+      }
+    </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
       window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
@@ -56,15 +72,15 @@
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
-          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-details');
           });
-          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-list');
           });
-          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
             document.querySelector('#site-results-grid').classList.add('grid-mode-card');
           });
@@ -85,7 +101,7 @@
               if(t) {
                 var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
                 patchCompanyCourseVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setCreated', s)
+                    , 'setCreated', s
                     , event.currentTarget
                     , function(response, target) { addGlow(target); }
                     , function(response, target) { addError(target); }
@@ -272,22 +288,6 @@
           searchpageCompanyCourse();
         });
       });
-    </script>
-    <script>
-
-      function jsWebsocketCompanyCourse(pk, vars, $response) {
-        {%- block jsWebsocketCompanyCoursePage %}{%- endblock %}
-      }
-
-      function jsTooltipCompanyCourse(e, feature) {
-        {%- block jsTooltipCompanyCoursePage %}{%- endblock %}
-      }
-
-      function htmTooltipCompanyCourse(feature, layer) {
-        return `{%- block htmTooltipCompanyCoursePage %}
-<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
-{%- endblock htmTooltipCompanyCoursePage %}`;
-      }
     </script>
 {%- endblock htmScriptCompanyCoursePage %}
 {%- endblock htmScriptBaseModelPage %}
@@ -553,7 +553,20 @@
               {{ htmPaginationButtonsCompanyCoursePage() }}
             <div class="grid-mode-details">
             <div>
-                <i class="far fa-notebook site-result-icon "></i>
+                <i class="fa-regular fa-notebook"></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               <sl-dropdown>
                 <sl-button slot="trigger" caret>course name</sl-button>
                 <sl-menu>
@@ -564,6 +577,19 @@
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by course name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -580,21 +606,49 @@
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listCompanyCourse%}
               <a href="{{ item.pageUrlPk }}">
-                <i class="far fa-notebook site-result-icon "></i>
+                <i class="fa-regular fa-notebook"></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
                 <div>{{ item.courseName }}</div>
+                <div>{{ item.objectTitle }}</div>
                 <div>{{ item.courseDescription }}</div>
+                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
+                      {% if getColumnCreated is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
                       {% if getColumnCourseName is defined %}
                         <div>
                         </div>
                       {% endif %}
+                      {% if getColumnObjectTitle is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
                       {% if getColumnCourseDescription is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnObjectTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -703,7 +757,7 @@
         <div class="htmBodySidebarCompanyCoursePage ">
           {%- block htmBodySidebarCompanyCoursePage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
@@ -750,7 +804,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-filters "></i> Filters</span>
             </div>
@@ -854,7 +908,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
@@ -886,7 +940,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
@@ -919,7 +973,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
@@ -1145,7 +1199,7 @@
           </div>
           <div class="">
             <a href="/course" class="">
-              <i class="far fa-notebook"></i>
+              <i class="fa-regular fa-notebook"></i>
               see all the courses
             </a>
           </div>

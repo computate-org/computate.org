@@ -31,8 +31,7 @@ import io.vertx.pgclient.data.Point;
  * Role: SiteAdmin
  * 
  * AName: a course
- * IconGroup: regular
- * IconName: notebook
+ * Icon: <i class="fa-regular fa-notebook"></i>
  */
 public class CompanyCourse extends CompanyCourseGen<BaseModel> {
 

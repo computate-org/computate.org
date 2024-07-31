@@ -44,8 +44,7 @@ import io.vertx.pgclient.data.Polygon;
  *
  * AName: a weather observed device
  * Color: 2017-shaded-spruce
- * IconGroup: solid
- * IconName: cloud-bolt-sun
+ * Icon: <i class="fa-regular fa-cloud-bolt-sun"></i>
  * Rows: 100
  **/
 public class WeatherObserved extends WeatherObservedGen<BaseModel> {

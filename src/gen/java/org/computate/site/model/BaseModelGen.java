@@ -961,6 +961,58 @@ public abstract class BaseModelGen<DEV> extends Object {
 		return BaseModel.staticSearchSaves(siteRequest_, BaseModel.staticSetSaves(siteRequest_, o)).toString();
 	}
 
+	////////////////
+	// objectIcon //
+	////////////////
+
+
+	/**	 The entity objectIcon
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String objectIcon;
+
+	/**	<br> The entity objectIcon
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModel&fq=entiteVar_enUS_indexed_string:objectIcon">Find the entity objectIcon in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _objectIcon(Wrap<String> w);
+
+	public String getObjectIcon() {
+		return objectIcon;
+	}
+	public void setObjectIcon(String o) {
+		this.objectIcon = BaseModel.staticSetObjectIcon(siteRequest_, o);
+	}
+	public static String staticSetObjectIcon(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected BaseModel objectIconInit() {
+		Wrap<String> objectIconWrap = new Wrap<String>().var("objectIcon");
+		if(objectIcon == null) {
+			_objectIcon(objectIconWrap);
+			Optional.ofNullable(objectIconWrap.getO()).ifPresent(o -> {
+				setObjectIcon(o);
+			});
+		}
+		return (BaseModel)this;
+	}
+
+	public static String staticSearchObjectIcon(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrObjectIcon(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqObjectIcon(SiteRequest siteRequest_, String o) {
+		return BaseModel.staticSearchObjectIcon(siteRequest_, BaseModel.staticSetObjectIcon(siteRequest_, o)).toString();
+	}
+
 	/////////////////
 	// objectTitle //
 	/////////////////
@@ -1437,6 +1489,7 @@ public abstract class BaseModelGen<DEV> extends Object {
 				sessionIdInit();
 				userKeyInit();
 				savesInit();
+				objectIconInit();
 				objectTitleInit();
 				objectIdInit();
 				objectSuggestInit();
@@ -1523,6 +1576,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 				return oBaseModel.userKey;
 			case "saves":
 				return oBaseModel.saves;
+			case "objectIcon":
+				return oBaseModel.objectIcon;
 			case "objectTitle":
 				return oBaseModel.objectTitle;
 			case "objectId":
@@ -1602,6 +1657,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return BaseModel.staticSetUserKey(siteRequest_, o);
 		case "saves":
 			return BaseModel.staticSetSaves(siteRequest_, o);
+		case "objectIcon":
+			return BaseModel.staticSetObjectIcon(siteRequest_, o);
 		case "objectTitle":
 			return BaseModel.staticSetObjectTitle(siteRequest_, o);
 		case "objectId":
@@ -1656,6 +1713,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return BaseModel.staticSearchUserKey(siteRequest_, (Long)o);
 		case "saves":
 			return BaseModel.staticSearchSaves(siteRequest_, (String)o);
+		case "objectIcon":
+			return BaseModel.staticSearchObjectIcon(siteRequest_, (String)o);
 		case "objectTitle":
 			return BaseModel.staticSearchObjectTitle(siteRequest_, (String)o);
 		case "objectId":
@@ -1710,6 +1769,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return BaseModel.staticSearchStrUserKey(siteRequest_, (Long)o);
 		case "saves":
 			return BaseModel.staticSearchStrSaves(siteRequest_, (String)o);
+		case "objectIcon":
+			return BaseModel.staticSearchStrObjectIcon(siteRequest_, (String)o);
 		case "objectTitle":
 			return BaseModel.staticSearchStrObjectTitle(siteRequest_, (String)o);
 		case "objectId":
@@ -1764,6 +1825,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return BaseModel.staticSearchFqUserKey(siteRequest_, o);
 		case "saves":
 			return BaseModel.staticSearchFqSaves(siteRequest_, o);
+		case "objectIcon":
+			return BaseModel.staticSearchFqObjectIcon(siteRequest_, o);
 		case "objectTitle":
 			return BaseModel.staticSearchFqObjectTitle(siteRequest_, o);
 		case "objectId":
@@ -1936,6 +1999,12 @@ public abstract class BaseModelGen<DEV> extends Object {
 					oBaseModel.saves.addAll(saves);
 			}
 
+			if(saves.contains("objectIcon")) {
+				String objectIcon = (String)doc.get("objectIcon_docvalues_string");
+				if(objectIcon != null)
+					oBaseModel.setObjectIcon(objectIcon);
+			}
+
 			if(saves.contains("objectTitle")) {
 				String objectTitle = (String)doc.get("objectTitle_docvalues_string");
 				if(objectTitle != null)
@@ -2021,6 +2090,9 @@ public abstract class BaseModelGen<DEV> extends Object {
 				l.add(o);
 			}
 		}
+		if(objectIcon != null) {
+			doc.put("objectIcon_docvalues_string", objectIcon);
+		}
 		if(objectTitle != null) {
 			doc.put("objectTitle_docvalues_string", objectTitle);
 		}
@@ -2077,6 +2149,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 				return "userKey_docvalues_long";
 			case "saves":
 				return "saves_docvalues_strings";
+			case "objectIcon":
+				return "objectIcon_docvalues_string";
 			case "objectTitle":
 				return "objectTitle_docvalues_string";
 			case "objectId":
@@ -2118,6 +2192,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 				return "userKey_docvalues_long";
 			case "saves":
 				return "saves_docvalues_strings";
+			case "objectIcon":
+				return "objectIcon_docvalues_string";
 			case "objectTitle":
 				return "objectTitle_docvalues_string";
 			case "objectId":
@@ -2165,6 +2241,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 				return "userKey";
 			case "saves_docvalues_strings":
 				return "saves";
+			case "objectIcon_docvalues_string":
+				return "objectIcon";
 			case "objectTitle_docvalues_string":
 				return "objectTitle";
 			case "objectId_docvalues_string":
@@ -2233,6 +2311,7 @@ public abstract class BaseModelGen<DEV> extends Object {
 		Optional.ofNullable((List<?>)doc.get("saves_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oBaseModel.addSaves(BaseModel.staticSetSaves(siteRequest, v.toString()));
 		});
+		oBaseModel.setObjectIcon(Optional.ofNullable(doc.get("objectIcon_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oBaseModel.setObjectTitle(Optional.ofNullable(doc.get("objectTitle_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oBaseModel.setObjectId(Optional.ofNullable(doc.get("objectId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oBaseModel.setObjectSuggest(Optional.ofNullable(doc.get("objectSuggest_suggested")).map(v -> v.toString()).orElse(null));
@@ -2279,6 +2358,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 				apiRequest.addVars("userKey");
 			if(!Objects.equals(saves, original.getSaves()))
 				apiRequest.addVars("saves");
+			if(!Objects.equals(objectIcon, original.getObjectIcon()))
+				apiRequest.addVars("objectIcon");
 			if(!Objects.equals(objectTitle, original.getObjectTitle()))
 				apiRequest.addVars("objectTitle");
 			if(!Objects.equals(objectId, original.getObjectId()))
@@ -2316,6 +2397,7 @@ public abstract class BaseModelGen<DEV> extends Object {
 		sb.append(Optional.ofNullable(sessionId).map(v -> "sessionId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(userKey).map(v -> "userKey: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(saves).map(v -> "saves: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(objectIcon).map(v -> "objectIcon: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(objectTitle).map(v -> "objectTitle: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(objectId).map(v -> "objectId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(objectSuggest).map(v -> "objectSuggest: \"" + v + "\"\n" ).orElse(""));
@@ -2341,6 +2423,7 @@ public abstract class BaseModelGen<DEV> extends Object {
 	public static final String VAR_sessionId = "sessionId";
 	public static final String VAR_userKey = "userKey";
 	public static final String VAR_saves = "saves";
+	public static final String VAR_objectIcon = "objectIcon";
 	public static final String VAR_objectTitle = "objectTitle";
 	public static final String VAR_objectId = "objectId";
 	public static final String VAR_objectSuggest = "objectSuggest";
@@ -2395,6 +2478,7 @@ public abstract class BaseModelGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_sessionId = "";
 	public static final String DISPLAY_NAME_userKey = "";
 	public static final String DISPLAY_NAME_saves = "";
+	public static final String DISPLAY_NAME_objectIcon = "";
 	public static final String DISPLAY_NAME_objectTitle = "";
 	public static final String DISPLAY_NAME_objectId = "ID";
 	public static final String DISPLAY_NAME_objectSuggest = "autosuggest";
@@ -2435,6 +2519,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return DISPLAY_NAME_userKey;
 		case VAR_saves:
 			return DISPLAY_NAME_saves;
+		case VAR_objectIcon:
+			return DISPLAY_NAME_objectIcon;
 		case VAR_objectTitle:
 			return DISPLAY_NAME_objectTitle;
 		case VAR_objectId:
@@ -2484,6 +2570,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return "The primary key of the user that created this record";
 		case VAR_saves:
 			return "A list of fields that are saved for this record in the database";
+		case VAR_objectIcon:
+			return "The icon HTML";
 		case VAR_objectTitle:
 			return "The title of this object";
 		case VAR_objectId:
@@ -2533,6 +2621,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 			return "Long";
 		case VAR_saves:
 			return "List";
+		case VAR_objectIcon:
+			return "String";
 		case VAR_objectTitle:
 			return "String";
 		case VAR_objectId:
@@ -2556,6 +2646,10 @@ public abstract class BaseModelGen<DEV> extends Object {
 
 	public static Integer htmColumnBaseModel(String var) {
 		switch(var) {
+		case VAR_created:
+			return 1;
+		case VAR_objectTitle:
+			return 2;
 			default:
 				return null;
 		}

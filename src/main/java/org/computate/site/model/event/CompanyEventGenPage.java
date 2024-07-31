@@ -513,13 +513,8 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseModelPage> {
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("duotone");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("map-location-dot");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>");
   }
 
   protected void _pageUriCompanyEvent(Wrap<String> c) {

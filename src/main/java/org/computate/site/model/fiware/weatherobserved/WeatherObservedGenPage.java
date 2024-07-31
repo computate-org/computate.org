@@ -513,13 +513,8 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("solid");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("cloud-bolt-sun");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-regular fa-cloud-bolt-sun\"></i>");
   }
 
   protected void _pageUriWeatherObserved(Wrap<String> c) {

@@ -22,8 +22,8 @@ import org.computate.search.wrap.Wrap;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
 import org.computate.site.result.BaseResult;
-import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.site.request.SiteRequest;
+import org.computate.vertx.config.ComputateConfigKeys;
 
 import io.vertx.core.Promise;
 
@@ -43,24 +43,23 @@ import io.vertx.core.Promise;
  * ApiMethod:
  *   Search:
  *   GET:
- *   POST:
  *   PATCH:
+ *   POST:
  *   PUTImport:
  *   SearchPage:
  *     Page: SitePagePage
+ *     PageSuper: BaseResultPage
  *     ApiUri: /page
  * 
  * AName: an article
- * Color: 2017-shaded-spruce
- * IconGroup: duotone
- * IconName: newspaper
+ * Icon: <i class="fa-duotone fa-solid fa-newspaper"></i>
  * 
  * Sort.desc: courseNum
  * Sort.desc: lessonNum
  * 
  * PublicRead: true
  * Role: SiteAdmin
- * Description: Read the latest computate articles to learn more
+ * Description: Read the latest articles to learn more
  */
 public class SitePage extends SitePageGen<BaseResult> {
 
@@ -318,7 +317,7 @@ public class SitePage extends SitePageGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(title);
+		w.o(String.format("%s - %s", SitePage_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

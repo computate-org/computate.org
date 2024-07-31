@@ -393,24 +393,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	/**
-	 * Description: The icon group for this page
+	 * Description: The icon for this page
 	 */
-	protected void _classIconGroup(Wrap<String> w) {
-	}
-
-	/**
-	 * Description: The icon name for this page
-	 */
-	protected void _classIconName(Wrap<String> w) {
-	}
-
-	/**
-	 * Description: The icon CSS classes for this page
-	 */
-	protected void _classIconCssClasses(Wrap<String> w) {
-		if(classIconGroup != null && classIconName != null) {
-			w.o(String.format("fa-%s fa-%s ", classIconGroup, classIconName));
-		}
+	protected void _classIcon(Wrap<String> w) {
 	}
 
 	/**

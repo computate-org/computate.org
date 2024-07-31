@@ -95,19 +95,6 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>This class contains a comment <b>"ApiUri: /api/research"</b>, which defines the base API URI for CompanyResearch objects as "/api/research" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
- * <h2>IconGroup: duotone</h2>
- * <p>This class contains a comment <b>"IconGroup: duotone"</b>, which adds icons on the CompanyResearch page with a group of "duotone". 
- * This will reference a Font Awesome icon group that starts with "fa-" followed by the icon group "duotone", together is "fa-duotone". 
- * A Font Awesome icon group of "duotone" is expected to exist. 
- * The Font Awesome groups currently supported include: solid, regular, light, thin, duotone, sharp, and kit. 
- * See: <a href="https://fontawesome.com/docs/web/dig-deeper/styles">https://fontawesome.com/docs/web/dig-deeper/styles</a>. 
- * </p>
- * <h2>IconName: school</h2>
- * <p>This class contains a comment <b>"IconName: school"</b>, which adds icons on the CompanyResearch page with a name of "school". 
- * This will reference a Font Awesome icon that starts with the icon group "fa-duotone fa-" followed by the icon name, which is "fa-duotone fa-school". 
- * A Font Awesome icon of "fa-duotone fa-school" is expected to exist. 
- * See: <a href="https://fontawesome.com/icons">https://fontawesome.com/icons</a>. 
- * </p>
  * <h2>Indexed: true</h2>
  * <p>This class contains a comment <b>"Indexed: true"</b>, which means this class will be indexed in the search engine. 
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
@@ -217,8 +204,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 	public static final String SearchPage_enUS_Uri = "/research";
 	public static final String SearchPage_enUS_ImageUri = "/png/research-999.png";
 
-	public static final String CompanyResearch_IconGroup = "duotone";
-	public static final String CompanyResearch_IconName = "school";
+	public static final String CompanyResearch_Icon = "<i class=\"fa-duotone fa-solid fa-school\"></i>";
 
 	//////////
 	// name //

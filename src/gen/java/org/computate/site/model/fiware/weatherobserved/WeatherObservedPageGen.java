@@ -64,8 +64,6 @@ import io.vertx.core.json.JsonArray;
  * <h2>ApiTag.enUS: true</h2>
  * <h2>ApiUri.enUS: null</h2>
  * <h2>Color: null</h2>
- * <h2>IconGroup: null</h2>
- * <h2>IconName: null</h2>
  * <h2>Indexed: true</h2>
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the WeatherObservedPage class will inherit the helpful inherited class comments from the super class WeatherObservedPageGen. 

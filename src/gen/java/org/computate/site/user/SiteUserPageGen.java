@@ -64,8 +64,6 @@ import io.vertx.core.json.JsonArray;
  * <h2>ApiTag.enUS: true</h2>
  * <h2>ApiUri.enUS: null</h2>
  * <h2>Color: null</h2>
- * <h2>IconGroup: null</h2>
- * <h2>IconName: null</h2>
  * <h2>Indexed: true</h2>
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the SiteUserPage class will inherit the helpful inherited class comments from the super class SiteUserPageGen. 
@@ -129,7 +127,11 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseSiteUserPage(promise2);
 		promise2.future().onSuccess(a -> {
-			promise.complete();
+			super.promiseDeepSiteUserGenPage(siteRequest_).onSuccess(b -> {
+				promise.complete();
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
 		}).onFailure(ex -> {
 			promise.fail(ex);
 		});
@@ -153,7 +155,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		return promise.future();
 	}
 
-	public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepSiteUserPage(siteRequest_);
 	}
 
@@ -162,6 +164,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	/////////////////
 
 	public void siteRequestSiteUserPage(SiteRequest siteRequest_) {
+			super.siteRequestSiteUserGenPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -172,7 +175,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// obtain //
 	/////////////
 
-	public Object obtainForClass(String var) {
+	@Override public Object obtainForClass(String var) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -193,7 +196,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		SiteUserPage oSiteUserPage = (SiteUserPage)this;
 		switch(var) {
 			default:
-				return null;
+				return super.obtainSiteUserGenPage(var);
 		}
 	}
 
@@ -201,7 +204,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	// relate //
 	///////////////
 
-	public boolean relateForClass(String var, Object val) {
+	@Override public boolean relateForClass(String var, Object val) {
 		String[] vars = StringUtils.split(var, ".");
 		Object o = null;
 		for(String v : vars) {
@@ -218,7 +221,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 		SiteUserPage oSiteUserPage = (SiteUserPage)this;
 		switch(var) {
 			default:
-				return null;
+				return super.relateSiteUserGenPage(var, val);
 		}
 	}
 
@@ -232,7 +235,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public static Object staticSetSiteUserPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return SiteUserGenPage.staticSetSiteUserGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -246,7 +249,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public static Object staticSearchSiteUserPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return SiteUserGenPage.staticSearchSiteUserGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -260,7 +263,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public static String staticSearchStrSiteUserPage(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return SiteUserGenPage.staticSearchStrSiteUserGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -274,7 +277,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public static String staticSearchFqSiteUserPage(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 			default:
-				return null;
+				return SiteUserGenPage.staticSearchFqSiteUserGenPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -284,6 +287,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
 		return sb.toString();
 	}
 
@@ -296,7 +300,7 @@ public abstract class SiteUserPageGen<DEV> extends SiteUserGenPage {
 	public static String displayNameSiteUserPage(String var) {
 		switch(var) {
 		default:
-			return null;
+			return SiteUserGenPage.displayNameSiteUserGenPage(var);
 		}
 	}
 }

@@ -1526,12 +1526,10 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 			String uri = ctx.getString(CompanyProduct.VAR_uri);
 			String url = String.format("%s%s", siteBaseUrl, uri);
-			String pageId = StringUtils.substringBeforeLast(StringUtils.substringAfterLast(resourceUri, "/"), ".");
 			CompanyProduct page = new CompanyProduct();
 			page.setSiteRequest_((SiteRequest)siteRequest);
 			page.persistForClass(CompanyProduct.VAR_resourceUri, resourceUri);
 			page.persistForClass(CompanyProduct.VAR_templateUri, templateUri);
-			page.persistForClass(CompanyProduct.VAR_pageId, pageId);
 
 			page.persistForClass(CompanyProduct.VAR_inheritPk, CompanyProduct.staticSetInheritPk(siteRequest2, ctx.getString(CompanyProduct.VAR_inheritPk)));
 			page.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, ctx.getString(CompanyProduct.VAR_created)));

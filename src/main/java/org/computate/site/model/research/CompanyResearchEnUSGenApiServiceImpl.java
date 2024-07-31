@@ -1582,7 +1582,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateSearchPageCompanyResearch() {
-		return "/en-us/CompanyResearchPage.htm";
+		return "en-us/CompanyResearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyResearch(SearchList<CompanyResearch> listCompanyResearch) {
 		Promise<ServiceResponse> promise = Promise.promise();

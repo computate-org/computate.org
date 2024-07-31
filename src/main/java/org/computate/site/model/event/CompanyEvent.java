@@ -35,8 +35,7 @@ import io.vertx.pgclient.data.Point;
  * Role: SiteAdmin
  * 
  * AName: an event
- * IconGroup: duotone
- * IconName: map-location-dot
+ * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>
  */
 public class CompanyEvent extends CompanyEventGen<BaseModel> {
 

@@ -21,12 +21,101 @@
 {%- block htmScriptsBaseModelPage %}
 {{ super() }}
 {%- block htmScriptsCompanyEventPage %}
-    <script src="{{staticBaseUrl}}/js/en-us/CompanyEventPage.js"></script>
+    <script src="{{staticBaseUrl}}/js/enUS/CompanyEventPage.js"></script>
 {%- endblock htmScriptsCompanyEventPage %}
 {%- endblock htmScriptsBaseModelPage %}
 
 {%- block htmScriptBaseModelPage %}
 {%- block htmScriptCompanyEventPage %}
+    <script>
+
+      function jsWebsocketCompanyEvent(pk, vars, $response) {
+        {%- block jsWebsocketCompanyEventPage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyEvent(e, feature) {
+        {%- block jsTooltipCompanyEventPage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyEvent(feature, layer) {
+        return `{%- block htmTooltipCompanyEventPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyEventPage %}`;
+      }
+
+      function jsLegendCompanyEvent(map) {
+{%- block jsLegendCompanyEventPage %}
+        var div = L.DomUtil.create('div', 'info legend');
+        var htm = '';
+        window.listCompanyEvent.forEach((companyEvent, index) => {
+          if(companyEvent.location) {
+            var shapes = [];
+            if(Array.isArray(companyEvent.location))
+              shapes = shapes.concat(companyEvent.location);
+            else
+              shapes.push(companyEvent.location);
+            shapes.forEach(function(shape, index) {
+              htm += htmLegendCompanyEvent(map, shape, companyEvent, index, shapes.length);
+            });
+          }
+        });
+        div.innerHTML = htm;
+        return div;
+{%- endblock jsLegendCompanyEventPage %}
+      }
+
+      function htmLegendCompanyEvent(map, shape, companyEvent, index, count) {
+        var color = companyEvent.locationColors[index];
+        var title = companyEvent.locationTitles[index];
+        var url = companyEvent.locationLinks[index];
+        var htm = '';
+        htm += `<div class="w3-white w3-padding w3-border w3-opacity w3-hover-opacity-off cursor-pointer " style="max-width: 400px; ">
+`;
+        htm += `{%- block htmLegendCompanyEventPage %}
+    <div class="w3-row " title="${quoteattr(title)}">
+    <div class="w3-col " style="width: 20px; ">
+      <i class="fa-light fa-circle" style="color: ${color}; "></i>
+    </div>
+    <div class="w3-rest text-overflow-ellipsis ">
+      <span class="" data-id="${companyEvent.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
+    </div>
+    </div>
+{%- endblock htmLegendCompanyEventPage %}`;
+        htm += `
+</div>
+`;
+        return htm;
+      }
+
+      function jsStyleCompanyEvent(feature) {
+{%- block jsStyleCompanyEventPage %}
+        if(feature.geometry.type == 'Point') {
+          return {
+            radius: 8
+            , fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 1
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        } else if(feature.geometry.type == 'LineString') {
+          return {
+            color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 5
+            , opacity: 0.7
+          };
+        } else {
+          return {
+             fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 3
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        }
+{%- endblock jsStyleCompanyEventPage %}
+      }
+    </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
       window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
@@ -56,15 +145,15 @@
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
-          document.querySelector('#grid-toggle-details').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-details');
           });
-          document.querySelector('#grid-toggle-list').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
             document.querySelector('#site-results-grid').classList.add('grid-mode-list');
           });
-          document.querySelector('#grid-toggle-card').addEventListener('click', () => {
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
             document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
             document.querySelector('#site-results-grid').classList.add('grid-mode-card');
           });
@@ -85,7 +174,7 @@
               if(t) {
                 var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
                 patchCompanyEventVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setCreated', s)
+                    , 'setCreated', s
                     , event.currentTarget
                     , function(response, target) { addGlow(target); }
                     , function(response, target) { addError(target); }
@@ -272,95 +361,6 @@
           searchpageCompanyEvent();
         });
       });
-    </script>
-    <script>
-
-      function jsWebsocketCompanyEvent(pk, vars, $response) {
-        {%- block jsWebsocketCompanyEventPage %}{%- endblock %}
-      }
-
-      function jsTooltipCompanyEvent(e, feature) {
-        {%- block jsTooltipCompanyEventPage %}{%- endblock %}
-      }
-
-      function htmTooltipCompanyEvent(feature, layer) {
-        return `{%- block htmTooltipCompanyEventPage %}
-<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
-{%- endblock htmTooltipCompanyEventPage %}`;
-      }
-
-      function jsLegendCompanyEvent(map) {
-{%- block jsLegendCompanyEventPage %}
-        var div = L.DomUtil.create('div', 'info legend');
-        var htm = '';
-        window.listCompanyEvent.forEach((companyEvent, index) => {
-          if(companyEvent.location) {
-            var shapes = [];
-            if(Array.isArray(companyEvent.location))
-              shapes = shapes.concat(companyEvent.location);
-            else
-              shapes.push(companyEvent.location);
-            shapes.forEach(function(shape, index) {
-              htm += htmLegendCompanyEvent(map, shape, companyEvent, index, shapes.length);
-            });
-          }
-        });
-        div.innerHTML = htm;
-        return div;
-{%- endblock jsLegendCompanyEventPage %}
-      }
-
-      function htmLegendCompanyEvent(map, shape, companyEvent, index, count) {
-        var color = companyEvent.locationColors[index];
-        var title = companyEvent.locationTitles[index];
-        var url = companyEvent.locationLinks[index];
-        var htm = '';
-        htm += `<div class="w3-white w3-padding w3-border w3-opacity w3-hover-opacity-off cursor-pointer " style="max-width: 400px; ">
-`;
-        htm += `{%- block htmLegendCompanyEventPage %}
-    <div class="w3-row " title="${quoteattr(title)}">
-    <div class="w3-col " style="width: 20px; ">
-      <i class="fa-light fa-circle" style="color: ${color}; "></i>
-    </div>
-    <div class="w3-rest text-overflow-ellipsis ">
-      <span class="" data-id="${companyEvent.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
-    </div>
-    </div>
-{%- endblock htmLegendCompanyEventPage %}`;
-        htm += `
-</div>
-`;
-        return htm;
-      }
-
-      function jsStyleCompanyEvent(feature) {
-{%- block jsStyleCompanyEventPage %}
-        if(feature.geometry.type == 'Point') {
-          return {
-            radius: 8
-            , fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 1
-            , opacity: 0.7
-            , fillOpacity: 0.7
-          };
-        } else if(feature.geometry.type == 'LineString') {
-          return {
-            color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 5
-            , opacity: 0.7
-          };
-        } else {
-          return {
-             fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
-            , weight: 3
-            , opacity: 0.7
-            , fillOpacity: 0.7
-          };
-        }
-{%- endblock jsStyleCompanyEventPage %}
-      }
     </script>
 {%- endblock htmScriptCompanyEventPage %}
 {%- endblock htmScriptBaseModelPage %}
@@ -626,19 +626,55 @@
               {{ htmPaginationButtonsCompanyEventPage() }}
             <div class="grid-mode-details">
             <div>
-                <i class="fad fa-map-location-dot site-result-icon "></i>
+                <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>created</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by created ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by created descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret></sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by null ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by null descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listCompanyEvent%}
               <a href="{{ item.pageUrlPk }}">
-                <i class="fad fa-map-location-dot site-result-icon "></i>
+                <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
+                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
+                      {% if getColumnCreated is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnObjectTitle is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
             </div>
             {%- endmacro htmBodyAllCompanyEventPage() %}
 {%- macro htmSearchButtonsCompanyEventPage() %}
-        <sl-button-group id="htmSearchButtons">
+        <div id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for events">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
               <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
@@ -683,52 +719,49 @@
               Api
             </sl-button>
           </sl-tooltip>
-        </sl-button-group>
+        </div>
 {%- endmacro htmSearchButtonsCompanyEventPage() %}
 
 {%- macro htmPaginationButtonsCompanyEventPage() %}
             <div id="htmPaginationButtons">
-              <sl-button-group id="htmPaginationButtons">
-                <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show half the results">
-                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-minus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show double the results">
-                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                    <i slot="prefix" class="fas fa-plus-square "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                  </sl-button>
-                </sl-tooltip>
-                <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the results as details">
+                <sl-button id="grid-toggle-details">
+                  <i class="fa-solid fa-list"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as a list">
+                <sl-button id="grid-toggle-list">
+                  <i class="fa-solid fa-bars"></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the results as cards">
+                <sl-button id="grid-toggle-card">
+                  <i class="fa-solid fa-grid"></i>
+                </sl-button>
+              </sl-tooltip>
               <sl-divider vertical></sl-divider>
-              <sl-button-group>
-                <sl-tooltip placement="top" content="Show the results as details">
-                  <sl-button id="grid-toggle-details">
-                    <i class="fa-solid fa-list"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as a list">
-                  <sl-button id="grid-toggle-list">
-                    <i class="fa-solid fa-bars"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as cards">
-                  <sl-button id="grid-toggle-card">
-                    <i class="fa-solid fa-grid"></i>
-                  </sl-button>
-                </sl-tooltip>
-              </sl-button-group>
+              <sl-tooltip placement="top" content="Show the previous results">
+                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show half the results">
+                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-minus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show double the results">
+                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                  <i slot="prefix" class="fas fa-plus-square "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="top" content="Show the next results">
+                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                </sl-button>
+              </sl-tooltip>
+              <sl-divider vertical></sl-divider>
+              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyEventPage() %}
 
@@ -743,7 +776,7 @@
         <div class="htmBodySidebarCompanyEventPage ">
           {%- block htmBodySidebarCompanyEventPage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
@@ -790,7 +823,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-filters "></i> Filters</span>
             </div>
@@ -894,7 +927,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
@@ -926,7 +959,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
@@ -959,7 +992,7 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
-            <div class="w3-bar w3- ">
+            <div>
               <span class="w3-bar-item ">
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
@@ -1185,7 +1218,7 @@
           </div>
           <div class="">
             <a href="/event" class="">
-              <i class="fad fa-map-location-dot"></i>
+              <i class="fa-duotone fa-solid fa-map-location-dot"></i>
               see all the events
             </a>
           </div>
@@ -1467,7 +1500,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{toJsonObjectString companyEvent_.location}}"
+                  value="{{ toJsonObjectString(companyEvent_.location) }}"
   {%- endif %}
                   ></sl-input>
 

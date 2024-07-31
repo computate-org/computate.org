@@ -499,7 +499,7 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("Read the latest computate articles to learn more");
+      c.o("Read the latest articles to learn more");
   }
 
   @Override
@@ -508,13 +508,8 @@ public class SitePageGenPage extends SitePageGenPageGen<BaseResultPage> {
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("duotone");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("newspaper");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-duotone fa-solid fa-newspaper\"></i>");
   }
 
   protected void _pageUriSitePage(Wrap<String> c) {

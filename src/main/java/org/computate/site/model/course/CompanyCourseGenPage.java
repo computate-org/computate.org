@@ -513,13 +513,8 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseModelPage>
   }
 
   @Override
-  protected void _classIconGroup(Wrap<String> c) {
-      c.o("regular");
-  }
-
-  @Override
-  protected void _classIconName(Wrap<String> c) {
-      c.o("notebook");
+  protected void _classIcon(Wrap<String> c) {
+      c.o("<i class=\"fa-regular fa-notebook\"></i>");
   }
 
   protected void _pageUriCompanyCourse(Wrap<String> c) {
