@@ -40,6 +40,16 @@ import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.propagation.ContextPropagators;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
+import io.vertx.amqp.AmqpClient;
+import io.vertx.amqp.AmqpClientOptions;
+import io.vertx.amqp.AmqpSender;
+import io.vertx.rabbitmq.RabbitMQClient;
+import io.vertx.rabbitmq.RabbitMQOptions;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.AMQP.BasicProperties;
+import io.vertx.amqp.AmqpMessage;
+import io.vertx.amqp.AmqpMessageBuilder;
+import io.vertx.amqp.AmqpSenderOptions;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
@@ -87,6 +97,7 @@ import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.sstore.LocalSessionStore;
+import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
@@ -102,19 +113,19 @@ import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
 import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.event.CompanyEventEnUSGenApiService;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
-import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
@@ -147,7 +158,15 @@ public class MainVerticle extends AbstractVerticle {
 
 	private AuthorizationProvider authorizationProvider;
 
+	private KafkaProducer<String, String> kafkaProducer;
+
 	private MqttClient mqttClient;
+
+	private AmqpClient amqpClient;
+
+	private AmqpSender amqpSender;
+
+	private RabbitMQClient rabbitmqClient;
 
 	private Jinjava jinjava;
 
@@ -395,11 +414,17 @@ public class MainVerticle extends AbstractVerticle {
 						configureHealthChecks().onSuccess(d -> 
 							configureSharedWorkerExecutor().onSuccess(e -> 
 								configureWebsockets().onSuccess(f -> 
-									configureMqtt().onSuccess(h -> 
-										configureJinjava().onSuccess(i -> 
-											configureApi().onSuccess(j -> 
-												configureUi().onSuccess(k -> 
-													startServer().onSuccess(l -> startPromise.complete())
+									configureKafka().onSuccess(g -> 
+										configureMqtt().onSuccess(h -> 
+											configureAmqp().onSuccess(i -> 
+												configureRabbitmq().onSuccess(j -> 
+													configureJinjava().onSuccess(k -> 
+														configureApi().onSuccess(l -> 
+															configureUi().onSuccess(m -> 
+																startServer().onSuccess(n -> startPromise.complete())
+															).onFailure(ex -> startPromise.fail(ex))
+														).onFailure(ex -> startPromise.fail(ex))
+													).onFailure(ex -> startPromise.fail(ex))
 												).onFailure(ex -> startPromise.fail(ex))
 											).onFailure(ex -> startPromise.fail(ex))
 										).onFailure(ex -> startPromise.fail(ex))
@@ -435,6 +460,44 @@ public class MainVerticle extends AbstractVerticle {
 
 	/**
 	 **/
+	public Future<KafkaProducer<String, String>> configureKafka() {
+		Promise<KafkaProducer<String, String>> promise = Promise.promise();
+
+		try {
+			if(config().getBoolean(ConfigKeys.ENABLE_KAFKA, true)) {
+				Map<String, String> kafkaConfig = new HashMap<>();
+				kafkaConfig.put("bootstrap.servers", config().getString(ConfigKeys.KAFKA_BROKERS));
+				kafkaConfig.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+				kafkaConfig.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+				kafkaConfig.put("acks", "1");
+				kafkaConfig.put("security.protocol", "SSL");
+				Optional.ofNullable(config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_TYPE)).ifPresent(keystoreType -> {
+					kafkaConfig.put("ssl.keystore.type", keystoreType);
+					kafkaConfig.put("ssl.keystore.location", config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_LOCATION));
+					kafkaConfig.put("ssl.keystore.password", config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_PASSWORD));
+				});
+				Optional.ofNullable(config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_TYPE)).ifPresent(truststoreType -> {
+					kafkaConfig.put("ssl.truststore.type", truststoreType);
+					kafkaConfig.put("ssl.truststore.location", config().getString(ConfigKeys.KAFKA_SSL_TRUSTSTORE_LOCATION));
+					kafkaConfig.put("ssl.truststore.password", config().getString(ConfigKeys.KAFKA_SSL_TRUSTSTORE_PASSWORD));
+				});
+
+				kafkaProducer = KafkaProducer.createShared(vertx, config().getString(ConfigKeys.SITE_NAME), kafkaConfig);
+				LOG.info("The Kafka producer was initialized successfully. ");
+				promise.complete(kafkaProducer);
+			} else {
+				LOG.info("The Kafka producer was initialized successfully. ");
+				promise.complete(null);
+			}
+		} catch(Exception ex) {
+			LOG.error("Unable to configure Kafka. ", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+	/**
+	 **/
 	public Future<MqttClient> configureMqtt() {
 		Promise<MqttClient> promise = Promise.promise();
 
@@ -444,10 +507,8 @@ public class MainVerticle extends AbstractVerticle {
 					mqttClient = MqttClient.create(vertx);
 					mqttClient.connect(config().getInteger(ConfigKeys.MQTT_PORT), config().getString(ConfigKeys.MQTT_HOST)).onSuccess(a -> {
 						try {
-							// new MqttMessageReader(mqttClient, config());
-							LOG.info(":The MQTT client was initialized successfully.");
-							// promise.complete(mqttClient);
-							promise.complete(null);
+							LOG.info("The MQTT client was initialized successfully.");
+							promise.complete(mqttClient);
 						} catch(Exception ex) {
 							LOG.error("The MQTT client failed to initialize.", ex);
 							promise.fail(ex);
@@ -465,6 +526,97 @@ public class MainVerticle extends AbstractVerticle {
 			}
 		} catch(Exception ex) {
 			LOG.error("The MQTT client failed to initialize.", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+
+	/**
+	 **/
+	public Future<AmqpClient> configureAmqp() {
+		Promise<AmqpClient> promise = Promise.promise();
+
+		try {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_AMQP))) {
+				try {
+					AmqpClientOptions options = new AmqpClientOptions()
+							.setHost(config().getString(ConfigKeys.AMQP_HOST))
+							.setPort(config().getInteger(ConfigKeys.AMQP_PORT))
+							.setUsername(config().getString(ConfigKeys.AMQP_USER))
+							.setPassword(config().getString(ConfigKeys.AMQP_PASSWORD))
+							.setVirtualHost(config().getString(ConfigKeys.AMQP_VIRTUAL_HOST))
+							;
+					amqpClient = AmqpClient.create(vertx, options);
+					amqpClient.connect().onSuccess(amqpConnection -> {
+						try {
+							AmqpSenderOptions senderOptions = new AmqpSenderOptions();
+							amqpConnection
+									.createSender("my-queue", senderOptions)
+									.onSuccess(sender -> {
+								this.amqpSender = sender;
+								LOG.info("The AMQP client was initialized successfully.");
+								promise.complete(amqpClient);
+							}).onFailure(ex -> {
+								LOG.error("The AMQP client failed to initialize.", ex);
+								promise.fail(ex);
+							});
+						} catch(Exception ex) {
+							LOG.error("The AMQP client failed to initialize.", ex);
+							promise.fail(ex);
+						}
+					}).onFailure(ex -> {
+						LOG.error("The AMQP client failed to initialize.", ex);
+						promise.fail(ex);
+					});
+				} catch(Exception ex) {
+					LOG.error("The AMQP client failed to initialize.", ex);
+					promise.fail(ex);
+				}
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The AMQP client failed to initialize.", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+
+	/**
+	 **/
+	public Future<RabbitMQClient> configureRabbitmq() {
+		Promise<RabbitMQClient> promise = Promise.promise();
+
+		try {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_RABBITMQ))) {
+				try {
+					RabbitMQOptions options = new RabbitMQOptions()
+							.setHost(config().getString(ConfigKeys.RABBITMQ_HOST))
+							.setPort(config().getInteger(ConfigKeys.RABBITMQ_PORT))
+							.setUser(config().getString(ConfigKeys.RABBITMQ_USER))
+							.setPassword(config().getString(ConfigKeys.RABBITMQ_PASSWORD))
+							.setVirtualHost(config().getString(ConfigKeys.RABBITMQ_VIRTUAL_HOST))
+							.setAutomaticRecoveryEnabled(true)
+							;
+					this.rabbitmqClient = RabbitMQClient.create(vertx, options);
+					rabbitmqClient.start().onSuccess(a -> {
+						LOG.info("The AMQP client was initialized successfully.");
+						promise.complete(rabbitmqClient);
+					}).onFailure(ex -> {
+						LOG.error("The AMQP client failed to initialize.", ex);
+						promise.fail(ex);
+					});
+				} catch(Exception ex) {
+					LOG.error("The AMQP client failed to initialize.", ex);
+					promise.fail(ex);
+				}
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The AMQP client failed to initialize.", ex);
 			promise.fail(ex);
 		}
 
@@ -869,26 +1021,26 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureApi() {
 		Promise<Void> promise = Promise.promise();
 		try {
-			List<String> authResources = Arrays.asList("CompanyProduct","CompanyEvent","CompanyWebsite","CompanyResearch","CompanyCourse","WeatherObserved","SitePage");
+			List<String> authResources = Arrays.asList("CompanyCourse","CompanyEvent","WeatherObserved","CompanyProduct","CompanyResearch","CompanyWebsite","SitePage");
 			List<String> publicResources = Arrays.asList("CompanyProduct","SitePage");
-			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
 
-			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
-			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
-			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-
-			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-
-			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-
-			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, null, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
 			LOG.info("The API was configured properly.");

@@ -357,6 +357,16 @@
 
 		<dependency>
 			<groupId>io.vertx</groupId>
+			<artifactId>vertx-amqp-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-rabbitmq-client</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.vertx</groupId>
 			<artifactId>vertx-opentelemetry</artifactId>
 		</dependency>
 
@@ -569,7 +579,6 @@
 		<profile>
 			<id>deploy</id>
 			<build>
-				<defaultGoal>install</defaultGoal>
 				<plugins>
 					<!-- Source plugin -->
 					<plugin>
