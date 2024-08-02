@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.serialize.ComputateZonedDateTimeSerializer;
@@ -35,20 +36,20 @@ import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.site.model.event.CompanyEvent;
 import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
 import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsite;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsite;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
-import org.computate.site.model.course.CompanyCourse;
-import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -82,6 +83,17 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.predicate.ResponsePredicate;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.kafka.client.producer.KafkaProducer;
+import io.vertx.mqtt.MqttClient;
+import io.vertx.amqp.AmqpClient;
+import io.vertx.amqp.AmqpClientOptions;
+import io.vertx.amqp.AmqpSender;
+import io.vertx.rabbitmq.RabbitMQClient;
+import io.vertx.rabbitmq.RabbitMQOptions;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.AMQP.BasicProperties;
+import io.vertx.amqp.AmqpMessage;
+import io.vertx.amqp.AmqpMessageBuilder;
+import io.vertx.amqp.AmqpSenderOptions;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgPool;
 import io.vertx.sqlclient.Cursor;
@@ -101,6 +113,14 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	public final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss VV");
 
 	private KafkaProducer<String, String> kafkaProducer;
+
+	private MqttClient mqttClient;
+
+	private AmqpClient amqpClient;
+
+	private AmqpSender amqpSender;
+
+	private RabbitMQClient rabbitmqClient;
 
 	/**
 	 * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
@@ -137,10 +157,16 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 				configureJinjava().onSuccess(b -> 
 					configureWebClient().onSuccess(c -> 
 						configureSharedWorkerExecutor().onSuccess(d -> 
-							configureKafka().onSuccess(f -> 
-								importData().onSuccess(h -> {
-									startPromise.complete();
-								}).onFailure(ex -> startPromise.fail(ex))
+							configureKafka().onSuccess(e -> 
+								configureMqtt().onSuccess(f -> 
+									configureAmqp().onSuccess(g -> 
+										configureRabbitmq().onSuccess(h -> 
+											importData().onSuccess(i -> {
+												startPromise.complete();
+											}).onFailure(ex -> startPromise.fail(ex))
+										).onFailure(ex -> startPromise.fail(ex))
+									).onFailure(ex -> startPromise.fail(ex))
+								).onFailure(ex -> startPromise.fail(ex))
 							).onFailure(ex -> startPromise.fail(ex))
 						).onFailure(ex -> startPromise.fail(ex))
 					).onFailure(ex -> startPromise.fail(ex))
@@ -284,6 +310,133 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			}
 		} catch(Exception ex) {
 			LOG.error("Unable to configure site context. ", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+
+	/**
+	 **/
+	public Future<MqttClient> configureMqtt() {
+		Promise<MqttClient> promise = Promise.promise();
+
+		try {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_MQTT))) {
+				try {
+					mqttClient = MqttClient.create(vertx);
+					mqttClient.connect(config().getInteger(ConfigKeys.MQTT_PORT), config().getString(ConfigKeys.MQTT_HOST)).onSuccess(a -> {
+						try {
+							LOG.info("The MQTT client was initialized successfully.");
+							promise.complete(mqttClient);
+						} catch(Exception ex) {
+							LOG.error("The MQTT client failed to initialize.", ex);
+							promise.fail(ex);
+						}
+					}).onFailure(ex -> {
+						LOG.error("The MQTT client failed to initialize.", ex);
+						promise.fail(ex);
+					});
+				} catch(Exception ex) {
+					LOG.error("The MQTT client failed to initialize.", ex);
+					promise.fail(ex);
+				}
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The MQTT client failed to initialize.", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+
+	/**
+	 **/
+	public Future<AmqpClient> configureAmqp() {
+		Promise<AmqpClient> promise = Promise.promise();
+
+		try {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_AMQP))) {
+				try {
+					AmqpClientOptions options = new AmqpClientOptions()
+							.setHost(config().getString(ConfigKeys.AMQP_HOST))
+							.setPort(config().getInteger(ConfigKeys.AMQP_PORT))
+							.setUsername(config().getString(ConfigKeys.AMQP_USER))
+							.setPassword(config().getString(ConfigKeys.AMQP_PASSWORD))
+							.setVirtualHost(config().getString(ConfigKeys.AMQP_VIRTUAL_HOST))
+							;
+					amqpClient = AmqpClient.create(vertx, options);
+					amqpClient.connect().onSuccess(amqpConnection -> {
+						try {
+							AmqpSenderOptions senderOptions = new AmqpSenderOptions();
+							amqpConnection
+									.createSender("my-queue", senderOptions)
+									.onSuccess(sender -> {
+								this.amqpSender = sender;
+								LOG.info("The AMQP client was initialized successfully.");
+								promise.complete(amqpClient);
+							}).onFailure(ex -> {
+								LOG.error("The AMQP client failed to initialize.", ex);
+								promise.fail(ex);
+							});
+						} catch(Exception ex) {
+							LOG.error("The AMQP client failed to initialize.", ex);
+							promise.fail(ex);
+						}
+					}).onFailure(ex -> {
+						LOG.error("The AMQP client failed to initialize.", ex);
+						promise.fail(ex);
+					});
+				} catch(Exception ex) {
+					LOG.error("The AMQP client failed to initialize.", ex);
+					promise.fail(ex);
+				}
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The AMQP client failed to initialize.", ex);
+			promise.fail(ex);
+		}
+
+		return promise.future();
+	}
+
+	/**
+	 **/
+	public Future<RabbitMQClient> configureRabbitmq() {
+		Promise<RabbitMQClient> promise = Promise.promise();
+
+		try {
+			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_RABBITMQ))) {
+				try {
+					RabbitMQOptions options = new RabbitMQOptions()
+							.setHost(config().getString(ConfigKeys.RABBITMQ_HOST))
+							.setPort(config().getInteger(ConfigKeys.RABBITMQ_PORT))
+							.setUser(config().getString(ConfigKeys.RABBITMQ_USER))
+							.setPassword(config().getString(ConfigKeys.RABBITMQ_PASSWORD))
+							.setVirtualHost(config().getString(ConfigKeys.RABBITMQ_VIRTUAL_HOST))
+							.setAutomaticRecoveryEnabled(true)
+							;
+					this.rabbitmqClient = RabbitMQClient.create(vertx, options);
+					rabbitmqClient.start().onSuccess(a -> {
+						LOG.info("The AMQP client was initialized successfully.");
+						promise.complete(rabbitmqClient);
+					}).onFailure(ex -> {
+						LOG.error("The AMQP client failed to initialize.", ex);
+						promise.fail(ex);
+					});
+				} catch(Exception ex) {
+					LOG.error("The AMQP client failed to initialize.", ex);
+					promise.fail(ex);
+				}
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The AMQP client failed to initialize.", ex);
 			promise.fail(ex);
 		}
 
