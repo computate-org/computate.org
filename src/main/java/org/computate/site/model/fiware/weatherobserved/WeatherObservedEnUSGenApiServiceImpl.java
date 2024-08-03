@@ -746,6 +746,22 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlAddress());
 						break;
+					case "setAlternateName":
+							o2.setAlternateName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAlternateName());
+						break;
+					case "setAreaServed":
+							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAreaServed());
+						break;
 					case "setAirQualityIndex":
 							o2.setAirQualityIndex(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -761,30 +777,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_airQualityIndexForecast + "=$" + num);
 							num++;
 							bParams.add(o2.sqlAirQualityIndexForecast());
-						break;
-					case "setAirTemperatureForecast":
-							o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAirTemperatureForecast());
-						break;
-					case "setAirTemperatureTSA":
-							o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAirTemperatureTSA());
-						break;
-					case "setAlternateName":
-							o2.setAlternateName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAlternateName());
 						break;
 					case "setAqiMajorPollutant":
 							o2.setAqiMajorPollutant(jsonObject.getString(entityVar));
@@ -802,13 +794,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlAqiMajorPollutantForecast());
 						break;
-					case "setAreaServed":
-							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+					case "setAirTemperatureForecast":
+							o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAreaServed());
+							bParams.add(o2.sqlAirTemperatureForecast());
+						break;
+					case "setAirTemperatureTSA":
+							o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAirTemperatureTSA());
 						break;
 					case "setAtmosphericPressure":
 							o2.setAtmosphericPressure(jsonObject.getString(entityVar));
@@ -1464,6 +1464,24 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlAddress());
 						break;
+					case WeatherObserved.VAR_alternateName:
+						o2.setAlternateName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAlternateName());
+						break;
+					case WeatherObserved.VAR_areaServed:
+						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAreaServed());
+						break;
 					case WeatherObserved.VAR_airQualityIndex:
 						o2.setAirQualityIndex(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1481,33 +1499,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_airQualityIndexForecast + "=$" + num);
 						num++;
 						bParams.add(o2.sqlAirQualityIndexForecast());
-						break;
-					case WeatherObserved.VAR_airTemperatureForecast:
-						o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAirTemperatureForecast());
-						break;
-					case WeatherObserved.VAR_airTemperatureTSA:
-						o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAirTemperatureTSA());
-						break;
-					case WeatherObserved.VAR_alternateName:
-						o2.setAlternateName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAlternateName());
 						break;
 					case WeatherObserved.VAR_aqiMajorPollutant:
 						o2.setAqiMajorPollutant(jsonObject.getString(entityVar));
@@ -1527,14 +1518,23 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlAqiMajorPollutantForecast());
 						break;
-					case WeatherObserved.VAR_areaServed:
-						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+					case WeatherObserved.VAR_airTemperatureForecast:
+						o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAreaServed());
+						bParams.add(o2.sqlAirTemperatureForecast());
+						break;
+					case WeatherObserved.VAR_airTemperatureTSA:
+						o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAirTemperatureTSA());
 						break;
 					case WeatherObserved.VAR_atmosphericPressure:
 						o2.setAtmosphericPressure(jsonObject.getString(entityVar));

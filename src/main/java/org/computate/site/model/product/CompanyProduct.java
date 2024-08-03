@@ -6,7 +6,8 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 5
+ * Order: 6
+ * SqlOrder: 6
  * 
  * Api: true
  * Page: true

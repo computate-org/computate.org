@@ -2468,8 +2468,8 @@ public abstract class BaseModelGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_inheritPk = "";
 	public static final String DISPLAY_NAME_created = "created";
 	public static final String DISPLAY_NAME_modified = "modified";
-	public static final String DISPLAY_NAME_archived = "archived";
-	public static final String DISPLAY_NAME_deleted = "deleted";
+	public static final String DISPLAY_NAME_archived = "archive";
+	public static final String DISPLAY_NAME_deleted = "delete";
 	public static final String DISPLAY_NAME_classCanonicalName = "";
 	public static final String DISPLAY_NAME_classSimpleName = "object type";
 	public static final String DISPLAY_NAME_classCanonicalNames = "";
