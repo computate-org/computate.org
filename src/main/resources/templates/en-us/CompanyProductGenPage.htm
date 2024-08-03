@@ -202,24 +202,24 @@
             const form = document.querySelector('#PageForm_name');
             const valid = form.reportValidity();
           });
-          // PATCH pageId
-          document.querySelector('#Page_pageId')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_pageId');
+          // PATCH description
+          document.querySelector('#Page_description')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_description');
             const valid = form.checkValidity();
             if(valid) {
               patchCompanyProductVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setPageId', event.currentTarget.value
+                  , 'setDescription', event.currentTarget.value
                   , event.currentTarget
                   , function(response, target) { addGlow(target); }
                   , function(response, target) { addError(target); }
                   );
             }
           });
-          document.querySelector('#Page_pageId')?.addEventListener('sl-focus', (event) => {
+          document.querySelector('#Page_description')?.addEventListener('sl-focus', (event) => {
             removeGlow(event.currentTarget);
           });
-          document.querySelector('#Page_pageId')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_pageId');
+          document.querySelector('#Page_description')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_description');
             const valid = form.reportValidity();
           });
           // PATCH uri
@@ -260,6 +260,26 @@
           });
           document.querySelector('#Page_url')?.addEventListener('sl-blur', (event) => {
             const form = document.querySelector('#PageForm_url');
+            const valid = form.reportValidity();
+          });
+          // PATCH pageId
+          document.querySelector('#Page_pageId')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_pageId');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchCompanyProductVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
+                  , 'setPageId', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_pageId')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_pageId')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_pageId');
             const valid = form.reportValidity();
           });
           // PATCH inheritPk
@@ -457,6 +477,7 @@
 {%- macro htmForm_patchCompanyProduct() %}
         <sl-dialog id="patchCompanyProductDialog" label="Modify product">
           <form id="htmForm_patchCompanyProduct">
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -469,6 +490,16 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" in scopes %}
@@ -477,6 +508,8 @@
                   {{ htmObjectIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -497,6 +530,8 @@
                   {{ htmDeletedCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -509,12 +544,12 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
-                {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmDescriptionCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" in scopes %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -537,6 +572,20 @@
                   {{ htmUrlCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_patchCompanyProduct() }}
           </form>
         </sl-dialog>
@@ -559,6 +608,27 @@
         <sl-dialog id="postCompanyProductDialog" label="Create a product">
           <form id="htmForm_postCompanyProduct">
             <div class="">You can override any default values below: </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmCreatedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
 
               {% if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -569,6 +639,30 @@
                   {{ htmObjectIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmArchivedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmDeletedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -581,12 +675,12 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
-                {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmDescriptionCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" in scopes %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -609,6 +703,20 @@
                   {{ htmUrlCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_postCompanyProduct() }}
           </form>
         </sl-dialog>
@@ -653,6 +761,7 @@
 {%- macro htmForm_searchpageCompanyProduct() %}
         <div id="searchpageCompanyProductDialog" label="Search products">
           <div id="htmForm_searchpageCompanyProduct">
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -683,6 +792,8 @@
                   {{ htmObjectIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -703,6 +814,8 @@
                   {{ htmDeletedCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -715,12 +828,12 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
-                {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmDescriptionCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" in scopes %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
-                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmDescriptionCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -743,18 +856,30 @@
                   {{ htmUrlCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPageIdCompanyProductPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_searchpageCompanyProduct() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyProductPage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-regular fa-conveyor-belt"></i>
                 <span class="">products</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsCompanyProductPage() }}
             <div id="site-calendar-box">
@@ -764,19 +889,6 @@
             <div class="grid-mode-details">
             <div>
                 <i class="fa-regular fa-conveyor-belt"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>ID</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by ID ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by ID descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               <sl-dropdown>
                 <sl-button slot="trigger" caret>product name</sl-button>
                 <sl-menu>
@@ -791,67 +903,15 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown>
-                <sl-button slot="trigger" caret>title</sl-button>
+                <sl-button slot="trigger" caret>product description</sl-button>
                 <sl-menu>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by title ascending
+                    sort by product description ascending
                   </sl-menu-item>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by title descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>ID</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by ID ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by ID descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
+                    sort by product description descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -861,40 +921,15 @@
               {% for item in listCompanyProduct%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-regular fa-conveyor-belt"></i>
-                <div>{{ item.objectId }}</div>
                 <div>{{ item.name }}</div>
-                <div>{{ item.title }}</div>
-                <div>{{ item.objectId }}</div>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
-                <div>{{ item.objectTitle }}</div>
+                <div>{{ item.description }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnObjectId is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnName is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectId is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
+                      {% if getColumnDescription is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -951,43 +986,45 @@
 
 {%- macro htmPaginationButtonsCompanyProductPage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyProductPage() %}
@@ -1294,14 +1331,58 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsCompanyProductPage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if companyProductCount == 1 %}
+        <sl-button
+            id="refreshThisCompanyProductGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh this product
+        </sl-button>
+      {% endif %}
+      {% if companyProductCount > 0 %}
+        <div class="">
+          <sl-button id="refreshAllCompanyProductGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh all the products
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyProductCount > 0 %}
+        {{ htmButton_patchCompanyProduct() }}
+        {{ htmForm_patchCompanyProduct() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyProductCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyProduct() }}
+        {{ htmForm_postCompanyProduct() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyProduct() }}
+        {{ htmForm_postCompanyProduct() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyProduct() }}
+        {{ htmForm_putimportCompanyProduct() }}
+  {% endif %}
+        {%- endblock htmFormsCompanyProductPage %}
 {% if companyProductCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-conveyor-belt"></i>
             <span class="">products</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyProductPage() }}
         <h2>
@@ -1316,12 +1397,10 @@
   {% if companyProductCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-conveyor-belt"></i>
             <span class="">product</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyProductPage() }}
         <h2 class="w3-center ">
@@ -1351,54 +1430,6 @@
         {{ htmForm_searchpageCompanyProduct() }}
   {% endif %}
         {%- endblock htmFormCompanyProductPage %}
-        {%- block htmFormsCompanyProductPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyProductCount == 1 %}
-        <button
-            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-            id="refreshThisCompanyProductGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
-          <i class="fas fa-sync-alt "></i>
-          refresh this product
-        </button>
-      {% endif %}
-      {% if companyProductCount > 0 %}
-        <div class="">
-          <button id="refreshAllCompanyProductGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "
-              >
-            <i class="fas fa-sync-alt "></i>
-            refresh all the products
-          </button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyProductCount > 0 %}
-        {{ htmButton_patchCompanyProduct() }}
-        {{ htmForm_patchCompanyProduct() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyProductCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyProduct() }}
-        {{ htmForm_postCompanyProduct() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyProduct() }}
-        {{ htmForm_postCompanyProduct() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyProduct() }}
-        {{ htmForm_putimportCompanyProduct() }}
-  {% endif %}
-        {%- block htmSuggestedCompanyProductPage %}{%- endblock %}
-        {%- endblock htmFormsCompanyProductPage %}
       {%- endblock htmBodyMiddleCompanyProductPage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1454,27 +1485,27 @@
 
 {%- macro inputCreatedCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_created">
+                <form id="PageForm_created">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="created"
-                  help-text="A created timestamp for this record in the database"
-                  label="created"
-                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyProduct inputCompanyProduct{{id}}Created "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_created"
-                  value="{%- if companyProduct_.created is defined %}{{ formatZonedDateTime(companyProduct_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyProduct inputCompanyProduct{{id}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if companyProduct_.created is defined %}{{ formatZonedDateTime(companyProduct_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Created varCompanyProductCreated ">{{companyProduct_.created}}</span>
+                <span class="varCompanyProduct{{id}}Created varCompanyProductCreated ">{{companyProduct_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1483,27 +1514,27 @@
 
 {%- macro inputModifiedCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_modified">
+                <form id="PageForm_modified">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="modified"
-                  help-text="A modified timestamp for this record in the database"
-                  label="modified"
-                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyProduct inputCompanyProduct{{id}}Modified "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_modified"
-                  value="{%- if companyProduct_.modified is defined %}{{ formatZonedDateTime(companyProduct_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyProduct inputCompanyProduct{{id}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if companyProduct_.modified is defined %}{{ formatZonedDateTime(companyProduct_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Modified varCompanyProductModified ">{{companyProduct_.modified}}</span>
+                <span class="varCompanyProduct{{id}}Modified varCompanyProductModified ">{{companyProduct_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1512,37 +1543,37 @@
 
 {%- macro inputObjectIdCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_objectId">
+                <form id="PageForm_objectId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="ID"
-                  label="ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
 A URL friendly unique ID for this object"
-                  id="{{classApiMethodMethod}}_objectId"
+                      id="{{classApiMethodMethod}}_objectId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
-                  name="setObjectId"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="setObjectId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
-                  name="setObjectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="setObjectId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}ObjectId "
-                  name="objectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="objectId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyProduct_.objectId}}"
+                      value="{{companyProduct_.objectId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}ObjectId varCompanyProductObjectId ">{{companyProduct_.objectId}}</span>
+                <span class="varCompanyProduct{{id}}ObjectId varCompanyProductObjectId ">{{companyProduct_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1551,50 +1582,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_archived">
+                <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_archived"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_archived"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="archived"
-                  help-text="For archiving this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyProduct inputCompanyProduct{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyProduct_.archived is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >archived</sl-checkbox>
+                      >archived</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Archived varCompanyProductArchived ">{{companyProduct_.archived}}</span>
+                <span class="varCompanyProduct{{id}}Archived varCompanyProductArchived ">{{companyProduct_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1603,50 +1634,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputDeletedCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_deleted">
+                <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_deleted"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_deleted"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="deleted"
-                  help-text="For deleting this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="deleted"
+                      help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
+                      name="setDeleted"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
+                      name="setDeleted"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
+                      name="setDeleted"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyProduct_.deleted is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >deleted</sl-checkbox>
+                      >deleted</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Deleted varCompanyProductDeleted ">{{companyProduct_.deleted}}</span>
+                <span class="varCompanyProduct{{id}}Deleted varCompanyProductDeleted ">{{companyProduct_.deleted}}</span>
 {%- endmacro %}
 
 {%- macro htmDeletedCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1655,115 +1686,115 @@ A URL friendly unique ID for this object"
 
 {%- macro inputNameCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_name">
+                <form id="PageForm_name">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="product name"
-                  label="product name"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="product name"
+                      label="product name"
+                      help-text="
 The product name. "
-                  id="{{classApiMethodMethod}}_name"
+                      id="{{classApiMethodMethod}}_name"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
-                  name="setName"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="setName"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
-                  name="setName"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="setName"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Name "
-                  name="name"
+                      class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="name"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyProduct_.name}}"
+                      value="{{companyProduct_.name}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Name varCompanyProductName ">{{companyProduct_.name}}</span>
+                <span class="varCompanyProduct{{id}}Name varCompanyProductName ">{{companyProduct_.name}}</span>
 {%- endmacro %}
 
 {%- macro htmNameCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputNameCompanyProductPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputPageIdCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputDescriptionCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_pageId">
+                <form id="PageForm_description">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="Page ID"
-                  label="Page ID"
-                  help-text="
-The ID for this page. "
-                  id="{{classApiMethodMethod}}_pageId"
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="product description"
+                      label="product description"
+                      help-text="
+The product description. "
+                      id="{{classApiMethodMethod}}_description"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyProduct inputCompanyProduct{{id}}PageId "
-                  name="setPageId"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="setDescription"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyProduct inputCompanyProduct{{id}}PageId "
-                  name="setPageId"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="setDescription"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_pageId valuePageId w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}PageId "
-                  name="pageId"
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="description"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyProduct_.pageId}}"
+                      value="{{companyProduct_.description}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}PageId varCompanyProductPageId ">{{companyProduct_.pageId}}</span>
+                <span class="varCompanyProduct{{id}}Description varCompanyProductDescription ">{{companyProduct_.description}}</span>
 {%- endmacro %}
 
-{%- macro htmPageIdCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputPageIdCompanyProductPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmDescriptionCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDescriptionCompanyProductPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputUriCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_uri">
+                <form id="PageForm_uri">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="URI"
-                  label="URI"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URI"
+                      label="URI"
+                      help-text="
 The relative URI for this page. "
-                  id="{{classApiMethodMethod}}_uri"
+                      id="{{classApiMethodMethod}}_uri"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
-                  name="setUri"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="setUri"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
-                  name="setUri"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="setUri"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_uri valueUri w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Uri "
-                  name="uri"
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="uri"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyProduct_.uri}}"
+                      value="{{companyProduct_.uri}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Uri varCompanyProductUri ">{{companyProduct_.uri}}</span>
+                <span class="varCompanyProduct{{id}}Uri varCompanyProductUri ">{{companyProduct_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1772,39 +1803,78 @@ The relative URI for this page. "
 
 {%- macro inputUrlCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_url">
+                <form id="PageForm_url">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="URL"
-                  label="URL"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URL"
+                      label="URL"
+                      help-text="
 The URL for this page. "
-                  id="{{classApiMethodMethod}}_url"
+                      id="{{classApiMethodMethod}}_url"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
-                  name="setUrl"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="setUrl"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
-                  name="setUrl"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="setUrl"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_url valueUrl w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Url "
-                  name="url"
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="url"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyProduct_.url}}"
+                      value="{{companyProduct_.url}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyProduct{{id}}Url varCompanyProductUrl ">{{companyProduct_.url}}</span>
+                <span class="varCompanyProduct{{id}}Url varCompanyProductUrl ">{{companyProduct_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputUrlCompanyProductPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputPageIdCompanyProductPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_pageId">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyProduct inputCompanyProduct{{id}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyProduct inputCompanyProduct{{id}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId w3-input w3-border classCompanyProduct inputCompanyProduct{{id}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyProduct_.pageId}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyProduct{{id}}PageId varCompanyProductPageId ">{{companyProduct_.pageId}}</span>
+{%- endmacro %}
+
+{%- macro htmPageIdCompanyProductPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputPageIdCompanyProductPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

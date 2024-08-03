@@ -5,9 +5,9 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 4
+ * Order: 5
  * Model: true
- * SqlOrder: 4
+ * SqlOrder: 5
  * 
  * Api: true
  * Page: true
@@ -29,6 +29,7 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /research
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: a research
  * PluralName: research

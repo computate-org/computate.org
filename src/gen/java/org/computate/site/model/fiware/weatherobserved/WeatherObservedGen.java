@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
-import java.math.BigDecimal;
 import java.lang.String;
 import io.vertx.core.json.JsonArray;
 import io.vertx.pgclient.data.Polygon;
@@ -50,6 +49,7 @@ import io.vertx.core.json.Json;
 import io.vertx.pgclient.data.Point;
 import org.computate.vertx.serialize.pgclient.PgClientPolygonSerializer;
 import org.computate.vertx.serialize.pgclient.PgClientPolygonDeserializer;
+import java.math.BigDecimal;
 import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
 import org.computate.vertx.serialize.pgclient.PgClientPointDeserializer;
 import org.computate.search.wrap.Wrap;
@@ -123,11 +123,11 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>This class contains a comment <b>"Rows: 100"</b>, which means the WeatherObserved API will return a default of 100 records instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
  * </p>
- * <h2>Order: 7</h2>
- * <p>This class contains a comment <b>"Order: 7"</b>, which means this class will be sorted by the given number 7 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 8</h2>
+ * <p>This class contains a comment <b>"Order: 8"</b>, which means this class will be sorted by the given number 8 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 7</h2>
- * <p>This class contains a comment <b>"SqlOrder: 7"</b>, which means this class will be sorted by the given number 7 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 8</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 8"</b>, which means this class will be sorted by the given number 8 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -292,301 +292,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return address;
 	}
 
-	/////////////////////
-	// airQualityIndex //
-	/////////////////////
-
-
-	/**	 The entity airQualityIndex
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal airQualityIndex;
-
-	/**	<br> The entity airQualityIndex
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airQualityIndex">Find the entity airQualityIndex in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airQualityIndex(Wrap<BigDecimal> w);
-
-	public BigDecimal getAirQualityIndex() {
-		return airQualityIndex;
-	}
-
-	public void setAirQualityIndex(BigDecimal airQualityIndex) {
-		this.airQualityIndex = airQualityIndex;
-	}
-	@JsonIgnore
-	public void setAirQualityIndex(String o) {
-		this.airQualityIndex = WeatherObserved.staticSetAirQualityIndex(siteRequest_, o);
-	}
-	public static BigDecimal staticSetAirQualityIndex(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setAirQualityIndex(Double o) {
-		setAirQualityIndex(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirQualityIndex(Integer o) {
-		setAirQualityIndex(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirQualityIndex(Number o) {
-		setAirQualityIndex(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved airQualityIndexInit() {
-		Wrap<BigDecimal> airQualityIndexWrap = new Wrap<BigDecimal>().var("airQualityIndex");
-		if(airQualityIndex == null) {
-			_airQualityIndex(airQualityIndexWrap);
-			Optional.ofNullable(airQualityIndexWrap.getO()).ifPresent(o -> {
-				setAirQualityIndex(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchAirQualityIndex(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrAirQualityIndex(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirQualityIndex(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirQualityIndex(siteRequest_, WeatherObserved.staticSetAirQualityIndex(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlAirQualityIndex() {
-		return airQualityIndex;
-	}
-
-	/////////////////////////////
-	// airQualityIndexForecast //
-	/////////////////////////////
-
-
-	/**	 The entity airQualityIndexForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal airQualityIndexForecast;
-
-	/**	<br> The entity airQualityIndexForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airQualityIndexForecast">Find the entity airQualityIndexForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airQualityIndexForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getAirQualityIndexForecast() {
-		return airQualityIndexForecast;
-	}
-
-	public void setAirQualityIndexForecast(BigDecimal airQualityIndexForecast) {
-		this.airQualityIndexForecast = airQualityIndexForecast;
-	}
-	@JsonIgnore
-	public void setAirQualityIndexForecast(String o) {
-		this.airQualityIndexForecast = WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetAirQualityIndexForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setAirQualityIndexForecast(Double o) {
-		setAirQualityIndexForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirQualityIndexForecast(Integer o) {
-		setAirQualityIndexForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirQualityIndexForecast(Number o) {
-		setAirQualityIndexForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved airQualityIndexForecastInit() {
-		Wrap<BigDecimal> airQualityIndexForecastWrap = new Wrap<BigDecimal>().var("airQualityIndexForecast");
-		if(airQualityIndexForecast == null) {
-			_airQualityIndexForecast(airQualityIndexForecastWrap);
-			Optional.ofNullable(airQualityIndexForecastWrap.getO()).ifPresent(o -> {
-				setAirQualityIndexForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchAirQualityIndexForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrAirQualityIndexForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirQualityIndexForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirQualityIndexForecast(siteRequest_, WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlAirQualityIndexForecast() {
-		return airQualityIndexForecast;
-	}
-
-	////////////////////////////
-	// airTemperatureForecast //
-	////////////////////////////
-
-
-	/**	 The entity airTemperatureForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal airTemperatureForecast;
-
-	/**	<br> The entity airTemperatureForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
-		this.airTemperatureForecast = airTemperatureForecast;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(String o) {
-		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Double o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Integer o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Number o) {
-		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved airTemperatureForecastInit() {
-		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
-		if(airTemperatureForecast == null) {
-			_airTemperatureForecast(airTemperatureForecastWrap);
-			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
-				setAirTemperatureForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	///////////////////////
-	// airTemperatureTSA //
-	///////////////////////
-
-
-	/**	 The entity airTemperatureTSA
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject airTemperatureTSA;
-
-	/**	<br> The entity airTemperatureTSA
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
-
-	public JsonObject getAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
-	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
-		this.airTemperatureTSA = airTemperatureTSA;
-	}
-	@JsonIgnore
-	public void setAirTemperatureTSA(String o) {
-		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
-	}
-	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved airTemperatureTSAInit() {
-		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
-		if(airTemperatureTSA == null) {
-			_airTemperatureTSA(airTemperatureTSAWrap);
-			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
-				setAirTemperatureTSA(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
 	///////////////////
 	// alternateName //
 	///////////////////
@@ -641,118 +346,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public String sqlAlternateName() {
 		return alternateName;
-	}
-
-	///////////////////////
-	// aqiMajorPollutant //
-	///////////////////////
-
-
-	/**	 The entity aqiMajorPollutant
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String aqiMajorPollutant;
-
-	/**	<br> The entity aqiMajorPollutant
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:aqiMajorPollutant">Find the entity aqiMajorPollutant in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _aqiMajorPollutant(Wrap<String> w);
-
-	public String getAqiMajorPollutant() {
-		return aqiMajorPollutant;
-	}
-	public void setAqiMajorPollutant(String o) {
-		this.aqiMajorPollutant = WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o);
-	}
-	public static String staticSetAqiMajorPollutant(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved aqiMajorPollutantInit() {
-		Wrap<String> aqiMajorPollutantWrap = new Wrap<String>().var("aqiMajorPollutant");
-		if(aqiMajorPollutant == null) {
-			_aqiMajorPollutant(aqiMajorPollutantWrap);
-			Optional.ofNullable(aqiMajorPollutantWrap.getO()).ifPresent(o -> {
-				setAqiMajorPollutant(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchAqiMajorPollutant(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrAqiMajorPollutant(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAqiMajorPollutant(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAqiMajorPollutant(siteRequest_, WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o)).toString();
-	}
-
-	public String sqlAqiMajorPollutant() {
-		return aqiMajorPollutant;
-	}
-
-	///////////////////////////////
-	// aqiMajorPollutantForecast //
-	///////////////////////////////
-
-
-	/**	 The entity aqiMajorPollutantForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String aqiMajorPollutantForecast;
-
-	/**	<br> The entity aqiMajorPollutantForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:aqiMajorPollutantForecast">Find the entity aqiMajorPollutantForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _aqiMajorPollutantForecast(Wrap<String> w);
-
-	public String getAqiMajorPollutantForecast() {
-		return aqiMajorPollutantForecast;
-	}
-	public void setAqiMajorPollutantForecast(String o) {
-		this.aqiMajorPollutantForecast = WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
-	}
-	public static String staticSetAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved aqiMajorPollutantForecastInit() {
-		Wrap<String> aqiMajorPollutantForecastWrap = new Wrap<String>().var("aqiMajorPollutantForecast");
-		if(aqiMajorPollutantForecast == null) {
-			_aqiMajorPollutantForecast(aqiMajorPollutantForecastWrap);
-			Optional.ofNullable(aqiMajorPollutantForecastWrap.getO()).ifPresent(o -> {
-				setAqiMajorPollutantForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o)).toString();
-	}
-
-	public String sqlAqiMajorPollutantForecast() {
-		return aqiMajorPollutantForecast;
 	}
 
 	//////////////////////
@@ -1082,6 +675,413 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public Polygon sqlAreaServed() {
 		return areaServed;
+	}
+
+	/////////////////////
+	// airQualityIndex //
+	/////////////////////
+
+
+	/**	 The entity airQualityIndex
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal airQualityIndex;
+
+	/**	<br> The entity airQualityIndex
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airQualityIndex">Find the entity airQualityIndex in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airQualityIndex(Wrap<BigDecimal> w);
+
+	public BigDecimal getAirQualityIndex() {
+		return airQualityIndex;
+	}
+
+	public void setAirQualityIndex(BigDecimal airQualityIndex) {
+		this.airQualityIndex = airQualityIndex;
+	}
+	@JsonIgnore
+	public void setAirQualityIndex(String o) {
+		this.airQualityIndex = WeatherObserved.staticSetAirQualityIndex(siteRequest_, o);
+	}
+	public static BigDecimal staticSetAirQualityIndex(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setAirQualityIndex(Double o) {
+		setAirQualityIndex(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirQualityIndex(Integer o) {
+		setAirQualityIndex(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirQualityIndex(Number o) {
+		setAirQualityIndex(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved airQualityIndexInit() {
+		Wrap<BigDecimal> airQualityIndexWrap = new Wrap<BigDecimal>().var("airQualityIndex");
+		if(airQualityIndex == null) {
+			_airQualityIndex(airQualityIndexWrap);
+			Optional.ofNullable(airQualityIndexWrap.getO()).ifPresent(o -> {
+				setAirQualityIndex(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchAirQualityIndex(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrAirQualityIndex(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirQualityIndex(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirQualityIndex(siteRequest_, WeatherObserved.staticSetAirQualityIndex(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlAirQualityIndex() {
+		return airQualityIndex;
+	}
+
+	/////////////////////////////
+	// airQualityIndexForecast //
+	/////////////////////////////
+
+
+	/**	 The entity airQualityIndexForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal airQualityIndexForecast;
+
+	/**	<br> The entity airQualityIndexForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airQualityIndexForecast">Find the entity airQualityIndexForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airQualityIndexForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getAirQualityIndexForecast() {
+		return airQualityIndexForecast;
+	}
+
+	public void setAirQualityIndexForecast(BigDecimal airQualityIndexForecast) {
+		this.airQualityIndexForecast = airQualityIndexForecast;
+	}
+	@JsonIgnore
+	public void setAirQualityIndexForecast(String o) {
+		this.airQualityIndexForecast = WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetAirQualityIndexForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setAirQualityIndexForecast(Double o) {
+		setAirQualityIndexForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirQualityIndexForecast(Integer o) {
+		setAirQualityIndexForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirQualityIndexForecast(Number o) {
+		setAirQualityIndexForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved airQualityIndexForecastInit() {
+		Wrap<BigDecimal> airQualityIndexForecastWrap = new Wrap<BigDecimal>().var("airQualityIndexForecast");
+		if(airQualityIndexForecast == null) {
+			_airQualityIndexForecast(airQualityIndexForecastWrap);
+			Optional.ofNullable(airQualityIndexForecastWrap.getO()).ifPresent(o -> {
+				setAirQualityIndexForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchAirQualityIndexForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrAirQualityIndexForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirQualityIndexForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirQualityIndexForecast(siteRequest_, WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlAirQualityIndexForecast() {
+		return airQualityIndexForecast;
+	}
+
+	///////////////////////
+	// aqiMajorPollutant //
+	///////////////////////
+
+
+	/**	 The entity aqiMajorPollutant
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String aqiMajorPollutant;
+
+	/**	<br> The entity aqiMajorPollutant
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:aqiMajorPollutant">Find the entity aqiMajorPollutant in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _aqiMajorPollutant(Wrap<String> w);
+
+	public String getAqiMajorPollutant() {
+		return aqiMajorPollutant;
+	}
+	public void setAqiMajorPollutant(String o) {
+		this.aqiMajorPollutant = WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o);
+	}
+	public static String staticSetAqiMajorPollutant(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved aqiMajorPollutantInit() {
+		Wrap<String> aqiMajorPollutantWrap = new Wrap<String>().var("aqiMajorPollutant");
+		if(aqiMajorPollutant == null) {
+			_aqiMajorPollutant(aqiMajorPollutantWrap);
+			Optional.ofNullable(aqiMajorPollutantWrap.getO()).ifPresent(o -> {
+				setAqiMajorPollutant(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchAqiMajorPollutant(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrAqiMajorPollutant(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAqiMajorPollutant(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAqiMajorPollutant(siteRequest_, WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o)).toString();
+	}
+
+	public String sqlAqiMajorPollutant() {
+		return aqiMajorPollutant;
+	}
+
+	///////////////////////////////
+	// aqiMajorPollutantForecast //
+	///////////////////////////////
+
+
+	/**	 The entity aqiMajorPollutantForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String aqiMajorPollutantForecast;
+
+	/**	<br> The entity aqiMajorPollutantForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:aqiMajorPollutantForecast">Find the entity aqiMajorPollutantForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _aqiMajorPollutantForecast(Wrap<String> w);
+
+	public String getAqiMajorPollutantForecast() {
+		return aqiMajorPollutantForecast;
+	}
+	public void setAqiMajorPollutantForecast(String o) {
+		this.aqiMajorPollutantForecast = WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
+	}
+	public static String staticSetAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved aqiMajorPollutantForecastInit() {
+		Wrap<String> aqiMajorPollutantForecastWrap = new Wrap<String>().var("aqiMajorPollutantForecast");
+		if(aqiMajorPollutantForecast == null) {
+			_aqiMajorPollutantForecast(aqiMajorPollutantForecastWrap);
+			Optional.ofNullable(aqiMajorPollutantForecastWrap.getO()).ifPresent(o -> {
+				setAqiMajorPollutantForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAqiMajorPollutantForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o)).toString();
+	}
+
+	public String sqlAqiMajorPollutantForecast() {
+		return aqiMajorPollutantForecast;
+	}
+
+	////////////////////////////
+	// airTemperatureForecast //
+	////////////////////////////
+
+
+	/**	 The entity airTemperatureForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal airTemperatureForecast;
+
+	/**	<br> The entity airTemperatureForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
+		this.airTemperatureForecast = airTemperatureForecast;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(String o) {
+		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Double o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Integer o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Number o) {
+		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved airTemperatureForecastInit() {
+		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
+		if(airTemperatureForecast == null) {
+			_airTemperatureForecast(airTemperatureForecastWrap);
+			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
+				setAirTemperatureForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	///////////////////////
+	// airTemperatureTSA //
+	///////////////////////
+
+
+	/**	 The entity airTemperatureTSA
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject airTemperatureTSA;
+
+	/**	<br> The entity airTemperatureTSA
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
+
+	public JsonObject getAirTemperatureTSA() {
+		return airTemperatureTSA;
+	}
+
+	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
+		this.airTemperatureTSA = airTemperatureTSA;
+	}
+	@JsonIgnore
+	public void setAirTemperatureTSA(String o) {
+		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
+	}
+	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved airTemperatureTSAInit() {
+		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
+		if(airTemperatureTSA == null) {
+			_airTemperatureTSA(airTemperatureTSAWrap);
+			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
+				setAirTemperatureTSA(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlAirTemperatureTSA() {
+		return airTemperatureTSA;
 	}
 
 	/////////////////////////
@@ -3535,17 +3535,17 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			Promise<Void> promise2 = Promise.promise();
 			try {
 				addressInit();
-				airQualityIndexInit();
-				airQualityIndexForecastInit();
-				airTemperatureForecastInit();
-				airTemperatureTSAInit();
 				alternateNameInit();
-				aqiMajorPollutantInit();
-				aqiMajorPollutantForecastInit();
 				areaServedColorsInit();
 				areaServedTitlesInit();
 				areaServedLinksInit();
 				areaServedInit();
+				airQualityIndexInit();
+				airQualityIndexForecastInit();
+				aqiMajorPollutantInit();
+				aqiMajorPollutantForecastInit();
+				airTemperatureForecastInit();
+				airTemperatureTSAInit();
 				atmosphericPressureInit();
 				dataProviderInit();
 				dateCreatedInit();
@@ -3636,20 +3636,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 			case "address":
 				return oWeatherObserved.address;
-			case "airQualityIndex":
-				return oWeatherObserved.airQualityIndex;
-			case "airQualityIndexForecast":
-				return oWeatherObserved.airQualityIndexForecast;
-			case "airTemperatureForecast":
-				return oWeatherObserved.airTemperatureForecast;
-			case "airTemperatureTSA":
-				return oWeatherObserved.airTemperatureTSA;
 			case "alternateName":
 				return oWeatherObserved.alternateName;
-			case "aqiMajorPollutant":
-				return oWeatherObserved.aqiMajorPollutant;
-			case "aqiMajorPollutantForecast":
-				return oWeatherObserved.aqiMajorPollutantForecast;
 			case "areaServedColors":
 				return oWeatherObserved.areaServedColors;
 			case "areaServedTitles":
@@ -3658,6 +3646,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.areaServedLinks;
 			case "areaServed":
 				return oWeatherObserved.areaServed;
+			case "airQualityIndex":
+				return oWeatherObserved.airQualityIndex;
+			case "airQualityIndexForecast":
+				return oWeatherObserved.airQualityIndexForecast;
+			case "aqiMajorPollutant":
+				return oWeatherObserved.aqiMajorPollutant;
+			case "aqiMajorPollutantForecast":
+				return oWeatherObserved.aqiMajorPollutantForecast;
+			case "airTemperatureForecast":
+				return oWeatherObserved.airTemperatureForecast;
+			case "airTemperatureTSA":
+				return oWeatherObserved.airTemperatureTSA;
 			case "atmosphericPressure":
 				return oWeatherObserved.atmosphericPressure;
 			case "dataProvider":
@@ -3769,20 +3769,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "address":
 			return WeatherObserved.staticSetAddress(siteRequest_, o);
-		case "airQualityIndex":
-			return WeatherObserved.staticSetAirQualityIndex(siteRequest_, o);
-		case "airQualityIndexForecast":
-			return WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
 		case "alternateName":
 			return WeatherObserved.staticSetAlternateName(siteRequest_, o);
-		case "aqiMajorPollutant":
-			return WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o);
-		case "aqiMajorPollutantForecast":
-			return WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
 		case "areaServedColors":
 			return WeatherObserved.staticSetAreaServedColors(siteRequest_, o);
 		case "areaServedTitles":
@@ -3791,6 +3779,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetAreaServedLinks(siteRequest_, o);
 		case "areaServed":
 			return WeatherObserved.staticSetAreaServed(siteRequest_, o);
+		case "airQualityIndex":
+			return WeatherObserved.staticSetAirQualityIndex(siteRequest_, o);
+		case "airQualityIndexForecast":
+			return WeatherObserved.staticSetAirQualityIndexForecast(siteRequest_, o);
+		case "aqiMajorPollutant":
+			return WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o);
+		case "aqiMajorPollutantForecast":
+			return WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSetAtmosphericPressure(siteRequest_, o);
 		case "dataProvider":
@@ -3877,20 +3877,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "address":
 			return WeatherObserved.staticSearchAddress(siteRequest_, (JsonObject)o);
-		case "airQualityIndex":
-			return WeatherObserved.staticSearchAirQualityIndex(siteRequest_, (BigDecimal)o);
-		case "airQualityIndexForecast":
-			return WeatherObserved.staticSearchAirQualityIndexForecast(siteRequest_, (BigDecimal)o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, (BigDecimal)o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, (JsonObject)o);
 		case "alternateName":
 			return WeatherObserved.staticSearchAlternateName(siteRequest_, (String)o);
-		case "aqiMajorPollutant":
-			return WeatherObserved.staticSearchAqiMajorPollutant(siteRequest_, (String)o);
-		case "aqiMajorPollutantForecast":
-			return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, (String)o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchAreaServedColors(siteRequest_, (String)o);
 		case "areaServedTitles":
@@ -3899,6 +3887,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchAreaServedLinks(siteRequest_, (String)o);
 		case "areaServed":
 			return WeatherObserved.staticSearchAreaServed(siteRequest_, (Polygon)o);
+		case "airQualityIndex":
+			return WeatherObserved.staticSearchAirQualityIndex(siteRequest_, (BigDecimal)o);
+		case "airQualityIndexForecast":
+			return WeatherObserved.staticSearchAirQualityIndexForecast(siteRequest_, (BigDecimal)o);
+		case "aqiMajorPollutant":
+			return WeatherObserved.staticSearchAqiMajorPollutant(siteRequest_, (String)o);
+		case "aqiMajorPollutantForecast":
+			return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, (String)o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, (BigDecimal)o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, (JsonObject)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchAtmosphericPressure(siteRequest_, (BigDecimal)o);
 		case "dataProvider":
@@ -3985,20 +3985,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "address":
 			return WeatherObserved.staticSearchStrAddress(siteRequest_, (String)o);
-		case "airQualityIndex":
-			return WeatherObserved.staticSearchStrAirQualityIndex(siteRequest_, (Double)o);
-		case "airQualityIndexForecast":
-			return WeatherObserved.staticSearchStrAirQualityIndexForecast(siteRequest_, (Double)o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchStrAirTemperatureForecast(siteRequest_, (Double)o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchStrAirTemperatureTSA(siteRequest_, (String)o);
 		case "alternateName":
 			return WeatherObserved.staticSearchStrAlternateName(siteRequest_, (String)o);
-		case "aqiMajorPollutant":
-			return WeatherObserved.staticSearchStrAqiMajorPollutant(siteRequest_, (String)o);
-		case "aqiMajorPollutantForecast":
-			return WeatherObserved.staticSearchStrAqiMajorPollutantForecast(siteRequest_, (String)o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchStrAreaServedColors(siteRequest_, (String)o);
 		case "areaServedTitles":
@@ -4007,6 +3995,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrAreaServedLinks(siteRequest_, (String)o);
 		case "areaServed":
 			return WeatherObserved.staticSearchStrAreaServed(siteRequest_, (Polygon)o);
+		case "airQualityIndex":
+			return WeatherObserved.staticSearchStrAirQualityIndex(siteRequest_, (Double)o);
+		case "airQualityIndexForecast":
+			return WeatherObserved.staticSearchStrAirQualityIndexForecast(siteRequest_, (Double)o);
+		case "aqiMajorPollutant":
+			return WeatherObserved.staticSearchStrAqiMajorPollutant(siteRequest_, (String)o);
+		case "aqiMajorPollutantForecast":
+			return WeatherObserved.staticSearchStrAqiMajorPollutantForecast(siteRequest_, (String)o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchStrAirTemperatureForecast(siteRequest_, (Double)o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchStrAirTemperatureTSA(siteRequest_, (String)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchStrAtmosphericPressure(siteRequest_, (Double)o);
 		case "dataProvider":
@@ -4093,20 +4093,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "address":
 			return WeatherObserved.staticSearchFqAddress(siteRequest_, o);
-		case "airQualityIndex":
-			return WeatherObserved.staticSearchFqAirQualityIndex(siteRequest_, o);
-		case "airQualityIndexForecast":
-			return WeatherObserved.staticSearchFqAirQualityIndexForecast(siteRequest_, o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchFqAirTemperatureForecast(siteRequest_, o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchFqAirTemperatureTSA(siteRequest_, o);
 		case "alternateName":
 			return WeatherObserved.staticSearchFqAlternateName(siteRequest_, o);
-		case "aqiMajorPollutant":
-			return WeatherObserved.staticSearchFqAqiMajorPollutant(siteRequest_, o);
-		case "aqiMajorPollutantForecast":
-			return WeatherObserved.staticSearchFqAqiMajorPollutantForecast(siteRequest_, o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchFqAreaServedColors(siteRequest_, o);
 		case "areaServedTitles":
@@ -4115,6 +4103,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqAreaServedLinks(siteRequest_, o);
 		case "areaServed":
 			return WeatherObserved.staticSearchFqAreaServed(siteRequest_, o);
+		case "airQualityIndex":
+			return WeatherObserved.staticSearchFqAirQualityIndex(siteRequest_, o);
+		case "airQualityIndexForecast":
+			return WeatherObserved.staticSearchFqAirQualityIndexForecast(siteRequest_, o);
+		case "aqiMajorPollutant":
+			return WeatherObserved.staticSearchFqAqiMajorPollutant(siteRequest_, o);
+		case "aqiMajorPollutantForecast":
+			return WeatherObserved.staticSearchFqAqiMajorPollutantForecast(siteRequest_, o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchFqAirTemperatureForecast(siteRequest_, o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchFqAirTemperatureTSA(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchFqAtmosphericPressure(siteRequest_, o);
 		case "dataProvider":
@@ -4219,6 +4219,20 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("address");
 				return val;
+			} else if("alternatename".equals(varLower)) {
+				if(val instanceof String) {
+					setAlternateName((String)val);
+				}
+				saves.add("alternateName");
+				return val;
+			} else if("areaserved".equals(varLower)) {
+				if(val instanceof Polygon) {
+					setAreaServed((Polygon)val);
+				} else {
+					setAreaServed(val == null ? null : val.toString());
+				}
+				saves.add("areaServed");
+				return val;
 			} else if("airqualityindex".equals(varLower)) {
 				if(val instanceof String) {
 					setAirQualityIndex((String)val);
@@ -4235,6 +4249,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("airQualityIndexForecast");
 				return val;
+			} else if("aqimajorpollutant".equals(varLower)) {
+				if(val instanceof String) {
+					setAqiMajorPollutant((String)val);
+				}
+				saves.add("aqiMajorPollutant");
+				return val;
+			} else if("aqimajorpollutantforecast".equals(varLower)) {
+				if(val instanceof String) {
+					setAqiMajorPollutantForecast((String)val);
+				}
+				saves.add("aqiMajorPollutantForecast");
+				return val;
 			} else if("airtemperatureforecast".equals(varLower)) {
 				if(val instanceof String) {
 					setAirTemperatureForecast((String)val);
@@ -4250,32 +4276,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setAirTemperatureTSA((JsonObject)val);
 				}
 				saves.add("airTemperatureTSA");
-				return val;
-			} else if("alternatename".equals(varLower)) {
-				if(val instanceof String) {
-					setAlternateName((String)val);
-				}
-				saves.add("alternateName");
-				return val;
-			} else if("aqimajorpollutant".equals(varLower)) {
-				if(val instanceof String) {
-					setAqiMajorPollutant((String)val);
-				}
-				saves.add("aqiMajorPollutant");
-				return val;
-			} else if("aqimajorpollutantforecast".equals(varLower)) {
-				if(val instanceof String) {
-					setAqiMajorPollutantForecast((String)val);
-				}
-				saves.add("aqiMajorPollutantForecast");
-				return val;
-			} else if("areaserved".equals(varLower)) {
-				if(val instanceof Polygon) {
-					setAreaServed((Polygon)val);
-				} else {
-					setAreaServed(val == null ? null : val.toString());
-				}
-				saves.add("areaServed");
 				return val;
 			} else if("atmosphericpressure".equals(varLower)) {
 				if(val instanceof String) {
@@ -4552,46 +4552,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setAddress(address);
 			}
 
-			if(saves.contains("airQualityIndex")) {
-				Double airQualityIndex = (Double)doc.get("airQualityIndex_docvalues_double");
-				if(airQualityIndex != null)
-					oWeatherObserved.setAirQualityIndex(airQualityIndex);
-			}
-
-			if(saves.contains("airQualityIndexForecast")) {
-				Double airQualityIndexForecast = (Double)doc.get("airQualityIndexForecast_docvalues_double");
-				if(airQualityIndexForecast != null)
-					oWeatherObserved.setAirQualityIndexForecast(airQualityIndexForecast);
-			}
-
-			if(saves.contains("airTemperatureForecast")) {
-				Double airTemperatureForecast = (Double)doc.get("airTemperatureForecast_docvalues_double");
-				if(airTemperatureForecast != null)
-					oWeatherObserved.setAirTemperatureForecast(airTemperatureForecast);
-			}
-
-			if(saves.contains("airTemperatureTSA")) {
-				String airTemperatureTSA = (String)doc.get("airTemperatureTSA_docvalues_string");
-				if(airTemperatureTSA != null)
-					oWeatherObserved.setAirTemperatureTSA(airTemperatureTSA);
-			}
-
 			if(saves.contains("alternateName")) {
 				String alternateName = (String)doc.get("alternateName_docvalues_string");
 				if(alternateName != null)
 					oWeatherObserved.setAlternateName(alternateName);
-			}
-
-			if(saves.contains("aqiMajorPollutant")) {
-				String aqiMajorPollutant = (String)doc.get("aqiMajorPollutant_docvalues_string");
-				if(aqiMajorPollutant != null)
-					oWeatherObserved.setAqiMajorPollutant(aqiMajorPollutant);
-			}
-
-			if(saves.contains("aqiMajorPollutantForecast")) {
-				String aqiMajorPollutantForecast = (String)doc.get("aqiMajorPollutantForecast_docvalues_string");
-				if(aqiMajorPollutantForecast != null)
-					oWeatherObserved.setAqiMajorPollutantForecast(aqiMajorPollutantForecast);
 			}
 
 			if(saves.contains("areaServedColors")) {
@@ -4616,6 +4580,42 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				Polygon areaServed = (Polygon)doc.get("areaServed_docvalues_location");
 				if(areaServed != null)
 					oWeatherObserved.setAreaServed(areaServed);
+			}
+
+			if(saves.contains("airQualityIndex")) {
+				Double airQualityIndex = (Double)doc.get("airQualityIndex_docvalues_double");
+				if(airQualityIndex != null)
+					oWeatherObserved.setAirQualityIndex(airQualityIndex);
+			}
+
+			if(saves.contains("airQualityIndexForecast")) {
+				Double airQualityIndexForecast = (Double)doc.get("airQualityIndexForecast_docvalues_double");
+				if(airQualityIndexForecast != null)
+					oWeatherObserved.setAirQualityIndexForecast(airQualityIndexForecast);
+			}
+
+			if(saves.contains("aqiMajorPollutant")) {
+				String aqiMajorPollutant = (String)doc.get("aqiMajorPollutant_docvalues_string");
+				if(aqiMajorPollutant != null)
+					oWeatherObserved.setAqiMajorPollutant(aqiMajorPollutant);
+			}
+
+			if(saves.contains("aqiMajorPollutantForecast")) {
+				String aqiMajorPollutantForecast = (String)doc.get("aqiMajorPollutantForecast_docvalues_string");
+				if(aqiMajorPollutantForecast != null)
+					oWeatherObserved.setAqiMajorPollutantForecast(aqiMajorPollutantForecast);
+			}
+
+			if(saves.contains("airTemperatureForecast")) {
+				Double airTemperatureForecast = (Double)doc.get("airTemperatureForecast_docvalues_double");
+				if(airTemperatureForecast != null)
+					oWeatherObserved.setAirTemperatureForecast(airTemperatureForecast);
+			}
+
+			if(saves.contains("airTemperatureTSA")) {
+				String airTemperatureTSA = (String)doc.get("airTemperatureTSA_docvalues_string");
+				if(airTemperatureTSA != null)
+					oWeatherObserved.setAirTemperatureTSA(airTemperatureTSA);
 			}
 
 			if(saves.contains("atmosphericPressure")) {
@@ -4830,26 +4830,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(address != null) {
 			doc.put("address_docvalues_string", address.toString());
 		}
-		if(airQualityIndex != null) {
-			doc.put("airQualityIndex_docvalues_double", airQualityIndex.doubleValue());
-		}
-		if(airQualityIndexForecast != null) {
-			doc.put("airQualityIndexForecast_docvalues_double", airQualityIndexForecast.doubleValue());
-		}
-		if(airTemperatureForecast != null) {
-			doc.put("airTemperatureForecast_docvalues_double", airTemperatureForecast.doubleValue());
-		}
-		if(airTemperatureTSA != null) {
-			doc.put("airTemperatureTSA_docvalues_string", airTemperatureTSA.toString());
-		}
 		if(alternateName != null) {
 			doc.put("alternateName_docvalues_string", alternateName);
-		}
-		if(aqiMajorPollutant != null) {
-			doc.put("aqiMajorPollutant_docvalues_string", aqiMajorPollutant);
-		}
-		if(aqiMajorPollutantForecast != null) {
-			doc.put("aqiMajorPollutantForecast_docvalues_string", aqiMajorPollutantForecast);
 		}
 		if(areaServedColors != null) {
 			JsonArray l = new JsonArray();
@@ -4876,6 +4858,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			JsonArray pointsArray = new JsonArray();
 			areaServed.getPoints().stream().map(point -> new JsonArray().add(Double.valueOf(point.getX())).add(Double.valueOf(point.getY()))).collect(Collectors.toList()).forEach(pointArray -> pointsArray.add(pointArray));
 			doc.put("areaServed_docvalues_location", new JsonObject().put("type", "LineString").put("coordinates", pointsArray).toString());
+		}
+		if(airQualityIndex != null) {
+			doc.put("airQualityIndex_docvalues_double", airQualityIndex.doubleValue());
+		}
+		if(airQualityIndexForecast != null) {
+			doc.put("airQualityIndexForecast_docvalues_double", airQualityIndexForecast.doubleValue());
+		}
+		if(aqiMajorPollutant != null) {
+			doc.put("aqiMajorPollutant_docvalues_string", aqiMajorPollutant);
+		}
+		if(aqiMajorPollutantForecast != null) {
+			doc.put("aqiMajorPollutantForecast_docvalues_string", aqiMajorPollutantForecast);
+		}
+		if(airTemperatureForecast != null) {
+			doc.put("airTemperatureForecast_docvalues_double", airTemperatureForecast.doubleValue());
+		}
+		if(airTemperatureTSA != null) {
+			doc.put("airTemperatureTSA_docvalues_string", airTemperatureTSA.toString());
 		}
 		if(atmosphericPressure != null) {
 			doc.put("atmosphericPressure_docvalues_double", atmosphericPressure.doubleValue());
@@ -4987,20 +4987,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "address":
 				return "address_docvalues_string";
-			case "airQualityIndex":
-				return "airQualityIndex_docvalues_double";
-			case "airQualityIndexForecast":
-				return "airQualityIndexForecast_docvalues_double";
-			case "airTemperatureForecast":
-				return "airTemperatureForecast_docvalues_double";
-			case "airTemperatureTSA":
-				return "airTemperatureTSA_docvalues_string";
 			case "alternateName":
 				return "alternateName_docvalues_string";
-			case "aqiMajorPollutant":
-				return "aqiMajorPollutant_docvalues_string";
-			case "aqiMajorPollutantForecast":
-				return "aqiMajorPollutantForecast_docvalues_string";
 			case "areaServedColors":
 				return "areaServedColors_indexedstored_strings";
 			case "areaServedTitles":
@@ -5009,6 +4997,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks_indexedstored_strings";
 			case "areaServed":
 				return "areaServed_docvalues_location";
+			case "airQualityIndex":
+				return "airQualityIndex_docvalues_double";
+			case "airQualityIndexForecast":
+				return "airQualityIndexForecast_docvalues_double";
+			case "aqiMajorPollutant":
+				return "aqiMajorPollutant_docvalues_string";
+			case "aqiMajorPollutantForecast":
+				return "aqiMajorPollutantForecast_docvalues_string";
+			case "airTemperatureForecast":
+				return "airTemperatureForecast_docvalues_double";
+			case "airTemperatureTSA":
+				return "airTemperatureTSA_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
 			case "dataProvider":
@@ -5086,20 +5086,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "address":
 				return "address_docvalues_string";
-			case "airQualityIndex":
-				return "airQualityIndex_docvalues_double";
-			case "airQualityIndexForecast":
-				return "airQualityIndexForecast_docvalues_double";
-			case "airTemperatureForecast":
-				return "airTemperatureForecast_docvalues_double";
-			case "airTemperatureTSA":
-				return "airTemperatureTSA_docvalues_string";
 			case "alternateName":
 				return "alternateName_docvalues_string";
-			case "aqiMajorPollutant":
-				return "aqiMajorPollutant_docvalues_string";
-			case "aqiMajorPollutantForecast":
-				return "aqiMajorPollutantForecast_docvalues_string";
 			case "areaServedColors":
 				return "areaServedColors_indexedstored_strings";
 			case "areaServedTitles":
@@ -5108,6 +5096,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks_indexedstored_strings";
 			case "areaServed":
 				return "areaServed_docvalues_location";
+			case "airQualityIndex":
+				return "airQualityIndex_docvalues_double";
+			case "airQualityIndexForecast":
+				return "airQualityIndexForecast_docvalues_double";
+			case "aqiMajorPollutant":
+				return "aqiMajorPollutant_docvalues_string";
+			case "aqiMajorPollutantForecast":
+				return "aqiMajorPollutantForecast_docvalues_string";
+			case "airTemperatureForecast":
+				return "airTemperatureForecast_docvalues_double";
+			case "airTemperatureTSA":
+				return "airTemperatureTSA_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
 			case "dataProvider":
@@ -5185,20 +5185,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(searchVar) {
 			case "address_docvalues_string":
 				return "address";
-			case "airQualityIndex_docvalues_double":
-				return "airQualityIndex";
-			case "airQualityIndexForecast_docvalues_double":
-				return "airQualityIndexForecast";
-			case "airTemperatureForecast_docvalues_double":
-				return "airTemperatureForecast";
-			case "airTemperatureTSA_docvalues_string":
-				return "airTemperatureTSA";
 			case "alternateName_docvalues_string":
 				return "alternateName";
-			case "aqiMajorPollutant_docvalues_string":
-				return "aqiMajorPollutant";
-			case "aqiMajorPollutantForecast_docvalues_string":
-				return "aqiMajorPollutantForecast";
 			case "areaServedColors_indexedstored_strings":
 				return "areaServedColors";
 			case "areaServedTitles_indexedstored_strings":
@@ -5207,6 +5195,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks";
 			case "areaServed_docvalues_location":
 				return "areaServed";
+			case "airQualityIndex_docvalues_double":
+				return "airQualityIndex";
+			case "airQualityIndexForecast_docvalues_double":
+				return "airQualityIndexForecast";
+			case "aqiMajorPollutant_docvalues_string":
+				return "aqiMajorPollutant";
+			case "aqiMajorPollutantForecast_docvalues_string":
+				return "aqiMajorPollutantForecast";
+			case "airTemperatureForecast_docvalues_double":
+				return "airTemperatureForecast";
+			case "airTemperatureTSA_docvalues_string":
+				return "airTemperatureTSA";
 			case "atmosphericPressure_docvalues_double":
 				return "atmosphericPressure";
 			case "dataProvider_docvalues_string":
@@ -5306,13 +5306,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		SiteRequest siteRequest = oWeatherObserved.getSiteRequest_();
 
 		oWeatherObserved.setAddress(Optional.ofNullable(doc.get("address_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirQualityIndex(Optional.ofNullable(doc.get("airQualityIndex_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirQualityIndexForecast(Optional.ofNullable(doc.get("airQualityIndexForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirTemperatureForecast(Optional.ofNullable(doc.get("airTemperatureForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirTemperatureTSA(Optional.ofNullable(doc.get("airTemperatureTSA_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAlternateName(Optional.ofNullable(doc.get("alternateName_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAqiMajorPollutant(Optional.ofNullable(doc.get("aqiMajorPollutant_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAqiMajorPollutantForecast(Optional.ofNullable(doc.get("aqiMajorPollutantForecast_docvalues_string")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("areaServedColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oWeatherObserved.addAreaServedColors(WeatherObserved.staticSetAreaServedColors(siteRequest, v.toString()));
 		});
@@ -5323,6 +5317,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			oWeatherObserved.addAreaServedLinks(WeatherObserved.staticSetAreaServedLinks(siteRequest, v.toString()));
 		});
 		oWeatherObserved.setAreaServed(Optional.ofNullable(doc.get("areaServed_docvalues_location")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirQualityIndex(Optional.ofNullable(doc.get("airQualityIndex_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirQualityIndexForecast(Optional.ofNullable(doc.get("airQualityIndexForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAqiMajorPollutant(Optional.ofNullable(doc.get("aqiMajorPollutant_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAqiMajorPollutantForecast(Optional.ofNullable(doc.get("aqiMajorPollutantForecast_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirTemperatureForecast(Optional.ofNullable(doc.get("airTemperatureForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirTemperatureTSA(Optional.ofNullable(doc.get("airTemperatureTSA_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAtmosphericPressure(Optional.ofNullable(doc.get("atmosphericPressure_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDataProvider(Optional.ofNullable(doc.get("dataProvider_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDateCreated(Optional.ofNullable(doc.get("dateCreated_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -5372,20 +5372,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			WeatherObserved original = (WeatherObserved)o;
 			if(!Objects.equals(address, original.getAddress()))
 				apiRequest.addVars("address");
-			if(!Objects.equals(airQualityIndex, original.getAirQualityIndex()) && airQualityIndex != null && original.getAirQualityIndex() != null && airQualityIndex.compareTo(original.getAirQualityIndex()) != 0)
-				apiRequest.addVars("airQualityIndex");
-			if(!Objects.equals(airQualityIndexForecast, original.getAirQualityIndexForecast()) && airQualityIndexForecast != null && original.getAirQualityIndexForecast() != null && airQualityIndexForecast.compareTo(original.getAirQualityIndexForecast()) != 0)
-				apiRequest.addVars("airQualityIndexForecast");
-			if(!Objects.equals(airTemperatureForecast, original.getAirTemperatureForecast()) && airTemperatureForecast != null && original.getAirTemperatureForecast() != null && airTemperatureForecast.compareTo(original.getAirTemperatureForecast()) != 0)
-				apiRequest.addVars("airTemperatureForecast");
-			if(!Objects.equals(airTemperatureTSA, original.getAirTemperatureTSA()))
-				apiRequest.addVars("airTemperatureTSA");
 			if(!Objects.equals(alternateName, original.getAlternateName()))
 				apiRequest.addVars("alternateName");
-			if(!Objects.equals(aqiMajorPollutant, original.getAqiMajorPollutant()))
-				apiRequest.addVars("aqiMajorPollutant");
-			if(!Objects.equals(aqiMajorPollutantForecast, original.getAqiMajorPollutantForecast()))
-				apiRequest.addVars("aqiMajorPollutantForecast");
 			if(!Objects.equals(areaServedColors, original.getAreaServedColors()))
 				apiRequest.addVars("areaServedColors");
 			if(!Objects.equals(areaServedTitles, original.getAreaServedTitles()))
@@ -5394,6 +5382,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("areaServedLinks");
 			if(!Objects.equals(areaServed, original.getAreaServed()))
 				apiRequest.addVars("areaServed");
+			if(!Objects.equals(airQualityIndex, original.getAirQualityIndex()) && airQualityIndex != null && original.getAirQualityIndex() != null && airQualityIndex.compareTo(original.getAirQualityIndex()) != 0)
+				apiRequest.addVars("airQualityIndex");
+			if(!Objects.equals(airQualityIndexForecast, original.getAirQualityIndexForecast()) && airQualityIndexForecast != null && original.getAirQualityIndexForecast() != null && airQualityIndexForecast.compareTo(original.getAirQualityIndexForecast()) != 0)
+				apiRequest.addVars("airQualityIndexForecast");
+			if(!Objects.equals(aqiMajorPollutant, original.getAqiMajorPollutant()))
+				apiRequest.addVars("aqiMajorPollutant");
+			if(!Objects.equals(aqiMajorPollutantForecast, original.getAqiMajorPollutantForecast()))
+				apiRequest.addVars("aqiMajorPollutantForecast");
+			if(!Objects.equals(airTemperatureForecast, original.getAirTemperatureForecast()) && airTemperatureForecast != null && original.getAirTemperatureForecast() != null && airTemperatureForecast.compareTo(original.getAirTemperatureForecast()) != 0)
+				apiRequest.addVars("airTemperatureForecast");
+			if(!Objects.equals(airTemperatureTSA, original.getAirTemperatureTSA()))
+				apiRequest.addVars("airTemperatureTSA");
 			if(!Objects.equals(atmosphericPressure, original.getAtmosphericPressure()) && atmosphericPressure != null && original.getAtmosphericPressure() != null && atmosphericPressure.compareTo(original.getAtmosphericPressure()) != 0)
 				apiRequest.addVars("atmosphericPressure");
 			if(!Objects.equals(dataProvider, original.getDataProvider()))
@@ -5474,17 +5474,17 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(address).map(v -> "address: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(airQualityIndex).map(v -> "airQualityIndex: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(airQualityIndexForecast).map(v -> "airQualityIndexForecast: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(airTemperatureForecast).map(v -> "airTemperatureForecast: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(airTemperatureTSA).map(v -> "airTemperatureTSA: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(alternateName).map(v -> "alternateName: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(aqiMajorPollutant).map(v -> "aqiMajorPollutant: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(aqiMajorPollutantForecast).map(v -> "aqiMajorPollutantForecast: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(areaServedColors).map(v -> "areaServedColors: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServedTitles).map(v -> "areaServedTitles: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServedLinks).map(v -> "areaServedLinks: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServed).map(v -> "areaServed: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(airQualityIndex).map(v -> "airQualityIndex: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(airQualityIndexForecast).map(v -> "airQualityIndexForecast: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(aqiMajorPollutant).map(v -> "aqiMajorPollutant: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(aqiMajorPollutantForecast).map(v -> "aqiMajorPollutantForecast: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(airTemperatureForecast).map(v -> "airTemperatureForecast: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(airTemperatureTSA).map(v -> "airTemperatureTSA: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(atmosphericPressure).map(v -> "atmosphericPressure: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(dataProvider).map(v -> "dataProvider: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(dateCreated).map(v -> "dateCreated: \"" + v + "\"\n" ).orElse(""));
@@ -5528,17 +5528,17 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return CLASS_API_ADDRESS_WeatherObserved;
 	}
 	public static final String VAR_address = "address";
-	public static final String VAR_airQualityIndex = "airQualityIndex";
-	public static final String VAR_airQualityIndexForecast = "airQualityIndexForecast";
-	public static final String VAR_airTemperatureForecast = "airTemperatureForecast";
-	public static final String VAR_airTemperatureTSA = "airTemperatureTSA";
 	public static final String VAR_alternateName = "alternateName";
-	public static final String VAR_aqiMajorPollutant = "aqiMajorPollutant";
-	public static final String VAR_aqiMajorPollutantForecast = "aqiMajorPollutantForecast";
 	public static final String VAR_areaServedColors = "areaServedColors";
 	public static final String VAR_areaServedTitles = "areaServedTitles";
 	public static final String VAR_areaServedLinks = "areaServedLinks";
 	public static final String VAR_areaServed = "areaServed";
+	public static final String VAR_airQualityIndex = "airQualityIndex";
+	public static final String VAR_airQualityIndexForecast = "airQualityIndexForecast";
+	public static final String VAR_aqiMajorPollutant = "aqiMajorPollutant";
+	public static final String VAR_aqiMajorPollutantForecast = "aqiMajorPollutantForecast";
+	public static final String VAR_airTemperatureForecast = "airTemperatureForecast";
+	public static final String VAR_airTemperatureTSA = "airTemperatureTSA";
 	public static final String VAR_atmosphericPressure = "atmosphericPressure";
 	public static final String VAR_dataProvider = "dataProvider";
 	public static final String VAR_dateCreated = "dateCreated";
@@ -5588,14 +5588,14 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static List<String> varsFqWeatherObserved(List<String> vars) {
 		vars.add(VAR_address);
+		vars.add(VAR_alternateName);
+		vars.add(VAR_areaServed);
 		vars.add(VAR_airQualityIndex);
 		vars.add(VAR_airQualityIndexForecast);
-		vars.add(VAR_airTemperatureForecast);
-		vars.add(VAR_airTemperatureTSA);
-		vars.add(VAR_alternateName);
 		vars.add(VAR_aqiMajorPollutant);
 		vars.add(VAR_aqiMajorPollutantForecast);
-		vars.add(VAR_areaServed);
+		vars.add(VAR_airTemperatureForecast);
+		vars.add(VAR_airTemperatureTSA);
 		vars.add(VAR_atmosphericPressure);
 		vars.add(VAR_dataProvider);
 		vars.add(VAR_dateCreated);
@@ -5672,17 +5672,17 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 
 	public static final String DISPLAY_NAME_address = "address";
-	public static final String DISPLAY_NAME_airQualityIndex = "air quality index";
-	public static final String DISPLAY_NAME_airQualityIndexForecast = "air quality index forecast";
-	public static final String DISPLAY_NAME_airTemperatureForecast = "air temperature forecast";
-	public static final String DISPLAY_NAME_airTemperatureTSA = "air temperature tsa";
 	public static final String DISPLAY_NAME_alternateName = "alternate name";
-	public static final String DISPLAY_NAME_aqiMajorPollutant = "aqi major pollutant";
-	public static final String DISPLAY_NAME_aqiMajorPollutantForecast = "aqi major pollutant forecast";
 	public static final String DISPLAY_NAME_areaServedColors = "area served colors";
 	public static final String DISPLAY_NAME_areaServedTitles = "area served titles";
 	public static final String DISPLAY_NAME_areaServedLinks = "area served links";
 	public static final String DISPLAY_NAME_areaServed = "area served";
+	public static final String DISPLAY_NAME_airQualityIndex = "air quality index";
+	public static final String DISPLAY_NAME_airQualityIndexForecast = "air quality index forecast";
+	public static final String DISPLAY_NAME_aqiMajorPollutant = "aqi major pollutant";
+	public static final String DISPLAY_NAME_aqiMajorPollutantForecast = "aqi major pollutant forecast";
+	public static final String DISPLAY_NAME_airTemperatureForecast = "air temperature forecast";
+	public static final String DISPLAY_NAME_airTemperatureTSA = "air temperature tsa";
 	public static final String DISPLAY_NAME_atmosphericPressure = "atmospheric pressure";
 	public static final String DISPLAY_NAME_dataProvider = "data provider";
 	public static final String DISPLAY_NAME_dateCreated = "date created";
@@ -5726,20 +5726,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_address:
 			return DISPLAY_NAME_address;
-		case VAR_airQualityIndex:
-			return DISPLAY_NAME_airQualityIndex;
-		case VAR_airQualityIndexForecast:
-			return DISPLAY_NAME_airQualityIndexForecast;
-		case VAR_airTemperatureForecast:
-			return DISPLAY_NAME_airTemperatureForecast;
-		case VAR_airTemperatureTSA:
-			return DISPLAY_NAME_airTemperatureTSA;
 		case VAR_alternateName:
 			return DISPLAY_NAME_alternateName;
-		case VAR_aqiMajorPollutant:
-			return DISPLAY_NAME_aqiMajorPollutant;
-		case VAR_aqiMajorPollutantForecast:
-			return DISPLAY_NAME_aqiMajorPollutantForecast;
 		case VAR_areaServedColors:
 			return DISPLAY_NAME_areaServedColors;
 		case VAR_areaServedTitles:
@@ -5748,6 +5736,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_areaServedLinks;
 		case VAR_areaServed:
 			return DISPLAY_NAME_areaServed;
+		case VAR_airQualityIndex:
+			return DISPLAY_NAME_airQualityIndex;
+		case VAR_airQualityIndexForecast:
+			return DISPLAY_NAME_airQualityIndexForecast;
+		case VAR_aqiMajorPollutant:
+			return DISPLAY_NAME_aqiMajorPollutant;
+		case VAR_aqiMajorPollutantForecast:
+			return DISPLAY_NAME_aqiMajorPollutantForecast;
+		case VAR_airTemperatureForecast:
+			return DISPLAY_NAME_airTemperatureForecast;
+		case VAR_airTemperatureTSA:
+			return DISPLAY_NAME_airTemperatureTSA;
 		case VAR_atmosphericPressure:
 			return DISPLAY_NAME_atmosphericPressure;
 		case VAR_dataProvider:
@@ -5827,20 +5827,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_address:
 			return "The mailing address";
-		case VAR_airQualityIndex:
-			return "Air quality index is a number used to report the quality of the air on any given day";
-		case VAR_airQualityIndexForecast:
-			return "Forecasted overall Air Quality Index (AQI) over a certain duration in future";
-		case VAR_airTemperatureForecast:
-			return "Forecasted value of air temperature over a certain duration in future";
-		case VAR_airTemperatureTSA:
-			return "Air temperature time series aggregation";
 		case VAR_alternateName:
 			return "An alternative name for this item";
-		case VAR_aqiMajorPollutant:
-			return "Major pollutant in the Air Quality Index (AQI)";
-		case VAR_aqiMajorPollutantForecast:
-			return "Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future";
 		case VAR_areaServedColors:
 			return "The colors of each areaServed Paths. ";
 		case VAR_areaServedTitles:
@@ -5849,6 +5837,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The links of each areaServed Paths. ";
 		case VAR_areaServed:
 			return "The geographic area where a service or offered item is provided";
+		case VAR_airQualityIndex:
+			return "Air quality index is a number used to report the quality of the air on any given day";
+		case VAR_airQualityIndexForecast:
+			return "Forecasted overall Air Quality Index (AQI) over a certain duration in future";
+		case VAR_aqiMajorPollutant:
+			return "Major pollutant in the Air Quality Index (AQI)";
+		case VAR_aqiMajorPollutantForecast:
+			return "Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future";
+		case VAR_airTemperatureForecast:
+			return "Forecasted value of air temperature over a certain duration in future";
+		case VAR_airTemperatureTSA:
+			return "Air temperature time series aggregation";
 		case VAR_atmosphericPressure:
 			return "The atmospheric pressure observed measured in Hecto Pascals";
 		case VAR_dataProvider:
@@ -5928,19 +5928,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_address:
 			return "JsonObject";
-		case VAR_airQualityIndex:
-			return "BigDecimal";
-		case VAR_airQualityIndexForecast:
-			return "BigDecimal";
-		case VAR_airTemperatureForecast:
-			return "BigDecimal";
-		case VAR_airTemperatureTSA:
-			return "JsonObject";
 		case VAR_alternateName:
-			return "String";
-		case VAR_aqiMajorPollutant:
-			return "String";
-		case VAR_aqiMajorPollutantForecast:
 			return "String";
 		case VAR_areaServedColors:
 			return "List";
@@ -5950,6 +5938,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "List";
 		case VAR_areaServed:
 			return "Polygon";
+		case VAR_airQualityIndex:
+			return "BigDecimal";
+		case VAR_airQualityIndexForecast:
+			return "BigDecimal";
+		case VAR_aqiMajorPollutant:
+			return "String";
+		case VAR_aqiMajorPollutantForecast:
+			return "String";
+		case VAR_airTemperatureForecast:
+			return "BigDecimal";
+		case VAR_airTemperatureTSA:
+			return "JsonObject";
 		case VAR_atmosphericPressure:
 			return "BigDecimal";
 		case VAR_dataProvider:
@@ -6038,21 +6038,21 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_address:
 			return 3;
-		case VAR_airQualityIndex:
-			return 3;
-		case VAR_airQualityIndexForecast:
-			return 3;
-		case VAR_airTemperatureForecast:
-			return 4;
-		case VAR_airTemperatureTSA:
-			return 4;
 		case VAR_alternateName:
+			return 3;
+		case VAR_areaServed:
+			return 5;
+		case VAR_airQualityIndex:
+			return 4;
+		case VAR_airQualityIndexForecast:
 			return 4;
 		case VAR_aqiMajorPollutant:
-			return 5;
+			return 4;
 		case VAR_aqiMajorPollutantForecast:
+			return 4;
+		case VAR_airTemperatureForecast:
 			return 5;
-		case VAR_areaServed:
+		case VAR_airTemperatureTSA:
 			return 5;
 		case VAR_atmosphericPressure:
 			return 6;
@@ -6131,22 +6131,22 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_address:
 			return 1;
-		case VAR_airQualityIndex:
+		case VAR_alternateName:
 			return 2;
-		case VAR_airQualityIndexForecast:
+		case VAR_areaServed:
 			return 3;
+		case VAR_airQualityIndex:
+			return 1;
+		case VAR_airQualityIndexForecast:
+			return 2;
+		case VAR_aqiMajorPollutant:
+			return 3;
+		case VAR_aqiMajorPollutantForecast:
+			return 4;
 		case VAR_airTemperatureForecast:
 			return 1;
 		case VAR_airTemperatureTSA:
 			return 2;
-		case VAR_alternateName:
-			return 3;
-		case VAR_aqiMajorPollutant:
-			return 1;
-		case VAR_aqiMajorPollutantForecast:
-			return 2;
-		case VAR_areaServed:
-			return 3;
 		case VAR_atmosphericPressure:
 			return 1;
 		case VAR_dataProvider:

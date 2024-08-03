@@ -40,6 +40,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * PrimaryKey: true
 	 * UrlVar: pageUrlApi
 	 * Modify: false
+	 * HtmRowTitle: primary key, ID, created, modified, archive, delete details
 	 * HtmRow: 1
 	 * HtmCell: 1
 	 * DisplayName.enUS: primary key
@@ -95,7 +96,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * Facet: true
 	 * HtmRow: 2
 	 * HtmCell: 1
-	 * DisplayName.enUS: archived
+	 * DisplayName.enUS: archive
 	 * Description: For archiving this record
 	 */
 	protected void _archived(Wrap<Boolean> w) {
@@ -109,7 +110,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * Facet: true
 	 * HtmRow: 2
 	 * HtmCell: 2
-	 * DisplayName.enUS: deleted
+	 * DisplayName.enUS: delete
 	 * Description: For deleting this record
 	 */
 	protected void _deleted(Wrap<Boolean> w) {

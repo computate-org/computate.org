@@ -122,22 +122,22 @@
         </sl-button>
         <ul>
           <li>
-            <a href="{{ SITE_BASE_URL }}">home</a>
+            <sl-button href="{{ SITE_BASE_URL }}">
+              <i class="fa-regular fa-house"></i>
+              home
+            </sl-button>
           </li>
           <li>
-            <a href="">Youtube</a>
+            <sl-button href="https://github.com/computate/">
+              <i class="fa-brands fa-github"></i>
+              Github
+            </sl-button>
           </li>
           <li>
-            <a href="https://github.com/computate/">Github</a>
-          </li>
-        </ul>
-        <sl-separator></sl-separator>
-        <ul>
-          <li>
-            <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
-              <sl-button href="http://localhost:10200/course">
-                <i class="fa-regular fa-notebook"></i>
-                courses
+            <sl-tooltip placement="right" content="Read the latest articles to learn more">
+              <sl-button href="http://localhost:10200/page">
+                <i class="fa-duotone fa-solid fa-newspaper"></i>
+                articles
               </sl-button>
             </sl-tooltip>
           </li>
@@ -150,18 +150,10 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="ApiTag: weather observed">
-              <sl-button href="http://localhost:10200/weather-observed">
-                <i class="fa-regular fa-cloud-bolt-sun"></i>
-                weather observed devices
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-              <sl-button href="http://localhost:10200/product">
-                <i class="fa-regular fa-conveyor-belt"></i>
-                products
+            <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
+              <sl-button href="http://localhost:10200/course">
+                <i class="fa-regular fa-notebook"></i>
+                courses
               </sl-button>
             </sl-tooltip>
           </li>
@@ -174,6 +166,14 @@
             </sl-tooltip>
           </li>
           <li>
+            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
+              <sl-button href="http://localhost:10200/product">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                products
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
             <sl-tooltip placement="right" content="See the live websites built with computate">
               <sl-button href="http://localhost:10200/website">
                 <i class="fa-regular fa-globe-pointer"></i>
@@ -182,47 +182,46 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="Read the latest articles to learn more">
-              <sl-button href="http://localhost:10200/page">
-                <i class="fa-duotone fa-solid fa-newspaper"></i>
-                articles
+            <sl-tooltip placement="right" content="ApiTag: weather observed">
+              <sl-button href="http://localhost:10200/weather-observed">
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
+                weather observed devices
               </sl-button>
             </sl-tooltip>
           </li>
-        </ul>
-        <sl-divider></sl-divider>
-        <ul>
 {% if userKey is defined %}
           <li>
-            <sl-tooltip placement="right" content="Update your user profile, or log out of the site. ">
-            <sl-dropdown>
-              <sl-button slot="trigger" caret>
-                <i slot="prefix" class="fad fa-user"></i>
+            <sl-details>
+              <div slot="summary">
+                <sl-avatar label="user"></sl-avatar>
                 user: {{userName}}
-              </sl-button>
-              <sl-menu>
-                <sl-menu-item>{{ userFullName }}</sl-menu-item>
-                <sl-menu-item>{{ userEmail }}</sl-menu-item>
-                <sl-menu-item>
-                  <sl-button variant="brand" href="/user/{{ userKey }}">
+              </div>
+              <div>{{ userFullName }}</div>
+              <div>{{ userEmail }}</div>
+              <div>
+                <sl-tooltip placement="right" content="see or change your user profile">
+                  <sl-button href="/user/{{ userKey }}" label="see or change your user profile">
                     <i slot="prefix" class="fad fa-house-user"></i>
                     <span>my user page</span>
                   </sl-button>
-                </sl-menu-item>
-                <sl-menu-item>
-                  <sl-button variant="brand" href="{{ logoutUrl }}">
+                </sl-tooltip>
+              </div>
+              <div>
+                <sl-tooltip placement="right" content="sign out">
+                  <sl-button href="{{ logoutUrl }}" label="sign out">
                     <i slot="prefix" class="fad fa-sign-out-alt"></i>
                     <span>sign out</span>
                   </sl-button>
-                </sl-menu-item>
-              </sl-menu>
-            </sl-dropdown>
-            </sl-tooltip>
+                </sl-tooltip>
+              </div>
+            </sl-details>
           </li>
 {% else %}
-        <sl-button href="{{ SITE_BASE_URL }}/user">
-          <i class="fad fa-house-user "></i> login
-        </sl-button>
+          <li>
+            <sl-button href="{{ SITE_BASE_URL }}/user">
+              <i class="fad fa-house-user "></i> login
+            </sl-button>
+          </li>
 {% endif %}
         </ul>
       </aside>

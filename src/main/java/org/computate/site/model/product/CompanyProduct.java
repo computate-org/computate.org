@@ -6,7 +6,8 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 5
+ * Order: 6
+ * SqlOrder: 6
  * 
  * Api: true
  * Page: true
@@ -51,12 +52,26 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
   protected void _name(Wrap<String> w) {
   }
 
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: product description
+   * Description: The product description. 
+   * HtmRow: 3
+   * HtmCell: 2
+   * HtmColumn: 2
+   * Facet: true
+   */
+  protected void _description(Wrap<String> w) {
+  }
+
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
+	 * HtmRow: 4
+	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
@@ -121,7 +136,6 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * DisplayName: title
 	 * Description: The title of this page. 
 	 * UrlVar: pageUrlId
-	 * HtmColumn: 1
 	 */
 	protected void _title(Wrap<String> w) {
 		w.o(name);

@@ -20,12 +20,12 @@ import io.vertx.pgclient.data.Polygon;
  * Fiware: true
  *
  * Model: true
- * SqlOrder: 7
+ * SqlOrder: 8
  * Api: true
  * Page: true
  * SuperPage: BaseModelPage
  * Indexed: true
- * Order: 7
+ * Order: 8
  * Description: 
  * ApiTag: weather observed
  * ApiUri: /api/weather-observed
@@ -55,6 +55,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: address
 	 * Description: The mailing address
+	 * HtmRowTitle: weather observed details
 	 * HtmRow: 3
 	 * HtmCell: 1
 	 * Facet: true
@@ -66,91 +67,13 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * DisplayName: air quality index
-	 * Description: Air quality index is a number used to report the quality of the air on any given day
-	 * HtmRow: 3
-	 * HtmCell: 2
-	 * Facet: true
-	 **/
-	protected void _airQualityIndex(Wrap<BigDecimal> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: air quality index forecast
-	 * Description: Forecasted overall Air Quality Index (AQI) over a certain duration in future
-	 * HtmRow: 3
-	 * HtmCell: 3
-	 * Facet: true
-	 **/
-	protected void _airQualityIndexForecast(Wrap<BigDecimal> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: air temperature forecast
-	 * Description: Forecasted value of air temperature over a certain duration in future
-	 * HtmRow: 4
-	 * HtmCell: 1
-	 * Facet: true
-	 **/
-	protected void _airTemperatureForecast(Wrap<BigDecimal> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: air temperature tsa
-	 * Description: Air temperature time series aggregation
-	 * HtmRow: 4
-	 * HtmCell: 2
-	 * Facet: true
-	 **/
-	protected void _airTemperatureTSA(Wrap<JsonObject> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
 	 * DisplayName: alternate name
 	 * Description: An alternative name for this item
-	 * HtmRow: 4
-	 * HtmCell: 3
+	 * HtmRow: 3
+	 * HtmCell: 2
 	 * Facet: true
 	 **/
 	protected void _alternateName(Wrap<String> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: aqi major pollutant
-	 * Description: Major pollutant in the Air Quality Index (AQI)
-	 * HtmRow: 5
-	 * HtmCell: 1
-	 * Facet: true
-	 **/
-	protected void _aqiMajorPollutant(Wrap<String> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: aqi major pollutant forecast
-	 * Description: Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future
-	 * HtmRow: 5
-	 * HtmCell: 2
-	 * Facet: true
-	 **/
-	protected void _aqiMajorPollutantForecast(Wrap<String> w) {}
 
 
 	/**
@@ -200,6 +123,86 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Facet: true
 	 **/
 	protected void _areaServed(Wrap<Polygon> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air quality index
+	 * Description: Air quality index is a number used to report the quality of the air on any given day
+	 * HtmRow: 4
+	 * HtmCell: 1
+	 * HtmRowTitle: air quality details
+	 * Facet: true
+	 **/
+	protected void _airQualityIndex(Wrap<BigDecimal> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air quality index forecast
+	 * Description: Forecasted overall Air Quality Index (AQI) over a certain duration in future
+	 * HtmRow: 4
+	 * HtmCell: 2
+	 * Facet: true
+	 **/
+	protected void _airQualityIndexForecast(Wrap<BigDecimal> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: aqi major pollutant
+	 * Description: Major pollutant in the Air Quality Index (AQI)
+	 * HtmRow: 4
+	 * HtmCell: 3
+	 * Facet: true
+	 **/
+	protected void _aqiMajorPollutant(Wrap<String> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: aqi major pollutant forecast
+	 * Description: Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future
+	 * HtmRow: 4
+	 * HtmCell: 4
+	 * Facet: true
+	 **/
+	protected void _aqiMajorPollutantForecast(Wrap<String> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air temperature forecast
+	 * Description: Forecasted value of air temperature over a certain duration in future
+	 * HtmRow: 5
+	 * HtmCell: 1
+	 * HtmRowTitle: air temerature details
+	 * Facet: true
+	 **/
+	protected void _airTemperatureForecast(Wrap<BigDecimal> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air temperature tsa
+	 * Description: Air temperature time series aggregation
+	 * HtmRow: 5
+	 * HtmCell: 2
+	 * Facet: true
+	 **/
+	protected void _airTemperatureTSA(Wrap<JsonObject> w) {}
 
 
 	/**

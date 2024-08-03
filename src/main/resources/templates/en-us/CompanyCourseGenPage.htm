@@ -317,11 +317,36 @@
 {%- macro htmForm_patchCompanyCourse() %}
         <sl-dialog id="patchCompanyCourseDialog" label="Modify course">
           <form id="htmForm_patchCompanyCourse">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
+
+              {% if "PATCH" in scopes %}
+                {{ htmPkCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPkCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPkCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -329,9 +354,21 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+
+              {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -341,17 +378,19 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -361,12 +400,14 @@
               {% if "PATCH" in scopes %}
                 {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_patchCompanyCourse() }}
           </form>
         </sl-dialog>
@@ -389,11 +430,80 @@
         <sl-dialog id="postCompanyCourseDialog" label="Create a course">
           <form id="htmForm_postCompanyCourse">
             <div class="">You can override any default values below: </div>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
+
+              {% if "PATCH" in scopes %}
+                {{ htmPkCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPkCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPkCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmCreatedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -403,12 +513,14 @@
               {% if "PATCH" in scopes %}
                 {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_postCompanyCourse() }}
           </form>
         </sl-dialog>
@@ -453,11 +565,16 @@
 {%- macro htmForm_searchpageCompanyCourse() %}
         <div id="searchpageCompanyCourseDialog" label="Search courses">
           <div id="htmForm_searchpageCompanyCourse">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
 
               {% if "PATCH" in scopes %}
                 {{ htmPkCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmPkCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmPkCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -467,7 +584,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmObjectIdCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -477,7 +594,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -487,17 +604,19 @@
               {% if "PATCH" in scopes %}
                 {{ htmModifiedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmModifiedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmModifiedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -507,17 +626,19 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseNameCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -527,24 +648,24 @@
               {% if "PATCH" in scopes %}
                 {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCourseDescriptionCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_searchpageCompanyCourse() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyCoursePage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-regular fa-notebook"></i>
                 <span class="">courses</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsCompanyCoursePage() }}
             <div id="site-calendar-box">
@@ -705,43 +826,45 @@
 
 {%- macro htmPaginationButtonsCompanyCoursePage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyCoursePage() %}
@@ -1048,14 +1171,58 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsCompanyCoursePage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if companyCourseCount == 1 %}
+        <sl-button
+            id="refreshThisCompanyCourseGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh this course
+        </sl-button>
+      {% endif %}
+      {% if companyCourseCount > 0 %}
+        <div class="">
+          <sl-button id="refreshAllCompanyCourseGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh all the courses
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyCourseCount > 0 %}
+        {{ htmButton_patchCompanyCourse() }}
+        {{ htmForm_patchCompanyCourse() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyCourseCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyCourse() }}
+        {{ htmForm_postCompanyCourse() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyCourse() }}
+        {{ htmForm_postCompanyCourse() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyCourse() }}
+        {{ htmForm_putimportCompanyCourse() }}
+  {% endif %}
+        {%- endblock htmFormsCompanyCoursePage %}
 {% if companyCourseCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-notebook"></i>
             <span class="">courses</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyCoursePage() }}
         <h2>
@@ -1070,12 +1237,10 @@
   {% if companyCourseCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-notebook"></i>
             <span class="">course</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyCoursePage() }}
         <h2 class="w3-center ">
@@ -1105,54 +1270,6 @@
         {{ htmForm_searchpageCompanyCourse() }}
   {% endif %}
         {%- endblock htmFormCompanyCoursePage %}
-        {%- block htmFormsCompanyCoursePage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyCourseCount == 1 %}
-        <button
-            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-            id="refreshThisCompanyCourseGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; ">
-          <i class="fas fa-sync-alt "></i>
-          refresh this course
-        </button>
-      {% endif %}
-      {% if companyCourseCount > 0 %}
-        <div class="">
-          <button id="refreshAllCompanyCourseGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "
-              >
-            <i class="fas fa-sync-alt "></i>
-            refresh all the courses
-          </button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyCourseCount > 0 %}
-        {{ htmButton_patchCompanyCourse() }}
-        {{ htmForm_patchCompanyCourse() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyCourseCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyCourse() }}
-        {{ htmForm_postCompanyCourse() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyCourse() }}
-        {{ htmForm_postCompanyCourse() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyCourse() }}
-        {{ htmForm_putimportCompanyCourse() }}
-  {% endif %}
-        {%- block htmSuggestedCompanyCoursePage %}{%- endblock %}
-        {%- endblock htmFormsCompanyCoursePage %}
       {%- endblock htmBodyMiddleCompanyCoursePage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -1208,39 +1325,37 @@
 
 {%- macro inputPkCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_pk">
+                <form id="PageForm_pk">
   {%- endif %}
-              <sl-input
-                  readonly
-                  placeholder="primary key"
-                  label="primary key"
-                  help-text="
+                  <sl-input
+                      readonly
+                      placeholder="primary key"
+                      label="primary key"
+                      help-text="
 The primary key of this object in the database"
-                  id="{{classApiMethodMethod}}_pk"
+                      id="{{classApiMethodMethod}}_pk"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyCourse inputCompanyCourse{{pk}}Pk "
-                  name="setPk"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyCourse inputCompanyCourse{{pk}}Pk "
+                      name="setPk"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyCourse inputCompanyCourse{{pk}}Pk "
-                  name="setPk"
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyCourse inputCompanyCourse{{pk}}Pk "
+                      name="setPk"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}Pk "
-                  name="pk"
+                      class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}Pk "
+                      name="pk"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyCourse_.pk}}"
+                      value="{{companyCourse_.pk}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}Pk varCompanyCoursePk ">{{companyCourse_.pk}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}Pk varCompanyCoursePk ">{{companyCourse_.pk}}</span>
 {%- endmacro %}
 
 {%- macro htmPkCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1249,39 +1364,37 @@ The primary key of this object in the database"
 
 {%- macro inputObjectIdCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_objectId">
+                <form id="PageForm_objectId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="ID"
-                  label="ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
 A URL friendly unique ID for this object"
-                  id="{{classApiMethodMethod}}_objectId"
+                      id="{{classApiMethodMethod}}_objectId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
-                  name="setObjectId"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
+                      name="setObjectId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
-                  name="setObjectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
+                      name="setObjectId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
-                  name="objectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}ObjectId "
+                      name="objectId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyCourse_.objectId}}"
+                      value="{{companyCourse_.objectId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}ObjectId varCompanyCourseObjectId ">{{companyCourse_.objectId}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}ObjectId varCompanyCourseObjectId ">{{companyCourse_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1290,29 +1403,27 @@ A URL friendly unique ID for this object"
 
 {%- macro inputCreatedCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_created">
+                <form id="PageForm_created">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="created"
-                  help-text="A created timestamp for this record in the database"
-                  label="created"
-                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyCourse inputCompanyCourse{{pk}}Created "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_created"
-                  value="{%- if companyCourse_.created is defined %}{{ formatZonedDateTime(companyCourse_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyCourse inputCompanyCourse{{pk}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if companyCourse_.created is defined %}{{ formatZonedDateTime(companyCourse_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}Created varCompanyCourseCreated ">{{companyCourse_.created}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}Created varCompanyCourseCreated ">{{companyCourse_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1321,29 +1432,27 @@ A URL friendly unique ID for this object"
 
 {%- macro inputModifiedCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_modified">
+                <form id="PageForm_modified">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="modified"
-                  help-text="A modified timestamp for this record in the database"
-                  label="modified"
-                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyCourse inputCompanyCourse{{pk}}Modified "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_modified"
-                  value="{%- if companyCourse_.modified is defined %}{{ formatZonedDateTime(companyCourse_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyCourse inputCompanyCourse{{pk}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if companyCourse_.modified is defined %}{{ formatZonedDateTime(companyCourse_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}Modified varCompanyCourseModified ">{{companyCourse_.modified}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}Modified varCompanyCourseModified ">{{companyCourse_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1352,52 +1461,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_archived">
+                <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_archived"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_archived"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="archived"
-                  help-text="For archiving this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archive"
+                      help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyCourse inputCompanyCourse{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyCourse inputCompanyCourse{{pk}}Archived "
+                      name="setArchived"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyCourse inputCompanyCourse{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyCourse inputCompanyCourse{{pk}}Archived "
+                      name="setArchived"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyCourse inputCompanyCourse{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyCourse inputCompanyCourse{{pk}}Archived "
+                      name="setArchived"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyCourse_.archived is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >archived</sl-checkbox>
+                      >archive</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}Archived varCompanyCourseArchived ">{{companyCourse_.archived}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}Archived varCompanyCourseArchived ">{{companyCourse_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1406,52 +1513,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputDeletedCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_deleted">
+                <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_deleted"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_deleted"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="deleted"
-                  help-text="For deleting this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="delete"
+                      help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
+                      name="setDeleted"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
+                      name="setDeleted"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyCourse inputCompanyCourse{{pk}}Deleted "
+                      name="setDeleted"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyCourse_.deleted is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >deleted</sl-checkbox>
+                      >delete</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}Deleted varCompanyCourseDeleted ">{{companyCourse_.deleted}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}Deleted varCompanyCourseDeleted ">{{companyCourse_.deleted}}</span>
 {%- endmacro %}
 
 {%- macro htmDeletedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1460,40 +1565,38 @@ A URL friendly unique ID for this object"
 
 {%- macro inputCourseNameCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_courseName">
+                <form id="PageForm_courseName">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="course name"
-                  label="course name"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="course name"
+                      label="course name"
+                      help-text="
 The course name. "
-                  required
-                  id="{{classApiMethodMethod}}_courseName"
+                      required
+                      id="{{classApiMethodMethod}}_courseName"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_courseName setCourseName classCompanyCourse inputCompanyCourse{{pk}}CourseName "
-                  name="setCourseName"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_courseName setCourseName classCompanyCourse inputCompanyCourse{{pk}}CourseName "
+                      name="setCourseName"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_courseName setCourseName classCompanyCourse inputCompanyCourse{{pk}}CourseName "
-                  name="setCourseName"
+                      class="label-on-left {{classApiMethodMethod}}_courseName setCourseName classCompanyCourse inputCompanyCourse{{pk}}CourseName "
+                      name="setCourseName"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_courseName valueCourseName w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}CourseName "
-                  name="courseName"
+                      class="label-on-left {{classApiMethodMethod}}_courseName valueCourseName w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}CourseName "
+                      name="courseName"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyCourse_.courseName}}"
+                      value="{{companyCourse_.courseName}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}CourseName varCompanyCourseCourseName ">{{companyCourse_.courseName}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}CourseName varCompanyCourseCourseName ">{{companyCourse_.courseName}}</span>
 {%- endmacro %}
 
 {%- macro htmCourseNameCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1502,36 +1605,34 @@ The course name. "
 
 {%- macro inputCourseDescriptionCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_courseDescription">
+                <form id="PageForm_courseDescription">
   {%- endif %}
-              <sl-textarea
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="course description"
-                  label="course description"
-                  help-text="
+                  <sl-textarea
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="course description"
+                      label="course description"
+                      help-text="
 The course description. "
-                  id="{{classApiMethodMethod}}_courseDescription"
+                      id="{{classApiMethodMethod}}_courseDescription"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_courseDescription setCourseDescription classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
-                  name="setCourseDescription"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_courseDescription setCourseDescription classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
+                      name="setCourseDescription"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_courseDescription setCourseDescription classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
-                  name="setCourseDescription"
+                      class="label-on-left {{classApiMethodMethod}}_courseDescription setCourseDescription classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
+                      name="setCourseDescription"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_courseDescription valueCourseDescription w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
-                  name="courseDescription"
+                      class="label-on-left {{classApiMethodMethod}}_courseDescription valueCourseDescription w3-input w3-border classCompanyCourse inputCompanyCourse{{pk}}CourseDescription "
+                      name="courseDescription"
     {%- endif %}
   {%- endif %}
-                  >{{companyCourse_.courseDescription}}
+                      >{{companyCourse_.courseDescription}}
 </sl-textarea>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-  {%- if userKey in companyCourse_.userKeys %}
-            <span class="varCompanyCourse{{pk}}CourseDescription varCompanyCourseCourseDescription ">{{companyCourse_.courseDescription}}</span>
-  {%- endif %}
+                <span class="varCompanyCourse{{pk}}CourseDescription varCompanyCourseCourseDescription ">{{companyCourse_.courseDescription}}</span>
 {%- endmacro %}
 
 {%- macro htmCourseDescriptionCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

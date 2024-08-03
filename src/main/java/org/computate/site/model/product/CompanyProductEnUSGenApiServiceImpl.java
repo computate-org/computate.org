@@ -1543,6 +1543,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_objectId, CompanyProduct.staticSetObjectId(siteRequest2, ctx.getString(CompanyProduct.VAR_objectId)));
 			page.persistForClass(CompanyProduct.VAR_id, CompanyProduct.staticSetId(siteRequest2, ctx.getString(CompanyProduct.VAR_id)));
 			page.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, ctx.getString(CompanyProduct.VAR_name)));
+			page.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, ctx.getString(CompanyProduct.VAR_description)));
 			page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, ctx.getString(CompanyProduct.VAR_pageId)));
 			page.persistForClass(CompanyProduct.VAR_resourceUri, CompanyProduct.staticSetResourceUri(siteRequest2, ctx.getString(CompanyProduct.VAR_resourceUri)));
 			page.persistForClass(CompanyProduct.VAR_templateUri, CompanyProduct.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyProduct.VAR_templateUri)));

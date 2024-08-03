@@ -445,7 +445,7 @@ AMQP_VIRTUAL_HOST: "%2F"
 #################
 
 # Enable RabbitMQ message integration. 
-ENABLE_RABBITMQ: true
+ENABLE_RABBITMQ: false
 # The namespace in OpenShift where the AMQP message broker will run. 
 RABBITMQ_NAMESPACE: rabbitmq
 # The AMQP port. 

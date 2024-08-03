@@ -5,9 +5,9 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 3
+ * Order: 4
  * Model: true
- * SqlOrder: 3
+ * SqlOrder: 4
  * 
  * Api: true
  * Page: true
@@ -29,6 +29,7 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /course
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: a course
  * Icon: <i class="fa-regular fa-notebook"></i>
