@@ -557,6 +557,7 @@
 {%- macro htmForm_patchSitePage() %}
         <sl-dialog id="patchSitePageDialog" label="Modify article">
           <form id="htmForm_patchSitePage">
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -569,6 +570,16 @@
               {% endif %}
 
               {% if "PATCH" in scopes %}
+                {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmObjectIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" in scopes %}
@@ -577,6 +588,8 @@
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -597,6 +610,8 @@
                   {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -637,6 +652,8 @@
                   {{ htmAuthorSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -647,6 +664,8 @@
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_patchSitePage() }}
           </form>
         </sl-dialog>
@@ -669,6 +688,27 @@
         <sl-dialog id="postSitePageDialog" label="Create an article">
           <form id="htmForm_postSitePage">
             <div class="">You can override any default values below: </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
 
               {% if "PATCH" in scopes %}
                 {{ htmObjectIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -679,6 +719,30 @@
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -719,6 +783,8 @@
                   {{ htmAuthorSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -729,6 +795,8 @@
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_postSitePage() }}
           </form>
         </sl-dialog>
@@ -772,7 +840,8 @@
 
 {%- macro htmForm_searchpageSitePage() %}
         <div id="searchpageSitePageDialog" label="Search articles">
-          <sl-details id="htmForm_searchpageSitePage">
+          <div id="htmForm_searchpageSitePage">
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -803,6 +872,8 @@
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -823,6 +894,8 @@
                   {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -863,6 +936,8 @@
                   {{ htmAuthorSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="-1--1">
 
               {% if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -873,8 +948,10 @@
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_searchpageSitePage() }}
-          </sl-details>
+          </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllSitePagePage() %}
@@ -1334,6 +1411,52 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsSitePagePage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if sitePageCount == 1 %}
+        <sl-button
+            id="refreshThisSitePageGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSitePageGenPage')); }, function() { addError(document.querySelector('#refreshThisSitePageGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh this article
+        </sl-button>
+      {% endif %}
+      {% if sitePageCount > 0 %}
+        <div class="">
+          <sl-button id="refreshAllSitePageGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh all the articles
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if sitePageCount > 0 %}
+        {{ htmButton_patchSitePage() }}
+        {{ htmForm_patchSitePage() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if sitePageCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postSitePage() }}
+        {{ htmForm_postSitePage() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postSitePage() }}
+        {{ htmForm_postSitePage() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportSitePage() }}
+        {{ htmForm_putimportSitePage() }}
+  {% endif %}
+        {%- endblock htmFormsSitePagePage %}
 {% if sitePageCount == 0 %}
         <h1>
           <sl-button variant="text" size="large" href="{{pageUri}}">
@@ -1387,53 +1510,6 @@
         {{ htmForm_searchpageSitePage() }}
   {% endif %}
         {%- endblock htmFormSitePagePage %}
-        {%- block htmFormsSitePagePage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if sitePageCount == 1 %}
-        <button
-            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-            id="refreshThisSitePageGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSitePageGenPage')); }, function() { addError(document.querySelector('#refreshThisSitePageGenPage')); }); return false; ">
-          <i class="fas fa-sync-alt "></i>
-          refresh this article
-        </button>
-      {% endif %}
-      {% if sitePageCount > 0 %}
-        <div class="">
-          <button id="refreshAllSitePageGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }); "
-              >
-            <i class="fas fa-sync-alt "></i>
-            refresh all the articles
-          </button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if sitePageCount > 0 %}
-        {{ htmButton_patchSitePage() }}
-        {{ htmForm_patchSitePage() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if sitePageCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postSitePage() }}
-        {{ htmForm_postSitePage() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postSitePage() }}
-        {{ htmForm_postSitePage() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportSitePage() }}
-        {{ htmForm_putimportSitePage() }}
-  {% endif %}
-        {%- endblock htmFormsSitePagePage %}
       {%- endblock htmBodyMiddleSitePagePage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1489,27 +1565,27 @@
 
 {%- macro inputCreatedSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_created">
+                <form id="PageForm_created">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="created"
-                  help-text="A created timestamp for this record in the database"
-                  label="created"
-                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classSitePage inputSitePage{{id}}Created "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_created"
-                  value="{%- if sitePage_.created is defined %}{{ formatZonedDateTime(sitePage_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classSitePage inputSitePage{{id}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if sitePage_.created is defined %}{{ formatZonedDateTime(sitePage_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Created varSitePageCreated ">{{sitePage_.created}}</span>
+                <span class="varSitePage{{id}}Created varSitePageCreated ">{{sitePage_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1518,27 +1594,27 @@
 
 {%- macro inputModifiedSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_modified">
+                <form id="PageForm_modified">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="modified"
-                  help-text="A modified timestamp for this record in the database"
-                  label="modified"
-                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classSitePage inputSitePage{{id}}Modified "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_modified"
-                  value="{%- if sitePage_.modified is defined %}{{ formatZonedDateTime(sitePage_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classSitePage inputSitePage{{id}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if sitePage_.modified is defined %}{{ formatZonedDateTime(sitePage_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Modified varSitePageModified ">{{sitePage_.modified}}</span>
+                <span class="varSitePage{{id}}Modified varSitePageModified ">{{sitePage_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1547,37 +1623,37 @@
 
 {%- macro inputObjectIdSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_objectId">
+                <form id="PageForm_objectId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="ID"
-                  label="ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
 A URL friendly unique ID for this object"
-                  id="{{classApiMethodMethod}}_objectId"
+                      id="{{classApiMethodMethod}}_objectId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classSitePage inputSitePage{{id}}ObjectId "
-                  name="setObjectId"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classSitePage inputSitePage{{id}}ObjectId "
+                      name="setObjectId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classSitePage inputSitePage{{id}}ObjectId "
-                  name="setObjectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classSitePage inputSitePage{{id}}ObjectId "
+                      name="setObjectId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classSitePage inputSitePage{{id}}ObjectId "
-                  name="objectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classSitePage inputSitePage{{id}}ObjectId "
+                      name="objectId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.objectId}}"
+                      value="{{sitePage_.objectId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}ObjectId varSitePageObjectId ">{{sitePage_.objectId}}</span>
+                <span class="varSitePage{{id}}ObjectId varSitePageObjectId ">{{sitePage_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1586,50 +1662,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_archived">
+                <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_archived"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_archived"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="archived"
-                  help-text="For archiving this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classSitePage inputSitePage{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classSitePage inputSitePage{{id}}Archived "
+                      name="setArchived"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classSitePage inputSitePage{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classSitePage inputSitePage{{id}}Archived "
+                      name="setArchived"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classSitePage inputSitePage{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classSitePage inputSitePage{{id}}Archived "
+                      name="setArchived"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if sitePage_.archived is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >archived</sl-checkbox>
+                      >archived</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Archived varSitePageArchived ">{{sitePage_.archived}}</span>
+                <span class="varSitePage{{id}}Archived varSitePageArchived ">{{sitePage_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1638,50 +1714,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputDeletedSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_deleted">
+                <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_deleted"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_deleted"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="deleted"
-                  help-text="For deleting this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="deleted"
+                      help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
+                      name="setDeleted"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
+                      name="setDeleted"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classSitePage inputSitePage{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classSitePage inputSitePage{{id}}Deleted "
+                      name="setDeleted"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if sitePage_.deleted is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >deleted</sl-checkbox>
+                      >deleted</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Deleted varSitePageDeleted ">{{sitePage_.deleted}}</span>
+                <span class="varSitePage{{id}}Deleted varSitePageDeleted ">{{sitePage_.deleted}}</span>
 {%- endmacro %}
 
 {%- macro htmDeletedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1690,37 +1766,37 @@ A URL friendly unique ID for this object"
 
 {%- macro inputPageIdSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_pageId">
+                <form id="PageForm_pageId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="Page ID"
-                  label="Page ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Page ID"
+                      label="Page ID"
+                      help-text="
 The ID for this page. "
-                  id="{{classApiMethodMethod}}_pageId"
+                      id="{{classApiMethodMethod}}_pageId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_pageId setPageId classSitePage inputSitePage{{id}}PageId "
-                  name="setPageId"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classSitePage inputSitePage{{id}}PageId "
+                      name="setPageId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_pageId setPageId classSitePage inputSitePage{{id}}PageId "
-                  name="setPageId"
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classSitePage inputSitePage{{id}}PageId "
+                      name="setPageId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_pageId valuePageId w3-input w3-border classSitePage inputSitePage{{id}}PageId "
-                  name="pageId"
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId w3-input w3-border classSitePage inputSitePage{{id}}PageId "
+                      name="pageId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.pageId}}"
+                      value="{{sitePage_.pageId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}PageId varSitePagePageId ">{{sitePage_.pageId}}</span>
+                <span class="varSitePage{{id}}PageId varSitePagePageId ">{{sitePage_.pageId}}</span>
 {%- endmacro %}
 
 {%- macro htmPageIdSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1729,37 +1805,37 @@ The ID for this page. "
 
 {%- macro inputUriSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_uri">
+                <form id="PageForm_uri">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="URI"
-                  label="URI"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URI"
+                      label="URI"
+                      help-text="
 The relative URI for this page. "
-                  id="{{classApiMethodMethod}}_uri"
+                      id="{{classApiMethodMethod}}_uri"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_uri setUri classSitePage inputSitePage{{id}}Uri "
-                  name="setUri"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classSitePage inputSitePage{{id}}Uri "
+                      name="setUri"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_uri setUri classSitePage inputSitePage{{id}}Uri "
-                  name="setUri"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classSitePage inputSitePage{{id}}Uri "
+                      name="setUri"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_uri valueUri w3-input w3-border classSitePage inputSitePage{{id}}Uri "
-                  name="uri"
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri w3-input w3-border classSitePage inputSitePage{{id}}Uri "
+                      name="uri"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.uri}}"
+                      value="{{sitePage_.uri}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Uri varSitePageUri ">{{sitePage_.uri}}</span>
+                <span class="varSitePage{{id}}Uri varSitePageUri ">{{sitePage_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1768,37 +1844,37 @@ The relative URI for this page. "
 
 {%- macro inputUrlSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_url">
+                <form id="PageForm_url">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="URL"
-                  label="URL"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URL"
+                      label="URL"
+                      help-text="
 The URL for this page. "
-                  id="{{classApiMethodMethod}}_url"
+                      id="{{classApiMethodMethod}}_url"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_url setUrl classSitePage inputSitePage{{id}}Url "
-                  name="setUrl"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classSitePage inputSitePage{{id}}Url "
+                      name="setUrl"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_url setUrl classSitePage inputSitePage{{id}}Url "
-                  name="setUrl"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classSitePage inputSitePage{{id}}Url "
+                      name="setUrl"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_url valueUrl w3-input w3-border classSitePage inputSitePage{{id}}Url "
-                  name="url"
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl w3-input w3-border classSitePage inputSitePage{{id}}Url "
+                      name="url"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.url}}"
+                      value="{{sitePage_.url}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Url varSitePageUrl ">{{sitePage_.url}}</span>
+                <span class="varSitePage{{id}}Url varSitePageUrl ">{{sitePage_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1807,37 +1883,37 @@ The URL for this page. "
 
 {%- macro inputAuthorSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_author">
+                <form id="PageForm_author">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="author"
-                  label="author"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="author"
+                      label="author"
+                      help-text="
 The author"
-                  id="{{classApiMethodMethod}}_author"
+                      id="{{classApiMethodMethod}}_author"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_author setAuthor classSitePage inputSitePage{{id}}Author "
-                  name="setAuthor"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_author setAuthor classSitePage inputSitePage{{id}}Author "
+                      name="setAuthor"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_author setAuthor classSitePage inputSitePage{{id}}Author "
-                  name="setAuthor"
+                      class="label-on-left {{classApiMethodMethod}}_author setAuthor classSitePage inputSitePage{{id}}Author "
+                      name="setAuthor"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_author valueAuthor w3-input w3-border classSitePage inputSitePage{{id}}Author "
-                  name="author"
+                      class="label-on-left {{classApiMethodMethod}}_author valueAuthor w3-input w3-border classSitePage inputSitePage{{id}}Author "
+                      name="author"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.author}}"
+                      value="{{sitePage_.author}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}Author varSitePageAuthor ">{{sitePage_.author}}</span>
+                <span class="varSitePage{{id}}Author varSitePageAuthor ">{{sitePage_.author}}</span>
 {%- endmacro %}
 
 {%- macro htmAuthorSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1846,37 +1922,37 @@ The author"
 
 {%- macro inputPageImageUriSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_pageImageUri">
+                <form id="PageForm_pageImageUri">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="imageUri"
-                  label="imageUri"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="imageUri"
+                      label="imageUri"
+                      help-text="
 The page image URI"
-                  id="{{classApiMethodMethod}}_pageImageUri"
+                      id="{{classApiMethodMethod}}_pageImageUri"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_pageImageUri setPageImageUri classSitePage inputSitePage{{id}}PageImageUri "
-                  name="setPageImageUri"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_pageImageUri setPageImageUri classSitePage inputSitePage{{id}}PageImageUri "
+                      name="setPageImageUri"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_pageImageUri setPageImageUri classSitePage inputSitePage{{id}}PageImageUri "
-                  name="setPageImageUri"
+                      class="label-on-left {{classApiMethodMethod}}_pageImageUri setPageImageUri classSitePage inputSitePage{{id}}PageImageUri "
+                      name="setPageImageUri"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_pageImageUri valuePageImageUri w3-input w3-border classSitePage inputSitePage{{id}}PageImageUri "
-                  name="pageImageUri"
+                      class="label-on-left {{classApiMethodMethod}}_pageImageUri valuePageImageUri w3-input w3-border classSitePage inputSitePage{{id}}PageImageUri "
+                      name="pageImageUri"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{sitePage_.pageImageUri}}"
+                      value="{{sitePage_.pageImageUri}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varSitePage{{id}}PageImageUri varSitePagePageImageUri ">{{sitePage_.pageImageUri}}</span>
+                <span class="varSitePage{{id}}PageImageUri varSitePagePageImageUri ">{{sitePage_.pageImageUri}}</span>
 {%- endmacro %}
 
 {%- macro htmPageImageUriSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

@@ -701,6 +701,30 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsBaseModelPage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if baseModelCount == 1 %}
+        <sl-button
+            id="refreshBaseModelGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh 
+        </sl-button>
+      {% endif %}
+      {% if baseModelCount > 0 %}
+        <div class="">
+          <sl-button id="refreshBaseModelGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh 
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+        {%- endblock htmFormsBaseModelPage %}
 {% if baseModelCount == 0 %}
         <h1>
           <sl-button variant="text" size="large" href="{{pageUri}}">
@@ -754,30 +778,6 @@
         {{ htmForm_searchpageBaseModel() }}
   {% endif %}
         {%- endblock htmFormBaseModelPage %}
-        {%- block htmFormsBaseModelPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if baseModelCount == 1 %}
-        <sl-button
-            id="refreshBaseModelGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh 
-        </sl-button>
-      {% endif %}
-      {% if baseModelCount > 0 %}
-        <div class="">
-          <sl-button id="refreshBaseModelGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh 
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-        {%- endblock htmFormsBaseModelPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
       {%- endblock htmBodyMiddlePageLayout %}
 

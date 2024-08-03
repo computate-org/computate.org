@@ -705,6 +705,30 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsBaseResultPage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if baseResultCount == 1 %}
+        <sl-button
+            id="refreshBaseResultGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseResultGenPage')); }, function() { addError(document.querySelector('#refreshBaseResultGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh 
+        </sl-button>
+      {% endif %}
+      {% if baseResultCount > 0 %}
+        <div class="">
+          <sl-button id="refreshBaseResultGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseResultGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseResultGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh 
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+        {%- endblock htmFormsBaseResultPage %}
 {% if baseResultCount == 0 %}
         <h1>
           <sl-button variant="text" size="large" href="{{pageUri}}">
@@ -758,31 +782,6 @@
         {{ htmForm_searchpageBaseResult() }}
   {% endif %}
         {%- endblock htmFormBaseResultPage %}
-        {%- block htmFormsBaseResultPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if baseResultCount == 1 %}
-        <button
-            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-            id="refreshBaseResultGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseResultGenPage')); }, function() { addError(document.querySelector('#refreshBaseResultGenPage')); }); return false; ">
-          <i class="fas fa-sync-alt "></i>
-          refresh 
-        </button>
-      {% endif %}
-      {% if baseResultCount > 0 %}
-        <div class="">
-          <button id="refreshBaseResultGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseResultGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseResultGenPage{{id}}')); }); "
-              >
-            <i class="fas fa-sync-alt "></i>
-            refresh 
-          </button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-        {%- endblock htmFormsBaseResultPage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
       {%- endblock htmBodyMiddlePageLayout %}
 
@@ -837,25 +836,25 @@
 
 {%- macro inputCreatedBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_created">
+                <form id="PageForm_created">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="created"
-                  help-text="A created timestamp for this record in the database"
-                  label="created"
-                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classBaseResult inputBaseResult{{id}}Created "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_created"
-                  value="{%- if baseResult_.created is defined %}{{ formatZonedDateTime(baseResult_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classBaseResult inputBaseResult{{id}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if baseResult_.created is defined %}{{ formatZonedDateTime(baseResult_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
 {%- endmacro %}
 
@@ -865,25 +864,25 @@
 
 {%- macro inputModifiedBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_modified">
+                <form id="PageForm_modified">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="modified"
-                  help-text="A modified timestamp for this record in the database"
-                  label="modified"
-                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classBaseResult inputBaseResult{{id}}Modified "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_modified"
-                  value="{%- if baseResult_.modified is defined %}{{ formatZonedDateTime(baseResult_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classBaseResult inputBaseResult{{id}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if baseResult_.modified is defined %}{{ formatZonedDateTime(baseResult_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
 {%- endmacro %}
 
@@ -893,35 +892,35 @@
 
 {%- macro inputObjectIdBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_objectId">
+                <form id="PageForm_objectId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="ID"
-                  label="ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
 A URL friendly unique ID for this object"
-                  id="{{classApiMethodMethod}}_objectId"
+                      id="{{classApiMethodMethod}}_objectId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-id="{{ id }}"
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseResult inputBaseResult{{id}}ObjectId "
-                  name="setObjectId"
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseResult inputBaseResult{{id}}ObjectId "
+                      name="setObjectId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseResult inputBaseResult{{id}}ObjectId "
-                  name="setObjectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classBaseResult inputBaseResult{{id}}ObjectId "
+                      name="setObjectId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classBaseResult inputBaseResult{{id}}ObjectId "
-                  name="objectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classBaseResult inputBaseResult{{id}}ObjectId "
+                      name="objectId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{baseResult_.objectId}}"
+                      value="{{baseResult_.objectId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
 {%- endmacro %}
 
@@ -931,48 +930,48 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_archived">
+                <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_archived"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_archived"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="archived"
-                  help-text="For archiving this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
+                      name="setArchived"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
+                      name="setArchived"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classBaseResult inputBaseResult{{id}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classBaseResult inputBaseResult{{id}}Archived "
+                      name="setArchived"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if baseResult_.archived is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >archived</sl-checkbox>
+                      >archived</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
 {%- endmacro %}
 
@@ -982,48 +981,48 @@ A URL friendly unique ID for this object"
 
 {%- macro inputDeletedBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_deleted">
+                <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_deleted"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_deleted"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="deleted"
-                  help-text="For deleting this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="deleted"
+                      help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
+                      name="setDeleted"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
+                      name="setDeleted"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classBaseResult inputBaseResult{{id}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classBaseResult inputBaseResult{{id}}Deleted "
+                      name="setDeleted"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if baseResult_.deleted is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >deleted</sl-checkbox>
+                      >deleted</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
 {%- endmacro %}
 

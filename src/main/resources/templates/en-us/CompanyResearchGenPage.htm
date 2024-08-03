@@ -297,6 +297,31 @@
 {%- macro htmForm_patchCompanyResearch() %}
         <sl-dialog id="patchCompanyResearchDialog" label="Modify research">
           <form id="htmForm_patchCompanyResearch">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
+
+              {% if "PATCH" in scopes %}
+                {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -307,6 +332,18 @@
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -327,6 +364,8 @@
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -337,6 +376,8 @@
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_patchCompanyResearch() }}
           </form>
         </sl-dialog>
@@ -359,6 +400,75 @@
         <sl-dialog id="postCompanyResearchDialog" label="Create a research">
           <form id="htmForm_postCompanyResearch">
             <div class="">You can override any default values below: </div>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
+
+              {% if "PATCH" in scopes %}
+                {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+
+              {% if "PATCH" in scopes %}
+                {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" in scopes %}
+                  {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -369,6 +479,8 @@
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_postCompanyResearch() }}
           </form>
         </sl-dialog>
@@ -412,7 +524,12 @@
 
 {%- macro htmForm_searchpageCompanyResearch() %}
         <div id="searchpageCompanyResearchDialog" label="Search research">
-          <sl-details id="htmForm_searchpageCompanyResearch">
+          <div id="htmForm_searchpageCompanyResearch">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive, delete details</span>
+              </div>
+              <div>
 
               {% if "PATCH" in scopes %}
                 {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -453,6 +570,8 @@
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -473,6 +592,8 @@
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -483,8 +604,10 @@
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
+              </div>
+            </sl-details>
             {{ htmFormButton_searchpageCompanyResearch() }}
-          </sl-details>
+          </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyResearchPage() %}
@@ -944,6 +1067,52 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
+        {%- block htmFormsCompanyResearchPage %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+      {% if companyResearchCount == 1 %}
+        <sl-button
+            id="refreshThisCompanyResearchGenPage"
+            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyResearchGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyResearchGenPage')); }); return false; ">
+          <i slot="prefix" class="fas fa-sync-alt "></i>
+          refresh this research
+        </sl-button>
+      {% endif %}
+      {% if companyResearchCount > 0 %}
+        <div class="">
+          <sl-button id="refreshAllCompanyResearchGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh all the research
+          </sl-button>
+        </div>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyResearchCount > 0 %}
+        {{ htmButton_patchCompanyResearch() }}
+        {{ htmForm_patchCompanyResearch() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyResearchCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyResearch() }}
+        {{ htmForm_postCompanyResearch() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyResearch() }}
+        {{ htmForm_postCompanyResearch() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyResearch() }}
+        {{ htmForm_putimportCompanyResearch() }}
+  {% endif %}
+        {%- endblock htmFormsCompanyResearchPage %}
 {% if companyResearchCount == 0 %}
         <h1>
           <sl-button variant="text" size="large" href="{{pageUri}}">
@@ -997,53 +1166,6 @@
         {{ htmForm_searchpageCompanyResearch() }}
   {% endif %}
         {%- endblock htmFormCompanyResearchPage %}
-        {%- block htmFormsCompanyResearchPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyResearchCount == 1 %}
-        <button
-            class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-            id="refreshThisCompanyResearchGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyResearchGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyResearchGenPage')); }); return false; ">
-          <i class="fas fa-sync-alt "></i>
-          refresh this research
-        </button>
-      {% endif %}
-      {% if companyResearchCount > 0 %}
-        <div class="">
-          <button id="refreshAllCompanyResearchGenPage{{id}}" class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3- "
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }); "
-              >
-            <i class="fas fa-sync-alt "></i>
-            refresh all the research
-          </button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyResearchCount > 0 %}
-        {{ htmButton_patchCompanyResearch() }}
-        {{ htmForm_patchCompanyResearch() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyResearchCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyResearch() }}
-        {{ htmForm_postCompanyResearch() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyResearch() }}
-        {{ htmForm_postCompanyResearch() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyResearch() }}
-        {{ htmForm_putimportCompanyResearch() }}
-  {% endif %}
-        {%- endblock htmFormsCompanyResearchPage %}
       {%- endblock htmBodyMiddleCompanyResearchPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -1099,37 +1221,37 @@
 
 {%- macro inputPkCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_pk">
+                <form id="PageForm_pk">
   {%- endif %}
-              <sl-input
-                  readonly
-                  placeholder="primary key"
-                  label="primary key"
-                  help-text="
+                  <sl-input
+                      readonly
+                      placeholder="primary key"
+                      label="primary key"
+                      help-text="
 The primary key of this object in the database"
-                  id="{{classApiMethodMethod}}_pk"
+                      id="{{classApiMethodMethod}}_pk"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyResearch inputCompanyResearch{{pk}}Pk "
-                  name="setPk"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyResearch inputCompanyResearch{{pk}}Pk "
+                      name="setPk"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyResearch inputCompanyResearch{{pk}}Pk "
-                  name="setPk"
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyResearch inputCompanyResearch{{pk}}Pk "
+                      name="setPk"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Pk "
-                  name="pk"
+                      class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Pk "
+                      name="pk"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyResearch_.pk}}"
+                      value="{{companyResearch_.pk}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Pk varCompanyResearchPk ">{{companyResearch_.pk}}</span>
+                <span class="varCompanyResearch{{pk}}Pk varCompanyResearchPk ">{{companyResearch_.pk}}</span>
 {%- endmacro %}
 
 {%- macro htmPkCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1138,37 +1260,37 @@ The primary key of this object in the database"
 
 {%- macro inputObjectIdCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_objectId">
+                <form id="PageForm_objectId">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="ID"
-                  label="ID"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
 A URL friendly unique ID for this object"
-                  id="{{classApiMethodMethod}}_objectId"
+                      id="{{classApiMethodMethod}}_objectId"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
-                  name="setObjectId"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
+                      name="setObjectId"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
-                  name="setObjectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
+                      name="setObjectId"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
-                  name="objectId"
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
+                      name="objectId"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyResearch_.objectId}}"
+                      value="{{companyResearch_.objectId}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}ObjectId varCompanyResearchObjectId ">{{companyResearch_.objectId}}</span>
+                <span class="varCompanyResearch{{pk}}ObjectId varCompanyResearchObjectId ">{{companyResearch_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1177,27 +1299,27 @@ A URL friendly unique ID for this object"
 
 {%- macro inputCreatedCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_created">
+                <form id="PageForm_created">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="created"
-                  help-text="A created timestamp for this record in the database"
-                  label="created"
-                  class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyResearch inputCompanyResearch{{pk}}Created "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_created"
-                  value="{%- if companyResearch_.created is defined %}{{ formatZonedDateTime(companyResearch_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyResearch inputCompanyResearch{{pk}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if companyResearch_.created is defined %}{{ formatZonedDateTime(companyResearch_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Created varCompanyResearchCreated ">{{companyResearch_.created}}</span>
+                <span class="varCompanyResearch{{pk}}Created varCompanyResearchCreated ">{{companyResearch_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1206,27 +1328,27 @@ A URL friendly unique ID for this object"
 
 {%- macro inputModifiedCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_modified">
+                <form id="PageForm_modified">
   {%- endif %}
-              <sl-input
-                  type="text"
-                  readonly
-                  placeholder="modified"
-                  help-text="A modified timestamp for this record in the database"
-                  label="modified"
-                  class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyResearch inputCompanyResearch{{pk}}Modified "
-                  placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                  data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                  id="{{classApiMethodMethod}}_modified"
-                  value="{%- if companyResearch_.modified is defined %}{{ formatZonedDateTime(companyResearch_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyResearch inputCompanyResearch{{pk}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if companyResearch_.modified is defined %}{{ formatZonedDateTime(companyResearch_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
-                  >
-              </sl-input>
+                      >
+                  </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Modified varCompanyResearchModified ">{{companyResearch_.modified}}</span>
+                <span class="varCompanyResearch{{pk}}Modified varCompanyResearchModified ">{{companyResearch_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1235,50 +1357,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_archived">
+                <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_archived"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_archived"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="archived"
-                  help-text="For archiving this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archive"
+                      help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyResearch inputCompanyResearch{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyResearch inputCompanyResearch{{pk}}Archived "
+                      name="setArchived"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_archived classCompanyResearch inputCompanyResearch{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyResearch inputCompanyResearch{{pk}}Archived "
+                      name="setArchived"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyResearch inputCompanyResearch{{pk}}Archived "
-                  name="setArchived"
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyResearch inputCompanyResearch{{pk}}Archived "
+                      name="setArchived"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyResearch_.archived is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >archived</sl-checkbox>
+                      >archive</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Archived varCompanyResearchArchived ">{{companyResearch_.archived}}</span>
+                <span class="varCompanyResearch{{pk}}Archived varCompanyResearchArchived ">{{companyResearch_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1287,50 +1409,50 @@ A URL friendly unique ID for this object"
 
 {%- macro inputDeletedCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_deleted">
+                <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-              <sl-checkbox
-                  id="{{classApiMethodMethod}}_deleted"
-                  value="true"
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
   {%- else %}
-              <sl-select
-                  id="{{classApiMethodMethod}}_deleted"
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
   {%- endif %}
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="deleted"
-                  help-text="For deleting this record"
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="delete"
+                      help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
+                      name="setDeleted"
   {%- else %}
     {%- if 'Page' == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
+                      name="setDeleted"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
-                  name="setDeleted"
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyResearch inputCompanyResearch{{pk}}Deleted "
+                      name="setDeleted"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
     {%- if companyResearch_.deleted is defined %}
-                  checked="checked"
+                      checked="checked"
     {%- endif %}
-                  >deleted</sl-checkbox>
+                      >delete</sl-checkbox>
   {%- else %}
-                  >
-                <sl-option value="" selected="selected"></sl-option>
-                <sl-option value="true">true</sl-option>
-                <sl-option value="false">false</sl-option>
-              </sl-select>
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
   {%- endif %}
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Deleted varCompanyResearchDeleted ">{{companyResearch_.deleted}}</span>
+                <span class="varCompanyResearch{{pk}}Deleted varCompanyResearchDeleted ">{{companyResearch_.deleted}}</span>
 {%- endmacro %}
 
 {%- macro htmDeletedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1339,37 +1461,37 @@ A URL friendly unique ID for this object"
 
 {%- macro inputNameCompanyResearchPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-            <form id="PageForm_name">
+                <form id="PageForm_name">
   {%- endif %}
-              <sl-input
-                  {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                  placeholder="research name"
-                  label="research name"
-                  help-text="
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="research name"
+                      label="research name"
+                      help-text="
 The research name. "
-                  id="{{classApiMethodMethod}}_name"
+                      id="{{classApiMethodMethod}}_name"
   {%- if "Page" == classApiMethodMethod %}
-                  data-pk="{{ pk }}"
-                  class="label-on-left {{classApiMethodMethod}}_name setName classCompanyResearch inputCompanyResearch{{pk}}Name "
-                  name="setName"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyResearch inputCompanyResearch{{pk}}Name "
+                      name="setName"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                  class="label-on-left {{classApiMethodMethod}}_name setName classCompanyResearch inputCompanyResearch{{pk}}Name "
-                  name="setName"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyResearch inputCompanyResearch{{pk}}Name "
+                      name="setName"
     {%- else %}
-                  class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Name "
-                  name="name"
+                      class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Name "
+                      name="name"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                  value="{{companyResearch_.name}}"
+                      value="{{companyResearch_.name}}"
   {%- endif %}
-                  ></sl-input>
+                      ></sl-input>
 
   {%- if 'Page' == classApiMethodMethod %}
-            </form>
+                </form>
   {%- endif %}
-            <span class="varCompanyResearch{{pk}}Name varCompanyResearchName ">{{companyResearch_.name}}</span>
+                <span class="varCompanyResearch{{pk}}Name varCompanyResearchName ">{{companyResearch_.name}}</span>
 {%- endmacro %}
 
 {%- macro htmNameCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
