@@ -29,6 +29,7 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /research
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: a research
  * PluralName: research

@@ -33,6 +33,7 @@ import io.vertx.pgclient.data.Point;
  *     PublicRead: true
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: an event
  * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>

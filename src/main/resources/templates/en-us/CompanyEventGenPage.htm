@@ -394,7 +394,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -404,7 +404,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -414,7 +414,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -424,7 +424,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -434,7 +434,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmEventNameCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -466,7 +466,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -476,7 +476,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmEventNameCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -525,12 +525,12 @@
 
 {%- macro htmForm_searchpageCompanyEvent() %}
         <div id="searchpageCompanyEventDialog" label="Search events">
-          <div id="htmForm_searchpageCompanyEvent">
+          <sl-details id="htmForm_searchpageCompanyEvent">
 
               {% if "PATCH" in scopes %}
                 {{ htmPkCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmPkCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmPkCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -540,7 +540,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -550,7 +550,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -560,7 +560,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -570,7 +570,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -580,7 +580,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -590,7 +590,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -600,24 +600,22 @@
               {% if "PATCH" in scopes %}
                 {{ htmEventNameCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEventNameCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
             {{ htmFormButton_searchpageCompanyEvent() }}
-          </div>
+          </sl-details>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyEventPage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-duotone fa-solid fa-map-location-dot"></i>
                 <span class="">events</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsCompanyEventPage() }}
             <div id="site-calendar-box">
@@ -724,43 +722,45 @@
 
 {%- macro htmPaginationButtonsCompanyEventPage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyEventPage() %}
@@ -1069,12 +1069,10 @@
         </div>
 {% if companyEventCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-map-location-dot"></i>
             <span class="">events</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyEventPage() }}
         <h2>
@@ -1089,12 +1087,10 @@
   {% if companyEventCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-map-location-dot"></i>
             <span class="">event</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyEventPage() }}
         <h2 class="w3-center ">
@@ -1170,7 +1166,6 @@
         {{ htmButton_putimportCompanyEvent() }}
         {{ htmForm_putimportCompanyEvent() }}
   {% endif %}
-        {%- block htmSuggestedCompanyEventPage %}{%- endblock %}
         {%- endblock htmFormsCompanyEventPage %}
       {%- endblock htmBodyMiddleCompanyEventPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
@@ -1257,9 +1252,7 @@ The primary key of this object in the database"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Pk varCompanyEventPk ">{{companyEvent_.pk}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPkCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1298,9 +1291,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}ObjectId varCompanyEventObjectId ">{{companyEvent_.objectId}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1329,9 +1320,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Created varCompanyEventCreated ">{{companyEvent_.created}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1360,9 +1349,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Modified varCompanyEventModified ">{{companyEvent_.modified}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1414,9 +1401,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Archived varCompanyEventArchived ">{{companyEvent_.archived}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1468,9 +1453,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Deleted varCompanyEventDeleted ">{{companyEvent_.deleted}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDeletedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1507,9 +1490,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}Location varCompanyEventLocation ">{{companyEvent_.location}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmLocationCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1548,9 +1529,7 @@ The event name. "
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyEvent_.userKeys %}
             <span class="varCompanyEvent{{pk}}EventName varCompanyEventEventName ">{{companyEvent_.eventName}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmEventNameCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

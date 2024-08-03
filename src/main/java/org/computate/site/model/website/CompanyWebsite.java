@@ -29,6 +29,7 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /website
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: a website
  * PluralName: websites

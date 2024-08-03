@@ -7,9 +7,6 @@ paths:
     get:
       operationId: searchCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -323,9 +320,6 @@ paths:
     get:
       operationId: getCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -356,9 +350,6 @@ paths:
     get:
       operationId: searchpageCompanyCourseId
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -541,9 +532,6 @@ paths:
     get:
       operationId: searchpageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -720,9 +708,6 @@ paths:
     get:
       operationId: searchCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1036,9 +1021,6 @@ paths:
     get:
       operationId: getCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1069,9 +1051,6 @@ paths:
     get:
       operationId: searchpageCompanyEventId
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1254,9 +1233,6 @@ paths:
     get:
       operationId: searchpageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2952,9 +2928,6 @@ paths:
     get:
       operationId: searchCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3268,9 +3241,6 @@ paths:
     get:
       operationId: getCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3301,9 +3271,6 @@ paths:
     get:
       operationId: searchpageCompanyResearchId
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3486,9 +3453,6 @@ paths:
     get:
       operationId: searchpageCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3665,9 +3629,6 @@ paths:
     get:
       operationId: searchCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3981,9 +3942,6 @@ paths:
     get:
       operationId: getCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4014,9 +3972,6 @@ paths:
     get:
       operationId: searchpageCompanyWebsiteId
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4199,9 +4154,6 @@ paths:
     get:
       operationId: searchpageCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4550,30 +4502,6 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchSitePageResponse'
-    post:
-      operationId: postSitePage
-      x-vertx-event-bus: computate.org-enUS-SitePage
-      security:
-        - openIdConnect:
-          - profile
-      description: >+
-      summary: >+
-      tags:
-        - Page
-      requestBody:
-        description: >+
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/POSTSitePageRequest'
-      responses:
-        '200':
-          description: >+
-          content:
-            application/json; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/POSTSitePageResponse'
     patch:
       operationId: patchSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
@@ -4630,6 +4558,30 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PATCHSitePageResponse'
+    post:
+      operationId: postSitePage
+      x-vertx-event-bus: computate.org-enUS-SitePage
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - Page
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSitePageRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/POSTSitePageResponse'
   /api/page-import:
     put:
       operationId: putimportSitePage
@@ -6053,16 +6005,6 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchSitePageResponse'
-    POSTSitePageRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/POSTSitePageRequest'
-    POSTSitePageResponse:
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/POSTSitePageResponse'
     PATCHSitePageRequest:
       content:
         application/json:
@@ -6073,6 +6015,16 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/PATCHSitePageResponse'
+    POSTSitePageRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSitePageRequest'
+    POSTSitePageResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSitePageResponse'
     PUTImportSitePageRequest:
       content:
         application/json:
@@ -8028,6 +7980,8 @@ components:
                     type: string
                   title:
                     type: string
+                  objectTitle:
+                    type: string
                   objectId:
                     type: string
                   id:
@@ -8086,6 +8040,13 @@ components:
             removeTitle:
               type: string
             removeAllTitle:
+              type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
               type: string
             setObjectId:
               type: string
@@ -8161,6 +8122,13 @@ components:
               type: string
             removeAllTitle:
               type: string
+            setObjectTitle:
+              type: string
+              nullable: true
+            removeObjectTitle:
+              type: string
+            removeAllObjectTitle:
+              type: string
             setObjectId:
               type: string
               nullable: true
@@ -8200,6 +8168,8 @@ components:
               type: string
             title:
               type: string
+            objectTitle:
+              type: string
             objectId:
               type: string
             id:
@@ -8223,6 +8193,8 @@ components:
             url:
               type: string
             title:
+              type: string
+            objectTitle:
               type: string
             objectId:
               type: string
@@ -8253,6 +8225,8 @@ components:
                     type: string
                   title:
                     type: string
+                  objectTitle:
+                    type: string
                   objectId:
                     type: string
                   id:
@@ -8277,6 +8251,8 @@ components:
                     type: string
                   title:
                     type: string
+                  objectTitle:
+                    type: string
                   objectId:
                     type: string
                   id:
@@ -8300,6 +8276,8 @@ components:
             url:
               type: string
             title:
+              type: string
+            objectTitle:
               type: string
             objectId:
               type: string
@@ -8514,6 +8492,10 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -8527,10 +8509,6 @@ components:
                   h1:
                     type: string
                   h2:
-                    type: string
-                  title:
-                    type: string
-                  author:
                     type: string
                   pageImageUri:
                     type: string
@@ -8548,134 +8526,6 @@ components:
                     type: string
                   pageUrlId:
                     type: string
-    POSTSitePageRequest:
-      allOf:
-        - type: object
-          properties:
-            article:
-              type: boolean
-            githubOrg:
-              type: string
-            siteName:
-              type: string
-            siteDisplayName:
-              type: string
-            sitePublicUrl:
-              type: string
-            mailingListUrl:
-              type: string
-            quayioOrg:
-              type: string
-            sitePomGroupId:
-              type: string
-            staticBaseUrl:
-              type: string
-            staticPath:
-              type: string
-            siteBaseUrl:
-              type: string
-            courseNum:
-              type: string
-            lessonNum:
-              type: string
-            pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            h1:
-              type: string
-            h2:
-              type: string
-            title:
-              type: string
-            author:
-              type: string
-            pageImageUri:
-              type: string
-            pageImageWidth:
-              type: string
-            pageImageHeight:
-              type: string
-            pageImageType:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
-    POSTSitePageResponse:
-      allOf:
-        - type: object
-          properties:
-            article:
-              type: boolean
-            githubOrg:
-              type: string
-            siteName:
-              type: string
-            siteDisplayName:
-              type: string
-            sitePublicUrl:
-              type: string
-            mailingListUrl:
-              type: string
-            quayioOrg:
-              type: string
-            sitePomGroupId:
-              type: string
-            staticBaseUrl:
-              type: string
-            staticPath:
-              type: string
-            siteBaseUrl:
-              type: string
-            courseNum:
-              type: string
-            lessonNum:
-              type: string
-            pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            h1:
-              type: string
-            h2:
-              type: string
-            title:
-              type: string
-            author:
-              type: string
-            pageImageUri:
-              type: string
-            pageImageWidth:
-              type: string
-            pageImageHeight:
-              type: string
-            pageImageType:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     PATCHSitePageRequest:
       allOf:
         - type: object
@@ -8771,6 +8621,20 @@ components:
               type: string
             removeAllLessonNum:
               type: string
+            setTitle:
+              type: string
+              nullable: true
+            removeTitle:
+              type: string
+            removeAllTitle:
+              type: string
+            setAuthor:
+              type: string
+              nullable: true
+            removeAuthor:
+              type: string
+            removeAllAuthor:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -8819,20 +8683,6 @@ components:
             removeH2:
               type: string
             removeAllH2:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setAuthor:
-              type: string
-              nullable: true
-            removeAuthor:
-              type: string
-            removeAllAuthor:
               type: string
             setPageImageUri:
               type: string
@@ -8985,6 +8835,20 @@ components:
               type: string
             removeAllLessonNum:
               type: string
+            setTitle:
+              type: string
+              nullable: true
+            removeTitle:
+              type: string
+            removeAllTitle:
+              type: string
+            setAuthor:
+              type: string
+              nullable: true
+            removeAuthor:
+              type: string
+            removeAllAuthor:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -9033,20 +8897,6 @@ components:
             removeH2:
               type: string
             removeAllH2:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setAuthor:
-              type: string
-              nullable: true
-            removeAuthor:
-              type: string
-            removeAllAuthor:
               type: string
             setPageImageUri:
               type: string
@@ -9104,6 +8954,134 @@ components:
               type: string
             removeAllPageUrlId:
               type: string
+    POSTSitePageRequest:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            githubOrg:
+              type: string
+            siteName:
+              type: string
+            siteDisplayName:
+              type: string
+            sitePublicUrl:
+              type: string
+            mailingListUrl:
+              type: string
+            quayioOrg:
+              type: string
+            sitePomGroupId:
+              type: string
+            staticBaseUrl:
+              type: string
+            staticPath:
+              type: string
+            siteBaseUrl:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            title:
+              type: string
+            author:
+              type: string
+            pageId:
+              type: string
+            resourceUri:
+              type: string
+            templateUri:
+              type: string
+            uri:
+              type: string
+            url:
+              type: string
+            h1:
+              type: string
+            h2:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
+            id:
+              type: string
+            pageUrlId:
+              type: string
+    POSTSitePageResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            githubOrg:
+              type: string
+            siteName:
+              type: string
+            siteDisplayName:
+              type: string
+            sitePublicUrl:
+              type: string
+            mailingListUrl:
+              type: string
+            quayioOrg:
+              type: string
+            sitePomGroupId:
+              type: string
+            staticBaseUrl:
+              type: string
+            staticPath:
+              type: string
+            siteBaseUrl:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            title:
+              type: string
+            author:
+              type: string
+            pageId:
+              type: string
+            resourceUri:
+              type: string
+            templateUri:
+              type: string
+            uri:
+              type: string
+            url:
+              type: string
+            h1:
+              type: string
+            h2:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
+            id:
+              type: string
+            pageUrlId:
+              type: string
     PUTImportSitePageRequest:
       allOf:
         - type: object
@@ -9139,6 +9117,10 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -9152,10 +9134,6 @@ components:
                   h1:
                     type: string
                   h2:
-                    type: string
-                  title:
-                    type: string
-                  author:
                     type: string
                   pageImageUri:
                     type: string
@@ -9203,6 +9181,10 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  title:
+                    type: string
+                  author:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -9216,10 +9198,6 @@ components:
                   h1:
                     type: string
                   h2:
-                    type: string
-                  title:
-                    type: string
-                  author:
                     type: string
                   pageImageUri:
                     type: string
@@ -9267,6 +9245,10 @@ components:
               type: string
             lessonNum:
               type: string
+            title:
+              type: string
+            author:
+              type: string
             pageId:
               type: string
             resourceUri:
@@ -9280,10 +9262,6 @@ components:
             h1:
               type: string
             h2:
-              type: string
-            title:
-              type: string
-            author:
               type: string
             pageImageUri:
               type: string
@@ -9322,8 +9300,6 @@ components:
               items:
                 type: object
                 properties:
-                  archived:
-                    type: boolean
                   userKeys:
                     type: array
                     items:
@@ -9350,13 +9326,6 @@ components:
       allOf:
         - type: object
           properties:
-            setArchived:
-              type: boolean
-              nullable: true
-            removeArchived:
-              type: boolean
-            removeAllArchived:
-              type: boolean
             setUserKeys:
               type: array
               nullable: true
@@ -9441,13 +9410,6 @@ components:
       allOf:
         - type: object
           properties:
-            setArchived:
-              type: boolean
-              nullable: true
-            removeArchived:
-              type: boolean
-            removeAllArchived:
-              type: boolean
             setUserKeys:
               type: array
               nullable: true
@@ -9532,8 +9494,6 @@ components:
       allOf:
         - type: object
           properties:
-            archived:
-              type: boolean
             userKeys:
               type: array
               items:
@@ -9560,8 +9520,6 @@ components:
       allOf:
         - type: object
           properties:
-            archived:
-              type: boolean
             userKeys:
               type: array
               items:
@@ -9593,8 +9551,6 @@ components:
               items:
                 type: object
                 properties:
-                  archived:
-                    type: boolean
                   userKeys:
                     type: array
                     items:
@@ -9621,8 +9577,6 @@ components:
       allOf:
         - type: object
           properties:
-                  archived:
-                    type: boolean
                   userKeys:
                     type: array
                     items:

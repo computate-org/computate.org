@@ -2,7 +2,9 @@
 {% block htmMetaPageLayout %}
     <meta property="site:pageId" content="smart-device-platform-builder"/>
     <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
-    <meta property="site:title" content="Computate Smart Device Platform Builder"/>
+    <meta property="site:name" content="Computate Smart Device Platform Builder"/>
+    <meta property="site:title" content="{{ name }}"/>
+    <meta property="site:description" content="Build a custom data-driven website for your own ideas with the Computate Smart Device Platform Builder "/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 .intro-background {
@@ -10,7 +12,7 @@
 	color: white;
 	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
 }
-.gradient {
+.gradient-button {
   &:not(sl-button), &:is(sl-button)::part(base) {
     background: linear-gradient(90deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
     border: solid 1px var(--sl-color-purple-300);
@@ -88,7 +90,7 @@
             </h2>
             <div class="intro-details">
               <div>Download your own customizable website building toolkit to launch your own data-driven website here: </div>
-              <sl-button id="order-button" class="wa-theme-default-dark gradient" href="https://store.computate.org/computate-smart-device-platform-builder" data-wa-optional="" data-wa-valid="" value="" variant="neutral">
+              <sl-button id="order-button" class="gradient-button" href="https://store.computate.org/computate-smart-device-platform-builder" variant="neutral">
                 <i class="fa-solid fa-person-running-fast"></i>
                 Order Platform Builder
               </sl-button>

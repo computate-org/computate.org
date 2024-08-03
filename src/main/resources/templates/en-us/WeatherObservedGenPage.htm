@@ -2165,7 +2165,7 @@
 
 {%- macro htmForm_searchpageWeatherObserved() %}
         <div id="searchpageWeatherObservedDialog" label="Search weather observed devices">
-          <div id="htmForm_searchpageWeatherObserved">
+          <sl-details id="htmForm_searchpageWeatherObserved">
 
               {% if "PATCH" in scopes %}
                 {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -2657,17 +2657,15 @@
                 {% endif %}
               {% endif %}
             {{ htmFormButton_searchpageWeatherObserved() }}
-          </div>
+          </sl-details>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllWeatherObservedPage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3-2017-shaded-spruce w3-hover-2017-shaded-spruce">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
                 <span class="">weather observed devices</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsWeatherObservedPage() }}
             <div id="site-calendar-box">
@@ -2810,43 +2808,45 @@
 
 {%- macro htmPaginationButtonsWeatherObservedPage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsWeatherObservedPage() %}
@@ -3155,12 +3155,10 @@
         </div>
 {% if weatherObservedCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3-2017-shaded-spruce w3-hover-2017-shaded-spruce">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-cloud-bolt-sun"></i>
             <span class="">weather observed devices</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsWeatherObservedPage() }}
         <h2>
@@ -3175,12 +3173,10 @@
   {% if weatherObservedCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3-2017-shaded-spruce w3-hover-2017-shaded-spruce">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-regular fa-cloud-bolt-sun"></i>
             <span class="">weather observed device</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsWeatherObservedPage() }}
         <h2 class="w3-center ">
@@ -3256,7 +3252,6 @@
         {{ htmButton_putimportWeatherObserved() }}
         {{ htmForm_putimportWeatherObserved() }}
   {% endif %}
-        {%- block htmSuggestedWeatherObservedPage %}{%- endblock %}
         {%- endblock htmFormsWeatherObservedPage %}
       {%- endblock htmBodyMiddleWeatherObservedPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}

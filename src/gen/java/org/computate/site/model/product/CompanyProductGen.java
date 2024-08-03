@@ -257,6 +257,62 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return name;
 	}
 
+	/////////////////
+	// description //
+	/////////////////
+
+
+	/**	 The entity description
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String description;
+
+	/**	<br> The entity description
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _description(Wrap<String> w);
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String o) {
+		this.description = CompanyProduct.staticSetDescription(siteRequest_, o);
+	}
+	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct descriptionInit() {
+		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+		if(description == null) {
+			_description(descriptionWrap);
+			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+				setDescription(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchDescription(siteRequest_, CompanyProduct.staticSetDescription(siteRequest_, o)).toString();
+	}
+
+	public String sqlDescription() {
+		return description;
+	}
+
 	////////////
 	// pageId //
 	////////////
@@ -623,6 +679,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			Promise<Void> promise2 = Promise.promise();
 			try {
 				nameInit();
+				descriptionInit();
 				pageIdInit();
 				resourceUriInit();
 				templateUriInit();
@@ -684,6 +741,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 			case "name":
 				return oCompanyProduct.name;
+			case "description":
+				return oCompanyProduct.description;
 			case "pageId":
 				return oCompanyProduct.pageId;
 			case "resourceUri":
@@ -737,6 +796,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 		case "name":
 			return CompanyProduct.staticSetName(siteRequest_, o);
+		case "description":
+			return CompanyProduct.staticSetDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyProduct.staticSetPageId(siteRequest_, o);
 		case "resourceUri":
@@ -765,6 +826,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 		case "name":
 			return CompanyProduct.staticSearchName(siteRequest_, (String)o);
+		case "description":
+			return CompanyProduct.staticSearchDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyProduct.staticSearchPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -793,6 +856,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 		case "name":
 			return CompanyProduct.staticSearchStrName(siteRequest_, (String)o);
+		case "description":
+			return CompanyProduct.staticSearchStrDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyProduct.staticSearchStrPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -821,6 +886,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 		case "name":
 			return CompanyProduct.staticSearchFqName(siteRequest_, o);
+		case "description":
+			return CompanyProduct.staticSearchFqDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyProduct.staticSearchFqPageId(siteRequest_, o);
 		case "resourceUri":
@@ -864,6 +931,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					setName((String)val);
 				}
 				saves.add("name");
+				return val;
+			} else if("description".equals(varLower)) {
+				if(val instanceof String) {
+					setDescription((String)val);
+				}
+				saves.add("description");
 				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
@@ -924,6 +997,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					oCompanyProduct.setName(name);
 			}
 
+			if(saves.contains("description")) {
+				String description = (String)doc.get("description_docvalues_string");
+				if(description != null)
+					oCompanyProduct.setDescription(description);
+			}
+
 			if(saves.contains("pageId")) {
 				String pageId = (String)doc.get("pageId_docvalues_string");
 				if(pageId != null)
@@ -968,6 +1047,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(name != null) {
 			doc.put("name_docvalues_string", name);
 		}
+		if(description != null) {
+			doc.put("description_docvalues_string", description);
+		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
@@ -994,6 +1076,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1015,6 +1099,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1036,6 +1122,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(searchVar) {
 			case "name_docvalues_string":
 				return "name";
+			case "description_docvalues_string":
+				return "description";
 			case "pageId_docvalues_string":
 				return "pageId";
 			case "resourceUri_docvalues_string":
@@ -1079,6 +1167,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		SiteRequest siteRequest = oCompanyProduct.getSiteRequest_();
 
 		oCompanyProduct.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1100,6 +1189,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			CompanyProduct original = (CompanyProduct)o;
 			if(!Objects.equals(name, original.getName()))
 				apiRequest.addVars("name");
+			if(!Objects.equals(description, original.getDescription()))
+				apiRequest.addVars("description");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
 			if(!Objects.equals(resourceUri, original.getResourceUri()))
@@ -1124,6 +1215,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
@@ -1139,6 +1231,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return CLASS_API_ADDRESS_CompanyProduct;
 	}
 	public static final String VAR_name = "name";
+	public static final String VAR_description = "description";
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_resourceUri = "resourceUri";
 	public static final String VAR_templateUri = "templateUri";
@@ -1159,6 +1252,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	}
 	public static List<String> varsFqCompanyProduct(List<String> vars) {
 		vars.add(VAR_name);
+		vars.add(VAR_description);
 		vars.add(VAR_pageId);
 		vars.add(VAR_resourceUri);
 		vars.add(VAR_templateUri);
@@ -1177,6 +1271,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	}
 
 	public static final String DISPLAY_NAME_name = "product name";
+	public static final String DISPLAY_NAME_description = "product description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1191,6 +1286,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 		case VAR_name:
 			return DISPLAY_NAME_name;
+		case VAR_description:
+			return DISPLAY_NAME_description;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
 		case VAR_resourceUri:
@@ -1212,6 +1309,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 		case VAR_name:
 			return "The product name. ";
+		case VAR_description:
+			return "The product description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:
@@ -1232,6 +1331,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static String classSimpleNameCompanyProduct(String var) {
 		switch(var) {
 		case VAR_name:
+			return "String";
+		case VAR_description:
 			return "String";
 		case VAR_pageId:
 			return "String";
@@ -1254,8 +1355,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 		case VAR_name:
 			return 1;
-		case VAR_title:
-			return 1;
+		case VAR_description:
+			return 2;
 			default:
 				return BaseResult.htmColumnBaseResult(var);
 		}
@@ -1265,8 +1366,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 		case VAR_name:
 			return 3;
-		case VAR_pageId:
+		case VAR_description:
 			return 3;
+		case VAR_pageId:
+			return 4;
 		case VAR_uri:
 			return 3;
 		case VAR_url:
@@ -1280,8 +1383,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		switch(var) {
 		case VAR_name:
 			return 1;
-		case VAR_pageId:
+		case VAR_description:
 			return 2;
+		case VAR_pageId:
+			return 1;
 		case VAR_uri:
 			return 2;
 		case VAR_url:

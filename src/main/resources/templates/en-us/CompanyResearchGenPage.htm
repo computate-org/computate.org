@@ -301,7 +301,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -311,7 +311,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -321,7 +321,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -331,7 +331,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -363,7 +363,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -412,12 +412,12 @@
 
 {%- macro htmForm_searchpageCompanyResearch() %}
         <div id="searchpageCompanyResearchDialog" label="Search research">
-          <div id="htmForm_searchpageCompanyResearch">
+          <sl-details id="htmForm_searchpageCompanyResearch">
 
               {% if "PATCH" in scopes %}
                 {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -427,7 +427,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -437,7 +437,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -447,7 +447,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -457,7 +457,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -467,7 +467,7 @@
               {% if "PATCH" in scopes %}
                 {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -477,24 +477,22 @@
               {% if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
-                {% if "GET" scopes %}
+                {% if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
             {{ htmFormButton_searchpageCompanyResearch() }}
-          </div>
+          </sl-details>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyResearchPage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-duotone fa-solid fa-school"></i>
                 <span class="">research</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsCompanyResearchPage() }}
             <div id="site-calendar-box">
@@ -601,43 +599,45 @@
 
 {%- macro htmPaginationButtonsCompanyResearchPage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyResearchPage() %}
@@ -946,12 +946,10 @@
         </div>
 {% if companyResearchCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-school"></i>
             <span class="">research</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyResearchPage() }}
         <h2>
@@ -966,12 +964,10 @@
   {% if companyResearchCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-school"></i>
             <span class="">research</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsCompanyResearchPage() }}
         <h2 class="w3-center ">
@@ -1047,7 +1043,6 @@
         {{ htmButton_putimportCompanyResearch() }}
         {{ htmForm_putimportCompanyResearch() }}
   {% endif %}
-        {%- block htmSuggestedCompanyResearchPage %}{%- endblock %}
         {%- endblock htmFormsCompanyResearchPage %}
       {%- endblock htmBodyMiddleCompanyResearchPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
@@ -1134,9 +1129,7 @@ The primary key of this object in the database"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Pk varCompanyResearchPk ">{{companyResearch_.pk}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPkCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1175,9 +1168,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}ObjectId varCompanyResearchObjectId ">{{companyResearch_.objectId}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1206,9 +1197,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Created varCompanyResearchCreated ">{{companyResearch_.created}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1237,9 +1226,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Modified varCompanyResearchModified ">{{companyResearch_.modified}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1291,9 +1278,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Archived varCompanyResearchArchived ">{{companyResearch_.archived}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1345,9 +1330,7 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Deleted varCompanyResearchDeleted ">{{companyResearch_.deleted}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDeletedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1386,9 +1369,7 @@ The research name. "
   {%- if 'Page' == classApiMethodMethod %}
             </form>
   {%- endif %}
-  {%- if userKey in companyResearch_.userKeys %}
             <span class="varCompanyResearch{{pk}}Name varCompanyResearchName ">{{companyResearch_.name}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmNameCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

@@ -1,1 +1,20 @@
 {% extends "en-us/CompanyProductGenPage.htm" %}
+{%- block htmStyleComputateProductPage %}
+      {{ super() }}
+      @media (max-width:600px) {
+        #htmForm_searchpageComputateProduct {
+          display: grid;
+          grid-template-columns: repeat(1, minmax(min(10ch, 100%), 1fr));
+          column-gap: 10px;
+          row-gap: 10px;
+        }
+      }
+      @media (min-width:601px) {
+        #htmForm_searchpageComputateProduct {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(min(30ch, 100%), 1fr));
+          column-gap: 10px;
+          row-gap: 10px;
+        }
+      }
+{%- endblock htmStyleComputateProductPage %}

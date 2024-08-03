@@ -772,7 +772,7 @@
 
 {%- macro htmForm_searchpageSitePage() %}
         <div id="searchpageSitePageDialog" label="Search articles">
-          <div id="htmForm_searchpageSitePage">
+          <sl-details id="htmForm_searchpageSitePage">
 
               {% if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -874,17 +874,15 @@
                 {% endif %}
               {% endif %}
             {{ htmFormButton_searchpageSitePage() }}
-          </div>
+          </sl-details>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllSitePagePage() %}
             <h1>
-              <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-                {% if classIconCssClasses is defined %}
-                  <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-                {% endif %}
+              <sl-button variant="text" size="large" href="{{pageUri}}">
+                <i class="fa-duotone fa-solid fa-newspaper"></i>
                 <span class="">articles</span>
-              </a>
+              </sl-button>
             </h1>
             {{ htmSearchButtonsSitePagePage() }}
             <div id="site-calendar-box">
@@ -895,19 +893,6 @@
             <div>
                 <i class="fa-duotone fa-solid fa-newspaper"></i>
               <sl-dropdown>
-                <sl-button slot="trigger" caret>ID</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by ID ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by ID descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
                 <sl-button slot="trigger" caret>title</sl-button>
                 <sl-menu>
                   <sl-menu-item>
@@ -917,58 +902,6 @@
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by title descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>ID</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by ID ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by ID descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -991,40 +924,15 @@
               {% for item in listSitePage%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-duotone fa-solid fa-newspaper"></i>
-                <div>{{ item.objectId }}</div>
                 <div>{{ item.title }}</div>
-                <div>{{ item.objectId }}</div>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
                 <div>{{ item.pageUrlId }}</div>
-                <div>{{ item.objectTitle }}</div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnObjectId is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnObjectId is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnPageUrlId is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -1081,43 +989,45 @@
 
 {%- macro htmPaginationButtonsSitePagePage() %}
             <div id="htmPaginationButtons">
-              <sl-tooltip placement="top" content="Show the results as details">
-                <sl-button id="grid-toggle-details">
-                  <i class="fa-solid fa-list"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as a list">
-                <sl-button id="grid-toggle-list">
-                  <i class="fa-solid fa-bars"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the results as cards">
-                <sl-button id="grid-toggle-card">
-                  <i class="fa-solid fa-grid"></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
-              <sl-tooltip placement="top" content="Show the previous results">
-                <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-left "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show half the results">
-                <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-minus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show double the results">
-                <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
-                  <i slot="prefix" class="fas fa-plus-square "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="top" content="Show the next results">
-                <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
-                  <i slot="prefix" class="fas fa-arrow-square-right "></i>
-                </sl-button>
-              </sl-tooltip>
-              <sl-divider vertical></sl-divider>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsSitePagePage() %}
@@ -1426,12 +1336,10 @@
         </div>
 {% if sitePageCount == 0 %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-  {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-  {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-newspaper"></i>
             <span class="">articles</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsSitePagePage() }}
         <h2>
@@ -1446,12 +1354,10 @@
   {% if sitePageCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}" class="w3-bar-item w3-btn w3-center w3-block w3- w3-hover-">
-      {% if classIconCssClasses is defined %}
-              <i class="{{ classIconCssClasses }} site-menu-icon "></i>
-      {% endif %}
+          <sl-button variant="text" size="large" href="{{pageUri}}">
+            <i class="fa-duotone fa-solid fa-newspaper"></i>
             <span class="">article</span>
-          </a>
+          </sl-button>
         </h1>
         {{ htmSearchButtonsSitePagePage() }}
         <h2 class="w3-center ">
@@ -1527,7 +1433,6 @@
         {{ htmButton_putimportSitePage() }}
         {{ htmForm_putimportSitePage() }}
   {% endif %}
-        {%- block htmSuggestedSitePagePage %}{%- endblock %}
         {%- endblock htmFormsSitePagePage %}
       {%- endblock htmBodyMiddleSitePagePage %}
       {%- endblock htmBodyMiddleBaseResultPage %}

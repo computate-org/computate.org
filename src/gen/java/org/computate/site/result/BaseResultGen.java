@@ -2559,12 +2559,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 
 	public static Integer htmColumnBaseResult(String var) {
 		switch(var) {
-		case VAR_created:
-			return 2;
-		case VAR_objectTitle:
-			return 3;
-		case VAR_objectId:
-			return 1;
 			default:
 				return null;
 		}

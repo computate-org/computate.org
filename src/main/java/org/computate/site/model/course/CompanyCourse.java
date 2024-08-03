@@ -29,6 +29,7 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /course
  * 
  * Role: SiteAdmin
+ * PublicRead: true
  * 
  * AName: a course
  * Icon: <i class="fa-regular fa-notebook"></i>
