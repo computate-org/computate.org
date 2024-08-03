@@ -154,8 +154,16 @@ OPENSHIFT_APPS_DOMAIN: "apps-crc.testing"
 # Container defaults #
 ######################
 
+# The container registry where the container will be pushed. 
+CONTAINER_REGISTRY: quay.io
 # The organization within quay.io where the container will be pushed. 
 CONTAINER_ORG: computateorg
+# The container name where the container will be pushed. 
+CONTAINER_NAME: "{{ SITE_NAME }}"
+# The container version where the container will be pushed. 
+CONTAINER_VERSION: "latest"
+# The container URI where the container will be pushed. 
+CONTAINER_URI: "{{ CONTAINER_REGISTRY }}/{{ CONTAINER_ORG }}/{{ CONTAINER_NAME }}:{{ CONTAINER_VERSION }}"
 
 ###########################
 # Static content defaults #
@@ -220,6 +228,11 @@ ZOOKEEPER_NAMESPACE: zookeeper
 ZOOKEEPER_HOST_NAME: "zookeeper.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The default port that Zookeeper runs to manage the cluster. 
 ZOOKEEPER_PORT: 30081
+ZOOKEEPER_MAX_RETRIES: 0
+ZOOKEEPER_BASE_SLEEP_TIME_MILLIS: 5000
+ZOOKEEPER_MAX_SLEEP_MILLIS: 5000
+ZOOKEEPER_CONNECTION_TIMEOUT_MILLIS: 3000
+ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 
 #################
 # Solr defaults #
@@ -368,6 +381,15 @@ KAFKA_SSL_KEYSTORE_SECRET: "{{ SITE_SHORT_NAME }}-kafka"
 KAFKA_SSL_TRUSTSTORE_SECRET: default-cluster-ca-cert
 # The Kafka port. 
 KAFKA_PORT: 9093
+KAFKA_BROKERS: "127.0.0.1:39275"
+KAFKA_GROUP: "{{ SITE_SHORT_NAME }}-kafka"
+KAFKA_SECURITY_PROTOCOL: "SSL"
+KAFKA_SSL_KEYSTORE_TYPE: "pkcs12"
+KAFKA_SSL_KEYSTORE_LOCATION: "/home/ctate/.local/src/smartabyar-smartvillage/config/kafka-user.p12"
+KAFKA_SSL_KEYSTORE_PASSWORD: "MBpdJKCmHEYFINYwNJ3iWY0C8n3Fabvk"
+KAFKA_SSL_TRUSTSTORE_TYPE: "pkcs12"
+KAFKA_SSL_TRUSTSTORE_LOCATION: "/home/ctate/.local/src/smartabyar-smartvillage/config/kafka-ca.p12"
+KAFKA_SSL_TRUSTSTORE_PASSWORD: "X5rFaKRoxAJv"
 
 #############
 # IoT Agent #
@@ -443,7 +465,7 @@ RABBITMQ_VIRTUAL_HOST: "%2F"
 ################################
 
 # The amount of memory requested when the pod is first created in OpenShift. 
-SITE_REQUESTS_MEMORY: "1500Mi"
+SITE_REQUESTS_MEMORY: "500Mi"
 # The amount of total memory that can be used by the pod in OpenShift. 
 SITE_LIMITS_MEMORY: "1500Mi"
 # The amount of cpus requested when the pod is first created in OpenShift. 
