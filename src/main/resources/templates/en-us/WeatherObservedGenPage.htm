@@ -15,6 +15,10 @@
 {%- block htmStyleBaseModelPage %}
 {{ super() }}
 {%- block htmStyleWeatherObservedPage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleWeatherObservedPage %}
 {%- endblock htmStyleBaseModelPage %}
 
@@ -235,6 +239,66 @@
             const form = document.querySelector('#PageForm_deleted');
             const valid = form.reportValidity();
           });
+          // PATCH name
+          document.querySelector('#Page_name')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_name');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setName', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_name')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_name')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_name');
+            const valid = form.reportValidity();
+          });
+          // PATCH description
+          document.querySelector('#Page_description')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_description');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setDescription', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_description')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_description')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_description');
+            const valid = form.reportValidity();
+          });
+          // PATCH alternateName
+          document.querySelector('#Page_alternateName')?.addEventListener('sl-change', (event) => {
+            const form = document.querySelector('#PageForm_alternateName');
+            const valid = form.checkValidity();
+            if(valid) {
+              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
+                  , 'setAlternateName', event.currentTarget.value
+                  , event.currentTarget
+                  , function(response, target) { addGlow(target); }
+                  , function(response, target) { addError(target); }
+                  );
+            }
+          });
+          document.querySelector('#Page_alternateName')?.addEventListener('sl-focus', (event) => {
+            removeGlow(event.currentTarget);
+          });
+          document.querySelector('#Page_alternateName')?.addEventListener('sl-blur', (event) => {
+            const form = document.querySelector('#PageForm_alternateName');
+            const valid = form.reportValidity();
+          });
           // PATCH address
           document.querySelector('#Page_address')?.addEventListener('sl-change', (event) => {
             const form = document.querySelector('#PageForm_address');
@@ -273,26 +337,6 @@
           });
           document.querySelector('#Page_entityId')?.addEventListener('sl-blur', (event) => {
             const form = document.querySelector('#PageForm_entityId');
-            const valid = form.reportValidity();
-          });
-          // PATCH alternateName
-          document.querySelector('#Page_alternateName')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_alternateName');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setAlternateName', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_alternateName')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_alternateName')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_alternateName');
             const valid = form.reportValidity();
           });
           // PATCH airQualityIndex
@@ -535,26 +579,6 @@
             const form = document.querySelector('#PageForm_dateObserved');
             const valid = form.reportValidity();
           });
-          // PATCH description
-          document.querySelector('#Page_description')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_description');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setDescription', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_description')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_description')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_description');
-            const valid = form.reportValidity();
-          });
           // PATCH dewPoint
           document.querySelector('#Page_dewPoint')?.addEventListener('sl-change', (event) => {
             const form = document.querySelector('#PageForm_dewPoint');
@@ -693,26 +717,6 @@
           });
           document.querySelector('#Page_location')?.addEventListener('sl-blur', (event) => {
             const form = document.querySelector('#PageForm_location');
-            const valid = form.reportValidity();
-          });
-          // PATCH name
-          document.querySelector('#Page_name')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_name');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchWeatherObservedVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setName', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_name')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_name')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_name');
             const valid = form.reportValidity();
           });
           // PATCH owner
@@ -1166,15 +1170,15 @@
         {%- block websocketWeatherObservedPage %}{%- endblock %}
         document.querySelector('#htmForm_patchWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchWeatherObserved(null, document.querySelector('#htmForm_patchWeatherObserved'));
+          patchWeatherObserved(null, document.querySelector('#htmForm_patchWeatherObserved'), document.querySelector('#htmFormButton_patchWeatherObserved'));
         });
         document.querySelector('#htmForm_postWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
-          postWeatherObserved(document.querySelector('#htmForm_postWeatherObserved'));
+          postWeatherObserved(document.querySelector('#htmForm_postWeatherObserved'), document.querySelector('#htmFormButton_postWeatherObserved'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
         });
         document.querySelector('#htmForm_putimportWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
-          putimportWeatherObserved(document.querySelector('#htmForm_putimportWeatherObserved'));
+          putimportWeatherObserved(document.querySelector('#htmForm_putimportWeatherObserved'), document.querySelector('#htmFormButton_putimportWeatherObserved'));
         });
         document.querySelector('#htmForm_searchpageWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -1195,16 +1199,20 @@
 {%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
 
 {%- macro htmButton_patchWeatherObserved() %}
-        <sl-button
-            onclick="document.querySelector('#patchWeatherObservedDialog').show(); "
-            >
-          <i class="fas fa-edit "></i>
-          Modify weather observed device
-        </sl-button>
+        <sl-tooltip content="Modify weather observed device">
+          <sl-button
+              onclick="document.querySelector('#patchWeatherObservedDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchWeatherObserved() %}
-            <sl-button type="submit" variant="primary">Modify weather observed device</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_patchWeatherObserved"
+                >Modify weather observed device</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchWeatherObserved() %}
@@ -1286,6 +1294,36 @@
               <div>
 
               {% if "PATCH" in scopes %}
+                {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" scopes %}
@@ -1302,16 +1340,6 @@
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
               </div>
@@ -1452,16 +1480,6 @@
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
               </div>
               <div stuff="air temerature details-air temerature details">
 
@@ -1536,16 +1554,6 @@
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -1758,16 +1766,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_postWeatherObserved() %}
-        <sl-button
-            onclick="document.querySelector('#postWeatherObservedDialog').show(); "
-            >
-          <i class="fas fa-file-plus "></i>
-          Create a weather observed device
-        </sl-button>
+        <sl-tooltip content="Create a weather observed device">
+          <sl-button
+              onclick="document.querySelector('#postWeatherObservedDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_postWeatherObserved() %}
-            <sl-button type="submit" variant="primary">Create a weather observed device</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_postWeatherObserved"
+                >Create a weather observed device</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postWeatherObserved() %}
@@ -1850,6 +1862,36 @@
               <div>
 
               {% if "PATCH" in scopes %}
+                {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" scopes %}
@@ -1866,16 +1908,6 @@
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
               </div>
@@ -2016,16 +2048,6 @@
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
               </div>
               <div stuff="air temerature details-air temerature details">
 
@@ -2100,16 +2122,6 @@
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -2322,16 +2334,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_putimportWeatherObserved() %}
-        <sl-button
-            onclick="document.querySelector('#putimportWeatherObservedDialog').show(); "
-            >
-          <i class="fas fa-file-import "></i>
-          Import weather observed devices
-        </sl-button>
+        <sl-tooltip content="Import weather observed devices">
+          <sl-button
+              onclick="document.querySelector('#putimportWeatherObservedDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportWeatherObserved() %}
-            <sl-button type="submit" variant="primary">Import weather observed devices</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_putimportWeatherObserved"
+                >Import weather observed devices</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportWeatherObserved() %}
@@ -2354,7 +2370,9 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageWeatherObserved() %}
-            <sl-button type="submit" variant="primary">Search weather observed devices</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_searchpageWeatherObserved"
+                >Search weather observed devices</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageWeatherObserved() %}
@@ -2436,6 +2454,36 @@
               <div>
 
               {% if "PATCH" in scopes %}
+                {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
+                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {% else %}
+                {% if "GET" scopes %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {% else %}
+                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {% endif %}
+              {% endif %}
+
+              {% if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {% else %}
                 {% if "GET" scopes %}
@@ -2452,16 +2500,6 @@
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
               </div>
@@ -2602,16 +2640,6 @@
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
               </div>
               <div stuff="air temerature details-air temerature details">
 
@@ -2686,16 +2714,6 @@
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {% else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
-
-              {% if "PATCH" in scopes %}
-                {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" scopes %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
-                  {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {% endif %}
               {% endif %}
 
@@ -2902,38 +2920,26 @@
               {% endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_searchpageWeatherObserved() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllWeatherObservedPage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 <i class="fa-regular fa-cloud-bolt-sun"></i>
-                <span class="">weather observed devices</span>
-              </sl-button>
+                <span>weather observed devices</span>
+              </a>
             </h1>
-            {{ htmSearchButtonsWeatherObservedPage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsWeatherObservedPage() }}
+            {{ htmSearchButtonsWeatherObservedPage() }}
+            {{ htmFormsWeatherObservedPage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsWeatherObservedPage() }}
             <div class="grid-mode-details">
             <div>
                 <i class="fa-regular fa-cloud-bolt-sun"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               <sl-dropdown>
                 <sl-button slot="trigger" caret>name</sl-button>
                 <sl-menu>
@@ -2948,28 +2954,15 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
+                <sl-button slot="trigger" caret>description</sl-button>
                 <sl-menu>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
+                    sort by description ascending
                   </sl-menu-item>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
+                    sort by description descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -2979,25 +2972,15 @@
               {% for item in listWeatherObserved%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-regular fa-cloud-bolt-sun"></i>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
                 <div>{{ item.name }}</div>
-                <div>{{ item.objectTitle }}</div>
-                <div>{{ item.objectTitle }}</div>
+                <div>{{ item.description }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnName is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
+                      {% if getColumnDescription is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -3096,6 +3079,55 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsWeatherObservedPage() %}
+{%- macro htmFormsWeatherObservedPage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if weatherObservedCount == 1 %}
+        <sl-tooltip content="Refresh this weather observed device">
+          <sl-button
+              id="refreshThisWeatherObservedGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if weatherObservedCount > 0 %}
+        <sl-tooltip content="Refresh all the weather observed devices">
+          <sl-button id="refreshAllWeatherObservedGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if weatherObservedCount > 0 %}
+        {{ htmButton_patchWeatherObserved() }}
+        {{ htmForm_patchWeatherObserved() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if weatherObservedCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postWeatherObserved() }}
+        {{ htmForm_postWeatherObserved() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postWeatherObserved() }}
+        {{ htmForm_postWeatherObserved() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportWeatherObserved() }}
+        {{ htmForm_putimportWeatherObserved() }}
+  {% endif %}
+{%- endmacro htmFormsWeatherObservedPage() %}
 
     {%- block htmBodyStartBaseModelPage %}
     {{ super() }}
@@ -3243,18 +3275,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeWeatherObserved_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('WeatherObserved', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeWeatherObserved_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeWeatherObserved_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('WeatherObserved', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeWeatherObservedPage %}
             </div>
           </sl-drawer>
@@ -3275,18 +3300,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotWeatherObserved " id="pageSearchVal-PivotWeatherObserved_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('WeatherObserved', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotWeatherObserved_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotWeatherObservedPage %}
             </div>
           </sl-drawer>
@@ -3305,21 +3322,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListWeatherObserved">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListWeatherObserved " id="pageSearchVal-FieldListWeatherObserved_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListWeatherObserved " id="pageSearchVal-FieldListWeatherObserved_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListWeatherObserved_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('WeatherObserved', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListWeatherObserved_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListWeatherObserved_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListWeatherObservedPage %}
             </div>
           </sl-drawer>
@@ -3348,11 +3359,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsWeatherObserved_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('WeatherObserved', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsWeatherObserved_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsWeatherObserved_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsWeatherObserved_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldWeatherObserved_{{ key }} " id="pageStatsFieldWeatherObserved_{{ key }}">
                           {% if value.stats is defined %}
@@ -3399,60 +3410,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsWeatherObservedPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if weatherObservedCount == 1 %}
-        <sl-button
-            id="refreshThisWeatherObservedGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh this weather observed device
-        </sl-button>
-      {% endif %}
-      {% if weatherObservedCount > 0 %}
-        <div class="">
-          <sl-button id="refreshAllWeatherObservedGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh all the weather observed devices
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if weatherObservedCount > 0 %}
-        {{ htmButton_patchWeatherObserved() }}
-        {{ htmForm_patchWeatherObserved() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if weatherObservedCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postWeatherObserved() }}
-        {{ htmForm_postWeatherObserved() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postWeatherObserved() }}
-        {{ htmForm_postWeatherObserved() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportWeatherObserved() }}
-        {{ htmForm_putimportWeatherObserved() }}
-  {% endif %}
-        {%- endblock htmFormsWeatherObservedPage %}
 {% if weatherObservedCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-cloud-bolt-sun"></i>
-            <span class="">weather observed devices</span>
-          </sl-button>
+            <span>weather observed devices</span>
+          </a>
         </h1>
         {{ htmSearchButtonsWeatherObservedPage() }}
+            {{ htmFormsWeatherObservedPage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-2017-shaded-spruce">
   {% if classIconCssClasses is defined %}
@@ -3465,17 +3431,18 @@
   {% if weatherObservedCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-cloud-bolt-sun"></i>
             <span class="">weather observed device</span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsWeatherObservedPage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-2017-shaded-spruce">
             <span class="">{{weatherObserved_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsWeatherObservedPage() }}
+            {{ htmFormsWeatherObservedPage() }}
     {% else %}
         {{ htmBodyAllWeatherObservedPage() }}
     {% endif %}
@@ -3803,6 +3770,129 @@ A URL friendly unique ID for this object"
                             {{ inputDeletedWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
+{%- macro inputNameWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_name">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="name"
+                      label="name"
+                      help-text="
+The name of this item"
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classWeatherObserved inputWeatherObserved{{pk}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classWeatherObserved inputWeatherObserved{{pk}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.name}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+  {%- if userKey in weatherObserved_.userKeys %}
+                <span class="varWeatherObserved{{pk}}Name varWeatherObservedName ">{{weatherObserved_.name}}</span>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNameWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNameWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputDescriptionWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_description">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="description"
+                      label="description"
+                      help-text="
+A description of this item"
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classWeatherObserved inputWeatherObserved{{pk}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classWeatherObserved inputWeatherObserved{{pk}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.description}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+  {%- if userKey in weatherObserved_.userKeys %}
+                <span class="varWeatherObserved{{pk}}Description varWeatherObservedDescription ">{{weatherObserved_.description}}</span>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDescriptionWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputAlternateNameWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_alternateName">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="alternate name"
+                      label="alternate name"
+                      help-text="
+An alternative name for this item"
+                      id="{{classApiMethodMethod}}_alternateName"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_alternateName setAlternateName classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
+                      name="setAlternateName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_alternateName setAlternateName classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
+                      name="setAlternateName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_alternateName valueAlternateName w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
+                      name="alternateName"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.alternateName}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+  {%- if userKey in weatherObserved_.userKeys %}
+                <span class="varWeatherObserved{{pk}}AlternateName varWeatherObservedAlternateName ">{{weatherObserved_.alternateName}}</span>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmAlternateNameWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputAlternateNameWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
 {%- macro inputAddressWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_address">
@@ -3883,47 +3973,6 @@ A unique ID for this Smart Data Model"
 
 {%- macro htmEntityIdWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputEntityIdWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputAlternateNameWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_alternateName">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="alternate name"
-                      label="alternate name"
-                      help-text="
-An alternative name for this item"
-                      id="{{classApiMethodMethod}}_alternateName"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_alternateName setAlternateName classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
-                      name="setAlternateName"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_alternateName setAlternateName classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
-                      name="setAlternateName"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_alternateName valueAlternateName w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}AlternateName "
-                      name="alternateName"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.alternateName}}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AlternateName varWeatherObservedAlternateName ">{{weatherObserved_.alternateName}}</span>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmAlternateNameWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputAlternateNameWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputAirQualityIndexWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -4418,47 +4467,6 @@ Date of the observed entity defined by the user"
                             {{ inputDateObservedWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputDescriptionWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_description">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="description"
-                      label="description"
-                      help-text="
-A description of this item"
-                      id="{{classApiMethodMethod}}_description"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classWeatherObserved inputWeatherObserved{{pk}}Description "
-                      name="setDescription"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classWeatherObserved inputWeatherObserved{{pk}}Description "
-                      name="setDescription"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_description valueDescription w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}Description "
-                      name="description"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.description}}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Description varWeatherObservedDescription ">{{weatherObserved_.description}}</span>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDescriptionWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDescriptionWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputDewPointWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_dewPoint">
@@ -4744,47 +4752,6 @@ Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint,
 
 {%- macro htmLocationWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputLocationWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputNameWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_name">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="name"
-                      label="name"
-                      help-text="
-The name of this item"
-                      id="{{classApiMethodMethod}}_name"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_name setName classWeatherObserved inputWeatherObserved{{pk}}Name "
-                      name="setName"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_name setName classWeatherObserved inputWeatherObserved{{pk}}Name "
-                      name="setName"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classWeatherObserved inputWeatherObserved{{pk}}Name "
-                      name="name"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.name}}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Name varWeatherObservedName ">{{weatherObserved_.name}}</span>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmNameWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputNameWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputOwnerWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

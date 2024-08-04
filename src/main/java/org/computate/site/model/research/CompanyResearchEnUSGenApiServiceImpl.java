@@ -342,38 +342,29 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyResearchList(siteRequest, false, true, true).onSuccess(listCompanyResearch -> {
 							try {
-								if(listCompanyResearch.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyResearch")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyResearch"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listCompanyResearch.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyResearch.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listCompanyResearch.first());
+								apiRequest.setPk(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listCompanyResearch.getRequest().getRows());
-									apiRequest.setNumFound(listCompanyResearch.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listCompanyResearch.first());
-									apiRequest.setPk(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHCompanyResearch(apiRequest, listCompanyResearch).onSuccess(e -> {
-										response200PATCHCompanyResearch(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchCompanyResearch succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchCompanyResearch failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHCompanyResearch(apiRequest, listCompanyResearch).onSuccess(e -> {
+									response200PATCHCompanyResearch(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyResearch succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchCompanyResearch failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchCompanyResearch failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchCompanyResearch failed. "), ex);
 								error(siteRequest, eventHandler, ex);

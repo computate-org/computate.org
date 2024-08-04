@@ -15,6 +15,10 @@
 {%- block htmStyleBaseModelPage %}
 {{ super() }}
 {%- block htmStyleCompanyResearchPage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleCompanyResearchPage %}
 {%- endblock htmStyleBaseModelPage %}
 
@@ -253,15 +257,15 @@
         {%- block websocketCompanyResearchPage %}{%- endblock %}
         document.querySelector('#htmForm_patchCompanyResearch')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyResearch(null, document.querySelector('#htmForm_patchCompanyResearch'));
+          patchCompanyResearch(null, document.querySelector('#htmForm_patchCompanyResearch'), document.querySelector('#htmFormButton_patchCompanyResearch'));
         });
         document.querySelector('#htmForm_postCompanyResearch')?.addEventListener('submit', event => {
           event.preventDefault();
-          postCompanyResearch(document.querySelector('#htmForm_postCompanyResearch'));
+          postCompanyResearch(document.querySelector('#htmForm_postCompanyResearch'), document.querySelector('#htmFormButton_postCompanyResearch'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
         });
         document.querySelector('#htmForm_putimportCompanyResearch')?.addEventListener('submit', event => {
           event.preventDefault();
-          putimportCompanyResearch(document.querySelector('#htmForm_putimportCompanyResearch'));
+          putimportCompanyResearch(document.querySelector('#htmForm_putimportCompanyResearch'), document.querySelector('#htmFormButton_putimportCompanyResearch'));
         });
         document.querySelector('#htmForm_searchpageCompanyResearch')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -282,16 +286,20 @@
 {%- block htmUrlCompanyResearchPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyResearchPage %}
 
 {%- macro htmButton_patchCompanyResearch() %}
-        <sl-button
-            onclick="document.querySelector('#patchCompanyResearchDialog').show(); "
-            >
-          <i class="fas fa-edit "></i>
-          Modify research
-        </sl-button>
+        <sl-tooltip content="Modify research">
+          <sl-button
+              onclick="document.querySelector('#patchCompanyResearchDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyResearch() %}
-            <sl-button type="submit" variant="primary">Modify research</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_patchCompanyResearch"
+                >Modify research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyResearch() %}
@@ -384,16 +392,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_postCompanyResearch() %}
-        <sl-button
-            onclick="document.querySelector('#postCompanyResearchDialog').show(); "
-            >
-          <i class="fas fa-file-plus "></i>
-          Create a research
-        </sl-button>
+        <sl-tooltip content="Create a research">
+          <sl-button
+              onclick="document.querySelector('#postCompanyResearchDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_postCompanyResearch() %}
-            <sl-button type="submit" variant="primary">Create a research</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_postCompanyResearch"
+                >Create a research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyResearch() %}
@@ -487,16 +499,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_putimportCompanyResearch() %}
-        <sl-button
-            onclick="document.querySelector('#putimportCompanyResearchDialog').show(); "
-            >
-          <i class="fas fa-file-import "></i>
-          Import research
-        </sl-button>
+        <sl-tooltip content="Import research">
+          <sl-button
+              onclick="document.querySelector('#putimportCompanyResearchDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyResearch() %}
-            <sl-button type="submit" variant="primary">Import research</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_putimportCompanyResearch"
+                >Import research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyResearch() %}
@@ -519,7 +535,9 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyResearch() %}
-            <sl-button type="submit" variant="primary">Search research</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_searchpageCompanyResearch"
+                >Search research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyResearch() %}
@@ -606,69 +624,34 @@
               {% endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_searchpageCompanyResearch() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyResearchPage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 <i class="fa-duotone fa-solid fa-school"></i>
-                <span class="">research</span>
-              </sl-button>
+                <span>research</span>
+              </a>
             </h1>
-            {{ htmSearchButtonsCompanyResearchPage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsCompanyResearchPage() }}
+            {{ htmSearchButtonsCompanyResearchPage() }}
+            {{ htmFormsCompanyResearchPage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsCompanyResearchPage() }}
             <div class="grid-mode-details">
             <div>
                 <i class="fa-duotone fa-solid fa-school"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listCompanyResearch%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-duotone fa-solid fa-school"></i>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
             </div>
             {%- endmacro htmBodyAllCompanyResearchPage() %}
 {%- macro htmSearchButtonsCompanyResearchPage() %}
@@ -764,6 +747,55 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyResearchPage() %}
+{%- macro htmFormsCompanyResearchPage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if companyResearchCount == 1 %}
+        <sl-tooltip content="Refresh this research">
+          <sl-button
+              id="refreshThisCompanyResearchGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyResearchGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyResearchGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if companyResearchCount > 0 %}
+        <sl-tooltip content="Refresh all the research">
+          <sl-button id="refreshAllCompanyResearchGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyResearchCount > 0 %}
+        {{ htmButton_patchCompanyResearch() }}
+        {{ htmForm_patchCompanyResearch() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyResearchCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyResearch() }}
+        {{ htmForm_postCompanyResearch() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyResearch() }}
+        {{ htmForm_postCompanyResearch() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyResearch() }}
+        {{ htmForm_putimportCompanyResearch() }}
+  {% endif %}
+{%- endmacro htmFormsCompanyResearchPage() %}
 
     {%- block htmBodyStartBaseModelPage %}
     {{ super() }}
@@ -911,18 +943,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyResearch_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyResearch', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeCompanyResearch_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyResearch_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyResearch', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeCompanyResearchPage %}
             </div>
           </sl-drawer>
@@ -943,18 +968,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotCompanyResearch " id="pageSearchVal-PivotCompanyResearch_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyResearch_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyResearch', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotCompanyResearch_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyResearch_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyResearch', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotCompanyResearchPage %}
             </div>
           </sl-drawer>
@@ -973,21 +990,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListCompanyResearch">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListCompanyResearch " id="pageSearchVal-FieldListCompanyResearch_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListCompanyResearch " id="pageSearchVal-FieldListCompanyResearch_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyResearch_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyResearch', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListCompanyResearch_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyResearch_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyResearch', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListCompanyResearchPage %}
             </div>
           </sl-drawer>
@@ -1016,11 +1027,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyResearch_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyResearch', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyResearch_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyResearch', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsCompanyResearch_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsCompanyResearch_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldCompanyResearch_{{ key }} " id="pageStatsFieldCompanyResearch_{{ key }}">
                           {% if value.stats is defined %}
@@ -1067,60 +1078,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsCompanyResearchPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyResearchCount == 1 %}
-        <sl-button
-            id="refreshThisCompanyResearchGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyResearchGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyResearchGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh this research
-        </sl-button>
-      {% endif %}
-      {% if companyResearchCount > 0 %}
-        <div class="">
-          <sl-button id="refreshAllCompanyResearchGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyResearchGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh all the research
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyResearchCount > 0 %}
-        {{ htmButton_patchCompanyResearch() }}
-        {{ htmForm_patchCompanyResearch() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyResearchCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyResearch() }}
-        {{ htmForm_postCompanyResearch() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyResearch() }}
-        {{ htmForm_postCompanyResearch() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyResearch() }}
-        {{ htmForm_putimportCompanyResearch() }}
-  {% endif %}
-        {%- endblock htmFormsCompanyResearchPage %}
 {% if companyResearchCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-duotone fa-solid fa-school"></i>
-            <span class="">research</span>
-          </sl-button>
+            <span>research</span>
+          </a>
         </h1>
         {{ htmSearchButtonsCompanyResearchPage() }}
+            {{ htmFormsCompanyResearchPage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
   {% if classIconCssClasses is defined %}
@@ -1133,17 +1099,18 @@
   {% if companyResearchCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-duotone fa-solid fa-school"></i>
             <span class="">research</span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsCompanyResearchPage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
             <span class="">{{companyResearch_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsCompanyResearchPage() }}
+            {{ htmFormsCompanyResearchPage() }}
     {% else %}
         {{ htmBodyAllCompanyResearchPage() }}
     {% endif %}

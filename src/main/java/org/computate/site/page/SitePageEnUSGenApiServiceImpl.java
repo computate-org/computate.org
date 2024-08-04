@@ -342,37 +342,28 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchSitePageList(siteRequest, true, false, true).onSuccess(listSitePage -> {
 							try {
-								if(listSitePage.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_SitePage")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_SitePage"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listSitePage.getRequest().getRows());
+								apiRequest.setNumFound(listSitePage.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listSitePage.first());
+								eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listSitePage.getRequest().getRows());
-									apiRequest.setNumFound(listSitePage.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listSitePage.first());
-									eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHSitePage(apiRequest, listSitePage).onSuccess(e -> {
-										response200PATCHSitePage(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchSitePage succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchSitePage failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHSitePage(apiRequest, listSitePage).onSuccess(e -> {
+									response200PATCHSitePage(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchSitePage succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchSitePage failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchSitePage failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchSitePage failed. "), ex);
 								error(siteRequest, eventHandler, ex);

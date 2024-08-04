@@ -342,38 +342,29 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyEventList(siteRequest, false, true, true).onSuccess(listCompanyEvent -> {
 							try {
-								if(listCompanyEvent.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyEvent")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyEvent"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listCompanyEvent.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyEvent.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listCompanyEvent.first());
+								apiRequest.setPk(Optional.ofNullable(listCompanyEvent.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketCompanyEvent", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listCompanyEvent.getRequest().getRows());
-									apiRequest.setNumFound(listCompanyEvent.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listCompanyEvent.first());
-									apiRequest.setPk(Optional.ofNullable(listCompanyEvent.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketCompanyEvent", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHCompanyEvent(apiRequest, listCompanyEvent).onSuccess(e -> {
-										response200PATCHCompanyEvent(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchCompanyEvent succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchCompanyEvent failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHCompanyEvent(apiRequest, listCompanyEvent).onSuccess(e -> {
+									response200PATCHCompanyEvent(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyEvent succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchCompanyEvent failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchCompanyEvent failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchCompanyEvent failed. "), ex);
 								error(siteRequest, eventHandler, ex);

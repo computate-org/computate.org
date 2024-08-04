@@ -15,6 +15,10 @@
 {%- block htmStylePageLayout %}
 {{ super() }}
 {%- block htmStyleBaseModelPage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleBaseModelPage %}
 {%- endblock htmStylePageLayout %}
 
@@ -246,63 +250,29 @@
 {%- block htmUrlBaseModelPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlBaseModelPage %}
             {%- macro htmBodyAllBaseModelPage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 
-                <span class=""></span>
-              </sl-button>
+                <span></span>
+              </a>
             </h1>
-            {{ htmSearchButtonsBaseModelPage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsBaseModelPage() }}
+            {{ htmSearchButtonsBaseModelPage() }}
+            {{ htmFormsBaseModelPage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsBaseModelPage() }}
             <div class="grid-mode-details">
             <div>
                 
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listBaseModel%}
               <a href="{{ item.pageUrlPk }}">
                 
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
             </div>
             {%- endmacro htmBodyAllBaseModelPage() %}
 {%- macro htmSearchButtonsBaseModelPage() %}
@@ -398,6 +368,33 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsBaseModelPage() %}
+{%- macro htmFormsBaseModelPage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if baseModelCount == 1 %}
+        <sl-tooltip content="Refresh ">
+          <sl-button
+              id="refreshBaseModelGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if baseModelCount > 0 %}
+        <sl-tooltip content="Refresh ">
+          <sl-button id="refreshBaseModelGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{%- endmacro htmFormsBaseModelPage() %}
 
     {%- block htmBodyStartPageLayout %}
     {{ super() }}
@@ -545,18 +542,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeBaseModel_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('BaseModel', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeBaseModel_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeBaseModel_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('BaseModel', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeBaseModelPage %}
             </div>
           </sl-drawer>
@@ -577,18 +567,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotBaseModel " id="pageSearchVal-PivotBaseModel_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('BaseModel', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotBaseModel_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('BaseModel', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotBaseModelPage %}
             </div>
           </sl-drawer>
@@ -607,21 +589,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListBaseModel">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListBaseModel " id="pageSearchVal-FieldListBaseModel_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListBaseModel " id="pageSearchVal-FieldListBaseModel_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListBaseModel_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('BaseModel', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListBaseModel_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListBaseModel_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('BaseModel', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListBaseModelPage %}
             </div>
           </sl-drawer>
@@ -650,11 +626,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsBaseModel_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('BaseModel', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsBaseModel_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('BaseModel', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsBaseModel_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsBaseModel_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldBaseModel_{{ key }} " id="pageStatsFieldBaseModel_{{ key }}">
                           {% if value.stats is defined %}
@@ -701,38 +677,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsBaseModelPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if baseModelCount == 1 %}
-        <sl-button
-            id="refreshBaseModelGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh 
-        </sl-button>
-      {% endif %}
-      {% if baseModelCount > 0 %}
-        <div class="">
-          <sl-button id="refreshBaseModelGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshBaseModelGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshBaseModelGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh 
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-        {%- endblock htmFormsBaseModelPage %}
 {% if baseModelCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             
-            <span class=""></span>
-          </sl-button>
+            <span></span>
+          </a>
         </h1>
         {{ htmSearchButtonsBaseModelPage() }}
+            {{ htmFormsBaseModelPage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
   {% if classIconCssClasses is defined %}
@@ -745,17 +698,18 @@
   {% if baseModelCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             
             <span class=""></span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsBaseModelPage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
             <span class="">{{baseModel_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsBaseModelPage() }}
+            {{ htmFormsBaseModelPage() }}
     {% else %}
         {{ htmBodyAllBaseModelPage() }}
     {% endif %}

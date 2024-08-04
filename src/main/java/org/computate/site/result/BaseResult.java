@@ -243,6 +243,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * DocValues: true
 	 * VarUrlId: true
 	 * Description: The link by name for this object in the UI
+	 * DisplayName: URL
 	 */
 	protected void _pageUrlId(Wrap<String> w) {
 		if(objectId != null) {

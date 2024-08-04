@@ -15,6 +15,10 @@
 {%- block htmStyleBaseModelPage %}
 {{ super() }}
 {%- block htmStyleSiteUserPage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleSiteUserPage %}
 {%- endblock htmStyleBaseModelPage %}
 
@@ -393,15 +397,15 @@
         {%- block websocketSiteUserPage %}{%- endblock %}
         document.querySelector('#htmForm_patchSiteUser')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchSiteUser(null, document.querySelector('#htmForm_patchSiteUser'));
+          patchSiteUser(null, document.querySelector('#htmForm_patchSiteUser'), document.querySelector('#htmFormButton_patchSiteUser'));
         });
         document.querySelector('#htmForm_postSiteUser')?.addEventListener('submit', event => {
           event.preventDefault();
-          postSiteUser(document.querySelector('#htmForm_postSiteUser'));
+          postSiteUser(document.querySelector('#htmForm_postSiteUser'), document.querySelector('#htmFormButton_postSiteUser'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
         });
         document.querySelector('#htmForm_putimportSiteUser')?.addEventListener('submit', event => {
           event.preventDefault();
-          putimportSiteUser(document.querySelector('#htmForm_putimportSiteUser'));
+          putimportSiteUser(document.querySelector('#htmForm_putimportSiteUser'), document.querySelector('#htmFormButton_putimportSiteUser'));
         });
         document.querySelector('#htmForm_searchpageSiteUser')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -422,16 +426,20 @@
 {%- block htmUrlSiteUserPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlSiteUserPage %}
 
 {%- macro htmButton_patchSiteUser() %}
-        <sl-button
-            onclick="document.querySelector('#patchSiteUserDialog').show(); "
-            >
-          <i class="fas fa-edit "></i>
-          Modify site user
-        </sl-button>
+        <sl-tooltip content="Modify site user">
+          <sl-button
+              onclick="document.querySelector('#patchSiteUserDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchSiteUser() %}
-            <sl-button type="submit" variant="primary">Modify site user</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_patchSiteUser"
+                >Modify site user</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchSiteUser() %}
@@ -534,16 +542,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_postSiteUser() %}
-        <sl-button
-            onclick="document.querySelector('#postSiteUserDialog').show(); "
-            >
-          <i class="fas fa-file-plus "></i>
-          Create a site user
-        </sl-button>
+        <sl-tooltip content="Create a site user">
+          <sl-button
+              onclick="document.querySelector('#postSiteUserDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_postSiteUser() %}
-            <sl-button type="submit" variant="primary">Create a site user</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_postSiteUser"
+                >Create a site user</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postSiteUser() %}
@@ -647,16 +659,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_putimportSiteUser() %}
-        <sl-button
-            onclick="document.querySelector('#putimportSiteUserDialog').show(); "
-            >
-          <i class="fas fa-file-import "></i>
-          Import site users
-        </sl-button>
+        <sl-tooltip content="Import site users">
+          <sl-button
+              onclick="document.querySelector('#putimportSiteUserDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportSiteUser() %}
-            <sl-button type="submit" variant="primary">Import site users</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_putimportSiteUser"
+                >Import site users</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportSiteUser() %}
@@ -679,7 +695,9 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageSiteUser() %}
-            <sl-button type="submit" variant="primary">Search site users</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_searchpageSiteUser"
+                >Search site users</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageSiteUser() %}
@@ -776,87 +794,34 @@
               {% endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_searchpageSiteUser() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllSiteUserPage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 <i class="fa-duotone fa-solid fa-user-gear"></i>
-                <span class="">site users</span>
-              </sl-button>
+                <span>site users</span>
+              </a>
             </h1>
-            {{ htmSearchButtonsSiteUserPage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsSiteUserPage() }}
+            {{ htmSearchButtonsSiteUserPage() }}
+            {{ htmFormsSiteUserPage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsSiteUserPage() }}
             <div class="grid-mode-details">
             <div>
                 <i class="fa-duotone fa-solid fa-user-gear"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listSiteUser%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-duotone fa-solid fa-user-gear"></i>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
-                <div>{{ item.objectTitle }}</div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
             </div>
             {%- endmacro htmBodyAllSiteUserPage() %}
 {%- macro htmSearchButtonsSiteUserPage() %}
@@ -952,6 +917,55 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsSiteUserPage() %}
+{%- macro htmFormsSiteUserPage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if siteUserCount == 1 %}
+        <sl-tooltip content="Refresh this site user">
+          <sl-button
+              id="refreshThisSiteUserGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSiteUserGenPage')); }, function() { addError(document.querySelector('#refreshThisSiteUserGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if siteUserCount > 0 %}
+        <sl-tooltip content="Refresh all the site users">
+          <sl-button id="refreshAllSiteUserGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if siteUserCount > 0 %}
+        {{ htmButton_patchSiteUser() }}
+        {{ htmForm_patchSiteUser() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if siteUserCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postSiteUser() }}
+        {{ htmForm_postSiteUser() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postSiteUser() }}
+        {{ htmForm_postSiteUser() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportSiteUser() }}
+        {{ htmForm_putimportSiteUser() }}
+  {% endif %}
+{%- endmacro htmFormsSiteUserPage() %}
 
     {%- block htmBodyStartBaseModelPage %}
     {{ super() }}
@@ -1099,18 +1113,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSiteUser_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SiteUser', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeSiteUser_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSiteUser_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SiteUser', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeSiteUserPage %}
             </div>
           </sl-drawer>
@@ -1131,18 +1138,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotSiteUser " id="pageSearchVal-PivotSiteUser_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotSiteUser_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('SiteUser', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotSiteUser_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotSiteUser_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotSiteUserPage %}
             </div>
           </sl-drawer>
@@ -1161,21 +1160,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListSiteUser">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListSiteUser " id="pageSearchVal-FieldListSiteUser_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListSiteUser " id="pageSearchVal-FieldListSiteUser_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListSiteUser_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('SiteUser', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListSiteUser_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListSiteUser_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListSiteUserPage %}
             </div>
           </sl-drawer>
@@ -1204,11 +1197,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsSiteUser_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('SiteUser', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsSiteUser_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsSiteUser_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsSiteUser_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldSiteUser_{{ key }} " id="pageStatsFieldSiteUser_{{ key }}">
                           {% if value.stats is defined %}
@@ -1255,60 +1248,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsSiteUserPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if siteUserCount == 1 %}
-        <sl-button
-            id="refreshThisSiteUserGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSiteUserGenPage')); }, function() { addError(document.querySelector('#refreshThisSiteUserGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh this site user
-        </sl-button>
-      {% endif %}
-      {% if siteUserCount > 0 %}
-        <div class="">
-          <sl-button id="refreshAllSiteUserGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh all the site users
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if siteUserCount > 0 %}
-        {{ htmButton_patchSiteUser() }}
-        {{ htmForm_patchSiteUser() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if siteUserCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postSiteUser() }}
-        {{ htmForm_postSiteUser() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postSiteUser() }}
-        {{ htmForm_postSiteUser() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportSiteUser() }}
-        {{ htmForm_putimportSiteUser() }}
-  {% endif %}
-        {%- endblock htmFormsSiteUserPage %}
 {% if siteUserCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-duotone fa-solid fa-user-gear"></i>
-            <span class="">site users</span>
-          </sl-button>
+            <span>site users</span>
+          </a>
         </h1>
         {{ htmSearchButtonsSiteUserPage() }}
+            {{ htmFormsSiteUserPage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
   {% if classIconCssClasses is defined %}
@@ -1321,17 +1269,18 @@
   {% if siteUserCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-duotone fa-solid fa-user-gear"></i>
             <span class="">site user</span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsSiteUserPage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
             <span class="">{{siteUser_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsSiteUserPage() }}
+            {{ htmFormsSiteUserPage() }}
     {% else %}
         {{ htmBodyAllSiteUserPage() }}
     {% endif %}

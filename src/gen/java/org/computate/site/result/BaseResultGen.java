@@ -2402,7 +2402,7 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_objectId = "ID";
 	public static final String DISPLAY_NAME_objectSuggest = "autosuggest";
 	public static final String DISPLAY_NAME_objectText = "text";
-	public static final String DISPLAY_NAME_pageUrlId = "";
+	public static final String DISPLAY_NAME_pageUrlId = "URL";
 	public static final String DISPLAY_NAME_pageUrlPk = "";
 	public static final String DISPLAY_NAME_pageUrlApi = "";
 	public static final String DISPLAY_NAME_id = "";

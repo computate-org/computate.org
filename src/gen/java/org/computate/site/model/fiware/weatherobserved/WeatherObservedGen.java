@@ -228,6 +228,118 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String WeatherObserved_Icon = "<i class=\"fa-regular fa-cloud-bolt-sun\"></i>";
 	public static final Integer WeatherObserved_Rows = 100;
 
+	//////////
+	// name //
+	//////////
+
+
+	/**	 The entity name
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String name;
+
+	/**	<br> The entity name
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _name(Wrap<String> w);
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String o) {
+		this.name = WeatherObserved.staticSetName(siteRequest_, o);
+	}
+	public static String staticSetName(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved nameInit() {
+		Wrap<String> nameWrap = new Wrap<String>().var("name");
+		if(name == null) {
+			_name(nameWrap);
+			Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
+				setName(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchName(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchName(siteRequest_, WeatherObserved.staticSetName(siteRequest_, o)).toString();
+	}
+
+	public String sqlName() {
+		return name;
+	}
+
+	/////////////////
+	// description //
+	/////////////////
+
+
+	/**	 The entity description
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String description;
+
+	/**	<br> The entity description
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _description(Wrap<String> w);
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String o) {
+		this.description = WeatherObserved.staticSetDescription(siteRequest_, o);
+	}
+	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved descriptionInit() {
+		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+		if(description == null) {
+			_description(descriptionWrap);
+			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+				setDescription(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchDescription(siteRequest_, WeatherObserved.staticSetDescription(siteRequest_, o)).toString();
+	}
+
+	public String sqlDescription() {
+		return description;
+	}
+
 	/////////////
 	// address //
 	/////////////
@@ -1385,62 +1497,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return dateObserved;
 	}
 
-	/////////////////
-	// description //
-	/////////////////
-
-
-	/**	 The entity description
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String description;
-
-	/**	<br> The entity description
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _description(Wrap<String> w);
-
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String o) {
-		this.description = WeatherObserved.staticSetDescription(siteRequest_, o);
-	}
-	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved descriptionInit() {
-		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
-		if(description == null) {
-			_description(descriptionWrap);
-			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
-				setDescription(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchDescription(siteRequest_, WeatherObserved.staticSetDescription(siteRequest_, o)).toString();
-	}
-
-	public String sqlDescription() {
-		return description;
-	}
-
 	//////////////
 	// dewPoint //
 	//////////////
@@ -2004,62 +2060,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public Point sqlLocation() {
 		return location;
-	}
-
-	//////////
-	// name //
-	//////////
-
-
-	/**	 The entity name
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String name;
-
-	/**	<br> The entity name
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _name(Wrap<String> w);
-
-	public String getName() {
-		return name;
-	}
-	public void setName(String o) {
-		this.name = WeatherObserved.staticSetName(siteRequest_, o);
-	}
-	public static String staticSetName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved nameInit() {
-		Wrap<String> nameWrap = new Wrap<String>().var("name");
-		if(name == null) {
-			_name(nameWrap);
-			Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
-				setName(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchName(siteRequest_, WeatherObserved.staticSetName(siteRequest_, o)).toString();
-	}
-
-	public String sqlName() {
-		return name;
 	}
 
 	///////////
@@ -3534,6 +3534,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
+				nameInit();
+				descriptionInit();
 				addressInit();
 				alternateNameInit();
 				areaServedColorsInit();
@@ -3551,7 +3553,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				dateCreatedInit();
 				dateModifiedInit();
 				dateObservedInit();
-				descriptionInit();
 				dewPointInit();
 				diffuseIrradiationInit();
 				directIrradiationInit();
@@ -3559,7 +3560,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				gustSpeedInit();
 				illuminanceInit();
 				locationInit();
-				nameInit();
 				ownerInit();
 				precipitationInit();
 				precipitationForecastInit();
@@ -3634,6 +3634,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public Object obtainWeatherObserved(String var) {
 		WeatherObserved oWeatherObserved = (WeatherObserved)this;
 		switch(var) {
+			case "name":
+				return oWeatherObserved.name;
+			case "description":
+				return oWeatherObserved.description;
 			case "address":
 				return oWeatherObserved.address;
 			case "alternateName":
@@ -3668,8 +3672,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.dateModified;
 			case "dateObserved":
 				return oWeatherObserved.dateObserved;
-			case "description":
-				return oWeatherObserved.description;
 			case "dewPoint":
 				return oWeatherObserved.dewPoint;
 			case "diffuseIrradiation":
@@ -3684,8 +3686,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.illuminance;
 			case "location":
 				return oWeatherObserved.location;
-			case "name":
-				return oWeatherObserved.name;
 			case "owner":
 				return oWeatherObserved.owner;
 			case "precipitation":
@@ -3767,6 +3767,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static Object staticSetWeatherObserved(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
+		case "name":
+			return WeatherObserved.staticSetName(siteRequest_, o);
+		case "description":
+			return WeatherObserved.staticSetDescription(siteRequest_, o);
 		case "address":
 			return WeatherObserved.staticSetAddress(siteRequest_, o);
 		case "alternateName":
@@ -3801,8 +3805,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetDateModified(siteRequest_, o);
 		case "dateObserved":
 			return WeatherObserved.staticSetDateObserved(siteRequest_, o);
-		case "description":
-			return WeatherObserved.staticSetDescription(siteRequest_, o);
 		case "dewPoint":
 			return WeatherObserved.staticSetDewPoint(siteRequest_, o);
 		case "diffuseIrradiation":
@@ -3817,8 +3819,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetIlluminance(siteRequest_, o);
 		case "location":
 			return WeatherObserved.staticSetLocation(siteRequest_, o);
-		case "name":
-			return WeatherObserved.staticSetName(siteRequest_, o);
 		case "owner":
 			return WeatherObserved.staticSetOwner(siteRequest_, o);
 		case "precipitation":
@@ -3875,6 +3875,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static Object staticSearchWeatherObserved(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
+		case "name":
+			return WeatherObserved.staticSearchName(siteRequest_, (String)o);
+		case "description":
+			return WeatherObserved.staticSearchDescription(siteRequest_, (String)o);
 		case "address":
 			return WeatherObserved.staticSearchAddress(siteRequest_, (JsonObject)o);
 		case "alternateName":
@@ -3909,8 +3913,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchDateModified(siteRequest_, (String)o);
 		case "dateObserved":
 			return WeatherObserved.staticSearchDateObserved(siteRequest_, (String)o);
-		case "description":
-			return WeatherObserved.staticSearchDescription(siteRequest_, (String)o);
 		case "dewPoint":
 			return WeatherObserved.staticSearchDewPoint(siteRequest_, (BigDecimal)o);
 		case "diffuseIrradiation":
@@ -3925,8 +3927,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchIlluminance(siteRequest_, (BigDecimal)o);
 		case "location":
 			return WeatherObserved.staticSearchLocation(siteRequest_, (Point)o);
-		case "name":
-			return WeatherObserved.staticSearchName(siteRequest_, (String)o);
 		case "owner":
 			return WeatherObserved.staticSearchOwner(siteRequest_, (JsonObject)o);
 		case "precipitation":
@@ -3983,6 +3983,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static String staticSearchStrWeatherObserved(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
+		case "name":
+			return WeatherObserved.staticSearchStrName(siteRequest_, (String)o);
+		case "description":
+			return WeatherObserved.staticSearchStrDescription(siteRequest_, (String)o);
 		case "address":
 			return WeatherObserved.staticSearchStrAddress(siteRequest_, (String)o);
 		case "alternateName":
@@ -4017,8 +4021,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrDateModified(siteRequest_, (String)o);
 		case "dateObserved":
 			return WeatherObserved.staticSearchStrDateObserved(siteRequest_, (String)o);
-		case "description":
-			return WeatherObserved.staticSearchStrDescription(siteRequest_, (String)o);
 		case "dewPoint":
 			return WeatherObserved.staticSearchStrDewPoint(siteRequest_, (Double)o);
 		case "diffuseIrradiation":
@@ -4033,8 +4035,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrIlluminance(siteRequest_, (Double)o);
 		case "location":
 			return WeatherObserved.staticSearchStrLocation(siteRequest_, (Point)o);
-		case "name":
-			return WeatherObserved.staticSearchStrName(siteRequest_, (String)o);
 		case "owner":
 			return WeatherObserved.staticSearchStrOwner(siteRequest_, (String)o);
 		case "precipitation":
@@ -4091,6 +4091,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static String staticSearchFqWeatherObserved(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
+		case "name":
+			return WeatherObserved.staticSearchFqName(siteRequest_, o);
+		case "description":
+			return WeatherObserved.staticSearchFqDescription(siteRequest_, o);
 		case "address":
 			return WeatherObserved.staticSearchFqAddress(siteRequest_, o);
 		case "alternateName":
@@ -4125,8 +4129,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqDateModified(siteRequest_, o);
 		case "dateObserved":
 			return WeatherObserved.staticSearchFqDateObserved(siteRequest_, o);
-		case "description":
-			return WeatherObserved.staticSearchFqDescription(siteRequest_, o);
 		case "dewPoint":
 			return WeatherObserved.staticSearchFqDewPoint(siteRequest_, o);
 		case "diffuseIrradiation":
@@ -4141,8 +4143,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqIlluminance(siteRequest_, o);
 		case "location":
 			return WeatherObserved.staticSearchFqLocation(siteRequest_, o);
-		case "name":
-			return WeatherObserved.staticSearchFqName(siteRequest_, o);
 		case "owner":
 			return WeatherObserved.staticSearchFqOwner(siteRequest_, o);
 		case "precipitation":
@@ -4211,7 +4211,19 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public Object persistWeatherObserved(String var, Object val) {
 		String varLower = var.toLowerCase();
-			if("address".equals(varLower)) {
+			if("name".equals(varLower)) {
+				if(val instanceof String) {
+					setName((String)val);
+				}
+				saves.add("name");
+				return val;
+			} else if("description".equals(varLower)) {
+				if(val instanceof String) {
+					setDescription((String)val);
+				}
+				saves.add("description");
+				return val;
+			} else if("address".equals(varLower)) {
 				if(val instanceof String) {
 					setAddress((String)val);
 				} else if(val instanceof JsonObject) {
@@ -4309,12 +4321,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("dateObserved");
 				return val;
-			} else if("description".equals(varLower)) {
-				if(val instanceof String) {
-					setDescription((String)val);
-				}
-				saves.add("description");
-				return val;
 			} else if("dewpoint".equals(varLower)) {
 				if(val instanceof String) {
 					setDewPoint((String)val);
@@ -4370,12 +4376,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setLocation((Point)val);
 				}
 				saves.add("location");
-				return val;
-			} else if("name".equals(varLower)) {
-				if(val instanceof String) {
-					setName((String)val);
-				}
-				saves.add("name");
 				return val;
 			} else if("owner".equals(varLower)) {
 				if(val instanceof String) {
@@ -4546,6 +4546,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
 		if(saves != null) {
 
+			if(saves.contains("name")) {
+				String name = (String)doc.get("name_docvalues_string");
+				if(name != null)
+					oWeatherObserved.setName(name);
+			}
+
+			if(saves.contains("description")) {
+				String description = (String)doc.get("description_docvalues_string");
+				if(description != null)
+					oWeatherObserved.setDescription(description);
+			}
+
 			if(saves.contains("address")) {
 				String address = (String)doc.get("address_docvalues_string");
 				if(address != null)
@@ -4648,12 +4660,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setDateObserved(dateObserved);
 			}
 
-			if(saves.contains("description")) {
-				String description = (String)doc.get("description_docvalues_string");
-				if(description != null)
-					oWeatherObserved.setDescription(description);
-			}
-
 			if(saves.contains("dewPoint")) {
 				Double dewPoint = (Double)doc.get("dewPoint_docvalues_double");
 				if(dewPoint != null)
@@ -4694,12 +4700,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				Point location = (Point)doc.get("location_docvalues_location");
 				if(location != null)
 					oWeatherObserved.setLocation(location);
-			}
-
-			if(saves.contains("name")) {
-				String name = (String)doc.get("name_docvalues_string");
-				if(name != null)
-					oWeatherObserved.setName(name);
 			}
 
 			if(saves.contains("owner")) {
@@ -4827,6 +4827,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 
 	public void indexWeatherObserved(JsonObject doc) {
+		if(name != null) {
+			doc.put("name_docvalues_string", name);
+		}
+		if(description != null) {
+			doc.put("description_docvalues_string", description);
+		}
 		if(address != null) {
 			doc.put("address_docvalues_string", address.toString());
 		}
@@ -4892,9 +4898,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(dateObserved != null) {
 			doc.put("dateObserved_docvalues_string", dateObserved);
 		}
-		if(description != null) {
-			doc.put("description_docvalues_string", description);
-		}
 		if(dewPoint != null) {
 			doc.put("dewPoint_docvalues_double", dewPoint.doubleValue());
 		}
@@ -4915,9 +4918,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		}
 		if(location != null) {
 			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
-		}
-		if(name != null) {
-			doc.put("name_docvalues_string", name);
 		}
 		if(owner != null) {
 			doc.put("owner_docvalues_string", owner.toString());
@@ -4985,6 +4985,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static String varStoredWeatherObserved(String entityVar) {
 		switch(entityVar) {
+			case "name":
+				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
 			case "address":
 				return "address_docvalues_string";
 			case "alternateName":
@@ -5019,8 +5023,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "dateModified_docvalues_string";
 			case "dateObserved":
 				return "dateObserved_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
 			case "dewPoint":
 				return "dewPoint_docvalues_double";
 			case "diffuseIrradiation":
@@ -5035,8 +5037,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "illuminance_docvalues_double";
 			case "location":
 				return "location_docvalues_location";
-			case "name":
-				return "name_docvalues_string";
 			case "owner":
 				return "owner_docvalues_string";
 			case "precipitation":
@@ -5084,6 +5084,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static String varIndexedWeatherObserved(String entityVar) {
 		switch(entityVar) {
+			case "name":
+				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
 			case "address":
 				return "address_docvalues_string";
 			case "alternateName":
@@ -5118,8 +5122,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "dateModified_docvalues_string";
 			case "dateObserved":
 				return "dateObserved_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
 			case "dewPoint":
 				return "dewPoint_docvalues_double";
 			case "diffuseIrradiation":
@@ -5134,8 +5136,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "illuminance_docvalues_double";
 			case "location":
 				return "location_docvalues_location";
-			case "name":
-				return "name_docvalues_string";
 			case "owner":
 				return "owner_docvalues_string";
 			case "precipitation":
@@ -5183,6 +5183,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static String searchVarWeatherObserved(String searchVar) {
 		switch(searchVar) {
+			case "name_docvalues_string":
+				return "name";
+			case "description_docvalues_string":
+				return "description";
 			case "address_docvalues_string":
 				return "address";
 			case "alternateName_docvalues_string":
@@ -5217,8 +5221,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "dateModified";
 			case "dateObserved_docvalues_string":
 				return "dateObserved";
-			case "description_docvalues_string":
-				return "description";
 			case "dewPoint_docvalues_double":
 				return "dewPoint";
 			case "diffuseIrradiation_docvalues_double":
@@ -5233,8 +5235,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "illuminance";
 			case "location_docvalues_location":
 				return "location";
-			case "name_docvalues_string":
-				return "name";
 			case "owner_docvalues_string":
 				return "owner";
 			case "precipitation_docvalues_double":
@@ -5305,6 +5305,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		WeatherObserved oWeatherObserved = (WeatherObserved)this;
 		SiteRequest siteRequest = oWeatherObserved.getSiteRequest_();
 
+		oWeatherObserved.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAddress(Optional.ofNullable(doc.get("address_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAlternateName(Optional.ofNullable(doc.get("alternateName_docvalues_string")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("areaServedColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
@@ -5328,7 +5330,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setDateCreated(Optional.ofNullable(doc.get("dateCreated_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDateModified(Optional.ofNullable(doc.get("dateModified_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDateObserved(Optional.ofNullable(doc.get("dateObserved_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDewPoint(Optional.ofNullable(doc.get("dewPoint_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDiffuseIrradiation(Optional.ofNullable(doc.get("diffuseIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDirectIrradiation(Optional.ofNullable(doc.get("directIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
@@ -5336,7 +5337,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setGustSpeed(Optional.ofNullable(doc.get("gustSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setIlluminance(Optional.ofNullable(doc.get("illuminance_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setOwner(Optional.ofNullable(doc.get("owner_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setPrecipitation(Optional.ofNullable(doc.get("precipitation_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setPrecipitationForecast(Optional.ofNullable(doc.get("precipitationForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
@@ -5370,6 +5370,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof WeatherObserved) {
 			WeatherObserved original = (WeatherObserved)o;
+			if(!Objects.equals(name, original.getName()))
+				apiRequest.addVars("name");
+			if(!Objects.equals(description, original.getDescription()))
+				apiRequest.addVars("description");
 			if(!Objects.equals(address, original.getAddress()))
 				apiRequest.addVars("address");
 			if(!Objects.equals(alternateName, original.getAlternateName()))
@@ -5404,8 +5408,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("dateModified");
 			if(!Objects.equals(dateObserved, original.getDateObserved()))
 				apiRequest.addVars("dateObserved");
-			if(!Objects.equals(description, original.getDescription()))
-				apiRequest.addVars("description");
 			if(!Objects.equals(dewPoint, original.getDewPoint()) && dewPoint != null && original.getDewPoint() != null && dewPoint.compareTo(original.getDewPoint()) != 0)
 				apiRequest.addVars("dewPoint");
 			if(!Objects.equals(diffuseIrradiation, original.getDiffuseIrradiation()) && diffuseIrradiation != null && original.getDiffuseIrradiation() != null && diffuseIrradiation.compareTo(original.getDiffuseIrradiation()) != 0)
@@ -5420,8 +5422,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("illuminance");
 			if(!Objects.equals(location, original.getLocation()))
 				apiRequest.addVars("location");
-			if(!Objects.equals(name, original.getName()))
-				apiRequest.addVars("name");
 			if(!Objects.equals(owner, original.getOwner()))
 				apiRequest.addVars("owner");
 			if(!Objects.equals(precipitation, original.getPrecipitation()) && precipitation != null && original.getPrecipitation() != null && precipitation.compareTo(original.getPrecipitation()) != 0)
@@ -5473,6 +5473,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
+		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(address).map(v -> "address: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(alternateName).map(v -> "alternateName: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(areaServedColors).map(v -> "areaServedColors: " + v + "\n").orElse(""));
@@ -5490,7 +5492,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(dateCreated).map(v -> "dateCreated: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(dateModified).map(v -> "dateModified: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(dateObserved).map(v -> "dateObserved: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(dewPoint).map(v -> "dewPoint: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(diffuseIrradiation).map(v -> "diffuseIrradiation: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(directIrradiation).map(v -> "directIrradiation: " + v + "\n").orElse(""));
@@ -5498,7 +5499,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(gustSpeed).map(v -> "gustSpeed: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(illuminance).map(v -> "illuminance: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(owner).map(v -> "owner: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(precipitation).map(v -> "precipitation: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(precipitationForecast).map(v -> "precipitationForecast: " + v + "\n").orElse(""));
@@ -5527,6 +5527,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_WeatherObserved;
 	}
+	public static final String VAR_name = "name";
+	public static final String VAR_description = "description";
 	public static final String VAR_address = "address";
 	public static final String VAR_alternateName = "alternateName";
 	public static final String VAR_areaServedColors = "areaServedColors";
@@ -5544,7 +5546,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_dateCreated = "dateCreated";
 	public static final String VAR_dateModified = "dateModified";
 	public static final String VAR_dateObserved = "dateObserved";
-	public static final String VAR_description = "description";
 	public static final String VAR_dewPoint = "dewPoint";
 	public static final String VAR_diffuseIrradiation = "diffuseIrradiation";
 	public static final String VAR_directIrradiation = "directIrradiation";
@@ -5552,7 +5553,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_gustSpeed = "gustSpeed";
 	public static final String VAR_illuminance = "illuminance";
 	public static final String VAR_location = "location";
-	public static final String VAR_name = "name";
 	public static final String VAR_owner = "owner";
 	public static final String VAR_precipitation = "precipitation";
 	public static final String VAR_precipitationForecast = "precipitationForecast";
@@ -5587,6 +5587,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return WeatherObserved.varsFqWeatherObserved(new ArrayList<String>());
 	}
 	public static List<String> varsFqWeatherObserved(List<String> vars) {
+		vars.add(VAR_name);
+		vars.add(VAR_description);
 		vars.add(VAR_address);
 		vars.add(VAR_alternateName);
 		vars.add(VAR_areaServed);
@@ -5601,7 +5603,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_dateCreated);
 		vars.add(VAR_dateModified);
 		vars.add(VAR_dateObserved);
-		vars.add(VAR_description);
 		vars.add(VAR_dewPoint);
 		vars.add(VAR_diffuseIrradiation);
 		vars.add(VAR_directIrradiation);
@@ -5609,7 +5610,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_gustSpeed);
 		vars.add(VAR_illuminance);
 		vars.add(VAR_location);
-		vars.add(VAR_name);
 		vars.add(VAR_owner);
 		vars.add(VAR_precipitation);
 		vars.add(VAR_precipitationForecast);
@@ -5671,6 +5671,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return vars;
 	}
 
+	public static final String DISPLAY_NAME_name = "name";
+	public static final String DISPLAY_NAME_description = "description";
 	public static final String DISPLAY_NAME_address = "address";
 	public static final String DISPLAY_NAME_alternateName = "alternate name";
 	public static final String DISPLAY_NAME_areaServedColors = "area served colors";
@@ -5688,7 +5690,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_dateCreated = "date created";
 	public static final String DISPLAY_NAME_dateModified = "date modified";
 	public static final String DISPLAY_NAME_dateObserved = "date observed";
-	public static final String DISPLAY_NAME_description = "description";
 	public static final String DISPLAY_NAME_dewPoint = "dew point";
 	public static final String DISPLAY_NAME_diffuseIrradiation = "diffuse irradiation";
 	public static final String DISPLAY_NAME_directIrradiation = "direct irradiation";
@@ -5696,7 +5697,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_gustSpeed = "gust speed";
 	public static final String DISPLAY_NAME_illuminance = "illuminance";
 	public static final String DISPLAY_NAME_location = "location";
-	public static final String DISPLAY_NAME_name = "name";
 	public static final String DISPLAY_NAME_owner = "owner";
 	public static final String DISPLAY_NAME_precipitation = "precipitation";
 	public static final String DISPLAY_NAME_precipitationForecast = "precipitation forecast";
@@ -5724,6 +5724,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static String displayNameWeatherObserved(String var) {
 		switch(var) {
+		case VAR_name:
+			return DISPLAY_NAME_name;
+		case VAR_description:
+			return DISPLAY_NAME_description;
 		case VAR_address:
 			return DISPLAY_NAME_address;
 		case VAR_alternateName:
@@ -5758,8 +5762,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_dateModified;
 		case VAR_dateObserved:
 			return DISPLAY_NAME_dateObserved;
-		case VAR_description:
-			return DISPLAY_NAME_description;
 		case VAR_dewPoint:
 			return DISPLAY_NAME_dewPoint;
 		case VAR_diffuseIrradiation:
@@ -5774,8 +5776,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_illuminance;
 		case VAR_location:
 			return DISPLAY_NAME_location;
-		case VAR_name:
-			return DISPLAY_NAME_name;
 		case VAR_owner:
 			return DISPLAY_NAME_owner;
 		case VAR_precipitation:
@@ -5825,6 +5825,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static String descriptionWeatherObserved(String var) {
 		switch(var) {
+		case VAR_name:
+			return "The name of this item";
+		case VAR_description:
+			return "A description of this item";
 		case VAR_address:
 			return "The mailing address";
 		case VAR_alternateName:
@@ -5859,8 +5863,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform";
 		case VAR_dateObserved:
 			return "Date of the observed entity defined by the user";
-		case VAR_description:
-			return "A description of this item";
 		case VAR_dewPoint:
 			return "The dew point encoded as a number. Observed temperature to which air must be cooled to become saturated with water vapor";
 		case VAR_diffuseIrradiation:
@@ -5875,8 +5877,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "(https://en.wikipedia.org/wiki/Illuminance) observed measured in lux (lx) or lumens per square metre (cd\u00B7sr\u00B7m\u22122)";
 		case VAR_location:
 			return "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon";
-		case VAR_name:
-			return "The name of this item";
 		case VAR_owner:
 			return "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)";
 		case VAR_precipitation:
@@ -5926,6 +5926,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static String classSimpleNameWeatherObserved(String var) {
 		switch(var) {
+		case VAR_name:
+			return "String";
+		case VAR_description:
+			return "String";
 		case VAR_address:
 			return "JsonObject";
 		case VAR_alternateName:
@@ -5960,8 +5964,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_dateObserved:
 			return "String";
-		case VAR_description:
-			return "String";
 		case VAR_dewPoint:
 			return "BigDecimal";
 		case VAR_diffuseIrradiation:
@@ -5976,8 +5978,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "BigDecimal";
 		case VAR_location:
 			return "Point";
-		case VAR_name:
-			return "String";
 		case VAR_owner:
 			return "JsonObject";
 		case VAR_precipitation:
@@ -6029,6 +6029,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_name:
 			return 1;
+		case VAR_description:
+			return 2;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}
@@ -6036,6 +6038,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static Integer htmRowWeatherObserved(String var) {
 		switch(var) {
+		case VAR_name:
+			return 3;
+		case VAR_description:
+			return 3;
 		case VAR_address:
 			return 3;
 		case VAR_alternateName:
@@ -6064,8 +6070,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 7;
 		case VAR_dateObserved:
 			return 7;
-		case VAR_description:
-			return 7;
 		case VAR_dewPoint:
 			return 8;
 		case VAR_diffuseIrradiation:
@@ -6079,8 +6083,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_illuminance:
 			return 9;
 		case VAR_location:
-			return 10;
-		case VAR_name:
 			return 10;
 		case VAR_owner:
 			return 10;
@@ -6129,8 +6131,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public static Integer htmCellWeatherObserved(String var) {
 		switch(var) {
-		case VAR_address:
+		case VAR_name:
 			return 1;
+		case VAR_description:
+			return 2;
+		case VAR_address:
+			return 3;
 		case VAR_alternateName:
 			return 2;
 		case VAR_areaServed:
@@ -6157,8 +6163,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 1;
 		case VAR_dateObserved:
 			return 2;
-		case VAR_description:
-			return 3;
 		case VAR_dewPoint:
 			return 1;
 		case VAR_diffuseIrradiation:
@@ -6173,8 +6177,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_location:
 			return 1;
-		case VAR_name:
-			return 2;
 		case VAR_owner:
 			return 3;
 		case VAR_precipitation:
@@ -6214,7 +6216,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_windSpeed:
 			return 3;
 		case VAR_entityId:
-			return 1;
+			return 4;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

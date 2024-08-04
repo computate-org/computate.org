@@ -342,38 +342,29 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyWebsiteList(siteRequest, false, true, true).onSuccess(listCompanyWebsite -> {
 							try {
-								if(listCompanyWebsite.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyWebsite")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyWebsite"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listCompanyWebsite.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyWebsite.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listCompanyWebsite.first());
+								apiRequest.setPk(Optional.ofNullable(listCompanyWebsite.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketCompanyWebsite", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listCompanyWebsite.getRequest().getRows());
-									apiRequest.setNumFound(listCompanyWebsite.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listCompanyWebsite.first());
-									apiRequest.setPk(Optional.ofNullable(listCompanyWebsite.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketCompanyWebsite", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHCompanyWebsite(apiRequest, listCompanyWebsite).onSuccess(e -> {
-										response200PATCHCompanyWebsite(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchCompanyWebsite succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchCompanyWebsite failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHCompanyWebsite(apiRequest, listCompanyWebsite).onSuccess(e -> {
+									response200PATCHCompanyWebsite(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyWebsite succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchCompanyWebsite failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchCompanyWebsite failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchCompanyWebsite failed. "), ex);
 								error(siteRequest, eventHandler, ex);

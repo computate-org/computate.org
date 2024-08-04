@@ -242,38 +242,29 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 						searchSiteUserList(siteRequest, false, true, true).onSuccess(listSiteUser -> {
 							try {
-								if(listSiteUser.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_SiteUser")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_SiteUser"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listSiteUser.getRequest().getRows());
+								apiRequest.setNumFound(listSiteUser.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listSiteUser.first());
+								apiRequest.setPk(Optional.ofNullable(listSiteUser.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listSiteUser.getRequest().getRows());
-									apiRequest.setNumFound(listSiteUser.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listSiteUser.first());
-									apiRequest.setPk(Optional.ofNullable(listSiteUser.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHSiteUser(apiRequest, listSiteUser).onSuccess(e -> {
-										response200PATCHSiteUser(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchSiteUser succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchSiteUser failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHSiteUser(apiRequest, listSiteUser).onSuccess(e -> {
+									response200PATCHSiteUser(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchSiteUser succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchSiteUser failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchSiteUser failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchSiteUser failed. "), ex);
 								error(siteRequest, eventHandler, ex);

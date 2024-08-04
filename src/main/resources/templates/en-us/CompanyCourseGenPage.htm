@@ -15,6 +15,10 @@
 {%- block htmStyleBaseModelPage %}
 {{ super() }}
 {%- block htmStyleCompanyCoursePage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleCompanyCoursePage %}
 {%- endblock htmStyleBaseModelPage %}
 
@@ -273,15 +277,15 @@
         {%- block websocketCompanyCoursePage %}{%- endblock %}
         document.querySelector('#htmForm_patchCompanyCourse')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyCourse(null, document.querySelector('#htmForm_patchCompanyCourse'));
+          patchCompanyCourse(null, document.querySelector('#htmForm_patchCompanyCourse'), document.querySelector('#htmFormButton_patchCompanyCourse'));
         });
         document.querySelector('#htmForm_postCompanyCourse')?.addEventListener('submit', event => {
           event.preventDefault();
-          postCompanyCourse(document.querySelector('#htmForm_postCompanyCourse'));
+          postCompanyCourse(document.querySelector('#htmForm_postCompanyCourse'), document.querySelector('#htmFormButton_postCompanyCourse'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
         });
         document.querySelector('#htmForm_putimportCompanyCourse')?.addEventListener('submit', event => {
           event.preventDefault();
-          putimportCompanyCourse(document.querySelector('#htmForm_putimportCompanyCourse'));
+          putimportCompanyCourse(document.querySelector('#htmForm_putimportCompanyCourse'), document.querySelector('#htmFormButton_putimportCompanyCourse'));
         });
         document.querySelector('#htmForm_searchpageCompanyCourse')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -302,16 +306,20 @@
 {%- block htmUrlCompanyCoursePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyCoursePage %}
 
 {%- macro htmButton_patchCompanyCourse() %}
-        <sl-button
-            onclick="document.querySelector('#patchCompanyCourseDialog').show(); "
-            >
-          <i class="fas fa-edit "></i>
-          Modify course
-        </sl-button>
+        <sl-tooltip content="Modify course">
+          <sl-button
+              onclick="document.querySelector('#patchCompanyCourseDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyCourse() %}
-            <sl-button type="submit" variant="primary">Modify course</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_patchCompanyCourse"
+                >Modify course</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyCourse() %}
@@ -414,16 +422,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_postCompanyCourse() %}
-        <sl-button
-            onclick="document.querySelector('#postCompanyCourseDialog').show(); "
-            >
-          <i class="fas fa-file-plus "></i>
-          Create a course
-        </sl-button>
+        <sl-tooltip content="Create a course">
+          <sl-button
+              onclick="document.querySelector('#postCompanyCourseDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_postCompanyCourse() %}
-            <sl-button type="submit" variant="primary">Create a course</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_postCompanyCourse"
+                >Create a course</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyCourse() %}
@@ -527,16 +539,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_putimportCompanyCourse() %}
-        <sl-button
-            onclick="document.querySelector('#putimportCompanyCourseDialog').show(); "
-            >
-          <i class="fas fa-file-import "></i>
-          Import courses
-        </sl-button>
+        <sl-tooltip content="Import courses">
+          <sl-button
+              onclick="document.querySelector('#putimportCompanyCourseDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyCourse() %}
-            <sl-button type="submit" variant="primary">Import courses</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_putimportCompanyCourse"
+                >Import courses</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyCourse() %}
@@ -559,7 +575,9 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyCourse() %}
-            <sl-button type="submit" variant="primary">Search courses</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_searchpageCompanyCourse"
+                >Search courses</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyCourse() %}
@@ -656,38 +674,26 @@
               {% endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_searchpageCompanyCourse() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyCoursePage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 <i class="fa-regular fa-notebook"></i>
-                <span class="">courses</span>
-              </sl-button>
+                <span>courses</span>
+              </a>
             </h1>
-            {{ htmSearchButtonsCompanyCoursePage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsCompanyCoursePage() }}
+            {{ htmSearchButtonsCompanyCoursePage() }}
+            {{ htmFormsCompanyCoursePage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsCompanyCoursePage() }}
             <div class="grid-mode-details">
             <div>
                 <i class="fa-regular fa-notebook"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>created</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by created ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by created descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               <sl-dropdown>
                 <sl-button slot="trigger" caret>course name</sl-button>
                 <sl-menu>
@@ -698,19 +704,6 @@
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by course name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -727,49 +720,21 @@
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret></sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by null ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by null descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
               </div>
             </div>
             <div class="grid-mode-details" id="site-results-grid">
               {% for item in listCompanyCourse%}
               <a href="{{ item.pageUrlPk }}">
                 <i class="fa-regular fa-notebook"></i>
-                <div><sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.created, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date></div>
                 <div>{{ item.courseName }}</div>
-                <div>{{ item.objectTitle }}</div>
                 <div>{{ item.courseDescription }}</div>
-                <div>{{ item.objectTitle }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnCreated is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnCourseName is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnObjectTitle is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
                       {% if getColumnCourseDescription is defined %}
-                        <div>
-                        </div>
-                      {% endif %}
-                      {% if getColumnObjectTitle is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -868,6 +833,55 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyCoursePage() %}
+{%- macro htmFormsCompanyCoursePage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if companyCourseCount == 1 %}
+        <sl-tooltip content="Refresh this course">
+          <sl-button
+              id="refreshThisCompanyCourseGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if companyCourseCount > 0 %}
+        <sl-tooltip content="Refresh all the courses">
+          <sl-button id="refreshAllCompanyCourseGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyCourseCount > 0 %}
+        {{ htmButton_patchCompanyCourse() }}
+        {{ htmForm_patchCompanyCourse() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyCourseCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyCourse() }}
+        {{ htmForm_postCompanyCourse() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyCourse() }}
+        {{ htmForm_postCompanyCourse() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyCourse() }}
+        {{ htmForm_putimportCompanyCourse() }}
+  {% endif %}
+{%- endmacro htmFormsCompanyCoursePage() %}
 
     {%- block htmBodyStartBaseModelPage %}
     {{ super() }}
@@ -1015,18 +1029,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyCourse_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyCourse', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeCompanyCourse_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyCourse_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyCourse', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeCompanyCoursePage %}
             </div>
           </sl-drawer>
@@ -1047,18 +1054,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotCompanyCourse " id="pageSearchVal-PivotCompanyCourse_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyCourse_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyCourse', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotCompanyCourse_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyCourse_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyCourse', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotCompanyCoursePage %}
             </div>
           </sl-drawer>
@@ -1077,21 +1076,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListCompanyCourse">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListCompanyCourse " id="pageSearchVal-FieldListCompanyCourse_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListCompanyCourse " id="pageSearchVal-FieldListCompanyCourse_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyCourse_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyCourse', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListCompanyCourse_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyCourse_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyCourse', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListCompanyCoursePage %}
             </div>
           </sl-drawer>
@@ -1120,11 +1113,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyCourse_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyCourse', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyCourse_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyCourse', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsCompanyCourse_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsCompanyCourse_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldCompanyCourse_{{ key }} " id="pageStatsFieldCompanyCourse_{{ key }}">
                           {% if value.stats is defined %}
@@ -1171,60 +1164,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsCompanyCoursePage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyCourseCount == 1 %}
-        <sl-button
-            id="refreshThisCompanyCourseGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh this course
-        </sl-button>
-      {% endif %}
-      {% if companyCourseCount > 0 %}
-        <div class="">
-          <sl-button id="refreshAllCompanyCourseGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh all the courses
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyCourseCount > 0 %}
-        {{ htmButton_patchCompanyCourse() }}
-        {{ htmForm_patchCompanyCourse() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyCourseCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyCourse() }}
-        {{ htmForm_postCompanyCourse() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyCourse() }}
-        {{ htmForm_postCompanyCourse() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyCourse() }}
-        {{ htmForm_putimportCompanyCourse() }}
-  {% endif %}
-        {%- endblock htmFormsCompanyCoursePage %}
 {% if companyCourseCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-notebook"></i>
-            <span class="">courses</span>
-          </sl-button>
+            <span>courses</span>
+          </a>
         </h1>
         {{ htmSearchButtonsCompanyCoursePage() }}
+            {{ htmFormsCompanyCoursePage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
   {% if classIconCssClasses is defined %}
@@ -1237,17 +1185,18 @@
   {% if companyCourseCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-notebook"></i>
             <span class="">course</span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsCompanyCoursePage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
             <span class="">{{companyCourse_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsCompanyCoursePage() }}
+            {{ htmFormsCompanyCoursePage() }}
     {% else %}
         {{ htmBodyAllCompanyCoursePage() }}
     {% endif %}

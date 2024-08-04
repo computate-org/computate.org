@@ -49,15 +49,43 @@ import io.vertx.pgclient.data.Polygon;
  **/
 public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: name
+	 * Description: The name of this item
+	 * HtmRow: 3
+	 * HtmCell: 1
+	 * HtmColumn: 1
+	 * HtmRowTitle: weather observed details
+	 * Facet: true
+	 **/
+	protected void _name(Wrap<String> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: description
+	 * Description: A description of this item
+	 * HtmRow: 3
+	 * HtmCell: 2
+	 * Facet: true
+	 * HtmColumn: 2
+	 **/
+	protected void _description(Wrap<String> w) {}
+
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
 	 * DisplayName: address
 	 * Description: The mailing address
-	 * HtmRowTitle: weather observed details
 	 * HtmRow: 3
-	 * HtmCell: 1
+	 * HtmCell: 3
 	 * Facet: true
 	 **/
 	protected void _address(Wrap<JsonObject> w) {}
@@ -274,19 +302,6 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * DisplayName: description
-	 * Description: A description of this item
-	 * HtmRow: 7
-	 * HtmCell: 3
-	 * Facet: true
-	 **/
-	protected void _description(Wrap<String> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
 	 * DisplayName: dew point
 	 * Description: The dew point encoded as a number. Observed temperature to which air must be cooled to become saturated with water vapor
 	 * HtmRow: 8
@@ -373,20 +388,6 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Facet: true
 	 **/
 	protected void _location(Wrap<Point> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: name
-	 * Description: The name of this item
-	 * HtmRow: 10
-	 * HtmCell: 2
-	 * HtmColumn: 1
-	 * Facet: true
-	 **/
-	protected void _name(Wrap<String> w) {}
 
 
 	/**
@@ -643,7 +644,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * DisplayName: entity ID
 	 * Description: A unique ID for this Smart Data Model
 	 * HtmRow: 3
-	 * HtmCell: 1
+	 * HtmCell: 4
 	 * Facet: true
 	 */
 	protected void _entityId(Wrap<String> w) {
@@ -665,7 +666,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
 		StringBuilder b = new StringBuilder();
-		b.append(Optional.ofNullable(entityShortId).map(s -> String.format("%s - %s", WeatherObserved_NameAdjectiveSingular_enUS, s)).orElse(pk.toString()));
+		b.append(Optional.ofNullable(entityShortId).map(s -> String.format("%s — %s", WeatherObserved_NameAdjectiveSingular_enUS, s)).orElse(pk.toString()));
 		w.o(b.toString().trim());
 	}
 

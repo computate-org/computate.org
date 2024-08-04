@@ -342,38 +342,29 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
 							try {
-								if(listCompanyCourse.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyCourse")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_CompanyCourse"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listCompanyCourse.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listCompanyCourse.first());
+								apiRequest.setPk(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-									apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listCompanyCourse.first());
-									apiRequest.setPk(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-										response200PATCHCompanyCourse(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchCompanyCourse succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchCompanyCourse failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
+									response200PATCHCompanyCourse(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyCourse succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchCompanyCourse failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchCompanyCourse failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchCompanyCourse failed. "), ex);
 								error(siteRequest, eventHandler, ex);

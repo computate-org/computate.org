@@ -15,6 +15,10 @@
 {%- block htmStyleBaseResultPage %}
 {{ super() }}
 {%- block htmStyleCompanyProductPage %}
+      #site-grid > main {
+        max-width: 100ch;
+        margin-inline: auto;
+      }
 {%- endblock htmStyleCompanyProductPage %}
 {%- endblock htmStyleBaseResultPage %}
 
@@ -433,15 +437,15 @@
         {%- block websocketCompanyProductPage %}{%- endblock %}
         document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'));
+          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'), document.querySelector('#htmFormButton_patchCompanyProduct'));
         });
         document.querySelector('#htmForm_postCompanyProduct')?.addEventListener('submit', event => {
           event.preventDefault();
-          postCompanyProduct(document.querySelector('#htmForm_postCompanyProduct'));
+          postCompanyProduct(document.querySelector('#htmForm_postCompanyProduct'), document.querySelector('#htmFormButton_postCompanyProduct'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
         });
         document.querySelector('#htmForm_putimportCompanyProduct')?.addEventListener('submit', event => {
           event.preventDefault();
-          putimportCompanyProduct(document.querySelector('#htmForm_putimportCompanyProduct'));
+          putimportCompanyProduct(document.querySelector('#htmForm_putimportCompanyProduct'), document.querySelector('#htmFormButton_putimportCompanyProduct'));
         });
         document.querySelector('#htmForm_searchpageCompanyProduct')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -462,16 +466,20 @@
 {%- block htmUrlCompanyProductPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyProductPage %}
 
 {%- macro htmButton_patchCompanyProduct() %}
-        <sl-button
-            onclick="document.querySelector('#patchCompanyProductDialog').show(); "
-            >
-          <i class="fas fa-edit "></i>
-          Modify product
-        </sl-button>
+        <sl-tooltip content="Modify product">
+          <sl-button
+              onclick="document.querySelector('#patchCompanyProductDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyProduct() %}
-            <sl-button type="submit" variant="primary">Modify product</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_patchCompanyProduct"
+                >Modify product</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyProduct() %}
@@ -592,16 +600,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_postCompanyProduct() %}
-        <sl-button
-            onclick="document.querySelector('#postCompanyProductDialog').show(); "
-            >
-          <i class="fas fa-file-plus "></i>
-          Create a product
-        </sl-button>
+        <sl-tooltip content="Create a product">
+          <sl-button
+              onclick="document.querySelector('#postCompanyProductDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_postCompanyProduct() %}
-            <sl-button type="submit" variant="primary">Create a product</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_postCompanyProduct"
+                >Create a product</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyProduct() %}
@@ -723,16 +735,20 @@
 {%- endmacro %}
 
 {%- macro htmButton_putimportCompanyProduct() %}
-        <sl-button
-            onclick="document.querySelector('#putimportCompanyProductDialog').show(); "
-            >
-          <i class="fas fa-file-import "></i>
-          Import products
-        </sl-button>
+        <sl-tooltip content="Import products">
+          <sl-button
+              onclick="document.querySelector('#putimportCompanyProductDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyProduct() %}
-            <sl-button type="submit" variant="primary">Import products</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_putimportCompanyProduct"
+                >Import products</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyProduct() %}
@@ -755,7 +771,9 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyProduct() %}
-            <sl-button type="submit" variant="primary">Search products</sl-button>
+            <sl-button type="submit" variant="primary"
+                id="htmFormButton_searchpageCompanyProduct"
+                >Search products</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyProduct() %}
@@ -870,22 +888,23 @@
               {% endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_searchpageCompanyProduct() }}
           </div>
         </div>
 {%- endmacro %}
             {%- macro htmBodyAllCompanyProductPage() %}
             <h1>
-              <sl-button variant="text" size="large" href="{{pageUri}}">
+              <a href="{{pageUri}}">
                 <i class="fa-regular fa-conveyor-belt"></i>
-                <span class="">products</span>
-              </sl-button>
+                <span>products</span>
+              </a>
             </h1>
-            {{ htmSearchButtonsCompanyProductPage() }}
             <div id="site-calendar-box">
               <div id="site-calendar"><!-- // --></div>
             </div>
-              {{ htmPaginationButtonsCompanyProductPage() }}
+            {{ htmSearchButtonsCompanyProductPage() }}
+            {{ htmFormsCompanyProductPage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsCompanyProductPage() }}
             <div class="grid-mode-details">
             <div>
                 <i class="fa-regular fa-conveyor-belt"></i>
@@ -1028,6 +1047,55 @@
               <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyProductPage() %}
+{%- macro htmFormsCompanyProductPage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if companyProductCount == 1 %}
+        <sl-tooltip content="Refresh this product">
+          <sl-button
+              id="refreshThisCompanyProductGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if companyProductCount > 0 %}
+        <sl-tooltip content="Refresh all the products">
+          <sl-button id="refreshAllCompanyProductGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if companyProductCount > 0 %}
+        {{ htmButton_patchCompanyProduct() }}
+        {{ htmForm_patchCompanyProduct() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {% if companyProductCount == int1 %}
+      {% if id is defined %}
+      {% else %}
+        {{ htmButton_postCompanyProduct() }}
+        {{ htmForm_postCompanyProduct() }}
+      {% endif %}
+    {% else %}
+        {{ htmButton_postCompanyProduct() }}
+        {{ htmForm_postCompanyProduct() }}
+    {% endif %}
+  {% endif %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyProduct() }}
+        {{ htmForm_putimportCompanyProduct() }}
+  {% endif %}
+{%- endmacro htmFormsCompanyProductPage() %}
 
     {%- block htmBodyStartBaseResultPage %}
     {{ super() }}
@@ -1175,18 +1243,11 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
-                {% for key, value in varsRange.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); "></sl-radio-group></span>
-                    </td>
-                    <td class="">
-                      <label for="pageFacetRangeCompanyProduct_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); "></sl-radio-group></span>
+              </div>
+              {% endfor %}
               {%- endblock htmBodyRangeCompanyProductPage %}
             </div>
           </sl-drawer>
@@ -1207,18 +1268,10 @@
                   <div class="pageSearchVal pageSearchVal-PivotCompanyProduct " id="pageSearchVal-PivotCompanyProduct_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyProduct', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFacetPivotCompanyProduct_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
-                {% endfor %}
-              </table>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
               {%- endblock htmBodyPivotCompanyProductPage %}
             </div>
           </sl-drawer>
@@ -1237,21 +1290,15 @@
               </div>
               <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListCompanyProduct">
                 {% if defaultFieldListVars is defined %}
-                  <div class="pageSearchVal pageSearchVal-FieldListCompanyProduct " id="pageSearchVal-FieldListCompanyProduct_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ this }}{% endfor %}</div>
+                  <div class="pageSearchVal pageSearchVal-FieldListCompanyProduct " id="pageSearchVal-FieldListCompanyProduct_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
-              <table class="w3-table ">
-                {% for key, value in varsFq.items() %}
-                  <tr class="">
-                    <td class="">
-                      <span><sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ displayName }}</sl-checkbox></span>
-                    </td>
-                    <td class="w3-cell ">
-                      <label for="pageFieldListCompanyProduct_{{ key }}">{{ displayName }}</label>
-                    </td>
-                  </tr>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
                 {% endfor %}
-              </table>
               {%- endblock htmBodyFieldListCompanyProductPage %}
             </div>
           </sl-drawer>
@@ -1280,11 +1327,11 @@
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
-                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyProduct_{{ key }}" value="{{ var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyProduct', value); ">{{ displayName }}</sl-checkbox></span>
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyProduct_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
                       <td class="w3-cell ">
                         <div>
-                          <label for="pageStatsCompanyProduct_{{ key }}">{{ displayName }}</label>
+                          <label for="pageStatsCompanyProduct_{{ key }}">{{ value.displayName }}</label>
                         </div>
                         <div class="pageStatsField w3-small pageStatsFieldCompanyProduct_{{ key }} " id="pageStatsFieldCompanyProduct_{{ key }}">
                           {% if value.stats is defined %}
@@ -1331,60 +1378,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
         </div>
-        {%- block htmFormsCompanyProductPage %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if "PATCH" in scopes %}
-      {% if companyProductCount == 1 %}
-        <sl-button
-            id="refreshThisCompanyProductGenPage"
-            onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
-          <i slot="prefix" class="fas fa-sync-alt "></i>
-          refresh this product
-        </sl-button>
-      {% endif %}
-      {% if companyProductCount > 0 %}
-        <div class="">
-          <sl-button id="refreshAllCompanyProductGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh all the products
-          </sl-button>
-        </div>
-      {% endif %}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyProductCount > 0 %}
-        {{ htmButton_patchCompanyProduct() }}
-        {{ htmForm_patchCompanyProduct() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyProductCount == int1 %}
-      {% if id is defined %}
-      {% else %}
-        {{ htmButton_postCompanyProduct() }}
-        {{ htmForm_postCompanyProduct() }}
-      {% endif %}
-    {% else %}
-        {{ htmButton_postCompanyProduct() }}
-        {{ htmForm_postCompanyProduct() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyProduct() }}
-        {{ htmForm_putimportCompanyProduct() }}
-  {% endif %}
-        {%- endblock htmFormsCompanyProductPage %}
 {% if companyProductCount == 0 %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-conveyor-belt"></i>
-            <span class="">products</span>
-          </sl-button>
+            <span>products</span>
+          </a>
         </h1>
         {{ htmSearchButtonsCompanyProductPage() }}
+            {{ htmFormsCompanyProductPage() }}
         <h2>
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
   {% if classIconCssClasses is defined %}
@@ -1397,17 +1399,18 @@
   {% if companyProductCount == 1 %}
     {% if id is defined %}
         <h1>
-          <sl-button variant="text" size="large" href="{{pageUri}}">
+          <a href="{{pageUri}}">
             <i class="fa-regular fa-conveyor-belt"></i>
             <span class="">product</span>
-          </sl-button>
+          </a>
         </h1>
-        {{ htmSearchButtonsCompanyProductPage() }}
         <h2 class="w3-center ">
           <span class="w3-bar-item w3-padding w3-center w3-block w3-">
             <span class="">{{companyProduct_.objectTitle}}</span>
           </span>
         </h2>
+        {{ htmSearchButtonsCompanyProductPage() }}
+            {{ htmFormsCompanyProductPage() }}
     {% else %}
         {{ htmBodyAllCompanyProductPage() }}
     {% endif %}

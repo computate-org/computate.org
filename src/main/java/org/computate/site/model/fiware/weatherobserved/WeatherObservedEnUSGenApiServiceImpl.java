@@ -444,38 +444,29 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
 							try {
-								if(listWeatherObserved.getResponse().getResponse().getNumFound() > 1
-										&& !Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_WeatherObserved")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)
-										) {
-									String message = String.format("roles required: " + config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_WeatherObserved"));
-									LOG.error(message);
-									error(siteRequest, eventHandler, new RuntimeException(message));
-								} else {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listWeatherObserved.getRequest().getRows());
+								apiRequest.setNumFound(listWeatherObserved.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listWeatherObserved.first());
+								apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
 
-									ApiRequest apiRequest = new ApiRequest();
-									apiRequest.setRows(listWeatherObserved.getRequest().getRows());
-									apiRequest.setNumFound(listWeatherObserved.getResponse().getResponse().getNumFound());
-									apiRequest.setNumPATCH(0L);
-									apiRequest.initDeepApiRequest(siteRequest);
-									siteRequest.setApiRequest_(apiRequest);
-									if(apiRequest.getNumFound() == 1L)
-										apiRequest.setOriginal(listWeatherObserved.first());
-									apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
-									eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
-
-									listPATCHWeatherObserved(apiRequest, listWeatherObserved).onSuccess(e -> {
-										response200PATCHWeatherObserved(siteRequest).onSuccess(response -> {
-											LOG.debug(String.format("patchWeatherObserved succeeded. "));
-											eventHandler.handle(Future.succeededFuture(response));
-										}).onFailure(ex -> {
-											LOG.error(String.format("patchWeatherObserved failed. "), ex);
-											error(siteRequest, eventHandler, ex);
-										});
+								listPATCHWeatherObserved(apiRequest, listWeatherObserved).onSuccess(e -> {
+									response200PATCHWeatherObserved(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchWeatherObserved succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
 										LOG.error(String.format("patchWeatherObserved failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
-								}
+								}).onFailure(ex -> {
+									LOG.error(String.format("patchWeatherObserved failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
 							} catch(Exception ex) {
 								LOG.error(String.format("patchWeatherObserved failed. "), ex);
 								error(siteRequest, eventHandler, ex);
@@ -738,6 +729,22 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlUserKey());
 						break;
+					case "setName":
+							o2.setName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_name + "=$" + num);
+							num++;
+							bParams.add(o2.sqlName());
+						break;
+					case "setDescription":
+							o2.setDescription(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_description + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDescription());
+						break;
 					case "setAddress":
 							o2.setAddress(jsonObject.getJsonObject(entityVar));
 							if(bParams.size() > 0)
@@ -850,14 +857,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlDateObserved());
 						break;
-					case "setDescription":
-							o2.setDescription(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_description + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDescription());
-						break;
 					case "setDewPoint":
 							o2.setDewPoint(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -913,14 +912,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_location + "=$" + num);
 							num++;
 							bParams.add(o2.sqlLocation());
-						break;
-					case "setName":
-							o2.setName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_name + "=$" + num);
-							num++;
-							bParams.add(o2.sqlName());
 						break;
 					case "setOwner":
 							o2.setOwner(jsonObject.getJsonObject(entityVar));
@@ -1455,6 +1446,24 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlUserKey());
 						break;
+					case WeatherObserved.VAR_name:
+						o2.setName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_name + "=$" + num);
+						num++;
+						bParams.add(o2.sqlName());
+						break;
+					case WeatherObserved.VAR_description:
+						o2.setDescription(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_description + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDescription());
+						break;
 					case WeatherObserved.VAR_address:
 						o2.setAddress(jsonObject.getJsonObject(entityVar));
 						if(bParams.size() > 0) {
@@ -1581,15 +1590,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlDateObserved());
 						break;
-					case WeatherObserved.VAR_description:
-						o2.setDescription(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_description + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDescription());
-						break;
 					case WeatherObserved.VAR_dewPoint:
 						o2.setDewPoint(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1652,15 +1652,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_location + "=$" + num);
 						num++;
 						bParams.add(o2.sqlLocation());
-						break;
-					case WeatherObserved.VAR_name:
-						o2.setName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_name + "=$" + num);
-						num++;
-						bParams.add(o2.sqlName());
 						break;
 					case WeatherObserved.VAR_owner:
 						o2.setOwner(jsonObject.getJsonObject(entityVar));
