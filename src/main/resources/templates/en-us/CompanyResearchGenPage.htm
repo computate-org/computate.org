@@ -15,10 +15,6 @@
 {%- block htmStyleBaseModelPage %}
 {{ super() }}
 {%- block htmStyleCompanyResearchPage %}
-      #site-grid > main {
-        max-width: 100ch;
-        margin-inline: auto;
-      }
 {%- endblock htmStyleCompanyResearchPage %}
 {%- endblock htmStyleBaseModelPage %}
 
@@ -26,6 +22,9 @@
 {{ super() }}
 {%- block htmScriptsCompanyResearchPage %}
     <script src="{{staticBaseUrl}}/js/enUS/CompanyResearchPage.js"></script>
+    {% if pk is defined %}
+    <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyResearchPageModule.js"></script>
+    {% endif %}
 {%- endblock htmScriptsCompanyResearchPage %}
 {%- endblock htmScriptsBaseModelPage %}
 
@@ -60,18 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        document.onkeydown = function(evt) {
-          evt = evt || window.event;
-          var isEscape = false;
-          if ('key' in evt) {
-            isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
-          } else {
-            isEscape = (evt.keyCode === 27);
-          }
-          if (isEscape) {
-            document.querySelector('.w3-modal:visible').classList.add('display-none');
-          }
-        };
         window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
@@ -91,161 +78,6 @@
         } else {
           window.companyResearch = JSON.parse(document.querySelector('.pageForm .companyResearch')?.value);
         {% if pk is defined %}
-          // PATCH created
-          document.querySelector('#Page_created')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_created');
-            const valid = form.checkValidity();
-            if(valid) {
-              var timeZone = event.currentTarget.value.split('[').pop().split(']')[0];
-              var t1 = moment(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a');
-              var t2 = moment.tz(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone);
-              var t3 = new Date(t1._d);
-              t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime());
-              var t = moment(t3);
-              if(t) {
-                var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
-                patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setCreated', s
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_created')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_created')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_created');
-            const valid = form.reportValidity();
-          });
-          // PATCH archived
-          document.querySelector('#Page_archived')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_archived');
-            const valid = form.checkValidity();
-            if(valid) {
-              var confirmResponse = confirm('Are you sure you want to archive that?'); 
-              if(confirmResponse) { 
-                patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setArchived', event.currentTarget.checked
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_archived')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_archived')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_archived');
-            const valid = form.reportValidity();
-          });
-          // PATCH deleted
-          document.querySelector('#Page_deleted')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_deleted');
-            const valid = form.checkValidity();
-            if(valid) {
-              var confirmResponse = confirm('Are you sure you want to delete that?'); 
-              if(confirmResponse) { 
-                patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                    , 'setDeleted', event.currentTarget.checked
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_deleted')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_deleted')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_deleted');
-            const valid = form.reportValidity();
-          });
-          // PATCH name
-          document.querySelector('#Page_name')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_name');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setName', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_name')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_name')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_name');
-            const valid = form.reportValidity();
-          });
-          // PATCH inheritPk
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_inheritPk');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setInheritPk', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_inheritPk');
-            const valid = form.reportValidity();
-          });
-          // PATCH sessionId
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_sessionId');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setSessionId', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_sessionId');
-            const valid = form.reportValidity();
-          });
-          // PATCH userKey
-          document.querySelector('#Page_userKey')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_userKey');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchCompanyResearchVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'pk:' + event.currentTarget.getAttribute('data-pk') }]
-                  , 'setUserKey', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_userKey')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_userKey')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_userKey');
-            const valid = form.reportValidity();
-          });
         {% endif %}
         }
         window.listCompanyResearch = JSON.parse(document.querySelector('.pageForm .listCompanyResearch')?.value);
@@ -297,7 +129,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyResearch() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyResearch"
                 >Modify research</sl-button>
 {%- endmacro %}
@@ -311,79 +143,79 @@
               </div>
               <div>
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             {{ htmFormButton_patchCompanyResearch() }}
@@ -403,7 +235,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_postCompanyResearch() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyResearch"
                 >Create a research</sl-button>
 {%- endmacro %}
@@ -418,79 +250,79 @@
               </div>
               <div>
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             {{ htmFormButton_postCompanyResearch() }}
@@ -510,7 +342,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyResearch() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyResearch"
                 >Import research</sl-button>
 {%- endmacro %}
@@ -518,9 +350,9 @@
 {%- macro htmForm_putimportCompanyResearch() %}
         <sl-dialog id="putimportCompanyResearchDialog" label="Import research">
           <form id="htmForm_putimportCompanyResearch">
-            <div class="w3-cell-row ">
+            <div>
               <sl-textarea
-                  class="PUTImport_searchList w3-input w3-border "
+                  class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
                   >
@@ -535,7 +367,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyResearch() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyResearch"
                 >Search research</sl-button>
 {%- endmacro %}
@@ -549,79 +381,79 @@
               </div>
               <div>
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPkCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmNameCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
           </div>
@@ -658,37 +490,37 @@
         <div id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for research">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
               Search
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Filters and facet counts for research">
             <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
               Filters
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for research">
             <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
               Range
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for research">
             <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
               Pivot
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for research">
             <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
               FieldList
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for research">
             <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
               Stats
             </sl-button>
           </sl-tooltip>
@@ -696,7 +528,7 @@
             <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
                  href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
                 >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
               Api
             </sl-button>
           </sl-tooltip>
@@ -773,28 +605,28 @@
       {% endif %}
     {% endif %}
   {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if companyResearchCount > 0 %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {%- if companyResearchCount > 0 %}
         {{ htmButton_patchCompanyResearch() }}
         {{ htmForm_patchCompanyResearch() }}
-    {% endif %}
-  {% endif %}
+    {%- endif %}
+  {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if companyResearchCount == int1 %}
-      {% if id is defined %}
-      {% else %}
+    {%- if companyResearchCount == int1 %}
+      {%- if id is defined %}
+      {%- else %}
         {{ htmButton_postCompanyResearch() }}
         {{ htmForm_postCompanyResearch() }}
-      {% endif %}
-    {% else %}
+      {%- endif %}
+    {%- else %}
         {{ htmButton_postCompanyResearch() }}
         {{ htmForm_postCompanyResearch() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {%- endif %}
+  {%- endif %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
         {{ htmButton_putimportCompanyResearch() }}
         {{ htmForm_putimportCompanyResearch() }}
-  {% endif %}
+  {%- endif %}
 {%- endmacro htmFormsCompanyResearchPage() %}
 
     {%- block htmBodyStartBaseModelPage %}
@@ -809,45 +641,45 @@
           {%- block htmBodySidebarCompanyResearchPage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
 {%- block htmBodySearchCompanyResearchPage %}
               <div>
                 {% for key, value in varsQ.items() %}
-                  <div class="w3-cell-row ">
-                    <div class="w3-cell w3-cell-top ">
-                      <label for="qCompanyResearch_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
+                  <div>
+                    <div>
+                      <label for="qCompanyResearch_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
                     </div>
                   </div>
-                  <div class="w3-cell-row ">
-                    <div class="w3-cell w3-cell-top ">
+                  <div>
+                    <div>
                       <sl-input id="qCompanyResearch_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('CompanyResearch', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal w3-tiny "></div>
+                      <div class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
-                    <label for="qCompanyResearch_Start">start<sup class="w3-tiny "> (Long)</sup></label>
+                <div>
+                  <div>
+                    <label for="qCompanyResearch_Start">start<sup> (Long)</sup></label>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
+                <div>
+                  <div>
                     <sl-input id="qCompanyResearch_start" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyResearch', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal w3-tiny ">start={{ start }}</div>
+                    <div class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
-                    <label for="qCompanyResearch_Rows">rows<sup class="w3-tiny "> (Long)</sup></label>
+                <div>
+                  <div>
+                    <label for="qCompanyResearch_Rows">rows<sup> (Long)</sup></label>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
+                <div>
+                  <div>
                     <sl-input id="qCompanyResearch_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyResearch', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal w3-tiny ">rows={{ rows }}</div>
+                    <div class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -856,28 +688,28 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-filters "></i> Filters</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyFiltersCompanyResearchPage %}
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqCompanyResearch_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
-                    <div class="w3-cell-row ">
-                      <div class="w3-cell w3-cell-top ">
+                    <label for="fqCompanyResearch_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                    <div>
+                      <div>
                         <button id="buttonFacetCompanyResearch_{{ key }}" class="" onclick="facetFieldChange('CompanyResearch', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
                       </div>
-                      <div class="w3-cell w3-cell-top ">
+                      <div>
                         <sl-input id="fqCompanyResearch_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('CompanyResearch', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
                       </div>
                     </div>
                   </div>
-                  <div class="w3-tiny ">
+                  <div>
                     <div class="pageSearchVal " id="pageSearchVal-fqCompanyResearch_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyResearch_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
-                    <ol class="pageFacetField w3-small pageFacetFieldCompanyResearch_{{ key }} " id="pageFacetFieldCompanyResearch_{{ key }}">
+                    <ol class="pageFacetField pageFacetFieldCompanyResearch_{{ key }} " id="pageFacetFieldCompanyResearch_{{ key }}">
 {% for item in facetField.counts %}
                       <li class="cursor-pointer " data-class="CompanyResearch" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('CompanyResearch', item.value); ">{{ item.key }}: {{ item.value }}</li>
 {% endfor %}
@@ -889,15 +721,15 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleRange">
-            <div class="w3-bar w3-  ">
-              <span class="w3-bar-item ">
+            <div>
+              <span>
               <i class="fad fa-calendar-range "></i> Range</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyRangeCompanyResearchPage %}
-              <table class="w3-padding ">
+              <table>
                 <tr>
-                  <td class="w3-padding w3-tiny " colspan="2">
+                  <td colspan="2">
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-CompanyResearch">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-CompanyResearch">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-CompanyResearch">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
@@ -905,7 +737,7 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
+              <table>
                 <tr class="">
                   <td class="">
                     <span>Range Gap</span>
@@ -945,7 +777,7 @@
               </table>
               {% for key, value in varsRange.items() %}
               <div>
-<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyResearch_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyResearch', value); "></sl-radio-group></span>
+                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyResearch_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyResearch', value); "></sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodyRangeCompanyResearchPage %}
@@ -953,17 +785,17 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyPivotCompanyResearchPage %}
-              <div style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-PivotCompanyResearchHidden">
+              <div style="display: none; " id="pageSearchVal-PivotCompanyResearchHidden">
                 {% for item in defaultPivotVars %}
                   <div class="pageSearchVal-PivotCompanyResearchHidden " id="pageSearchVal-PivotCompanyResearchHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-PivotCompanyResearch">
+              <div id="pageSearchVal-PivotCompanyResearch">
                 {% if defaultPivotVars is defined %}
                   <div class="pageSearchVal pageSearchVal-PivotCompanyResearch " id="pageSearchVal-PivotCompanyResearch_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
@@ -977,18 +809,18 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyFieldListCompanyResearchPage %}
               <div
- style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-FieldListCompanyResearchHidden">
+ style="display: none; " id="pageSearchVal-FieldListCompanyResearchHidden">
                 {% for item in defaultFieldListVars %}
                   <div class="pageSearchVal-FieldListCompanyResearchHidden " id="pageSearchVal-FieldListCompanyResearchHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListCompanyResearch">
+              <div id="pageSearchVal-FieldListCompanyResearch">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListCompanyResearch " id="pageSearchVal-FieldListCompanyResearch_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
@@ -1004,36 +836,36 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
             <div>
-              <span class="w3-bar-item ">
+              <span>
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyStatsCompanyResearchPage %}
               <div
- style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-StatsCompanyResearchHidden">
+ style="display: none; " id="pageSearchVal-StatsCompanyResearchHidden">
                 {% for item in defaultStatsVars %}
                   <div class="pageSearchVal-StatsCompanyResearchHidden " id="pageSearchVal-StatsCompanyResearchHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-StatsCompanyResearch">
+              <div id="pageSearchVal-StatsCompanyResearch">
                 {% if defaultStatsVars is defined %}
                   {% for item in defaultStatsVars %}
                     <div class="pageSearchVal pageSearchVal-StatsCompanyResearch_{{ item }} " id="pageSearchVal-StatsCompanyResearch_{{ item }}">stats.field={{ item }}                    </div>
                   {% endfor %}
                 {% endif %}
               </div>
-              <table class="w3-table ">
+              <table>
                 {% for key, value in varsFq.items() %}
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
                         <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyResearch_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyResearch', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
-                      <td class="w3-cell ">
+                      <td>
                         <div>
                           <label for="pageStatsCompanyResearch_{{ key }}">{{ value.displayName }}</label>
                         </div>
-                        <div class="pageStatsField w3-small pageStatsFieldCompanyResearch_{{ key }} " id="pageStatsFieldCompanyResearch_{{ key }}">
+                        <div class="pageStatsField pageStatsFieldCompanyResearch_{{ key }} " id="pageStatsFieldCompanyResearch_{{ key }}">
                           {% if value.stats is defined %}
                             {% for item in value.stats %}
                               {% if item.key == 'name' %}{% else %}
@@ -1067,11 +899,11 @@
         </div>
 
         {%- block htmBodyGraphLocationCompanyResearchPage %}
-        <div id="htmBodyGraphLocationCompanyResearchPage" class="w3-content htmBodyGraphLocation "></div>
+        <div id="htmBodyGraphLocationCompanyResearchPage" class="htmBodyGraphLocation "></div>
         {%- endblock htmBodyGraphLocationCompanyResearchPage %}
 
         {%- block htmBodyGraphCompanyResearchPage %}
-        <div id="htmBodyGraphBaseModelPage" class="w3-content htmBodyGraph "></div>
+        <div id="htmBodyGraphBaseModelPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphCompanyResearchPage %}
         <div class="pageContent ">
           <div id="site-calendar-box">
@@ -1088,7 +920,7 @@
         {{ htmSearchButtonsCompanyResearchPage() }}
             {{ htmFormsCompanyResearchPage() }}
         <h2>
-          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+          <span>
   {% if classIconCssClasses is defined %}
             <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
   {% endif %}
@@ -1104,8 +936,8 @@
             <span class="">research</span>
           </a>
         </h1>
-        <h2 class="w3-center ">
-          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+        <h2>
+          <span>
             <span class="">{{companyResearch_.objectTitle}}</span>
           </span>
         </h2>
@@ -1142,17 +974,17 @@
       {%- endblock htmBodyEndCompanyResearchPage %}
       {%- endblock htmBodyEndBaseModelPage %}
 {%- block htmSuggestedCompanyResearchPage %}
-        <div class="w3-cell-row ">
-          <div class="w3-cell ">
+        <div>
+          <div>
             <span>
               search research: 
             </span>
           </div>
         </div>
-        <div class="w3-bar ">
+        <div>
           <sl-input
               type="text"
-              class="suggestCompanyResearch w3-input w3-border w3-bar-item "
+              class="suggestCompanyResearch "
               name="suggestCompanyResearch"
               id="suggestCompanyResearch{{id}}"
               autocomplete="off"
@@ -1164,15 +996,14 @@
               >
           </sl-input>
           <button
-              class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3- "
               onclick="window.location.href = '/research?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
           </button>
           <div>
-            <div class="w3-cell-row ">
-              <div class="w3-cell w3-left-align w3-cell-top ">
-                <ul class="w3-ul w3-hoverable " id="suggestListCompanyResearch{{id}}">
+            <div>
+              <div>
+                <ul id="suggestListCompanyResearch{{id}}">
                 </ul>
               </div>
             </div>
@@ -1206,7 +1037,7 @@ The primary key of this object in the database"
                       class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyResearch inputCompanyResearch{{pk}}Pk "
                       name="setPk"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pk valuePk w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Pk "
+                      class="label-on-left {{classApiMethodMethod}}_pk valuePk classCompanyResearch inputCompanyResearch{{pk}}Pk "
                       name="pk"
     {%- endif %}
   {%- endif %}
@@ -1245,7 +1076,7 @@ A URL friendly unique ID for this object"
                       class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
                       name="setObjectId"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId classCompanyResearch inputCompanyResearch{{pk}}ObjectId "
                       name="objectId"
     {%- endif %}
   {%- endif %}
@@ -1446,7 +1277,7 @@ The research name. "
                       class="label-on-left {{classApiMethodMethod}}_name setName classCompanyResearch inputCompanyResearch{{pk}}Name "
                       name="setName"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_name valueName w3-input w3-border classCompanyResearch inputCompanyResearch{{pk}}Name "
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyResearch inputCompanyResearch{{pk}}Name "
                       name="name"
     {%- endif %}
   {%- endif %}

@@ -15,10 +15,6 @@
 {%- block htmStyleBaseResultPage %}
 {{ super() }}
 {%- block htmStyleSitePagePage %}
-      #site-grid > main {
-        max-width: 100ch;
-        margin-inline: auto;
-      }
 {%- endblock htmStyleSitePagePage %}
 {%- endblock htmStyleBaseResultPage %}
 
@@ -26,6 +22,9 @@
 {{ super() }}
 {%- block htmScriptsSitePagePage %}
     <script src="{{staticBaseUrl}}/js/enUS/SitePagePage.js"></script>
+    {% if id is defined %}
+    <script type="module" src="{{staticBaseUrl}}/js/enUS/SitePagePageModule.js"></script>
+    {% endif %}
 {%- endblock htmScriptsSitePagePage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -60,18 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        document.onkeydown = function(evt) {
-          evt = evt || window.event;
-          var isEscape = false;
-          if ('key' in evt) {
-            isEscape = (evt.key === 'Escape' || evt.key === 'Esc');
-          } else {
-            isEscape = (evt.keyCode === 27);
-          }
-          if (isEscape) {
-            document.querySelector('.w3-modal:visible').classList.add('display-none');
-          }
-        };
         window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
@@ -91,421 +78,6 @@
         } else {
           window.sitePage = JSON.parse(document.querySelector('.pageForm .sitePage')?.value);
         {% if id is defined %}
-          // PATCH created
-          document.querySelector('#Page_created')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_created');
-            const valid = form.checkValidity();
-            if(valid) {
-              var timeZone = event.currentTarget.value.split('[').pop().split(']')[0];
-              var t1 = moment(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a');
-              var t2 = moment.tz(event.currentTarget.value.split('[')[0].trim(), 'MM/DD/YYYY h:mm a', timeZone);
-              var t3 = new Date(t1._d);
-              t3.setTime(t1.toDate().getTime() + t2.toDate().getTime() - t1.toDate().getTime());
-              var t = moment(t3);
-              if(t) {
-                var s = t.tz(timeZone).format('YYYY-MM-DDTHH:mm:ss.000') + '[' + timeZone + ']';
-                patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                    , 'setCreated', s
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_created')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_created')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_created');
-            const valid = form.reportValidity();
-          });
-          // PATCH objectId
-          document.querySelector('#Page_objectId')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_objectId');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setObjectId', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_objectId')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_objectId')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_objectId');
-            const valid = form.reportValidity();
-          });
-          // PATCH archived
-          document.querySelector('#Page_archived')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_archived');
-            const valid = form.checkValidity();
-            if(valid) {
-              var confirmResponse = confirm('Are you sure you want to archive that?'); 
-              if(confirmResponse) { 
-                patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                    , 'setArchived', event.currentTarget.checked
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_archived')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_archived')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_archived');
-            const valid = form.reportValidity();
-          });
-          // PATCH deleted
-          document.querySelector('#Page_deleted')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_deleted');
-            const valid = form.checkValidity();
-            if(valid) {
-              var confirmResponse = confirm('Are you sure you want to delete that?'); 
-              if(confirmResponse) { 
-                patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                    , 'setDeleted', event.currentTarget.checked
-                    , event.currentTarget
-                    , function(response, target) { addGlow(target); }
-                    , function(response, target) { addError(target); }
-                    );
-              }
-            }
-          });
-          document.querySelector('#Page_deleted')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_deleted')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_deleted');
-            const valid = form.reportValidity();
-          });
-          // PATCH pageId
-          document.querySelector('#Page_pageId')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_pageId');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setPageId', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_pageId')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_pageId')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_pageId');
-            const valid = form.reportValidity();
-          });
-          // PATCH uri
-          document.querySelector('#Page_uri')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_uri');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setUri', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_uri')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_uri')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_uri');
-            const valid = form.reportValidity();
-          });
-          // PATCH url
-          document.querySelector('#Page_url')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_url');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setUrl', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_url')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_url')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_url');
-            const valid = form.reportValidity();
-          });
-          // PATCH author
-          document.querySelector('#Page_author')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_author');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setAuthor', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_author')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_author')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_author');
-            const valid = form.reportValidity();
-          });
-          // PATCH pageImageUri
-          document.querySelector('#Page_pageImageUri')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_pageImageUri');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setPageImageUri', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_pageImageUri')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_pageImageUri')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_pageImageUri');
-            const valid = form.reportValidity();
-          });
-          // PATCH inheritPk
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_inheritPk');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setInheritPk', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_inheritPk')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_inheritPk');
-            const valid = form.reportValidity();
-          });
-          // PATCH sessionId
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_sessionId');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setSessionId', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_sessionId')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_sessionId');
-            const valid = form.reportValidity();
-          });
-          // PATCH userKey
-          document.querySelector('#Page_userKey')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_userKey');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setUserKey', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_userKey')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_userKey')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_userKey');
-            const valid = form.reportValidity();
-          });
-          // PATCH id
-          document.querySelector('#Page_id')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_id');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setId', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_id')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_id')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_id');
-            const valid = form.reportValidity();
-          });
-          // PATCH courseNum
-          document.querySelector('#Page_courseNum')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_courseNum');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setCourseNum', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_courseNum')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_courseNum')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_courseNum');
-            const valid = form.reportValidity();
-          });
-          // PATCH lessonNum
-          document.querySelector('#Page_lessonNum')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_lessonNum');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setLessonNum', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_lessonNum')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_lessonNum')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_lessonNum');
-            const valid = form.reportValidity();
-          });
-          // PATCH title
-          document.querySelector('#Page_title')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_title');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setTitle', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_title')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_title')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_title');
-            const valid = form.reportValidity();
-          });
-          // PATCH resourceUri
-          document.querySelector('#Page_resourceUri')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_resourceUri');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setResourceUri', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_resourceUri')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_resourceUri')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_resourceUri');
-            const valid = form.reportValidity();
-          });
-          // PATCH templateUri
-          document.querySelector('#Page_templateUri')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_templateUri');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setTemplateUri', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_templateUri')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_templateUri')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_templateUri');
-            const valid = form.reportValidity();
-          });
-          // PATCH h1
-          document.querySelector('#Page_h1')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_h1');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setH1', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_h1')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_h1')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_h1');
-            const valid = form.reportValidity();
-          });
-          // PATCH h2
-          document.querySelector('#Page_h2')?.addEventListener('sl-change', (event) => {
-            const form = document.querySelector('#PageForm_h2');
-            const valid = form.checkValidity();
-            if(valid) {
-              patchSitePageVal([{ name: 'softCommit', value: 'true' }, { name: 'fq', value: 'id:' + event.currentTarget.getAttribute('data-id') }]
-                  , 'setH2', event.currentTarget.value
-                  , event.currentTarget
-                  , function(response, target) { addGlow(target); }
-                  , function(response, target) { addError(target); }
-                  );
-            }
-          });
-          document.querySelector('#Page_h2')?.addEventListener('sl-focus', (event) => {
-            removeGlow(event.currentTarget);
-          });
-          document.querySelector('#Page_h2')?.addEventListener('sl-blur', (event) => {
-            const form = document.querySelector('#PageForm_h2');
-            const valid = form.reportValidity();
-          });
         {% endif %}
         }
         window.listSitePage = JSON.parse(document.querySelector('.pageForm .listSitePage')?.value);
@@ -557,7 +129,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_patchSitePage() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchSitePage"
                 >Modify article</sl-button>
 {%- endmacro %}
@@ -567,111 +139,111 @@
           <form id="htmForm_patchSitePage">
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUrlSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmAuthorSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             {{ htmFormButton_patchSitePage() }}
@@ -691,7 +263,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_postSitePage() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postSitePage"
                 >Create an article</sl-button>
 {%- endmacro %}
@@ -702,111 +274,111 @@
             <div class="">You can override any default values below: </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUrlSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmAuthorSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             {{ htmFormButton_postSitePage() }}
@@ -826,7 +398,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_putimportSitePage() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportSitePage"
                 >Import articles</sl-button>
 {%- endmacro %}
@@ -834,9 +406,9 @@
 {%- macro htmForm_putimportSitePage() %}
         <sl-dialog id="putimportSitePageDialog" label="Import articles">
           <form id="htmForm_putimportSitePage">
-            <div class="w3-cell-row ">
+            <div>
               <sl-textarea
-                  class="PUTImport_searchList w3-input w3-border "
+                  class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
                   >
@@ -851,7 +423,7 @@
 {%- endmacro %}
 
 {%- macro htmFormButton_searchpageSitePage() %}
-            <sl-button type="submit" variant="primary"
+            <sl-button slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageSitePage"
                 >Search articles</sl-button>
 {%- endmacro %}
@@ -861,111 +433,111 @@
           <div id="htmForm_searchpageSitePage">
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmModifiedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmModifiedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmObjectIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmObjectIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmUrlSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmUrlSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmAuthorSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmAuthorSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
               <div stuff="-1--1">
 
-              {% if "PATCH" in scopes %}
+              {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {% else %}
-                {% if "GET" in scopes %}
+              {%- else %}
+                {%- if "GET" in scopes %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {% else %}
+                {%- else %}
                   {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {% endif %}
-              {% endif %}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
           </div>
@@ -1038,37 +610,37 @@
         <div id="htmSearchButtons">
           <sl-tooltip placement="top" content="Advanced search for articles">
             <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
               Search
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Filters and facet counts for articles">
             <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
               Filters
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for articles">
             <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
               Range
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for articles">
             <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
               Pivot
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for articles">
             <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
               FieldList
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="top" content="Advanced search for articles">
             <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
               Stats
             </sl-button>
           </sl-tooltip>
@@ -1076,7 +648,7 @@
             <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
                  href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
                 >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow w3-xlarge "></i> 
+              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
               Api
             </sl-button>
           </sl-tooltip>
@@ -1153,28 +725,28 @@
       {% endif %}
     {% endif %}
   {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-    {% if sitePageCount > 0 %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {%- if sitePageCount > 0 %}
         {{ htmButton_patchSitePage() }}
         {{ htmForm_patchSitePage() }}
-    {% endif %}
-  {% endif %}
+    {%- endif %}
+  {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {% if sitePageCount == int1 %}
-      {% if id is defined %}
-      {% else %}
+    {%- if sitePageCount == int1 %}
+      {%- if id is defined %}
+      {%- else %}
         {{ htmButton_postSitePage() }}
         {{ htmForm_postSitePage() }}
-      {% endif %}
-    {% else %}
+      {%- endif %}
+    {%- else %}
         {{ htmButton_postSitePage() }}
         {{ htmForm_postSitePage() }}
-    {% endif %}
-  {% endif %}
-  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {%- endif %}
+  {%- endif %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
         {{ htmButton_putimportSitePage() }}
         {{ htmForm_putimportSitePage() }}
-  {% endif %}
+  {%- endif %}
 {%- endmacro htmFormsSitePagePage() %}
 
     {%- block htmBodyStartBaseResultPage %}
@@ -1189,45 +761,45 @@
           {%- block htmBodySidebarSitePagePage %}
           <sl-drawer placement="end" id="siteSidebarToggleSearch">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-magnifying-glass "></i> Search</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
 {%- block htmBodySearchSitePagePage %}
               <div>
                 {% for key, value in varsQ.items() %}
-                  <div class="w3-cell-row ">
-                    <div class="w3-cell w3-cell-top ">
-                      <label for="qSitePage_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
+                  <div>
+                    <div>
+                      <label for="qSitePage_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
                     </div>
                   </div>
-                  <div class="w3-cell-row ">
-                    <div class="w3-cell w3-cell-top ">
+                  <div>
+                    <div>
                       <sl-input id="qSitePage_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('SitePage', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal w3-tiny "></div>
+                      <div class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
-                    <label for="qSitePage_Start">start<sup class="w3-tiny "> (Long)</sup></label>
+                <div>
+                  <div>
+                    <label for="qSitePage_Start">start<sup> (Long)</sup></label>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
+                <div>
+                  <div>
                     <sl-input id="qSitePage_start" placeholder="{{ displayName }}" class="" onchange="paramChange('SitePage', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal w3-tiny ">start={{ start }}</div>
+                    <div class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
-                    <label for="qSitePage_Rows">rows<sup class="w3-tiny "> (Long)</sup></label>
+                <div>
+                  <div>
+                    <label for="qSitePage_Rows">rows<sup> (Long)</sup></label>
                   </div>
                 </div>
-                <div class="w3-cell-row ">
-                  <div class="w3-cell w3-cell-top ">
+                <div>
+                  <div>
                     <sl-input id="qSitePage_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('SitePage', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal w3-tiny ">rows={{ rows }}</div>
+                    <div class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -1236,28 +808,28 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFilters">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-filters "></i> Filters</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyFiltersSitePagePage %}
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqSitePage_{{ key }}">{{ displayName }}<sup class="w3-tiny "> ({{ classSimpleName }})</sup></label>
-                    <div class="w3-cell-row ">
-                      <div class="w3-cell w3-cell-top ">
+                    <label for="fqSitePage_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                    <div>
+                      <div>
                         <button id="buttonFacetSitePage_{{ key }}" class="" onclick="facetFieldChange('SitePage', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
                       </div>
-                      <div class="w3-cell w3-cell-top ">
+                      <div>
                         <sl-input id="fqSitePage_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('SitePage', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
                       </div>
                     </div>
                   </div>
-                  <div class="w3-tiny ">
+                  <div>
                     <div class="pageSearchVal " id="pageSearchVal-fqSitePage_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-buttonFacetSitePage_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
-                    <ol class="pageFacetField w3-small pageFacetFieldSitePage_{{ key }} " id="pageFacetFieldSitePage_{{ key }}">
+                    <ol class="pageFacetField pageFacetFieldSitePage_{{ key }} " id="pageFacetFieldSitePage_{{ key }}">
 {% for item in facetField.counts %}
                       <li class="cursor-pointer " data-class="SitePage" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('SitePage', item.value); ">{{ item.key }}: {{ item.value }}</li>
 {% endfor %}
@@ -1269,15 +841,15 @@
             </div>
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleRange">
-            <div class="w3-bar w3-  ">
-              <span class="w3-bar-item ">
+            <div>
+              <span>
               <i class="fad fa-calendar-range "></i> Range</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyRangeSitePagePage %}
-              <table class="w3-padding ">
+              <table>
                 <tr>
-                  <td class="w3-padding w3-tiny " colspan="2">
+                  <td colspan="2">
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-SitePage">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-SitePage">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-SitePage">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
@@ -1285,7 +857,7 @@
                   </td>
                 </tr>
               </table>
-              <table class="w3-padding ">
+              <table>
                 <tr class="">
                   <td class="">
                     <span>Range Gap</span>
@@ -1325,7 +897,7 @@
               </table>
               {% for key, value in varsRange.items() %}
               <div>
-<sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSitePage_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SitePage', value); "></sl-radio-group></span>
+                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSitePage_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SitePage', value); "></sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodyRangeSitePagePage %}
@@ -1333,17 +905,17 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarTogglePivot">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyPivotSitePagePage %}
-              <div style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-PivotSitePageHidden">
+              <div style="display: none; " id="pageSearchVal-PivotSitePageHidden">
                 {% for item in defaultPivotVars %}
                   <div class="pageSearchVal-PivotSitePageHidden " id="pageSearchVal-PivotSitePageHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-PivotSitePage">
+              <div id="pageSearchVal-PivotSitePage">
                 {% if defaultPivotVars is defined %}
                   <div class="pageSearchVal pageSearchVal-PivotSitePage " id="pageSearchVal-PivotSitePage_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
@@ -1357,18 +929,18 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleFieldList">
             <div>
-              <span class="w3-bar-item ">
+              <span>
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyFieldListSitePagePage %}
               <div
- style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-FieldListSitePageHidden">
+ style="display: none; " id="pageSearchVal-FieldListSitePageHidden">
                 {% for item in defaultFieldListVars %}
                   <div class="pageSearchVal-FieldListSitePageHidden " id="pageSearchVal-FieldListSitePageHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-FieldListSitePage">
+              <div id="pageSearchVal-FieldListSitePage">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListSitePage " id="pageSearchVal-FieldListSitePage_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
@@ -1384,36 +956,36 @@
           </sl-drawer>
           <sl-drawer placement="end" id="siteSidebarToggleStats">
             <div>
-              <span class="w3-bar-item ">
+              <span>
                 <i class="fad fa-chart-candlestick "></i>                 Stats</span>
             </div>
-            <div class="w3-bar-block ">
+            <div>
               {%- block htmBodyStatsSitePagePage %}
               <div
- style="display: none; " class="w3-padding w3-tiny " id="pageSearchVal-StatsSitePageHidden">
+ style="display: none; " id="pageSearchVal-StatsSitePageHidden">
                 {% for item in defaultStatsVars %}
                   <div class="pageSearchVal-StatsSitePageHidden " id="pageSearchVal-StatsSitePageHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
-              <div class="w3-padding w3-tiny " id="pageSearchVal-StatsSitePage">
+              <div id="pageSearchVal-StatsSitePage">
                 {% if defaultStatsVars is defined %}
                   {% for item in defaultStatsVars %}
                     <div class="pageSearchVal pageSearchVal-StatsSitePage_{{ item }} " id="pageSearchVal-StatsSitePage_{{ item }}">stats.field={{ item }}                    </div>
                   {% endfor %}
                 {% endif %}
               </div>
-              <table class="w3-table ">
+              <table>
                 {% for key, value in varsFq.items() %}
                   {% if enableStats is defined %}
                     <tr class="">
                       <td class="">
                         <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsSitePage_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('SitePage', value); ">{{ value.displayName }}</sl-checkbox></span>
                       </td>
-                      <td class="w3-cell ">
+                      <td>
                         <div>
                           <label for="pageStatsSitePage_{{ key }}">{{ value.displayName }}</label>
                         </div>
-                        <div class="pageStatsField w3-small pageStatsFieldSitePage_{{ key }} " id="pageStatsFieldSitePage_{{ key }}">
+                        <div class="pageStatsField pageStatsFieldSitePage_{{ key }} " id="pageStatsFieldSitePage_{{ key }}">
                           {% if value.stats is defined %}
                             {% for item in value.stats %}
                               {% if item.key == 'name' %}{% else %}
@@ -1447,11 +1019,11 @@
         </div>
 
         {%- block htmBodyGraphLocationSitePagePage %}
-        <div id="htmBodyGraphLocationSitePagePage" class="w3-content htmBodyGraphLocation "></div>
+        <div id="htmBodyGraphLocationSitePagePage" class="htmBodyGraphLocation "></div>
         {%- endblock htmBodyGraphLocationSitePagePage %}
 
         {%- block htmBodyGraphSitePagePage %}
-        <div id="htmBodyGraphBaseResultPage" class="w3-content htmBodyGraph "></div>
+        <div id="htmBodyGraphBaseResultPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphSitePagePage %}
         <div class="pageContent ">
           <div id="site-calendar-box">
@@ -1468,7 +1040,7 @@
         {{ htmSearchButtonsSitePagePage() }}
             {{ htmFormsSitePagePage() }}
         <h2>
-          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+          <span>
   {% if classIconCssClasses is defined %}
             <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
   {% endif %}
@@ -1484,8 +1056,8 @@
             <span class="">article</span>
           </a>
         </h1>
-        <h2 class="w3-center ">
-          <span class="w3-bar-item w3-padding w3-center w3-block w3-">
+        <h2>
+          <span>
             <span class="">{{sitePage_.objectTitle}}</span>
           </span>
         </h2>
@@ -1522,17 +1094,17 @@
       {%- endblock htmBodyEndSitePagePage %}
       {%- endblock htmBodyEndBaseResultPage %}
 {%- block htmSuggestedSitePagePage %}
-        <div class="w3-cell-row ">
-          <div class="w3-cell ">
+        <div>
+          <div>
             <span>
               search articles: 
             </span>
           </div>
         </div>
-        <div class="w3-bar ">
+        <div>
           <sl-input
               type="text"
-              class="suggestSitePage w3-input w3-border w3-bar-item "
+              class="suggestSitePage "
               name="suggestSitePage"
               id="suggestSitePage{{id}}"
               autocomplete="off"
@@ -1544,15 +1116,14 @@
               >
           </sl-input>
           <button
-              class="w3-btn w3-round w3-border w3-border-black w3-ripple w3-padding w3-bar-item w3- "
               onclick="window.location.href = '/page?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
           </button>
           <div>
-            <div class="w3-cell-row ">
-              <div class="w3-cell w3-left-align w3-cell-top ">
-                <ul class="w3-ul w3-hoverable " id="suggestListSitePage{{id}}">
+            <div>
+              <div>
+                <ul id="suggestListSitePage{{id}}">
                 </ul>
               </div>
             </div>
@@ -1644,7 +1215,7 @@ A URL friendly unique ID for this object"
                       class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classSitePage inputSitePage{{id}}ObjectId "
                       name="setObjectId"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId w3-input w3-border classSitePage inputSitePage{{id}}ObjectId "
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId classSitePage inputSitePage{{id}}ObjectId "
                       name="objectId"
     {%- endif %}
   {%- endif %}
@@ -1787,7 +1358,7 @@ The ID for this page. "
                       class="label-on-left {{classApiMethodMethod}}_pageId setPageId classSitePage inputSitePage{{id}}PageId "
                       name="setPageId"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId w3-input w3-border classSitePage inputSitePage{{id}}PageId "
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classSitePage inputSitePage{{id}}PageId "
                       name="pageId"
     {%- endif %}
   {%- endif %}
@@ -1826,7 +1397,7 @@ The relative URI for this page. "
                       class="label-on-left {{classApiMethodMethod}}_uri setUri classSitePage inputSitePage{{id}}Uri "
                       name="setUri"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_uri valueUri w3-input w3-border classSitePage inputSitePage{{id}}Uri "
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri classSitePage inputSitePage{{id}}Uri "
                       name="uri"
     {%- endif %}
   {%- endif %}
@@ -1865,7 +1436,7 @@ The URL for this page. "
                       class="label-on-left {{classApiMethodMethod}}_url setUrl classSitePage inputSitePage{{id}}Url "
                       name="setUrl"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_url valueUrl w3-input w3-border classSitePage inputSitePage{{id}}Url "
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl classSitePage inputSitePage{{id}}Url "
                       name="url"
     {%- endif %}
   {%- endif %}
@@ -1904,7 +1475,7 @@ The author"
                       class="label-on-left {{classApiMethodMethod}}_author setAuthor classSitePage inputSitePage{{id}}Author "
                       name="setAuthor"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_author valueAuthor w3-input w3-border classSitePage inputSitePage{{id}}Author "
+                      class="label-on-left {{classApiMethodMethod}}_author valueAuthor classSitePage inputSitePage{{id}}Author "
                       name="author"
     {%- endif %}
   {%- endif %}
@@ -1943,7 +1514,7 @@ The page image URI"
                       class="label-on-left {{classApiMethodMethod}}_pageImageUri setPageImageUri classSitePage inputSitePage{{id}}PageImageUri "
                       name="setPageImageUri"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pageImageUri valuePageImageUri w3-input w3-border classSitePage inputSitePage{{id}}PageImageUri "
+                      class="label-on-left {{classApiMethodMethod}}_pageImageUri valuePageImageUri classSitePage inputSitePage{{id}}PageImageUri "
                       name="pageImageUri"
     {%- endif %}
   {%- endif %}
