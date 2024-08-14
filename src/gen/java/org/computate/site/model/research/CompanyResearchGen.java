@@ -1,10 +1,8 @@
 package org.computate.site.model.research;
 
 import org.computate.site.request.SiteRequest;
+import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
-import io.vertx.core.json.JsonObject;
-import java.util.Date;
-import java.util.Set;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import java.util.Optional;
@@ -42,6 +40,7 @@ import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
+import io.vertx.core.json.JsonObject;
 
 /**
  * <ol>
@@ -50,8 +49,10 @@ import org.computate.search.response.solr.SolrResponse;
  * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyResearch API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyResearch objects in a relational PostgreSQL database transactionally in the RESTful API. 
+ * The code to persist and query the CompanyResearchGen data in the database will then be automatically generated. 
  * </li>
- * <h3>About the CompanyResearch class and it's generated class CompanyResearchGen&lt;BaseModel&gt;: </h3>extends CompanyResearchGen
+ * <h3>About the CompanyResearch class and it's generated class CompanyResearchGen&lt;BaseResult&gt;: </h3>extends CompanyResearchGen
  * <p>
  * This Java class extends a generated Java class CompanyResearchGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -62,9 +63,9 @@ import org.computate.search.response.solr.SolrResponse;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyResearchGen<BaseModel>
- * <p>This <code>class CompanyResearch extends CompanyResearchGen&lt;BaseModel&gt;</code>, which means it extends a newly generated CompanyResearchGen. 
- * The generated <code>class CompanyResearchGen extends BaseModel</code> which means that CompanyResearch extends CompanyResearchGen which extends BaseModel. 
+ * extends CompanyResearchGen<BaseResult>
+ * <p>This <code>class CompanyResearch extends CompanyResearchGen&lt;BaseResult&gt;</code>, which means it extends a newly generated CompanyResearchGen. 
+ * The generated <code>class CompanyResearchGen extends BaseResult</code> which means that CompanyResearch extends CompanyResearchGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -103,24 +104,18 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>By adding a class comment "{@inheritDoc}", the CompanyResearch class will inherit the helpful inherited class comments from the super class CompanyResearchGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 5</h2>
- * <p>This class contains a comment <b>"Order: 5"</b>, which means this class will be sorted by the given number 5 ascending when code that relates to multiple classes at the same time is generated. 
- * </p>
- * <h2>SqlOrder: 5</h2>
- * <p>This class contains a comment <b>"SqlOrder: 5"</b>, which means this class will be sorted by the given number 5 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>Order: 3</h2>
+ * <p>This class contains a comment <b>"Order: 3"</b>, which means this class will be sorted by the given number 3 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>Model: true</h2>
- * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
- * Every protected void method that begins with "_" that contains a "Persist: true" comment will be a persisted field in the database table. 
- * </p>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.research.CompanyResearchPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.model.research.CompanyResearchPage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: BaseResultPage</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
+ * This means that the newly created class org.computate.site.model.research.CompanyResearchPage extends org.computate.site.result.BaseResultPage. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -168,7 +163,7 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyResearchGen<DEV> extends BaseModel {
+public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyResearch.class);
 
 	public static final String CompanyResearch_Description_enUS = "Read about the computate project related research going on at Red Hat research";
@@ -262,6 +257,398 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		return name;
 	}
 
+	/////////////////
+	// description //
+	/////////////////
+
+
+	/**	 The entity description
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String description;
+
+	/**	<br> The entity description
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _description(Wrap<String> w);
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String o) {
+		this.description = CompanyResearch.staticSetDescription(siteRequest_, o);
+	}
+	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch descriptionInit() {
+		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+		if(description == null) {
+			_description(descriptionWrap);
+			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+				setDescription(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchDescription(siteRequest_, CompanyResearch.staticSetDescription(siteRequest_, o)).toString();
+	}
+
+	public String sqlDescription() {
+		return description;
+	}
+
+	////////////
+	// pageId //
+	////////////
+
+
+	/**	 The entity pageId
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String pageId;
+
+	/**	<br> The entity pageId
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageId(Wrap<String> w);
+
+	public String getPageId() {
+		return pageId;
+	}
+	public void setPageId(String o) {
+		this.pageId = CompanyResearch.staticSetPageId(siteRequest_, o);
+	}
+	public static String staticSetPageId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch pageIdInit() {
+		Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
+		if(pageId == null) {
+			_pageId(pageIdWrap);
+			Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
+				setPageId(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchPageId(siteRequest_, CompanyResearch.staticSetPageId(siteRequest_, o)).toString();
+	}
+
+	public String sqlPageId() {
+		return pageId;
+	}
+
+	/////////////////
+	// resourceUri //
+	/////////////////
+
+
+	/**	 The entity resourceUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String resourceUri;
+
+	/**	<br> The entity resourceUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _resourceUri(Wrap<String> w);
+
+	public String getResourceUri() {
+		return resourceUri;
+	}
+	public void setResourceUri(String o) {
+		this.resourceUri = CompanyResearch.staticSetResourceUri(siteRequest_, o);
+	}
+	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch resourceUriInit() {
+		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
+		if(resourceUri == null) {
+			_resourceUri(resourceUriWrap);
+			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
+				setResourceUri(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchResourceUri(siteRequest_, CompanyResearch.staticSetResourceUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlResourceUri() {
+		return resourceUri;
+	}
+
+	/////////////////
+	// templateUri //
+	/////////////////
+
+
+	/**	 The entity templateUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String templateUri;
+
+	/**	<br> The entity templateUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _templateUri(Wrap<String> w);
+
+	public String getTemplateUri() {
+		return templateUri;
+	}
+	public void setTemplateUri(String o) {
+		this.templateUri = CompanyResearch.staticSetTemplateUri(siteRequest_, o);
+	}
+	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch templateUriInit() {
+		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
+		if(templateUri == null) {
+			_templateUri(templateUriWrap);
+			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
+				setTemplateUri(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchTemplateUri(siteRequest_, CompanyResearch.staticSetTemplateUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlTemplateUri() {
+		return templateUri;
+	}
+
+	/////////
+	// uri //
+	/////////
+
+
+	/**	 The entity uri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String uri;
+
+	/**	<br> The entity uri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _uri(Wrap<String> w);
+
+	public String getUri() {
+		return uri;
+	}
+	public void setUri(String o) {
+		this.uri = CompanyResearch.staticSetUri(siteRequest_, o);
+	}
+	public static String staticSetUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch uriInit() {
+		Wrap<String> uriWrap = new Wrap<String>().var("uri");
+		if(uri == null) {
+			_uri(uriWrap);
+			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
+				setUri(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchUri(siteRequest_, CompanyResearch.staticSetUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlUri() {
+		return uri;
+	}
+
+	/////////
+	// url //
+	/////////
+
+
+	/**	 The entity url
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String url;
+
+	/**	<br> The entity url
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _url(Wrap<String> w);
+
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String o) {
+		this.url = CompanyResearch.staticSetUrl(siteRequest_, o);
+	}
+	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch urlInit() {
+		Wrap<String> urlWrap = new Wrap<String>().var("url");
+		if(url == null) {
+			_url(urlWrap);
+			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
+				setUrl(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchUrl(siteRequest_, CompanyResearch.staticSetUrl(siteRequest_, o)).toString();
+	}
+
+	public String sqlUrl() {
+		return url;
+	}
+
+	///////////
+	// title //
+	///////////
+
+
+	/**	 The entity title
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String title;
+
+	/**	<br> The entity title
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _title(Wrap<String> w);
+
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String o) {
+		this.title = CompanyResearch.staticSetTitle(siteRequest_, o);
+	}
+	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyResearch titleInit() {
+		Wrap<String> titleWrap = new Wrap<String>().var("title");
+		if(title == null) {
+			_title(titleWrap);
+			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
+				setTitle(o);
+			});
+		}
+		return (CompanyResearch)this;
+	}
+
+	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
+		return CompanyResearch.staticSearchTitle(siteRequest_, CompanyResearch.staticSetTitle(siteRequest_, o)).toString();
+	}
+
+	public String sqlTitle() {
+		return title;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -276,7 +663,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyResearch(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
+			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -292,6 +679,13 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 			Promise<Void> promise2 = Promise.promise();
 			try {
 				nameInit();
+				descriptionInit();
+				pageIdInit();
+				resourceUriInit();
+				templateUriInit();
+				uriInit();
+				urlInit();
+				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -314,7 +708,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 	/////////////////
 
 	public void siteRequestCompanyResearch(SiteRequest siteRequest_) {
-			super.siteRequestBaseModel(siteRequest_);
+			super.siteRequestBaseResult(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -347,8 +741,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(var) {
 			case "name":
 				return oCompanyResearch.name;
+			case "description":
+				return oCompanyResearch.description;
+			case "pageId":
+				return oCompanyResearch.pageId;
+			case "resourceUri":
+				return oCompanyResearch.resourceUri;
+			case "templateUri":
+				return oCompanyResearch.templateUri;
+			case "uri":
+				return oCompanyResearch.uri;
+			case "url":
+				return oCompanyResearch.url;
+			case "title":
+				return oCompanyResearch.title;
 			default:
-				return super.obtainBaseModel(var);
+				return super.obtainBaseResult(var);
 		}
 	}
 
@@ -373,7 +781,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		CompanyResearch oCompanyResearch = (CompanyResearch)this;
 		switch(var) {
 			default:
-				return super.relateBaseModel(var, val);
+				return super.relateBaseResult(var, val);
 		}
 	}
 
@@ -388,8 +796,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "name":
 			return CompanyResearch.staticSetName(siteRequest_, o);
+		case "description":
+			return CompanyResearch.staticSetDescription(siteRequest_, o);
+		case "pageId":
+			return CompanyResearch.staticSetPageId(siteRequest_, o);
+		case "resourceUri":
+			return CompanyResearch.staticSetResourceUri(siteRequest_, o);
+		case "templateUri":
+			return CompanyResearch.staticSetTemplateUri(siteRequest_, o);
+		case "uri":
+			return CompanyResearch.staticSetUri(siteRequest_, o);
+		case "url":
+			return CompanyResearch.staticSetUrl(siteRequest_, o);
+		case "title":
+			return CompanyResearch.staticSetTitle(siteRequest_, o);
 			default:
-				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -404,8 +826,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "name":
 			return CompanyResearch.staticSearchName(siteRequest_, (String)o);
+		case "description":
+			return CompanyResearch.staticSearchDescription(siteRequest_, (String)o);
+		case "pageId":
+			return CompanyResearch.staticSearchPageId(siteRequest_, (String)o);
+		case "resourceUri":
+			return CompanyResearch.staticSearchResourceUri(siteRequest_, (String)o);
+		case "templateUri":
+			return CompanyResearch.staticSearchTemplateUri(siteRequest_, (String)o);
+		case "uri":
+			return CompanyResearch.staticSearchUri(siteRequest_, (String)o);
+		case "url":
+			return CompanyResearch.staticSearchUrl(siteRequest_, (String)o);
+		case "title":
+			return CompanyResearch.staticSearchTitle(siteRequest_, (String)o);
 			default:
-				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -420,8 +856,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "name":
 			return CompanyResearch.staticSearchStrName(siteRequest_, (String)o);
+		case "description":
+			return CompanyResearch.staticSearchStrDescription(siteRequest_, (String)o);
+		case "pageId":
+			return CompanyResearch.staticSearchStrPageId(siteRequest_, (String)o);
+		case "resourceUri":
+			return CompanyResearch.staticSearchStrResourceUri(siteRequest_, (String)o);
+		case "templateUri":
+			return CompanyResearch.staticSearchStrTemplateUri(siteRequest_, (String)o);
+		case "uri":
+			return CompanyResearch.staticSearchStrUri(siteRequest_, (String)o);
+		case "url":
+			return CompanyResearch.staticSearchStrUrl(siteRequest_, (String)o);
+		case "title":
+			return CompanyResearch.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
-				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -436,8 +886,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 		case "name":
 			return CompanyResearch.staticSearchFqName(siteRequest_, o);
+		case "description":
+			return CompanyResearch.staticSearchFqDescription(siteRequest_, o);
+		case "pageId":
+			return CompanyResearch.staticSearchFqPageId(siteRequest_, o);
+		case "resourceUri":
+			return CompanyResearch.staticSearchFqResourceUri(siteRequest_, o);
+		case "templateUri":
+			return CompanyResearch.staticSearchFqTemplateUri(siteRequest_, o);
+		case "uri":
+			return CompanyResearch.staticSearchFqUri(siteRequest_, o);
+		case "url":
+			return CompanyResearch.staticSearchFqUrl(siteRequest_, o);
+		case "title":
+			return CompanyResearch.staticSearchFqTitle(siteRequest_, o);
 			default:
-				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -468,8 +932,50 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 				}
 				saves.add("name");
 				return val;
+			} else if("description".equals(varLower)) {
+				if(val instanceof String) {
+					setDescription((String)val);
+				}
+				saves.add("description");
+				return val;
+			} else if("pageid".equals(varLower)) {
+				if(val instanceof String) {
+					setPageId((String)val);
+				}
+				saves.add("pageId");
+				return val;
+			} else if("resourceuri".equals(varLower)) {
+				if(val instanceof String) {
+					setResourceUri((String)val);
+				}
+				saves.add("resourceUri");
+				return val;
+			} else if("templateuri".equals(varLower)) {
+				if(val instanceof String) {
+					setTemplateUri((String)val);
+				}
+				saves.add("templateUri");
+				return val;
+			} else if("uri".equals(varLower)) {
+				if(val instanceof String) {
+					setUri((String)val);
+				}
+				saves.add("uri");
+				return val;
+			} else if("url".equals(varLower)) {
+				if(val instanceof String) {
+					setUrl((String)val);
+				}
+				saves.add("url");
+				return val;
+			} else if("title".equals(varLower)) {
+				if(val instanceof String) {
+					setTitle((String)val);
+				}
+				saves.add("title");
+				return val;
 		} else {
-			return super.persistBaseModel(var, val);
+			return super.persistBaseResult(var, val);
 		}
 	}
 
@@ -490,16 +996,79 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 				if(name != null)
 					oCompanyResearch.setName(name);
 			}
+
+			if(saves.contains("description")) {
+				String description = (String)doc.get("description_docvalues_string");
+				if(description != null)
+					oCompanyResearch.setDescription(description);
+			}
+
+			if(saves.contains("pageId")) {
+				String pageId = (String)doc.get("pageId_docvalues_string");
+				if(pageId != null)
+					oCompanyResearch.setPageId(pageId);
+			}
+
+			if(saves.contains("resourceUri")) {
+				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
+				if(resourceUri != null)
+					oCompanyResearch.setResourceUri(resourceUri);
+			}
+
+			if(saves.contains("templateUri")) {
+				String templateUri = (String)doc.get("templateUri_docvalues_string");
+				if(templateUri != null)
+					oCompanyResearch.setTemplateUri(templateUri);
+			}
+
+			if(saves.contains("uri")) {
+				String uri = (String)doc.get("uri_docvalues_string");
+				if(uri != null)
+					oCompanyResearch.setUri(uri);
+			}
+
+			if(saves.contains("url")) {
+				String url = (String)doc.get("url_docvalues_string");
+				if(url != null)
+					oCompanyResearch.setUrl(url);
+			}
+
+			if(saves.contains("title")) {
+				String title = (String)doc.get("title_docvalues_string");
+				if(title != null)
+					oCompanyResearch.setTitle(title);
+			}
 		}
 
-		super.populateBaseModel(doc);
+		super.populateBaseResult(doc);
 	}
 
 	public void indexCompanyResearch(JsonObject doc) {
 		if(name != null) {
 			doc.put("name_docvalues_string", name);
 		}
-		super.indexBaseModel(doc);
+		if(description != null) {
+			doc.put("description_docvalues_string", description);
+		}
+		if(pageId != null) {
+			doc.put("pageId_docvalues_string", pageId);
+		}
+		if(resourceUri != null) {
+			doc.put("resourceUri_docvalues_string", resourceUri);
+		}
+		if(templateUri != null) {
+			doc.put("templateUri_docvalues_string", templateUri);
+		}
+		if(uri != null) {
+			doc.put("uri_docvalues_string", uri);
+		}
+		if(url != null) {
+			doc.put("url_docvalues_string", url);
+		}
+		if(title != null) {
+			doc.put("title_docvalues_string", title);
+		}
+		super.indexBaseResult(doc);
 
 	}
 
@@ -507,8 +1076,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
+			case "pageId":
+				return "pageId_docvalues_string";
+			case "resourceUri":
+				return "resourceUri_docvalues_string";
+			case "templateUri":
+				return "templateUri_docvalues_string";
+			case "uri":
+				return "uri_docvalues_string";
+			case "url":
+				return "url_docvalues_string";
+			case "title":
+				return "title_docvalues_string";
 			default:
-				return BaseModel.varStoredBaseModel(entityVar);
+				return BaseResult.varStoredBaseResult(entityVar);
 		}
 	}
 
@@ -516,8 +1099,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
+			case "pageId":
+				return "pageId_docvalues_string";
+			case "resourceUri":
+				return "resourceUri_docvalues_string";
+			case "templateUri":
+				return "templateUri_docvalues_string";
+			case "uri":
+				return "uri_docvalues_string";
+			case "url":
+				return "url_docvalues_string";
+			case "title":
+				return "title_docvalues_string";
 			default:
-				return BaseModel.varIndexedBaseModel(entityVar);
+				return BaseResult.varIndexedBaseResult(entityVar);
 		}
 	}
 
@@ -525,22 +1122,36 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(searchVar) {
 			case "name_docvalues_string":
 				return "name";
+			case "description_docvalues_string":
+				return "description";
+			case "pageId_docvalues_string":
+				return "pageId";
+			case "resourceUri_docvalues_string":
+				return "resourceUri";
+			case "templateUri_docvalues_string":
+				return "templateUri";
+			case "uri_docvalues_string":
+				return "uri";
+			case "url_docvalues_string":
+				return "url";
+			case "title_docvalues_string":
+				return "title";
 			default:
-				return BaseModel.searchVarBaseModel(searchVar);
+				return BaseResult.searchVarBaseResult(searchVar);
 		}
 	}
 
 	public static String varSearchCompanyResearch(String entityVar) {
 		switch(entityVar) {
 			default:
-				return BaseModel.varSearchBaseModel(entityVar);
+				return BaseResult.varSearchBaseResult(entityVar);
 		}
 	}
 
 	public static String varSuggestedCompanyResearch(String entityVar) {
 		switch(entityVar) {
 			default:
-				return BaseModel.varSuggestedBaseModel(entityVar);
+				return BaseResult.varSuggestedBaseResult(entityVar);
 		}
 	}
 
@@ -556,8 +1167,15 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		SiteRequest siteRequest = oCompanyResearch.getSiteRequest_();
 
 		oCompanyResearch.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyResearch.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
-		super.storeBaseModel(doc);
+		super.storeBaseResult(doc);
 	}
 
 	//////////////////
@@ -571,7 +1189,21 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 			CompanyResearch original = (CompanyResearch)o;
 			if(!Objects.equals(name, original.getName()))
 				apiRequest.addVars("name");
-			super.apiRequestBaseModel();
+			if(!Objects.equals(description, original.getDescription()))
+				apiRequest.addVars("description");
+			if(!Objects.equals(pageId, original.getPageId()))
+				apiRequest.addVars("pageId");
+			if(!Objects.equals(resourceUri, original.getResourceUri()))
+				apiRequest.addVars("resourceUri");
+			if(!Objects.equals(templateUri, original.getTemplateUri()))
+				apiRequest.addVars("templateUri");
+			if(!Objects.equals(uri, original.getUri()))
+				apiRequest.addVars("uri");
+			if(!Objects.equals(url, original.getUrl()))
+				apiRequest.addVars("url");
+			if(!Objects.equals(title, original.getTitle()))
+				apiRequest.addVars("title");
+			super.apiRequestBaseResult();
 		}
 	}
 
@@ -583,6 +1215,13 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -592,12 +1231,19 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		return CLASS_API_ADDRESS_CompanyResearch;
 	}
 	public static final String VAR_name = "name";
+	public static final String VAR_description = "description";
+	public static final String VAR_pageId = "pageId";
+	public static final String VAR_resourceUri = "resourceUri";
+	public static final String VAR_templateUri = "templateUri";
+	public static final String VAR_uri = "uri";
+	public static final String VAR_url = "url";
+	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
 		return CompanyResearch.varsQCompanyResearch(new ArrayList<String>());
 	}
 	public static List<String> varsQCompanyResearch(List<String> vars) {
-		BaseModel.varsQBaseModel(vars);
+		BaseResult.varsQBaseResult(vars);
 		return vars;
 	}
 
@@ -606,7 +1252,13 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 	}
 	public static List<String> varsFqCompanyResearch(List<String> vars) {
 		vars.add(VAR_name);
-		BaseModel.varsFqBaseModel(vars);
+		vars.add(VAR_description);
+		vars.add(VAR_pageId);
+		vars.add(VAR_resourceUri);
+		vars.add(VAR_templateUri);
+		vars.add(VAR_uri);
+		vars.add(VAR_url);
+		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
 
@@ -614,11 +1266,18 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		return CompanyResearch.varsRangeCompanyResearch(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyResearch(List<String> vars) {
-		BaseModel.varsRangeBaseModel(vars);
+		BaseResult.varsRangeBaseResult(vars);
 		return vars;
 	}
 
-	public static final String DISPLAY_NAME_name = "research name";
+	public static final String DISPLAY_NAME_name = "service name";
+	public static final String DISPLAY_NAME_description = "service description";
+	public static final String DISPLAY_NAME_pageId = "Page ID";
+	public static final String DISPLAY_NAME_resourceUri = "resource URI";
+	public static final String DISPLAY_NAME_templateUri = "template URI";
+	public static final String DISPLAY_NAME_uri = "URI";
+	public static final String DISPLAY_NAME_url = "URL";
+	public static final String DISPLAY_NAME_title = "title";
 
 	public static String displayNameForClass(String var) {
 		return CompanyResearch.displayNameCompanyResearch(var);
@@ -627,17 +1286,45 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_name:
 			return DISPLAY_NAME_name;
+		case VAR_description:
+			return DISPLAY_NAME_description;
+		case VAR_pageId:
+			return DISPLAY_NAME_pageId;
+		case VAR_resourceUri:
+			return DISPLAY_NAME_resourceUri;
+		case VAR_templateUri:
+			return DISPLAY_NAME_templateUri;
+		case VAR_uri:
+			return DISPLAY_NAME_uri;
+		case VAR_url:
+			return DISPLAY_NAME_url;
+		case VAR_title:
+			return DISPLAY_NAME_title;
 		default:
-			return BaseModel.displayNameBaseModel(var);
+			return BaseResult.displayNameBaseResult(var);
 		}
 	}
 
 	public static String descriptionCompanyResearch(String var) {
 		switch(var) {
 		case VAR_name:
-			return "The research name. ";
+			return "The service name. ";
+		case VAR_description:
+			return "The service description. ";
+		case VAR_pageId:
+			return "The ID for this page. ";
+		case VAR_resourceUri:
+			return "The resource relative URI for this page. ";
+		case VAR_templateUri:
+			return "The template relative URI for this page. ";
+		case VAR_uri:
+			return "The relative URI for this page. ";
+		case VAR_url:
+			return "The URL for this page. ";
+		case VAR_title:
+			return "The title of this page. ";
 			default:
-				return BaseModel.descriptionBaseModel(var);
+				return BaseResult.descriptionBaseResult(var);
 		}
 	}
 
@@ -645,15 +1332,33 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_name:
 			return "String";
+		case VAR_description:
+			return "String";
+		case VAR_pageId:
+			return "String";
+		case VAR_resourceUri:
+			return "String";
+		case VAR_templateUri:
+			return "String";
+		case VAR_uri:
+			return "String";
+		case VAR_url:
+			return "String";
+		case VAR_title:
+			return "String";
 			default:
-				return BaseModel.classSimpleNameBaseModel(var);
+				return BaseResult.classSimpleNameBaseResult(var);
 		}
 	}
 
 	public static Integer htmColumnCompanyResearch(String var) {
 		switch(var) {
+		case VAR_name:
+			return 1;
+		case VAR_description:
+			return 2;
 			default:
-				return BaseModel.htmColumnBaseModel(var);
+				return BaseResult.htmColumnBaseResult(var);
 		}
 	}
 
@@ -661,45 +1366,61 @@ public abstract class CompanyResearchGen<DEV> extends BaseModel {
 		switch(var) {
 		case VAR_name:
 			return 3;
+		case VAR_description:
+			return 3;
+		case VAR_pageId:
+			return 4;
+		case VAR_uri:
+			return 3;
+		case VAR_url:
+			return 3;
 			default:
-				return BaseModel.htmRowBaseModel(var);
+				return BaseResult.htmRowBaseResult(var);
 		}
 	}
 
 	public static Integer htmCellCompanyResearch(String var) {
 		switch(var) {
 		case VAR_name:
+			return 1;
+		case VAR_description:
+			return 2;
+		case VAR_pageId:
+			return 1;
+		case VAR_uri:
+			return 2;
+		case VAR_url:
 			return 2;
 			default:
-				return BaseModel.htmCellBaseModel(var);
+				return BaseResult.htmCellBaseResult(var);
 		}
 	}
 
 	public static Integer lengthMinCompanyResearch(String var) {
 		switch(var) {
 			default:
-				return BaseModel.lengthMinBaseModel(var);
+				return BaseResult.lengthMinBaseResult(var);
 		}
 	}
 
 	public static Integer lengthMaxCompanyResearch(String var) {
 		switch(var) {
 			default:
-				return BaseModel.lengthMaxBaseModel(var);
+				return BaseResult.lengthMaxBaseResult(var);
 		}
 	}
 
 	public static Integer maxCompanyResearch(String var) {
 		switch(var) {
 			default:
-				return BaseModel.maxBaseModel(var);
+				return BaseResult.maxBaseResult(var);
 		}
 	}
 
 	public static Integer minCompanyResearch(String var) {
 		switch(var) {
 			default:
-				return BaseModel.minBaseModel(var);
+				return BaseResult.minBaseResult(var);
 		}
 	}
 }

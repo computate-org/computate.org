@@ -99,7 +99,8 @@
       });
     </script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
-    <script type="module" src="{{ STATIC_BASE_URL }}/js/site.js"></script>
+    <script src="{{ STATIC_BASE_URL }}/js/site.js"></script>
+    <script type="module" src="{{ STATIC_BASE_URL }}/js/siteModule.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
@@ -128,16 +129,18 @@
             </sl-button>
           </li>
           <li>
-            <sl-button href="https://github.com/computate/">
-              <i class="fa-brands fa-github"></i>
-              Github
-            </sl-button>
-          </li>
-          <li>
             <sl-tooltip placement="right" content="Read the latest articles to learn more">
               <sl-button href="http://localhost:10200/page">
                 <i class="fa-duotone fa-solid fa-newspaper"></i>
                 articles
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
+              <sl-button href="http://localhost:10200/research">
+                <i class="fa-duotone fa-solid fa-school"></i>
+                research
               </sl-button>
             </sl-tooltip>
           </li>
@@ -158,18 +161,18 @@
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
-              <sl-button href="http://localhost:10200/research">
-                <i class="fa-duotone fa-solid fa-school"></i>
-                research
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
             <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
               <sl-button href="http://localhost:10200/product">
                 <i class="fa-regular fa-conveyor-belt"></i>
                 products
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
+              <sl-button href="http://localhost:10200/service">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                services
               </sl-button>
             </sl-tooltip>
           </li>
@@ -235,7 +238,7 @@
               <i slot="prefix" class="fa-duotone fa-magnifying-glass"></i>
             </sl-input>
             <!-- <sl-button type="submit" variant="primary" size="medium" slot="trigger" caret>Search</sl-button> -->
-            <sl-dropdown id="siteSearchDropdown">
+            <sl-dropdown id="siteSearchDropdown" style="background-color: black;">
               <sl-menu>
               </sl-menu>
             </sl-dropdown>

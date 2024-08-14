@@ -113,22 +113,29 @@ import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
 import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
-import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
-import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
-import org.computate.site.model.event.CompanyEventEnUSGenApiService;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProductEnUSGenApiService;
-import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
-import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearch;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEvent;
+import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.model.product.CompanyProductEnUSGenApiService;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.service.CompanyServiceEnUSGenApiService;
+import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
+import org.computate.site.model.service.CompanyService;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsite;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 
 
 /**
@@ -1021,27 +1028,34 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureApi() {
 		Promise<Void> promise = Promise.promise();
 		try {
-			List<String> authResources = Arrays.asList("CompanyCourse","CompanyEvent","WeatherObserved","CompanyProduct","CompanyResearch","CompanyWebsite","SitePage");
-			List<String> publicResources = Arrays.asList("CompanyProduct","SitePage");
+			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite","WeatherObserved");
+			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite");
 			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
-			CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
-			CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyResearch.configureUi(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
 
-			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyEvent.configureUi(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
+
+			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyCourse.configureUi(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
 
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
 
-			CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyService.configureUi(router, CompanyService.class, SiteRequest.class, "/en-us/service");
 
-			CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
+			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
 			LOG.info("The API was configured properly.");
 			promise.complete();

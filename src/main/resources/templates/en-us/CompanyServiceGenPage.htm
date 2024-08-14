@@ -1,0 +1,1534 @@
+{% extends "en-us/BaseResultPage.htm" %}
+
+{%- block htmTitleBaseResultPage %}
+{%- block htmTitleCompanyServicePage %}
+    <title>{% if searchListCompanyService_ is defined %}{% if companyServiceCount == int1 %}{% if id is defined %}service{% else %}service{% endif %}{% else %}no service found{% endif %}{% else %}services{% endif %}</title>
+{%- endblock htmTitleCompanyServicePage %}
+{%- endblock htmTitleBaseResultPage %}
+
+{%- block htmStylesBaseResultPage %}
+{{ super() }}
+{%- block htmStylesCompanyServicePage %}
+{%- endblock htmStylesCompanyServicePage %}
+{%- endblock htmStylesBaseResultPage %}
+
+{%- block htmStyleBaseResultPage %}
+{{ super() }}
+{%- block htmStyleCompanyServicePage %}
+{%- endblock htmStyleCompanyServicePage %}
+{%- endblock htmStyleBaseResultPage %}
+
+{%- block htmScriptsBaseResultPage %}
+{{ super() }}
+{%- block htmScriptsCompanyServicePage %}
+    <script src="{{staticBaseUrl}}/js/enUS/CompanyServicePage.js"></script>
+    {% if id is defined %}
+    <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyServicePageModule.js"></script>
+    {% endif %}
+{%- endblock htmScriptsCompanyServicePage %}
+{%- endblock htmScriptsBaseResultPage %}
+
+{%- block htmScriptBaseResultPage %}
+{%- block htmScriptCompanyServicePage %}
+    <script>
+
+      function jsWebsocketCompanyService(id, vars, $response) {
+        {%- block jsWebsocketCompanyServicePage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyService(e, feature) {
+        {%- block jsTooltipCompanyServicePage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyService(feature, layer) {
+        return `{%- block htmTooltipCompanyServicePage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyServicePage %}`;
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        window.eventBus = new EventBus('/eventbus');
+        var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
+
+        if(pk == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          window.companyService = JSON.parse(document.querySelector('.pageForm .companyService')?.value);
+        {% if id is defined %}
+        {% endif %}
+        }
+        window.listCompanyService = JSON.parse(document.querySelector('.pageForm .listCompanyService')?.value);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphCompanyService();
+
+        {%- block websocketCompanyServicePage %}{%- endblock %}
+        document.querySelector('#htmForm_patchCompanyService')?.addEventListener('submit', event => {
+          event.preventDefault();
+          patchCompanyService(null, document.querySelector('#htmForm_patchCompanyService'), document.querySelector('#htmFormButton_patchCompanyService'));
+        });
+        document.querySelector('#htmForm_postCompanyService')?.addEventListener('submit', event => {
+          event.preventDefault();
+          postCompanyService(document.querySelector('#htmForm_postCompanyService'), document.querySelector('#htmFormButton_postCompanyService'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+        });
+        document.querySelector('#htmForm_putimportCompanyService')?.addEventListener('submit', event => {
+          event.preventDefault();
+          putimportCompanyService(document.querySelector('#htmForm_putimportCompanyService'), document.querySelector('#htmFormButton_putimportCompanyService'));
+        });
+        document.querySelector('#htmForm_searchpageCompanyService')?.addEventListener('submit', event => {
+          event.preventDefault();
+          searchpageCompanyService();
+        });
+      });
+    </script>
+{%- endblock htmScriptCompanyServicePage %}
+{%- endblock htmScriptBaseResultPage %}
+
+{%- block websocketBaseResultPage %}
+{{ super() }}
+{%- block websocketCompanyServicePage %}
+        websocketCompanyService(websocketCompanyServiceInner);
+{%- endblock websocketCompanyServicePage %}
+{%- endblock websocketBaseResultPage %}
+
+{%- block htmUrlCompanyServicePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyServicePage %}
+
+{%- macro htmButton_patchCompanyService() %}
+        <sl-tooltip content="Modify service">
+          <sl-button
+              onclick="document.querySelector('#patchCompanyServiceDialog').show(); "
+              >
+            <i class="fas fa-edit "></i>
+            Modify
+          </sl-button>
+        </sl-tooltip>
+{%- endmacro %}
+
+{%- macro htmFormButton_patchCompanyService() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_patchCompanyService"
+                >Modify service</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_patchCompanyService() %}
+        <sl-dialog id="patchCompanyServiceDialog" label="Modify service">
+          <form id="htmForm_patchCompanyService">
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+            {{ htmFormButton_patchCompanyService() }}
+          </form>
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_postCompanyService() %}
+        <sl-tooltip content="Create a service">
+          <sl-button
+              onclick="document.querySelector('#postCompanyServiceDialog').show(); "
+              >
+            <i class="fas fa-file-plus "></i>
+            Create
+          </sl-button>
+        </sl-tooltip>
+{%- endmacro %}
+
+{%- macro htmFormButton_postCompanyService() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_postCompanyService"
+                >Create a service</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_postCompanyService() %}
+        <sl-dialog id="postCompanyServiceDialog" label="Create a service">
+          <form id="htmForm_postCompanyService">
+            <div class="">You can override any default values below: </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+            {{ htmFormButton_postCompanyService() }}
+          </form>
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_putimportCompanyService() %}
+        <sl-tooltip content="Import services">
+          <sl-button
+              onclick="document.querySelector('#putimportCompanyServiceDialog').show(); "
+              >
+            <i class="fas fa-file-import "></i>
+            Import
+          </sl-button>
+        </sl-tooltip>
+{%- endmacro %}
+
+{%- macro htmFormButton_putimportCompanyService() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_putimportCompanyService"
+                >Import services</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_putimportCompanyService() %}
+        <sl-dialog id="putimportCompanyServiceDialog" label="Import services">
+          <form id="htmForm_putimportCompanyService">
+            <div>
+              <sl-textarea
+                  class="PUTImport_searchList "
+                  style="height: 300px; "
+                  placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
+                  >
+              </sl-textarea>
+            </div>
+            {{ htmFormButton_putimportCompanyService() }}
+          </form>
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_searchpageCompanyService() %}
+{%- endmacro %}
+
+{%- macro htmFormButton_searchpageCompanyService() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_searchpageCompanyService"
+                >Search services</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_searchpageCompanyService() %}
+        <div id="searchpageCompanyServiceDialog" label="Search services">
+          <div id="htmForm_searchpageCompanyService">
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="-1--1">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+          </div>
+        </div>
+{%- endmacro %}
+            {%- macro htmBodyAllCompanyServicePage() %}
+            <h1>
+              <a href="{{pageUri}}">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                <span>services</span>
+              </a>
+            </h1>
+            <div id="site-calendar-box">
+              <div id="site-calendar"><!-- // --></div>
+            </div>
+            {{ htmSearchButtonsCompanyServicePage() }}
+            {{ htmFormsCompanyServicePage() }}
+            <sl-divider></sl-divider>
+            {{ htmPaginationButtonsCompanyServicePage() }}
+            <div class="grid-mode-details">
+            <div>
+                <i class="fa-regular fa-conveyor-belt"></i>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>service name</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by service name ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by service name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown>
+                <sl-button slot="trigger" caret>service description</sl-button>
+                <sl-menu>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by service description ascending
+                  </sl-menu-item>
+                  <sl-menu-item>
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by service description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              </div>
+            </div>
+            <div class="grid-mode-details" id="site-results-grid">
+              {% for item in listCompanyService%}
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                <div>{{ item.name }}</div>
+                <div>{{ item.description }}</div>
+              </a>
+              {% endfor %}
+                      {% if getColumnName is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnDescription is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+            </div>
+            {%- endmacro htmBodyAllCompanyServicePage() %}
+{%- macro htmSearchButtonsCompanyServicePage() %}
+        <div id="htmSearchButtons">
+          <sl-tooltip placement="top" content="Advanced search for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
+              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
+              Search
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Filters and facet counts for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
+              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
+              Filters
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
+              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
+              Range
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for services">
+            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
+              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
+              Pivot
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
+              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
+              FieldList
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Advanced search for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
+              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
+              Stats
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="top" content="Query the JSON REST API for services">
+            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
+                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
+                >
+              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
+              Api
+            </sl-button>
+          </sl-tooltip>
+        </div>
+{%- endmacro htmSearchButtonsCompanyServicePage() %}
+
+{%- macro htmPaginationButtonsCompanyServicePage() %}
+            <div id="htmPaginationButtons">
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the results as details" pill>
+                  <sl-button id="grid-toggle-details">
+                    <i class="fa-solid fa-list"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as a list">
+                  <sl-button id="grid-toggle-list">
+                    <i class="fa-solid fa-bars"></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the results as cards" pill>
+                  <sl-button id="grid-toggle-card">
+                    <i class="fa-solid fa-grid"></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <sl-button-group>
+                <sl-tooltip placement="top" content="Show the previous results">
+                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-left "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show half the results">
+                  <sl-button{% if pagination.rowsPrevious >= pagination['1L'] %} href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsPrevious }}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-minus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show double the results">
+                  <sl-button href="{{pageUri}}?start={{pagination.start}}&amp;rows={{ pagination.rowsNext }}">
+                    <i slot="prefix" class="fas fa-plus-square "></i>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="top" content="Show the next results">
+                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                    <i slot="prefix" class="fas fa-arrow-square-right "></i>
+                  </sl-button>
+                </sl-tooltip>
+              </sl-button-group>
+              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+            </div>
+{%- endmacro htmPaginationButtonsCompanyServicePage() %}
+{%- macro htmFormsCompanyServicePage() %}
+  {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+      {% if companyServiceCount == 1 %}
+        <sl-tooltip content="Refresh this service">
+          <sl-button
+              id="refreshThisCompanyServiceGenPage"
+              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyServiceGenPage')); }); return false; ">
+            <i slot="prefix" class="fas fa-sync-alt "></i>
+            refresh
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+      {% if companyServiceCount > 0 %}
+        <sl-tooltip content="Refresh all the services">
+          <sl-button id="refreshAllCompanyServiceGenPage{{id}}"
+              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }); "
+              >
+            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+            Refresh all 
+          </sl-button>
+        </sl-tooltip>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+    {%- if companyServiceCount > 0 %}
+        {{ htmButton_patchCompanyService() }}
+        {{ htmForm_patchCompanyService() }}
+    {%- endif %}
+  {%- endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {%- if companyServiceCount == int1 %}
+      {%- if id is defined %}
+      {%- else %}
+        {{ htmButton_postCompanyService() }}
+        {{ htmForm_postCompanyService() }}
+      {%- endif %}
+    {%- else %}
+        {{ htmButton_postCompanyService() }}
+        {{ htmForm_postCompanyService() }}
+    {%- endif %}
+  {%- endif %}
+  {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+        {{ htmButton_putimportCompanyService() }}
+        {{ htmForm_putimportCompanyService() }}
+  {%- endif %}
+{%- endmacro htmFormsCompanyServicePage() %}
+
+    {%- block htmBodyStartBaseResultPage %}
+    {{ super() }}
+    {%- block htmBodyStartCompanyServicePage %}
+    {%- endblock htmBodyStartCompanyServicePage %}
+    {%- endblock htmBodyStartBaseResultPage %}
+
+    {%- block htmBodyMiddleBaseResultPage %}
+    {%- block htmBodyMiddleCompanyServicePage %}
+        <div class="htmBodySidebarCompanyServicePage ">
+          {%- block htmBodySidebarCompanyServicePage %}
+          <sl-drawer placement="end" id="siteSidebarToggleSearch">
+            <div>
+              <span>
+              <i class="fad fa-magnifying-glass "></i> Search</span>
+            </div>
+            <div>
+{%- block htmBodySearchCompanyServicePage %}
+              <div>
+                {% for key, value in varsQ.items() %}
+                  <div>
+                    <div>
+                      <label for="qCompanyService_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <sl-input id="qCompanyService_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('CompanyService', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
+                      <div class="pageSearchVal "></div>
+                    </div>
+                  </div>
+                {% endfor %}
+                <div>
+                  <div>
+                    <label for="qCompanyService_Start">start<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qCompanyService_start" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyService', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div class="pageSearchVal ">start={{ start }}</div>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <label for="qCompanyService_Rows">rows<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qCompanyService_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyService', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div class="pageSearchVal ">rows={{ rows }}</div>
+                  </div>
+                </div>
+              </div>
+              {%- endblock htmBodySearchCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFilters">
+            <div>
+              <span>
+              <i class="fad fa-filters "></i> Filters</span>
+            </div>
+            <div>
+              {%- block htmBodyFiltersCompanyServicePage %}
+              <div>
+                {% for key, value in varsFq.items() %}
+                  <div class="">
+                    <label for="fqCompanyService_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                    <div>
+                      <div>
+                        <button id="buttonFacetCompanyService_{{ key }}" class="" onclick="facetFieldChange('CompanyService', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
+                      </div>
+                      <div>
+                        <sl-input id="fqCompanyService_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('CompanyService', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyService_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyService_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <ol class="pageFacetField pageFacetFieldCompanyService_{{ key }} " id="pageFacetFieldCompanyService_{{ key }}">
+{% for item in facetField.counts %}
+                      <li class="cursor-pointer " data-class="CompanyService" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('CompanyService', item.value); ">{{ item.key }}: {{ item.value }}</li>
+{% endfor %}
+                    </ol>
+                  </div>
+                {% endfor %}
+              </div>
+              {%- endblock htmBodyFiltersCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleRange">
+            <div>
+              <span>
+              <i class="fad fa-calendar-range "></i> Range</span>
+            </div>
+            <div>
+              {%- block htmBodyRangeCompanyServicePage %}
+              <table>
+                <tr>
+                  <td colspan="2">
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-CompanyService">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-CompanyService">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-CompanyService">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeVar-CompanyService">{% if defaultRangeVar is defined %}facet.range={!tag=r1}{{ defaultRangeVar | urlencode() }}{% endif %}</div>
+                  </td>
+                </tr>
+              </table>
+              <table>
+                <tr class="">
+                  <td class="">
+                    <span>Range Gap</span>
+                  </td>
+                  <td class="">
+                    <sl-select name="facet.range.gap" id="pageFacetRangeGap-CompanyService" onchange="facetRangeGapChange('CompanyService', this); ">
+                      <sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
+                      <sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
+                      <sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
+                      <sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
+                      <sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
+                      <sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
+                      <sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
+                    </sl-select>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range Start</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-CompanyService" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('CompanyService', this); "></sl-input></span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range End</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-CompanyService" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('CompanyService', this); "></sl-input></span>
+                  </td>
+                </tr>
+              </table>
+              {% for key, value in varsRange.items() %}
+              <div>
+                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyService_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyService', value); "></sl-radio-group>
+              </div>
+              {% endfor %}
+              {%- endblock htmBodyRangeCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarTogglePivot">
+            <div>
+              <span>
+              <i class="fad fa-table-pivot "></i> Pivot</span>
+            </div>
+            <div>
+              {%- block htmBodyPivotCompanyServicePage %}
+              <div style="display: none; " id="pageSearchVal-PivotCompanyServiceHidden">
+                {% for item in defaultPivotVars %}
+                  <div class="pageSearchVal-PivotCompanyServiceHidden " id="pageSearchVal-PivotCompanyServiceHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-PivotCompanyService">
+                {% if defaultPivotVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-PivotCompanyService " id="pageSearchVal-PivotCompanyService_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyService_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyService', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+              {% endfor %}
+              {%- endblock htmBodyPivotCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFieldList">
+            <div>
+              <span>
+              <i class="fad fa-list-ul "></i> Field List</span>
+            </div>
+            <div>
+              {%- block htmBodyFieldListCompanyServicePage %}
+              <div
+ style="display: none; " id="pageSearchVal-FieldListCompanyServiceHidden">
+                {% for item in defaultFieldListVars %}
+                  <div class="pageSearchVal-FieldListCompanyServiceHidden " id="pageSearchVal-FieldListCompanyServiceHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-FieldListCompanyService">
+                {% if defaultFieldListVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-FieldListCompanyService " id="pageSearchVal-FieldListCompanyService_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyService_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyService', value); ">{{ value.displayName }}</sl-checkbox></span>
+              </div>
+                {% endfor %}
+              {%- endblock htmBodyFieldListCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleStats">
+            <div>
+              <span>
+                <i class="fad fa-chart-candlestick "></i>                 Stats</span>
+            </div>
+            <div>
+              {%- block htmBodyStatsCompanyServicePage %}
+              <div
+ style="display: none; " id="pageSearchVal-StatsCompanyServiceHidden">
+                {% for item in defaultStatsVars %}
+                  <div class="pageSearchVal-StatsCompanyServiceHidden " id="pageSearchVal-StatsCompanyServiceHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-StatsCompanyService">
+                {% if defaultStatsVars is defined %}
+                  {% for item in defaultStatsVars %}
+                    <div class="pageSearchVal pageSearchVal-StatsCompanyService_{{ item }} " id="pageSearchVal-StatsCompanyService_{{ item }}">stats.field={{ item }}                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <table>
+                {% for key, value in varsFq.items() %}
+                  {% if enableStats is defined %}
+                    <tr class="">
+                      <td class="">
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyService_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyService', value); ">{{ value.displayName }}</sl-checkbox></span>
+                      </td>
+                      <td>
+                        <div>
+                          <label for="pageStatsCompanyService_{{ key }}">{{ value.displayName }}</label>
+                        </div>
+                        <div class="pageStatsField pageStatsFieldCompanyService_{{ key }} " id="pageStatsFieldCompanyService_{{ key }}">
+                          {% if value.stats is defined %}
+                            {% for item in value.stats %}
+                              {% if item.key == 'name' %}{% else %}
+                                <div data-class="CompanyService" data-var="{{ item.var }}" data-val="{{ item.key }}">{{ item.key }}: {{ item }}</div>
+                              {% endif %}
+                            {% endfor %}
+                            {% if value.stats.max is defined %}
+                              <div>
+                                <span> step </span>
+                                <sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
+                                <span> min </span>
+                                <sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
+                                <span> max </span>
+                                <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
+                                <span> speed in seconds </span>
+                                <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
+                                <button onclick="animateStats(); ">animate</button>
+                              </div>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+            {%- endblock htmBodyStatsCompanyServicePage %}
+            </div>
+          </sl-drawer>
+          {%- endblock htmBodySidebarCompanyServicePage %}
+        </div>
+
+        {%- block htmBodyGraphLocationCompanyServicePage %}
+        <div id="htmBodyGraphLocationCompanyServicePage" class="htmBodyGraphLocation "></div>
+        {%- endblock htmBodyGraphLocationCompanyServicePage %}
+
+        {%- block htmBodyGraphCompanyServicePage %}
+        <div id="htmBodyGraphBaseResultPage" class="htmBodyGraph "></div>
+        {%- endblock htmBodyGraphCompanyServicePage %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+        </div>
+{% if companyServiceCount == 0 %}
+        <h1>
+          <a href="{{pageUri}}">
+            <i class="fa-regular fa-conveyor-belt"></i>
+            <span>services</span>
+          </a>
+        </h1>
+        {{ htmSearchButtonsCompanyServicePage() }}
+            {{ htmFormsCompanyServicePage() }}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no service found</span>
+          </span>
+        </h2>
+{% else %}
+  {% if companyServiceCount == 1 %}
+    {% if id is defined %}
+        <h1>
+          <a href="{{pageUri}}">
+            <i class="fa-regular fa-conveyor-belt"></i>
+            <span class="">service</span>
+          </a>
+        </h1>
+        <h2>
+          <span>
+            <span class="">{{companyService_.objectTitle}}</span>
+          </span>
+        </h2>
+        {{ htmSearchButtonsCompanyServicePage() }}
+            {{ htmFormsCompanyServicePage() }}
+    {% else %}
+        {{ htmBodyAllCompanyServicePage() }}
+    {% endif %}
+  {% else %}
+        {{ htmBodyAllCompanyServicePage() }}
+  {% endif %}
+{% endif %}
+        {%- block htmFormCompanyServicePage %}
+        <form action="/api/service" id="CompanyServiceForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+{% if id is defined %}
+          <input name="id" class="valueId" type="hidden" value="{{id}}"/>
+          {% endif %}
+          <input name="focusId" type="hidden"/>
+          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+          <input name="companyService" id="companyService" class="companyService"  value='{{ toJsonObjectStringInApostrophes(companyService_) }}' type="hidden"/>
+          <input name="listCompanyService" id="listCompanyService" class="listCompanyService"  value='{{ toJsonArrayStringInApostrophes(listCompanyService) }}' type="hidden"/>
+        </form>
+  {% if id is defined %}
+        {{ htmButton_searchpageCompanyService() }}
+        {{ htmForm_searchpageCompanyService() }}
+  {% endif %}
+        {%- endblock htmFormCompanyServicePage %}
+      {%- endblock htmBodyMiddleCompanyServicePage %}
+      {%- endblock htmBodyMiddleBaseResultPage %}
+
+      {%- block htmBodyEndBaseResultPage %}
+      {{ super() }}
+      {%- block htmBodyEndCompanyServicePage %}
+      {%- endblock htmBodyEndCompanyServicePage %}
+      {%- endblock htmBodyEndBaseResultPage %}
+{%- block htmSuggestedCompanyServicePage %}
+        <div>
+          <div>
+            <span>
+              search services: 
+            </span>
+          </div>
+        </div>
+        <div>
+          <sl-input
+              type="text"
+              class="suggestCompanyService "
+              name="suggestCompanyService"
+              id="suggestCompanyService{{id}}"
+              autocomplete="off"
+              oninput="suggestCompanyServiceObjectSuggest( [ { 'name': 'q', 'value': 'objectSuggest:' + this.value }, { 'name': 'rows', 'value': '10' }, { 'name': 'fl', 'value': 'classCanonicalName,,pageUrlPk,objectTitle' } ], document.querySelector('#suggestListCompanyService{{id}}'), {{id}}; "
+              onkeyup="if (event.keyCode === 13) { event.preventDefault(); window.location.href = '/service?q={{ query1 }}:' + encodeURIComponent(this.value) + '{{fqs}}{{sorts}}&amp;rows={{start2}}&amp;rows={{rows1}}"
+  {% if listCompanyService is defined %}
+              value="{{query2}}"
+  {% endif %}
+              >
+          </sl-input>
+          <button
+              onclick="window.location.href = '/service?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
+              >
+            <i class="fas fa-search "></i>
+          </button>
+          <div>
+            <div>
+              <div>
+                <ul id="suggestListCompanyService{{id}}">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <a href="/service" class="">
+              <i class="fa-regular fa-conveyor-belt"></i>
+              see all the services
+            </a>
+          </div>
+        </div>
+{%- endblock htmSuggestedCompanyServicePage %}
+
+{%- macro inputCreatedCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_created">
+  {%- endif %}
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyService inputCompanyService{{id}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if companyService_.created is defined %}{{ formatZonedDateTime(companyService_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      >
+                  </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Created varCompanyServiceCreated ">{{companyService_.created}}</span>
+{%- endmacro %}
+
+{%- macro htmCreatedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputCreatedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputModifiedCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_modified">
+  {%- endif %}
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyService inputCompanyService{{id}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if companyService_.modified is defined %}{{ formatZonedDateTime(companyService_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      >
+                  </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Modified varCompanyServiceModified ">{{companyService_.modified}}</span>
+{%- endmacro %}
+
+{%- macro htmModifiedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputModifiedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputObjectIdCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_objectId">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="ID"
+                      label="ID"
+                      help-text="
+A URL friendly unique ID for this object"
+                      id="{{classApiMethodMethod}}_objectId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyService inputCompanyService{{id}}ObjectId "
+                      name="setObjectId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyService inputCompanyService{{id}}ObjectId "
+                      name="setObjectId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId classCompanyService inputCompanyService{{id}}ObjectId "
+                      name="objectId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.objectId}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}ObjectId varCompanyServiceObjectId ">{{companyService_.objectId}}</span>
+{%- endmacro %}
+
+{%- macro htmObjectIdCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputObjectIdCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputArchivedCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyService inputCompanyService{{id}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyService inputCompanyService{{id}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyService inputCompanyService{{id}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if companyService_.archived is defined %}
+                      checked="checked"
+    {%- endif %}
+                      >archived</sl-checkbox>
+  {%- else %}
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
+  {%- endif %}
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Archived varCompanyServiceArchived ">{{companyService_.archived}}</span>
+{%- endmacro %}
+
+{%- macro htmArchivedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputArchivedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputDeletedCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_deleted">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_deleted"
+                      value="true"
+  {%- else %}
+                  <sl-select
+                      id="{{classApiMethodMethod}}_deleted"
+  {%- endif %}
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="deleted"
+                      help-text="For deleting this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyService inputCompanyService{{id}}Deleted "
+                      name="setDeleted"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyService inputCompanyService{{id}}Deleted "
+                      name="setDeleted"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyService inputCompanyService{{id}}Deleted "
+                      name="setDeleted"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if companyService_.deleted is defined %}
+                      checked="checked"
+    {%- endif %}
+                      >deleted</sl-checkbox>
+  {%- else %}
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
+  {%- endif %}
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Deleted varCompanyServiceDeleted ">{{companyService_.deleted}}</span>
+{%- endmacro %}
+
+{%- macro htmDeletedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDeletedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputNameCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_name">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="service name"
+                      label="service name"
+                      help-text="
+The service name. "
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyService inputCompanyService{{id}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyService inputCompanyService{{id}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyService inputCompanyService{{id}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.name}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Name varCompanyServiceName ">{{companyService_.name}}</span>
+{%- endmacro %}
+
+{%- macro htmNameCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNameCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputDescriptionCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_description">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="service description"
+                      label="service description"
+                      help-text="
+The service description. "
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyService inputCompanyService{{id}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyService inputCompanyService{{id}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyService inputCompanyService{{id}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.description}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Description varCompanyServiceDescription ">{{companyService_.description}}</span>
+{%- endmacro %}
+
+{%- macro htmDescriptionCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDescriptionCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputUriCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_uri">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URI"
+                      label="URI"
+                      help-text="
+The relative URI for this page. "
+                      id="{{classApiMethodMethod}}_uri"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyService inputCompanyService{{id}}Uri "
+                      name="setUri"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyService inputCompanyService{{id}}Uri "
+                      name="setUri"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri classCompanyService inputCompanyService{{id}}Uri "
+                      name="uri"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.uri}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Uri varCompanyServiceUri ">{{companyService_.uri}}</span>
+{%- endmacro %}
+
+{%- macro htmUriCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputUriCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputUrlCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_url">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URL"
+                      label="URL"
+                      help-text="
+The URL for this page. "
+                      id="{{classApiMethodMethod}}_url"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyService inputCompanyService{{id}}Url "
+                      name="setUrl"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyService inputCompanyService{{id}}Url "
+                      name="setUrl"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl classCompanyService inputCompanyService{{id}}Url "
+                      name="url"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.url}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}Url varCompanyServiceUrl ">{{companyService_.url}}</span>
+{%- endmacro %}
+
+{%- macro htmUrlCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputUrlCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputPageIdCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_pageId">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyService inputCompanyService{{id}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyService inputCompanyService{{id}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classCompanyService inputCompanyService{{id}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyService_.pageId}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyService{{id}}PageId varCompanyServicePageId ">{{companyService_.pageId}}</span>
+{%- endmacro %}
+
+{%- macro htmPageIdCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputPageIdCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}

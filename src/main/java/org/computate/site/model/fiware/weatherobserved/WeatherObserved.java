@@ -20,12 +20,12 @@ import io.vertx.pgclient.data.Polygon;
  * Fiware: true
  *
  * Model: true
- * SqlOrder: 8
+ * SqlOrder: 9
  * Api: true
  * Page: true
  * SuperPage: BaseModelPage
  * Indexed: true
- * Order: 8
+ * Order: 9
  * Description: 
  * ApiTag: weather observed
  * ApiUri: /api/weather-observed

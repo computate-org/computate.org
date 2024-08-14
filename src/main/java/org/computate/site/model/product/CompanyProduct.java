@@ -77,7 +77,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * Description: The ID for this page. 
 	 */
 	protected void _pageId(Wrap<String> w) {
-    toId(name);
+		toId(name);
 	}
 
 	/**

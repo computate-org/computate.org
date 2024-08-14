@@ -1,4 +1,4 @@
-package org.computate.site.model.course;
+package org.computate.site.model.service;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -100,36 +100,36 @@ import java.util.Base64;
 import java.time.ZonedDateTime;
 import org.apache.commons.lang3.BooleanUtils;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.course.CompanyCoursePage;
+import org.computate.site.model.service.CompanyServicePage;
 
 
 /**
  * Translate: false
  * Generated: true
  **/
-public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyCourseEnUSGenApiService {
+public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyServiceEnUSGenApiService {
 
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourseEnUSGenApiServiceImpl.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(CompanyServiceEnUSGenApiServiceImpl.class);
 
-	public CompanyCourseEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
+	public CompanyServiceEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
 		super(eventBus, config, workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 	}
 
 	// Search //
 
 	@Override
-	public void searchCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchCompanyService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200SearchCompanyCourse(listCompanyCourse).onSuccess(response -> {
+						searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+							response200SearchCompanyService(listCompanyService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchCompanyCourse succeeded. "));
+								LOG.debug(String.format("searchCompanyService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchCompanyCourse failed. "), ex);
+								LOG.error(String.format("searchCompanyService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchCompanyCourse failed. "), ex);
+							LOG.error(String.format("searchCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 		}).onFailure(ex -> {
@@ -137,7 +137,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchCompanyCourse failed. ", ex2));
+					LOG.error(String.format("searchCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -152,28 +152,28 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("searchCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200SearchCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200SearchCompanyService(SearchList<CompanyService> listCompanyService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			List<String> fls = listCompanyCourse.getRequest().getFields();
+			SiteRequest siteRequest = listCompanyService.getSiteRequest_(SiteRequest.class);
+			List<String> fls = listCompanyService.getRequest().getFields();
 			JsonObject json = new JsonObject();
 			JsonArray l = new JsonArray();
-			listCompanyCourse.getList().stream().forEach(o -> {
+			listCompanyService.getList().stream().forEach(o -> {
 				JsonObject json2 = JsonObject.mapFrom(o);
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					for(String fieldName : json2.fieldNames()) {
-						String v = CompanyCourse.varIndexedCompanyCourse(fieldName);
+						String v = CompanyService.varIndexedCompanyService(fieldName);
 						if(v != null)
-							fieldNames.add(CompanyCourse.varIndexedCompanyCourse(fieldName));
+							fieldNames.add(CompanyService.varIndexedCompanyService(fieldName));
 					}
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
@@ -191,15 +191,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				l.add(json2);
 			});
 			json.put("list", l);
-			response200Search(listCompanyCourse.getRequest(), listCompanyCourse.getResponse(), json);
+			response200Search(listCompanyService.getRequest(), listCompanyService.getResponse(), json);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200SearchCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void responsePivotSearchCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+	public void responsePivotSearchCompanyService(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
 		if(pivots != null) {
 			for(SolrResponse.Pivot pivotField : pivots) {
 				String entityIndexed = pivotField.getField();
@@ -228,7 +228,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				if(pivotFields2 != null) {
 					JsonArray pivotArray2 = new JsonArray();
 					pivotJson.put("pivot", pivotArray2);
-					responsePivotSearchCompanyCourse(pivotFields2, pivotArray2);
+					responsePivotSearchCompanyService(pivotFields2, pivotArray2);
 				}
 			}
 		}
@@ -237,18 +237,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// GET //
 
 	@Override
-	public void getCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void getCompanyService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200GETCompanyCourse(listCompanyCourse).onSuccess(response -> {
+						searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+							response200GETCompanyService(listCompanyService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("getCompanyCourse succeeded. "));
+								LOG.debug(String.format("getCompanyService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("getCompanyCourse failed. "), ex);
+								LOG.error(String.format("getCompanyService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("getCompanyCourse failed. "), ex);
+							LOG.error(String.format("getCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 		}).onFailure(ex -> {
@@ -256,7 +256,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("getCompanyCourse failed. ", ex2));
+					LOG.error(String.format("getCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -271,21 +271,21 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("getCompanyCourse failed. "), ex);
+				LOG.error(String.format("getCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200GETCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200GETCompanyService(SearchList<CompanyService> listCompanyService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			JsonObject json = JsonObject.mapFrom(listCompanyCourse.getList().stream().findFirst().orElse(null));
+			SiteRequest siteRequest = listCompanyService.getSiteRequest_(SiteRequest.class);
+			JsonObject json = JsonObject.mapFrom(listCompanyService.getList().stream().findFirst().orElse(null));
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200GETCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200GETCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -294,8 +294,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// PATCH //
 
 	@Override
-	public void patchCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("patchCompanyCourse started. "));
+	public void patchCompanyService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("patchCompanyService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 
 			webClient.post(
@@ -310,7 +310,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -340,41 +340,41 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
+						searchCompanyServiceList(siteRequest, true, false, true).onSuccess(listCompanyService -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-								apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
+								apiRequest.setRows(listCompanyService.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyService.getResponse().getResponse().getNumFound());
 								apiRequest.setNumPATCH(0L);
 								apiRequest.initDeepApiRequest(siteRequest);
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
-									apiRequest.setOriginal(listCompanyCourse.first());
-								eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+									apiRequest.setOriginal(listCompanyService.first());
+								eventBus.publish("websocketCompanyService", JsonObject.mapFrom(apiRequest).toString());
 
-								listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-									response200PATCHCompanyCourse(siteRequest).onSuccess(response -> {
-										LOG.debug(String.format("patchCompanyCourse succeeded. "));
+								listPATCHCompanyService(apiRequest, listCompanyService).onSuccess(e -> {
+									response200PATCHCompanyService(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyService succeeded. "));
 										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
-										LOG.error(String.format("patchCompanyCourse failed. "), ex);
+										LOG.error(String.format("patchCompanyService failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
 								}).onFailure(ex -> {
-									LOG.error(String.format("patchCompanyCourse failed. "), ex);
+									LOG.error(String.format("patchCompanyService failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							} catch(Exception ex) {
-								LOG.error(String.format("patchCompanyCourse failed. "), ex);
+								LOG.error(String.format("patchCompanyService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							}
 						}).onFailure(ex -> {
-							LOG.error(String.format("patchCompanyCourse failed. "), ex);
+							LOG.error(String.format("patchCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("patchCompanyCourse failed. "), ex);
+					LOG.error(String.format("patchCompanyService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -383,7 +383,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("patchCompanyCourse failed. ", ex2));
+					LOG.error(String.format("patchCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -398,63 +398,63 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("patchCompanyCourse failed. "), ex);
+				LOG.error(String.format("patchCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPATCHCompanyCourse(ApiRequest apiRequest, SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<Void> listPATCHCompanyService(ApiRequest apiRequest, SearchList<CompanyService> listCompanyService) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
-		SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-		listCompanyCourse.getList().forEach(o -> {
+		SiteRequest siteRequest = listCompanyService.getSiteRequest_(SiteRequest.class);
+		listCompanyService.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			futures.add(Future.future(promise1 -> {
-				patchCompanyCourseFuture(o, false).onSuccess(a -> {
+				patchCompanyServiceFuture(o, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
-					LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+					LOG.error(String.format("listPATCHCompanyService failed. "), ex);
 					promise1.fail(ex);
 				});
 			}));
 		});
 		CompositeFuture.all(futures).onSuccess( a -> {
-			listCompanyCourse.next().onSuccess(next -> {
+			listCompanyService.next().onSuccess(next -> {
 				if(next) {
-					listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(b -> {
+					listPATCHCompanyService(apiRequest, listCompanyService).onSuccess(b -> {
 						promise.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+						LOG.error(String.format("listPATCHCompanyService failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete();
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+				LOG.error(String.format("listPATCHCompanyService failed. "), ex);
 				promise.fail(ex);
 			});
 		}).onFailure(ex -> {
-			LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+			LOG.error(String.format("listPATCHCompanyService failed. "), ex);
 			promise.fail(ex);
 		});
 		return promise.future();
 	}
 
 	@Override
-	public void patchCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void patchCompanyServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
-				searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
+				searchCompanyServiceList(siteRequest, false, true, true).onSuccess(listCompanyService -> {
 					try {
-						CompanyCourse o = listCompanyCourse.first();
-						if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
+						CompanyService o = listCompanyService.first();
+						if(o != null && listCompanyService.getResponse().getResponse().getNumFound() == 1) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1L);
 							apiRequest.setNumFound(1L);
@@ -466,7 +466,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							patchCompanyCourseFuture(o, false).onSuccess(o2 -> {
+							patchCompanyServiceFuture(o, false).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -475,31 +475,31 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("patchCompanyCourse failed. "), ex);
+						LOG.error(String.format("patchCompanyService failed. "), ex);
 						error(siteRequest, eventHandler, ex);
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("patchCompanyCourse failed. "), ex);
+					LOG.error(String.format("patchCompanyService failed. "), ex);
 					error(siteRequest, eventHandler, ex);
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("patchCompanyCourse failed. "), ex);
+				LOG.error(String.format("patchCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		}).onFailure(ex -> {
-			LOG.error(String.format("patchCompanyCourse failed. "), ex);
+			LOG.error(String.format("patchCompanyService failed. "), ex);
 			error(null, eventHandler, ex);
 		});
 	}
 
-	public Future<CompanyCourse> patchCompanyCourseFuture(CompanyCourse o, Boolean inheritPk) {
+	public Future<CompanyService> patchCompanyServiceFuture(CompanyService o, Boolean inheritPk) {
 		SiteRequest siteRequest = o.getSiteRequest_();
-		Promise<CompanyCourse> promise = Promise.promise();
+		Promise<CompanyService> promise = Promise.promise();
 
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			persistCompanyCourse(o, true).onSuccess(c -> {
-				indexCompanyCourse(o).onSuccess(e -> {
+			persistCompanyService(o, true).onSuccess(c -> {
+				indexCompanyService(o).onSuccess(e -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
 					promise.fail(ex);
@@ -508,19 +508,19 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("patchCompanyCourseFuture failed. "), ex);
+			LOG.error(String.format("patchCompanyServiceFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200PATCHCompanyCourse(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200PATCHCompanyService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PATCHCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200PATCHCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -529,8 +529,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// POST //
 
 	@Override
-	public void postCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("postCompanyCourse started. "));
+	public void postCompanyService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("postCompanyService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 
 			webClient.post(
@@ -545,7 +545,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "POST"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -581,7 +581,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+						eventBus.publish("websocketCompanyService", JsonObject.mapFrom(apiRequest).toString());
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
@@ -600,18 +600,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						params.put("query", query);
 						JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 						JsonObject json = new JsonObject().put("context", context);
-						eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyCourseFuture")).onSuccess(a -> {
+						eventBus.request(CompanyService.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyServiceFuture")).onSuccess(a -> {
 							JsonObject responseMessage = (JsonObject)a.body();
 							JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
-							LOG.debug(String.format("postCompanyCourse succeeded. "));
+							LOG.debug(String.format("postCompanyService succeeded. "));
 						}).onFailure(ex -> {
-							LOG.error(String.format("postCompanyCourse failed. "), ex);
+							LOG.error(String.format("postCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("postCompanyCourse failed. "), ex);
+					LOG.error(String.format("postCompanyService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -620,7 +620,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postCompanyCourse failed. ", ex2));
+					LOG.error(String.format("postCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -635,7 +635,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("postCompanyCourse failed. "), ex);
+				LOG.error(String.format("postCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
@@ -643,7 +643,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 
 	@Override
-	public void postCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void postCompanyServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			ApiRequest apiRequest = new ApiRequest();
 			apiRequest.setRows(1L);
@@ -654,7 +654,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 				siteRequest.getRequestVars().put( "refresh", "false" );
 			}
-			postCompanyCourseFuture(siteRequest, false).onSuccess(o -> {
+			postCompanyServiceFuture(siteRequest, false).onSuccess(o -> {
 				eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(o).encodePrettily()))));
 			}).onFailure(ex -> {
 				eventHandler.handle(Future.failedFuture(ex));
@@ -664,7 +664,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postCompanyCourse failed. ", ex2));
+					LOG.error(String.format("postCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -679,20 +679,20 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("postCompanyCourse failed. "), ex);
+				LOG.error(String.format("postCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<CompanyCourse> postCompanyCourseFuture(SiteRequest siteRequest, Boolean inheritPk) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyService> postCompanyServiceFuture(SiteRequest siteRequest, Boolean inheritPk) {
+		Promise<CompanyService> promise = Promise.promise();
 
 		try {
-			createCompanyCourse(siteRequest).onSuccess(companyCourse -> {
-				persistCompanyCourse(companyCourse, false).onSuccess(c -> {
-					indexCompanyCourse(companyCourse).onSuccess(o2 -> {
-						promise.complete(companyCourse);
+			createCompanyService(siteRequest).onSuccess(companyService -> {
+				persistCompanyService(companyService, false).onSuccess(c -> {
+					indexCompanyService(companyService).onSuccess(o2 -> {
+						promise.complete(companyService);
 					}).onFailure(ex -> {
 						promise.fail(ex);
 					});
@@ -703,20 +703,20 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("postCompanyCourseFuture failed. "), ex);
+			LOG.error(String.format("postCompanyServiceFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200POSTCompanyCourse(CompanyCourse o) {
+	public Future<ServiceResponse> response200POSTCompanyService(CompanyService o) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200POSTCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200POSTCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -725,8 +725,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// PUTImport //
 
 	@Override
-	public void putimportCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("putimportCompanyCourse started. "));
+	public void putimportCompanyService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("putimportCompanyService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 
 			webClient.post(
@@ -741,11 +741,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -782,27 +782,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
-						varsCompanyCourse(siteRequest).onSuccess(d -> {
-							listPUTImportCompanyCourse(apiRequest, siteRequest).onSuccess(e -> {
-								response200PUTImportCompanyCourse(siteRequest).onSuccess(response -> {
-									LOG.debug(String.format("putimportCompanyCourse succeeded. "));
+						eventBus.publish("websocketCompanyService", JsonObject.mapFrom(apiRequest).toString());
+						varsCompanyService(siteRequest).onSuccess(d -> {
+							listPUTImportCompanyService(apiRequest, siteRequest).onSuccess(e -> {
+								response200PUTImportCompanyService(siteRequest).onSuccess(response -> {
+									LOG.debug(String.format("putimportCompanyService succeeded. "));
 									eventHandler.handle(Future.succeededFuture(response));
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+									LOG.error(String.format("putimportCompanyService failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+								LOG.error(String.format("putimportCompanyService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+							LOG.error(String.format("putimportCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+					LOG.error(String.format("putimportCompanyService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -811,7 +811,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+					LOG.error(String.format("putimportCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -826,14 +826,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+				LOG.error(String.format("putimportCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPUTImportCompanyCourse(ApiRequest apiRequest, SiteRequest siteRequest) {
+	public Future<Void> listPUTImportCompanyService(ApiRequest apiRequest, SiteRequest siteRequest) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -858,10 +858,10 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					params.put("query", query);
 					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 					JsonObject json = new JsonObject().put("context", context);
-					eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyCourseFuture")).onSuccess(a -> {
+					eventBus.request(CompanyService.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyServiceFuture")).onSuccess(a -> {
 						promise1.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+						LOG.error(String.format("listPUTImportCompanyService failed. "), ex);
 						promise1.fail(ex);
 					});
 				}));
@@ -870,18 +870,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				promise.complete();
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+				LOG.error(String.format("listPUTImportCompanyService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+			LOG.error(String.format("listPUTImportCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
 	@Override
-	public void putimportCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void putimportCompanyServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				ApiRequest apiRequest = new ApiRequest();
@@ -890,25 +890,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyCourse.VAR_id)).orElse(body.getString(CompanyCourse.VAR_id));
+				String inheritPk = Optional.ofNullable(body.getString(CompanyService.VAR_id)).orElse(body.getString(CompanyService.VAR_id));
 				body.put("inheritPk", inheritPk);
 				body.put("inheritPk", body.getValue("id"));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
 
-				SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+				SearchList<CompanyService> searchList = new SearchList<CompanyService>();
 				searchList.setStore(true);
 				searchList.q("*:*");
-				searchList.setC(CompanyCourse.class);
+				searchList.setC(CompanyService.class);
 				searchList.fq("deleted_docvalues_boolean:false");
 				searchList.fq("archived_docvalues_boolean:false");
 				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
-							CompanyCourse o = searchList.getList().stream().findFirst().orElse(null);
-							CompanyCourse o2 = new CompanyCourse();
+							CompanyService o = searchList.getList().stream().findFirst().orElse(null);
+							CompanyService o2 = new CompanyService();
 							o2.setSiteRequest_(siteRequest);
 							JsonObject body2 = new JsonObject();
 							for(String f : body.fieldNames()) {
@@ -954,35 +954,35 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 									apiRequest.setOriginal(o);
 								}
 								siteRequest.setJsonObject(body2);
-								patchCompanyCourseFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyCourse {} succeeded, modified CompanyCourse. ", body.getValue(CompanyCourse.VAR_id));
+								patchCompanyServiceFuture(o2, true).onSuccess(b -> {
+									LOG.debug("Import CompanyService {} succeeded, modified CompanyService. ", body.getValue(CompanyService.VAR_id));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+									LOG.error(String.format("putimportCompanyServiceFuture failed. "), ex);
 									eventHandler.handle(Future.failedFuture(ex));
 								});
 							} else {
 								eventHandler.handle(Future.succeededFuture());
 							}
 						} else {
-							postCompanyCourseFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyCourse {} succeeded, created new CompanyCourse. ", body.getValue(CompanyCourse.VAR_id));
+							postCompanyServiceFuture(siteRequest, true).onSuccess(b -> {
+								LOG.debug("Import CompanyService {} succeeded, created new CompanyService. ", body.getValue(CompanyService.VAR_id));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+								LOG.error(String.format("putimportCompanyServiceFuture failed. "), ex);
 								eventHandler.handle(Future.failedFuture(ex));
 							});
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+						LOG.error(String.format("putimportCompanyServiceFuture failed. "), ex);
 						eventHandler.handle(Future.failedFuture(ex));
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+					LOG.error(String.format("putimportCompanyServiceFuture failed. "), ex);
 					eventHandler.handle(Future.failedFuture(ex));
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+				LOG.error(String.format("putimportCompanyServiceFuture failed. "), ex);
 				eventHandler.handle(Future.failedFuture(ex));
 			}
 		}).onFailure(ex -> {
@@ -990,7 +990,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+					LOG.error(String.format("putimportCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1005,19 +1005,19 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+				LOG.error(String.format("putimportCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<ServiceResponse> response200PUTImportCompanyCourse(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200PUTImportCompanyService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PUTImportCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200PUTImportCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1026,23 +1026,23 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// SearchPage //
 
 	@Override
-	public void searchpageCompanyCourseId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		searchpageCompanyCourse(serviceRequest, eventHandler);
+	public void searchpageCompanyServiceId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		searchpageCompanyService(serviceRequest, eventHandler);
 	}
 
 	@Override
-	public void searchpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchpageCompanyService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
+						searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+							response200SearchPageCompanyService(listCompanyService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageCompanyCourse succeeded. "));
+								LOG.debug(String.format("searchpageCompanyService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+								LOG.error(String.format("searchpageCompanyService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+							LOG.error(String.format("searchpageCompanyService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 		}).onFailure(ex -> {
@@ -1050,7 +1050,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageCompanyCourse failed. ", ex2));
+					LOG.error(String.format("searchpageCompanyService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1065,35 +1065,35 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchpageCompanyService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public void searchpageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse) {
+	public void searchpageCompanyServicePageInit(CompanyServicePage page, SearchList<CompanyService> listCompanyService) {
 	}
 
-	public String templateSearchPageCompanyCourse() {
-		return "en-us/CompanyCoursePage.htm";
+	public String templateSearchPageCompanyService() {
+		return "en-us/CompanyServicePage.htm";
 	}
-	public Future<ServiceResponse> response200SearchPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200SearchPageCompanyService(SearchList<CompanyService> listCompanyService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateSearchPageCompanyCourse();
+			SiteRequest siteRequest = listCompanyService.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateSearchPageCompanyService();
 			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
 			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-			CompanyCoursePage page = new CompanyCoursePage();
+			CompanyServicePage page = new CompanyServicePage();
 			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			page.setSearchListCompanyCourse_(listCompanyCourse);
+			page.setSearchListCompanyService_(listCompanyService);
 			page.setSiteRequest_(siteRequest);
 			page.setServiceRequest(siteRequest.getServiceRequest());
-			page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
+			page.promiseDeepCompanyServicePage(siteRequest).onSuccess(a -> {
 				try {
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
@@ -1101,14 +1101,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					Buffer buffer = Buffer.buffer(renderedTemplate);
 					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
 				} catch(Exception ex) {
-					LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
+					LOG.error(String.format("response200SearchPageCompanyService failed. "), ex);
 					promise.fail(ex);
 				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200SearchPageCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1116,62 +1116,62 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	// General //
 
-	public Future<CompanyCourse> createCompanyCourse(SiteRequest siteRequest) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyService> createCompanyService(SiteRequest siteRequest) {
+		Promise<CompanyService> promise = Promise.promise();
 		try {
-			CompanyCourse o = new CompanyCourse();
+			CompanyService o = new CompanyService();
 			o.setSiteRequest_(siteRequest);
 			promise.complete(o);
 		} catch(Exception ex) {
-			LOG.error(String.format("createCompanyCourse failed. "), ex);
+			LOG.error(String.format("createCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public void searchCompanyCourseQ(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchCompanyServiceQ(SearchList<CompanyService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.q(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : SearchTool.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 		}
 	}
 
-	public String searchCompanyCourseFq(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public String searchCompanyServiceFq(SearchList<CompanyService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		if(StringUtils.startsWith(valueIndexed, "[")) {
 			String[] fqs = StringUtils.substringAfter(StringUtils.substringBeforeLast(valueIndexed, "]"), "[").split(" TO ");
 			if(fqs.length != 2)
 				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
-			String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
-			String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
+			String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
 			 return varIndexed + ":[" + fq1 + " TO " + fq2 + "]";
 		} else {
-			return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
+			return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
 		}
 	}
 
-	public void searchCompanyCourseSort(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchCompanyServiceSort(SearchList<CompanyService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.sort(varIndexed, valueIndexed);
 	}
 
-	public void searchCompanyCourseRows(SearchList<CompanyCourse> searchList, Long valueRows) {
+	public void searchCompanyServiceRows(SearchList<CompanyService> searchList, Long valueRows) {
 			searchList.rows(valueRows != null ? valueRows : 10L);
 	}
 
-	public void searchCompanyCourseStart(SearchList<CompanyCourse> searchList, Long valueStart) {
+	public void searchCompanyServiceStart(SearchList<CompanyService> searchList, Long valueStart) {
 		searchList.start(valueStart);
 	}
 
-	public void searchCompanyCourseVar(SearchList<CompanyCourse> searchList, String var, String value) {
+	public void searchCompanyServiceVar(SearchList<CompanyService> searchList, String var, String value) {
 		searchList.getSiteRequest_(SiteRequest.class).getRequestVars().put(var, value);
 	}
 
-	public void searchCompanyCourseUri(SearchList<CompanyCourse> searchList) {
+	public void searchCompanyServiceUri(SearchList<CompanyService> searchList) {
 	}
 
-	public Future<ServiceResponse> varsCompanyCourse(SiteRequest siteRequest) {
+	public Future<ServiceResponse> varsCompanyService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
@@ -1189,25 +1189,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						siteRequest.getRequestVars().put(entityVar, valueIndexed);
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchCompanyCourse failed. "), ex);
+					LOG.error(String.format("searchCompanyService failed. "), ex);
 					promise.fail(ex);
 				}
 			});
 			promise.complete();
 		} catch(Exception ex) {
-			LOG.error(String.format("searchCompanyCourse failed. "), ex);
+			LOG.error(String.format("searchCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<SearchList<CompanyCourse>> searchCompanyCourseList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
-		Promise<SearchList<CompanyCourse>> promise = Promise.promise();
+	public Future<SearchList<CompanyService>> searchCompanyServiceList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+		Promise<SearchList<CompanyService>> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
 			String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+			SearchList<CompanyService> searchList = new SearchList<CompanyService>();
 			String facetRange = null;
 			Date facetRangeStart = null;
 			Date facetRangeEnd = null;
@@ -1217,11 +1217,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			searchList.setPopulate(populate);
 			searchList.setStore(store);
 			searchList.q("*:*");
-			searchList.setC(CompanyCourse.class);
+			searchList.setC(CompanyService.class);
 			searchList.setSiteRequest_(siteRequest);
 			if(entityList != null) {
 				for(String v : entityList) {
-					searchList.fl(CompanyCourse.varIndexedCompanyCourse(v));
+					searchList.fl(CompanyService.varIndexedCompanyService(v));
 				}
 			}
 
@@ -1253,7 +1253,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							String[] varsIndexed = new String[entityVars.length];
 							for(Integer i = 0; i < entityVars.length; i++) {
 								entityVar = entityVars[i];
-								varsIndexed[i] = CompanyCourse.varIndexedCompanyCourse(entityVar);
+								varsIndexed[i] = CompanyService.varIndexedCompanyService(entityVar);
 							}
 							searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
 						}
@@ -1267,8 +1267,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 									while(foundQ) {
 										entityVar = mQ.group(1).trim();
 										valueIndexed = mQ.group(2).trim();
-										varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-										String entityQ = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = CompanyService.varIndexedCompanyService(entityVar);
+										String entityQ = searchCompanyServiceFq(searchList, entityVar, valueIndexed, varIndexed);
 										mQ.appendReplacement(sb, entityQ);
 										foundQ = mQ.find();
 									}
@@ -1283,8 +1283,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 									while(foundFq) {
 										entityVar = mFq.group(1).trim();
 										valueIndexed = mFq.group(2).trim();
-										varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-										String entityFq = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = CompanyService.varIndexedCompanyService(entityVar);
+										String entityFq = searchCompanyServiceFq(searchList, entityVar, valueIndexed, varIndexed);
 										mFq.appendReplacement(sb, entityFq);
 										foundFq = mFq.find();
 									}
@@ -1294,14 +1294,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							} else if(paramName.equals("sort")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-								searchCompanyCourseSort(searchList, entityVar, valueIndexed, varIndexed);
+								varIndexed = CompanyService.varIndexedCompanyService(entityVar);
+								searchCompanyServiceSort(searchList, entityVar, valueIndexed, varIndexed);
 							} else if(paramName.equals("start")) {
 								valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchCompanyCourseStart(searchList, valueStart);
+								searchCompanyServiceStart(searchList, valueStart);
 							} else if(paramName.equals("rows")) {
 								valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchCompanyCourseRows(searchList, valueRows);
+								searchCompanyServiceRows(searchList, valueRows);
 							} else if(paramName.equals("stats")) {
 								searchList.stats((Boolean)paramObject);
 							} else if(paramName.equals("stats.field")) {
@@ -1310,7 +1310,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								if(foundStats) {
 									String solrLocalParams = mStats.group(1);
 									entityVar = mStats.group(2).trim();
-									varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+									varIndexed = CompanyService.varIndexedCompanyService(entityVar);
 									searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									statsField = entityVar;
 									statsFieldIndexed = varIndexed;
@@ -1337,32 +1337,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								if(foundFacetRange) {
 									String solrLocalParams = mFacetRange.group(1);
 									entityVar = mFacetRange.group(2).trim();
-									varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+									varIndexed = CompanyService.varIndexedCompanyService(entityVar);
 									searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									facetRange = entityVar;
 								}
 							} else if(paramName.equals("facet.field")) {
 								entityVar = (String)paramObject;
-								varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+								varIndexed = CompanyService.varIndexedCompanyService(entityVar);
 								if(varIndexed != null)
 									searchList.facetField(varIndexed);
 							} else if(paramName.equals("var")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								searchCompanyCourseVar(searchList, entityVar, valueIndexed);
+								searchCompanyServiceVar(searchList, entityVar, valueIndexed);
 							} else if(paramName.equals("cursorMark")) {
 								valueCursorMark = (String)paramObject;
 								searchList.cursorMark((String)paramObject);
 							}
 						}
-						searchCompanyCourseUri(searchList);
+						searchCompanyServiceUri(searchList);
 					}
 				} catch(Exception e) {
 					ExceptionUtils.rethrow(e);
 				}
 			}
 			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.sort("courseNum_docvalues_int", "asc");
+				searchList.sort("created_docvalues_date", "desc");
 			}
 			String facetRange2 = facetRange;
 			Date facetRangeStart2 = facetRangeStart;
@@ -1370,7 +1370,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			String facetRangeGap2 = facetRangeGap;
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
-			searchCompanyCourse2(siteRequest, populate, store, modify, searchList);
+			searchCompanyService2(siteRequest, populate, store, modify, searchList);
 			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
@@ -1406,26 +1406,26 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					searchList.query().onSuccess(b -> {
 						promise.complete(searchList);
 					}).onFailure(ex -> {
-						LOG.error(String.format("searchCompanyCourse failed. "), ex);
+						LOG.error(String.format("searchCompanyService failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete(searchList);
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("searchCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchCompanyService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("searchCompanyCourse failed. "), ex);
+			LOG.error(String.format("searchCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void searchCompanyCourse2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyCourse> searchList) {
+	public void searchCompanyService2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyService> searchList) {
 	}
 
-	public Future<Void> persistCompanyCourse(CompanyCourse o, Boolean patch) {
+	public Future<Void> persistCompanyService(CompanyService o, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -1445,24 +1445,24 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							try {
 								o.persistForClass(columnName, columnValue);
 							} catch(Exception e) {
-								LOG.error(String.format("persistCompanyCourse failed. "), e);
+								LOG.error(String.format("persistCompanyService failed. "), e);
 							}
 						}
 					});
 					promise.complete();
 				} catch(Exception ex) {
-					LOG.error(String.format("persistCompanyCourse failed. "), ex);
+					LOG.error(String.format("persistCompanyService failed. "), ex);
 					promise.fail(ex);
 				}
 		} catch(Exception ex) {
-			LOG.error(String.format("persistCompanyCourse failed. "), ex);
+			LOG.error(String.format("persistCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<CompanyCourse> indexCompanyCourse(CompanyCourse o) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyService> indexCompanyService(CompanyService o) {
+		Promise<CompanyService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1472,7 +1472,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				json.put("add", add);
 				JsonObject doc = new JsonObject();
 				add.put("doc", doc);
-				o.indexCompanyCourse(doc);
+				o.indexCompanyService(doc);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
 				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
@@ -1489,27 +1489,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
-					LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
+					LOG.error(String.format("indexCompanyService failed. "), new RuntimeException(ex));
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexCompanyCourse failed. "), ex);
+				LOG.error(String.format("indexCompanyService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("indexCompanyCourse failed. "), ex);
+			LOG.error(String.format("indexCompanyService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
 	public String searchVar(String varIndexed) {
-		return CompanyCourse.searchVarCompanyCourse(varIndexed);
+		return CompanyService.searchVarCompanyService(varIndexed);
 	}
 
 	@Override
 	public String getClassApiAddress() {
-		return CompanyCourse.CLASS_API_ADDRESS_CompanyCourse;
+		return CompanyService.CLASS_API_ADDRESS_CompanyService;
 	}
 
 	@Override
@@ -1518,30 +1518,29 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		try {
 			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
 			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			String uri = ctx.getString(CompanyCourse.VAR_uri);
+			String uri = ctx.getString(CompanyService.VAR_uri);
 			String url = String.format("%s%s", siteBaseUrl, uri);
-			CompanyCourse page = new CompanyCourse();
+			CompanyService page = new CompanyService();
 			page.setSiteRequest_((SiteRequest)siteRequest);
-			page.persistForClass(CompanyCourse.VAR_resourceUri, resourceUri);
-			page.persistForClass(CompanyCourse.VAR_templateUri, templateUri);
+			page.persistForClass(CompanyService.VAR_resourceUri, resourceUri);
+			page.persistForClass(CompanyService.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyCourse.VAR_inheritPk, CompanyCourse.staticSetInheritPk(siteRequest2, ctx.getString(CompanyCourse.VAR_inheritPk)));
-			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, ctx.getString(CompanyCourse.VAR_created)));
-			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, ctx.getString(CompanyCourse.VAR_archived)));
-			page.persistForClass(CompanyCourse.VAR_deleted, CompanyCourse.staticSetDeleted(siteRequest2, ctx.getString(CompanyCourse.VAR_deleted)));
-			page.persistForClass(CompanyCourse.VAR_sessionId, CompanyCourse.staticSetSessionId(siteRequest2, ctx.getString(CompanyCourse.VAR_sessionId)));
-			page.persistForClass(CompanyCourse.VAR_userKey, CompanyCourse.staticSetUserKey(siteRequest2, ctx.getString(CompanyCourse.VAR_userKey)));
-			page.persistForClass(CompanyCourse.VAR_objectId, CompanyCourse.staticSetObjectId(siteRequest2, ctx.getString(CompanyCourse.VAR_objectId)));
-			page.persistForClass(CompanyCourse.VAR_id, CompanyCourse.staticSetId(siteRequest2, ctx.getString(CompanyCourse.VAR_id)));
-			page.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, ctx.getString(CompanyCourse.VAR_name)));
-			page.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, ctx.getString(CompanyCourse.VAR_description)));
-			page.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, ctx.getString(CompanyCourse.VAR_pageId)));
-			page.persistForClass(CompanyCourse.VAR_resourceUri, CompanyCourse.staticSetResourceUri(siteRequest2, ctx.getString(CompanyCourse.VAR_resourceUri)));
-			page.persistForClass(CompanyCourse.VAR_templateUri, CompanyCourse.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyCourse.VAR_templateUri)));
-			page.persistForClass(CompanyCourse.VAR_uri, CompanyCourse.staticSetUri(siteRequest2, ctx.getString(CompanyCourse.VAR_uri)));
-			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
-			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, ctx.getString(CompanyCourse.VAR_title)));
-			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, ctx.getString(CompanyCourse.VAR_courseNum)));
+			page.persistForClass(CompanyService.VAR_inheritPk, CompanyService.staticSetInheritPk(siteRequest2, ctx.getString(CompanyService.VAR_inheritPk)));
+			page.persistForClass(CompanyService.VAR_created, CompanyService.staticSetCreated(siteRequest2, ctx.getString(CompanyService.VAR_created)));
+			page.persistForClass(CompanyService.VAR_archived, CompanyService.staticSetArchived(siteRequest2, ctx.getString(CompanyService.VAR_archived)));
+			page.persistForClass(CompanyService.VAR_deleted, CompanyService.staticSetDeleted(siteRequest2, ctx.getString(CompanyService.VAR_deleted)));
+			page.persistForClass(CompanyService.VAR_sessionId, CompanyService.staticSetSessionId(siteRequest2, ctx.getString(CompanyService.VAR_sessionId)));
+			page.persistForClass(CompanyService.VAR_userKey, CompanyService.staticSetUserKey(siteRequest2, ctx.getString(CompanyService.VAR_userKey)));
+			page.persistForClass(CompanyService.VAR_objectId, CompanyService.staticSetObjectId(siteRequest2, ctx.getString(CompanyService.VAR_objectId)));
+			page.persistForClass(CompanyService.VAR_id, CompanyService.staticSetId(siteRequest2, ctx.getString(CompanyService.VAR_id)));
+			page.persistForClass(CompanyService.VAR_name, CompanyService.staticSetName(siteRequest2, ctx.getString(CompanyService.VAR_name)));
+			page.persistForClass(CompanyService.VAR_description, CompanyService.staticSetDescription(siteRequest2, ctx.getString(CompanyService.VAR_description)));
+			page.persistForClass(CompanyService.VAR_pageId, CompanyService.staticSetPageId(siteRequest2, ctx.getString(CompanyService.VAR_pageId)));
+			page.persistForClass(CompanyService.VAR_resourceUri, CompanyService.staticSetResourceUri(siteRequest2, ctx.getString(CompanyService.VAR_resourceUri)));
+			page.persistForClass(CompanyService.VAR_templateUri, CompanyService.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyService.VAR_templateUri)));
+			page.persistForClass(CompanyService.VAR_uri, CompanyService.staticSetUri(siteRequest2, ctx.getString(CompanyService.VAR_uri)));
+			page.persistForClass(CompanyService.VAR_url, CompanyService.staticSetUrl(siteRequest2, ctx.getString(CompanyService.VAR_url)));
+			page.persistForClass(CompanyService.VAR_title, CompanyService.staticSetTitle(siteRequest2, ctx.getString(CompanyService.VAR_title)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

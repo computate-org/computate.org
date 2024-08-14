@@ -36,20 +36,22 @@ import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
-import org.computate.site.model.course.CompanyCourse;
-import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
-import org.computate.site.model.event.CompanyEvent;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
-import org.computate.site.model.research.CompanyResearch;
-import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsite;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearch;
+import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEvent;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.service.CompanyService;
+import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsite;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -455,12 +457,27 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			siteRequest.setWebClient(webClient);
 			siteRequest.initDeepSiteRequest(siteRequest);
 			String templatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
 			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q1 -> {
-				apiSitePage.importTimer(Paths.get(templatePath, "/en-us/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q2 -> {
-					LOG.info("data import complete");
-					promise.complete();
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			apiSitePage.importTimer(Paths.get(templatePath, "/en-us/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q1 -> {
+				apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q2 -> {
+					apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q3 -> {
+						apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/course"), vertx, siteRequest, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse).onSuccess(q4 -> {
+							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q5 -> {
+								apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q6 -> {
+									apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q7 -> {
+										LOG.info("data import complete");
+										promise.complete();
+									}).onFailure(ex -> promise.fail(ex));
+								}).onFailure(ex -> promise.fail(ex));
+							}).onFailure(ex -> promise.fail(ex));
+						}).onFailure(ex -> promise.fail(ex));
+					}).onFailure(ex -> promise.fail(ex));
 				}).onFailure(ex -> promise.fail(ex));
 			}).onFailure(ex -> promise.fail(ex));
 		}

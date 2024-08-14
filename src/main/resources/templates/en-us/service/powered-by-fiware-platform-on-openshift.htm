@@ -1,10 +1,10 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta property="site:pageId" content="smart-device-platform-builder"/>
-    <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
-    <meta property="site:name" content="Computate Smart Device Platform Builder"/>
+    <meta property="site:pageId" content="powered-by-fiware-platform-on-openshift"/>
+    <meta property="site:uri" content="/en-us/service/{{ pageId }}"/>
+    <meta property="site:name" content="Powered by FIWARE Platform on OpenShift"/>
     <meta property="site:title" content="{{ name }}"/>
-    <meta property="site:description" content="Build a custom data-driven website for your own ideas with the Computate Smart Device Platform Builder "/>
+    <meta property="site:description" content="Work together with computate to launch your own Powered by FIWARE platform in the cloud to Red Hat OpenShift"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 .intro-background {
@@ -83,16 +83,16 @@
               <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
             </div>
             <h1 class="brand-font">
-              Build a custom data-driven website for your own ideas
+              {{ description }}
             </h1>
             <h2 class="brand-font">
               with the {{ name }}
             </h2>
             <div class="intro-details">
-              <div>Download your own customizable website building toolkit to launch your own data-driven website here: </div>
-              <sl-button id="order-button" class="gradient-button" href="https://store.computate.org/{{ pageId }}" variant="neutral">
+              <div>For more information, please contact </div>
+              <sl-button id="order-button" class="gradient-button" href="mailto:services@computate.org" variant="neutral">
                 <i class="fa-solid fa-person-running-fast"></i>
-                Order Platform Builder
+                services@computate.org
               </sl-button>
             </div>
           </div>
@@ -104,20 +104,20 @@
               What is the {{ name }}?
             </h2>
             <p>
-              Teaching tools and automation for easily building a custom website with the models and data that you care about using the best in open source software. 
+              Work with Computate to launch your own Powered by FIWARE to Red Hat OpenShift in the cloud. 
             </p>
-
             <div class="summary-grid">
+
               <div>
                 <div class="icon-heading">
                   <i class="fa-solid fa-code"></i>
                   <h3>
-                    Modern development tools
+                    Develop
                   </h3>
                 </div>
                 <p>
-                  Learn how to install all the latest software development tools on your own computer like VSCode, Jupyter, Ansible, OpenJDK, Helm, and OpenShift, 
-                  and start writing code like a real cloud-native developer. 
+                  Build a custom data-driven website and OpenAPI based on your own business data and Smart Data Models. 
+                  See the <a href="{{ SITE_BASE_URL }}/en-us/product/smart-device-platform-builder">Computate Smart Device Platform Builder</a>
                 </p>
               </div>
 
@@ -125,16 +125,29 @@
                 <div class="icon-heading">
                   <i class="fa-solid fa-cloud-arrow-up"></i>
                   <h3>
-                    Cloud-native microservices
+                    Containerize
                   </h3>
                 </div>
                 <p>
-                  Deploy cloud microservices in a Red Hat OpenShift Local cloud environment on your own computer 
-                  for certificate management, event bus application clustering, databases, a search engine, and single sign-on server for securing and scaling your data-driven website. 
+                  After developing your new data-driven website locally, learn how to containerize the application for running in the cloud the open source way. 
+                  See the <a href="{{ SITE_BASE_URL }}/en-us/course/powered-by-fiware-smart-developer-challenge">Powered by FIWARE Smart Developer Challenge</a>
                 </p>
               </div>
-            </div>
 
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <h3>
+                    Deploy
+                  </h3>
+                </div>
+                <p>
+                  Learn how to deploy your newly developed and containerized data-driven website to the cloud. 
+                  See the <a href="{{ SITE_BASE_URL }}/en-us/course/powered-by-fiware-smart-cloud-challenge">Powered by FIWARE Smart Cloud Challenge</a>
+                </p>
+              </div>
+
+            </div>
           </div>
         </div>
 {% endblock %}

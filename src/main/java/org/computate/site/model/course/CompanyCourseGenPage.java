@@ -1,7 +1,7 @@
 package org.computate.site.model.course;
 
 import org.computate.site.page.PageLayout;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.result.BaseResultPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -47,7 +47,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseModelPage> {
+public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage> {
 
   /**
    * {@inheritDoc}
@@ -453,11 +453,6 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseModelPage>
   protected void _companyCourse_(Wrap<CompanyCourse> w) {
     if(companyCourseCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyCourse_.get(0));
-  }
-
-  protected void _pk(Wrap<Long> w) {
-    if(companyCourse_ != null)
-      w.o(companyCourse_.getPk());
   }
 
   protected void _id(Wrap<String> w) {

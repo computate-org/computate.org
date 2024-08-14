@@ -1,4 +1,4 @@
-package org.computate.site.model.website;
+package org.computate.site.model.service;
 
 import org.computate.site.page.PageLayout;
 import org.computate.site.result.BaseResultPage;
@@ -47,37 +47,37 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPage> {
+public class CompanyServiceGenPage extends CompanyServiceGenPageGen<BaseResultPage> {
 
   /**
    * {@inheritDoc}
    * Ignore: true
    **/
-  protected void _searchListCompanyWebsite_(Wrap<SearchList<CompanyWebsite>> w) {
+  protected void _searchListCompanyService_(Wrap<SearchList<CompanyService>> w) {
   }
 
   @Override
   protected void _pageResponse(Wrap<String> w) {
-    if(searchListCompanyWebsite_ != null)
-      w.o(JsonObject.mapFrom(searchListCompanyWebsite_.getResponse()).toString());
+    if(searchListCompanyService_ != null)
+      w.o(JsonObject.mapFrom(searchListCompanyService_.getResponse()).toString());
   }
 
   @Override
   protected void _stats(Wrap<SolrResponse.Stats> w) {
-    w.o(searchListCompanyWebsite_.getResponse().getStats());
+    w.o(searchListCompanyService_.getResponse().getStats());
   }
 
   @Override
   protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-    w.o(searchListCompanyWebsite_.getResponse().getFacetCounts());
+    w.o(searchListCompanyService_.getResponse().getFacetCounts());
   }
 
   @Override
   protected void _pagination(JsonObject pagination) {
     JsonArray pages = new JsonArray();
-    Long start = searchListCompanyWebsite_.getStart().longValue();
-    Long rows = searchListCompanyWebsite_.getRows().longValue();
-    Long foundNum = searchListCompanyWebsite_.getResponse().getResponse().getNumFound().longValue();
+    Long start = searchListCompanyService_.getStart().longValue();
+    Long rows = searchListCompanyService_.getRows().longValue();
+    Long foundNum = searchListCompanyService_.getResponse().getResponse().getNumFound().longValue();
     Long startNum = start + 1L;
     Long endNum = start + rows;
     Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -119,12 +119,12 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _varsQ(JsonObject vars) {
-    CompanyWebsite.varsQForClass().forEach(var -> {
+    CompanyService.varsQForClass().forEach(var -> {
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(CompanyWebsite.displayNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyWebsite.classSimpleNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", Optional.ofNullable(searchListCompanyWebsite_.getRequest().getQuery()).filter(fq -> fq.startsWith(CompanyWebsite.varIndexedCompanyWebsite(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(CompanyService.displayNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(CompanyService.classSimpleNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", Optional.ofNullable(searchListCompanyService_.getRequest().getQuery()).filter(fq -> fq.startsWith(CompanyService.varIndexedCompanyService(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -132,17 +132,17 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
   @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    CompanyWebsite.varsFqForClass().forEach(var -> {
-      String varIndexed = CompanyWebsite.varIndexedCompanyWebsite(var);
-      String varStored = CompanyWebsite.varStoredCompanyWebsite(var);
+    CompanyService.varsFqForClass().forEach(var -> {
+      String varIndexed = CompanyService.varIndexedCompanyService(var);
+      String varStored = CompanyService.varStoredCompanyService(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
       json.put("varStored", varStored);
       json.put("varIndexed", varIndexed);
       String type = StringUtils.substringAfterLast(varIndexed, "_");
-      json.put("displayName", Optional.ofNullable(CompanyWebsite.displayNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyWebsite.classSimpleNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListCompanyWebsite_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyWebsite.varIndexedCompanyWebsite(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(CompanyService.displayNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(CompanyService.classSimpleNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", searchListCompanyService_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyService.varIndexedCompanyService(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
         json.put("stats", JsonObject.mapFrom(stat));
       });
@@ -204,13 +204,13 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _varsRange(JsonObject vars) {
-    CompanyWebsite.varsRangeForClass().forEach(var -> {
-      String varIndexed = CompanyWebsite.varIndexedCompanyWebsite(var);
+    CompanyService.varsRangeForClass().forEach(var -> {
+      String varIndexed = CompanyService.varIndexedCompanyService(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(CompanyWebsite.displayNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyWebsite.classSimpleNameCompanyWebsite(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListCompanyWebsite_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyWebsite.varIndexedCompanyWebsite(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(CompanyService.displayNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(CompanyService.classSimpleNameCompanyService(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", searchListCompanyService_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyService.varIndexedCompanyService(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -221,7 +221,7 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
     JsonObject params = serviceRequest.getParams();
 
     JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-    Long num = searchListCompanyWebsite_.getResponse().getResponse().getNumFound().longValue();
+    Long num = searchListCompanyService_.getResponse().getResponse().getNumFound().longValue();
     String q = "*:*";
     String q1 = "objectText";
     String q2 = "";
@@ -249,28 +249,28 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
     }
     query.put("q", q);
 
-    Long rows1 = Optional.ofNullable(searchListCompanyWebsite_).map(l -> l.getRows()).orElse(10L);
-    Long start1 = Optional.ofNullable(searchListCompanyWebsite_).map(l -> l.getStart()).orElse(1L);
+    Long rows1 = Optional.ofNullable(searchListCompanyService_).map(l -> l.getRows()).orElse(10L);
+    Long start1 = Optional.ofNullable(searchListCompanyService_).map(l -> l.getStart()).orElse(1L);
     Long start2 = start1 - rows1;
     Long start3 = start1 + rows1;
     Long rows2 = rows1 / 2;
     Long rows3 = rows1 * 2;
     start2 = start2 < 0 ? 0 : start2;
     JsonObject fqs = new JsonObject();
-    for(String fq : Optional.ofNullable(searchListCompanyWebsite_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
+    for(String fq : Optional.ofNullable(searchListCompanyService_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
       if(!StringUtils.contains(fq, "(")) {
-        String fq1 = CompanyWebsite.searchVarCompanyWebsite(StringUtils.substringBefore(fq, ":"));
+        String fq1 = CompanyService.searchVarCompanyService(StringUtils.substringBefore(fq, ":"));
         String fq2 = StringUtils.substringAfter(fq, ":");
         if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
-          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", CompanyWebsite.displayNameForClass(fq1)));
+          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", CompanyService.displayNameForClass(fq1)));
         }
       }
     query.put("fq", fqs);
 
     JsonArray sorts = new JsonArray();
-    for(String sort : Optional.ofNullable(searchListCompanyWebsite_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
-      String sort1 = CompanyWebsite.searchVarCompanyWebsite(StringUtils.substringBefore(sort, " "));
-      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", CompanyWebsite.displayNameForClass(sort1)));
+    for(String sort : Optional.ofNullable(searchListCompanyService_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+      String sort1 = CompanyService.searchVarCompanyService(StringUtils.substringBefore(sort, " "));
+      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", CompanyService.displayNameForClass(sort1)));
     }
     query.put("sort", sorts);
   }
@@ -304,31 +304,31 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
   @Override
   protected void _rows(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("rows", null) != null)
-      w.o(searchListCompanyWebsite_.getRows());
+      w.o(searchListCompanyService_.getRows());
   }
 
   @Override
   protected void _start(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("start", null) != null)
-      w.o(searchListCompanyWebsite_.getStart());
+      w.o(searchListCompanyService_.getStart());
   }
 
   @Override
   protected void _rangeGap(Wrap<String> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.gap", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetRangeGap()).orElse(null));
+      w.o(Optional.ofNullable(searchListCompanyService_.getFacetRangeGap()).orElse(null));
   }
 
   @Override
   protected void _rangeEnd(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.end", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListCompanyService_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
   protected void _rangeStart(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.start", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListCompanyService_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
@@ -348,27 +348,27 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _defaultRangeVar(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return CompanyWebsite.searchVarCompanyWebsite(v); }).orElse("created"));
+    w.o(Optional.ofNullable(searchListCompanyService_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return CompanyService.searchVarCompanyService(v); }).orElse("created"));
   }
 
   @Override
   protected void _defaultFacetSort(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetSort()).orElse("index"));
+    w.o(Optional.ofNullable(searchListCompanyService_.getFacetSort()).orElse("index"));
   }
 
   @Override
   protected void _defaultFacetLimit(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetLimit()).orElse(1));
+    w.o(Optional.ofNullable(searchListCompanyService_.getFacetLimit()).orElse(1));
   }
 
   @Override
   protected void _defaultFacetMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetMinCount()).orElse(1));
+    w.o(Optional.ofNullable(searchListCompanyService_.getFacetMinCount()).orElse(1));
   }
 
   @Override
   protected void _defaultPivotMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyWebsite_.getFacetPivotMinCount()).orElse(0));
+    w.o(Optional.ofNullable(searchListCompanyService_.getFacetPivotMinCount()).orElse(0));
   }
 
   @Override
@@ -390,14 +390,14 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _defaultFieldListVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyWebsite_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
+    Optional.ofNullable(searchListCompanyService_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
       if(StringUtils.contains(varStored2, "}"))
         varStored2 = StringUtils.substringAfterLast(varStored2, "}");
       String[] parts = varStored2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyWebsite.searchVarCompanyWebsite(part);
+          String var = CompanyService.searchVarCompanyService(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -407,14 +407,14 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _defaultStatsVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyWebsite_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
+    Optional.ofNullable(searchListCompanyService_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
       String varIndexed2 = varIndexed;
       if(StringUtils.contains(varIndexed2, "}"))
         varIndexed2 = StringUtils.substringAfterLast(varIndexed2, "}");
       String[] parts = varIndexed2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyWebsite.searchVarCompanyWebsite(part);
+          String var = CompanyService.searchVarCompanyService(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -424,14 +424,14 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _defaultPivotVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyWebsite_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
+    Optional.ofNullable(searchListCompanyService_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
       String facetPivot2 = facetPivot;
       if(StringUtils.contains(facetPivot2, "}"))
         facetPivot2 = StringUtils.substringAfterLast(facetPivot2, "}");
       String[] parts = facetPivot2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyWebsite.searchVarCompanyWebsite(part);
+          String var = CompanyService.searchVarCompanyService(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -442,22 +442,22 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
   /**
    * {@inheritDoc}
    **/
-  protected void _listCompanyWebsite(JsonArray l) {
-    Optional.ofNullable(searchListCompanyWebsite_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
+  protected void _listCompanyService(JsonArray l) {
+    Optional.ofNullable(searchListCompanyService_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyWebsiteCount(Wrap<Integer> w) {
-    w.o(searchListCompanyWebsite_ == null ? 0 : searchListCompanyWebsite_.size());
+  protected void _companyServiceCount(Wrap<Integer> w) {
+    w.o(searchListCompanyService_ == null ? 0 : searchListCompanyService_.size());
   }
 
-  protected void _companyWebsite_(Wrap<CompanyWebsite> w) {
-    if(companyWebsiteCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
-      w.o(searchListCompanyWebsite_.get(0));
+  protected void _companyService_(Wrap<CompanyService> w) {
+    if(companyServiceCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+      w.o(searchListCompanyService_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyWebsite_ != null)
-      w.o(companyWebsite_.getId());
+    if(companyService_ != null)
+      w.o(companyService_.getId());
   }
 
   @Override
@@ -467,29 +467,29 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _classSimpleName(Wrap<String> w) {
-    w.o("CompanyWebsite");
+    w.o("CompanyService");
   }
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyWebsite_ != null && companyWebsite_.getObjectTitle() != null)
-      c.o(companyWebsite_.getObjectTitle());
-    else if(companyWebsite_ != null)
-      c.o("websites");
-    else if(searchListCompanyWebsite_ == null || companyWebsiteCount == 0)
-      c.o("no website found");
+    if(companyService_ != null && companyService_.getObjectTitle() != null)
+      c.o(companyService_.getObjectTitle());
+    else if(companyService_ != null)
+      c.o("services");
+    else if(searchListCompanyService_ == null || companyServiceCount == 0)
+      c.o("no service found");
     else
-      c.o("websites");
+      c.o("services");
   }
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/website");
+    c.o("/service");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/website");
+    c.o("/api/service");
   }
 
   @Override
@@ -499,20 +499,20 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<BaseResultPa
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("See the live websites built with computate");
+      c.o("See the services provided by computate that will help you build your own data-driven platforms");
   }
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/website-999.png");
+      c.o("/png/service-999.png");
   }
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-regular fa-globe-pointer\"></i>");
+      c.o("<i class=\"fa-regular fa-conveyor-belt\"></i>");
   }
 
-  protected void _pageUriCompanyWebsite(Wrap<String> c) {
-      c.o("/website");
+  protected void _pageUriCompanyService(Wrap<String> c) {
+      c.o("/service");
   }
 }

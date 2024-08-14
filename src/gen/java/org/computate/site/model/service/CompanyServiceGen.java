@@ -1,4 +1,4 @@
-package org.computate.site.model.course;
+package org.computate.site.model.service;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.result.BaseResult;
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
-import java.lang.Integer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -46,27 +45,27 @@ import io.vertx.core.json.JsonObject;
 /**
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
- * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyCourseGen into the class CompanyCourse. 
- * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyCourse API to return more or less than 10 records by default. 
+ * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyServiceGen into the class CompanyService. 
+ * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyService API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
- * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyCourse objects in a relational PostgreSQL database transactionally in the RESTful API. 
- * The code to persist and query the CompanyCourseGen data in the database will then be automatically generated. 
+ * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyService objects in a relational PostgreSQL database transactionally in the RESTful API. 
+ * The code to persist and query the CompanyServiceGen data in the database will then be automatically generated. 
  * </li>
- * <h3>About the CompanyCourse class and it's generated class CompanyCourseGen&lt;BaseResult&gt;: </h3>extends CompanyCourseGen
+ * <h3>About the CompanyService class and it's generated class CompanyServiceGen&lt;BaseResult&gt;: </h3>extends CompanyServiceGen
  * <p>
- * This Java class extends a generated Java class CompanyCourseGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
+ * This Java class extends a generated Java class CompanyServiceGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse">Find the class CompanyCourse in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService">Find the class CompanyService in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyCourseGen<BaseResult>
- * <p>This <code>class CompanyCourse extends CompanyCourseGen&lt;BaseResult&gt;</code>, which means it extends a newly generated CompanyCourseGen. 
- * The generated <code>class CompanyCourseGen extends BaseResult</code> which means that CompanyCourse extends CompanyCourseGen which extends BaseResult. 
+ * extends CompanyServiceGen<BaseResult>
+ * <p>This <code>class CompanyService extends CompanyServiceGen&lt;BaseResult&gt;</code>, which means it extends a newly generated CompanyServiceGen. 
+ * The generated <code>class CompanyServiceGen extends BaseResult</code> which means that CompanyService extends CompanyServiceGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -91,10 +90,10 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: course"</b>, which groups all of the OpenAPIs for CompanyCourse objects under the tag "course". 
+ * <p>This class contains a comment <b>"ApiTag: service"</b>, which groups all of the OpenAPIs for CompanyService objects under the tag "service". 
  * </p>
- * <h2>ApiUri.enUS: /api/course</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/course"</b>, which defines the base API URI for CompanyCourse objects as "/api/course" in the OpenAPI spec. 
+ * <h2>ApiUri.enUS: /api/service</h2>
+ * <p>This class contains a comment <b>"ApiUri: /api/service"</b>, which defines the base API URI for CompanyService objects as "/api/service" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -102,30 +101,30 @@ import io.vertx.core.json.JsonObject;
  * Every protected void method that begins with "_" that is marked to be searched with a comment like "Indexed: true", "Stored: true", or "DocValues: true" will be indexed in the search engine. 
  * </p>
  * <h2>{@inheritDoc}</h2>
- * <p>By adding a class comment "{@inheritDoc}", the CompanyCourse class will inherit the helpful inherited class comments from the super class CompanyCourseGen. 
+ * <p>By adding a class comment "{@inheritDoc}", the CompanyService class will inherit the helpful inherited class comments from the super class CompanyServiceGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 5</h2>
- * <p>This class contains a comment <b>"Order: 5"</b>, which means this class will be sorted by the given number 5 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 7</h2>
+ * <p>This class contains a comment <b>"Order: 7"</b>, which means this class will be sorted by the given number 7 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 5</h2>
- * <p>This class contains a comment <b>"SqlOrder: 5"</b>, which means this class will be sorted by the given number 5 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 7</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 7"</b>, which means this class will be sorted by the given number 7 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
- * This creates a new Java class org.computate.site.model.course.CompanyCoursePage. 
+ * This creates a new Java class org.computate.site.model.service.CompanyServicePage. 
  * </p>
  * <h2>SuperPage.enUS: BaseResultPage</h2>
  * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.course.CompanyCoursePage extends org.computate.site.result.BaseResultPage. 
+ * This means that the newly created class org.computate.site.model.service.CompanyServicePage extends org.computate.site.result.BaseResultPage. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
  *   This class contains a comment <b>"Promise: true"</b>
  *   Sometimes a Java class must be initialized asynchronously when it involves calling a blocking API. 
- *   This means that the CompanyCourse Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
+ *   This means that the CompanyService Java class has promiseDeep methods which must be initialized asynchronously as a Vert.x Promise  instead of initDeep methods which are a simple non-asynchronous method. 
  * </p>
  * <p>
  *   Adding protected void methods beginning with an underscore with a Promise as the only parameter will automatically set `Promise: true`. 
@@ -146,20 +145,20 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * <h2>Role.enUS: SiteAdmin</h2>
  * <p>
- * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this CompanyCourse API. 
- * It's possible to reconfigure the roles required to access the CompanyCourse API by configuring an environment variable like this: 
+ * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this CompanyService API. 
+ * It's possible to reconfigure the roles required to access the CompanyService API by configuring an environment variable like this: 
  * </p>
- * <pre>AUTH_ROLE_REQUIRED_CompanyCourse: ["SiteAdmin"]</pre>
- * <h2>AName.enUS: a course</h2>
- * <p>This class contains a comment <b>"AName.enUS: a course"</b>, which identifies the language context to describe a CompanyCourse as "a course". 
- * </p>
- * <p>
- * Delete the class CompanyCourse in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>AUTH_ROLE_REQUIRED_CompanyService: ["SiteAdmin"]</pre>
+ * <h2>AName.enUS: a service</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a service"</b>, which identifies the language context to describe a CompanyService as "a service". 
  * </p>
  * <p>
- * Delete  the package org.computate.site.model.course in Solr: 
- * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.course&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * Delete the class CompanyService in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * </p>
+ * <p>
+ * Delete  the package org.computate.site.model.service in Solr: 
+ * curl -k 'https://solr.apps-crc.testing:443/solr/computate/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.service&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
@@ -167,43 +166,43 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyCourseGen<DEV> extends BaseResult {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourse.class);
+public abstract class CompanyServiceGen<DEV> extends BaseResult {
+	protected static final Logger LOG = LoggerFactory.getLogger(CompanyService.class);
 
-	public static final String CompanyCourse_Description_enUS = "Take an exciting hands-on course on your own computer with computate";
-	public static final String CompanyCourse_AName_enUS = "a course";
-	public static final String CompanyCourse_This_enUS = "this ";
-	public static final String CompanyCourse_ThisName_enUS = "this course";
-	public static final String CompanyCourse_A_enUS = "a ";
-	public static final String CompanyCourse_TheName_enUS = "the course";
-	public static final String CompanyCourse_SingularName_enUS = "course";
-	public static final String CompanyCourse_PluralName_enUS = "courses";
-	public static final String CompanyCourse_NameActual_enUS = "current course";
-	public static final String CompanyCourse_AllName_enUS = "all the courses";
-	public static final String CompanyCourse_SearchAllNameBy_enUS = "search courses by ";
-	public static final String CompanyCourse_Title_enUS = "courses";
-	public static final String CompanyCourse_ThePluralName_enUS = "the courses";
-	public static final String CompanyCourse_NoNameFound_enUS = "no course found";
-	public static final String CompanyCourse_ApiUri_enUS = "/api/course";
-	public static final String CompanyCourse_ApiUriSearchPage_enUS = "/course";
-	public static final String CompanyCourse_OfName_enUS = "of course";
-	public static final String CompanyCourse_ANameAdjective_enUS = "a course";
-	public static final String CompanyCourse_NameAdjectiveSingular_enUS = "course";
-	public static final String CompanyCourse_NameAdjectivePlural_enUS = "courses";
-	public static final String Search_enUS_Uri = "/api/course";
-	public static final String Search_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String GET_enUS_Uri = "/api/course/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/course/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/course";
-	public static final String PATCH_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String POST_enUS_Uri = "/api/course";
-	public static final String POST_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/course-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/course-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/course";
-	public static final String SearchPage_enUS_ImageUri = "/png/course-999.png";
+	public static final String CompanyService_Description_enUS = "See the services provided by computate that will help you build your own data-driven platforms";
+	public static final String CompanyService_AName_enUS = "a service";
+	public static final String CompanyService_This_enUS = "this ";
+	public static final String CompanyService_ThisName_enUS = "this service";
+	public static final String CompanyService_A_enUS = "a ";
+	public static final String CompanyService_TheName_enUS = "the service";
+	public static final String CompanyService_SingularName_enUS = "service";
+	public static final String CompanyService_PluralName_enUS = "services";
+	public static final String CompanyService_NameActual_enUS = "current service";
+	public static final String CompanyService_AllName_enUS = "all the services";
+	public static final String CompanyService_SearchAllNameBy_enUS = "search services by ";
+	public static final String CompanyService_Title_enUS = "services";
+	public static final String CompanyService_ThePluralName_enUS = "the services";
+	public static final String CompanyService_NoNameFound_enUS = "no service found";
+	public static final String CompanyService_ApiUri_enUS = "/api/service";
+	public static final String CompanyService_ApiUriSearchPage_enUS = "/service";
+	public static final String CompanyService_OfName_enUS = "of service";
+	public static final String CompanyService_ANameAdjective_enUS = "a service";
+	public static final String CompanyService_NameAdjectiveSingular_enUS = "service";
+	public static final String CompanyService_NameAdjectivePlural_enUS = "services";
+	public static final String Search_enUS_Uri = "/api/service";
+	public static final String Search_enUS_ImageUri = "/png/api/service-999.png";
+	public static final String GET_enUS_Uri = "/api/service/{id}";
+	public static final String GET_enUS_ImageUri = "/png/api/service/{id}-999.png";
+	public static final String PATCH_enUS_Uri = "/api/service";
+	public static final String PATCH_enUS_ImageUri = "/png/api/service-999.png";
+	public static final String POST_enUS_Uri = "/api/service";
+	public static final String POST_enUS_ImageUri = "/png/api/service-999.png";
+	public static final String PUTImport_enUS_Uri = "/api/service-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/api/service-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/service";
+	public static final String SearchPage_enUS_ImageUri = "/png/service-999.png";
 
-	public static final String CompanyCourse_Icon = "<i class=\"fa-regular fa-notebook\"></i>";
+	public static final String CompanyService_Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
 
 	//////////
 	// name //
@@ -219,7 +218,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity name
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -229,12 +228,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return name;
 	}
 	public void setName(String o) {
-		this.name = CompanyCourse.staticSetName(siteRequest_, o);
+		this.name = CompanyService.staticSetName(siteRequest_, o);
 	}
 	public static String staticSetName(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse nameInit() {
+	protected CompanyService nameInit() {
 		Wrap<String> nameWrap = new Wrap<String>().var("name");
 		if(name == null) {
 			_name(nameWrap);
@@ -242,7 +241,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setName(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchName(SiteRequest siteRequest_, String o) {
@@ -254,7 +253,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchName(siteRequest_, CompanyCourse.staticSetName(siteRequest_, o)).toString();
+		return CompanyService.staticSearchName(siteRequest_, CompanyService.staticSetName(siteRequest_, o)).toString();
 	}
 
 	public String sqlName() {
@@ -275,7 +274,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity description
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -285,12 +284,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return description;
 	}
 	public void setDescription(String o) {
-		this.description = CompanyCourse.staticSetDescription(siteRequest_, o);
+		this.description = CompanyService.staticSetDescription(siteRequest_, o);
 	}
 	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse descriptionInit() {
+	protected CompanyService descriptionInit() {
 		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
 		if(description == null) {
 			_description(descriptionWrap);
@@ -298,7 +297,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setDescription(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
@@ -310,7 +309,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchDescription(siteRequest_, CompanyCourse.staticSetDescription(siteRequest_, o)).toString();
+		return CompanyService.staticSearchDescription(siteRequest_, CompanyService.staticSetDescription(siteRequest_, o)).toString();
 	}
 
 	public String sqlDescription() {
@@ -331,7 +330,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity pageId
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -341,12 +340,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return pageId;
 	}
 	public void setPageId(String o) {
-		this.pageId = CompanyCourse.staticSetPageId(siteRequest_, o);
+		this.pageId = CompanyService.staticSetPageId(siteRequest_, o);
 	}
 	public static String staticSetPageId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse pageIdInit() {
+	protected CompanyService pageIdInit() {
 		Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
 		if(pageId == null) {
 			_pageId(pageIdWrap);
@@ -354,7 +353,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setPageId(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
@@ -366,7 +365,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchPageId(siteRequest_, CompanyCourse.staticSetPageId(siteRequest_, o)).toString();
+		return CompanyService.staticSearchPageId(siteRequest_, CompanyService.staticSetPageId(siteRequest_, o)).toString();
 	}
 
 	public String sqlPageId() {
@@ -387,7 +386,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity resourceUri
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -397,12 +396,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return resourceUri;
 	}
 	public void setResourceUri(String o) {
-		this.resourceUri = CompanyCourse.staticSetResourceUri(siteRequest_, o);
+		this.resourceUri = CompanyService.staticSetResourceUri(siteRequest_, o);
 	}
 	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse resourceUriInit() {
+	protected CompanyService resourceUriInit() {
 		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
 		if(resourceUri == null) {
 			_resourceUri(resourceUriWrap);
@@ -410,7 +409,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setResourceUri(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
@@ -422,7 +421,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchResourceUri(siteRequest_, CompanyCourse.staticSetResourceUri(siteRequest_, o)).toString();
+		return CompanyService.staticSearchResourceUri(siteRequest_, CompanyService.staticSetResourceUri(siteRequest_, o)).toString();
 	}
 
 	public String sqlResourceUri() {
@@ -443,7 +442,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity templateUri
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -453,12 +452,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return templateUri;
 	}
 	public void setTemplateUri(String o) {
-		this.templateUri = CompanyCourse.staticSetTemplateUri(siteRequest_, o);
+		this.templateUri = CompanyService.staticSetTemplateUri(siteRequest_, o);
 	}
 	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse templateUriInit() {
+	protected CompanyService templateUriInit() {
 		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
 		if(templateUri == null) {
 			_templateUri(templateUriWrap);
@@ -466,7 +465,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setTemplateUri(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
@@ -478,7 +477,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchTemplateUri(siteRequest_, CompanyCourse.staticSetTemplateUri(siteRequest_, o)).toString();
+		return CompanyService.staticSearchTemplateUri(siteRequest_, CompanyService.staticSetTemplateUri(siteRequest_, o)).toString();
 	}
 
 	public String sqlTemplateUri() {
@@ -499,7 +498,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity uri
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -509,12 +508,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return uri;
 	}
 	public void setUri(String o) {
-		this.uri = CompanyCourse.staticSetUri(siteRequest_, o);
+		this.uri = CompanyService.staticSetUri(siteRequest_, o);
 	}
 	public static String staticSetUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse uriInit() {
+	protected CompanyService uriInit() {
 		Wrap<String> uriWrap = new Wrap<String>().var("uri");
 		if(uri == null) {
 			_uri(uriWrap);
@@ -522,7 +521,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setUri(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
@@ -534,7 +533,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchUri(siteRequest_, CompanyCourse.staticSetUri(siteRequest_, o)).toString();
+		return CompanyService.staticSearchUri(siteRequest_, CompanyService.staticSetUri(siteRequest_, o)).toString();
 	}
 
 	public String sqlUri() {
@@ -555,7 +554,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity url
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -565,12 +564,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return url;
 	}
 	public void setUrl(String o) {
-		this.url = CompanyCourse.staticSetUrl(siteRequest_, o);
+		this.url = CompanyService.staticSetUrl(siteRequest_, o);
 	}
 	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse urlInit() {
+	protected CompanyService urlInit() {
 		Wrap<String> urlWrap = new Wrap<String>().var("url");
 		if(url == null) {
 			_url(urlWrap);
@@ -578,7 +577,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setUrl(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
@@ -590,7 +589,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchUrl(siteRequest_, CompanyCourse.staticSetUrl(siteRequest_, o)).toString();
+		return CompanyService.staticSearchUrl(siteRequest_, CompanyService.staticSetUrl(siteRequest_, o)).toString();
 	}
 
 	public String sqlUrl() {
@@ -611,7 +610,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	/**	<br> The entity title
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -621,12 +620,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return title;
 	}
 	public void setTitle(String o) {
-		this.title = CompanyCourse.staticSetTitle(siteRequest_, o);
+		this.title = CompanyService.staticSetTitle(siteRequest_, o);
 	}
 	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse titleInit() {
+	protected CompanyService titleInit() {
 		Wrap<String> titleWrap = new Wrap<String>().var("title");
 		if(title == null) {
 			_title(titleWrap);
@@ -634,7 +633,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				setTitle(o);
 			});
 		}
-		return (CompanyCourse)this;
+		return (CompanyService)this;
 	}
 
 	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
@@ -646,90 +645,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchTitle(siteRequest_, CompanyCourse.staticSetTitle(siteRequest_, o)).toString();
+		return CompanyService.staticSearchTitle(siteRequest_, CompanyService.staticSetTitle(siteRequest_, o)).toString();
 	}
 
 	public String sqlTitle() {
 		return title;
 	}
 
-	///////////////
-	// courseNum //
-	///////////////
-
-
-	/**	 The entity courseNum
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer courseNum;
-
-	/**	<br> The entity courseNum
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _courseNum(Wrap<Integer> w);
-
-	public Integer getCourseNum() {
-		return courseNum;
-	}
-
-	public void setCourseNum(Integer courseNum) {
-		this.courseNum = courseNum;
-	}
-	@JsonIgnore
-	public void setCourseNum(String o) {
-		this.courseNum = CompanyCourse.staticSetCourseNum(siteRequest_, o);
-	}
-	public static Integer staticSetCourseNum(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected CompanyCourse courseNumInit() {
-		Wrap<Integer> courseNumWrap = new Wrap<Integer>().var("courseNum");
-		if(courseNum == null) {
-			_courseNum(courseNumWrap);
-			Optional.ofNullable(courseNumWrap.getO()).ifPresent(o -> {
-				setCourseNum(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static Integer staticSearchCourseNum(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
-
-	public static String staticSearchStrCourseNum(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqCourseNum(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchCourseNum(siteRequest_, CompanyCourse.staticSetCourseNum(siteRequest_, o)).toString();
-	}
-
-	public Integer sqlCourseNum() {
-		return courseNum;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyCourse(SiteRequest siteRequest_) {
+	public Future<Void> promiseDeepCompanyService(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyCourse();
+		return promiseDeepCompanyService();
 	}
 
-	public Future<Void> promiseDeepCompanyCourse() {
+	public Future<Void> promiseDeepCompanyService() {
 		Promise<Void> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyCourse(promise2);
+		promiseCompanyService(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
 				promise.complete();
@@ -742,7 +677,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return promise.future();
 	}
 
-	public Future<Void> promiseCompanyCourse(Promise<Void> promise) {
+	public Future<Void> promiseCompanyService(Promise<Void> promise) {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
@@ -754,7 +689,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				uriInit();
 				urlInit();
 				titleInit();
-				courseNumInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -769,19 +703,19 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyCourse(siteRequest_);
+		return promiseDeepCompanyService(siteRequest_);
 	}
 
 	/////////////////
 	// siteRequest //
 	/////////////////
 
-	public void siteRequestCompanyCourse(SiteRequest siteRequest_) {
+	public void siteRequestCompanyService(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyCourse(siteRequest_);
+		siteRequestCompanyService(siteRequest_);
 	}
 
 	/////////////
@@ -793,7 +727,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = obtainCompanyCourse(v);
+				o = obtainCompanyService(v);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.obtainForClass(v);
@@ -805,27 +739,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 		return o;
 	}
-	public Object obtainCompanyCourse(String var) {
-		CompanyCourse oCompanyCourse = (CompanyCourse)this;
+	public Object obtainCompanyService(String var) {
+		CompanyService oCompanyService = (CompanyService)this;
 		switch(var) {
 			case "name":
-				return oCompanyCourse.name;
+				return oCompanyService.name;
 			case "description":
-				return oCompanyCourse.description;
+				return oCompanyService.description;
 			case "pageId":
-				return oCompanyCourse.pageId;
+				return oCompanyService.pageId;
 			case "resourceUri":
-				return oCompanyCourse.resourceUri;
+				return oCompanyService.resourceUri;
 			case "templateUri":
-				return oCompanyCourse.templateUri;
+				return oCompanyService.templateUri;
 			case "uri":
-				return oCompanyCourse.uri;
+				return oCompanyService.uri;
 			case "url":
-				return oCompanyCourse.url;
+				return oCompanyService.url;
 			case "title":
-				return oCompanyCourse.title;
-			case "courseNum":
-				return oCompanyCourse.courseNum;
+				return oCompanyService.title;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -840,7 +772,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		Object o = null;
 		for(String v : vars) {
 			if(o == null)
-				o = relateCompanyCourse(v, val);
+				o = relateCompanyService(v, val);
 			else if(o instanceof BaseModel) {
 				BaseModel baseModel = (BaseModel)o;
 				o = baseModel.relateForClass(v, val);
@@ -848,8 +780,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 		return o != null;
 	}
-	public Object relateCompanyCourse(String var, Object val) {
-		CompanyCourse oCompanyCourse = (CompanyCourse)this;
+	public Object relateCompanyService(String var, Object val) {
+		CompanyService oCompanyService = (CompanyService)this;
 		switch(var) {
 			default:
 				return super.relateBaseResult(var, val);
@@ -861,28 +793,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	///////////////
 
 	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyCourse(entityVar,  siteRequest_, o);
+		return staticSetCompanyService(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSetCompanyCourse(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyService(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyCourse.staticSetName(siteRequest_, o);
+			return CompanyService.staticSetName(siteRequest_, o);
 		case "description":
-			return CompanyCourse.staticSetDescription(siteRequest_, o);
+			return CompanyService.staticSetDescription(siteRequest_, o);
 		case "pageId":
-			return CompanyCourse.staticSetPageId(siteRequest_, o);
+			return CompanyService.staticSetPageId(siteRequest_, o);
 		case "resourceUri":
-			return CompanyCourse.staticSetResourceUri(siteRequest_, o);
+			return CompanyService.staticSetResourceUri(siteRequest_, o);
 		case "templateUri":
-			return CompanyCourse.staticSetTemplateUri(siteRequest_, o);
+			return CompanyService.staticSetTemplateUri(siteRequest_, o);
 		case "uri":
-			return CompanyCourse.staticSetUri(siteRequest_, o);
+			return CompanyService.staticSetUri(siteRequest_, o);
 		case "url":
-			return CompanyCourse.staticSetUrl(siteRequest_, o);
+			return CompanyService.staticSetUrl(siteRequest_, o);
 		case "title":
-			return CompanyCourse.staticSetTitle(siteRequest_, o);
-		case "courseNum":
-			return CompanyCourse.staticSetCourseNum(siteRequest_, o);
+			return CompanyService.staticSetTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -893,28 +823,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	////////////////
 
 	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyCourse(entityVar,  siteRequest_, o);
+		return staticSearchCompanyService(entityVar,  siteRequest_, o);
 	}
-	public static Object staticSearchCompanyCourse(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static Object staticSearchCompanyService(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyCourse.staticSearchName(siteRequest_, (String)o);
+			return CompanyService.staticSearchName(siteRequest_, (String)o);
 		case "description":
-			return CompanyCourse.staticSearchDescription(siteRequest_, (String)o);
+			return CompanyService.staticSearchDescription(siteRequest_, (String)o);
 		case "pageId":
-			return CompanyCourse.staticSearchPageId(siteRequest_, (String)o);
+			return CompanyService.staticSearchPageId(siteRequest_, (String)o);
 		case "resourceUri":
-			return CompanyCourse.staticSearchResourceUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchResourceUri(siteRequest_, (String)o);
 		case "templateUri":
-			return CompanyCourse.staticSearchTemplateUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchTemplateUri(siteRequest_, (String)o);
 		case "uri":
-			return CompanyCourse.staticSearchUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchUri(siteRequest_, (String)o);
 		case "url":
-			return CompanyCourse.staticSearchUrl(siteRequest_, (String)o);
+			return CompanyService.staticSearchUrl(siteRequest_, (String)o);
 		case "title":
-			return CompanyCourse.staticSearchTitle(siteRequest_, (String)o);
-		case "courseNum":
-			return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
+			return CompanyService.staticSearchTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -925,28 +853,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	///////////////////
 
 	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyCourse(entityVar,  siteRequest_, o);
+		return staticSearchStrCompanyService(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchStrCompanyCourse(String entityVar, SiteRequest siteRequest_, Object o) {
+	public static String staticSearchStrCompanyService(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyCourse.staticSearchStrName(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrName(siteRequest_, (String)o);
 		case "description":
-			return CompanyCourse.staticSearchStrDescription(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrDescription(siteRequest_, (String)o);
 		case "pageId":
-			return CompanyCourse.staticSearchStrPageId(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrPageId(siteRequest_, (String)o);
 		case "resourceUri":
-			return CompanyCourse.staticSearchStrResourceUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrResourceUri(siteRequest_, (String)o);
 		case "templateUri":
-			return CompanyCourse.staticSearchStrTemplateUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrTemplateUri(siteRequest_, (String)o);
 		case "uri":
-			return CompanyCourse.staticSearchStrUri(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrUri(siteRequest_, (String)o);
 		case "url":
-			return CompanyCourse.staticSearchStrUrl(siteRequest_, (String)o);
+			return CompanyService.staticSearchStrUrl(siteRequest_, (String)o);
 		case "title":
-			return CompanyCourse.staticSearchStrTitle(siteRequest_, (String)o);
-		case "courseNum":
-			return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+			return CompanyService.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -957,28 +883,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	//////////////////
 
 	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyCourse(entityVar,  siteRequest_, o);
+		return staticSearchFqCompanyService(entityVar,  siteRequest_, o);
 	}
-	public static String staticSearchFqCompanyCourse(String entityVar, SiteRequest siteRequest_, String o) {
+	public static String staticSearchFqCompanyService(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyCourse.staticSearchFqName(siteRequest_, o);
+			return CompanyService.staticSearchFqName(siteRequest_, o);
 		case "description":
-			return CompanyCourse.staticSearchFqDescription(siteRequest_, o);
+			return CompanyService.staticSearchFqDescription(siteRequest_, o);
 		case "pageId":
-			return CompanyCourse.staticSearchFqPageId(siteRequest_, o);
+			return CompanyService.staticSearchFqPageId(siteRequest_, o);
 		case "resourceUri":
-			return CompanyCourse.staticSearchFqResourceUri(siteRequest_, o);
+			return CompanyService.staticSearchFqResourceUri(siteRequest_, o);
 		case "templateUri":
-			return CompanyCourse.staticSearchFqTemplateUri(siteRequest_, o);
+			return CompanyService.staticSearchFqTemplateUri(siteRequest_, o);
 		case "uri":
-			return CompanyCourse.staticSearchFqUri(siteRequest_, o);
+			return CompanyService.staticSearchFqUri(siteRequest_, o);
 		case "url":
-			return CompanyCourse.staticSearchFqUrl(siteRequest_, o);
+			return CompanyService.staticSearchFqUrl(siteRequest_, o);
 		case "title":
-			return CompanyCourse.staticSearchFqTitle(siteRequest_, o);
-		case "courseNum":
-			return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
+			return CompanyService.staticSearchFqTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -994,7 +918,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(val != null) {
 			for(String v : vars) {
 				if(o == null)
-					o = persistCompanyCourse(v, val);
+					o = persistCompanyService(v, val);
 				else if(o instanceof BaseModel) {
 					BaseModel oBaseModel = (BaseModel)o;
 					o = oBaseModel.persistForClass(v, val);
@@ -1003,7 +927,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 		return o != null;
 	}
-	public Object persistCompanyCourse(String var, Object val) {
+	public Object persistCompanyService(String var, Object val) {
 		String varLower = var.toLowerCase();
 			if("name".equals(varLower)) {
 				if(val instanceof String) {
@@ -1053,14 +977,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("title");
 				return val;
-			} else if("coursenum".equals(varLower)) {
-				if(val instanceof Integer) {
-					setCourseNum((Integer)val);
-				} else {
-					setCourseNum(val == null ? null : val.toString());
-				}
-				saves.add("courseNum");
-				return val;
 		} else {
 			return super.persistBaseResult(var, val);
 		}
@@ -1071,72 +987,66 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	/////////////
 
 	@Override public void populateForClass(SolrResponse.Doc doc) {
-		populateCompanyCourse(doc);
+		populateCompanyService(doc);
 	}
-	public void populateCompanyCourse(SolrResponse.Doc doc) {
-		CompanyCourse oCompanyCourse = (CompanyCourse)this;
+	public void populateCompanyService(SolrResponse.Doc doc) {
+		CompanyService oCompanyService = (CompanyService)this;
 		saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
 		if(saves != null) {
 
 			if(saves.contains("name")) {
 				String name = (String)doc.get("name_docvalues_string");
 				if(name != null)
-					oCompanyCourse.setName(name);
+					oCompanyService.setName(name);
 			}
 
 			if(saves.contains("description")) {
 				String description = (String)doc.get("description_docvalues_string");
 				if(description != null)
-					oCompanyCourse.setDescription(description);
+					oCompanyService.setDescription(description);
 			}
 
 			if(saves.contains("pageId")) {
 				String pageId = (String)doc.get("pageId_docvalues_string");
 				if(pageId != null)
-					oCompanyCourse.setPageId(pageId);
+					oCompanyService.setPageId(pageId);
 			}
 
 			if(saves.contains("resourceUri")) {
 				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
 				if(resourceUri != null)
-					oCompanyCourse.setResourceUri(resourceUri);
+					oCompanyService.setResourceUri(resourceUri);
 			}
 
 			if(saves.contains("templateUri")) {
 				String templateUri = (String)doc.get("templateUri_docvalues_string");
 				if(templateUri != null)
-					oCompanyCourse.setTemplateUri(templateUri);
+					oCompanyService.setTemplateUri(templateUri);
 			}
 
 			if(saves.contains("uri")) {
 				String uri = (String)doc.get("uri_docvalues_string");
 				if(uri != null)
-					oCompanyCourse.setUri(uri);
+					oCompanyService.setUri(uri);
 			}
 
 			if(saves.contains("url")) {
 				String url = (String)doc.get("url_docvalues_string");
 				if(url != null)
-					oCompanyCourse.setUrl(url);
+					oCompanyService.setUrl(url);
 			}
 
 			if(saves.contains("title")) {
 				String title = (String)doc.get("title_docvalues_string");
 				if(title != null)
-					oCompanyCourse.setTitle(title);
-			}
-
-			if(saves.contains("courseNum")) {
-				Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
-				if(courseNum != null)
-					oCompanyCourse.setCourseNum(courseNum);
+					oCompanyService.setTitle(title);
 			}
 		}
 
 		super.populateBaseResult(doc);
 	}
 
-	public void indexCompanyCourse(JsonObject doc) {
+	public void indexCompanyService(JsonObject doc) {
 		if(name != null) {
 			doc.put("name_docvalues_string", name);
 		}
@@ -1161,14 +1071,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(title != null) {
 			doc.put("title_docvalues_string", title);
 		}
-		if(courseNum != null) {
-			doc.put("courseNum_docvalues_int", courseNum);
-		}
 		super.indexBaseResult(doc);
 
 	}
 
-	public static String varStoredCompanyCourse(String entityVar) {
+	public static String varStoredCompanyService(String entityVar) {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
@@ -1186,14 +1093,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "url_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
-			case "courseNum":
-				return "courseNum_docvalues_int";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
 	}
 
-	public static String varIndexedCompanyCourse(String entityVar) {
+	public static String varIndexedCompanyService(String entityVar) {
 		switch(entityVar) {
 			case "name":
 				return "name_docvalues_string";
@@ -1211,14 +1116,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "url_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
-			case "courseNum":
-				return "courseNum_docvalues_int";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
 	}
 
-	public static String searchVarCompanyCourse(String searchVar) {
+	public static String searchVarCompanyService(String searchVar) {
 		switch(searchVar) {
 			case "name_docvalues_string":
 				return "name";
@@ -1236,21 +1139,19 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "url";
 			case "title_docvalues_string":
 				return "title";
-			case "courseNum_docvalues_int":
-				return "courseNum";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
 	}
 
-	public static String varSearchCompanyCourse(String entityVar) {
+	public static String varSearchCompanyService(String entityVar) {
 		switch(entityVar) {
 			default:
 				return BaseResult.varSearchBaseResult(entityVar);
 		}
 	}
 
-	public static String varSuggestedCompanyCourse(String entityVar) {
+	public static String varSuggestedCompanyService(String entityVar) {
 		switch(entityVar) {
 			default:
 				return BaseResult.varSuggestedBaseResult(entityVar);
@@ -1262,21 +1163,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	/////////////
 
 	@Override public void storeForClass(SolrResponse.Doc doc) {
-		storeCompanyCourse(doc);
+		storeCompanyService(doc);
 	}
-	public void storeCompanyCourse(SolrResponse.Doc doc) {
-		CompanyCourse oCompanyCourse = (CompanyCourse)this;
-		SiteRequest siteRequest = oCompanyCourse.getSiteRequest_();
+	public void storeCompanyService(SolrResponse.Doc doc) {
+		CompanyService oCompanyService = (CompanyService)this;
+		SiteRequest siteRequest = oCompanyService.getSiteRequest_();
 
-		oCompanyCourse.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1285,11 +1185,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	// apiRequest //
 	//////////////////
 
-	public void apiRequestCompanyCourse() {
+	public void apiRequestCompanyService() {
 		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(o != null && o instanceof CompanyCourse) {
-			CompanyCourse original = (CompanyCourse)o;
+		if(o != null && o instanceof CompanyService) {
+			CompanyService original = (CompanyService)o;
 			if(!Objects.equals(name, original.getName()))
 				apiRequest.addVars("name");
 			if(!Objects.equals(description, original.getDescription()))
@@ -1306,8 +1206,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				apiRequest.addVars("url");
 			if(!Objects.equals(title, original.getTitle()))
 				apiRequest.addVars("title");
-			if(!Objects.equals(courseNum, original.getCourseNum()))
-				apiRequest.addVars("courseNum");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1327,14 +1225,13 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyCourse";
-	public static final String CLASS_API_ADDRESS_CompanyCourse = "computate.org-enUS-CompanyCourse";
+	public static final String CLASS_SIMPLE_NAME = "CompanyService";
+	public static final String CLASS_API_ADDRESS_CompanyService = "computate.org-enUS-CompanyService";
 	public static String getClassApiAddress() {
-		return CLASS_API_ADDRESS_CompanyCourse;
+		return CLASS_API_ADDRESS_CompanyService;
 	}
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
@@ -1344,20 +1241,19 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String VAR_uri = "uri";
 	public static final String VAR_url = "url";
 	public static final String VAR_title = "title";
-	public static final String VAR_courseNum = "courseNum";
 
 	public static List<String> varsQForClass() {
-		return CompanyCourse.varsQCompanyCourse(new ArrayList<String>());
+		return CompanyService.varsQCompanyService(new ArrayList<String>());
 	}
-	public static List<String> varsQCompanyCourse(List<String> vars) {
+	public static List<String> varsQCompanyService(List<String> vars) {
 		BaseResult.varsQBaseResult(vars);
 		return vars;
 	}
 
 	public static List<String> varsFqForClass() {
-		return CompanyCourse.varsFqCompanyCourse(new ArrayList<String>());
+		return CompanyService.varsFqCompanyService(new ArrayList<String>());
 	}
-	public static List<String> varsFqCompanyCourse(List<String> vars) {
+	public static List<String> varsFqCompanyService(List<String> vars) {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
 		vars.add(VAR_pageId);
@@ -1365,34 +1261,31 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		vars.add(VAR_templateUri);
 		vars.add(VAR_uri);
 		vars.add(VAR_url);
-		vars.add(VAR_courseNum);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
 
 	public static List<String> varsRangeForClass() {
-		return CompanyCourse.varsRangeCompanyCourse(new ArrayList<String>());
+		return CompanyService.varsRangeCompanyService(new ArrayList<String>());
 	}
-	public static List<String> varsRangeCompanyCourse(List<String> vars) {
-		vars.add(VAR_courseNum);
+	public static List<String> varsRangeCompanyService(List<String> vars) {
 		BaseResult.varsRangeBaseResult(vars);
 		return vars;
 	}
 
-	public static final String DISPLAY_NAME_name = "course name";
-	public static final String DISPLAY_NAME_description = "course description";
+	public static final String DISPLAY_NAME_name = "service name";
+	public static final String DISPLAY_NAME_description = "service description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
 	public static final String DISPLAY_NAME_uri = "URI";
 	public static final String DISPLAY_NAME_url = "URL";
 	public static final String DISPLAY_NAME_title = "title";
-	public static final String DISPLAY_NAME_courseNum = "Course Number";
 
 	public static String displayNameForClass(String var) {
-		return CompanyCourse.displayNameCompanyCourse(var);
+		return CompanyService.displayNameCompanyService(var);
 	}
-	public static String displayNameCompanyCourse(String var) {
+	public static String displayNameCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
 			return DISPLAY_NAME_name;
@@ -1410,19 +1303,17 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_url;
 		case VAR_title:
 			return DISPLAY_NAME_title;
-		case VAR_courseNum:
-			return DISPLAY_NAME_courseNum;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
 	}
 
-	public static String descriptionCompanyCourse(String var) {
+	public static String descriptionCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
-			return "The course name. ";
+			return "The service name. ";
 		case VAR_description:
-			return "The course description. ";
+			return "The service description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:
@@ -1435,14 +1326,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "The URL for this page. ";
 		case VAR_title:
 			return "The title of this page. ";
-		case VAR_courseNum:
-			return "The course number for this page. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
 	}
 
-	public static String classSimpleNameCompanyCourse(String var) {
+	public static String classSimpleNameCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
 			return "String";
@@ -1460,14 +1349,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_title:
 			return "String";
-		case VAR_courseNum:
-			return "Integer";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
 		}
 	}
 
-	public static Integer htmColumnCompanyCourse(String var) {
+	public static Integer htmColumnCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
 			return 1;
@@ -1478,7 +1365,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 	}
 
-	public static Integer htmRowCompanyCourse(String var) {
+	public static Integer htmRowCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
 			return 3;
@@ -1495,7 +1382,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 	}
 
-	public static Integer htmCellCompanyCourse(String var) {
+	public static Integer htmCellCompanyService(String var) {
 		switch(var) {
 		case VAR_name:
 			return 1;
@@ -1512,28 +1399,28 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		}
 	}
 
-	public static Integer lengthMinCompanyCourse(String var) {
+	public static Integer lengthMinCompanyService(String var) {
 		switch(var) {
 			default:
 				return BaseResult.lengthMinBaseResult(var);
 		}
 	}
 
-	public static Integer lengthMaxCompanyCourse(String var) {
+	public static Integer lengthMaxCompanyService(String var) {
 		switch(var) {
 			default:
 				return BaseResult.lengthMaxBaseResult(var);
 		}
 	}
 
-	public static Integer maxCompanyCourse(String var) {
+	public static Integer maxCompanyService(String var) {
 		switch(var) {
 			default:
 				return BaseResult.maxBaseResult(var);
 		}
 	}
 
-	public static Integer minCompanyCourse(String var) {
+	public static Integer minCompanyService(String var) {
 		switch(var) {
 			default:
 				return BaseResult.minBaseResult(var);

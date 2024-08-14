@@ -1,10 +1,11 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta property="site:pageId" content="smart-device-platform-builder"/>
-    <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
-    <meta property="site:name" content="Computate Smart Device Platform Builder"/>
+    <meta property="site:pageId" content="powered-by-fiware-smart-developer-challenge"/>
+    <meta property="site:uri" content="/en-us/course/{{ pageId }}"/>
+    <meta property="site:name" content="Powered by FIWARE Smart Developer Challenge"/>
     <meta property="site:title" content="{{ name }}"/>
-    <meta property="site:description" content="Build a custom data-driven website for your own ideas with the Computate Smart Device Platform Builder "/>
+    <meta property="site:description" content="Learn how to build new and existing Smart Data Models into an existing Powered by Fiware platform with Computate"/>
+    <meta property="site:courseNum" content="2"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 .intro-background {
@@ -83,16 +84,16 @@
               <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
             </div>
             <h1 class="brand-font">
-              Build a custom data-driven website for your own ideas
+              Learn how to build new and existing Smart Data Models into an existing Powered by Fiware platform with Computate
             </h1>
             <h2 class="brand-font">
               with the {{ name }}
             </h2>
             <div class="intro-details">
-              <div>Download your own customizable website building toolkit to launch your own data-driven website here: </div>
+              <div>Download the complete course here </div>
               <sl-button id="order-button" class="gradient-button" href="https://store.computate.org/{{ pageId }}" variant="neutral">
                 <i class="fa-solid fa-person-running-fast"></i>
-                Order Platform Builder
+                Order the course
               </sl-button>
             </div>
           </div>
@@ -104,37 +105,67 @@
               What is the {{ name }}?
             </h2>
             <p>
-              Teaching tools and automation for easily building a custom website with the models and data that you care about using the best in open source software. 
+              This course builds upon the prerequisite course 
+              <a href="{{ SITE_BASE_URL }}/en-us/course/powered-by-fiware-smart-cloud-challenge">Powered by FIWARE Smart Cloud Challenge</a>
             </p>
-
+            <p>
+              Learn how to add new and existing <a href="https://github.com/smart-data-models">FIWARE Smart Data Models</a>
+              into an existing Powered by FIWARE platform to focus on the IoT device data that you are interested in using. 
+            </p>
             <div class="summary-grid">
+
               <div>
                 <div class="icon-heading">
                   <i class="fa-solid fa-code"></i>
                   <h3>
-                    Modern development tools
+                    Load code generation data
                   </h3>
                 </div>
                 <p>
-                  Learn how to install all the latest software development tools on your own computer like VSCode, Jupyter, Ansible, OpenJDK, Helm, and OpenShift, 
-                  and start writing code like a real cloud-native developer. 
+                  Learn how to load your own open source source search engine running in your cloud project with data about your code project, 
+                  and FIWARE Smart Data Models to generate thousands of lines of code for you in seconds. 
                 </p>
               </div>
 
               <div>
                 <div class="icon-heading">
-                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <i class="fa-solid fa-code"></i>
                   <h3>
-                    Cloud-native microservices
+                    Generate Smart Data Model code
                   </h3>
                 </div>
                 <p>
-                  Deploy cloud microservices in a Red Hat OpenShift Local cloud environment on your own computer 
-                  for certificate management, event bus application clustering, databases, a search engine, and single sign-on server for securing and scaling your data-driven website. 
+                  Select a FIWARE Smart Data Model and instantly generate the model code, API code, dashboard code, and more
+                  for the Smart Data Models you are interested in. 
                 </p>
               </div>
-            </div>
 
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-code"></i>
+                  <h3>
+                    Generate auth permissions
+                  </h3>
+                </div>
+                <p>
+                  Run some simple commands to authorize Keycloak users to create, modify, and view your new Smart Data Model records. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-code"></i>
+                  <h3>
+                    View generated Smart Model Data dashboard
+                  </h3>
+                </div>
+                <p>
+                  See the Computate code generation automation for building Smart Data Model dashboards in your updated application 
+                  by running the simple commands in the Jupyter Notebook. 
+                </p>
+              </div>
+
+            </div>
           </div>
         </div>
 {% endblock %}

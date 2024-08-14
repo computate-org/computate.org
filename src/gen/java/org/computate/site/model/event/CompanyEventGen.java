@@ -1,10 +1,8 @@
 package org.computate.site.model.event;
 
 import org.computate.site.request.SiteRequest;
+import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
-import io.vertx.core.json.JsonObject;
-import java.util.Date;
-import java.util.Set;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import java.util.Optional;
@@ -47,6 +45,7 @@ import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.BeanDescription;
 import java.util.stream.Collectors;
 import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
 import io.vertx.core.json.JsonArray;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
@@ -61,8 +60,10 @@ import org.computate.search.response.solr.SolrResponse;
  * </li><li>You can add a class comment "Rows: 100" if you wish the CompanyEvent API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </li><li>You can add a class comment "Model: true" if you wish to persist these CompanyEvent objects in a relational PostgreSQL database transactionally in the RESTful API. 
+ * The code to persist and query the CompanyEventGen data in the database will then be automatically generated. 
  * </li>
- * <h3>About the CompanyEvent class and it's generated class CompanyEventGen&lt;BaseModel&gt;: </h3>extends CompanyEventGen
+ * <h3>About the CompanyEvent class and it's generated class CompanyEventGen&lt;BaseResult&gt;: </h3>extends CompanyEventGen
  * <p>
  * This Java class extends a generated Java class CompanyEventGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -73,9 +74,9 @@ import org.computate.search.response.solr.SolrResponse;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyEventGen<BaseModel>
- * <p>This <code>class CompanyEvent extends CompanyEventGen&lt;BaseModel&gt;</code>, which means it extends a newly generated CompanyEventGen. 
- * The generated <code>class CompanyEventGen extends BaseModel</code> which means that CompanyEvent extends CompanyEventGen which extends BaseModel. 
+ * extends CompanyEventGen<BaseResult>
+ * <p>This <code>class CompanyEvent extends CompanyEventGen&lt;BaseResult&gt;</code>, which means it extends a newly generated CompanyEventGen. 
+ * The generated <code>class CompanyEventGen extends BaseResult</code> which means that CompanyEvent extends CompanyEventGen which extends BaseResult. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -114,24 +115,18 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>By adding a class comment "{@inheritDoc}", the CompanyEvent class will inherit the helpful inherited class comments from the super class CompanyEventGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 3</h2>
- * <p>This class contains a comment <b>"Order: 3"</b>, which means this class will be sorted by the given number 3 ascending when code that relates to multiple classes at the same time is generated. 
- * </p>
- * <h2>SqlOrder: 3</h2>
- * <p>This class contains a comment <b>"SqlOrder: 3"</b>, which means this class will be sorted by the given number 3 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>Order: 4</h2>
+ * <p>This class contains a comment <b>"Order: 4"</b>, which means this class will be sorted by the given number 4 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>Model: true</h2>
- * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
- * Every protected void method that begins with "_" that contains a "Persist: true" comment will be a persisted field in the database table. 
- * </p>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.event.CompanyEventPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.model.event.CompanyEventPage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: BaseResultPage</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
+ * This means that the newly created class org.computate.site.model.event.CompanyEventPage extends org.computate.site.result.BaseResultPage. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -179,7 +174,7 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyEventGen<DEV> extends BaseModel {
+public abstract class CompanyEventGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyEvent.class);
 
 	public static final String CompanyEvent_Description_enUS = "See the upcoming computate in-person and online events";
@@ -217,56 +212,452 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 
 	public static final String CompanyEvent_Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
 
-	////////
-	// id //
-	////////
+	//////////
+	// name //
+	//////////
 
 
-	/**	 The entity id
+	/**	 The entity name
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String id;
+	protected String name;
 
-	/**	<br> The entity id
+	/**	<br> The entity name
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _id(Wrap<String> w);
+	protected abstract void _name(Wrap<String> w);
 
-	public String getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
-	public void setId(String o) {
-		this.id = CompanyEvent.staticSetId(siteRequest_, o);
+	public void setName(String o) {
+		this.name = CompanyEvent.staticSetName(siteRequest_, o);
 	}
-	public static String staticSetId(SiteRequest siteRequest_, String o) {
+	public static String staticSetName(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyEvent idInit() {
-		Wrap<String> idWrap = new Wrap<String>().var("id");
-		if(id == null) {
-			_id(idWrap);
-			Optional.ofNullable(idWrap.getO()).ifPresent(o -> {
-				setId(o);
+	protected CompanyEvent nameInit() {
+		Wrap<String> nameWrap = new Wrap<String>().var("name");
+		if(name == null) {
+			_name(nameWrap);
+			Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
+				setName(o);
 			});
 		}
 		return (CompanyEvent)this;
 	}
 
-	public static String staticSearchId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchName(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqId(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchId(siteRequest_, CompanyEvent.staticSetId(siteRequest_, o)).toString();
+	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchName(siteRequest_, CompanyEvent.staticSetName(siteRequest_, o)).toString();
+	}
+
+	public String sqlName() {
+		return name;
+	}
+
+	/////////////////
+	// description //
+	/////////////////
+
+
+	/**	 The entity description
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String description;
+
+	/**	<br> The entity description
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _description(Wrap<String> w);
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String o) {
+		this.description = CompanyEvent.staticSetDescription(siteRequest_, o);
+	}
+	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent descriptionInit() {
+		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+		if(description == null) {
+			_description(descriptionWrap);
+			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+				setDescription(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchDescription(siteRequest_, CompanyEvent.staticSetDescription(siteRequest_, o)).toString();
+	}
+
+	public String sqlDescription() {
+		return description;
+	}
+
+	////////////
+	// pageId //
+	////////////
+
+
+	/**	 The entity pageId
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String pageId;
+
+	/**	<br> The entity pageId
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageId(Wrap<String> w);
+
+	public String getPageId() {
+		return pageId;
+	}
+	public void setPageId(String o) {
+		this.pageId = CompanyEvent.staticSetPageId(siteRequest_, o);
+	}
+	public static String staticSetPageId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent pageIdInit() {
+		Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
+		if(pageId == null) {
+			_pageId(pageIdWrap);
+			Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
+				setPageId(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchPageId(siteRequest_, CompanyEvent.staticSetPageId(siteRequest_, o)).toString();
+	}
+
+	public String sqlPageId() {
+		return pageId;
+	}
+
+	/////////////////
+	// resourceUri //
+	/////////////////
+
+
+	/**	 The entity resourceUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String resourceUri;
+
+	/**	<br> The entity resourceUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _resourceUri(Wrap<String> w);
+
+	public String getResourceUri() {
+		return resourceUri;
+	}
+	public void setResourceUri(String o) {
+		this.resourceUri = CompanyEvent.staticSetResourceUri(siteRequest_, o);
+	}
+	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent resourceUriInit() {
+		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
+		if(resourceUri == null) {
+			_resourceUri(resourceUriWrap);
+			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
+				setResourceUri(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchResourceUri(siteRequest_, CompanyEvent.staticSetResourceUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlResourceUri() {
+		return resourceUri;
+	}
+
+	/////////////////
+	// templateUri //
+	/////////////////
+
+
+	/**	 The entity templateUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String templateUri;
+
+	/**	<br> The entity templateUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _templateUri(Wrap<String> w);
+
+	public String getTemplateUri() {
+		return templateUri;
+	}
+	public void setTemplateUri(String o) {
+		this.templateUri = CompanyEvent.staticSetTemplateUri(siteRequest_, o);
+	}
+	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent templateUriInit() {
+		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
+		if(templateUri == null) {
+			_templateUri(templateUriWrap);
+			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
+				setTemplateUri(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchTemplateUri(siteRequest_, CompanyEvent.staticSetTemplateUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlTemplateUri() {
+		return templateUri;
+	}
+
+	/////////
+	// uri //
+	/////////
+
+
+	/**	 The entity uri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String uri;
+
+	/**	<br> The entity uri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _uri(Wrap<String> w);
+
+	public String getUri() {
+		return uri;
+	}
+	public void setUri(String o) {
+		this.uri = CompanyEvent.staticSetUri(siteRequest_, o);
+	}
+	public static String staticSetUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent uriInit() {
+		Wrap<String> uriWrap = new Wrap<String>().var("uri");
+		if(uri == null) {
+			_uri(uriWrap);
+			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
+				setUri(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchUri(siteRequest_, CompanyEvent.staticSetUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlUri() {
+		return uri;
+	}
+
+	/////////
+	// url //
+	/////////
+
+
+	/**	 The entity url
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String url;
+
+	/**	<br> The entity url
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _url(Wrap<String> w);
+
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String o) {
+		this.url = CompanyEvent.staticSetUrl(siteRequest_, o);
+	}
+	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent urlInit() {
+		Wrap<String> urlWrap = new Wrap<String>().var("url");
+		if(url == null) {
+			_url(urlWrap);
+			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
+				setUrl(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchUrl(siteRequest_, CompanyEvent.staticSetUrl(siteRequest_, o)).toString();
+	}
+
+	public String sqlUrl() {
+		return url;
+	}
+
+	///////////
+	// title //
+	///////////
+
+
+	/**	 The entity title
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String title;
+
+	/**	<br> The entity title
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _title(Wrap<String> w);
+
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String o) {
+		this.title = CompanyEvent.staticSetTitle(siteRequest_, o);
+	}
+	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyEvent titleInit() {
+		Wrap<String> titleWrap = new Wrap<String>().var("title");
+		if(title == null) {
+			_title(titleWrap);
+			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
+				setTitle(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchTitle(siteRequest_, CompanyEvent.staticSetTitle(siteRequest_, o)).toString();
+	}
+
+	public String sqlTitle() {
+		return title;
 	}
 
 	//////////////
@@ -594,62 +985,6 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		return CompanyEvent.staticSearchLocationLinks(siteRequest_, CompanyEvent.staticSetLocationLinks(siteRequest_, o)).toString();
 	}
 
-	///////////////
-	// eventName //
-	///////////////
-
-
-	/**	 The entity eventName
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String eventName;
-
-	/**	<br> The entity eventName
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:eventName">Find the entity eventName in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _eventName(Wrap<String> w);
-
-	public String getEventName() {
-		return eventName;
-	}
-	public void setEventName(String o) {
-		this.eventName = CompanyEvent.staticSetEventName(siteRequest_, o);
-	}
-	public static String staticSetEventName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyEvent eventNameInit() {
-		Wrap<String> eventNameWrap = new Wrap<String>().var("eventName");
-		if(eventName == null) {
-			_eventName(eventNameWrap);
-			Optional.ofNullable(eventNameWrap.getO()).ifPresent(o -> {
-				setEventName(o);
-			});
-		}
-		return (CompanyEvent)this;
-	}
-
-	public static String staticSearchEventName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrEventName(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqEventName(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchEventName(siteRequest_, CompanyEvent.staticSetEventName(siteRequest_, o)).toString();
-	}
-
-	public String sqlEventName() {
-		return eventName;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -664,7 +999,7 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyEvent(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
+			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -679,12 +1014,18 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
-				idInit();
+				nameInit();
+				descriptionInit();
+				pageIdInit();
+				resourceUriInit();
+				templateUriInit();
+				uriInit();
+				urlInit();
+				titleInit();
 				locationInit();
 				locationColorsInit();
 				locationTitlesInit();
 				locationLinksInit();
-				eventNameInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -707,7 +1048,7 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	/////////////////
 
 	public void siteRequestCompanyEvent(SiteRequest siteRequest_) {
-			super.siteRequestBaseModel(siteRequest_);
+			super.siteRequestBaseResult(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -738,8 +1079,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	public Object obtainCompanyEvent(String var) {
 		CompanyEvent oCompanyEvent = (CompanyEvent)this;
 		switch(var) {
-			case "id":
-				return oCompanyEvent.id;
+			case "name":
+				return oCompanyEvent.name;
+			case "description":
+				return oCompanyEvent.description;
+			case "pageId":
+				return oCompanyEvent.pageId;
+			case "resourceUri":
+				return oCompanyEvent.resourceUri;
+			case "templateUri":
+				return oCompanyEvent.templateUri;
+			case "uri":
+				return oCompanyEvent.uri;
+			case "url":
+				return oCompanyEvent.url;
+			case "title":
+				return oCompanyEvent.title;
 			case "location":
 				return oCompanyEvent.location;
 			case "locationColors":
@@ -748,10 +1103,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				return oCompanyEvent.locationTitles;
 			case "locationLinks":
 				return oCompanyEvent.locationLinks;
-			case "eventName":
-				return oCompanyEvent.eventName;
 			default:
-				return super.obtainBaseModel(var);
+				return super.obtainBaseResult(var);
 		}
 	}
 
@@ -776,7 +1129,7 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		CompanyEvent oCompanyEvent = (CompanyEvent)this;
 		switch(var) {
 			default:
-				return super.relateBaseModel(var, val);
+				return super.relateBaseResult(var, val);
 		}
 	}
 
@@ -789,8 +1142,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public static Object staticSetCompanyEvent(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
-		case "id":
-			return CompanyEvent.staticSetId(siteRequest_, o);
+		case "name":
+			return CompanyEvent.staticSetName(siteRequest_, o);
+		case "description":
+			return CompanyEvent.staticSetDescription(siteRequest_, o);
+		case "pageId":
+			return CompanyEvent.staticSetPageId(siteRequest_, o);
+		case "resourceUri":
+			return CompanyEvent.staticSetResourceUri(siteRequest_, o);
+		case "templateUri":
+			return CompanyEvent.staticSetTemplateUri(siteRequest_, o);
+		case "uri":
+			return CompanyEvent.staticSetUri(siteRequest_, o);
+		case "url":
+			return CompanyEvent.staticSetUrl(siteRequest_, o);
+		case "title":
+			return CompanyEvent.staticSetTitle(siteRequest_, o);
 		case "location":
 			return CompanyEvent.staticSetLocation(siteRequest_, o);
 		case "locationColors":
@@ -799,10 +1166,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return CompanyEvent.staticSetLocationTitles(siteRequest_, o);
 		case "locationLinks":
 			return CompanyEvent.staticSetLocationLinks(siteRequest_, o);
-		case "eventName":
-			return CompanyEvent.staticSetEventName(siteRequest_, o);
 			default:
-				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -815,8 +1180,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public static Object staticSearchCompanyEvent(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
-		case "id":
-			return CompanyEvent.staticSearchId(siteRequest_, (String)o);
+		case "name":
+			return CompanyEvent.staticSearchName(siteRequest_, (String)o);
+		case "description":
+			return CompanyEvent.staticSearchDescription(siteRequest_, (String)o);
+		case "pageId":
+			return CompanyEvent.staticSearchPageId(siteRequest_, (String)o);
+		case "resourceUri":
+			return CompanyEvent.staticSearchResourceUri(siteRequest_, (String)o);
+		case "templateUri":
+			return CompanyEvent.staticSearchTemplateUri(siteRequest_, (String)o);
+		case "uri":
+			return CompanyEvent.staticSearchUri(siteRequest_, (String)o);
+		case "url":
+			return CompanyEvent.staticSearchUrl(siteRequest_, (String)o);
+		case "title":
+			return CompanyEvent.staticSearchTitle(siteRequest_, (String)o);
 		case "location":
 			return CompanyEvent.staticSearchLocation(siteRequest_, (Point)o);
 		case "locationColors":
@@ -825,10 +1204,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return CompanyEvent.staticSearchLocationTitles(siteRequest_, (String)o);
 		case "locationLinks":
 			return CompanyEvent.staticSearchLocationLinks(siteRequest_, (String)o);
-		case "eventName":
-			return CompanyEvent.staticSearchEventName(siteRequest_, (String)o);
 			default:
-				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -841,8 +1218,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public static String staticSearchStrCompanyEvent(String entityVar, SiteRequest siteRequest_, Object o) {
 		switch(entityVar) {
-		case "id":
-			return CompanyEvent.staticSearchStrId(siteRequest_, (String)o);
+		case "name":
+			return CompanyEvent.staticSearchStrName(siteRequest_, (String)o);
+		case "description":
+			return CompanyEvent.staticSearchStrDescription(siteRequest_, (String)o);
+		case "pageId":
+			return CompanyEvent.staticSearchStrPageId(siteRequest_, (String)o);
+		case "resourceUri":
+			return CompanyEvent.staticSearchStrResourceUri(siteRequest_, (String)o);
+		case "templateUri":
+			return CompanyEvent.staticSearchStrTemplateUri(siteRequest_, (String)o);
+		case "uri":
+			return CompanyEvent.staticSearchStrUri(siteRequest_, (String)o);
+		case "url":
+			return CompanyEvent.staticSearchStrUrl(siteRequest_, (String)o);
+		case "title":
+			return CompanyEvent.staticSearchStrTitle(siteRequest_, (String)o);
 		case "location":
 			return CompanyEvent.staticSearchStrLocation(siteRequest_, (Point)o);
 		case "locationColors":
@@ -851,10 +1242,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return CompanyEvent.staticSearchStrLocationTitles(siteRequest_, (String)o);
 		case "locationLinks":
 			return CompanyEvent.staticSearchStrLocationLinks(siteRequest_, (String)o);
-		case "eventName":
-			return CompanyEvent.staticSearchStrEventName(siteRequest_, (String)o);
 			default:
-				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -867,8 +1256,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public static String staticSearchFqCompanyEvent(String entityVar, SiteRequest siteRequest_, String o) {
 		switch(entityVar) {
-		case "id":
-			return CompanyEvent.staticSearchFqId(siteRequest_, o);
+		case "name":
+			return CompanyEvent.staticSearchFqName(siteRequest_, o);
+		case "description":
+			return CompanyEvent.staticSearchFqDescription(siteRequest_, o);
+		case "pageId":
+			return CompanyEvent.staticSearchFqPageId(siteRequest_, o);
+		case "resourceUri":
+			return CompanyEvent.staticSearchFqResourceUri(siteRequest_, o);
+		case "templateUri":
+			return CompanyEvent.staticSearchFqTemplateUri(siteRequest_, o);
+		case "uri":
+			return CompanyEvent.staticSearchFqUri(siteRequest_, o);
+		case "url":
+			return CompanyEvent.staticSearchFqUrl(siteRequest_, o);
+		case "title":
+			return CompanyEvent.staticSearchFqTitle(siteRequest_, o);
 		case "location":
 			return CompanyEvent.staticSearchFqLocation(siteRequest_, o);
 		case "locationColors":
@@ -877,10 +1280,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return CompanyEvent.staticSearchFqLocationTitles(siteRequest_, o);
 		case "locationLinks":
 			return CompanyEvent.staticSearchFqLocationLinks(siteRequest_, o);
-		case "eventName":
-			return CompanyEvent.staticSearchFqEventName(siteRequest_, o);
 			default:
-				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
+				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -905,7 +1306,55 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public Object persistCompanyEvent(String var, Object val) {
 		String varLower = var.toLowerCase();
-			if("location".equals(varLower)) {
+			if("name".equals(varLower)) {
+				if(val instanceof String) {
+					setName((String)val);
+				}
+				saves.add("name");
+				return val;
+			} else if("description".equals(varLower)) {
+				if(val instanceof String) {
+					setDescription((String)val);
+				}
+				saves.add("description");
+				return val;
+			} else if("pageid".equals(varLower)) {
+				if(val instanceof String) {
+					setPageId((String)val);
+				}
+				saves.add("pageId");
+				return val;
+			} else if("resourceuri".equals(varLower)) {
+				if(val instanceof String) {
+					setResourceUri((String)val);
+				}
+				saves.add("resourceUri");
+				return val;
+			} else if("templateuri".equals(varLower)) {
+				if(val instanceof String) {
+					setTemplateUri((String)val);
+				}
+				saves.add("templateUri");
+				return val;
+			} else if("uri".equals(varLower)) {
+				if(val instanceof String) {
+					setUri((String)val);
+				}
+				saves.add("uri");
+				return val;
+			} else if("url".equals(varLower)) {
+				if(val instanceof String) {
+					setUrl((String)val);
+				}
+				saves.add("url");
+				return val;
+			} else if("title".equals(varLower)) {
+				if(val instanceof String) {
+					setTitle((String)val);
+				}
+				saves.add("title");
+				return val;
+			} else if("location".equals(varLower)) {
 				if(val instanceof String) {
 					setLocation((String)val);
 				} else if(val instanceof Point) {
@@ -913,14 +1362,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				}
 				saves.add("location");
 				return val;
-			} else if("eventname".equals(varLower)) {
-				if(val instanceof String) {
-					setEventName((String)val);
-				}
-				saves.add("eventName");
-				return val;
 		} else {
-			return super.persistBaseModel(var, val);
+			return super.persistBaseResult(var, val);
 		}
 	}
 
@@ -935,6 +1378,54 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		CompanyEvent oCompanyEvent = (CompanyEvent)this;
 		saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
 		if(saves != null) {
+
+			if(saves.contains("name")) {
+				String name = (String)doc.get("name_docvalues_string");
+				if(name != null)
+					oCompanyEvent.setName(name);
+			}
+
+			if(saves.contains("description")) {
+				String description = (String)doc.get("description_docvalues_string");
+				if(description != null)
+					oCompanyEvent.setDescription(description);
+			}
+
+			if(saves.contains("pageId")) {
+				String pageId = (String)doc.get("pageId_docvalues_string");
+				if(pageId != null)
+					oCompanyEvent.setPageId(pageId);
+			}
+
+			if(saves.contains("resourceUri")) {
+				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
+				if(resourceUri != null)
+					oCompanyEvent.setResourceUri(resourceUri);
+			}
+
+			if(saves.contains("templateUri")) {
+				String templateUri = (String)doc.get("templateUri_docvalues_string");
+				if(templateUri != null)
+					oCompanyEvent.setTemplateUri(templateUri);
+			}
+
+			if(saves.contains("uri")) {
+				String uri = (String)doc.get("uri_docvalues_string");
+				if(uri != null)
+					oCompanyEvent.setUri(uri);
+			}
+
+			if(saves.contains("url")) {
+				String url = (String)doc.get("url_docvalues_string");
+				if(url != null)
+					oCompanyEvent.setUrl(url);
+			}
+
+			if(saves.contains("title")) {
+				String title = (String)doc.get("title_docvalues_string");
+				if(title != null)
+					oCompanyEvent.setTitle(title);
+			}
 
 			if(saves.contains("location")) {
 				Point location = (Point)doc.get("location_docvalues_location");
@@ -959,18 +1450,36 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				if(locationLinks != null)
 					oCompanyEvent.locationLinks.addAll(locationLinks);
 			}
-
-			if(saves.contains("eventName")) {
-				String eventName = (String)doc.get("eventName_docvalues_string");
-				if(eventName != null)
-					oCompanyEvent.setEventName(eventName);
-			}
 		}
 
-		super.populateBaseModel(doc);
+		super.populateBaseResult(doc);
 	}
 
 	public void indexCompanyEvent(JsonObject doc) {
+		if(name != null) {
+			doc.put("name_docvalues_string", name);
+		}
+		if(description != null) {
+			doc.put("description_docvalues_string", description);
+		}
+		if(pageId != null) {
+			doc.put("pageId_docvalues_string", pageId);
+		}
+		if(resourceUri != null) {
+			doc.put("resourceUri_docvalues_string", resourceUri);
+		}
+		if(templateUri != null) {
+			doc.put("templateUri_docvalues_string", templateUri);
+		}
+		if(uri != null) {
+			doc.put("uri_docvalues_string", uri);
+		}
+		if(url != null) {
+			doc.put("url_docvalues_string", url);
+		}
+		if(title != null) {
+			doc.put("title_docvalues_string", title);
+		}
 		if(location != null) {
 			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
 		}
@@ -995,15 +1504,28 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				l.add(o);
 			}
 		}
-		if(eventName != null) {
-			doc.put("eventName_docvalues_string", eventName);
-		}
-		super.indexBaseModel(doc);
+		super.indexBaseResult(doc);
 
 	}
 
 	public static String varStoredCompanyEvent(String entityVar) {
 		switch(entityVar) {
+			case "name":
+				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
+			case "pageId":
+				return "pageId_docvalues_string";
+			case "resourceUri":
+				return "resourceUri_docvalues_string";
+			case "templateUri":
+				return "templateUri_docvalues_string";
+			case "uri":
+				return "uri_docvalues_string";
+			case "url":
+				return "url_docvalues_string";
+			case "title":
+				return "title_docvalues_string";
 			case "location":
 				return "location_docvalues_location";
 			case "locationColors":
@@ -1012,15 +1534,29 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				return "locationTitles_indexedstored_strings";
 			case "locationLinks":
 				return "locationLinks_indexedstored_strings";
-			case "eventName":
-				return "eventName_docvalues_string";
 			default:
-				return BaseModel.varStoredBaseModel(entityVar);
+				return BaseResult.varStoredBaseResult(entityVar);
 		}
 	}
 
 	public static String varIndexedCompanyEvent(String entityVar) {
 		switch(entityVar) {
+			case "name":
+				return "name_docvalues_string";
+			case "description":
+				return "description_docvalues_string";
+			case "pageId":
+				return "pageId_docvalues_string";
+			case "resourceUri":
+				return "resourceUri_docvalues_string";
+			case "templateUri":
+				return "templateUri_docvalues_string";
+			case "uri":
+				return "uri_docvalues_string";
+			case "url":
+				return "url_docvalues_string";
+			case "title":
+				return "title_docvalues_string";
 			case "location":
 				return "location_docvalues_location";
 			case "locationColors":
@@ -1029,15 +1565,29 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				return "locationTitles_indexedstored_strings";
 			case "locationLinks":
 				return "locationLinks_indexedstored_strings";
-			case "eventName":
-				return "eventName_docvalues_string";
 			default:
-				return BaseModel.varIndexedBaseModel(entityVar);
+				return BaseResult.varIndexedBaseResult(entityVar);
 		}
 	}
 
 	public static String searchVarCompanyEvent(String searchVar) {
 		switch(searchVar) {
+			case "name_docvalues_string":
+				return "name";
+			case "description_docvalues_string":
+				return "description";
+			case "pageId_docvalues_string":
+				return "pageId";
+			case "resourceUri_docvalues_string":
+				return "resourceUri";
+			case "templateUri_docvalues_string":
+				return "templateUri";
+			case "uri_docvalues_string":
+				return "uri";
+			case "url_docvalues_string":
+				return "url";
+			case "title_docvalues_string":
+				return "title";
 			case "location_docvalues_location":
 				return "location";
 			case "locationColors_indexedstored_strings":
@@ -1046,24 +1596,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				return "locationTitles";
 			case "locationLinks_indexedstored_strings":
 				return "locationLinks";
-			case "eventName_docvalues_string":
-				return "eventName";
 			default:
-				return BaseModel.searchVarBaseModel(searchVar);
+				return BaseResult.searchVarBaseResult(searchVar);
 		}
 	}
 
 	public static String varSearchCompanyEvent(String entityVar) {
 		switch(entityVar) {
 			default:
-				return BaseModel.varSearchBaseModel(entityVar);
+				return BaseResult.varSearchBaseResult(entityVar);
 		}
 	}
 
 	public static String varSuggestedCompanyEvent(String entityVar) {
 		switch(entityVar) {
 			default:
-				return BaseModel.varSuggestedBaseModel(entityVar);
+				return BaseResult.varSuggestedBaseResult(entityVar);
 		}
 	}
 
@@ -1078,6 +1626,14 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		CompanyEvent oCompanyEvent = (CompanyEvent)this;
 		SiteRequest siteRequest = oCompanyEvent.getSiteRequest_();
 
+		oCompanyEvent.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("locationColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oCompanyEvent.addLocationColors(CompanyEvent.staticSetLocationColors(siteRequest, v.toString()));
@@ -1088,9 +1644,8 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		Optional.ofNullable((List<?>)doc.get("locationLinks_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oCompanyEvent.addLocationLinks(CompanyEvent.staticSetLocationLinks(siteRequest, v.toString()));
 		});
-		oCompanyEvent.setEventName(Optional.ofNullable(doc.get("eventName_docvalues_string")).map(v -> v.toString()).orElse(null));
 
-		super.storeBaseModel(doc);
+		super.storeBaseResult(doc);
 	}
 
 	//////////////////
@@ -1102,6 +1657,22 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
 		if(o != null && o instanceof CompanyEvent) {
 			CompanyEvent original = (CompanyEvent)o;
+			if(!Objects.equals(name, original.getName()))
+				apiRequest.addVars("name");
+			if(!Objects.equals(description, original.getDescription()))
+				apiRequest.addVars("description");
+			if(!Objects.equals(pageId, original.getPageId()))
+				apiRequest.addVars("pageId");
+			if(!Objects.equals(resourceUri, original.getResourceUri()))
+				apiRequest.addVars("resourceUri");
+			if(!Objects.equals(templateUri, original.getTemplateUri()))
+				apiRequest.addVars("templateUri");
+			if(!Objects.equals(uri, original.getUri()))
+				apiRequest.addVars("uri");
+			if(!Objects.equals(url, original.getUrl()))
+				apiRequest.addVars("url");
+			if(!Objects.equals(title, original.getTitle()))
+				apiRequest.addVars("title");
 			if(!Objects.equals(location, original.getLocation()))
 				apiRequest.addVars("location");
 			if(!Objects.equals(locationColors, original.getLocationColors()))
@@ -1110,9 +1681,7 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 				apiRequest.addVars("locationTitles");
 			if(!Objects.equals(locationLinks, original.getLocationLinks()))
 				apiRequest.addVars("locationLinks");
-			if(!Objects.equals(eventName, original.getEventName()))
-				apiRequest.addVars("eventName");
-			super.apiRequestBaseModel();
+			super.apiRequestBaseResult();
 		}
 	}
 
@@ -1123,11 +1692,18 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	@Override public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
+		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(locationColors).map(v -> "locationColors: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(locationTitles).map(v -> "locationTitles: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(locationLinks).map(v -> "locationLinks: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(eventName).map(v -> "eventName: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1136,18 +1712,24 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyEvent;
 	}
-	public static final String VAR_id = "id";
+	public static final String VAR_name = "name";
+	public static final String VAR_description = "description";
+	public static final String VAR_pageId = "pageId";
+	public static final String VAR_resourceUri = "resourceUri";
+	public static final String VAR_templateUri = "templateUri";
+	public static final String VAR_uri = "uri";
+	public static final String VAR_url = "url";
+	public static final String VAR_title = "title";
 	public static final String VAR_location = "location";
 	public static final String VAR_locationColors = "locationColors";
 	public static final String VAR_locationTitles = "locationTitles";
 	public static final String VAR_locationLinks = "locationLinks";
-	public static final String VAR_eventName = "eventName";
 
 	public static List<String> varsQForClass() {
 		return CompanyEvent.varsQCompanyEvent(new ArrayList<String>());
 	}
 	public static List<String> varsQCompanyEvent(List<String> vars) {
-		BaseModel.varsQBaseModel(vars);
+		BaseResult.varsQBaseResult(vars);
 		return vars;
 	}
 
@@ -1155,9 +1737,15 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 		return CompanyEvent.varsFqCompanyEvent(new ArrayList<String>());
 	}
 	public static List<String> varsFqCompanyEvent(List<String> vars) {
+		vars.add(VAR_name);
+		vars.add(VAR_description);
+		vars.add(VAR_pageId);
+		vars.add(VAR_resourceUri);
+		vars.add(VAR_templateUri);
+		vars.add(VAR_uri);
+		vars.add(VAR_url);
 		vars.add(VAR_location);
-		vars.add(VAR_eventName);
-		BaseModel.varsFqBaseModel(vars);
+		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
 
@@ -1166,24 +1754,44 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 	}
 	public static List<String> varsRangeCompanyEvent(List<String> vars) {
 		vars.add(VAR_location);
-		BaseModel.varsRangeBaseModel(vars);
+		BaseResult.varsRangeBaseResult(vars);
 		return vars;
 	}
 
-	public static final String DISPLAY_NAME_id = "";
+	public static final String DISPLAY_NAME_name = "service name";
+	public static final String DISPLAY_NAME_description = "service description";
+	public static final String DISPLAY_NAME_pageId = "Page ID";
+	public static final String DISPLAY_NAME_resourceUri = "resource URI";
+	public static final String DISPLAY_NAME_templateUri = "template URI";
+	public static final String DISPLAY_NAME_uri = "URI";
+	public static final String DISPLAY_NAME_url = "URL";
+	public static final String DISPLAY_NAME_title = "title";
 	public static final String DISPLAY_NAME_location = "map location";
 	public static final String DISPLAY_NAME_locationColors = "location colors";
 	public static final String DISPLAY_NAME_locationTitles = "location titles";
 	public static final String DISPLAY_NAME_locationLinks = "location links";
-	public static final String DISPLAY_NAME_eventName = "event name";
 
 	public static String displayNameForClass(String var) {
 		return CompanyEvent.displayNameCompanyEvent(var);
 	}
 	public static String displayNameCompanyEvent(String var) {
 		switch(var) {
-		case VAR_id:
-			return DISPLAY_NAME_id;
+		case VAR_name:
+			return DISPLAY_NAME_name;
+		case VAR_description:
+			return DISPLAY_NAME_description;
+		case VAR_pageId:
+			return DISPLAY_NAME_pageId;
+		case VAR_resourceUri:
+			return DISPLAY_NAME_resourceUri;
+		case VAR_templateUri:
+			return DISPLAY_NAME_templateUri;
+		case VAR_uri:
+			return DISPLAY_NAME_uri;
+		case VAR_url:
+			return DISPLAY_NAME_url;
+		case VAR_title:
+			return DISPLAY_NAME_title;
 		case VAR_location:
 			return DISPLAY_NAME_location;
 		case VAR_locationColors:
@@ -1192,31 +1800,57 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_locationTitles;
 		case VAR_locationLinks:
 			return DISPLAY_NAME_locationLinks;
-		case VAR_eventName:
-			return DISPLAY_NAME_eventName;
 		default:
-			return BaseModel.displayNameBaseModel(var);
+			return BaseResult.displayNameBaseResult(var);
 		}
 	}
 
 	public static String descriptionCompanyEvent(String var) {
 		switch(var) {
+		case VAR_name:
+			return "The service name. ";
+		case VAR_description:
+			return "The service description. ";
+		case VAR_pageId:
+			return "The ID for this page. ";
+		case VAR_resourceUri:
+			return "The resource relative URI for this page. ";
+		case VAR_templateUri:
+			return "The template relative URI for this page. ";
+		case VAR_uri:
+			return "The relative URI for this page. ";
+		case VAR_url:
+			return "The URL for this page. ";
+		case VAR_title:
+			return "The title of this page. ";
 		case VAR_locationColors:
 			return "The colors of each location Points. ";
 		case VAR_locationTitles:
 			return "The titles of each location Paths. ";
 		case VAR_locationLinks:
 			return "The links of each location Paths. ";
-		case VAR_eventName:
-			return "The event name. ";
 			default:
-				return BaseModel.descriptionBaseModel(var);
+				return BaseResult.descriptionBaseResult(var);
 		}
 	}
 
 	public static String classSimpleNameCompanyEvent(String var) {
 		switch(var) {
-		case VAR_id:
+		case VAR_name:
+			return "String";
+		case VAR_description:
+			return "String";
+		case VAR_pageId:
+			return "String";
+		case VAR_resourceUri:
+			return "String";
+		case VAR_templateUri:
+			return "String";
+		case VAR_uri:
+			return "String";
+		case VAR_url:
+			return "String";
+		case VAR_title:
 			return "String";
 		case VAR_location:
 			return "Point";
@@ -1226,67 +1860,85 @@ public abstract class CompanyEventGen<DEV> extends BaseModel {
 			return "List";
 		case VAR_locationLinks:
 			return "List";
-		case VAR_eventName:
-			return "String";
 			default:
-				return BaseModel.classSimpleNameBaseModel(var);
+				return BaseResult.classSimpleNameBaseResult(var);
 		}
 	}
 
 	public static Integer htmColumnCompanyEvent(String var) {
 		switch(var) {
+		case VAR_name:
+			return 1;
+		case VAR_description:
+			return 2;
 			default:
-				return BaseModel.htmColumnBaseModel(var);
+				return BaseResult.htmColumnBaseResult(var);
 		}
 	}
 
 	public static Integer htmRowCompanyEvent(String var) {
 		switch(var) {
+		case VAR_name:
+			return 3;
+		case VAR_description:
+			return 3;
+		case VAR_pageId:
+			return 4;
+		case VAR_uri:
+			return 3;
+		case VAR_url:
+			return 3;
 		case VAR_location:
 			return 3;
-		case VAR_eventName:
-			return 3;
 			default:
-				return BaseModel.htmRowBaseModel(var);
+				return BaseResult.htmRowBaseResult(var);
 		}
 	}
 
 	public static Integer htmCellCompanyEvent(String var) {
 		switch(var) {
+		case VAR_name:
+			return 1;
+		case VAR_description:
+			return 2;
+		case VAR_pageId:
+			return 1;
+		case VAR_uri:
+			return 2;
+		case VAR_url:
+			return 2;
 		case VAR_location:
 			return 1;
-		case VAR_eventName:
-			return 2;
 			default:
-				return BaseModel.htmCellBaseModel(var);
+				return BaseResult.htmCellBaseResult(var);
 		}
 	}
 
 	public static Integer lengthMinCompanyEvent(String var) {
 		switch(var) {
 			default:
-				return BaseModel.lengthMinBaseModel(var);
+				return BaseResult.lengthMinBaseResult(var);
 		}
 	}
 
 	public static Integer lengthMaxCompanyEvent(String var) {
 		switch(var) {
 			default:
-				return BaseModel.lengthMaxBaseModel(var);
+				return BaseResult.lengthMaxBaseResult(var);
 		}
 	}
 
 	public static Integer maxCompanyEvent(String var) {
 		switch(var) {
 			default:
-				return BaseModel.maxBaseModel(var);
+				return BaseResult.maxBaseResult(var);
 		}
 	}
 
 	public static Integer minCompanyEvent(String var) {
 		switch(var) {
 			default:
-				return BaseModel.minBaseModel(var);
+				return BaseResult.minBaseResult(var);
 		}
 	}
 }

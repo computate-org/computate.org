@@ -177,7 +177,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					}
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
-						fieldNames.remove("pk_docvalues_long");
+						fieldNames.remove("_docvalues_long");
 						fieldNames.remove("created_docvalues_date");
 					}
 					else if(fls.size() >= 1) {
@@ -340,7 +340,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchCompanyResearchList(siteRequest, false, true, true).onSuccess(listCompanyResearch -> {
+						searchCompanyResearchList(siteRequest, true, false, true).onSuccess(listCompanyResearch -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
 								apiRequest.setRows(listCompanyResearch.getRequest().getRows());
@@ -350,7 +350,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyResearch.first());
-								apiRequest.setPk(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPk()).orElse(null));
 								eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHCompanyResearch(apiRequest, listCompanyResearch).onSuccess(e -> {
@@ -467,7 +466,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setPk(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPk()).orElse(null));
 							patchCompanyResearchFuture(o, false).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -500,175 +498,17 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			Promise<CompanyResearch> promise1 = Promise.promise();
-			pgPool.withTransaction(sqlConnection -> {
-				siteRequest.setSqlConnection(sqlConnection);
-				varsCompanyResearch(siteRequest).onSuccess(a -> {
-					sqlPATCHCompanyResearch(o, inheritPk).onSuccess(companyResearch -> {
-						persistCompanyResearch(companyResearch).onSuccess(c -> {
-							relateCompanyResearch(companyResearch).onSuccess(d -> {
-								indexCompanyResearch(companyResearch).onSuccess(o2 -> {
-									if(apiRequest != null) {
-										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-										if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
-											o2.apiRequestCompanyResearch();
-											if(apiRequest.getVars().size() > 0)
-												eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
-										}
-									}
-									promise1.complete(companyResearch);
-								}).onFailure(ex -> {
-									promise1.fail(ex);
-								});
-							}).onFailure(ex -> {
-								promise1.fail(ex);
-							});
-						}).onFailure(ex -> {
-							promise1.fail(ex);
-						});
-					}).onFailure(ex -> {
-						promise1.fail(ex);
-					});
+			persistCompanyResearch(o, true).onSuccess(c -> {
+				indexCompanyResearch(o).onSuccess(e -> {
+					promise.complete(o);
 				}).onFailure(ex -> {
-					promise1.fail(ex);
+					promise.fail(ex);
 				});
-				return promise1.future();
-			}).onSuccess(a -> {
-				siteRequest.setSqlConnection(null);
-			}).onFailure(ex -> {
-				siteRequest.setSqlConnection(null);
-				promise.fail(ex);
-			}).compose(companyResearch -> {
-				Promise<CompanyResearch> promise2 = Promise.promise();
-				refreshCompanyResearch(companyResearch).onSuccess(a -> {
-					promise2.complete(companyResearch);
-				}).onFailure(ex -> {
-					promise2.fail(ex);
-				});
-				return promise2.future();
-			}).onSuccess(companyResearch -> {
-				promise.complete(companyResearch);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
 			LOG.error(String.format("patchCompanyResearchFuture failed. "), ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
-	public Future<CompanyResearch> sqlPATCHCompanyResearch(CompanyResearch o, Boolean inheritPk) {
-		Promise<CompanyResearch> promise = Promise.promise();
-		try {
-			SiteRequest siteRequest = o.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SqlConnection sqlConnection = siteRequest.getSqlConnection();
-			Integer num = 1;
-			StringBuilder bSql = new StringBuilder("UPDATE CompanyResearch SET ");
-			List<Object> bParams = new ArrayList<Object>();
-			Long pk = o.getPk();
-			JsonObject jsonObject = siteRequest.getJsonObject();
-			Set<String> methodNames = jsonObject.fieldNames();
-			CompanyResearch o2 = new CompanyResearch();
-			o2.setSiteRequest_(siteRequest);
-			List<Future> futures1 = new ArrayList<>();
-			List<Future> futures2 = new ArrayList<>();
-
-			for(String entityVar : methodNames) {
-				switch(entityVar) {
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
-					case "setCreated":
-							o2.setCreated(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_created + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCreated());
-						break;
-					case "setArchived":
-							o2.setArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_archived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlArchived());
-						break;
-					case "setDeleted":
-							o2.setDeleted(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_deleted + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDeleted());
-						break;
-					case "setSessionId":
-							o2.setSessionId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_sessionId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSessionId());
-						break;
-					case "setUserKey":
-							o2.setUserKey(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_userKey + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUserKey());
-						break;
-					case "setName":
-							o2.setName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyResearch.VAR_name + "=$" + num);
-							num++;
-							bParams.add(o2.sqlName());
-						break;
-				}
-			}
-			bSql.append(" WHERE pk=$" + num);
-			if(bParams.size() > 0) {
-				bParams.add(pk);
-				num++;
-				futures2.add(0, Future.future(a -> {
-					sqlConnection.preparedQuery(bSql.toString())
-							.execute(Tuple.tuple(bParams)
-							).onSuccess(b -> {
-						a.handle(Future.succeededFuture());
-					}).onFailure(ex -> {
-						RuntimeException ex2 = new RuntimeException("value CompanyResearch failed", ex);
-						LOG.error(String.format("relateCompanyResearch failed. "), ex2);
-						a.handle(Future.failedFuture(ex2));
-					});
-				}));
-			}
-			CompositeFuture.all(futures1).onSuccess(a -> {
-				CompositeFuture.all(futures2).onSuccess(b -> {
-					CompanyResearch o3 = new CompanyResearch();
-					o3.setSiteRequest_(o.getSiteRequest_());
-					o3.setPk(pk);
-					promise.complete(o3);
-				}).onFailure(ex -> {
-					LOG.error(String.format("sqlPATCHCompanyResearch failed. "), ex);
-					promise.fail(ex);
-				});
-			}).onFailure(ex -> {
-				LOG.error(String.format("sqlPATCHCompanyResearch failed. "), ex);
-				promise.fail(ex);
-			});
-		} catch(Exception ex) {
-			LOG.error(String.format("sqlPATCHCompanyResearch failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -763,7 +603,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						eventBus.request(CompanyResearch.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyResearchFuture")).onSuccess(a -> {
 							JsonObject responseMessage = (JsonObject)a.body();
 							JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
-							apiRequest.setPk(Long.parseLong(responseBody.getString("pk")));
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
 							LOG.debug(String.format("postCompanyResearch succeeded. "));
 						}).onFailure(ex -> {
@@ -850,205 +689,21 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		Promise<CompanyResearch> promise = Promise.promise();
 
 		try {
-			pgPool.withTransaction(sqlConnection -> {
-				Promise<CompanyResearch> promise1 = Promise.promise();
-				siteRequest.setSqlConnection(sqlConnection);
-				varsCompanyResearch(siteRequest).onSuccess(a -> {
-					createCompanyResearch(siteRequest).onSuccess(companyResearch -> {
-						sqlPOSTCompanyResearch(companyResearch, inheritPk).onSuccess(b -> {
-							persistCompanyResearch(companyResearch).onSuccess(c -> {
-								relateCompanyResearch(companyResearch).onSuccess(d -> {
-									indexCompanyResearch(companyResearch).onSuccess(o2 -> {
-										promise1.complete(companyResearch);
-									}).onFailure(ex -> {
-										promise1.fail(ex);
-									});
-								}).onFailure(ex -> {
-									promise1.fail(ex);
-								});
-							}).onFailure(ex -> {
-								promise1.fail(ex);
-							});
-						}).onFailure(ex -> {
-							promise1.fail(ex);
-						});
+			createCompanyResearch(siteRequest).onSuccess(companyResearch -> {
+				persistCompanyResearch(companyResearch, false).onSuccess(c -> {
+					indexCompanyResearch(companyResearch).onSuccess(o2 -> {
+						promise.complete(companyResearch);
 					}).onFailure(ex -> {
-						promise1.fail(ex);
+						promise.fail(ex);
 					});
 				}).onFailure(ex -> {
-					promise1.fail(ex);
+					promise.fail(ex);
 				});
-				return promise1.future();
-			}).onSuccess(a -> {
-				siteRequest.setSqlConnection(null);
-			}).onFailure(ex -> {
-				siteRequest.setSqlConnection(null);
-				promise.fail(ex);
-			}).compose(companyResearch -> {
-				Promise<CompanyResearch> promise2 = Promise.promise();
-				refreshCompanyResearch(companyResearch).onSuccess(a -> {
-					try {
-						ApiRequest apiRequest = siteRequest.getApiRequest_();
-						if(apiRequest != null) {
-							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							companyResearch.apiRequestCompanyResearch();
-							eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
-						}
-						promise2.complete(companyResearch);
-					} catch(Exception ex) {
-						LOG.error(String.format("postCompanyResearchFuture failed. "), ex);
-						promise.fail(ex);
-					}
-				}).onFailure(ex -> {
-					promise2.fail(ex);
-				});
-				return promise2.future();
-			}).onSuccess(companyResearch -> {
-				promise.complete(companyResearch);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
 			LOG.error(String.format("postCompanyResearchFuture failed. "), ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
-	public Future<Void> sqlPOSTCompanyResearch(CompanyResearch o, Boolean inheritPk) {
-		Promise<Void> promise = Promise.promise();
-		try {
-			SiteRequest siteRequest = o.getSiteRequest_();
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			SqlConnection sqlConnection = siteRequest.getSqlConnection();
-			Integer num = 1;
-			StringBuilder bSql = new StringBuilder("UPDATE CompanyResearch SET ");
-			List<Object> bParams = new ArrayList<Object>();
-			Long pk = o.getPk();
-			JsonObject jsonObject = siteRequest.getJsonObject();
-			CompanyResearch o2 = new CompanyResearch();
-			o2.setSiteRequest_(siteRequest);
-			List<Future> futures1 = new ArrayList<>();
-			List<Future> futures2 = new ArrayList<>();
-
-			if(siteRequest.getSessionId() != null) {
-				if(bParams.size() > 0) {
-					bSql.append(", ");
-				}
-				bSql.append("sessionId=$" + num);
-				num++;
-				bParams.add(siteRequest.getSessionId());
-			}
-			if(siteRequest.getUserKey() != null) {
-				if(bParams.size() > 0) {
-					bSql.append(", ");
-				}
-				bSql.append("userKey=$" + num);
-				num++;
-				bParams.add(siteRequest.getUserKey());
-			}
-
-			if(jsonObject != null) {
-				Set<String> entityVars = jsonObject.fieldNames();
-				for(String entityVar : entityVars) {
-					switch(entityVar) {
-					case CompanyResearch.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
-					case CompanyResearch.VAR_created:
-						o2.setCreated(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_created + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCreated());
-						break;
-					case CompanyResearch.VAR_archived:
-						o2.setArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_archived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlArchived());
-						break;
-					case CompanyResearch.VAR_deleted:
-						o2.setDeleted(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_deleted + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDeleted());
-						break;
-					case CompanyResearch.VAR_sessionId:
-						o2.setSessionId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_sessionId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSessionId());
-						break;
-					case CompanyResearch.VAR_userKey:
-						o2.setUserKey(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_userKey + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUserKey());
-						break;
-					case CompanyResearch.VAR_name:
-						o2.setName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyResearch.VAR_name + "=$" + num);
-						num++;
-						bParams.add(o2.sqlName());
-						break;
-					}
-				}
-			}
-			bSql.append(" WHERE pk=$" + num);
-			if(bParams.size() > 0) {
-			bParams.add(pk);
-			num++;
-				futures2.add(0, Future.future(a -> {
-					sqlConnection.preparedQuery(bSql.toString())
-							.execute(Tuple.tuple(bParams)
-							).onSuccess(b -> {
-						a.handle(Future.succeededFuture());
-					}).onFailure(ex -> {
-						RuntimeException ex2 = new RuntimeException("value CompanyResearch failed", ex);
-						LOG.error(String.format("relateCompanyResearch failed. "), ex2);
-						a.handle(Future.failedFuture(ex2));
-					});
-				}));
-			}
-			CompositeFuture.all(futures1).onSuccess(a -> {
-				CompositeFuture.all(futures2).onSuccess(b -> {
-					promise.complete();
-				}).onFailure(ex -> {
-					LOG.error(String.format("sqlPOSTCompanyResearch failed. "), ex);
-					promise.fail(ex);
-				});
-			}).onFailure(ex -> {
-				LOG.error(String.format("sqlPOSTCompanyResearch failed. "), ex);
-				promise.fail(ex);
-			});
-		} catch(Exception ex) {
-			LOG.error(String.format("sqlPOSTCompanyResearch failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1235,8 +890,9 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyResearch.VAR_pk)).orElse(body.getString(CompanyResearch.VAR_id));
+				String inheritPk = Optional.ofNullable(body.getString(CompanyResearch.VAR_id)).orElse(body.getString(CompanyResearch.VAR_id));
 				body.put("inheritPk", inheritPk);
+				body.put("inheritPk", body.getValue("id"));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -1283,24 +939,23 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
 							if(body2.size() > 0) {
 								if(searchList.size() == 1) {
 									apiRequest.setOriginal(o);
-									apiRequest.setPk(o.getPk());
 								}
 								siteRequest.setJsonObject(body2);
-								patchCompanyResearchFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import CompanyResearch {} succeeded, modified CompanyResearch. ", body.getValue(CompanyResearch.VAR_pk));
+								patchCompanyResearchFuture(o2, true).onSuccess(b -> {
+									LOG.debug("Import CompanyResearch {} succeeded, modified CompanyResearch. ", body.getValue(CompanyResearch.VAR_id));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportCompanyResearchFuture failed. "), ex);
@@ -1311,7 +966,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 						} else {
 							postCompanyResearchFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyResearch {} succeeded, created new CompanyResearch. ", body.getValue(CompanyResearch.VAR_pk));
+								LOG.debug("Import CompanyResearch {} succeeded, created new CompanyResearch. ", body.getValue(CompanyResearch.VAR_id));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportCompanyResearchFuture failed. "), ex);
@@ -1435,8 +1090,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			if(listCompanyResearch.size() == 1)
-				siteRequest.setRequestPk(listCompanyResearch.get(0).getPk());
 			page.setSearchListCompanyResearch_(listCompanyResearch);
 			page.setSiteRequest_(siteRequest);
 			page.setServiceRequest(siteRequest.getServiceRequest());
@@ -1466,25 +1119,9 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	public Future<CompanyResearch> createCompanyResearch(SiteRequest siteRequest) {
 		Promise<CompanyResearch> promise = Promise.promise();
 		try {
-			SqlConnection sqlConnection = siteRequest.getSqlConnection();
-			String userId = siteRequest.getUserId();
-			Long userKey = siteRequest.getUserKey();
-			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER.withZone(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))))).orElse(ZonedDateTime.now(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))));
-
-			sqlConnection.preparedQuery("INSERT INTO CompanyResearch(created, userKey) VALUES($1, $2) RETURNING pk")
-					.collecting(Collectors.toList())
-					.execute(Tuple.of(created.toOffsetDateTime(), userKey)).onSuccess(result -> {
-				Row createLine = result.value().stream().findFirst().orElseGet(() -> null);
-				Long pk = createLine.getLong(0);
-				CompanyResearch o = new CompanyResearch();
-				o.setPk(pk);
-				o.setSiteRequest_(siteRequest);
-				promise.complete(o);
-			}).onFailure(ex -> {
-				RuntimeException ex2 = new RuntimeException(ex);
-				LOG.error("createCompanyResearch failed. ", ex2);
-				promise.fail(ex2);
-			});
+			CompanyResearch o = new CompanyResearch();
+			o.setSiteRequest_(siteRequest);
+			promise.complete(o);
 		} catch(Exception ex) {
 			LOG.error(String.format("createCompanyResearch failed. "), ex);
 			promise.fail(ex);
@@ -1590,7 +1227,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(pk_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
+				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
 			} else if(id != null) {
 				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
 			}
@@ -1788,50 +1425,39 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	public void searchCompanyResearch2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyResearch> searchList) {
 	}
 
-	public Future<Void> persistCompanyResearch(CompanyResearch o) {
+	public Future<Void> persistCompanyResearch(CompanyResearch o, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
-			SqlConnection sqlConnection = siteRequest.getSqlConnection();
-			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT * FROM CompanyResearch WHERE pk=$1")
-					.collecting(Collectors.toList())
-					.execute(Tuple.of(pk)
-					).onSuccess(result -> {
 				try {
-					for(Row definition : result.value()) {
-						for(Integer i = 0; i < definition.size(); i++) {
-							String columnName = definition.getColumnName(i);
-							Object columnValue = definition.getValue(i);
-							if(!"pk".equals(columnName)) {
-								try {
-									o.persistForClass(columnName, columnValue);
-								} catch(Exception e) {
-									LOG.error(String.format("persistCompanyResearch failed. "), e);
-								}
+					JsonObject jsonObject = siteRequest.getJsonObject();
+					jsonObject.forEach(definition -> {
+							String columnName;
+							Object columnValue;
+						if(patch && StringUtils.startsWith(definition.getKey(), "set")) {
+							columnName = StringUtils.uncapitalize(StringUtils.substringAfter(definition.getKey(), "set"));
+							columnValue = definition.getValue();
+						} else {
+							columnName = definition.getKey();
+							columnValue = definition.getValue();
+						}
+						if(!"".equals(columnName)) {
+							try {
+								o.persistForClass(columnName, columnValue);
+							} catch(Exception e) {
+								LOG.error(String.format("persistCompanyResearch failed. "), e);
 							}
 						}
-					}
+					});
 					promise.complete();
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyResearch failed. "), ex);
 					promise.fail(ex);
 				}
-			}).onFailure(ex -> {
-				RuntimeException ex2 = new RuntimeException(ex);
-				LOG.error(String.format("persistCompanyResearch failed. "), ex2);
-				promise.fail(ex2);
-			});
 		} catch(Exception ex) {
 			LOG.error(String.format("persistCompanyResearch failed. "), ex);
 			promise.fail(ex);
 		}
-		return promise.future();
-	}
-
-	public Future<Void> relateCompanyResearch(CompanyResearch o) {
-		Promise<Void> promise = Promise.promise();
-			promise.complete();
 		return promise.future();
 	}
 
@@ -1886,62 +1512,49 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return CompanyResearch.CLASS_API_ADDRESS_CompanyResearch;
 	}
 
-	public Future<Void> refreshCompanyResearch(CompanyResearch o) {
-		Promise<Void> promise = Promise.promise();
-		SiteRequest siteRequest = o.getSiteRequest_();
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, JsonObject ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
 		try {
-			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
-			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
-			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
-			if(refresh && !Optional.ofNullable(siteRequest.getJsonObject()).map(JsonObject::isEmpty).orElse(true)) {
-				List<Future> futures = new ArrayList<>();
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			String uri = ctx.getString(CompanyResearch.VAR_uri);
+			String url = String.format("%s%s", siteBaseUrl, uri);
+			CompanyResearch page = new CompanyResearch();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+			page.persistForClass(CompanyResearch.VAR_resourceUri, resourceUri);
+			page.persistForClass(CompanyResearch.VAR_templateUri, templateUri);
 
-				for(int i=0; i < pks.size(); i++) {
-					Long pk2 = pks.get(i);
-					String classSimpleName2 = classes.get(i);
-				}
+			page.persistForClass(CompanyResearch.VAR_inheritPk, CompanyResearch.staticSetInheritPk(siteRequest2, ctx.getString(CompanyResearch.VAR_inheritPk)));
+			page.persistForClass(CompanyResearch.VAR_created, CompanyResearch.staticSetCreated(siteRequest2, ctx.getString(CompanyResearch.VAR_created)));
+			page.persistForClass(CompanyResearch.VAR_archived, CompanyResearch.staticSetArchived(siteRequest2, ctx.getString(CompanyResearch.VAR_archived)));
+			page.persistForClass(CompanyResearch.VAR_deleted, CompanyResearch.staticSetDeleted(siteRequest2, ctx.getString(CompanyResearch.VAR_deleted)));
+			page.persistForClass(CompanyResearch.VAR_sessionId, CompanyResearch.staticSetSessionId(siteRequest2, ctx.getString(CompanyResearch.VAR_sessionId)));
+			page.persistForClass(CompanyResearch.VAR_userKey, CompanyResearch.staticSetUserKey(siteRequest2, ctx.getString(CompanyResearch.VAR_userKey)));
+			page.persistForClass(CompanyResearch.VAR_objectId, CompanyResearch.staticSetObjectId(siteRequest2, ctx.getString(CompanyResearch.VAR_objectId)));
+			page.persistForClass(CompanyResearch.VAR_id, CompanyResearch.staticSetId(siteRequest2, ctx.getString(CompanyResearch.VAR_id)));
+			page.persistForClass(CompanyResearch.VAR_name, CompanyResearch.staticSetName(siteRequest2, ctx.getString(CompanyResearch.VAR_name)));
+			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, ctx.getString(CompanyResearch.VAR_description)));
+			page.persistForClass(CompanyResearch.VAR_pageId, CompanyResearch.staticSetPageId(siteRequest2, ctx.getString(CompanyResearch.VAR_pageId)));
+			page.persistForClass(CompanyResearch.VAR_resourceUri, CompanyResearch.staticSetResourceUri(siteRequest2, ctx.getString(CompanyResearch.VAR_resourceUri)));
+			page.persistForClass(CompanyResearch.VAR_templateUri, CompanyResearch.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyResearch.VAR_templateUri)));
+			page.persistForClass(CompanyResearch.VAR_uri, CompanyResearch.staticSetUri(siteRequest2, ctx.getString(CompanyResearch.VAR_uri)));
+			page.persistForClass(CompanyResearch.VAR_url, CompanyResearch.staticSetUrl(siteRequest2, ctx.getString(CompanyResearch.VAR_url)));
+			page.persistForClass(CompanyResearch.VAR_title, CompanyResearch.staticSetTitle(siteRequest2, ctx.getString(CompanyResearch.VAR_title)));
 
-				CompositeFuture.all(futures).onSuccess(b -> {
-					JsonObject params = new JsonObject();
-					params.put("body", new JsonObject());
-					params.put("cookie", new JsonObject());
-					params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
-					params.put("form", new JsonObject());
-					params.put("path", new JsonObject());
-					JsonObject query = new JsonObject();
-					Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
-					Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
-					if(softCommit == null && commitWithin == null)
-						softCommit = true;
-					if(softCommit != null)
-						query.put("softCommit", softCommit);
-					if(commitWithin != null)
-						query.put("commitWithin", commitWithin);
-					query.put("q", "*:*").put("fq", new JsonArray().add("pk:" + o.getPk())).put("var", new JsonArray().add("refresh:false"));
-					params.put("query", query);
-					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
-					JsonObject json = new JsonObject().put("context", context);
-					eventBus.request(CompanyResearch.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "patchCompanyResearchFuture")).onSuccess(c -> {
-						JsonObject responseMessage = (JsonObject)c.body();
-						Integer statusCode = responseMessage.getInteger("statusCode");
-						if(statusCode.equals(200))
-							promise.complete();
-						else
-							promise.fail(new RuntimeException(responseMessage.getString("statusMessage")));
-					}).onFailure(ex -> {
-						LOG.error("Refresh relations failed. ", ex);
-						promise.fail(ex);
-					});
-				}).onFailure(ex -> {
-					LOG.error("Refresh relations failed. ", ex);
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					promise.complete(JsonObject.mapFrom(page));
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
 					promise.fail(ex);
-				});
-			} else {
-				promise.complete();
-			}
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
 		} catch(Exception ex) {
-			LOG.error(String.format("refreshCompanyResearch failed. "), ex);
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

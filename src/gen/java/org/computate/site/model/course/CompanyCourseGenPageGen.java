@@ -1,7 +1,7 @@
 package org.computate.site.model.course;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.result.BaseResultPage;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyCourseGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyCourseGenPageGen into the class CompanyCourseGenPage. 
  * </li>
- * <h3>About the CompanyCourseGenPage class and it's generated class CompanyCourseGenPageGen&lt;BaseModelPage&gt;: </h3>extends CompanyCourseGenPageGen
+ * <h3>About the CompanyCourseGenPage class and it's generated class CompanyCourseGenPageGen&lt;BaseResultPage&gt;: </h3>extends CompanyCourseGenPageGen
  * <p>
  * This Java class extends a generated Java class CompanyCourseGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyCourseGenPageGen<BaseModelPage>
- * <p>This <code>class CompanyCourseGenPage extends CompanyCourseGenPageGen&lt;BaseModelPage&gt;</code>, which means it extends a newly generated CompanyCourseGenPageGen. 
- * The generated <code>class CompanyCourseGenPageGen extends BaseModelPage</code> which means that CompanyCourseGenPage extends CompanyCourseGenPageGen which extends BaseModelPage. 
+ * extends CompanyCourseGenPageGen<BaseResultPage>
+ * <p>This <code>class CompanyCourseGenPage extends CompanyCourseGenPageGen&lt;BaseResultPage&gt;</code>, which means it extends a newly generated CompanyCourseGenPageGen. 
+ * The generated <code>class CompanyCourseGenPageGen extends BaseResultPage</code> which means that CompanyCourseGenPage extends CompanyCourseGenPageGen which extends BaseResultPage. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
+public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourseGenPage.class);
 
 	//////////////////////////////
@@ -331,66 +331,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 	}
 
 	////////
-	// pk //
-	////////
-
-
-	/**	 The entity pk
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long pk;
-
-	/**	<br> The entity pk
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourseGenPage&fq=entiteVar_enUS_indexed_string:pk">Find the entity pk in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pk(Wrap<Long> w);
-
-	public Long getPk() {
-		return pk;
-	}
-
-	public void setPk(Long pk) {
-		this.pk = pk;
-	}
-	@JsonIgnore
-	public void setPk(String o) {
-		this.pk = CompanyCourseGenPage.staticSetPk(siteRequest_, o);
-	}
-	public static Long staticSetPk(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Long.parseLong(o);
-		return null;
-	}
-	protected CompanyCourseGenPage pkInit() {
-		Wrap<Long> pkWrap = new Wrap<Long>().var("pk");
-		if(pk == null) {
-			_pk(pkWrap);
-			Optional.ofNullable(pkWrap.getO()).ifPresent(o -> {
-				setPk(o);
-			});
-		}
-		return (CompanyCourseGenPage)this;
-	}
-
-	public static Long staticSearchPk(SiteRequest siteRequest_, Long o) {
-		return o;
-	}
-
-	public static String staticSearchStrPk(SiteRequest siteRequest_, Long o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqPk(SiteRequest siteRequest_, String o) {
-		return CompanyCourseGenPage.staticSearchPk(siteRequest_, CompanyCourseGenPage.staticSetPk(siteRequest_, o)).toString();
-	}
-
-	////////
 	// id //
 	////////
 
@@ -508,7 +448,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyCourseGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepBaseResultPage(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -527,7 +467,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 				listCompanyCourseInit();
 				companyCourseCountInit();
 				companyCourse_Init();
-				pkInit();
 				idInit();
 				pageUriCompanyCourseInit();
 				promise2.complete();
@@ -552,7 +491,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 	/////////////////
 
 	public void siteRequestCompanyCourseGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelPage(siteRequest_);
+			super.siteRequestBaseResultPage(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -591,14 +530,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 				return oCompanyCourseGenPage.companyCourseCount;
 			case "companyCourse_":
 				return oCompanyCourseGenPage.companyCourse_;
-			case "pk":
-				return oCompanyCourseGenPage.pk;
 			case "id":
 				return oCompanyCourseGenPage.id;
 			case "pageUriCompanyCourse":
 				return oCompanyCourseGenPage.pageUriCompanyCourse;
 			default:
-				return super.obtainBaseModelPage(var);
+				return super.obtainBaseResultPage(var);
 		}
 	}
 
@@ -623,7 +560,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 		CompanyCourseGenPage oCompanyCourseGenPage = (CompanyCourseGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelPage(var, val);
+				return super.relateBaseResultPage(var, val);
 		}
 	}
 
@@ -640,14 +577,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 			return CompanyCourseGenPage.staticSetListCompanyCourse(siteRequest_, o);
 		case "companyCourseCount":
 			return CompanyCourseGenPage.staticSetCompanyCourseCount(siteRequest_, o);
-		case "pk":
-			return CompanyCourseGenPage.staticSetPk(siteRequest_, o);
 		case "id":
 			return CompanyCourseGenPage.staticSetId(siteRequest_, o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSetPageUriCompanyCourse(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSetBaseModelPage(entityVar,  siteRequest_, o);
+				return BaseResultPage.staticSetBaseResultPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -664,14 +599,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 			return CompanyCourseGenPage.staticSearchListCompanyCourse(siteRequest_, (JsonArray)o);
 		case "companyCourseCount":
 			return CompanyCourseGenPage.staticSearchCompanyCourseCount(siteRequest_, (Integer)o);
-		case "pk":
-			return CompanyCourseGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchId(siteRequest_, (String)o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchPageUriCompanyCourse(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+				return BaseResultPage.staticSearchBaseResultPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -688,14 +621,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 			return CompanyCourseGenPage.staticSearchStrListCompanyCourse(siteRequest_, (String)o);
 		case "companyCourseCount":
 			return CompanyCourseGenPage.staticSearchStrCompanyCourseCount(siteRequest_, (Integer)o);
-		case "pk":
-			return CompanyCourseGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchStrId(siteRequest_, (String)o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchStrPageUriCompanyCourse(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+				return BaseResultPage.staticSearchStrBaseResultPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -712,14 +643,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 			return CompanyCourseGenPage.staticSearchFqListCompanyCourse(siteRequest_, o);
 		case "companyCourseCount":
 			return CompanyCourseGenPage.staticSearchFqCompanyCourseCount(siteRequest_, o);
-		case "pk":
-			return CompanyCourseGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchFqId(siteRequest_, o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchFqPageUriCompanyCourse(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+				return BaseResultPage.staticSearchFqBaseResultPage(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -738,7 +667,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 	public static final String VAR_listCompanyCourse = "listCompanyCourse";
 	public static final String VAR_companyCourseCount = "companyCourseCount";
 	public static final String VAR_companyCourse_ = "companyCourse_";
-	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriCompanyCourse = "pageUriCompanyCourse";
 
@@ -746,7 +674,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 	public static final String DISPLAY_NAME_listCompanyCourse = "";
 	public static final String DISPLAY_NAME_companyCourseCount = "";
 	public static final String DISPLAY_NAME_companyCourse_ = "";
-	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriCompanyCourse = "";
 
@@ -763,14 +690,12 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseModelPage {
 			return DISPLAY_NAME_companyCourseCount;
 		case VAR_companyCourse_:
 			return DISPLAY_NAME_companyCourse_;
-		case VAR_pk:
-			return DISPLAY_NAME_pk;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		case VAR_pageUriCompanyCourse:
 			return DISPLAY_NAME_pageUriCompanyCourse;
 		default:
-			return BaseModelPage.displayNameBaseModelPage(var);
+			return BaseResultPage.displayNameBaseResultPage(var);
 		}
 	}
 }

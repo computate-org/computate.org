@@ -1,25 +1,23 @@
-package org.computate.site.model.event;
+package org.computate.site.model.service;
 
-import java.util.List;
-
-import org.computate.search.wrap.Wrap;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
-
+import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 4
+ * Order: 7
+ * SqlOrder: 7
  * 
  * Api: true
  * Page: true
- * PageTemplates: /en-us/event
+ * PageTemplates: /en-us/service
  * SuperPage: BaseResultPage
  * Indexed: true
- * Description: See the upcoming computate in-person and online events
+ * Description: See the services provided by computate that will help you build your own data-driven platforms
  * 
- * ApiTag:  Computate Event
- * ApiUri: /api/event
+ * ApiTag: service
+ * ApiUri: /api/service
  * 
  * ApiMethod:
  *   Search:
@@ -28,17 +26,17 @@ import io.vertx.pgclient.data.Point;
  *   POST:
  *   PUTImport:
  *   SearchPage:
- *     Page: CompanyEventPage
- *     ApiUri: /event
- *     PublicRead: true
+ *     Page: CompanyServicePage
+ *     ApiUri: /service
  * 
- * Role: SiteAdmin
  * PublicRead: true
+ * Role: SiteAdmin
  * 
- * AName: an event
- * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+ * AName: a service
+ * PluralName: services
+ * Icon: <i class="fa-regular fa-conveyor-belt"></i>
  */
-public class CompanyEvent extends CompanyEventGen<BaseResult> {
+public class CompanyService extends CompanyServiceGen<BaseResult> {
 
   /**
    * {@inheritDoc}
@@ -145,7 +143,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s - %s", CompanyEvent_NameAdjectiveSingular_enUS, title));
+		w.o(String.format("%s - %s", CompanyService_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override
@@ -162,53 +160,5 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
 	protected void _pageUrlId(Wrap<String> w) {
 		w.o(url);
 	}
-
-  /**
-   * {@inheritDoc}
-   * Location: true
-   * DocValues: true
-   * Persist: true
-   * DisplayName: map location
-   * HtmRow: 3
-   * HtmCell: 1
-   * Facet: true
-   */
-  protected void _location(Wrap<Point> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * LocationColor: true
-   * Indexed: true
-   * Stored: true
-   * DisplayName: location colors
-   * Description: The colors of each location Points. 
-   */
-  protected void _locationColors(List<String> l) {
-    l.add("#3388ff");
-  }
-
-  /**
-   * {@inheritDoc}
-   * LocationTitle: true
-   * Indexed: true
-   * Stored: true
-   * DisplayName: location titles
-   * Description: The titles of each location Paths. 
-   */
-  protected void _locationTitles(List<String> l) {
-    l.add(objectTitle);
-  }
-
-  /**
-   * {@inheritDoc}
-   * LocationUrl: true
-   * Indexed: true
-   * Stored: true
-   * DisplayName: location links
-   * Description: The links of each location Paths. 
-   */
-  protected void _locationLinks(List<String> l) {
-    l.add(pageUrlId);
-  }
 }
+

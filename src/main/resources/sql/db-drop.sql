@@ -1,6 +1,2 @@
 DROP TABLE WeatherObserved CASCADE;
 DROP TABLE SiteUser CASCADE;
-DROP TABLE CompanyEvent CASCADE;
-DROP TABLE CompanyWebsite CASCADE;
-DROP TABLE CompanyCourse CASCADE;
-DROP TABLE CompanyResearch CASCADE;
