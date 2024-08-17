@@ -185,7 +185,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String SiteUser_SingularName_enUS = "site user";
 	public static final String SiteUser_PluralName_enUS = "site users";
 	public static final String SiteUser_NameActual_enUS = "current site user";
-	public static final String SiteUser_AllName_enUS = "all the site users";
+	public static final String SiteUser_AllName_enUS = "all site users";
 	public static final String SiteUser_SearchAllNameBy_enUS = "search site users by ";
 	public static final String SiteUser_Title_enUS = "site users";
 	public static final String SiteUser_ThePluralName_enUS = "the site users";
@@ -1505,9 +1505,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static Integer htmRowSiteUser(String var) {
 		switch(var) {
 		case VAR_seeArchived:
-			return 3;
+			return 4;
 		case VAR_seeDeleted:
-			return 3;
+			return 4;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -1516,9 +1516,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static Integer htmCellSiteUser(String var) {
 		switch(var) {
 		case VAR_seeArchived:
-			return 2;
+			return 1;
 		case VAR_seeDeleted:
-			return 3;
+			return 2;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

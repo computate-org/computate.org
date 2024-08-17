@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: computateorg
+  name: computateorg
+  labels:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: computateorg
+      app.kubernetes.io/name: computateorg
+      deployment: computateorg
+      app: computateorg
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: computateorg
+        app.kubernetes.io/name: computateorg
+        deployment: computateorg
+        app: computateorg
+    spec:
+      containers:
+        - name: computateorg
+          image: 'quay.io/computateorg/computate.org:latest'
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 10200
+              name: http
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 'http'
+            timeoutSeconds: 10
+            failureThreshold: 10
+          resources:
+            requests:
+              cpu: '700m'
+              memory: '500Mi'
+            limits:
+              cpu: '1'
+              memory: '1500Mi'
+          envFrom:
+            - secretRef:
+                name: computate.org-zookeeper
+            - secretRef:
+                name: computate.org-solr
+            - secretRef:
+                name: computate.org-database
+            - secretRef:
+                name: computate.org-auth
+            - secretRef:
+                name: computate.org-kafka
+            - secretRef:
+                name: computate.org-mqtt
+            - secretRef:
+                name: computate.org-amqp
+            - secretRef:
+                name: computate.org-rabbitmq
+            - secretRef:
+                name: computate.org-context-broker
+          env:
+            - name: SITE_ZONE
+              value: "America/New_York"
+            - name: SITE_LOCALE
+              value: "en-US"
+            - name: SITE_PORT
+              value: "10200"
+            - name: SITE_HOST_NAME
+              value: "computateorg"
+            - name: SITE_BASE_URL
+              value: "computateorg.apps-crc.testing"
+            - name: SITE_PUBLIC_URL
+              value: "https://www.computate.org"
+            - name: CLUSTER_PORT
+              value: "10201"
+            - name: SSL_VERIFY
+              value: "true"
+            - name: SITE_INSTANCES
+              value: "2"
+            - name: WORKER_POOL_SIZE
+              value: "2"
+            - name: VERTX_MAX_EVENT_LOOP_EXECUTE_TIME
+              value: "30"
+            - name: VERTX_MAX_WORKER_EXECUTE_TIME
+              value: "6000"
+            - name: VERTX_WARNING_EXCEPTION_SECONDS
+              value: "60"
+            - name: NUMBER_EXECUTORS
+              value: "2"
+            - name: SITE_STATIC_NAME
+              value: "computate.org-static"
+            - name: SITE_STATIC_REPO
+              value: "git@github.com:computate-org/computate.org-static.git"
+            - name: STATIC_PATH
+              value: "/home/default/computate.org-static"
+            - name: STATIC_BASE_URL
+              value: "computate.org.apps-crc.testing/static"
+            - name: SITE_LOGO_URI
+              value: "/svg/computate-keys.svg"
+            - name: TEMPLATE_PATH
+              value: "/home/default/computate.org/src/main/resources/templates"
+            - name: DYNAMIC_PAGE_PATHS
+              value: '["en-us/article"]'
+            - name: FONTAWESOME_KIT
+              value: '<script src="https://kit.fontawesome.com/59d19567d5.js" crossorigin="anonymous"></script>'
+            - name: SITE_THEME
+              value: "dark"
+            - name: SITE_POWERED_BY_NAME
+              value: "Google Kubernetes Engine"
+            - name: SITE_POWERED_BY_URL
+              value: "https://cloud.google.com/kubernetes-engine"
+            - name: SITE_POWERED_BY_IMAGE_URI
+              value: "/svg/google-gke.svg"
+            - name: DEFAULT_MAP_LOCATION
+              value: "55.63379,13.49261"
+            - name: DEFAULT_MAP_ZOOM
+              value: "17"

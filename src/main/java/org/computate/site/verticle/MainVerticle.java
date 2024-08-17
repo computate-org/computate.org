@@ -343,19 +343,19 @@ public class MainVerticle extends AbstractVerticle {
 					}
 				}
 				if(clusterHostName != null) {
-					LOG.info(String.format("%s: %s", ConfigKeys.CLUSTER_HOST_NAME, clusterHostName));
+					LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_HOST_NAME, clusterHostName));
 					eventBusOptions.setHost(clusterHostName);
 				}
 				if(clusterPort != null) {
-					LOG.info(String.format("%s: %s", ConfigKeys.CLUSTER_PORT, clusterPort));
+					LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PORT, clusterPort));
 					eventBusOptions.setPort(clusterPort);
 				}
 				if(clusterPublicHostName != null) {
-					LOG.info(String.format("%s: %s", ConfigKeys.CLUSTER_PUBLIC_HOST_NAME, clusterPublicHostName));
+					LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PUBLIC_HOST_NAME, clusterPublicHostName));
 					eventBusOptions.setClusterPublicHost(clusterPublicHostName);
 				}
 				if(clusterPublicPort != null) {
-					LOG.info(String.format("%s: %s", ConfigKeys.CLUSTER_PUBLIC_PORT, clusterPublicPort));
+					LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PUBLIC_PORT, clusterPublicPort));
 					eventBusOptions.setClusterPublicPort(clusterPublicPort);
 				}
 				vertxOptions.setClusterManager(clusterManager);
@@ -1088,6 +1088,12 @@ public class MainVerticle extends AbstractVerticle {
 					LOG.error("Failed to load page. ", ex);
 					handler.fail(ex);
 				}
+			});
+
+			router.get("/hackathons").handler(ctx -> {
+				ctx.response().putHeader("location", "/en-us/article/hackathons");
+				ctx.response().setStatusCode(302);
+				ctx.end();
 			});
 
 			StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(false);

@@ -19,7 +19,6 @@
 {%- endblock htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
-{{ super() }}
 {%- block htmScriptsWeatherObservedPage %}
     <script src="{{staticBaseUrl}}/js/enUS/WeatherObservedPage.js"></script>
     {% if pk is defined %}
@@ -158,23 +157,61 @@
         window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
         window.defaultRangeVar = '{{ defaultRangeVar }}';
         pageGraphWeatherObserved();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qWeatherObserved_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qWeatherObserved_rows')?.addEventListener('sl-change', event => {
+          paramChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_rows'));
+        });
+
+        document.querySelector('#qWeatherObserved_start')?.addEventListener('sl-change', event => {
+          paramChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_start'));
+        });
 
         {%- block websocketWeatherObservedPage %}{%- endblock %}
-        document.querySelector('#htmForm_patchWeatherObserved')?.addEventListener('submit', event => {
+
+        var submitForm_patchWeatherObserved = document.querySelector('#htmForm_patchWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchWeatherObserved(null, document.querySelector('#htmForm_patchWeatherObserved'), document.querySelector('#htmFormButton_patchWeatherObserved'));
+          return false;
         });
-        document.querySelector('#htmForm_postWeatherObserved')?.addEventListener('submit', event => {
+        document.querySelector('#htmFormButton_patchWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchWeatherObserved(null, document.querySelector('#htmForm_patchWeatherObserved'), document.querySelector('#htmFormButton_patchWeatherObserved'), event.target.getAttribute('data-pk'));
+          return false;
+        });
+
+        var submitForm_postWeatherObserved = document.querySelector('#htmForm_postWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postWeatherObserved')?.addEventListener('click', event => {
           event.preventDefault();
           postWeatherObserved(document.querySelector('#htmForm_postWeatherObserved'), document.querySelector('#htmFormButton_postWeatherObserved'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
         });
-        document.querySelector('#htmForm_putimportWeatherObserved')?.addEventListener('submit', event => {
+
+        var submitForm_putimportWeatherObserved = document.querySelector('#htmForm_putimportWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportWeatherObserved')?.addEventListener('click', event => {
           event.preventDefault();
           putimportWeatherObserved(document.querySelector('#htmForm_putimportWeatherObserved'), document.querySelector('#htmFormButton_putimportWeatherObserved'));
+          return false;
         });
-        document.querySelector('#htmForm_searchpageWeatherObserved')?.addEventListener('submit', event => {
+
+        var submitForm_searchpageWeatherObserved = document.querySelector('#htmForm_searchpageWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageWeatherObserved')?.addEventListener('click', event => {
           event.preventDefault();
           searchpageWeatherObserved();
+          return false;
         });
       });
     </script>
@@ -190,16 +227,7 @@
 
 {%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
 
-{%- macro htmButton_patchWeatherObserved() %}
-        <sl-tooltip content="Modify weather observed device">
-          <sl-button
-              onclick="document.querySelector('#patchWeatherObservedDialog').show(); "
-              >
-            <i class="fas fa-edit "></i>
-            Modify
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_patchWeatherObserved() %}<sl-button onclick="document.querySelector('#patchWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -752,21 +780,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_patchWeatherObserved() }}
           </form>
+          {{ htmFormButton_patchWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postWeatherObserved() %}
-        <sl-tooltip content="Create a weather observed device">
-          <sl-button
-              onclick="document.querySelector('#postWeatherObservedDialog').show(); "
-              >
-            <i class="fas fa-file-plus "></i>
-            Create
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_postWeatherObserved() %}<sl-button onclick="document.querySelector('#postWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1320,21 +1339,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_postWeatherObserved() }}
           </form>
+          {{ htmFormButton_postWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportWeatherObserved() %}
-        <sl-tooltip content="Import weather observed devices">
-          <sl-button
-              onclick="document.querySelector('#putimportWeatherObservedDialog').show(); "
-              >
-            <i class="fas fa-file-import "></i>
-            Import
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_putimportWeatherObserved() %}<sl-button onclick="document.querySelector('#putimportWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1353,13 +1363,12 @@
                   >
               </sl-textarea>
             </div>
-            {{ htmFormButton_putimportWeatherObserved() }}
           </form>
+          {{ htmFormButton_putimportWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_searchpageWeatherObserved() %}
-{%- endmacro %}
+{%- macro htmButton_searchpageWeatherObserved() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1980,58 +1989,14 @@
             {%- endmacro htmBodyAllWeatherObservedPage() %}
 {%- macro htmSearchButtonsWeatherObservedPage() %}
         <div id="htmSearchButtons">
-          <sl-tooltip placement="top" content="Advanced search for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
-              Search
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Filters and facet counts for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
-              Filters
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
-              Range
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
-              Pivot
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
-              FieldList
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
-              Stats
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Query the JSON REST API for weather observed devices">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
-                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
-                >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
-              Api
-            </sl-button>
-          </sl-tooltip>
-        </div>
+<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> Search</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow "></i> Filters</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> Range</sl-button><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> Pivot</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> FieldList</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> Stats</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> Api</sl-button>        </div>
 {%- endmacro htmSearchButtonsWeatherObservedPage() %}
 
 {%- macro htmPaginationButtonsWeatherObservedPage() %}
             <div id="htmPaginationButtons">
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button id="grid-toggle-details">
+                  <sl-button pill id="grid-toggle-details">
                     <i class="fa-solid fa-list"></i>
                   </sl-button>
                 </sl-tooltip>
@@ -2041,14 +2006,14 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button id="grid-toggle-card">
+                  <sl-button pill id="grid-toggle-card">
                     <i class="fa-solid fa-grid"></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -2063,43 +2028,22 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} – {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsWeatherObservedPage() %}
 {%- macro htmFormsWeatherObservedPage() %}
   {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
-      {% if weatherObservedCount == 1 %}
-        <sl-tooltip content="Refresh this weather observed device">
-          <sl-button
-              id="refreshThisWeatherObservedGenPage"
-              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-      {% if weatherObservedCount > 0 %}
-        <sl-tooltip content="Refresh all the weather observed devices">
-          <sl-button id="refreshAllWeatherObservedGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
-            Refresh all 
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+            <div id="htmButtonGroup">
+{% if weatherObservedCount == 1 %}<sl-button id="refreshThisWeatherObservedGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if weatherObservedCount > 0 %}<sl-button id="refreshAllWeatherObservedGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if weatherObservedCount > 0 %}{{ htmButton_patchWeatherObserved() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if weatherObservedCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportWeatherObserved() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if weatherObservedCount > 0 %}
-        {{ htmButton_patchWeatherObserved() }}
         {{ htmForm_patchWeatherObserved() }}
     {%- endif %}
   {%- endif %}
@@ -2107,16 +2051,13 @@
     {%- if weatherObservedCount == int1 %}
       {%- if id is defined %}
       {%- else %}
-        {{ htmButton_postWeatherObserved() }}
         {{ htmForm_postWeatherObserved() }}
       {%- endif %}
     {%- else %}
-        {{ htmButton_postWeatherObserved() }}
         {{ htmForm_postWeatherObserved() }}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportWeatherObserved() }}
         {{ htmForm_putimportWeatherObserved() }}
   {%- endif %}
 {%- endmacro htmFormsWeatherObservedPage() %}
@@ -2142,13 +2083,13 @@
                 {% for key, value in varsQ.items() %}
                   <div>
                     <div>
-                      <label for="qWeatherObserved_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                      <label for="qWeatherObserved_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <sl-input id="qWeatherObserved_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('WeatherObserved', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal "></div>
+                      <sl-input id="qWeatherObserved_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                      <div id="qWeatherObservedDiv_{{ key }}" class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
@@ -2159,8 +2100,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qWeatherObserved_start" placeholder="{{ displayName }}" class="" onchange="paramChange('WeatherObserved', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal ">start={{ start }}</div>
+                    <sl-input id="qWeatherObserved_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qWeatherObservedDiv_start" class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
                 <div>
@@ -2170,8 +2111,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qWeatherObserved_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('WeatherObserved', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal ">rows={{ rows }}</div>
+                    <sl-input id="qWeatherObserved_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qWeatherObservedDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -2188,22 +2129,18 @@
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqWeatherObserved_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
-                    <div>
-                      <div>
-                        <button id="buttonFacetWeatherObserved_{{ key }}" class="" onclick="facetFieldChange('WeatherObserved', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
-                      </div>
-                      <div>
-                        <sl-input id="fqWeatherObserved_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('WeatherObserved', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
-                      </div>
+                    <label for="fqWeatherObserved_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetWeatherObserved_{{ key }}" onclick="facetFieldChange('WeatherObserved', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqWeatherObserved_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('WeatherObserved', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
-                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetWeatherObserved_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetWeatherObserved_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
                     <ol class="pageFacetField pageFacetFieldWeatherObserved_{{ key }} " id="pageFacetFieldWeatherObserved_{{ key }}">
-{% for item in facetField.counts %}
-                      <li class="cursor-pointer " data-class="WeatherObserved" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('WeatherObserved', item.value); ">{{ item.key }}: {{ item.value }}</li>
+{% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <li class="cursor-pointer " data-class="WeatherObserved" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('WeatherObserved', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
 {% endfor %}
                     </ol>
                   </div>
@@ -2267,11 +2204,10 @@
                   </td>
                 </tr>
               </table>
-              {% for key, value in varsRange.items() %}
-              <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeWeatherObserved_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('WeatherObserved', value); "></sl-radio-group>
-              </div>
-              {% endfor %}
+              <sl-radio-group>                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeWeatherObserved_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('WeatherObserved', value); ">{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
               {%- endblock htmBodyRangeWeatherObservedPage %}
             </div>
           </sl-drawer>
@@ -2288,13 +2224,14 @@
                 {% endfor %}
               </div>
               <div id="pageSearchVal-PivotWeatherObserved">
-                {% if defaultPivotVars is defined %}
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
                   <div class="pageSearchVal pageSearchVal-PivotWeatherObserved " id="pageSearchVal-PivotWeatherObserved_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
               {% endfor %}
               {%- endblock htmBodyPivotWeatherObservedPage %}
             </div>
@@ -2312,15 +2249,16 @@
                   <div class="pageSearchVal-FieldListWeatherObservedHidden " id="pageSearchVal-FieldListWeatherObservedHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
               <div id="pageSearchVal-FieldListWeatherObserved">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListWeatherObserved " id="pageSearchVal-FieldListWeatherObserved_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
+              {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListWeatherObserved_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox></span>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListWeatherObserved_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListWeatherObservedPage %}
@@ -2374,7 +2312,7 @@
                                 <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
                                 <span> speed in seconds </span>
                                 <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-                                <button onclick="animateStats(); ">animate</button>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
                               </div>
                             {% endif %}
                           {% endif %}
@@ -2401,13 +2339,16 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-        </div>
 {% if weatherObservedCount == 0 %}
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-cloud-bolt-sun"></i>
+          <sl-tooltip content="back to all weather observed devices">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all weather observed devices
+            </sl-button>
+          </sl-tooltip>
+          <i class="fa-regular fa-cloud-bolt-sun"></i>
             <span>weather observed devices</span>
-          </a>
         </h1>
         {{ htmSearchButtonsWeatherObservedPage() }}
             {{ htmFormsWeatherObservedPage() }}
@@ -2423,16 +2364,15 @@
   {% if weatherObservedCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-cloud-bolt-sun"></i>
-            <span class="">weather observed device</span>
-          </a>
+          <sl-tooltip content="back to all weather observed devices">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all weather observed devices
+            </sl-button>
+          </sl-tooltip>
+          <i class="fa-regular fa-cloud-bolt-sun"></i>
+          {{weatherObserved_.objectTitle}}
         </h1>
-        <h2>
-          <span>
-            <span class="">{{weatherObserved_.objectTitle}}</span>
-          </span>
-        </h2>
         {{ htmSearchButtonsWeatherObservedPage() }}
             {{ htmFormsWeatherObservedPage() }}
     {% else %}
@@ -2457,6 +2397,7 @@
         {{ htmForm_searchpageWeatherObserved() }}
   {% endif %}
         {%- endblock htmFormWeatherObservedPage %}
+        </div>
       {%- endblock htmBodyMiddleWeatherObservedPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -2487,11 +2428,11 @@
   {% endif %}
               >
           </sl-input>
-          <button
+          <sl-button
               onclick="window.location.href = '/weather-observed?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
-          </button>
+          </sl-button>
           <div>
             <div>
               <div>
@@ -2503,7 +2444,7 @@
           <div class="">
             <a href="/weather-observed" class="">
               <i class="fa-regular fa-cloud-bolt-sun"></i>
-              see all the weather observed devices
+              see all weather observed devices
             </a>
           </div>
         </div>
@@ -2608,6 +2549,7 @@ A URL friendly unique ID for this object"
                       value="{%- if weatherObserved_.created is defined %}{{ formatZonedDateTime(weatherObserved_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-pk="{{ pk }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -2639,6 +2581,7 @@ A URL friendly unique ID for this object"
                       value="{%- if weatherObserved_.modified is defined %}{{ formatZonedDateTime(weatherObserved_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-pk="{{ pk }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -2658,6 +2601,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classWeatherObserved inputWeatherObserved{{pk}}Archived "
+                      name="setArchived"
+                      data-pk="{{ pk }}"
+                      data-val="{{ weatherObserved_.archived }}"
+                      >archive</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -2667,6 +2622,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archive"
+                      label="archive"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classWeatherObserved inputWeatherObserved{{pk}}Archived "
@@ -2681,11 +2637,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if weatherObserved_.archived is defined %}
-                      checked="checked"
+    {%- if weatherObserved_.archived == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >archive</sl-checkbox>
   {%- else %}
                       >
@@ -2694,7 +2649,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -2712,6 +2667,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="delete"
+                      label="delete"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
+                      name="setDeleted"
+                      data-pk="{{ pk }}"
+                      data-val="{{ weatherObserved_.deleted }}"
+                      >delete</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -2721,6 +2688,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="delete"
+                      label="delete"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
@@ -2735,11 +2703,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if weatherObserved_.deleted is defined %}
-                      checked="checked"
+    {%- if weatherObserved_.deleted == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >delete</sl-checkbox>
   {%- else %}
                       >
@@ -2748,7 +2715,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}

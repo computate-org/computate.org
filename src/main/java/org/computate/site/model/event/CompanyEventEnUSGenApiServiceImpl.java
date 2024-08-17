@@ -1219,6 +1219,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			searchList.q("*:*");
 			searchList.setC(CompanyEvent.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(CompanyEvent.varIndexedCompanyEvent(v));

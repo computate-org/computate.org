@@ -1270,8 +1270,8 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		return vars;
 	}
 
-	public static final String DISPLAY_NAME_name = "service name";
-	public static final String DISPLAY_NAME_description = "service description";
+	public static final String DISPLAY_NAME_name = "research name";
+	public static final String DISPLAY_NAME_description = "research description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1308,9 +1308,9 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static String descriptionCompanyResearch(String var) {
 		switch(var) {
 		case VAR_name:
-			return "The service name. ";
+			return "The research name. ";
 		case VAR_description:
-			return "The service description. ";
+			return "The research description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:

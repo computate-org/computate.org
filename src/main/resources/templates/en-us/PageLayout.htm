@@ -72,13 +72,14 @@
           }).then(response => {
             if(response.ok) {
               var dropdown = document.querySelector('#siteSearchDropdown');
+              var dropdownMenu = document.querySelector('#siteSearchDropdownMenu');
               response.json().then(function(body) {
-                dropdown.innerHTML = '';
+                dropdownMenu.innerHTML = '';
                 body.list.forEach((o) => {
                   var menuItem = document.createElement('sl-menu-item');
                   menuItem.innerText = o.objectTitle;
                   menuItem.setAttribute('data-href', o.pageUrlId);
-                  dropdown.appendChild(menuItem);
+                  dropdownMenu.appendChild(menuItem);
                   menuItem.addEventListener('click', (event) => window.location.href = event.target.getAttribute('data-href') );
                 });
                 dropdown.show();
@@ -233,17 +234,15 @@
           <sl-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text">
             <i slot="prefix" class="fas fa-bars"></i>
           </sl-button>
-          <form class="display-flex ">
             <sl-input placeholder="search" id="siteSearchInput">
               <i slot="prefix" class="fa-duotone fa-magnifying-glass"></i>
             </sl-input>
             <!-- <sl-button type="submit" variant="primary" size="medium" slot="trigger" caret>Search</sl-button> -->
-            <sl-dropdown id="siteSearchDropdown" style="background-color: black;">
-              <sl-menu>
-              </sl-menu>
-            </sl-dropdown>
-          </form>
         </header>
+        <sl-dropdown id="siteSearchDropdown" class="display-block ">
+          <sl-menu id="siteSearchDropdownMenu">
+          </sl-menu>
+        </sl-dropdown>
 {% endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}
         <div class="pageContent w3-content ">

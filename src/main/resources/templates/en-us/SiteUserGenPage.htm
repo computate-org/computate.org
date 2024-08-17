@@ -19,7 +19,6 @@
 {%- endblock htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
-{{ super() }}
 {%- block htmScriptsSiteUserPage %}
     <script src="{{staticBaseUrl}}/js/enUS/SiteUserPage.js"></script>
     {% if pk is defined %}
@@ -85,23 +84,61 @@
         window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
         window.defaultRangeVar = '{{ defaultRangeVar }}';
         pageGraphSiteUser();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qSiteUser_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('SiteUser', event.target, document.querySelector('#qSiteUserDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qSiteUser_rows')?.addEventListener('sl-change', event => {
+          paramChange('SiteUser', event.target, document.querySelector('#qSiteUserDiv_rows'));
+        });
+
+        document.querySelector('#qSiteUser_start')?.addEventListener('sl-change', event => {
+          paramChange('SiteUser', event.target, document.querySelector('#qSiteUserDiv_start'));
+        });
 
         {%- block websocketSiteUserPage %}{%- endblock %}
-        document.querySelector('#htmForm_patchSiteUser')?.addEventListener('submit', event => {
+
+        var submitForm_patchSiteUser = document.querySelector('#htmForm_patchSiteUser')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchSiteUser')?.addEventListener('click', event => {
           event.preventDefault();
           patchSiteUser(null, document.querySelector('#htmForm_patchSiteUser'), document.querySelector('#htmFormButton_patchSiteUser'));
+          return false;
         });
-        document.querySelector('#htmForm_postSiteUser')?.addEventListener('submit', event => {
+
+        var submitForm_postSiteUser = document.querySelector('#htmForm_postSiteUser')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postSiteUser')?.addEventListener('click', event => {
           event.preventDefault();
           postSiteUser(document.querySelector('#htmForm_postSiteUser'), document.querySelector('#htmFormButton_postSiteUser'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
         });
-        document.querySelector('#htmForm_putimportSiteUser')?.addEventListener('submit', event => {
+
+        var submitForm_putimportSiteUser = document.querySelector('#htmForm_putimportSiteUser')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportSiteUser')?.addEventListener('click', event => {
           event.preventDefault();
           putimportSiteUser(document.querySelector('#htmForm_putimportSiteUser'), document.querySelector('#htmFormButton_putimportSiteUser'));
+          return false;
         });
-        document.querySelector('#htmForm_searchpageSiteUser')?.addEventListener('submit', event => {
+
+        var submitForm_searchpageSiteUser = document.querySelector('#htmForm_searchpageSiteUser')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageSiteUser')?.addEventListener('click', event => {
           event.preventDefault();
           searchpageSiteUser();
+          return false;
         });
       });
     </script>
@@ -117,16 +154,7 @@
 
 {%- block htmUrlSiteUserPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlSiteUserPage %}
 
-{%- macro htmButton_patchSiteUser() %}
-        <sl-tooltip content="Modify site user">
-          <sl-button
-              onclick="document.querySelector('#patchSiteUserDialog').show(); "
-              >
-            <i class="fas fa-edit "></i>
-            Modify
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_patchSiteUser() %}<sl-button onclick="document.querySelector('#patchSiteUserDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchSiteUser() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -205,7 +233,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+            </sl-details>
+            <sl-details class="HtmRow" id="user-options">
+              <div slot="summary">
+                <span>user options</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -228,21 +261,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_patchSiteUser() }}
           </form>
+          {{ htmFormButton_patchSiteUser() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postSiteUser() %}
-        <sl-tooltip content="Create a site user">
-          <sl-button
-              onclick="document.querySelector('#postSiteUserDialog').show(); "
-              >
-            <i class="fas fa-file-plus "></i>
-            Create
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_postSiteUser() %}<sl-button onclick="document.querySelector('#postSiteUserDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postSiteUser() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -322,7 +346,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+            </sl-details>
+            <sl-details class="HtmRow" id="user-options">
+              <div slot="summary">
+                <span>user options</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -345,21 +374,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_postSiteUser() }}
           </form>
+          {{ htmFormButton_postSiteUser() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportSiteUser() %}
-        <sl-tooltip content="Import site users">
-          <sl-button
-              onclick="document.querySelector('#putimportSiteUserDialog').show(); "
-              >
-            <i class="fas fa-file-import "></i>
-            Import
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_putimportSiteUser() %}<sl-button onclick="document.querySelector('#putimportSiteUserDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportSiteUser() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -378,13 +398,12 @@
                   >
               </sl-textarea>
             </div>
-            {{ htmFormButton_putimportSiteUser() }}
           </form>
+          {{ htmFormButton_putimportSiteUser() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_searchpageSiteUser() %}
-{%- endmacro %}
+{%- macro htmButton_searchpageSiteUser() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageSiteUser() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -463,7 +482,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+            </sl-details>
+            <sl-details class="HtmRow" id="user-options">
+              <div slot="summary">
+                <span>user options</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -518,58 +542,14 @@
             {%- endmacro htmBodyAllSiteUserPage() %}
 {%- macro htmSearchButtonsSiteUserPage() %}
         <div id="htmSearchButtons">
-          <sl-tooltip placement="top" content="Advanced search for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
-              Search
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Filters and facet counts for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
-              Filters
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
-              Range
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
-              Pivot
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
-              FieldList
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
-              Stats
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Query the JSON REST API for site users">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
-                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
-                >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
-              Api
-            </sl-button>
-          </sl-tooltip>
-        </div>
+<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> Search</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow "></i> Filters</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> Range</sl-button><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> Pivot</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> FieldList</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> Stats</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> Api</sl-button>        </div>
 {%- endmacro htmSearchButtonsSiteUserPage() %}
 
 {%- macro htmPaginationButtonsSiteUserPage() %}
             <div id="htmPaginationButtons">
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button id="grid-toggle-details">
+                  <sl-button pill id="grid-toggle-details">
                     <i class="fa-solid fa-list"></i>
                   </sl-button>
                 </sl-tooltip>
@@ -579,14 +559,14 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button id="grid-toggle-card">
+                  <sl-button pill id="grid-toggle-card">
                     <i class="fa-solid fa-grid"></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -601,7 +581,7 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -613,31 +593,10 @@
   {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
-      {% if siteUserCount == 1 %}
-        <sl-tooltip content="Refresh this site user">
-          <sl-button
-              id="refreshThisSiteUserGenPage"
-              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSiteUserGenPage')); }, function() { addError(document.querySelector('#refreshThisSiteUserGenPage')); }); return false; ">
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-      {% if siteUserCount > 0 %}
-        <sl-tooltip content="Refresh all the site users">
-          <sl-button id="refreshAllSiteUserGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
-            Refresh all 
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+            <div id="htmButtonGroup">
+{% if siteUserCount == 1 %}<sl-button id="refreshThisSiteUserGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSiteUserGenPage')); }, function() { addError(document.querySelector('#refreshThisSiteUserGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if siteUserCount > 0 %}<sl-button id="refreshAllSiteUserGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSiteUserGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if siteUserCount > 0 %}{{ htmButton_patchSiteUser() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if siteUserCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postSiteUser() }}{%- endif %}{%- else %}{{ htmButton_postSiteUser() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportSiteUser() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if siteUserCount > 0 %}
-        {{ htmButton_patchSiteUser() }}
         {{ htmForm_patchSiteUser() }}
     {%- endif %}
   {%- endif %}
@@ -645,16 +604,13 @@
     {%- if siteUserCount == int1 %}
       {%- if id is defined %}
       {%- else %}
-        {{ htmButton_postSiteUser() }}
         {{ htmForm_postSiteUser() }}
       {%- endif %}
     {%- else %}
-        {{ htmButton_postSiteUser() }}
         {{ htmForm_postSiteUser() }}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportSiteUser() }}
         {{ htmForm_putimportSiteUser() }}
   {%- endif %}
 {%- endmacro htmFormsSiteUserPage() %}
@@ -680,13 +636,13 @@
                 {% for key, value in varsQ.items() %}
                   <div>
                     <div>
-                      <label for="qSiteUser_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                      <label for="qSiteUser_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <sl-input id="qSiteUser_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('SiteUser', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal "></div>
+                      <sl-input id="qSiteUser_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                      <div id="qSiteUserDiv_{{ key }}" class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
@@ -697,8 +653,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qSiteUser_start" placeholder="{{ displayName }}" class="" onchange="paramChange('SiteUser', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal ">start={{ start }}</div>
+                    <sl-input id="qSiteUser_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qSiteUserDiv_start" class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
                 <div>
@@ -708,8 +664,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qSiteUser_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('SiteUser', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal ">rows={{ rows }}</div>
+                    <sl-input id="qSiteUser_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qSiteUserDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -726,22 +682,18 @@
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqSiteUser_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
-                    <div>
-                      <div>
-                        <button id="buttonFacetSiteUser_{{ key }}" class="" onclick="facetFieldChange('SiteUser', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
-                      </div>
-                      <div>
-                        <sl-input id="fqSiteUser_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('SiteUser', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
-                      </div>
+                    <label for="fqSiteUser_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetSiteUser_{{ key }}" onclick="facetFieldChange('SiteUser', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqSiteUser_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('SiteUser', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqSiteUser_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
-                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetSiteUser_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqSiteUser_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetSiteUser_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
                     <ol class="pageFacetField pageFacetFieldSiteUser_{{ key }} " id="pageFacetFieldSiteUser_{{ key }}">
-{% for item in facetField.counts %}
-                      <li class="cursor-pointer " data-class="SiteUser" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('SiteUser', item.value); ">{{ item.key }}: {{ item.value }}</li>
+{% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <li class="cursor-pointer " data-class="SiteUser" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('SiteUser', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
 {% endfor %}
                     </ol>
                   </div>
@@ -805,11 +757,10 @@
                   </td>
                 </tr>
               </table>
-              {% for key, value in varsRange.items() %}
-              <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSiteUser_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SiteUser', value); "></sl-radio-group>
-              </div>
-              {% endfor %}
+              <sl-radio-group>                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeSiteUser_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('SiteUser', value); ">{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
               {%- endblock htmBodyRangeSiteUserPage %}
             </div>
           </sl-drawer>
@@ -826,13 +777,14 @@
                 {% endfor %}
               </div>
               <div id="pageSearchVal-PivotSiteUser">
-                {% if defaultPivotVars is defined %}
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
                   <div class="pageSearchVal pageSearchVal-PivotSiteUser " id="pageSearchVal-PivotSiteUser_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotSiteUser_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotSiteUser_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
               {% endfor %}
               {%- endblock htmBodyPivotSiteUserPage %}
             </div>
@@ -850,15 +802,16 @@
                   <div class="pageSearchVal-FieldListSiteUserHidden " id="pageSearchVal-FieldListSiteUserHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
               <div id="pageSearchVal-FieldListSiteUser">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListSiteUser " id="pageSearchVal-FieldListSiteUser_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
+              {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListSiteUser_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox></span>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListSiteUser_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('SiteUser', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListSiteUserPage %}
@@ -912,7 +865,7 @@
                                 <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
                                 <span> speed in seconds </span>
                                 <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-                                <button onclick="animateStats(); ">animate</button>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
                               </div>
                             {% endif %}
                           {% endif %}
@@ -939,13 +892,16 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-        </div>
 {% if siteUserCount == 0 %}
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-duotone fa-solid fa-user-gear"></i>
+          <sl-tooltip content="back to all site users">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all site users
+            </sl-button>
+          </sl-tooltip>
+          <i class="fa-duotone fa-solid fa-user-gear"></i>
             <span>site users</span>
-          </a>
         </h1>
         {{ htmSearchButtonsSiteUserPage() }}
             {{ htmFormsSiteUserPage() }}
@@ -961,16 +917,15 @@
   {% if siteUserCount == 1 %}
     {% if id is defined %}
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-duotone fa-solid fa-user-gear"></i>
-            <span class="">site user</span>
-          </a>
+          <sl-tooltip content="back to all site users">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all site users
+            </sl-button>
+          </sl-tooltip>
+          <i class="fa-duotone fa-solid fa-user-gear"></i>
+          {{siteUser_.objectTitle}}
         </h1>
-        <h2>
-          <span>
-            <span class="">{{siteUser_.objectTitle}}</span>
-          </span>
-        </h2>
         {{ htmSearchButtonsSiteUserPage() }}
             {{ htmFormsSiteUserPage() }}
     {% else %}
@@ -995,6 +950,7 @@
         {{ htmForm_searchpageSiteUser() }}
   {% endif %}
         {%- endblock htmFormSiteUserPage %}
+        </div>
       {%- endblock htmBodyMiddleSiteUserPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -1025,11 +981,11 @@
   {% endif %}
               >
           </sl-input>
-          <button
+          <sl-button
               onclick="window.location.href = '/user?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
-          </button>
+          </sl-button>
           <div>
             <div>
               <div>
@@ -1041,7 +997,7 @@
           <div class="">
             <a href="/user" class="">
               <i class="fa-duotone fa-solid fa-user-gear"></i>
-              see all the site users
+              see all site users
             </a>
           </div>
         </div>
@@ -1142,6 +1098,7 @@ A URL friendly unique ID for this object"
                       value="{%- if siteUser_.created is defined %}{{ formatZonedDateTime(siteUser_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-pk="{{ pk }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1171,6 +1128,7 @@ A URL friendly unique ID for this object"
                       value="{%- if siteUser_.modified is defined %}{{ formatZonedDateTime(siteUser_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-pk="{{ pk }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1213,9 +1171,10 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-    {%- if siteUser_.archived is defined %}
-                      checked="checked"
+    {%- if siteUser_.archived == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >archive</sl-checkbox>
   {%- else %}
                       >
@@ -1265,9 +1224,10 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-    {%- if siteUser_.deleted is defined %}
-                      checked="checked"
+    {%- if siteUser_.deleted == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >delete</sl-checkbox>
   {%- else %}
                       >
@@ -1317,9 +1277,10 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-    {%- if siteUser_.seeArchived is defined %}
-                      checked="checked"
+    {%- if siteUser_.seeArchived == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >see archived</sl-checkbox>
   {%- else %}
                       >
@@ -1369,9 +1330,10 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-    {%- if siteUser_.seeDeleted is defined %}
-                      checked="checked"
+    {%- if siteUser_.seeDeleted == true %}
+                      checked
     {%- endif %}
+                      data-pk="{{ pk }}"
                       >see deleted</sl-checkbox>
   {%- else %}
                       >

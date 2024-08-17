@@ -1758,8 +1758,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return vars;
 	}
 
-	public static final String DISPLAY_NAME_name = "service name";
-	public static final String DISPLAY_NAME_description = "service description";
+	public static final String DISPLAY_NAME_name = "event name";
+	public static final String DISPLAY_NAME_description = "event description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1808,9 +1808,9 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static String descriptionCompanyEvent(String var) {
 		switch(var) {
 		case VAR_name:
-			return "The service name. ";
+			return "The event name. ";
 		case VAR_description:
-			return "The service description. ";
+			return "The event description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:

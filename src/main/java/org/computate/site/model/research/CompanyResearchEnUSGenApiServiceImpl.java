@@ -1219,6 +1219,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			searchList.q("*:*");
 			searchList.setC(CompanyResearch.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(CompanyResearch.varIndexedCompanyResearch(v));

@@ -1219,6 +1219,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			searchList.q("*:*");
 			searchList.setC(SitePage.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(SitePage.varIndexedSitePage(v));

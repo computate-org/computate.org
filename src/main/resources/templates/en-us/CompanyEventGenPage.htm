@@ -158,6 +158,20 @@
         window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
         window.defaultRangeVar = '{{ defaultRangeVar }}';
         pageGraphCompanyEvent();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyEvent_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyEvent_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyEvent_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_start'));
+        });
 
         {%- block websocketCompanyEventPage %}{%- endblock %}
         document.querySelector('#htmForm_patchCompanyEvent')?.addEventListener('submit', event => {
@@ -664,28 +678,28 @@
             <div>
                 <i class="fa-duotone fa-solid fa-map-location-dot"></i>
               <sl-dropdown>
-                <sl-button slot="trigger" caret>service name</sl-button>
+                <sl-button slot="trigger" caret>event name</sl-button>
                 <sl-menu>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by service name ascending
+                    sort by event name ascending
                   </sl-menu-item>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by service name descending
+                    sort by event name descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown>
-                <sl-button slot="trigger" caret>service description</sl-button>
+                <sl-button slot="trigger" caret>event description</sl-button>
                 <sl-menu>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by service description ascending
+                    sort by event description ascending
                   </sl-menu-item>
                   <sl-menu-item>
                     <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by service description descending
+                    sort by event description descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
@@ -873,13 +887,13 @@
                 {% for key, value in varsQ.items() %}
                   <div>
                     <div>
-                      <label for="qCompanyEvent_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                      <label for="qCompanyEvent_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <sl-input id="qCompanyEvent_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('CompanyEvent', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal "></div>
+                      <sl-input id="qCompanyEvent_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                      <div id="qCompanyEventDiv_{{ key }}" class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
@@ -890,8 +904,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qCompanyEvent_start" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyEvent', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal ">start={{ start }}</div>
+                    <sl-input id="qCompanyEvent_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qCompanyEventDiv_start" class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
                 <div>
@@ -901,8 +915,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qCompanyEvent_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyEvent', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal ">rows={{ rows }}</div>
+                    <sl-input id="qCompanyEvent_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qCompanyEventDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -919,22 +933,18 @@
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqCompanyEvent_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
-                    <div>
-                      <div>
-                        <button id="buttonFacetCompanyEvent_{{ key }}" class="" onclick="facetFieldChange('CompanyEvent', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
-                      </div>
-                      <div>
-                        <sl-input id="fqCompanyEvent_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('CompanyEvent', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
-                      </div>
+                    <label for="fqCompanyEvent_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetCompanyEvent_{{ key }}" onclick="facetFieldChange('CompanyEvent', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqCompanyEvent_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyEvent', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyEvent_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
-                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyEvent_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyEvent_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyEvent_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
                     <ol class="pageFacetField pageFacetFieldCompanyEvent_{{ key }} " id="pageFacetFieldCompanyEvent_{{ key }}">
-{% for item in facetField.counts %}
-                      <li class="cursor-pointer " data-class="CompanyEvent" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('CompanyEvent', item.value); ">{{ item.key }}: {{ item.value }}</li>
+{% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <li class="cursor-pointer " data-class="CompanyEvent" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('CompanyEvent', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
 {% endfor %}
                     </ol>
                   </div>
@@ -1000,7 +1010,7 @@
               </table>
               {% for key, value in varsRange.items() %}
               <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyEvent_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyEvent', value); "></sl-radio-group>
+                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyEvent_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyEvent', value); "></sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodyRangeCompanyEventPage %}
@@ -1019,7 +1029,7 @@
                 {% endfor %}
               </div>
               <div id="pageSearchVal-PivotCompanyEvent">
-                {% if defaultPivotVars is defined %}
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
                   <div class="pageSearchVal pageSearchVal-PivotCompanyEvent " id="pageSearchVal-PivotCompanyEvent_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
@@ -1043,15 +1053,17 @@
                   <div class="pageSearchVal-FieldListCompanyEventHidden " id="pageSearchVal-FieldListCompanyEventHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
               <div id="pageSearchVal-FieldListCompanyEvent">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListCompanyEvent " id="pageSearchVal-FieldListCompanyEvent_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
+              {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
                 <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyEvent_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox></span>
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyEvent_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListCompanyEventPage %}
@@ -1105,7 +1117,7 @@
                                 <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
                                 <span> speed in seconds </span>
                                 <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-                                <button onclick="animateStats(); ">animate</button>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
                               </div>
                             {% endif %}
                           {% endif %}
@@ -1132,7 +1144,6 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-        </div>
 {% if companyEventCount == 0 %}
         <h1>
           <a href="{{pageUri}}">
@@ -1188,6 +1199,7 @@
         {{ htmForm_searchpageCompanyEvent() }}
   {% endif %}
         {%- endblock htmFormCompanyEventPage %}
+        </div>
       {%- endblock htmBodyMiddleCompanyEventPage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1218,11 +1230,11 @@
   {% endif %}
               >
           </sl-input>
-          <button
+          <sl-button
               onclick="window.location.href = '/event?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
-          </button>
+          </sl-button>
           <div>
             <div>
               <div>
@@ -1447,10 +1459,10 @@ A URL friendly unique ID for this object"
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="service name"
-                      label="service name"
+                      placeholder="event name"
+                      label="event name"
                       help-text="
-The service name. "
+The event name. "
                       id="{{classApiMethodMethod}}_name"
   {%- if "Page" == classApiMethodMethod %}
                       data-id="{{ id }}"
@@ -1523,10 +1535,10 @@ The service name. "
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="service description"
-                      label="service description"
+                      placeholder="event description"
+                      label="event description"
                       help-text="
-The service description. "
+The event description. "
                       id="{{classApiMethodMethod}}_description"
   {%- if "Page" == classApiMethodMethod %}
                       data-id="{{ id }}"

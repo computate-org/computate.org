@@ -2451,6 +2451,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			searchList.q("*:*");
 			searchList.setC(WeatherObserved.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(WeatherObserved.varIndexedWeatherObserved(v));

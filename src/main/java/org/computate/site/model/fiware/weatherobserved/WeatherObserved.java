@@ -20,7 +20,6 @@ import io.vertx.pgclient.data.Polygon;
  * Fiware: true
  *
  * Model: true
- * SqlOrder: 9
  * Api: true
  * Page: true
  * SuperPage: BaseModelPage

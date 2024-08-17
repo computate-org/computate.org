@@ -1219,6 +1219,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			searchList.q("*:*");
 			searchList.setC(CompanyCourse.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(CompanyCourse.varIndexedCompanyCourse(v));

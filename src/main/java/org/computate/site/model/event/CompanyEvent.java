@@ -44,8 +44,8 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: service name
-   * Description: The service name. 
+   * DisplayName: event name
+   * Description: The event name. 
    * HtmRow: 3
    * HtmCell: 1
    * HtmColumn: 1
@@ -58,8 +58,8 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: service description
-   * Description: The service description. 
+   * DisplayName: event description
+   * Description: The event description. 
    * HtmRow: 3
    * HtmCell: 2
    * HtmColumn: 2
@@ -145,7 +145,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s - %s", CompanyEvent_NameAdjectiveSingular_enUS, title));
+		w.o(String.format("%s — %s", CompanyEvent_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

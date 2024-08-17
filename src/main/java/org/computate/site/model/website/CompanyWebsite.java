@@ -143,7 +143,7 @@ public class CompanyWebsite extends CompanyWebsiteGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s - %s", CompanyWebsite_NameAdjectiveSingular_enUS, title));
+		w.o(String.format("%s — %s", CompanyWebsite_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

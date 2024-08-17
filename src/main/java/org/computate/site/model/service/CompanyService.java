@@ -143,7 +143,7 @@ public class CompanyService extends CompanyServiceGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s - %s", CompanyService_NameAdjectiveSingular_enUS, title));
+		w.o(String.format("%s — %s", CompanyService_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

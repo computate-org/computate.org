@@ -85,6 +85,20 @@
         window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
         window.defaultRangeVar = '{{ defaultRangeVar }}';
         pageGraphCompanyProduct();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyProduct_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyProduct_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyProduct_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_start'));
+        });
 
         {%- block websocketCompanyProductPage %}{%- endblock %}
         document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
@@ -770,13 +784,13 @@
                 {% for key, value in varsQ.items() %}
                   <div>
                     <div>
-                      <label for="qCompanyProduct_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
+                      <label for="qCompanyProduct_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     </div>
                   </div>
                   <div>
                     <div>
-                      <sl-input id="qCompanyProduct_{{ key }}" placeholder="{{ displayName }}" class="" {% if var == 'objectSuggest' %}onkeyup{% else %}onchange{% endif %}="qChange('CompanyProduct', value); " data-var="{{ var }}" autocomplete="off="></sl-input>
-                      <div class="pageSearchVal "></div>
+                      <sl-input id="qCompanyProduct_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                      <div id="qCompanyProductDiv_{{ key }}" class="pageSearchVal "></div>
                     </div>
                   </div>
                 {% endfor %}
@@ -787,8 +801,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qCompanyProduct_start" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyProduct', this); " data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
-                    <div class="pageSearchVal ">start={{ start }}</div>
+                    <sl-input id="qCompanyProduct_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qCompanyProductDiv_start" class="pageSearchVal ">start={{ start }}</div>
                   </div>
                 </div>
                 <div>
@@ -798,8 +812,8 @@
                 </div>
                 <div>
                   <div>
-                    <sl-input id="qCompanyProduct_rows" placeholder="{{ displayName }}" class="" onchange="paramChange('CompanyProduct', this); " data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
-                    <div class="pageSearchVal ">rows={{ rows }}</div>
+                    <sl-input id="qCompanyProduct_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qCompanyProductDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
                   </div>
                 </div>
               </div>
@@ -816,22 +830,18 @@
               <div>
                 {% for key, value in varsFq.items() %}
                   <div class="">
-                    <label for="fqCompanyProduct_{{ key }}">{{ displayName }}<sup> ({{ classSimpleName }})</sup></label>
-                    <div>
-                      <div>
-                        <button id="buttonFacetCompanyProduct_{{ key }}" class="" onclick="facetFieldChange('CompanyProduct', value); " title="see values " data-var="{{ var }}" data-clear="{% if facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></button>
-                      </div>
-                      <div>
-                        <sl-input id="fqCompanyProduct_{{ key }}" placeholder="{{ displayName }}" class="" onchange="fqChange('CompanyProduct', value); " data-var="{{ var }}" autocomplete="off=" value="{{ val }}"></sl-input>
-                      </div>
+                    <label for="fqCompanyProduct_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetCompanyProduct_{{ key }}" onclick="facetFieldChange('CompanyProduct', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqCompanyProduct_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyProduct', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyProduct_{{ key }}">{% if val is defined %}fq={{ var }}:{{ val | urlencode() }}{% endif %}</div>
-                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyProduct_{{ key }}">{% if facetField.var is defined %}facet.field={{ facetField.var }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyProduct_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyProduct_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
                     <ol class="pageFacetField pageFacetFieldCompanyProduct_{{ key }} " id="pageFacetFieldCompanyProduct_{{ key }}">
-{% for item in facetField.counts %}
-                      <li class="cursor-pointer " data-class="CompanyProduct" data-var="{{ item.var }}" data-val="{{ item.key }}" onclick="fqReplace('CompanyProduct', item.value); ">{{ item.key }}: {{ item.value }}</li>
+{% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <li class="cursor-pointer " data-class="CompanyProduct" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('CompanyProduct', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
 {% endfor %}
                     </ol>
                   </div>
@@ -897,7 +907,7 @@
               </table>
               {% for key, value in varsRange.items() %}
               <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); "></sl-radio-group>
+                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); "></sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodyRangeCompanyProductPage %}
@@ -916,7 +926,7 @@
                 {% endfor %}
               </div>
               <div id="pageSearchVal-PivotCompanyProduct">
-                {% if defaultPivotVars is defined %}
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
                   <div class="pageSearchVal pageSearchVal-PivotCompanyProduct " id="pageSearchVal-PivotCompanyProduct_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
@@ -940,15 +950,17 @@
                   <div class="pageSearchVal-FieldListCompanyProductHidden " id="pageSearchVal-FieldListCompanyProductHidden_{{ item }}">{{ item }}</div>
                 {% endfor %}
               </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
               <div id="pageSearchVal-FieldListCompanyProduct">
                 {% if defaultFieldListVars is defined %}
                   <div class="pageSearchVal pageSearchVal-FieldListCompanyProduct " id="pageSearchVal-FieldListCompanyProduct_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
                 {% endif %}
               </div>
+              {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
                 <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox></span>
+ name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListCompanyProductPage %}
@@ -1002,7 +1014,7 @@
                                 <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
                                 <span> speed in seconds </span>
                                 <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-                                <button onclick="animateStats(); ">animate</button>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
                               </div>
                             {% endif %}
                           {% endif %}
@@ -1029,7 +1041,6 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-        </div>
 {% if companyProductCount == 0 %}
         <h1>
           <a href="{{pageUri}}">
@@ -1085,6 +1096,7 @@
         {{ htmForm_searchpageCompanyProduct() }}
   {% endif %}
         {%- endblock htmFormCompanyProductPage %}
+        </div>
       {%- endblock htmBodyMiddleCompanyProductPage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1115,11 +1127,11 @@
   {% endif %}
               >
           </sl-input>
-          <button
+          <sl-button
               onclick="window.location.href = '/product?q=&quot;, query1, &quot;:' + encodeURIComponent(this.previousElementSibling.value) + '&quot;, fqs, sorts, &quot;&amp;rows=&quot;, start2, &quot;&amp;rows=&quot;, rows1, &quot;'; "
               >
             <i class="fas fa-search "></i>
-          </button>
+          </sl-button>
           <div>
             <div>
               <div>

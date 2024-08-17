@@ -177,6 +177,8 @@ SITE_STATIC_REPO: "git@github.com:{{ GITHUB_ORG }}/{{ SITE_STATIC_NAME }}.git"
 STATIC_PATH: "{{ (PARENT_SRC + '/' + SITE_STATIC_NAME) | realpath }}"
 # The base URL to the static files. 
 STATIC_BASE_URL: "{{ SITE_BASE_URL }}/static"
+# The site logo relative URI
+SITE_LOGO_URI: "/svg/computate-keys.svg"
 # The path to the template files. 
 TEMPLATE_PATH: "{{ SITE_SRC }}/src/main/resources/templates"
 # The path to the site page templates. 
@@ -239,7 +241,7 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 #################
 
 # Name of the solr deployment in OpenShift. 
-SOLR_NAME: solr
+#SOLR_NAME: solr
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL: true
 # The host name to connect to Solr in OpenShift. 
@@ -385,22 +387,11 @@ KAFKA_BROKERS: "127.0.0.1:39275"
 KAFKA_GROUP: "{{ SITE_SHORT_NAME }}-kafka"
 KAFKA_SECURITY_PROTOCOL: "SSL"
 KAFKA_SSL_KEYSTORE_TYPE: "pkcs12"
-KAFKA_SSL_KEYSTORE_LOCATION: "/home/ctate/.local/src/smartabyar-smartvillage/config/kafka-user.p12"
-KAFKA_SSL_KEYSTORE_PASSWORD: "MBpdJKCmHEYFINYwNJ3iWY0C8n3Fabvk"
+KAFKA_SSL_KEYSTORE_LOCATION: ""
+KAFKA_SSL_KEYSTORE_PASSWORD: ""
 KAFKA_SSL_TRUSTSTORE_TYPE: "pkcs12"
-KAFKA_SSL_TRUSTSTORE_LOCATION: "/home/ctate/.local/src/smartabyar-smartvillage/config/kafka-ca.p12"
-KAFKA_SSL_TRUSTSTORE_PASSWORD: "X5rFaKRoxAJv"
-
-#############
-# IoT Agent #
-#############
-
-# Whether to use SSL when connecting to the IoT Agent. 
-IOT_AGENT_SSL: false
-# The host name to connect to the IoT Agent in OpenShift. 
-IOT_AGENT_HOST_NAME: "iotagent-json.iotagent.svc"
-# The default port that the IoT Agent runs. 
-IOT_AGENT_PORT: 4041
+KAFKA_SSL_TRUSTSTORE_LOCATION: ""
+KAFKA_SSL_TRUSTSTORE_PASSWORD: ""
 
 ##################
 # Context Broker #
@@ -419,6 +410,16 @@ CONTEXT_BROKER_PORT: 9090
 
 # Enable MQTT message integration. 
 ENABLE_MQTT: false
+# The namespace in OpenShift where the AMQP message broker will run. 
+MQTT_NAMESPACE: rabbitmq
+# The MQTT port. 
+MQTT_PORT: 5672
+# The MQTT host name. 
+MQTT_HOST_NAME: "rabbitmq.{{ MQTT_NAMESPACE }}.svc"
+# The MQTT user. 
+MQTT_USER: "user"
+# The MQTT password. 
+#MQTT_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='iotagent-json-message-broker-secret', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
 
 #############
 # AMQP vars #
@@ -433,9 +434,9 @@ AMQP_PORT: 5672
 # The AMQP host name. 
 AMQP_HOST_NAME: "rabbitmq.{{ AMQP_NAMESPACE }}.svc"
 # The AMQP user. 
-AMQP_HOST_USER: "user"
+AMQP_USER: "user"
 # The AMQP password. 
-AMQP_HOST_PASSWORD: ""
+AMQP_PASSWORD: ""
 #AMQP_HOST_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='iotagent-json-message-broker-secret', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
 # The AMQP virtual host. 
 AMQP_VIRTUAL_HOST: "%2F"
@@ -510,3 +511,8 @@ WRITE_COMMENTS: true
 
 #IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
 #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
+
+SITE_REDIRECTS:
+  - src: /hackathons
+    dest: /en-us/article/hackathons
+

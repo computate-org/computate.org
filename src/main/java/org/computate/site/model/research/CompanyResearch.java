@@ -41,8 +41,8 @@ public class CompanyResearch extends CompanyResearchGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: service name
-   * Description: The service name. 
+   * DisplayName: research name
+   * Description: The research name. 
    * HtmRow: 3
    * HtmCell: 1
    * HtmColumn: 1
@@ -55,8 +55,8 @@ public class CompanyResearch extends CompanyResearchGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: service description
-   * Description: The service description. 
+   * DisplayName: research description
+   * Description: The research description. 
    * HtmRow: 3
    * HtmCell: 2
    * HtmColumn: 2
@@ -142,7 +142,7 @@ public class CompanyResearch extends CompanyResearchGen<BaseResult> {
 
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s - %s", CompanyResearch_NameAdjectiveSingular_enUS, title));
+		w.o(String.format("%s — %s", CompanyResearch_NameAdjectiveSingular_enUS, title));
 	}
 
 	@Override

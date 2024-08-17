@@ -62,6 +62,8 @@ import org.computate.search.response.solr.SolrResponse;
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
  * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class WeatherObservedGen into the class WeatherObserved. 
+ * </li><li>You can add a class comment "SqlOrder: " followed by an Integer to sort this class compared when generating the SQL code to create and drop tables. 
+ * The Order comment allows you do define which order the SQL code is generated. 
  * </li>
  * <h3>About the WeatherObserved class and it's generated class WeatherObservedGen&lt;BaseModel&gt;: </h3>extends WeatherObservedGen
  * <p>
@@ -125,9 +127,6 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * <h2>Order: 9</h2>
  * <p>This class contains a comment <b>"Order: 9"</b>, which means this class will be sorted by the given number 9 ascending when code that relates to multiple classes at the same time is generated. 
- * </p>
- * <h2>SqlOrder: 9</h2>
- * <p>This class contains a comment <b>"SqlOrder: 9"</b>, which means this class will be sorted by the given number 9 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -200,7 +199,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String WeatherObserved_SingularName_enUS = "weather observed device";
 	public static final String WeatherObserved_PluralName_enUS = "weather observed devices";
 	public static final String WeatherObserved_NameActual_enUS = "current weather observed device";
-	public static final String WeatherObserved_AllName_enUS = "all the weather observed devices";
+	public static final String WeatherObserved_AllName_enUS = "all weather observed devices";
 	public static final String WeatherObserved_SearchAllNameBy_enUS = "search weather observed devices by ";
 	public static final String WeatherObserved_Title_enUS = "weather observed devices";
 	public static final String WeatherObserved_ThePluralName_enUS = "the weather observed devices";

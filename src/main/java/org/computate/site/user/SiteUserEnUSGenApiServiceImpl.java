@@ -1501,6 +1501,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			searchList.q("*:*");
 			searchList.setC(SiteUser.class);
 			searchList.setSiteRequest_(siteRequest);
+			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
 					searchList.fl(SiteUser.varIndexedSiteUser(v));
