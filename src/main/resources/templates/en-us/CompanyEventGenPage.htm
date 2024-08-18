@@ -174,21 +174,45 @@
         });
 
         {%- block websocketCompanyEventPage %}{%- endblock %}
-        document.querySelector('#htmForm_patchCompanyEvent')?.addEventListener('submit', event => {
+
+        var submitForm_patchCompanyEvent = document.querySelector('#htmForm_patchCompanyEvent')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyEvent(null, document.querySelector('#htmForm_patchCompanyEvent'), document.querySelector('#htmFormButton_patchCompanyEvent'));
+          return false;
         });
-        document.querySelector('#htmForm_postCompanyEvent')?.addEventListener('submit', event => {
+        document.querySelector('#htmFormButton_patchCompanyEvent')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyEvent(null, document.querySelector('#htmForm_patchCompanyEvent'), document.querySelector('#htmFormButton_patchCompanyEvent'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyEvent = document.querySelector('#htmForm_postCompanyEvent')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyEvent')?.addEventListener('click', event => {
           event.preventDefault();
           postCompanyEvent(document.querySelector('#htmForm_postCompanyEvent'), document.querySelector('#htmFormButton_postCompanyEvent'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
         });
-        document.querySelector('#htmForm_putimportCompanyEvent')?.addEventListener('submit', event => {
+
+        var submitForm_putimportCompanyEvent = document.querySelector('#htmForm_putimportCompanyEvent')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyEvent')?.addEventListener('click', event => {
           event.preventDefault();
           putimportCompanyEvent(document.querySelector('#htmForm_putimportCompanyEvent'), document.querySelector('#htmFormButton_putimportCompanyEvent'));
+          return false;
         });
-        document.querySelector('#htmForm_searchpageCompanyEvent')?.addEventListener('submit', event => {
+
+        var submitForm_searchpageCompanyEvent = document.querySelector('#htmForm_searchpageCompanyEvent')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyEvent')?.addEventListener('click', event => {
           event.preventDefault();
           searchpageCompanyEvent();
+          return false;
         });
       });
     </script>
@@ -204,16 +228,7 @@
 
 {%- block htmUrlCompanyEventPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyEventPage %}
 
-{%- macro htmButton_patchCompanyEvent() %}
-        <sl-tooltip content="Modify event">
-          <sl-button
-              onclick="document.querySelector('#patchCompanyEventDialog').show(); "
-              >
-            <i class="fas fa-edit "></i>
-            Modify
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_patchCompanyEvent() %}<sl-button onclick="document.querySelector('#patchCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -343,21 +358,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_patchCompanyEvent() }}
           </form>
+          {{ htmFormButton_patchCompanyEvent() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyEvent() %}
-        <sl-tooltip content="Create an event">
-          <sl-button
-              onclick="document.querySelector('#postCompanyEventDialog').show(); "
-              >
-            <i class="fas fa-file-plus "></i>
-            Create
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_postCompanyEvent() %}<sl-button onclick="document.querySelector('#postCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -488,21 +494,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_postCompanyEvent() }}
           </form>
+          {{ htmFormButton_postCompanyEvent() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyEvent() %}
-        <sl-tooltip content="Import events">
-          <sl-button
-              onclick="document.querySelector('#putimportCompanyEventDialog').show(); "
-              >
-            <i class="fas fa-file-import "></i>
-            Import
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_putimportCompanyEvent() %}<sl-button onclick="document.querySelector('#putimportCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -521,13 +518,12 @@
                   >
               </sl-textarea>
             </div>
-            {{ htmFormButton_putimportCompanyEvent() }}
           </form>
+          {{ htmFormButton_putimportCompanyEvent() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_searchpageCompanyEvent() %}
-{%- endmacro %}
+{%- macro htmButton_searchpageCompanyEvent() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -725,58 +721,14 @@
             {%- endmacro htmBodyAllCompanyEventPage() %}
 {%- macro htmSearchButtonsCompanyEventPage() %}
         <div id="htmSearchButtons">
-          <sl-tooltip placement="top" content="Advanced search for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
-              Search
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Filters and facet counts for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
-              Filters
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
-              Range
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for events">
-            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
-              Pivot
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
-              FieldList
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
-              Stats
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Query the JSON REST API for events">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
-                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
-                >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
-              Api
-            </sl-button>
-          </sl-tooltip>
-        </div>
+<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> Search</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow "></i> Filters</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> Range</sl-button><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> Pivot</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> FieldList</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> Stats</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> Api</sl-button>        </div>
 {%- endmacro htmSearchButtonsCompanyEventPage() %}
 
 {%- macro htmPaginationButtonsCompanyEventPage() %}
             <div id="htmPaginationButtons">
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button id="grid-toggle-details">
+                  <sl-button pill id="grid-toggle-details">
                     <i class="fa-solid fa-list"></i>
                   </sl-button>
                 </sl-tooltip>
@@ -786,14 +738,14 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button id="grid-toggle-card">
+                  <sl-button pill id="grid-toggle-card">
                     <i class="fa-solid fa-grid"></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -808,43 +760,22 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyEventPage() %}
 {%- macro htmFormsCompanyEventPage() %}
   {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
-      {% if companyEventCount == 1 %}
-        <sl-tooltip content="Refresh this event">
-          <sl-button
-              id="refreshThisCompanyEventGenPage"
-              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyEventGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyEventGenPage')); }); return false; ">
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-      {% if companyEventCount > 0 %}
-        <sl-tooltip content="Refresh all the events">
-          <sl-button id="refreshAllCompanyEventGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
-            Refresh all 
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+            <div id="htmButtonGroup">
+{% if companyEventCount == 1 %}<sl-button id="refreshThisCompanyEventGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyEventGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyEventGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyEventCount > 0 %}<sl-button id="refreshAllCompanyEventGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyEventCount > 0 %}{{ htmButton_patchCompanyEvent() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyEventCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyEvent() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyEventCount > 0 %}
-        {{ htmButton_patchCompanyEvent() }}
         {{ htmForm_patchCompanyEvent() }}
     {%- endif %}
   {%- endif %}
@@ -852,16 +783,13 @@
     {%- if companyEventCount == int1 %}
       {%- if id is defined %}
       {%- else %}
-        {{ htmButton_postCompanyEvent() }}
         {{ htmForm_postCompanyEvent() }}
       {%- endif %}
     {%- else %}
-        {{ htmButton_postCompanyEvent() }}
         {{ htmForm_postCompanyEvent() }}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyEvent() }}
         {{ htmForm_putimportCompanyEvent() }}
   {%- endif %}
 {%- endmacro htmFormsCompanyEventPage() %}
@@ -1008,11 +936,10 @@
                   </td>
                 </tr>
               </table>
-              {% for key, value in varsRange.items() %}
-              <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyEvent_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyEvent', value); "></sl-radio-group>
-              </div>
-              {% endfor %}
+              <sl-radio-group>                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyEvent_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyEvent', value); ">{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
               {%- endblock htmBodyRangeCompanyEventPage %}
             </div>
           </sl-drawer>
@@ -1035,7 +962,8 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyEvent_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyEvent_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
               {% endfor %}
               {%- endblock htmBodyPivotCompanyEventPage %}
             </div>
@@ -1062,8 +990,7 @@
               {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyEvent_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyEvent_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListCompanyEventPage %}
@@ -1145,11 +1072,17 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if companyEventCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all events">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all events
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+          <i class="fa-duotone fa-solid fa-map-location-dot"></i>
             <span>events</span>
-          </a>
         </h1>
         {{ htmSearchButtonsCompanyEventPage() }}
             {{ htmFormsCompanyEventPage() }}
@@ -1164,17 +1097,18 @@
 {% else %}
   {% if companyEventCount == 1 %}
     {% if id is defined %}
+        <div>
+          <sl-tooltip content="back to all events">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all events
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-            <span class="">event</span>
-          </a>
+          <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+          {{companyEvent_.objectTitle}}
         </h1>
-        <h2>
-          <span>
-            <span class="">{{companyEvent_.objectTitle}}</span>
-          </span>
-        </h2>
         {{ htmSearchButtonsCompanyEventPage() }}
             {{ htmFormsCompanyEventPage() }}
     {% else %}
@@ -1246,7 +1180,7 @@
           <div class="">
             <a href="/event" class="">
               <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-              see all the events
+              see all events
             </a>
           </div>
         </div>
@@ -1269,6 +1203,7 @@
                       value="{%- if companyEvent_.created is defined %}{{ formatZonedDateTime(companyEvent_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1298,6 +1233,7 @@
                       value="{%- if companyEvent_.modified is defined %}{{ formatZonedDateTime(companyEvent_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1354,6 +1290,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyEvent inputCompanyEvent{{id}}Archived "
+                      name="setArchived"
+                      data-id="{{ id }}"
+                      data-val="{{ companyEvent_.archived }}"
+                      >archived</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -1363,6 +1311,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archived"
+                      label="archived"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classCompanyEvent inputCompanyEvent{{id}}Archived "
@@ -1377,11 +1326,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyEvent_.archived is defined %}
-                      checked="checked"
+    {%- if companyEvent_.archived == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >archived</sl-checkbox>
   {%- else %}
                       >
@@ -1390,7 +1338,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1406,6 +1354,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="deleted"
+                      label="deleted"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
+                      name="setDeleted"
+                      data-id="{{ id }}"
+                      data-val="{{ companyEvent_.deleted }}"
+                      >deleted</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -1415,6 +1375,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="deleted"
+                      label="deleted"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
@@ -1429,11 +1390,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyEvent_.deleted is defined %}
-                      checked="checked"
+    {%- if companyEvent_.deleted == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >deleted</sl-checkbox>
   {%- else %}
                       >
@@ -1442,7 +1402,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}

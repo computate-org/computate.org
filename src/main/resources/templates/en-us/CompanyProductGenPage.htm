@@ -101,21 +101,45 @@
         });
 
         {%- block websocketCompanyProductPage %}{%- endblock %}
-        document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
+
+        var submitForm_patchCompanyProduct = document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'), document.querySelector('#htmFormButton_patchCompanyProduct'));
+          return false;
         });
-        document.querySelector('#htmForm_postCompanyProduct')?.addEventListener('submit', event => {
+        document.querySelector('#htmFormButton_patchCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'), document.querySelector('#htmFormButton_patchCompanyProduct'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyProduct = document.querySelector('#htmForm_postCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyProduct')?.addEventListener('click', event => {
           event.preventDefault();
           postCompanyProduct(document.querySelector('#htmForm_postCompanyProduct'), document.querySelector('#htmFormButton_postCompanyProduct'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
         });
-        document.querySelector('#htmForm_putimportCompanyProduct')?.addEventListener('submit', event => {
+
+        var submitForm_putimportCompanyProduct = document.querySelector('#htmForm_putimportCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyProduct')?.addEventListener('click', event => {
           event.preventDefault();
           putimportCompanyProduct(document.querySelector('#htmForm_putimportCompanyProduct'), document.querySelector('#htmFormButton_putimportCompanyProduct'));
+          return false;
         });
-        document.querySelector('#htmForm_searchpageCompanyProduct')?.addEventListener('submit', event => {
+
+        var submitForm_searchpageCompanyProduct = document.querySelector('#htmForm_searchpageCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyProduct')?.addEventListener('click', event => {
           event.preventDefault();
           searchpageCompanyProduct();
+          return false;
         });
       });
     </script>
@@ -131,16 +155,7 @@
 
 {%- block htmUrlCompanyProductPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyProductPage %}
 
-{%- macro htmButton_patchCompanyProduct() %}
-        <sl-tooltip content="Modify product">
-          <sl-button
-              onclick="document.querySelector('#patchCompanyProductDialog').show(); "
-              >
-            <i class="fas fa-edit "></i>
-            Modify
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_patchCompanyProduct() %}<sl-button onclick="document.querySelector('#patchCompanyProductDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyProduct() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -260,21 +275,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_patchCompanyProduct() }}
           </form>
+          {{ htmFormButton_patchCompanyProduct() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyProduct() %}
-        <sl-tooltip content="Create a product">
-          <sl-button
-              onclick="document.querySelector('#postCompanyProductDialog').show(); "
-              >
-            <i class="fas fa-file-plus "></i>
-            Create
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_postCompanyProduct() %}<sl-button onclick="document.querySelector('#postCompanyProductDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyProduct() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -395,21 +401,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_postCompanyProduct() }}
           </form>
+          {{ htmFormButton_postCompanyProduct() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyProduct() %}
-        <sl-tooltip content="Import products">
-          <sl-button
-              onclick="document.querySelector('#putimportCompanyProductDialog').show(); "
-              >
-            <i class="fas fa-file-import "></i>
-            Import
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_putimportCompanyProduct() %}<sl-button onclick="document.querySelector('#putimportCompanyProductDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyProduct() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -428,13 +425,12 @@
                   >
               </sl-textarea>
             </div>
-            {{ htmFormButton_putimportCompanyProduct() }}
           </form>
+          {{ htmFormButton_putimportCompanyProduct() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_searchpageCompanyProduct() %}
-{%- endmacro %}
+{%- macro htmButton_searchpageCompanyProduct() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyProduct() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -622,58 +618,14 @@
             {%- endmacro htmBodyAllCompanyProductPage() %}
 {%- macro htmSearchButtonsCompanyProductPage() %}
         <div id="htmSearchButtons">
-          <sl-tooltip placement="top" content="Advanced search for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
-              Search
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Filters and facet counts for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
-              Filters
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
-              Range
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for products">
-            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
-              Pivot
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
-              FieldList
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
-              Stats
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Query the JSON REST API for products">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
-                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
-                >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
-              Api
-            </sl-button>
-          </sl-tooltip>
-        </div>
+<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> Search</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow "></i> Filters</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> Range</sl-button><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> Pivot</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> FieldList</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> Stats</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> Api</sl-button>        </div>
 {%- endmacro htmSearchButtonsCompanyProductPage() %}
 
 {%- macro htmPaginationButtonsCompanyProductPage() %}
             <div id="htmPaginationButtons">
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button id="grid-toggle-details">
+                  <sl-button pill id="grid-toggle-details">
                     <i class="fa-solid fa-list"></i>
                   </sl-button>
                 </sl-tooltip>
@@ -683,14 +635,14 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button id="grid-toggle-card">
+                  <sl-button pill id="grid-toggle-card">
                     <i class="fa-solid fa-grid"></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -705,43 +657,22 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyProductPage() %}
 {%- macro htmFormsCompanyProductPage() %}
   {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
-      {% if companyProductCount == 1 %}
-        <sl-tooltip content="Refresh this product">
-          <sl-button
-              id="refreshThisCompanyProductGenPage"
-              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-      {% if companyProductCount > 0 %}
-        <sl-tooltip content="Refresh all the products">
-          <sl-button id="refreshAllCompanyProductGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
-            Refresh all 
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+            <div id="htmButtonGroup">
+{% if companyProductCount == 1 %}<sl-button id="refreshThisCompanyProductGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyProductCount > 0 %}<sl-button id="refreshAllCompanyProductGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyProductCount > 0 %}{{ htmButton_patchCompanyProduct() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyProductCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyProduct() }}{%- endif %}{%- else %}{{ htmButton_postCompanyProduct() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyProduct() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyProductCount > 0 %}
-        {{ htmButton_patchCompanyProduct() }}
         {{ htmForm_patchCompanyProduct() }}
     {%- endif %}
   {%- endif %}
@@ -749,16 +680,13 @@
     {%- if companyProductCount == int1 %}
       {%- if id is defined %}
       {%- else %}
-        {{ htmButton_postCompanyProduct() }}
         {{ htmForm_postCompanyProduct() }}
       {%- endif %}
     {%- else %}
-        {{ htmButton_postCompanyProduct() }}
         {{ htmForm_postCompanyProduct() }}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyProduct() }}
         {{ htmForm_putimportCompanyProduct() }}
   {%- endif %}
 {%- endmacro htmFormsCompanyProductPage() %}
@@ -905,11 +833,10 @@
                   </td>
                 </tr>
               </table>
-              {% for key, value in varsRange.items() %}
-              <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); "></sl-radio-group>
-              </div>
-              {% endfor %}
+              <sl-radio-group>                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyProduct_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyProduct', value); ">{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
               {%- endblock htmBodyRangeCompanyProductPage %}
             </div>
           </sl-drawer>
@@ -932,7 +859,8 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
               {% endfor %}
               {%- endblock htmBodyPivotCompanyProductPage %}
             </div>
@@ -959,8 +887,7 @@
               {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyProduct_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListCompanyProductPage %}
@@ -1042,11 +969,17 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if companyProductCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-conveyor-belt"></i>
+          <i class="fa-regular fa-conveyor-belt"></i>
             <span>products</span>
-          </a>
         </h1>
         {{ htmSearchButtonsCompanyProductPage() }}
             {{ htmFormsCompanyProductPage() }}
@@ -1061,17 +994,18 @@
 {% else %}
   {% if companyProductCount == 1 %}
     {% if id is defined %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-conveyor-belt"></i>
-            <span class="">product</span>
-          </a>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          {{companyProduct_.objectTitle}}
         </h1>
-        <h2>
-          <span>
-            <span class="">{{companyProduct_.objectTitle}}</span>
-          </span>
-        </h2>
         {{ htmSearchButtonsCompanyProductPage() }}
             {{ htmFormsCompanyProductPage() }}
     {% else %}
@@ -1143,7 +1077,7 @@
           <div class="">
             <a href="/product" class="">
               <i class="fa-regular fa-conveyor-belt"></i>
-              see all the products
+              see all products
             </a>
           </div>
         </div>
@@ -1166,6 +1100,7 @@
                       value="{%- if companyProduct_.created is defined %}{{ formatZonedDateTime(companyProduct_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1195,6 +1130,7 @@
                       value="{%- if companyProduct_.modified is defined %}{{ formatZonedDateTime(companyProduct_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1251,6 +1187,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
+                      data-id="{{ id }}"
+                      data-val="{{ companyProduct_.archived }}"
+                      >archived</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -1260,6 +1208,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archived"
+                      label="archived"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
@@ -1274,11 +1223,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyProduct_.archived is defined %}
-                      checked="checked"
+    {%- if companyProduct_.archived == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >archived</sl-checkbox>
   {%- else %}
                       >
@@ -1287,7 +1235,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1303,6 +1251,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="deleted"
+                      label="deleted"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
+                      name="setDeleted"
+                      data-id="{{ id }}"
+                      data-val="{{ companyProduct_.deleted }}"
+                      >deleted</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -1312,6 +1272,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="deleted"
+                      label="deleted"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classCompanyProduct inputCompanyProduct{{id}}Deleted "
@@ -1326,11 +1287,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyProduct_.deleted is defined %}
-                      checked="checked"
+    {%- if companyProduct_.deleted == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >deleted</sl-checkbox>
   {%- else %}
                       >
@@ -1339,7 +1299,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}

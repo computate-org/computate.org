@@ -175,7 +175,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String CompanyResearch_SingularName_enUS = "research";
 	public static final String CompanyResearch_PluralName_enUS = "research";
 	public static final String CompanyResearch_NameActual_enUS = "current research";
-	public static final String CompanyResearch_AllName_enUS = "all the research";
+	public static final String CompanyResearch_AllName_enUS = "all research";
 	public static final String CompanyResearch_SearchAllNameBy_enUS = "search research by ";
 	public static final String CompanyResearch_Title_enUS = "research";
 	public static final String CompanyResearch_ThePluralName_enUS = "the research";

@@ -101,21 +101,45 @@
         });
 
         {%- block websocketCompanyWebsitePage %}{%- endblock %}
-        document.querySelector('#htmForm_patchCompanyWebsite')?.addEventListener('submit', event => {
+
+        var submitForm_patchCompanyWebsite = document.querySelector('#htmForm_patchCompanyWebsite')?.addEventListener('submit', event => {
           event.preventDefault();
-          patchCompanyWebsite(null, document.querySelector('#htmForm_patchCompanyWebsite'), document.querySelector('#htmFormButton_patchCompanyWebsite'));
+          return false;
         });
-        document.querySelector('#htmForm_postCompanyWebsite')?.addEventListener('submit', event => {
+        document.querySelector('#htmFormButton_patchCompanyWebsite')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyWebsite(null, document.querySelector('#htmForm_patchCompanyWebsite'), document.querySelector('#htmFormButton_patchCompanyWebsite'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyWebsite = document.querySelector('#htmForm_postCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyWebsite')?.addEventListener('click', event => {
           event.preventDefault();
           postCompanyWebsite(document.querySelector('#htmForm_postCompanyWebsite'), document.querySelector('#htmFormButton_postCompanyWebsite'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
         });
-        document.querySelector('#htmForm_putimportCompanyWebsite')?.addEventListener('submit', event => {
+
+        var submitForm_putimportCompanyWebsite = document.querySelector('#htmForm_putimportCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyWebsite')?.addEventListener('click', event => {
           event.preventDefault();
           putimportCompanyWebsite(document.querySelector('#htmForm_putimportCompanyWebsite'), document.querySelector('#htmFormButton_putimportCompanyWebsite'));
+          return false;
         });
-        document.querySelector('#htmForm_searchpageCompanyWebsite')?.addEventListener('submit', event => {
+
+        var submitForm_searchpageCompanyWebsite = document.querySelector('#htmForm_searchpageCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyWebsite')?.addEventListener('click', event => {
           event.preventDefault();
           searchpageCompanyWebsite();
+          return false;
         });
       });
     </script>
@@ -131,16 +155,7 @@
 
 {%- block htmUrlCompanyWebsitePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyWebsitePage %}
 
-{%- macro htmButton_patchCompanyWebsite() %}
-        <sl-tooltip content="Modify website">
-          <sl-button
-              onclick="document.querySelector('#patchCompanyWebsiteDialog').show(); "
-              >
-            <i class="fas fa-edit "></i>
-            Modify
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_patchCompanyWebsite() %}<sl-button onclick="document.querySelector('#patchCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -260,21 +275,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_patchCompanyWebsite() }}
           </form>
+          {{ htmFormButton_patchCompanyWebsite() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyWebsite() %}
-        <sl-tooltip content="Create a website">
-          <sl-button
-              onclick="document.querySelector('#postCompanyWebsiteDialog').show(); "
-              >
-            <i class="fas fa-file-plus "></i>
-            Create
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_postCompanyWebsite() %}<sl-button onclick="document.querySelector('#postCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -395,21 +401,12 @@
               {%- endif %}
               </div>
             </sl-details>
-            {{ htmFormButton_postCompanyWebsite() }}
           </form>
+          {{ htmFormButton_postCompanyWebsite() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyWebsite() %}
-        <sl-tooltip content="Import websites">
-          <sl-button
-              onclick="document.querySelector('#putimportCompanyWebsiteDialog').show(); "
-              >
-            <i class="fas fa-file-import "></i>
-            Import
-          </sl-button>
-        </sl-tooltip>
-{%- endmacro %}
+{%- macro htmButton_putimportCompanyWebsite() %}<sl-button onclick="document.querySelector('#putimportCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -428,13 +425,12 @@
                   >
               </sl-textarea>
             </div>
-            {{ htmFormButton_putimportCompanyWebsite() }}
           </form>
+          {{ htmFormButton_putimportCompanyWebsite() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_searchpageCompanyWebsite() %}
-{%- endmacro %}
+{%- macro htmButton_searchpageCompanyWebsite() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -622,58 +618,14 @@
             {%- endmacro htmBodyAllCompanyWebsitePage() %}
 {%- macro htmSearchButtonsCompanyWebsitePage() %}
         <div id="htmSearchButtons">
-          <sl-tooltip placement="top" content="Advanced search for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); ">
-              <i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> 
-              Search
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Filters and facet counts for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); ">
-              <i slot="prefix" class="fad fa-filters hover-box-shadow "></i> 
-              Filters
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); ">
-              <i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> 
-              Range
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); ">
-              <i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> 
-              Pivot
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); ">
-              <i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> 
-              FieldList
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Advanced search for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); ">
-              <i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> 
-              Stats
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="top" content="Query the JSON REST API for websites">
-            <sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); "
-                 href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"
-                >
-              <i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> 
-              Api
-            </sl-button>
-          </sl-tooltip>
-        </div>
+<sl-button onclick="document.querySelector('#siteSidebarToggleSearch').show(); "><i slot="prefix" class="fad fa-magnifying-glass hover-box-shadow "></i> Search</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFilters').show(); "><i slot="prefix" class="fad fa-filters hover-box-shadow "></i> Filters</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleRange').show(); "><i slot="prefix" class="fad fa-calendar-range hover-box-shadow "></i> Range</sl-button><sl-button onclick="document.querySelector('#siteSidebarTogglePivot').show(); "><i slot="prefix" class="fad fa-table-pivot hover-box-shadow "></i> Pivot</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleFieldList').show(); "><i slot="prefix" class="fad fa-list-ul hover-box-shadow "></i> FieldList</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleStats').show(); "><i slot="prefix" class="fad fa-chart-candlestick hover-box-shadow "></i> Stats</sl-button><sl-button onclick="document.querySelector('#siteSidebarToggleApi').show(); " href="{{ apiUri }}{% if pk is defined %}/{{ pk }}{% else %}{% if id is defined %}/{{ id }}{% else %}{{ queryStr }}{% endif %}{% endif %}"><i slot="prefix" class="fad fa-brackets-curly hover-box-shadow "></i> Api</sl-button>        </div>
 {%- endmacro htmSearchButtonsCompanyWebsitePage() %}
 
 {%- macro htmPaginationButtonsCompanyWebsitePage() %}
             <div id="htmPaginationButtons">
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button id="grid-toggle-details">
+                  <sl-button pill id="grid-toggle-details">
                     <i class="fa-solid fa-list"></i>
                   </sl-button>
                 </sl-tooltip>
@@ -683,14 +635,14 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button id="grid-toggle-card">
+                  <sl-button pill id="grid-toggle-card">
                     <i class="fa-solid fa-grid"></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
-                  <sl-button{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-left "></i>
                   </sl-button>
                 </sl-tooltip>
@@ -705,43 +657,22 @@
                   </sl-button>
                 </sl-tooltip>
                 <sl-tooltip placement="top" content="Show the next results">
-                  <sl-button{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
+                  <sl-button pill{% if pagination.pageNext is defined %} href="{{pageUri}}?start={{pagination.pageNext.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
                     <i slot="prefix" class="fas fa-arrow-square-right "></i>
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyWebsitePage() %}
 {%- macro htmFormsCompanyWebsitePage() %}
   {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
-      {% if companyWebsiteCount == 1 %}
-        <sl-tooltip content="Refresh this website">
-          <sl-button
-              id="refreshThisCompanyWebsiteGenPage"
-              onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }); return false; ">
-            <i slot="prefix" class="fas fa-sync-alt "></i>
-            refresh
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-      {% if companyWebsiteCount > 0 %}
-        <sl-tooltip content="Refresh all the websites">
-          <sl-button id="refreshAllCompanyWebsiteGenPage{{id}}"
-              onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }); "
-              >
-            <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
-            Refresh all 
-          </sl-button>
-        </sl-tooltip>
-      {% endif %}
-    {% endif %}
-  {% endif %}
+            <div id="htmButtonGroup">
+{% if companyWebsiteCount == 1 %}<sl-button id="refreshThisCompanyWebsiteGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyWebsiteCount > 0 %}<sl-button id="refreshAllCompanyWebsiteGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyWebsiteCount > 0 %}{{ htmButton_patchCompanyWebsite() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyWebsiteCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyWebsite() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyWebsiteCount > 0 %}
-        {{ htmButton_patchCompanyWebsite() }}
         {{ htmForm_patchCompanyWebsite() }}
     {%- endif %}
   {%- endif %}
@@ -749,16 +680,13 @@
     {%- if companyWebsiteCount == int1 %}
       {%- if id is defined %}
       {%- else %}
-        {{ htmButton_postCompanyWebsite() }}
         {{ htmForm_postCompanyWebsite() }}
       {%- endif %}
     {%- else %}
-        {{ htmButton_postCompanyWebsite() }}
         {{ htmForm_postCompanyWebsite() }}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
-        {{ htmButton_putimportCompanyWebsite() }}
         {{ htmForm_putimportCompanyWebsite() }}
   {%- endif %}
 {%- endmacro htmFormsCompanyWebsitePage() %}
@@ -905,11 +833,10 @@
                   </td>
                 </tr>
               </table>
-              {% for key, value in varsRange.items() %}
-              <div>
-                <sl-radio-group name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyWebsite', value); "></sl-radio-group>
-              </div>
-              {% endfor %}
+              <sl-radio-group>                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %} onclick="facetRangeChange('CompanyWebsite', value); ">{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
               {%- endblock htmBodyRangeCompanyWebsitePage %}
             </div>
           </sl-drawer>
@@ -932,7 +859,8 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-<sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyWebsite', value); ">{{ value.displayName }}</sl-checkbox>              </div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyWebsite', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
               {% endfor %}
               {%- endblock htmBodyPivotCompanyWebsitePage %}
             </div>
@@ -959,8 +887,7 @@
               {% endif %}
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox
- name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyWebsite', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyWebsite_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyWebsite', value); ">{{ value.displayName }}</sl-checkbox>
               </div>
                 {% endfor %}
               {%- endblock htmBodyFieldListCompanyWebsitePage %}
@@ -1042,11 +969,17 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if companyWebsiteCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all websites">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all websites
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-globe-pointer"></i>
+          <i class="fa-regular fa-globe-pointer"></i>
             <span>websites</span>
-          </a>
         </h1>
         {{ htmSearchButtonsCompanyWebsitePage() }}
             {{ htmFormsCompanyWebsitePage() }}
@@ -1061,17 +994,18 @@
 {% else %}
   {% if companyWebsiteCount == 1 %}
     {% if id is defined %}
+        <div>
+          <sl-tooltip content="back to all websites">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all websites
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            <i class="fa-regular fa-globe-pointer"></i>
-            <span class="">website</span>
-          </a>
+          <i class="fa-regular fa-globe-pointer"></i>
+          {{companyWebsite_.objectTitle}}
         </h1>
-        <h2>
-          <span>
-            <span class="">{{companyWebsite_.objectTitle}}</span>
-          </span>
-        </h2>
         {{ htmSearchButtonsCompanyWebsitePage() }}
             {{ htmFormsCompanyWebsitePage() }}
     {% else %}
@@ -1143,7 +1077,7 @@
           <div class="">
             <a href="/website" class="">
               <i class="fa-regular fa-globe-pointer"></i>
-              see all the websites
+              see all websites
             </a>
           </div>
         </div>
@@ -1166,6 +1100,7 @@
                       value="{%- if companyWebsite_.created is defined %}{{ formatZonedDateTime(companyWebsite_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1195,6 +1130,7 @@
                       value="{%- if companyWebsite_.modified is defined %}{{ formatZonedDateTime(companyWebsite_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -1251,6 +1187,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebsite inputCompanyWebsite{{id}}Archived "
+                      name="setArchived"
+                      data-id="{{ id }}"
+                      data-val="{{ companyWebsite_.archived }}"
+                      >archived</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -1260,6 +1208,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archived"
+                      label="archived"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebsite inputCompanyWebsite{{id}}Archived "
@@ -1274,11 +1223,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyWebsite_.archived is defined %}
-                      checked="checked"
+    {%- if companyWebsite_.archived == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >archived</sl-checkbox>
   {%- else %}
                       >
@@ -1287,7 +1235,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1303,6 +1251,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="deleted"
+                      label="deleted"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
+                      name="setDeleted"
+                      data-id="{{ id }}"
+                      data-val="{{ companyWebsite_.deleted }}"
+                      >deleted</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -1312,6 +1272,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="deleted"
+                      label="deleted"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
@@ -1326,11 +1287,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyWebsite_.deleted is defined %}
-                      checked="checked"
+    {%- if companyWebsite_.deleted == true %}
+                      checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >deleted</sl-checkbox>
   {%- else %}
                       >
@@ -1339,7 +1299,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}

@@ -21,10 +21,6 @@
 {%- block htmScriptsPageLayout %}
 {{ super() }}
 {%- block htmScriptsBaseResultPage %}
-    <script src="{{staticBaseUrl}}/js/enUS/BaseResultPage.js"></script>
-    {% if id is defined %}
-    <script type="module" src="{{staticBaseUrl}}/js/enUS/BaseResultPageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsBaseResultPage %}
 {%- endblock htmScriptsPageLayout %}
 
@@ -187,7 +183,7 @@
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsBaseResultPage() %}
 {%- macro htmFormsBaseResultPage() %}
@@ -476,11 +472,17 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if baseResultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to ">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              
+            </sl-button>
+          </sl-tooltip>
+        </div>
         <h1>
-          <a href="{{pageUri}}">
-            
+          
             <span></span>
-          </a>
         </h1>
         {{ htmSearchButtonsBaseResultPage() }}
             {{ htmFormsBaseResultPage() }}
@@ -495,13 +497,15 @@
 {% else %}
   {% if baseResultCount == 1 %}
     {% if id is defined %}
-        <h1>
+        <div>
           <sl-tooltip content="back to ">
             <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
-              back
+              
             </sl-button>
           </sl-tooltip>
+        </div>
+        <h1>
           
           {{baseResult_.objectTitle}}
         </h1>
@@ -598,6 +602,7 @@
                       value="{%- if baseResult_.created is defined %}{{ formatZonedDateTime(baseResult_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -626,6 +631,7 @@
                       value="{%- if baseResult_.modified is defined %}{{ formatZonedDateTime(baseResult_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
+                      data-id="{{ id }}"
                       >
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
@@ -680,6 +686,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
+                      name="setArchived"
+                      data-id="{{ id }}"
+                      data-val="{{ baseResult_.archived }}"
+                      >archived</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -689,6 +707,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archived"
+                      label="archived"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classBaseResult inputBaseResult{{id}}Archived "
@@ -703,11 +722,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if baseResult_.archived == true %}
                       checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >archived</sl-checkbox>
   {%- else %}
                       >
@@ -716,7 +734,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -731,6 +749,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="deleted"
+                      label="deleted"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
+                      name="setDeleted"
+                      data-id="{{ id }}"
+                      data-val="{{ baseResult_.deleted }}"
+                      >deleted</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -740,6 +770,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="deleted"
+                      label="deleted"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
@@ -754,11 +785,10 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if baseResult_.deleted == true %}
                       checked
     {%- endif %}
+                      data-id="{{ id }}"
                       >deleted</sl-checkbox>
   {%- else %}
                       >
@@ -767,7 +797,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}

@@ -178,7 +178,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	public static final String CompanyService_SingularName_enUS = "service";
 	public static final String CompanyService_PluralName_enUS = "services";
 	public static final String CompanyService_NameActual_enUS = "current service";
-	public static final String CompanyService_AllName_enUS = "all the services";
+	public static final String CompanyService_AllName_enUS = "all services";
 	public static final String CompanyService_SearchAllNameBy_enUS = "search services by ";
 	public static final String CompanyService_Title_enUS = "services";
 	public static final String CompanyService_ThePluralName_enUS = "the services";

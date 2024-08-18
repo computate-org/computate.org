@@ -176,7 +176,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String CompanyWebsite_SingularName_enUS = "website";
 	public static final String CompanyWebsite_PluralName_enUS = "websites";
 	public static final String CompanyWebsite_NameActual_enUS = "current website";
-	public static final String CompanyWebsite_AllName_enUS = "all the websites";
+	public static final String CompanyWebsite_AllName_enUS = "all websites";
 	public static final String CompanyWebsite_SearchAllNameBy_enUS = "search websites by ";
 	public static final String CompanyWebsite_Title_enUS = "websites";
 	public static final String CompanyWebsite_ThePluralName_enUS = "the websites";

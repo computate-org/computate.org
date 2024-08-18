@@ -186,7 +186,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static final String CompanyEvent_SingularName_enUS = "event";
 	public static final String CompanyEvent_PluralName_enUS = "events";
 	public static final String CompanyEvent_NameActual_enUS = "current event";
-	public static final String CompanyEvent_AllName_enUS = "all the events";
+	public static final String CompanyEvent_AllName_enUS = "all events";
 	public static final String CompanyEvent_SearchAllNameBy_enUS = "search events by ";
 	public static final String CompanyEvent_Title_enUS = "events";
 	public static final String CompanyEvent_ThePluralName_enUS = "the events";

@@ -179,7 +179,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String CompanyCourse_SingularName_enUS = "course";
 	public static final String CompanyCourse_PluralName_enUS = "courses";
 	public static final String CompanyCourse_NameActual_enUS = "current course";
-	public static final String CompanyCourse_AllName_enUS = "all the courses";
+	public static final String CompanyCourse_AllName_enUS = "all courses";
 	public static final String CompanyCourse_SearchAllNameBy_enUS = "search courses by ";
 	public static final String CompanyCourse_Title_enUS = "courses";
 	public static final String CompanyCourse_ThePluralName_enUS = "the courses";

@@ -178,7 +178,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String CompanyProduct_SingularName_enUS = "product";
 	public static final String CompanyProduct_PluralName_enUS = "products";
 	public static final String CompanyProduct_NameActual_enUS = "current product";
-	public static final String CompanyProduct_AllName_enUS = "all the products";
+	public static final String CompanyProduct_AllName_enUS = "all products";
 	public static final String CompanyProduct_SearchAllNameBy_enUS = "search products by ";
 	public static final String CompanyProduct_Title_enUS = "products";
 	public static final String CompanyProduct_ThePluralName_enUS = "the products";

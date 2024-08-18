@@ -19,6 +19,7 @@
 {%- endblock htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
+{{ super() }}
 {%- block htmScriptsWeatherObservedPage %}
     <script src="{{staticBaseUrl}}/js/enUS/WeatherObservedPage.js"></script>
     {% if pk is defined %}
@@ -2033,7 +2034,7 @@
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} – {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsWeatherObservedPage() %}
 {%- macro htmFormsWeatherObservedPage() %}
@@ -2340,13 +2341,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if weatherObservedCount == 0 %}
-        <h1>
+        <div>
           <sl-tooltip content="back to all weather observed devices">
             <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all weather observed devices
             </sl-button>
           </sl-tooltip>
+        </div>
+        <h1>
           <i class="fa-regular fa-cloud-bolt-sun"></i>
             <span>weather observed devices</span>
         </h1>
@@ -2363,13 +2366,15 @@
 {% else %}
   {% if weatherObservedCount == 1 %}
     {% if id is defined %}
-        <h1>
+        <div>
           <sl-tooltip content="back to all weather observed devices">
             <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all weather observed devices
             </sl-button>
           </sl-tooltip>
+        </div>
+        <h1>
           <i class="fa-regular fa-cloud-bolt-sun"></i>
           {{weatherObserved_.objectTitle}}
         </h1>

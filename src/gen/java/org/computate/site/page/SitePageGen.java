@@ -180,7 +180,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String SitePage_SingularName_enUS = "article";
 	public static final String SitePage_PluralName_enUS = "articles";
 	public static final String SitePage_NameActual_enUS = "current article";
-	public static final String SitePage_AllName_enUS = "all the articles";
+	public static final String SitePage_AllName_enUS = "all articles";
 	public static final String SitePage_SearchAllNameBy_enUS = "search articles by ";
 	public static final String SitePage_Title_enUS = "articles";
 	public static final String SitePage_ThePluralName_enUS = "the articles";

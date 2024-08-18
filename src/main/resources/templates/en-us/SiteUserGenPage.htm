@@ -19,6 +19,7 @@
 {%- endblock htmStyleBaseModelPage %}
 
 {%- block htmScriptsBaseModelPage %}
+{{ super() }}
 {%- block htmScriptsSiteUserPage %}
     <script src="{{staticBaseUrl}}/js/enUS/SiteUserPage.js"></script>
     {% if pk is defined %}
@@ -107,7 +108,7 @@
         });
         document.querySelector('#htmFormButton_patchSiteUser')?.addEventListener('click', event => {
           event.preventDefault();
-          patchSiteUser(null, document.querySelector('#htmForm_patchSiteUser'), document.querySelector('#htmFormButton_patchSiteUser'));
+          patchSiteUser(null, document.querySelector('#htmForm_patchSiteUser'), document.querySelector('#htmFormButton_patchSiteUser'), event.target.getAttribute('data-pk'));
           return false;
         });
 
@@ -586,7 +587,7 @@
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} - {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsSiteUserPage() %}
 {%- macro htmFormsSiteUserPage() %}
@@ -893,13 +894,15 @@
             <div id="site-calendar"><!-- // --></div>
           </div>
 {% if siteUserCount == 0 %}
-        <h1>
+        <div>
           <sl-tooltip content="back to all site users">
             <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all site users
             </sl-button>
           </sl-tooltip>
+        </div>
+        <h1>
           <i class="fa-duotone fa-solid fa-user-gear"></i>
             <span>site users</span>
         </h1>
@@ -916,13 +919,15 @@
 {% else %}
   {% if siteUserCount == 1 %}
     {% if id is defined %}
-        <h1>
+        <div>
           <sl-tooltip content="back to all site users">
             <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all site users
             </sl-button>
           </sl-tooltip>
+        </div>
+        <h1>
           <i class="fa-duotone fa-solid fa-user-gear"></i>
           {{siteUser_.objectTitle}}
         </h1>
@@ -1146,6 +1151,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classSiteUser inputSiteUser{{pk}}Archived "
+                      name="setArchived"
+                      data-pk="{{ pk }}"
+                      data-val="{{ siteUser_.archived }}"
+                      >archive</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_archived"
                       value="true"
@@ -1155,6 +1172,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archive"
+                      label="archive"
                       help-text="For archiving this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_archived classSiteUser inputSiteUser{{pk}}Archived "
@@ -1169,8 +1187,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if siteUser_.archived == true %}
                       checked
     {%- endif %}
@@ -1183,7 +1199,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1199,6 +1215,18 @@ A URL friendly unique ID for this object"
                 <form id="PageForm_deleted">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_deleted"
+                      placeholder="delete"
+                      label="delete"
+                      help-text="For deleting this record"
+                      class="label-on-left {{classApiMethodMethod}}_deleted classSiteUser inputSiteUser{{pk}}Deleted "
+                      name="setDeleted"
+                      data-pk="{{ pk }}"
+                      data-val="{{ siteUser_.deleted }}"
+                      >delete</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
                   <sl-checkbox
                       id="{{classApiMethodMethod}}_deleted"
                       value="true"
@@ -1208,6 +1236,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="delete"
+                      label="delete"
                       help-text="For deleting this record"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_deleted classSiteUser inputSiteUser{{pk}}Deleted "
@@ -1222,8 +1251,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if siteUser_.deleted == true %}
                       checked
     {%- endif %}
@@ -1236,7 +1263,7 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
+  {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1261,6 +1288,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="see archived"
+                      label="see archived"
                       help-text="A user field allowing a user to see archived records"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_seeArchived classSiteUser inputSiteUser{{pk}}SeeArchived "
@@ -1275,8 +1303,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if siteUser_.seeArchived == true %}
                       checked
     {%- endif %}
@@ -1289,7 +1315,6 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
@@ -1314,6 +1339,7 @@ A URL friendly unique ID for this object"
   {%- endif %}
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="see deleted"
+                      label="see deleted"
                       help-text="A user field allowing a user to see deleted records"
   {%- if 'Page' == classApiMethodMethod %}
                       class="label-on-left {{classApiMethodMethod}}_seeDeleted classSiteUser inputSiteUser{{pk}}SeeDeleted "
@@ -1328,8 +1354,6 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
     {%- if siteUser_.seeDeleted == true %}
                       checked
     {%- endif %}
@@ -1342,7 +1366,6 @@ A URL friendly unique ID for this object"
                     <sl-option value="false">false</sl-option>
                   </sl-select>
   {%- endif %}
-
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
