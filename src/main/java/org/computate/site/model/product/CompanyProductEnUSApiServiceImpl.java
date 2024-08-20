@@ -2,8 +2,15 @@ package org.computate.site.model.product;
 
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.web.api.service.ServiceRequest;
+import io.vertx.ext.web.api.service.ServiceResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.core.eventbus.EventBus;
+import io.vertx.core.file.FileSystem;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
+import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgPool;
@@ -11,6 +18,9 @@ import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.amqp.AmqpSender;
 import io.vertx.rabbitmq.RabbitMQClient;
+
+import org.computate.vertx.search.list.SearchList;
+
 import com.hubspot.jinjava.Jinjava;
 
 /**

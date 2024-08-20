@@ -89,6 +89,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
+ * <h2>ApiMethode: SearchDownload</h2>
+ * <p>This class contains a comment <b>"ApiMethod: SearchDownload"</b>, which creates an API "SearchDownload". 
+ * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: product"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "product". 
  * </p>
@@ -106,9 +109,6 @@ import io.vertx.core.json.JsonObject;
  * <h2>Rows: null</h2>
  * <h2>Order: 6</h2>
  * <p>This class contains a comment <b>"Order: 6"</b>, which means this class will be sorted by the given number 6 ascending when code that relates to multiple classes at the same time is generated. 
- * </p>
- * <h2>SqlOrder: 6</h2>
- * <p>This class contains a comment <b>"SqlOrder: 6"</b>, which means this class will be sorted by the given number 6 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
@@ -201,6 +201,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String PUTImport_enUS_ImageUri = "/png/api/product-import-999.png";
 	public static final String SearchPage_enUS_Uri = "/product";
 	public static final String SearchPage_enUS_ImageUri = "/png/product-999.png";
+	public static final String SearchDownload_enUS_Uri = "/download/product";
+	public static final String SearchDownload_enUS_ImageUri = "/png/download/product-999.png";
 
 	public static final String CompanyProduct_Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
 

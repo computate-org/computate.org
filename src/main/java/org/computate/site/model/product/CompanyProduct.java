@@ -7,7 +7,6 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 6
- * SqlOrder: 6
  * 
  * Api: true
  * Page: true
@@ -28,6 +27,10 @@ import io.vertx.pgclient.data.Point;
  *   SearchPage:
  *     Page: CompanyProductPage
  *     ApiUri: /product
+ *   SearchDownload:
+ *     ApiUri: /download/product
+ *     ApiMediaType200: application/zip
+ *     Role: User
  * 
  * PublicRead: true
  * Role: SiteAdmin
@@ -148,7 +151,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 
 	@Override
 	protected void _objectId(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
+		w.o(pageId);
 	}
 
 	@Override

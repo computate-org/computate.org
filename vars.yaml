@@ -512,6 +512,14 @@ WRITE_COMMENTS: true
 #IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
 #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
+##########
+# Square #
+##########
+
+SQUARE_ACCESS_TOKEN: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_ACCESS_TOKEN'] | b64decode }}"
+SQUARE_SIGNATURE_KEY: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_SIGNATURE_KEY'] | b64decode }}"
+SQUARE_NOTIFICATION_URL: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_NOTIFICATION_URL'] | b64decode }}"
+
 SITE_REDIRECTS:
   - src: /hackathons
     dest: /en-us/article/hackathons

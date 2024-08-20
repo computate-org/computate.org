@@ -2,6 +2,7 @@ package org.computate.site.verticle;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -47,9 +48,21 @@ import io.vertx.rabbitmq.RabbitMQClient;
 import io.vertx.rabbitmq.RabbitMQOptions;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.BasicProperties;
+import com.squareup.square.Environment;
+import com.squareup.square.SquareClient;
+import com.squareup.square.api.EventsApi;
+import com.squareup.square.api.OrdersApi;
+import com.squareup.square.authentication.BearerAuthModel;
+import com.squareup.square.models.Order;
+import com.squareup.square.models.OrderLineItem;
+import com.squareup.square.models.OrderLineItemModifier;
+import com.squareup.square.models.RetrieveOrderResponse;
+import com.squareup.square.utilities.WebhooksHelper;
+
 import io.vertx.amqp.AmqpMessage;
 import io.vertx.amqp.AmqpMessageBuilder;
 import io.vertx.amqp.AmqpSenderOptions;
+import io.vertx.codegen.annotations.Nullable;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
@@ -176,6 +189,8 @@ public class MainVerticle extends AbstractVerticle {
 	private RabbitMQClient rabbitmqClient;
 
 	private Jinjava jinjava;
+
+	private SquareClient squareClient;
 
 	/**	
 	 *	The main method for the Vert.x application that runs the Vert.x Runner class
@@ -426,9 +441,11 @@ public class MainVerticle extends AbstractVerticle {
 											configureAmqp().onSuccess(i -> 
 												configureRabbitmq().onSuccess(j -> 
 													configureJinjava().onSuccess(k -> 
-														configureApi().onSuccess(l -> 
-															configureUi().onSuccess(m -> 
-																startServer().onSuccess(n -> startPromise.complete())
+														configureSquare().onSuccess(l -> 
+															configureApi().onSuccess(m -> 
+																configureUi().onSuccess(n -> 
+																	startServer().onSuccess(o -> startPromise.complete())
+																).onFailure(ex -> startPromise.fail(ex))
 															).onFailure(ex -> startPromise.fail(ex))
 														).onFailure(ex -> startPromise.fail(ex))
 													).onFailure(ex -> startPromise.fail(ex))
@@ -1023,6 +1040,32 @@ public class MainVerticle extends AbstractVerticle {
 		return promise.future();
 	}
 
+	/**	
+	 * Configure square webhooks
+	 **/
+	public Future<Void> configureSquare() {
+		Promise<Void> promise = Promise.promise();
+		try {
+			String squareAccessToken = config().getString(ConfigKeys.SQUARE_ACCESS_TOKEN);
+			String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
+			String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
+			if(squareAccessToken == null || squareSignatureKey == null || squareNotificationUrl == null) {
+				promise.complete();
+			} else {
+				squareClient = new SquareClient.Builder()
+						.bearerAuthCredentials(new BearerAuthModel.Builder(squareAccessToken).build())
+						.environment(Environment.PRODUCTION)
+						.build();
+				LOG.info("Configure Square succeeded.");
+				promise.complete();
+			}
+		} catch (Exception ex) {
+			LOG.error("Configure Square failed.", ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
 	/**
 	 */
 	public Future<Void> configureApi() {
@@ -1086,6 +1129,214 @@ public class MainVerticle extends AbstractVerticle {
 					handler.end(buffer);
 				} catch(Exception ex) {
 					LOG.error("Failed to load page. ", ex);
+					handler.fail(ex);
+				}
+			});
+
+			router.route().handler(BodyHandler.create());
+			router.post("/square/order").handler(handler -> {
+				try {
+					String signature = handler.request().headers().get("x-square-hmacsha256-signature");
+					JsonObject body = handler.body().asJsonObject();
+					String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
+					String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
+					if(squareSignatureKey != null && squareNotificationUrl != null) {
+						Boolean isFromSquare = WebhooksHelper.isValidWebhookEventSignature(body.encode(), signature, squareSignatureKey, squareNotificationUrl);
+						if(isFromSquare) {
+							OrdersApi ordersApi = squareClient.getOrdersApi();
+							String orderId = body.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("order_id");
+							String state = body.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("state");
+							if("OPEN".equals(state)) {
+								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
+								Order order = orderResponse.getOrder();
+								String githubU = null;
+								for(OrderLineItem lineItem : order.getLineItems()) {
+									for(OrderLineItemModifier modifier : lineItem.getModifiers()) {
+										String modifierName = modifier.getName();
+										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+										if (m.find())
+											githubU = m.group(1).trim();
+									}
+								}
+								String githubUsername = githubU;
+								String groupName = "/product/computate-smart-cloud-builder";
+								if(githubUsername != null) {
+									String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+									String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+									Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
+									String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
+									Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
+									String authRealm = config().getString(ConfigKeys.AUTH_REALM);
+									String authClient = config().getString(ConfigKeys.AUTH_CLIENT);
+									webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+											.sendForm(MultiMap.caseInsensitiveMultiMap()
+													.add("username", authAdminUsername)
+													.add("password", authAdminPassword)
+													.add("grant_type", "password")
+													.add("client_id", "admin-cli")
+													).onSuccess(tokenResponse -> {
+										try {
+											webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).send().onSuccess(groupResponse -> {
+												try {
+													JsonObject group = groupResponse.bodyAsJsonObject();
+													String groupId = group.getString("id");
+													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).send().onSuccess(userResponse -> {
+														JsonObject user = userResponse.bodyAsJsonObject();
+														String userId = user.getString("id");
+														webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+																.send().onSuccess(groupUserResponse -> {
+															Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+															handler.response().putHeader("Content-Type", "application/json");
+															handler.end(buffer);
+														}).onFailure(ex -> {
+															LOG.error("Failed to process square webook while adding user to group. ", ex);
+															handler.fail(ex);
+														});
+													}).onFailure(ex -> {
+														LOG.error("Failed to process square webook while querying user. ", ex);
+														handler.fail(ex);
+													});
+												} catch(Throwable ex) {
+													LOG.error("Failed to process square webook while querying group. ", ex);
+													handler.fail(ex);
+												}
+											}).onFailure(ex -> {
+												LOG.error("Failed to process square webook while querying group. ", ex);
+												handler.fail(ex);
+											});
+										} catch(Throwable ex) {
+											LOG.error("Failed to process square webook while querying group. ", ex);
+											handler.fail(ex);
+										}
+									}).onFailure(ex -> {
+										LOG.error("Failed to process square webook. ", ex);
+										handler.fail(ex);
+									});
+								} else {
+									Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
+									LOG.error("Missing GitHub Username in order. ", ex);
+									handler.fail(ex);
+								}
+							} else {
+								promise.complete();
+							}
+						} else {
+							Throwable ex = new RuntimeException("Webhook is not from Square. ");
+							LOG.error("Webhook is not from Square. ", ex);
+							handler.fail(ex);
+						}
+					} else {
+						Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
+						LOG.error("Missing Square Signature Key and Notification URL. ", ex);
+						handler.fail(ex);
+					}
+				} catch(Throwable ex) {
+					LOG.error("Failed to process square webook. ", ex);
+					handler.fail(ex);
+				}
+			});
+
+			router.get("/square/test").handler(handler -> {
+				try {
+					String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
+					String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
+					if(squareSignatureKey != null && squareNotificationUrl != null) {
+							OrdersApi ordersApi = squareClient.getOrdersApi();
+							String orderId = "gp3Mjfd4N8Nah8JZ3KS9WPiAIrAZY";
+								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
+								Order order = orderResponse.getOrder();
+								String githubU = null;
+								for(OrderLineItem lineItem : order.getLineItems()) {
+									for(OrderLineItemModifier modifier : lineItem.getModifiers()) {
+										String modifierName = modifier.getName();
+										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+										if (m.find())
+											githubU = m.group(1).trim();
+									}
+								}
+								String githubUsername = githubU;
+								String groupName = "/product/computate-smart-cloud-builder";
+								if(githubUsername != null) {
+									String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+									String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+									Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
+									String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
+									Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
+									String authRealm = config().getString(ConfigKeys.AUTH_REALM);
+									String authClient = config().getString(ConfigKeys.AUTH_CLIENT);
+									webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+											.sendForm(MultiMap.caseInsensitiveMultiMap()
+													.add("username", authAdminUsername)
+													.add("password", authAdminPassword)
+													.add("grant_type", "password")
+													.add("client_id", "admin-cli")
+													).onSuccess(tokenResponse -> {
+										try {
+											String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+											String groupEnc = URLEncoder.encode(groupName, "UTF-8");
+											webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(groupResponse -> {
+												try {
+													JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+													JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+													if(group != null) {
+														String groupId = group.getString("id");
+														webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(userResponse -> {
+															JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+															JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+															if(user != null) {
+																String userId = user.getString("id");
+																webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+																		.putHeader("Authorization", String.format("Bearer %s", authToken))
+																		.send().onSuccess(groupUserResponse -> {
+																	Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+																	handler.response().putHeader("Content-Type", "application/json");
+																	handler.end(buffer);
+																}).onFailure(ex -> {
+																	LOG.error("Failed to process square webook while adding user to group. ", ex);
+																	handler.fail(ex);
+																});
+															} else {
+																Throwable ex = new RuntimeException("Failed to find user. ");
+																LOG.error(ex.getMessage(), ex);
+																handler.fail(ex);
+															}
+														}).onFailure(ex -> {
+															LOG.error("Failed to process square webook while querying user. ", ex);
+															handler.fail(ex);
+														});
+													} else {
+														Throwable ex = new RuntimeException("Failed to find group. ");
+														LOG.error(ex.getMessage(), ex);
+														handler.fail(ex);
+													}
+												} catch(Throwable ex) {
+													LOG.error("Failed to process square webook while querying group. ", ex);
+													handler.fail(ex);
+												}
+											}).onFailure(ex -> {
+												LOG.error("Failed to process square webook while querying group. ", ex);
+												handler.fail(ex);
+											});
+										} catch(Throwable ex) {
+											LOG.error("Failed to process square webook while querying group. ", ex);
+											handler.fail(ex);
+										}
+									}).onFailure(ex -> {
+										LOG.error("Failed to process square webook. ", ex);
+										handler.fail(ex);
+									});
+								} else {
+									Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
+									LOG.error("Missing GitHub Username in order. ", ex);
+									handler.fail(ex);
+								}
+					} else {
+						Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
+						LOG.error("Missing Square Signature Key and Notification URL. ", ex);
+						handler.fail(ex);
+					}
+				} catch(Throwable ex) {
+					LOG.error("Failed to process square webook. ", ex);
 					handler.fail(ex);
 				}
 			});

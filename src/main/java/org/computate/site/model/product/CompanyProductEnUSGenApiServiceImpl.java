@@ -1114,6 +1114,125 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
+	// SearchDownload //
+
+	@Override
+	public void searchdownloadCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+							response200SearchDownloadCompanyProduct(listCompanyProduct).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("searchdownloadCompanyProduct succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("searchdownloadCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("searchdownloadCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("searchdownloadCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("searchdownloadCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+
+	public Future<ServiceResponse> response200SearchDownloadCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+			List<String> fls = listCompanyProduct.getRequest().getFields();
+			JsonObject json = new JsonObject();
+			JsonArray l = new JsonArray();
+			listCompanyProduct.getList().stream().forEach(o -> {
+				JsonObject json2 = JsonObject.mapFrom(o);
+				if(fls.size() > 0) {
+					Set<String> fieldNames = new HashSet<String>();
+					for(String fieldName : json2.fieldNames()) {
+						String v = CompanyProduct.varIndexedCompanyProduct(fieldName);
+						if(v != null)
+							fieldNames.add(CompanyProduct.varIndexedCompanyProduct(fieldName));
+					}
+					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
+						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
+						fieldNames.remove("_docvalues_long");
+						fieldNames.remove("created_docvalues_date");
+					}
+					else if(fls.size() >= 1) {
+						fieldNames.removeAll(fls);
+					}
+					for(String fieldName : fieldNames) {
+						if(!fls.contains(fieldName))
+							json2.remove(fieldName);
+					}
+				}
+				l.add(json2);
+			});
+			json.put("list", l);
+			response200Search(listCompanyProduct.getRequest(), listCompanyProduct.getResponse(), json);
+			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+		} catch(Exception ex) {
+			LOG.error(String.format("response200SearchDownloadCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotSearchDownloadCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotSearchDownloadCompanyProduct(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
 	// General //
 
 	public Future<CompanyProduct> createCompanyProduct(SiteRequest siteRequest) {

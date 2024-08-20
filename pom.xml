@@ -116,6 +116,7 @@
 		<kie.version>7.67.0.Final-redhat-00017</kie.version>
 		<drools.version>8.32.0.Final</drools.version>
 		<cloudevents.version>2.4.0</cloudevents.version>
+		<square.version>40.1.1.20240717</square.version>
 
 		<computate.version>4.4.4.2</computate.version>
 	</properties>
@@ -525,6 +526,13 @@
 		<!-- ##### -->
 		<!-- Other -->
 		<!-- ##### -->
+
+		<!-- squareup -->
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>square</artifactId>
+			<version>${square.version}</version>
+		</dependency>
 
 		<!-- ##### -->
 		<!-- Camel -->
