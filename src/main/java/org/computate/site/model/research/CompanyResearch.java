@@ -147,7 +147,7 @@ public class CompanyResearch extends CompanyResearchGen<BaseResult> {
 
 	@Override
 	protected void _objectId(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
+		w.o(pageId);
 	}
 
 	@Override

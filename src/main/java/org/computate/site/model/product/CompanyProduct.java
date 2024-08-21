@@ -2,12 +2,15 @@ package org.computate.site.model.product;
 
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 6
- * SqlOrder: 6
  * 
  * Api: true
  * Page: true
@@ -28,6 +31,10 @@ import io.vertx.pgclient.data.Point;
  *   SearchPage:
  *     Page: CompanyProductPage
  *     ApiUri: /product
+ *   SearchDownload:
+ *     ApiUri: /download/product
+ *     ApiMediaType200: application/zip
+ *     Role: User
  * 
  * PublicRead: true
  * Role: SiteAdmin
@@ -133,6 +140,39 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
+	 * Facet: true
+	 * DisplayName: download URI
+	 * Description: The download relative URI for this page. 
+	 */
+	protected void _downloadUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: user URI
+	 * Description: The user relative URI for this page. 
+	 */
+	protected void _userUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
+	 */
+	protected void _storeUrl(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
 	 * DisplayName: title
 	 * Description: The title of this page. 
 	 * UrlVar: pageUrlId
@@ -148,7 +188,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 
 	@Override
 	protected void _objectId(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
+		w.o(pageId);
 	}
 
 	@Override

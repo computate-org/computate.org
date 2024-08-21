@@ -1,8 +1,11 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta property="site:pageId" content="powered-by-fiware-smart-cloud-challenge"/>
-    <meta property="site:uri" content="/en-us/course/{{ pageId }}"/>
-    <meta property="site:name" content="Powered by FIWARE Smart Cloud Challenge"/>
+    <meta property="site:pageId" content="computate-smart-cloud-deployer"/>
+    <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
+    <meta property="site:userUri" content="/en-us/user/product/{{ pageId }}"/>
+    <meta property="site:storeUrl" content="https://square.link/u/piqETX0u"/>
+    <meta property="site:downloadUri" content="/download/en-us/product/{{ pageId }}"/>
+    <meta property="site:name" content="Computate Smart Cloud Builder"/>
     <meta property="site:title" content="{{ name }}"/>
     <meta property="site:description" content="Learn how to deploy open source smart device microservices to the cloud and try out your own private IoT smart platform with built-in security. "/>
     <meta property="site:courseNum" content="1"/>
@@ -90,11 +93,31 @@
               with the {{ name }}
             </h2>
             <div class="intro-details">
-              <div>Download the complete course here </div>
-              <sl-button id="order-button" class="gradient-button" href="https://store.computate.org/{{ pageId }}" variant="neutral">
-                <i class="fa-solid fa-person-running-fast"></i>
-                Order the course
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
+              <div>
+                <div>Download your copy of the {{ name }}! </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
+              </div>
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Order here
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
               </sl-button>
+              {% endif %}
             </div>
           </div>
         </div>
