@@ -27,10 +27,17 @@ spec:
         deployment: computateorg
         app: computateorg
     spec:
+      volumes:
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: computate.org-downloads
       containers:
         - name: computateorg
           image: 'quay.io/computateorg/computate.org:latest'
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /opt/computate.org-downloads
+              name: computate.org-downloads
           ports:
             - containerPort: 10200
               name: http
