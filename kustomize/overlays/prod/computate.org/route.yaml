@@ -1,0 +1,25 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  namespace: computateorg
+  name: computateorg
+  labels:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+  annotations:
+    kubernetes.io/tls-acme: 'true'
+    acme.openshift.io/secret-name: "computateorg-certificate"
+spec:
+  host: "localhost"
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: "computateorg"
+    weight: 100
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

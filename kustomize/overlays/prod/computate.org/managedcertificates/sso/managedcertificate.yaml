@@ -1,0 +1,8 @@
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: sso
+  namespace: keycloak
+spec:
+  domains:
+    - sso.computate.org
