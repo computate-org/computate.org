@@ -1278,12 +1278,15 @@ public class MainVerticle extends AbstractVerticle {
 					String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
 					String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
 					if(squareSignatureKey != null && squareNotificationUrl != null) {
+						LOG.info("Square webhook 1");
 						Boolean isFromSquare = WebhooksHelper.isValidWebhookEventSignature(body.encode(), signature, squareSignatureKey, squareNotificationUrl);
 						if(isFromSquare) {
+						LOG.info("Square webhook 2");
 							OrdersApi ordersApi = squareClient.getOrdersApi();
 							String orderId = body.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("order_id");
 							String state = body.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("state");
 							if("OPEN".equals(state)) {
+						LOG.info("Square webhook 3");
 								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
 								Order order = orderResponse.getOrder();
 								String githubU = null;
@@ -1309,10 +1312,13 @@ public class MainVerticle extends AbstractVerticle {
 								searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
 								searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
 								searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						LOG.info("Square webhook 4");
 									if(searchList.size() > 0) {
+						LOG.info("Square webhook 5");
 										String uri = (String)searchList.first().obtainForClass("uri");
 										String groupName = uri;
 										if(githubUsername != null) {
+						LOG.info("Square webhook 6");
 											String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
 											String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
 											Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
@@ -1327,24 +1333,31 @@ public class MainVerticle extends AbstractVerticle {
 															.add("client_id", "admin-cli")
 															).onSuccess(tokenResponse -> {
 												try {
+						LOG.info("Square webhook 7");
 													String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
 													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(groupResponse -> {
 														try {
+						LOG.info("Square webhook 8");
 															JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
 															JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
 															if(group != null) {
+						LOG.info("Square webhook 9");
 																String groupId = group.getString("id");
 																webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(userResponse -> {
+						LOG.info("Square webhook 10");
 																	JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
 																	JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
 																	if(user != null) {
+						LOG.info("Square webhook 11");
 																		String userId = user.getString("id");
 																		webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
 																				.putHeader("Authorization", String.format("Bearer %s", authToken))
 																				.send().onSuccess(groupUserResponse -> {
+						LOG.info("Square webhook 12");
 																			Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 																			handler.response().putHeader("Content-Type", "application/json");
 																			handler.end(buffer);
+																			LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
 																		}).onFailure(ex -> {
 																			LOG.error("Failed to process square webook while adding user to group. ", ex);
 																			handler.fail(ex);
