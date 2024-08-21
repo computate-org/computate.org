@@ -1,10 +1,13 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta property="site:pageId" content="smart-device-platform-builder"/>
+    <meta property="site:pageId" content="computate-smart-website-builder"/>
     <meta property="site:uri" content="/en-us/product/{{ pageId }}"/>
-    <meta property="site:name" content="Computate Smart Device Platform Builder"/>
+    <meta property="site:userUri" content="/en-us/user/product/{{ pageId }}"/>
+    <meta property="site:storeUrl" content="https://store.computate.org/product/computate-smart-website-builder/12"/>
+    <meta property="site:downloadUri" content="/download/en-us/product/{{ pageId }}"/>
+    <meta property="site:name" content="Computate Smart Website Builder"/>
     <meta property="site:title" content="{{ name }}"/>
-    <meta property="site:description" content="Build a custom data-driven website for your own ideas with the Computate Smart Device Platform Builder "/>
+    <meta property="site:description" content="Build a custom data-driven website for your own ideas with the {{ name}}"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 .intro-background {
@@ -89,11 +92,31 @@
               with the {{ name }}
             </h2>
             <div class="intro-details">
-              <div>Download your own customizable website building toolkit to launch your own data-driven website here: </div>
-              <sl-button id="order-button" class="gradient-button" href="https://store.computate.org/{{ pageId }}" variant="neutral">
-                <i class="fa-solid fa-person-running-fast"></i>
-                Order Platform Builder
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
+              <div>
+                <div>Download your own customizable website building toolkit to launch your own data-driven website with the {{ name }} here! </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
+              </div>
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Order here
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
               </sl-button>
+              {% endif %}
             </div>
           </div>
         </div>

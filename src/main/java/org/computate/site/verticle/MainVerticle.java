@@ -1288,31 +1288,33 @@ public class MainVerticle extends AbstractVerticle {
 								Order order = orderResponse.getOrder();
 								String githubU = null;
 								OrderLineItem item = order.getLineItems().get(0);
-								for(OrderLineItemModifier modifier : item.getModifiers()) {
-									String modifierName = modifier.getName();
-									Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
-									if (m.find())
-										githubU = m.group(1).trim();
+								if(item.getModifiers() != null) {
+									for(OrderLineItemModifier modifier : item.getModifiers()) {
+										String modifierName = modifier.getName();
+										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+										if (m.find())
+											githubU = m.group(1).trim();
+									}
 								}
-								String githubUsername = githubU;
 								String name = item.getName();
+								String githubUsername = githubU;
+								if(githubUsername != null) {
 
-								SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-								ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
-								List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
-								SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
+									SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+									ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+									List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
+									SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
 
-								SearchList<BaseResult> searchList = new SearchList<BaseResult>();
-								searchList.setStore(true);
-								searchList.q("*:*");
-								searchList.setSiteRequest_(siteRequest);
-								searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
-								searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
-								searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
-									if(searchList.size() > 0) {
-										String uri = (String)searchList.first().obtainForClass("uri");
-										String groupName = uri;
-										if(githubUsername != null) {
+									SearchList<BaseResult> searchList = new SearchList<BaseResult>();
+									searchList.setStore(true);
+									searchList.q("*:*");
+									searchList.setSiteRequest_(siteRequest);
+									searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
+									searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
+									searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+										if(searchList.size() > 0) {
+											String uri = (String)searchList.first().obtainForClass("uri");
+											String groupName = uri;
 											String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
 											String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
 											Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
@@ -1380,19 +1382,21 @@ public class MainVerticle extends AbstractVerticle {
 												handler.fail(ex);
 											});
 										} else {
-											Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
-											LOG.error("Missing GitHub Username in order. ", ex);
-											handler.fail(ex);
+											LOG.warn(String.format("Item not found with name %s. ", name));
+											Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+											handler.response().putHeader("Content-Type", "application/json");
+											handler.end(buffer);
 										}
-									} else {
-										Throwable ex = new RuntimeException(String.format("Item not found with name %s. ", name));
-										LOG.error(ex.getMessage(), ex);
+									}).onFailure(ex -> {
+										LOG.error("Failed to process square webook. ", ex);
 										handler.fail(ex);
-									}
-								}).onFailure(ex -> {
-									LOG.error("Failed to process square webook. ", ex);
-									handler.fail(ex);
-								});
+									});
+								} else {
+									LOG.warn(String.format("GitHub username modifier not found order %s for %s. ", orderId, name));
+									Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+									handler.response().putHeader("Content-Type", "application/json");
+									handler.end(buffer);
+								}
 							} else {
 								Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 								handler.response().putHeader("Content-Type", "application/json");
