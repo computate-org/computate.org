@@ -28,16 +28,16 @@ spec:
         app: computateorg
     spec:
       volumes:
-        - name: downloads
+        - name: computateorg-downloads
           persistentVolumeClaim:
-            claimName: computate.org-downloads
+            claimName: computateorg-downloads
       containers:
         - name: computateorg
           image: 'quay.io/computateorg/computate.org:latest'
           imagePullPolicy: Always
           volumeMounts:
             - mountPath: /opt/computate.org-downloads
-              name: computate.org-downloads
+              name: computateorg-downloads
           ports:
             - containerPort: 10200
               name: http
@@ -84,6 +84,8 @@ spec:
                 name: computateorg-rabbitmq
             - secretRef:
                 name: computateorg-context-broker
+            - secretRef:
+                name: computateorg-square
           env:
             - name: SITE_ZONE
               value: "America/New_York"
@@ -149,3 +151,5 @@ spec:
               value: "false"
             - name: ENABLE_IMPORT_DATA
               value: "true"
+            - name: DOWNLOAD_PATH
+              value: "/opt/computate.org-downloads"

@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: computateorg
-  name: computate.org-downloads
+  name: computateorg-downloads
 spec:
   accessModes:
   - ReadWriteOnce
