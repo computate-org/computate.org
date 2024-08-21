@@ -1394,7 +1394,9 @@ public class MainVerticle extends AbstractVerticle {
 									handler.fail(ex);
 								});
 							} else {
-								promise.complete();
+								Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+								handler.response().putHeader("Content-Type", "application/json");
+								handler.end(buffer);
 							}
 						} else {
 							Throwable ex = new RuntimeException("Webhook is not from Square. ");
