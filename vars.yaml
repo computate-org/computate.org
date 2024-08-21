@@ -519,6 +519,7 @@ WRITE_COMMENTS: true
 SQUARE_ACCESS_TOKEN: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_ACCESS_TOKEN'] | b64decode }}"
 SQUARE_SIGNATURE_KEY: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_SIGNATURE_KEY'] | b64decode }}"
 SQUARE_NOTIFICATION_URL: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=SITE_NAME + '-square', namespace=SITE_NAMESPACE)[0].data['SQUARE_NOTIFICATION_URL'] | b64decode }}"
+DOWNLOAD_PATH: "{{ SITE_SRC }}-downloads"
 
 SITE_REDIRECTS:
   - src: /hackathons

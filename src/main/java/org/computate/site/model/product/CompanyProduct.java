@@ -2,6 +2,10 @@ package org.computate.site.model.product;
 
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
@@ -130,6 +134,39 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 */
 	protected void _url(Wrap<String> w) {
 		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: download URI
+	 * Description: The download relative URI for this page. 
+	 */
+	protected void _downloadUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: user URI
+	 * Description: The user relative URI for this page. 
+	 */
+	protected void _userUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
+	 */
+	protected void _storeUrl(Wrap<String> w) {
 	}
 
 	/**

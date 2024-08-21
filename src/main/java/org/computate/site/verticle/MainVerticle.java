@@ -20,14 +20,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.tool.SearchTool;
+import org.computate.vertx.api.BaseApiServiceImpl;
 import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.model.user.ComputateSiteUser;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.openapi.OpenApi3Generator;
+import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.search.list.SearchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +62,7 @@ import com.squareup.square.models.Order;
 import com.squareup.square.models.OrderLineItem;
 import com.squareup.square.models.OrderLineItemModifier;
 import com.squareup.square.models.RetrieveOrderResponse;
+import com.squareup.square.models.UpdateOrderRequest;
 import com.squareup.square.utilities.WebhooksHelper;
 
 import io.vertx.amqp.AmqpMessage;
@@ -87,10 +93,13 @@ import io.vertx.core.net.JksOptions;
 import io.vertx.core.net.PemKeyCertOptions;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.core.spi.cluster.NodeInfo;
+import io.vertx.core.streams.Pump;
+import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.auth.oauth2.OAuth2Options;
 import io.vertx.ext.auth.oauth2.authorization.KeycloakAuthorization;
+import io.vertx.ext.auth.oauth2.impl.OAuth2AuthProviderImpl;
 import io.vertx.ext.auth.oauth2.providers.OpenIDConnectAuth;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.healthchecks.HealthCheckHandler;
@@ -99,8 +108,11 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.api.service.ServiceRequest;
+import io.vertx.ext.web.api.service.ServiceResponse;
+import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
+import io.vertx.ext.web.client.predicate.ResponsePredicate;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
@@ -108,6 +120,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TemplateHandler;
 import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
+import io.vertx.ext.web.impl.RoutingContextImpl;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.kafka.client.producer.KafkaProducer;
@@ -121,6 +134,7 @@ import io.vertx.tracing.opentelemetry.OpenTelemetryOptions;
 
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
+import org.computate.site.result.BaseResult;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
@@ -162,6 +176,10 @@ public class MainVerticle extends AbstractVerticle {
 	private Integer workerPoolSize;
 	private Integer jdbcMaxPoolSize; 
 	private Integer jdbcMaxWaitQueueSize;
+
+	LocalSessionStore sessionStore;
+	SessionHandler sessionHandler;
+	ComputateOAuth2AuthHandlerImpl oauth2AuthHandler;
 
 	/**
 	 * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
@@ -768,7 +786,7 @@ public class MainVerticle extends AbstractVerticle {
 			OpenIDConnectAuth.discover(vertx, oauth2ClientOptions).onSuccess(oauth2AuthenticationProvider -> {
 				authorizationProvider = KeycloakAuthorization.create();
 
-				ComputateOAuth2AuthHandlerImpl oauth2AuthHandler = new ComputateOAuth2AuthHandlerImpl(vertx, oauth2AuthenticationProvider, siteBaseUrl + authCallbackUri);
+				oauth2AuthHandler = new ComputateOAuth2AuthHandlerImpl(vertx, oauth2AuthenticationProvider, siteBaseUrl + authCallbackUri);
 				Router tempRouter = Router.router(vertx);
 				oauth2AuthHandler.setupCallback(tempRouter.get(authCallbackUri));
 				authHandlers.put(authClientOpenApiId, oauth2AuthHandler);
@@ -821,8 +839,8 @@ public class MainVerticle extends AbstractVerticle {
 				authorizationProvider = KeycloakAuthorization.create();
 		
 				//ClusteredSessionStore sessionStore = ClusteredSessionStore.create(vertx);
-				LocalSessionStore sessionStore = LocalSessionStore.create(vertx, config().getString(ConfigKeys.SITE_NAME));
-				SessionHandler sessionHandler = SessionHandler.create(sessionStore);
+				sessionStore = LocalSessionStore.create(vertx, config().getString(ConfigKeys.SITE_NAME));
+				sessionHandler = SessionHandler.create(sessionStore);
 				if(StringUtils.startsWith(siteBaseUrl, "https://"))
 					sessionHandler.setCookieSecureFlag(true);
 		
@@ -1091,6 +1109,8 @@ public class MainVerticle extends AbstractVerticle {
 
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
+			// apiCompanyProduct.configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/user/product");
+			configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/user/product");
 
 			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyService.configureUi(router, CompanyService.class, SiteRequest.class, "/en-us/service");
@@ -1109,12 +1129,130 @@ public class MainVerticle extends AbstractVerticle {
 		return promise.future();
 	}
 
+
+	public <Q, SiteRequest extends ComputateSiteRequest, SiteUser extends ComputateSiteUser> void configureUserUi(Router router, Class<Q> classResult, Class<SiteRequest> classSiteRequest, Class<SiteUser> classSiteUser, String apiAddressSiteUser, String uriPrefix) {
+		// router.getWithRegex("(?<part1>/[^/]+)/[^/]+(?<part2>.*)").handler(oauth2AuthHandler).handler(handler -> {
+		router.getWithRegex("(?<part1>/[a-z]{2}-[a-z]{2})/[^/]+(?<part2>.*)").handler(oauth2AuthHandler).handler(handler -> {
+			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+			String originalUri = handler.pathParam("uri");
+
+			apiSiteUser.user(serviceRequest, classSiteRequest, classSiteUser, apiAddressSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+				try {
+					String uri = String.format("%s%s", handler.pathParam("part1"), handler.pathParam("part2"));
+					String url = String.format("%s%s", config().getString(ComputateConfigKeys.SITE_BASE_URL), uri);
+					webClient.post(
+							config().getInteger(ComputateConfigKeys.AUTH_PORT)
+							, config().getString(ComputateConfigKeys.AUTH_HOST_NAME)
+							, config().getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+							)
+							.ssl(config().getBoolean(ComputateConfigKeys.AUTH_SSL))
+							.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+							.expect(ResponsePredicate.status(200))
+							.sendForm(MultiMap.caseInsensitiveMultiMap()
+									.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+									.add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
+									.add("response_mode", "permissions")
+									.add("permission", String.format("%s#%s", uri, "GET"))
+					).onComplete(future -> {
+						try {
+							HttpResponse<Buffer> authorizationDecision = null;
+							if(future.succeeded())
+								authorizationDecision = future.result();
+							JsonArray scopes = Optional.ofNullable(authorizationDecision).map(authDecision -> authDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray())).orElse(new JsonArray());
+							SiteUser user = siteRequest.getSiteUser_(classSiteUser);
+							JsonObject query = new JsonObject();
+							MultiMap queryParams = handler.queryParams();
+							for(String name : queryParams.names()) {
+								JsonArray array = query.getJsonArray(name);
+								List<String> vals = queryParams.getAll(name);
+								if(array == null) {
+									array = new JsonArray();
+									query.put(name, array);
+								}
+								for(String val : vals) {
+									array.add(val);
+								}
+							}
+							SearchList<Q> l = new SearchList<>();
+							l.q("*:*");
+							l.setC(classResult);
+							l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
+							l.setStore(true);
+							l.promiseDeepForClass(siteRequest).onSuccess(a -> {
+								Q result = l.first();
+								try {
+									JsonObject resultJson = JsonObject.mapFrom(result);
+									String siteTemplatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
+									Path resourceTemplatePath = Path.of(siteTemplatePath, resultJson.getString("templateUri"));
+									String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+									JsonObject ctx = ComputateConfigKeys.getPageContext(config());
+									ctx.put("userName", user.getUserName());
+									ctx.put("userFirstName", user.getUserFirstName());
+									ctx.put("userLastName", user.getUserLastName());
+									if(scopes.contains("GET")) {
+										ctx.put("scope", "GET");
+									}
+									Matcher m = Pattern.compile("<meta property=\"([^\"]+)\"\\s+content=\"([^\"]*)\"/>", Pattern.MULTILINE).matcher(template);
+									boolean trouve = m.find();
+									while (trouve) {
+										String siteKey = m.group(1);
+										if(siteKey.startsWith("site:")) {
+											String key = StringUtils.substringAfter(siteKey, "site:");
+											String val = m.group(2);
+											if(val instanceof String) {
+												String rendered = jinjava.render(val, ctx.getMap());
+												ctx.put(key, rendered);
+											} else {
+												ctx.put(key, val);
+											}
+										}
+										trouve = m.find();
+									}
+
+									String renderedTemplate = jinjava.render(template, ctx.getMap());
+									Buffer buffer = Buffer.buffer(renderedTemplate);
+									handler.response().putHeader("Content-Type", "text/html");
+									handler.end(buffer);
+								} catch (Exception ex) {
+									LOG.error(String.format("Failed to render page %s", uri), ex);
+									handler.fail(ex);
+								}
+
+							}).onFailure(ex -> {
+								LOG.error(String.format("Failed to render page %s", uri), ex);
+								handler.fail(ex);
+							});
+						} catch (Exception ex) {
+							LOG.error(String.format("Failed to render page %s", uri), ex);
+							handler.fail(ex);
+						}
+					});
+				} catch(Exception ex) {
+					LOG.error("Failed to load page. ", ex);
+					handler.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("Failed to render page %s", originalUri), ex);
+				handler.fail(ex);
+			});
+		});
+	}
+
 	/**
 	 */
 	public Future<Void> configureUi() {
 		Promise<Void> promise = Promise.promise();
 		try {
 			String staticPath = config().getString(ConfigKeys.STATIC_PATH);
+
+			StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(false);
+			if(staticPath != null) {
+				staticHandler.setAllowRootFileSystemAccess(true);
+				staticHandler.setWebRoot(staticPath);
+				staticHandler.setFilesReadOnly(true);
+			}
+			router.route("/static/*").handler(staticHandler);
 
 			router.get("/").handler(handler -> {
 				try {
@@ -1133,8 +1271,7 @@ public class MainVerticle extends AbstractVerticle {
 				}
 			});
 
-			router.route().handler(BodyHandler.create());
-			router.post("/square/order").handler(handler -> {
+			router.post("/square/order").handler(BodyHandler.create()).handler(handler -> {
 				try {
 					String signature = handler.request().headers().get("x-square-hmacsha256-signature");
 					JsonObject body = handler.body().asJsonObject();
@@ -1150,50 +1287,88 @@ public class MainVerticle extends AbstractVerticle {
 								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
 								Order order = orderResponse.getOrder();
 								String githubU = null;
-								for(OrderLineItem lineItem : order.getLineItems()) {
-									for(OrderLineItemModifier modifier : lineItem.getModifiers()) {
-										String modifierName = modifier.getName();
-										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
-										if (m.find())
-											githubU = m.group(1).trim();
-									}
+								OrderLineItem item = order.getLineItems().get(0);
+								for(OrderLineItemModifier modifier : item.getModifiers()) {
+									String modifierName = modifier.getName();
+									Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+									if (m.find())
+										githubU = m.group(1).trim();
 								}
 								String githubUsername = githubU;
-								String groupName = "/product/computate-smart-cloud-builder";
-								if(githubUsername != null) {
-									String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
-									String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
-									Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
-									String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
-									Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
-									String authRealm = config().getString(ConfigKeys.AUTH_REALM);
-									String authClient = config().getString(ConfigKeys.AUTH_CLIENT);
-									webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
-											.sendForm(MultiMap.caseInsensitiveMultiMap()
-													.add("username", authAdminUsername)
-													.add("password", authAdminPassword)
-													.add("grant_type", "password")
-													.add("client_id", "admin-cli")
-													).onSuccess(tokenResponse -> {
-										try {
-											webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).send().onSuccess(groupResponse -> {
+								String name = item.getName();
+
+								SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+								ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+								List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
+								SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
+
+								SearchList<BaseResult> searchList = new SearchList<BaseResult>();
+								searchList.setStore(true);
+								searchList.q("*:*");
+								searchList.setSiteRequest_(siteRequest);
+								searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
+								searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
+								searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+									if(searchList.size() > 0) {
+										String uri = (String)searchList.first().obtainForClass("uri");
+										String groupName = uri;
+										if(githubUsername != null) {
+											String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+											String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+											Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
+											String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
+											Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
+											String authRealm = config().getString(ConfigKeys.AUTH_REALM);
+											webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+													.sendForm(MultiMap.caseInsensitiveMultiMap()
+															.add("username", authAdminUsername)
+															.add("password", authAdminPassword)
+															.add("grant_type", "password")
+															.add("client_id", "admin-cli")
+															).onSuccess(tokenResponse -> {
 												try {
-													JsonObject group = groupResponse.bodyAsJsonObject();
-													String groupId = group.getString("id");
-													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).send().onSuccess(userResponse -> {
-														JsonObject user = userResponse.bodyAsJsonObject();
-														String userId = user.getString("id");
-														webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-																.send().onSuccess(groupUserResponse -> {
-															Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-															handler.response().putHeader("Content-Type", "application/json");
-															handler.end(buffer);
-														}).onFailure(ex -> {
-															LOG.error("Failed to process square webook while adding user to group. ", ex);
+													String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(groupResponse -> {
+														try {
+															JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+															JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+															if(group != null) {
+																String groupId = group.getString("id");
+																webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(userResponse -> {
+																	JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+																	JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+																	if(user != null) {
+																		String userId = user.getString("id");
+																		webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+																				.putHeader("Authorization", String.format("Bearer %s", authToken))
+																				.send().onSuccess(groupUserResponse -> {
+																			Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+																			handler.response().putHeader("Content-Type", "application/json");
+																			handler.end(buffer);
+																		}).onFailure(ex -> {
+																			LOG.error("Failed to process square webook while adding user to group. ", ex);
+																			handler.fail(ex);
+																		});
+																	} else {
+																		Throwable ex = new RuntimeException("Failed to find user. ");
+																		LOG.error(ex.getMessage(), ex);
+																		handler.fail(ex);
+																	}
+																}).onFailure(ex -> {
+																	LOG.error("Failed to process square webook while querying user. ", ex);
+																	handler.fail(ex);
+																});
+															} else {
+																Throwable ex = new RuntimeException("Failed to find group. ");
+																LOG.error(ex.getMessage(), ex);
+																handler.fail(ex);
+															}
+														} catch(Throwable ex) {
+															LOG.error("Failed to process square webook while querying group. ", ex);
 															handler.fail(ex);
-														});
+														}
 													}).onFailure(ex -> {
-														LOG.error("Failed to process square webook while querying user. ", ex);
+														LOG.error("Failed to process square webook while querying group. ", ex);
 														handler.fail(ex);
 													});
 												} catch(Throwable ex) {
@@ -1201,22 +1376,23 @@ public class MainVerticle extends AbstractVerticle {
 													handler.fail(ex);
 												}
 											}).onFailure(ex -> {
-												LOG.error("Failed to process square webook while querying group. ", ex);
+												LOG.error("Failed to process square webook. ", ex);
 												handler.fail(ex);
 											});
-										} catch(Throwable ex) {
-											LOG.error("Failed to process square webook while querying group. ", ex);
+										} else {
+											Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
+											LOG.error("Missing GitHub Username in order. ", ex);
 											handler.fail(ex);
 										}
-									}).onFailure(ex -> {
-										LOG.error("Failed to process square webook. ", ex);
+									} else {
+										Throwable ex = new RuntimeException(String.format("Item not found with name %s. ", name));
+										LOG.error(ex.getMessage(), ex);
 										handler.fail(ex);
-									});
-								} else {
-									Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
-									LOG.error("Missing GitHub Username in order. ", ex);
+									}
+								}).onFailure(ex -> {
+									LOG.error("Failed to process square webook. ", ex);
 									handler.fail(ex);
-								}
+								});
 							} else {
 								promise.complete();
 							}
@@ -1236,109 +1412,98 @@ public class MainVerticle extends AbstractVerticle {
 				}
 			});
 
-			router.get("/square/test").handler(handler -> {
-				try {
-					String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
-					String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
-					if(squareSignatureKey != null && squareNotificationUrl != null) {
-							OrdersApi ordersApi = squareClient.getOrdersApi();
-							String orderId = "gp3Mjfd4N8Nah8JZ3KS9WPiAIrAZY";
-								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
-								Order order = orderResponse.getOrder();
-								String githubU = null;
-								for(OrderLineItem lineItem : order.getLineItems()) {
-									for(OrderLineItemModifier modifier : lineItem.getModifiers()) {
-										String modifierName = modifier.getName();
-										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
-										if (m.find())
-											githubU = m.group(1).trim();
+			router.getWithRegex("\\/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
+				String originalUri = handler.pathParam("uri");
+				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+				ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+					try {
+
+						String uri = handler.pathParam("uri");
+						String url = String.format("%s%s", config().getString(ComputateConfigKeys.SITE_BASE_URL), uri);
+						webClient.post(
+								config().getInteger(ComputateConfigKeys.AUTH_PORT)
+								, config().getString(ComputateConfigKeys.AUTH_HOST_NAME)
+								, config().getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+								)
+								.ssl(config().getBoolean(ComputateConfigKeys.AUTH_SSL))
+								.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+								.expect(ResponsePredicate.status(200))
+								.sendForm(MultiMap.caseInsensitiveMultiMap()
+										.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+										.add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
+										.add("response_mode", "permissions")
+										.add("permission", String.format("%s#%s", uri, "GET"))
+						).onFailure(ex -> {
+							String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+							LOG.error(String.format("Failed to render page %s", originalUri), ex);
+							handler.fail(403, ex);
+						}).onSuccess(authorizationDecision -> {
+							try {
+								JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+								if(!scopes.contains("GET")) {
+									String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+									Throwable ex = new RuntimeException(msg);
+									LOG.error(String.format("Failed to render page %s", originalUri), ex);
+									handler.fail(403, ex);
+								} else {
+									SiteUser user = siteRequest.getSiteUser_(SiteUser.class);
+									JsonObject query = new JsonObject();
+									MultiMap queryParams = handler.queryParams();
+									for(String name : queryParams.names()) {
+										JsonArray array = query.getJsonArray(name);
+										List<String> vals = queryParams.getAll(name);
+										if(array == null) {
+											array = new JsonArray();
+											query.put(name, array);
+										}
+										for(String val : vals) {
+											array.add(val);
+										}
 									}
-								}
-								String githubUsername = githubU;
-								String groupName = "/product/computate-smart-cloud-builder";
-								if(githubUsername != null) {
-									String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
-									String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
-									Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
-									String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
-									Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
-									String authRealm = config().getString(ConfigKeys.AUTH_REALM);
-									String authClient = config().getString(ConfigKeys.AUTH_CLIENT);
-									webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
-											.sendForm(MultiMap.caseInsensitiveMultiMap()
-													.add("username", authAdminUsername)
-													.add("password", authAdminPassword)
-													.add("grant_type", "password")
-													.add("client_id", "admin-cli")
-													).onSuccess(tokenResponse -> {
+									SearchList<BaseResult> l = new SearchList<>();
+									l.q("*:*");
+									l.setC(BaseResult.class);
+									l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
+									l.setStore(true);
+									handler.response().headers().add("Content-Type", "text/html");
+									l.promiseDeepForClass(siteRequest).onSuccess(a -> {
+										BaseResult result = l.first();
 										try {
-											String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
-											String groupEnc = URLEncoder.encode(groupName, "UTF-8");
-											webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(groupResponse -> {
-												try {
-													JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
-													JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-													if(group != null) {
-														String groupId = group.getString("id");
-														webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(userResponse -> {
-															JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
-															JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-															if(user != null) {
-																String userId = user.getString("id");
-																webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-																		.putHeader("Authorization", String.format("Bearer %s", authToken))
-																		.send().onSuccess(groupUserResponse -> {
-																	Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-																	handler.response().putHeader("Content-Type", "application/json");
-																	handler.end(buffer);
-																}).onFailure(ex -> {
-																	LOG.error("Failed to process square webook while adding user to group. ", ex);
-																	handler.fail(ex);
-																});
-															} else {
-																Throwable ex = new RuntimeException("Failed to find user. ");
-																LOG.error(ex.getMessage(), ex);
-																handler.fail(ex);
-															}
-														}).onFailure(ex -> {
-															LOG.error("Failed to process square webook while querying user. ", ex);
-															handler.fail(ex);
-														});
-													} else {
-														Throwable ex = new RuntimeException("Failed to find group. ");
-														LOG.error(ex.getMessage(), ex);
-														handler.fail(ex);
-													}
-												} catch(Throwable ex) {
-													LOG.error("Failed to process square webook while querying group. ", ex);
-													handler.fail(ex);
-												}
+											String downloadPath = String.format("%s%s.zip", config().getString(ConfigKeys.DOWNLOAD_PATH), uri);
+											vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
+												handler.response().putHeader("Content-Type", "application/zip")
+														.putHeader("Content-Disposition", "attachment; filename=\"" + (String)result.obtainForClass("pageId") + ".zip\"");
+												handler.end(buffer);
 											}).onFailure(ex -> {
-												LOG.error("Failed to process square webook while querying group. ", ex);
+												LOG.error(String.format("Failed to find download %s", uri), ex);
 												handler.fail(ex);
 											});
-										} catch(Throwable ex) {
-											LOG.error("Failed to process square webook while querying group. ", ex);
+										} catch (Exception ex) {
+											LOG.error(String.format("Failed to render page %s", uri), ex);
 											handler.fail(ex);
 										}
 									}).onFailure(ex -> {
-										LOG.error("Failed to process square webook. ", ex);
+										LOG.error(String.format("Failed to render page %s", uri), ex);
 										handler.fail(ex);
 									});
-								} else {
-									Throwable ex = new RuntimeException("Missing GitHub Username in order. ");
-									LOG.error("Missing GitHub Username in order. ", ex);
-									handler.fail(ex);
 								}
-					} else {
-						Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
-						LOG.error("Missing Square Signature Key and Notification URL. ", ex);
+							} catch (Exception ex) {
+								LOG.error(String.format("Failed to render page %s", uri), ex);
+								handler.fail(ex);
+							}
+						}).onFailure(ex -> {
+							LOG.error(String.format("Failed to render page %s", originalUri), ex);
+							handler.fail(ex);
+						});
+					} catch(Exception ex) {
+						LOG.error("Failed to load page. ", ex);
 						handler.fail(ex);
 					}
-				} catch(Throwable ex) {
-					LOG.error("Failed to process square webook. ", ex);
+				}).onFailure(ex -> {
+					LOG.error(String.format("Failed to render page %s", originalUri), ex);
 					handler.fail(ex);
-				}
+				});
 			});
 
 			router.get("/hackathons").handler(ctx -> {
@@ -1346,14 +1511,6 @@ public class MainVerticle extends AbstractVerticle {
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});
-
-			StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(false);
-			if(staticPath != null) {
-				staticHandler.setAllowRootFileSystemAccess(true);
-				staticHandler.setWebRoot(staticPath);
-				staticHandler.setFilesReadOnly(true);
-			}
-			router.route("/static/*").handler(staticHandler);
 
 			LOG.info("The UI was configured properly.");
 			promise.complete();

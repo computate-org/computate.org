@@ -10,4 +10,5 @@ public class ConfigKeys extends ComputateConfigKeys {
 	public static final String SQUARE_ACCESS_TOKEN = "SQUARE_ACCESS_TOKEN";
 	public static final String SQUARE_SIGNATURE_KEY = "SQUARE_SIGNATURE_KEY";
 	public static final String SQUARE_NOTIFICATION_URL = "SQUARE_NOTIFICATION_URL";
+	public static final String DOWNLOAD_PATH = "DOWNLOAD_PATH";
 }

@@ -598,6 +598,174 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return url;
 	}
 
+	/////////////////
+	// downloadUri //
+	/////////////////
+
+
+	/**	 The entity downloadUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String downloadUri;
+
+	/**	<br> The entity downloadUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:downloadUri">Find the entity downloadUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _downloadUri(Wrap<String> w);
+
+	public String getDownloadUri() {
+		return downloadUri;
+	}
+	public void setDownloadUri(String o) {
+		this.downloadUri = CompanyProduct.staticSetDownloadUri(siteRequest_, o);
+	}
+	public static String staticSetDownloadUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct downloadUriInit() {
+		Wrap<String> downloadUriWrap = new Wrap<String>().var("downloadUri");
+		if(downloadUri == null) {
+			_downloadUri(downloadUriWrap);
+			Optional.ofNullable(downloadUriWrap.getO()).ifPresent(o -> {
+				setDownloadUri(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchDownloadUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDownloadUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDownloadUri(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchDownloadUri(siteRequest_, CompanyProduct.staticSetDownloadUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlDownloadUri() {
+		return downloadUri;
+	}
+
+	/////////////
+	// userUri //
+	/////////////
+
+
+	/**	 The entity userUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String userUri;
+
+	/**	<br> The entity userUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:userUri">Find the entity userUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _userUri(Wrap<String> w);
+
+	public String getUserUri() {
+		return userUri;
+	}
+	public void setUserUri(String o) {
+		this.userUri = CompanyProduct.staticSetUserUri(siteRequest_, o);
+	}
+	public static String staticSetUserUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct userUriInit() {
+		Wrap<String> userUriWrap = new Wrap<String>().var("userUri");
+		if(userUri == null) {
+			_userUri(userUriWrap);
+			Optional.ofNullable(userUriWrap.getO()).ifPresent(o -> {
+				setUserUri(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchUserUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUserUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUserUri(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchUserUri(siteRequest_, CompanyProduct.staticSetUserUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlUserUri() {
+		return userUri;
+	}
+
+	//////////////
+	// storeUrl //
+	//////////////
+
+
+	/**	 The entity storeUrl
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String storeUrl;
+
+	/**	<br> The entity storeUrl
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:storeUrl">Find the entity storeUrl in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _storeUrl(Wrap<String> w);
+
+	public String getStoreUrl() {
+		return storeUrl;
+	}
+	public void setStoreUrl(String o) {
+		this.storeUrl = CompanyProduct.staticSetStoreUrl(siteRequest_, o);
+	}
+	public static String staticSetStoreUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct storeUrlInit() {
+		Wrap<String> storeUrlWrap = new Wrap<String>().var("storeUrl");
+		if(storeUrl == null) {
+			_storeUrl(storeUrlWrap);
+			Optional.ofNullable(storeUrlWrap.getO()).ifPresent(o -> {
+				setStoreUrl(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchStoreUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrStoreUrl(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqStoreUrl(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchStoreUrl(siteRequest_, CompanyProduct.staticSetStoreUrl(siteRequest_, o)).toString();
+	}
+
+	public String sqlStoreUrl() {
+		return storeUrl;
+	}
+
 	///////////
 	// title //
 	///////////
@@ -690,6 +858,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				templateUriInit();
 				uriInit();
 				urlInit();
+				downloadUriInit();
+				userUriInit();
+				storeUrlInit();
 				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -758,6 +929,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return oCompanyProduct.uri;
 			case "url":
 				return oCompanyProduct.url;
+			case "downloadUri":
+				return oCompanyProduct.downloadUri;
+			case "userUri":
+				return oCompanyProduct.userUri;
+			case "storeUrl":
+				return oCompanyProduct.storeUrl;
 			case "title":
 				return oCompanyProduct.title;
 			default:
@@ -813,6 +990,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSetUri(siteRequest_, o);
 		case "url":
 			return CompanyProduct.staticSetUrl(siteRequest_, o);
+		case "downloadUri":
+			return CompanyProduct.staticSetDownloadUri(siteRequest_, o);
+		case "userUri":
+			return CompanyProduct.staticSetUserUri(siteRequest_, o);
+		case "storeUrl":
+			return CompanyProduct.staticSetStoreUrl(siteRequest_, o);
 		case "title":
 			return CompanyProduct.staticSetTitle(siteRequest_, o);
 			default:
@@ -843,6 +1026,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyProduct.staticSearchUrl(siteRequest_, (String)o);
+		case "downloadUri":
+			return CompanyProduct.staticSearchDownloadUri(siteRequest_, (String)o);
+		case "userUri":
+			return CompanyProduct.staticSearchUserUri(siteRequest_, (String)o);
+		case "storeUrl":
+			return CompanyProduct.staticSearchStoreUrl(siteRequest_, (String)o);
 		case "title":
 			return CompanyProduct.staticSearchTitle(siteRequest_, (String)o);
 			default:
@@ -873,6 +1062,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStrUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyProduct.staticSearchStrUrl(siteRequest_, (String)o);
+		case "downloadUri":
+			return CompanyProduct.staticSearchStrDownloadUri(siteRequest_, (String)o);
+		case "userUri":
+			return CompanyProduct.staticSearchStrUserUri(siteRequest_, (String)o);
+		case "storeUrl":
+			return CompanyProduct.staticSearchStrStoreUrl(siteRequest_, (String)o);
 		case "title":
 			return CompanyProduct.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
@@ -903,6 +1098,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchFqUri(siteRequest_, o);
 		case "url":
 			return CompanyProduct.staticSearchFqUrl(siteRequest_, o);
+		case "downloadUri":
+			return CompanyProduct.staticSearchFqDownloadUri(siteRequest_, o);
+		case "userUri":
+			return CompanyProduct.staticSearchFqUserUri(siteRequest_, o);
+		case "storeUrl":
+			return CompanyProduct.staticSearchFqStoreUrl(siteRequest_, o);
 		case "title":
 			return CompanyProduct.staticSearchFqTitle(siteRequest_, o);
 			default:
@@ -973,6 +1174,24 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				}
 				saves.add("url");
 				return val;
+			} else if("downloaduri".equals(varLower)) {
+				if(val instanceof String) {
+					setDownloadUri((String)val);
+				}
+				saves.add("downloadUri");
+				return val;
+			} else if("useruri".equals(varLower)) {
+				if(val instanceof String) {
+					setUserUri((String)val);
+				}
+				saves.add("userUri");
+				return val;
+			} else if("storeurl".equals(varLower)) {
+				if(val instanceof String) {
+					setStoreUrl((String)val);
+				}
+				saves.add("storeUrl");
+				return val;
 			} else if("title".equals(varLower)) {
 				if(val instanceof String) {
 					setTitle((String)val);
@@ -1038,6 +1257,24 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					oCompanyProduct.setUrl(url);
 			}
 
+			if(saves.contains("downloadUri")) {
+				String downloadUri = (String)doc.get("downloadUri_docvalues_string");
+				if(downloadUri != null)
+					oCompanyProduct.setDownloadUri(downloadUri);
+			}
+
+			if(saves.contains("userUri")) {
+				String userUri = (String)doc.get("userUri_docvalues_string");
+				if(userUri != null)
+					oCompanyProduct.setUserUri(userUri);
+			}
+
+			if(saves.contains("storeUrl")) {
+				String storeUrl = (String)doc.get("storeUrl_docvalues_string");
+				if(storeUrl != null)
+					oCompanyProduct.setStoreUrl(storeUrl);
+			}
+
 			if(saves.contains("title")) {
 				String title = (String)doc.get("title_docvalues_string");
 				if(title != null)
@@ -1070,6 +1307,15 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(url != null) {
 			doc.put("url_docvalues_string", url);
 		}
+		if(downloadUri != null) {
+			doc.put("downloadUri_docvalues_string", downloadUri);
+		}
+		if(userUri != null) {
+			doc.put("userUri_docvalues_string", userUri);
+		}
+		if(storeUrl != null) {
+			doc.put("storeUrl_docvalues_string", storeUrl);
+		}
 		if(title != null) {
 			doc.put("title_docvalues_string", title);
 		}
@@ -1093,6 +1339,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "downloadUri":
+				return "downloadUri_docvalues_string";
+			case "userUri":
+				return "userUri_docvalues_string";
+			case "storeUrl":
+				return "storeUrl_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
 			default:
@@ -1116,6 +1368,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "downloadUri":
+				return "downloadUri_docvalues_string";
+			case "userUri":
+				return "userUri_docvalues_string";
+			case "storeUrl":
+				return "storeUrl_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
 			default:
@@ -1139,6 +1397,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri";
 			case "url_docvalues_string":
 				return "url";
+			case "downloadUri_docvalues_string":
+				return "downloadUri";
+			case "userUri_docvalues_string":
+				return "userUri";
+			case "storeUrl_docvalues_string":
+				return "storeUrl";
 			case "title_docvalues_string":
 				return "title";
 			default:
@@ -1178,6 +1442,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		oCompanyProduct.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setUserUri(Optional.ofNullable(doc.get("userUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
@@ -1206,6 +1473,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				apiRequest.addVars("uri");
 			if(!Objects.equals(url, original.getUrl()))
 				apiRequest.addVars("url");
+			if(!Objects.equals(downloadUri, original.getDownloadUri()))
+				apiRequest.addVars("downloadUri");
+			if(!Objects.equals(userUri, original.getUserUri()))
+				apiRequest.addVars("userUri");
+			if(!Objects.equals(storeUrl, original.getStoreUrl()))
+				apiRequest.addVars("storeUrl");
 			if(!Objects.equals(title, original.getTitle()))
 				apiRequest.addVars("title");
 			super.apiRequestBaseResult();
@@ -1226,6 +1499,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(userUri).map(v -> "userUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
@@ -1242,6 +1518,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String VAR_templateUri = "templateUri";
 	public static final String VAR_uri = "uri";
 	public static final String VAR_url = "url";
+	public static final String VAR_downloadUri = "downloadUri";
+	public static final String VAR_userUri = "userUri";
+	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
@@ -1263,6 +1542,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		vars.add(VAR_templateUri);
 		vars.add(VAR_uri);
 		vars.add(VAR_url);
+		vars.add(VAR_downloadUri);
+		vars.add(VAR_userUri);
+		vars.add(VAR_storeUrl);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
@@ -1282,6 +1564,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_templateUri = "template URI";
 	public static final String DISPLAY_NAME_uri = "URI";
 	public static final String DISPLAY_NAME_url = "URL";
+	public static final String DISPLAY_NAME_downloadUri = "download URI";
+	public static final String DISPLAY_NAME_userUri = "user URI";
+	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_title = "title";
 
 	public static String displayNameForClass(String var) {
@@ -1303,6 +1588,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_uri;
 		case VAR_url:
 			return DISPLAY_NAME_url;
+		case VAR_downloadUri:
+			return DISPLAY_NAME_downloadUri;
+		case VAR_userUri:
+			return DISPLAY_NAME_userUri;
+		case VAR_storeUrl:
+			return DISPLAY_NAME_storeUrl;
 		case VAR_title:
 			return DISPLAY_NAME_title;
 		default:
@@ -1326,6 +1617,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "The relative URI for this page. ";
 		case VAR_url:
 			return "The URL for this page. ";
+		case VAR_downloadUri:
+			return "The download relative URI for this page. ";
+		case VAR_userUri:
+			return "The user relative URI for this page. ";
+		case VAR_storeUrl:
+			return "The store URL for this page. ";
 		case VAR_title:
 			return "The title of this page. ";
 			default:
@@ -1348,6 +1645,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		case VAR_uri:
 			return "String";
 		case VAR_url:
+			return "String";
+		case VAR_downloadUri:
+			return "String";
+		case VAR_userUri:
+			return "String";
+		case VAR_storeUrl:
 			return "String";
 		case VAR_title:
 			return "String";
