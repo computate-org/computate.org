@@ -88,6 +88,7 @@ import io.vertx.core.eventbus.EventBusOptions;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.http.HttpHeaders;
+import io.vertx.core.http.HttpResponseExpectation;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.impl.VertxImpl;
 import io.vertx.core.json.JsonArray;
@@ -1232,11 +1233,16 @@ public class MainVerticle extends AbstractVerticle {
 															.add("password", authAdminPassword)
 															.add("grant_type", "password")
 															.add("client_id", "admin-cli")
-															).onSuccess(tokenResponse -> {
+															)
+													.expecting(HttpResponseExpectation.SC_OK)
+															.onSuccess(tokenResponse -> {
 												try {
 						LOG.info("Square webhook 7");
 													String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
-													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(groupResponse -> {
+													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+													.send()
+													.expecting(HttpResponseExpectation.SC_OK)
+													.onSuccess(groupResponse -> {
 														try {
 						LOG.info("Square webhook 8");
 															JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
@@ -1244,7 +1250,10 @@ public class MainVerticle extends AbstractVerticle {
 															if(group != null) {
 						LOG.info("Square webhook 9");
 																String groupId = group.getString("id");
-																webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken)).send().onSuccess(userResponse -> {
+																webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+																.send()
+																.expecting(HttpResponseExpectation.SC_OK)
+																.onSuccess(userResponse -> {
 						LOG.info("Square webhook 10");
 																	JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
 																	JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
@@ -1253,7 +1262,11 @@ public class MainVerticle extends AbstractVerticle {
 																		String userId = user.getString("id");
 																		webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
 																				.putHeader("Authorization", String.format("Bearer %s", authToken))
-																				.send().onSuccess(groupUserResponse -> {
+																				.putHeader("Content-Type", "application/json")
+																				.putHeader("Content-Length", "0")
+																				.send()
+																				.expecting(HttpResponseExpectation.SC_NO_CONTENT)
+																				.onSuccess(groupUserResponse -> {
 						LOG.info("Square webhook 12");
 																			Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 																			handler.response().putHeader("Content-Type", "application/json");
