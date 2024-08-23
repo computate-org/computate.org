@@ -59,7 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -100,7 +99,6 @@
           paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_start'));
         });
 
-        {%- block websocketCompanyCoursePage %}{%- endblock %}
 
         var submitForm_patchCompanyCourse = document.querySelector('#htmForm_patchCompanyCourse')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -147,8 +145,8 @@
 {%- endblock htmScriptBaseResultPage %}
 
 {%- block websocketBaseResultPage %}
-{{ super() }}
 {%- block websocketCompanyCoursePage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketCompanyCourse(websocketCompanyCourseInner);
 {%- endblock websocketCompanyCoursePage %}
 {%- endblock websocketBaseResultPage %}
@@ -259,6 +257,16 @@
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPriceCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -385,6 +393,16 @@
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPriceCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -534,6 +552,16 @@
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPriceCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPriceCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1462,6 +1490,42 @@ The URL for this page. "
 
 {%- macro htmUrlCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputUrlCompanyCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputPriceCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_price">
+  {%- endif %}
+                  <sl-textarea
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="course description"
+                      label="course description"
+                      help-text="
+The course description. "
+                      id="{{classApiMethodMethod}}_price"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyCourse inputCompanyCourse{{id}}Price "
+                      name="setPrice"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyCourse inputCompanyCourse{{id}}Price "
+                      name="setPrice"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_price valuePrice classCompanyCourse inputCompanyCourse{{id}}Price "
+                      name="price"
+    {%- endif %}
+  {%- endif %}
+                      >{{companyCourse_.price}}
+</sl-textarea>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+                <span class="varCompanyCourse{{id}}Price varCompanyCoursePrice ">{{companyCourse_.price}}</span>
+{%- endmacro %}
+
+{%- macro htmPriceCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputPriceCompanyCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputPageIdCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

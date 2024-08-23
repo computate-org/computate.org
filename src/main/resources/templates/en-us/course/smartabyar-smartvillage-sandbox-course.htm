@@ -1,12 +1,15 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta property="site:pageId" content="smart-developer-powered-by-fiware"/>
+    <meta property="site:pageId" content="smartabyar-smartvillage-sandbox-course"/>
     <meta property="site:uri" content="/en-us/course/{{ pageId }}"/>
-    <meta property="site:name" content="Smart Developer Powered by FIWARE"/>
+    <meta property="site:userUri" content="/en-us/user/course/{{ pageId }}"/>
+    <meta property="site:storeUrl" content="https://store.computate.org/product/smarta-byar-smart-village-sandbox-course/13"/>
+    <meta property="site:downloadUri" content="/download/en-us/course/{{ pageId }}"/>
+    <meta property="site:name" content="Smarta Byar Smart Village Sandbox Course"/>
     <meta property="site:title" content="{{ name }}"/>
-    <meta property="site:description" content="Learn how to build new and existing Smart Data Models into an existing Powered by Fiware platform with Computate"/>
-    <meta property="site:courseNum" content="3"/>
-    <meta property="site:price" content="400"/>
+    <meta property="site:description" content="A free Boston University research course to learn how the Smarta Byar Smart Village FIWARE iHub deploys open source smart device microservices to the cloud with the Smart Village Operator. "/>
+    <meta property="site:price" content="0.00"/>
+    <meta property="site:courseNum" content="1"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 .intro-background {
@@ -85,21 +88,37 @@
               <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
             </div>
             <h1 class="brand-font">
-              Learn how to build new and existing Smart Data Models into an existing Powered by Fiware platform with Computate
+              Learn how to deploy open source smart device microservices to the cloud
             </h1>
             <h2 class="brand-font">
               with the {{ name }}
             </h2>
             <div class="intro-details">
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
               <div>
-                This course will become available for the 
-                <a href="https://www.eventbrite.de/e/fiware-tech-training-naples-tickets-920143322447">FIWARE Summit Technical Training</a>
-                in Naples, Italy September 18 2024 · 9:30am – September 19 · 5:30pm CEST 
+                <div>Download your free copy of the {{ name }}! </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
               </div>
-              <sl-button id="order-button" class="gradient-button" variant="neutral" href="https://www.eventbrite.de/e/fiware-tech-training-naples-tickets-920143322447">
-                <i class="fa-solid fa-person-running-fast"></i>
-                Register for the training
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download your free copy
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
               </sl-button>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -110,67 +129,37 @@
               What is the {{ name }}?
             </h2>
             <p>
-              This course builds upon the prerequisite course 
-              <a href="{{ SITE_BASE_URL }}/en-us/course/powered-by-fiware-smart-cloud-challenge">Powered by FIWARE Smart Cloud Challenge</a>
+              {{ description }}
             </p>
-            <p>
-              Learn how to add new and existing <a href="https://github.com/smart-data-models">FIWARE Smart Data Models</a>
-              into an existing Powered by FIWARE platform to focus on the IoT device data that you are interested in using. 
-            </p>
+
             <div class="summary-grid">
-
               <div>
                 <div class="icon-heading">
                   <i class="fa-solid fa-code"></i>
                   <h3>
-                    Load code generation data
+                    Modern development tools
                   </h3>
                 </div>
                 <p>
-                  Learn how to load your own open source source search engine running in your cloud project with data about your code project, 
-                  and FIWARE Smart Data Models to generate thousands of lines of code for you in seconds. 
+                  Learn how to install all the latest cloud deployment tools on your own computer like VSCode, Jupyter, Ansible, Helm, and OpenShift command line interface, 
+                  and start deploying microservices to the cloud like a modern cloud developer. 
                 </p>
               </div>
 
               <div>
                 <div class="icon-heading">
-                  <i class="fa-solid fa-code"></i>
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
                   <h3>
-                    Generate Smart Data Model code
+                    Cloud-native microservices
                   </h3>
                 </div>
                 <p>
-                  Select a FIWARE Smart Data Model and instantly generate the model code, API code, dashboard code, and more
-                  for the Smart Data Models you are interested in. 
+                  Deploy modern microservices to a free Red Hat OpenShift Developer Sandbox environment
+                  for certificate management, event bus application clustering, databases, a search engine, and single sign-on server for securing and scaling your data-driven website. 
                 </p>
               </div>
-
-              <div>
-                <div class="icon-heading">
-                  <i class="fa-solid fa-code"></i>
-                  <h3>
-                    Generate auth permissions
-                  </h3>
-                </div>
-                <p>
-                  Run some simple commands to authorize Keycloak users to create, modify, and view your new Smart Data Model records. 
-                </p>
-              </div>
-
-              <div>
-                <div class="icon-heading">
-                  <i class="fa-solid fa-code"></i>
-                  <h3>
-                    View generated Smart Model Data dashboard
-                  </h3>
-                </div>
-                <p>
-                  See the Computate code generation automation for building Smart Data Model dashboards in your updated application 
-                  by running the simple commands in the Jupyter Notebook. 
-                </p>
-              </div>
-
             </div>
+
           </div>
         </div>
 {% endblock %}

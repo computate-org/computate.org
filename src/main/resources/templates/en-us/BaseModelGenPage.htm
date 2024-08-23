@@ -55,7 +55,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -96,15 +95,14 @@
           paramChange('BaseModel', event.target, document.querySelector('#qBaseModelDiv_start'));
         });
 
-        {%- block websocketBaseModelPage %}{%- endblock %}
       });
     </script>
 {%- endblock htmScriptBaseModelPage %}
 {%- endblock htmScriptPageLayout %}
 
 {%- block websocketPageLayout %}
-{{ super() }}
 {%- block websocketBaseModelPage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketBaseModel(websocketBaseModelInner);
 {%- endblock websocketBaseModelPage %}
 {%- endblock websocketPageLayout %}

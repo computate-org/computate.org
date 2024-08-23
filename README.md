@@ -21,3 +21,14 @@ podman login quay.io
 podman push computateorg/computate.org:latest quay.io/computateorg/computate.org:latest
 ```
 
+### Restart site pod
+```bash
+oc -n computateorg delete pod -l app=computateorg
+```
+
+### rsync downloads
+
+```bash
+oc -n computateorg rsync ~/.local/src/computate.org-downloads/ $(oc -n computateorg get pod -l app=computateorg -o name):/opt/computate.org-downloads/
+```
+

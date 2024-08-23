@@ -59,7 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -100,7 +99,6 @@
           paramChange('CompanyWebsite', event.target, document.querySelector('#qCompanyWebsiteDiv_start'));
         });
 
-        {%- block websocketCompanyWebsitePage %}{%- endblock %}
 
         var submitForm_patchCompanyWebsite = document.querySelector('#htmForm_patchCompanyWebsite')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -147,8 +145,8 @@
 {%- endblock htmScriptBaseResultPage %}
 
 {%- block websocketBaseResultPage %}
-{{ super() }}
 {%- block websocketCompanyWebsitePage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketCompanyWebsite(websocketCompanyWebsiteInner);
 {%- endblock websocketCompanyWebsitePage %}
 {%- endblock websocketBaseResultPage %}

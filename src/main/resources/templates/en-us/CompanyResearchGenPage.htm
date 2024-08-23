@@ -59,7 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -100,7 +99,6 @@
           paramChange('CompanyResearch', event.target, document.querySelector('#qCompanyResearchDiv_start'));
         });
 
-        {%- block websocketCompanyResearchPage %}{%- endblock %}
 
         var submitForm_patchCompanyResearch = document.querySelector('#htmForm_patchCompanyResearch')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -147,8 +145,8 @@
 {%- endblock htmScriptBaseResultPage %}
 
 {%- block websocketBaseResultPage %}
-{{ super() }}
 {%- block websocketCompanyResearchPage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketCompanyResearch(websocketCompanyResearchInner);
 {%- endblock websocketCompanyResearchPage %}
 {%- endblock websocketBaseResultPage %}

@@ -132,7 +132,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -173,7 +172,6 @@
           paramChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_start'));
         });
 
-        {%- block websocketWeatherObservedPage %}{%- endblock %}
 
         var submitForm_patchWeatherObserved = document.querySelector('#htmForm_patchWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -220,8 +218,8 @@
 {%- endblock htmScriptBaseModelPage %}
 
 {%- block websocketBaseModelPage %}
-{{ super() }}
 {%- block websocketWeatherObservedPage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketWeatherObserved(websocketWeatherObservedInner);
 {%- endblock websocketWeatherObservedPage %}
 {%- endblock websocketBaseModelPage %}
@@ -248,7 +246,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPkWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -258,7 +256,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -268,7 +266,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -278,7 +276,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -290,7 +288,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -300,7 +298,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -317,7 +315,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -327,7 +325,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -337,7 +335,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -347,7 +345,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -357,7 +355,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -374,7 +372,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -384,7 +382,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -394,7 +392,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -404,7 +402,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -421,7 +419,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -431,7 +429,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -441,7 +439,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -453,7 +451,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -463,7 +461,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -473,7 +471,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -485,7 +483,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -495,7 +493,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -507,7 +505,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDewPointWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -517,7 +515,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -527,7 +525,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -539,7 +537,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -549,7 +547,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -559,7 +557,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -571,7 +569,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmLocationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -581,7 +579,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmOwnerWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -593,7 +591,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -603,7 +601,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -613,7 +611,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -625,7 +623,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -635,7 +633,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -645,7 +643,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -657,7 +655,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -667,7 +665,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -677,7 +675,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -689,7 +687,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -699,7 +697,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSourceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -709,7 +707,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -721,7 +719,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -731,7 +729,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -741,7 +739,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -753,7 +751,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -763,7 +761,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -773,7 +771,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
@@ -807,7 +805,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPkWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -817,7 +815,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -827,7 +825,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -837,7 +835,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -849,7 +847,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -859,7 +857,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -876,7 +874,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -886,7 +884,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -896,7 +894,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -906,7 +904,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -916,7 +914,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -933,7 +931,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -943,7 +941,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -953,7 +951,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -963,7 +961,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -980,7 +978,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -990,7 +988,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1000,7 +998,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1012,7 +1010,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1022,7 +1020,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1032,7 +1030,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1044,7 +1042,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1054,7 +1052,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1066,7 +1064,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDewPointWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1076,7 +1074,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1086,7 +1084,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1098,7 +1096,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1108,7 +1106,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1118,7 +1116,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1130,7 +1128,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmLocationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1140,7 +1138,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmOwnerWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1152,7 +1150,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1162,7 +1160,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1172,7 +1170,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1184,7 +1182,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1194,7 +1192,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1204,7 +1202,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1216,7 +1214,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1226,7 +1224,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1236,7 +1234,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1248,7 +1246,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1258,7 +1256,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSourceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1268,7 +1266,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1280,7 +1278,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1290,7 +1288,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1300,7 +1298,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1312,7 +1310,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1322,7 +1320,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1332,7 +1330,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1389,7 +1387,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1399,7 +1397,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1409,7 +1407,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1419,7 +1417,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1431,7 +1429,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1441,7 +1439,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1458,7 +1456,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1468,7 +1466,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDescriptionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1478,7 +1476,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAlternateNameWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1488,7 +1486,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAddressWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAddressWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1498,7 +1496,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1515,7 +1513,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1525,7 +1523,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirQualityIndexForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1535,7 +1533,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1545,7 +1543,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAqiMajorPollutantForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1562,7 +1560,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1572,7 +1570,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAirTemperatureTSAWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1582,7 +1580,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAreaServedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1594,7 +1592,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmAtmosphericPressureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1604,7 +1602,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDataProviderWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1614,7 +1612,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateCreatedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1626,7 +1624,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateModifiedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1636,7 +1634,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDateObservedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1648,7 +1646,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDewPointWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDewPointWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1658,7 +1656,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDiffuseIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1668,7 +1666,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmDirectIrradiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1680,7 +1678,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmFeelsLikeTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1690,7 +1688,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmGustSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1700,7 +1698,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmIlluminanceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1712,7 +1710,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmLocationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmLocationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1722,7 +1720,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmOwnerWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmOwnerWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1734,7 +1732,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1744,7 +1742,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPrecipitationForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1754,7 +1752,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPressureTendencyWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1766,7 +1764,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefDeviceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1776,7 +1774,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1786,7 +1784,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1798,7 +1796,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1808,7 +1806,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1818,7 +1816,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSnowHeightWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1830,7 +1828,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSolarRadiationWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1840,7 +1838,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmSourceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSourceWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1850,7 +1848,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmStreamGaugeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1862,7 +1860,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmTemperatureWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1872,7 +1870,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUVIndexMaxWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1882,7 +1880,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmVisibilityWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1894,7 +1892,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWeatherTypeWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1904,7 +1902,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindDirectionWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
@@ -1914,7 +1912,7 @@
               {%- if "PATCH" in scopes %}
                 {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
-                {%- if "GET" scopes %}
+                {%- if "GET" in scopes %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmWindSpeedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}

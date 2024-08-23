@@ -59,7 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -100,7 +99,6 @@
           paramChange('CompanyService', event.target, document.querySelector('#qCompanyServiceDiv_start'));
         });
 
-        {%- block websocketCompanyServicePage %}{%- endblock %}
 
         var submitForm_patchCompanyService = document.querySelector('#htmForm_patchCompanyService')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -147,8 +145,8 @@
 {%- endblock htmScriptBaseResultPage %}
 
 {%- block websocketBaseResultPage %}
-{{ super() }}
 {%- block websocketCompanyServicePage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketCompanyService(websocketCompanyServiceInner);
 {%- endblock websocketCompanyServicePage %}
 {%- endblock websocketBaseResultPage %}

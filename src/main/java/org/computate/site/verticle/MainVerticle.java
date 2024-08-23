@@ -29,10 +29,12 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.tool.SearchTool;
 import org.computate.vertx.api.BaseApiServiceImpl;
 import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.model.base.ComputateBaseModel;
 import org.computate.vertx.model.user.ComputateSiteUser;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.openapi.OpenApi3Generator;
 import org.computate.vertx.request.ComputateSiteRequest;
+import org.computate.vertx.result.base.ComputateBaseResult;
 import org.computate.vertx.search.list.SearchList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,6 +75,7 @@ import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.CompositeFuture;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.MultiMap;
@@ -1089,154 +1092,50 @@ public class MainVerticle extends AbstractVerticle {
 	public Future<Void> configureApi() {
 		Promise<Void> promise = Promise.promise();
 		try {
+			List<Future<?>> futures = new ArrayList<>();
 			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite","WeatherObserved");
 			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite");
-			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
-			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
-			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyResearch.configureUi(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
 
-			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyEvent.configureUi(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
 
-			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyCourse.configureUi(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
+			apiCompanyCourse.configureUserUi(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/course", "/en-us/user/course");
 
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
-			// apiCompanyProduct.configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/user/product");
-			configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/user/product");
+			apiCompanyProduct.configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/product");
 
-			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyService.configureUi(router, CompanyService.class, SiteRequest.class, "/en-us/service");
 
-			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 
-			LOG.info("The API was configured properly.");
-			promise.complete();
+			Future.all(futures).onSuccess( a -> {
+				LOG.info("The API was configured properly.");
+				promise.complete();
+			}).onFailure(ex -> {
+				LOG.error("The API was not configured properly.", ex);
+				promise.fail(ex);
+			});
 		} catch(Exception ex) {
 			LOG.error("The API was not configured properly.", ex);
 			promise.fail(ex);
 		}
 		return promise.future();
-	}
-
-
-	public <Q, SiteRequest extends ComputateSiteRequest, SiteUser extends ComputateSiteUser> void configureUserUi(Router router, Class<Q> classResult, Class<SiteRequest> classSiteRequest, Class<SiteUser> classSiteUser, String apiAddressSiteUser, String uriPrefix) {
-		// router.getWithRegex("(?<part1>/[^/]+)/[^/]+(?<part2>.*)").handler(oauth2AuthHandler).handler(handler -> {
-		router.getWithRegex("(?<part1>/[a-z]{2}-[a-z]{2})/[^/]+(?<part2>.*)").handler(oauth2AuthHandler).handler(handler -> {
-			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
-			String originalUri = handler.pathParam("uri");
-
-			apiSiteUser.user(serviceRequest, classSiteRequest, classSiteUser, apiAddressSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-				try {
-					String uri = String.format("%s%s", handler.pathParam("part1"), handler.pathParam("part2"));
-					String url = String.format("%s%s", config().getString(ComputateConfigKeys.SITE_BASE_URL), uri);
-					webClient.post(
-							config().getInteger(ComputateConfigKeys.AUTH_PORT)
-							, config().getString(ComputateConfigKeys.AUTH_HOST_NAME)
-							, config().getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-							)
-							.ssl(config().getBoolean(ComputateConfigKeys.AUTH_SSL))
-							.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-							.expect(ResponsePredicate.status(200))
-							.sendForm(MultiMap.caseInsensitiveMultiMap()
-									.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
-									.add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
-									.add("response_mode", "permissions")
-									.add("permission", String.format("%s#%s", uri, "GET"))
-					).onComplete(future -> {
-						try {
-							HttpResponse<Buffer> authorizationDecision = null;
-							if(future.succeeded())
-								authorizationDecision = future.result();
-							JsonArray scopes = Optional.ofNullable(authorizationDecision).map(authDecision -> authDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray())).orElse(new JsonArray());
-							SiteUser user = siteRequest.getSiteUser_(classSiteUser);
-							JsonObject query = new JsonObject();
-							MultiMap queryParams = handler.queryParams();
-							for(String name : queryParams.names()) {
-								JsonArray array = query.getJsonArray(name);
-								List<String> vals = queryParams.getAll(name);
-								if(array == null) {
-									array = new JsonArray();
-									query.put(name, array);
-								}
-								for(String val : vals) {
-									array.add(val);
-								}
-							}
-							SearchList<Q> l = new SearchList<>();
-							l.q("*:*");
-							l.setC(classResult);
-							l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
-							l.setStore(true);
-							l.promiseDeepForClass(siteRequest).onSuccess(a -> {
-								Q result = l.first();
-								try {
-									JsonObject resultJson = JsonObject.mapFrom(result);
-									String siteTemplatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
-									Path resourceTemplatePath = Path.of(siteTemplatePath, resultJson.getString("templateUri"));
-									String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-									JsonObject ctx = ComputateConfigKeys.getPageContext(config());
-									ctx.put("userName", user.getUserName());
-									ctx.put("userFirstName", user.getUserFirstName());
-									ctx.put("userLastName", user.getUserLastName());
-									if(scopes.contains("GET")) {
-										ctx.put("scope", "GET");
-									}
-									Matcher m = Pattern.compile("<meta property=\"([^\"]+)\"\\s+content=\"([^\"]*)\"/>", Pattern.MULTILINE).matcher(template);
-									boolean trouve = m.find();
-									while (trouve) {
-										String siteKey = m.group(1);
-										if(siteKey.startsWith("site:")) {
-											String key = StringUtils.substringAfter(siteKey, "site:");
-											String val = m.group(2);
-											if(val instanceof String) {
-												String rendered = jinjava.render(val, ctx.getMap());
-												ctx.put(key, rendered);
-											} else {
-												ctx.put(key, val);
-											}
-										}
-										trouve = m.find();
-									}
-
-									String renderedTemplate = jinjava.render(template, ctx.getMap());
-									Buffer buffer = Buffer.buffer(renderedTemplate);
-									handler.response().putHeader("Content-Type", "text/html");
-									handler.end(buffer);
-								} catch (Exception ex) {
-									LOG.error(String.format("Failed to render page %s", uri), ex);
-									handler.fail(ex);
-								}
-
-							}).onFailure(ex -> {
-								LOG.error(String.format("Failed to render page %s", uri), ex);
-								handler.fail(ex);
-							});
-						} catch (Exception ex) {
-							LOG.error(String.format("Failed to render page %s", uri), ex);
-							handler.fail(ex);
-						}
-					});
-				} catch(Exception ex) {
-					LOG.error("Failed to load page. ", ex);
-					handler.fail(ex);
-				}
-			}).onFailure(ex -> {
-				LOG.error(String.format("Failed to render page %s", originalUri), ex);
-				handler.fail(ex);
-			});
-		});
 	}
 
 	/**
@@ -1303,7 +1202,7 @@ public class MainVerticle extends AbstractVerticle {
 								String githubUsername = githubU;
 								if(githubUsername != null) {
 
-									SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+									SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 									ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
 									List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
 									SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
@@ -1433,7 +1332,7 @@ public class MainVerticle extends AbstractVerticle {
 
 			router.getWithRegex("\\/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
 				String originalUri = handler.pathParam("uri");
-				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 				ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
 				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 					try {

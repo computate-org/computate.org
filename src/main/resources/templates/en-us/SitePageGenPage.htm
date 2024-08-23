@@ -59,7 +59,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -100,7 +99,6 @@
           paramChange('SitePage', event.target, document.querySelector('#qSitePageDiv_start'));
         });
 
-        {%- block websocketSitePagePage %}{%- endblock %}
 
         var submitForm_patchSitePage = document.querySelector('#htmForm_patchSitePage')?.addEventListener('submit', event => {
           event.preventDefault();
@@ -147,8 +145,8 @@
 {%- endblock htmScriptBaseResultPage %}
 
 {%- block websocketBaseResultPage %}
-{{ super() }}
 {%- block websocketSitePagePage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketSitePage(websocketSitePageInner);
 {%- endblock websocketSitePagePage %}
 {%- endblock websocketBaseResultPage %}

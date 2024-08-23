@@ -22,3 +22,4 @@ resources:
   - deployment.yaml
   - service.yaml
   - route.yaml
+  - persistentvolumeclaim.yaml

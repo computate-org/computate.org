@@ -3,6 +3,9 @@ package org.computate.site.model.course;
 import org.computate.site.model.BaseModel;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
+
+import java.math.BigDecimal;
+
 import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
@@ -13,6 +16,7 @@ import io.vertx.pgclient.data.Point;
  * Api: true
  * Page: true
  * PageTemplates: /en-us/course
+ * UserPageTemplates: /en-us/user/course
  * SuperPage: BaseResultPage
  * Indexed: true
  * Description: Take an exciting hands-on course on your own computer with computate
@@ -67,6 +71,20 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * HtmColumn: 2
    */
   protected void _description(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: course description
+   * Description: The course description. 
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   * Multiline: true
+   */
+  protected void _price(Wrap<BigDecimal> w) {
   }
 
 	/**
@@ -130,6 +148,39 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 */
 	protected void _url(Wrap<String> w) {
 		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: download URI
+	 * Description: The download relative URI for this page. 
+	 */
+	protected void _downloadUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: user URI
+	 * Description: The user relative URI for this page. 
+	 */
+	protected void _userUri(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
+	 */
+	protected void _storeUrl(Wrap<String> w) {
 	}
 
 	/**
