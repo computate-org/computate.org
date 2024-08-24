@@ -7,6 +7,7 @@
 	background: linear-gradient(130deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
 	color: white;
 	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
+  border-radius: var(--sl-border-radius-x-large);
 }
 .gradient-button {
   &:not(sl-button), &:is(sl-button)::part(base) {
@@ -29,14 +30,15 @@
 	padding-inline: var(--sl-spacing-2x-large);
 }
 .intro-details {
-	display: flex;
-	align-items: center;
-	gap: 1.5rem;
-	flex-wrap: wrap;
-	background-color: var(--sl-color-gray-200);
-	border-radius: 0.75rem;
+  display: flex;
+  justify-content: center;
+}
+.intro-details > div {
+	background-color: var(--sl-color-gray-100);
+	border-radius: var(--sl-border-radius-pill);
 	font-size: 0.875rem;
 	padding: 1.5rem;
+  display: inline-block;
 }
 
 .summary-wrapper {
@@ -67,23 +69,106 @@
   }
   margin-inline: auto;
 }
+
+@media (max-width:800px) {
+  .intro-content > h1 {
+    font-size: var(--sl-font-size-large);
+  }
+  sl-carousel {
+    --aspect-ratio: 16/8;
+  }
+}
+@media (min-width:801px) {
+  sl-carousel {
+    --aspect-ratio: 16/4;
+  }
+}
 {% endblock htmStylePageLayout %}
 {% block htmBodyMiddlePageLayout %}
+        <div>
+          <sl-carousel class="aspect-ratio" autoplay loop navigation pagination autoplay-interval="5000">
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="Boston University researchers in Smart Cities meeting together in Boston with Red Hat and FIWARE. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/smartvillage/meet-our-team.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="Hackathon with UNICEF at the Red Hat Tech Exchange 2018 in Orlando Florida, discovering the solution for the Multi-hop Mobility Challenge. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/social-innovation/unicef-hackathon-2018.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="The Smarta Byar Smart Village FIWARE iHub receiving an official certificate at the FIWARE Summit in Vienna, Austria in 2023. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-ihub-certificate.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="Hackathon for the ChRIS Project open compute medical imaging with Shaw University students in 2023. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2023.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="Remote hackathon with the Southern Coaliation for Social Justice on Martin Luther King Jr. Day 2021 to kick off the development of the Open Data Policing website. ">
+                <img src="{{ STATIC_BASE_URL }}/png/social-innovation/mlk-day-hackathon-2021.png">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="Global outreach panel discussion at the FIWARE Summit in Vienna, Austria in 2023. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-summit-2023-vienna-panel.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="left" content="FIWARE Cloud-to-Edge Hackathon with students from Shaw University, St. Augustine’s University, and North Carolina Central University in 2024. ">
+                <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2024.jpg">
+              </sl-tooltip>
+            </sl-carousel-item>
+          </sl-carousel>
+
+          <div class="max-width-content-width margin-inline-auto ">
+            <header class="margin-block-spacing-medium ">
+              <img class="max-width-100" src="https://computate.neocities.org/svg/computate.org-keys.svg" alt="computate.org logo">
+            </header>
+            <sl-card style="--border-radius: var(--sl-border-radius-x-large);">
+              <p>
+                Christopher Tate is a Red Hat Principal Software Engineer and a forever open source software developer. 
+                He also: 
+              </p>
+              <ul>
+                <li>
+                  advocates for open standards together with Red Hat enterprise open source software in the Cloud
+                </li>
+                <li>
+                  created the Computate Smart Cloud Deployer and Website Builder software
+                </li>
+                <li>
+                  is a lead software engineer for logging, metrics, alerts, and AI/ML smart data research projects in the New England Research Cloud environment
+                </li>
+                <li>
+                  created the Smart Village Operator and Smart Village Platform on Red Hat OpenShift, deploying all things FIWARE including Context Brokers, IoT Agents, and Smart Data Models
+                </li>
+                <li>
+                  is an architect of the Red Hat Social Innovation Program
+                </li>
+                <li>
+                  founded the Smarta Byar Smart Village Community FIWARE Innovation Hub
+                </li>
+              </ul>
+            </sl-card>
+          </div>
+        </div>
+
         <div class="intro-background">
           <div class="intro-content">
             <div class="wa-crown">
-              <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
+              <i class="fa-duotone fa-solid fa-conveyor-belt fa-5x "></i>
             </div>
             <h1 class="brand-font">
-              Latest available product — Learn how to deploy open source smart device microservices to the cloud
-            </h1>
-            <h2 class="brand-font">
+              Latest available product: Learn how to deploy open source smart device microservices to the cloud
               with the Computate Smart Cloud Builder
-            </h2>
+            </h1>
             <div class="intro-details">
               <div>
-                <div>Click to </div>
-                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}/en-us/product/computate-smart-cloud-deployer" variant="neutral">
+                <sl-button pill id="order-button" size="large" class="gradient-button" href="{{ SITE_BASE_URL }}/en-us/product/computate-smart-cloud-deployer" variant="neutral">
                   <i class="fa-solid fa-person-running-fast"></i>
                   Learn more
                 </sl-button>

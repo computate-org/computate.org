@@ -36,6 +36,7 @@ import org.computate.vertx.openapi.OpenApi3Generator;
 import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.result.base.ComputateBaseResult;
 import org.computate.vertx.search.list.SearchList;
+import org.computate.vertx.verticle.EmailVerticle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +85,7 @@ import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBusOptions;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpClientOptions;
@@ -1171,6 +1173,169 @@ public class MainVerticle extends AbstractVerticle {
 				}
 			});
 
+
+			// router.get("/square/order").handler(BodyHandler.create()).handler(handler -> {
+			// 	try {
+			// 		String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
+			// 		String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
+			// 			LOG.info("Square webhook 2");
+			// 				OrdersApi ordersApi = squareClient.getOrdersApi();
+			// 				String orderId = "WiUTNOuHcDj13bhwkIRfSY06b2LZY";
+			// 				String state = "OPEN";
+			// 				if("OPEN".equals(state)) {
+			// 			LOG.info("Square webhook 3");
+			// 					RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
+			// 					Order order = orderResponse.getOrder();
+			// 					String githubU = null;
+			// 					OrderLineItem item = order.getLineItems().get(0);
+			// 					if(item.getModifiers() != null) {
+			// 						for(OrderLineItemModifier modifier : item.getModifiers()) {
+			// 							String modifierName = modifier.getName();
+			// 							Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+			// 							if (m.find())
+			// 								githubU = m.group(1).trim();
+			// 						}
+			// 					}
+			// 					String name = item.getName();
+			// 					String githubUsername = githubU;
+			// 					if(githubUsername != null) {
+
+			// 						SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			// 						ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+			// 						List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
+			// 						SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
+
+			// 						SearchList<BaseResult> searchList = new SearchList<BaseResult>();
+			// 						searchList.setStore(true);
+			// 						searchList.q("*:*");
+			// 						searchList.setSiteRequest_(siteRequest);
+			// 						searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
+			// 						searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
+			// 						searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			// 				LOG.info("Square webhook 4");
+			// 							if(searchList.size() > 0) {
+			// 				LOG.info("Square webhook 5");
+			// 								String uri = (String)searchList.first().obtainForClass("uri");
+			// 								String groupName = uri;
+			// 				LOG.info("Square webhook 6");
+			// 								String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+			// 								String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+			// 								Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
+			// 								String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
+			// 								Boolean authSsl = config().getBoolean(ConfigKeys.AUTH_SSL);
+			// 								String authRealm = config().getString(ConfigKeys.AUTH_REALM);
+			// 								webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+			// 										.sendForm(MultiMap.caseInsensitiveMultiMap()
+			// 												.add("username", authAdminUsername)
+			// 												.add("password", authAdminPassword)
+			// 												.add("grant_type", "password")
+			// 												.add("client_id", "admin-cli")
+			// 												)
+			// 										.expecting(HttpResponseExpectation.SC_OK)
+			// 												.onSuccess(tokenResponse -> {
+			// 									try {
+			// 			LOG.info("Square webhook 7");
+			// 										String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+			// 										webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+			// 										.send()
+			// 										.expecting(HttpResponseExpectation.SC_OK)
+			// 										.onSuccess(groupResponse -> {
+			// 											try {
+			// 			LOG.info("Square webhook 8");
+			// 												JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+			// 												JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+			// 												if(group != null) {
+			// 			LOG.info("Square webhook 9");
+			// 													String groupId = group.getString("id");
+			// 													webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+			// 													.send()
+			// 													.expecting(HttpResponseExpectation.SC_OK)
+			// 													.onSuccess(userResponse -> {
+			// 			LOG.info("Square webhook 10");
+			// 														JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+			// 														JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+			// 														if(user != null) {
+			// 			LOG.info("Square webhook 11");
+			// 															String userId = user.getString("id");
+			// 															webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+			// 																	.putHeader("Authorization", String.format("Bearer %s", authToken))
+			// 																	.send()
+			// 																	.expecting(HttpResponseExpectation.SC_NO_CONTENT)
+			// 																	.onSuccess(groupUserResponse -> {
+			// 			LOG.info("Square webhook 12");
+
+			// 																DeliveryOptions options = new DeliveryOptions();
+			// 																options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, "");
+			// 																options.addHeader(EmailVerticle.MAIL_HEADER_FROM, "");
+			// 																options.addHeader(EmailVerticle.MAIL_HEADER_TO, "");
+			// 																options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, "");
+			// 																vertx.eventBus().publish(EmailVerticle.MAIL_EVENTBUS_ADDRESS, String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(ex)));
+
+			// 																Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+			// 																handler.response().putHeader("Content-Type", "application/json");
+			// 																handler.end(buffer);
+			// 																LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
+			// 															}).onFailure(ex -> {
+			// 																LOG.error("Failed to process square webook while adding user to group. ", ex);
+			// 																handler.fail(ex);
+			// 															});
+			// 														} else {
+			// 															Throwable ex = new RuntimeException("Failed to find user. ");
+			// 															LOG.error(ex.getMessage(), ex);
+			// 															handler.fail(ex);
+			// 														}
+			// 													}).onFailure(ex -> {
+			// 														LOG.error("Failed to process square webook while querying user. ", ex);
+			// 														handler.fail(ex);
+			// 													});
+			// 												} else {
+			// 													Throwable ex = new RuntimeException("Failed to find group. ");
+			// 													LOG.error(ex.getMessage(), ex);
+			// 													handler.fail(ex);
+			// 												}
+			// 											} catch(Throwable ex) {
+			// 												LOG.error("Failed to process square webook while querying group. ", ex);
+			// 												handler.fail(ex);
+			// 											}
+			// 										}).onFailure(ex -> {
+			// 											LOG.error("Failed to process square webook while querying group. ", ex);
+			// 											handler.fail(ex);
+			// 										});
+			// 									} catch(Throwable ex) {
+			// 										LOG.error("Failed to process square webook while querying group. ", ex);
+			// 										handler.fail(ex);
+			// 									}
+			// 								}).onFailure(ex -> {
+			// 									LOG.error("Failed to process square webook. ", ex);
+			// 									handler.fail(ex);
+			// 								});
+			// 							} else {
+			// 								LOG.warn(String.format("Item not found with name %s. ", name));
+			// 								Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+			// 								handler.response().putHeader("Content-Type", "application/json");
+			// 								handler.end(buffer);
+			// 							}
+			// 						}).onFailure(ex -> {
+			// 							LOG.error("Failed to process square webook. ", ex);
+			// 							handler.fail(ex);
+			// 						});
+			// 					} else {
+			// 						LOG.warn(String.format("GitHub username modifier not found order %s for %s. ", orderId, name));
+			// 						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+			// 						handler.response().putHeader("Content-Type", "application/json");
+			// 						handler.end(buffer);
+			// 					}
+			// 				} else {
+			// 					Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+			// 					handler.response().putHeader("Content-Type", "application/json");
+			// 					handler.end(buffer);
+			// 				}
+			// 	} catch(Throwable ex) {
+			// 		LOG.error("Failed to process square webook. ", ex);
+			// 		handler.fail(ex);
+			// 	}
+			// });
+
 			router.post("/square/order").handler(BodyHandler.create()).handler(handler -> {
 				try {
 					String signature = handler.request().headers().get("x-square-hmacsha256-signature");
@@ -1268,6 +1433,14 @@ public class MainVerticle extends AbstractVerticle {
 																				.expecting(HttpResponseExpectation.SC_NO_CONTENT)
 																				.onSuccess(groupUserResponse -> {
 						LOG.info("Square webhook 12");
+
+																			// DeliveryOptions options = new DeliveryOptions();
+																			// options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, "");
+																			// options.addHeader(EmailVerticle.MAIL_HEADER_FROM, "");
+																			// options.addHeader(EmailVerticle.MAIL_HEADER_TO, "");
+																			// options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, "");
+																			// vertx.eventBus().publish(EmailVerticle.MAIL_EVENTBUS_ADDRESS, String.format("%s\n\n%s", json.encodePrettily(), ExceptionUtils.getStackTrace(ex)));
+
 																			Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 																			handler.response().putHeader("Content-Type", "application/json");
 																			handler.end(buffer);

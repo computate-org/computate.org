@@ -221,7 +221,7 @@
               <div>
                 <sl-tooltip placement="right" content="sign out">
                   <sl-button href="{{ logoutUrl }}" label="sign out">
-                    <i slot="prefix" class="fad fa-sign-out-alt"></i>
+                    <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
                     <span>sign out</span>
                   </sl-button>
                 </sl-tooltip>
@@ -231,7 +231,7 @@
 {% else %}
           <li>
             <sl-button href="{{ SITE_BASE_URL }}/user">
-              <i class="fad fa-house-user "></i> login
+              <i class="fa-duotone fa-person-to-portal"></i> login
             </sl-button>
           </li>
 {% endif %}
@@ -243,7 +243,7 @@
             <i slot="prefix" class="fas fa-bars"></i>
           </sl-button>
             <sl-input placeholder="search" id="siteSearchInput">
-              <i slot="prefix" class="fa-duotone fa-magnifying-glass"></i>
+              <i slot="prefix" class="fa-light fa-magnifying-glass"></i>
             </sl-input>
             <!-- <sl-button type="submit" variant="primary" size="medium" slot="trigger" caret>Search</sl-button> -->
         </header>
@@ -259,7 +259,7 @@
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
       </main>
-      <footer class="split-block ">
+      <footer class="split-block " id="site-footer">
         {% if GITHUB_ORG is defined %}
         <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
           <div>
