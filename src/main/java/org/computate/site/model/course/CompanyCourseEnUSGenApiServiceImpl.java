@@ -1541,6 +1541,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, ctx.getString(CompanyCourse.VAR_pageId)));
 			page.persistForClass(CompanyCourse.VAR_resourceUri, CompanyCourse.staticSetResourceUri(siteRequest2, ctx.getString(CompanyCourse.VAR_resourceUri)));
 			page.persistForClass(CompanyCourse.VAR_templateUri, CompanyCourse.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyCourse.VAR_templateUri)));
+			page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, ctx.getString(CompanyCourse.VAR_emailTemplate)));
 			page.persistForClass(CompanyCourse.VAR_uri, CompanyCourse.staticSetUri(siteRequest2, ctx.getString(CompanyCourse.VAR_uri)));
 			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
 			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, ctx.getString(CompanyCourse.VAR_downloadUri)));

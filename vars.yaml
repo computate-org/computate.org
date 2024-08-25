@@ -525,3 +525,14 @@ SITE_REDIRECTS:
   - src: /hackathons
     dest: /en-us/article/hackathons
 
+#########
+# Email #
+#########
+
+EMAIL_HOST: smtp.fastmail.com
+EMAIL_PORT: 465
+EMAIL_SSL: true
+EMAIL_USERNAME: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['username'] | b64decode }}"
+EMAIL_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
+EMAIL_FROM: support@computate.org
+EMAIL_ADMIN: support@computate.org

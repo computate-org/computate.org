@@ -114,6 +114,17 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
+	 * Facet: true
+	 * DisplayName: email template
+	 * Description: The HTML email template for this product. 
+	 */
+	protected void _emailTemplate(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
 	 * HtmRow: 3
 	 * HtmCell: 2
 	 * Facet: true
