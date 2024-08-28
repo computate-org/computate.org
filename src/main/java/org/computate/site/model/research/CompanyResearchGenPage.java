@@ -261,7 +261,7 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
       if(!StringUtils.contains(fq, "(")) {
         String fq1 = CompanyResearch.searchVarCompanyResearch(StringUtils.substringBefore(fq, ":"));
         String fq2 = StringUtils.substringAfter(fq, ":");
-        if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+        if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "sessionId", "userKeys"))
           fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", CompanyResearch.displayNameForClass(fq1)));
         }
       }

@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseResultPage %}
 {%- block htmTitleCompanyWebsitePage %}
-    <title>{% if searchListCompanyWebsite_ is defined %}{% if companyWebsiteCount == int1 %}{% if id is defined %}website{% else %}website{% endif %}{% else %}no website found{% endif %}{% else %}websites{% endif %}</title>
+    <title>{% if searchListCompanyWebsite_ is defined %}{% if companyWebsiteCount == 1 %}{% if id is defined %}website{% else %}website{% endif %}{% else %}no website found{% endif %}{% else %}websites{% endif %}</title>
 {%- endblock htmTitleCompanyWebsitePage %}
 {%- endblock htmTitleBaseResultPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsCompanyWebsitePage %}
     <script src="{{staticBaseUrl}}/js/enUS/CompanyWebsitePage.js"></script>
-    {% if id is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyWebsitePageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsCompanyWebsitePage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -153,7 +151,7 @@
 
 {%- block htmUrlCompanyWebsitePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyWebsitePage %}
 
-{%- macro htmButton_patchCompanyWebsite() %}<sl-button onclick="document.querySelector('#patchCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyWebsite() %}<sl-button id="htmButton_patchCompanyWebsite" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -196,7 +194,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -207,18 +210,8 @@
                   {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -260,7 +253,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -278,7 +271,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyWebsite() %}<sl-button onclick="document.querySelector('#postCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyWebsite() %}<sl-button id="htmButton_postCompanyWebsite" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -322,7 +315,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -333,18 +331,8 @@
                   {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -386,7 +374,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -404,7 +392,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyWebsite() %}<sl-button onclick="document.querySelector('#putimportCompanyWebsiteDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyWebsite() %}<sl-button id="htmButton_putimportCompanyWebsite" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyWebsite() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -471,7 +459,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -482,18 +475,8 @@
                   {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -535,7 +518,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -668,15 +651,16 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if companyWebsiteCount == 1 %}<sl-button id="refreshThisCompanyWebsiteGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyWebsiteCount > 0 %}<sl-button id="refreshAllCompanyWebsiteGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyWebsiteCount > 0 %}{{ htmButton_patchCompanyWebsite() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyWebsiteCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyWebsite() }}{%- endif %}            </div>
+{% if companyWebsiteCount == 1 %}<sl-button id="refreshThisCompanyWebsiteGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebsiteGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyWebsiteCount > 0 %}<sl-button id="refreshAllCompanyWebsiteGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebsiteGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyWebsiteCount > 0 %}{{ htmButton_patchCompanyWebsite() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyWebsiteCount == 1 %}{%- if id is defined %}{{ htmButton_postCompanyWebsite() }}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- else %}{{ htmButton_postCompanyWebsite() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyWebsite() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyWebsiteCount > 0 %}
         {{ htmForm_patchCompanyWebsite() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if companyWebsiteCount == int1 %}
+    {%- if companyWebsiteCount == 1 %}
       {%- if id is defined %}
+        {{ htmForm_postCompanyWebsite() }}
       {%- else %}
         {{ htmForm_postCompanyWebsite() }}
       {%- endif %}
@@ -1242,70 +1226,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ companyWebsite_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyWebsite inputCompanyWebsite{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyWebsite_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-                <span class="varCompanyWebsite{{id}}Deleted varCompanyWebsiteDeleted ">{{companyWebsite_.deleted}}</span>
-{%- endmacro %}
-
-{%- macro htmDeletedCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNameCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

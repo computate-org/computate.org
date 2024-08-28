@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseResultPage %}
 {%- block htmTitleCompanyEventPage %}
-    <title>{% if searchListCompanyEvent_ is defined %}{% if companyEventCount == int1 %}{% if id is defined %}event{% else %}event{% endif %}{% else %}no event found{% endif %}{% else %}events{% endif %}</title>
+    <title>{% if searchListCompanyEvent_ is defined %}{% if companyEventCount == 1 %}{% if id is defined %}event{% else %}event{% endif %}{% else %}no event found{% endif %}{% else %}events{% endif %}</title>
 {%- endblock htmTitleCompanyEventPage %}
 {%- endblock htmTitleBaseResultPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsCompanyEventPage %}
     <script src="{{staticBaseUrl}}/js/enUS/CompanyEventPage.js"></script>
-    {% if id is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyEventPageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsCompanyEventPage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -226,7 +224,7 @@
 
 {%- block htmUrlCompanyEventPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyEventPage %}
 
-{%- macro htmButton_patchCompanyEvent() %}<sl-button onclick="document.querySelector('#patchCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyEvent() %}<sl-button id="htmButton_patchCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -237,7 +235,11 @@
 {%- macro htmForm_patchCompanyEvent() %}
         <sl-dialog id="patchCompanyEventDialog" label="Modify event">
           <form id="htmForm_patchCompanyEvent">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -269,7 +271,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -280,18 +282,8 @@
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -343,7 +335,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -361,7 +353,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyEvent() %}<sl-button onclick="document.querySelector('#postCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyEvent() %}<sl-button id="htmButton_postCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -373,7 +365,11 @@
         <sl-dialog id="postCompanyEventDialog" label="Create an event">
           <form id="htmForm_postCompanyEvent">
             <div class="">You can override any default values below: </div>
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -405,7 +401,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -416,18 +412,8 @@
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -479,7 +465,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -497,7 +483,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyEvent() %}<sl-button onclick="document.querySelector('#putimportCompanyEventDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyEvent() %}<sl-button id="htmButton_putimportCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyEvent() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -532,7 +518,11 @@
 {%- macro htmForm_searchpageCompanyEvent() %}
         <div id="searchpageCompanyEventDialog" label="Search events">
           <div id="htmForm_searchpageCompanyEvent">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -564,7 +554,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -575,18 +565,8 @@
                   {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -638,7 +618,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -771,15 +751,16 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if companyEventCount == 1 %}<sl-button id="refreshThisCompanyEventGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyEventGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyEventGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyEventCount > 0 %}<sl-button id="refreshAllCompanyEventGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyEventCount > 0 %}{{ htmButton_patchCompanyEvent() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyEventCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyEvent() }}{%- endif %}            </div>
+{% if companyEventCount == 1 %}<sl-button id="refreshThisCompanyEventGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyEventGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyEventGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyEventCount > 0 %}<sl-button id="refreshAllCompanyEventGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyEventCount > 0 %}{{ htmButton_patchCompanyEvent() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyEventCount == 1 %}{%- if id is defined %}{{ htmButton_postCompanyEvent() }}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- else %}{{ htmButton_postCompanyEvent() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyEvent() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyEventCount > 0 %}
         {{ htmForm_patchCompanyEvent() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if companyEventCount == int1 %}
+    {%- if companyEventCount == 1 %}
       {%- if id is defined %}
+        {{ htmForm_postCompanyEvent() }}
       {%- else %}
         {{ htmForm_postCompanyEvent() }}
       {%- endif %}
@@ -1345,70 +1326,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ companyEvent_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyEvent inputCompanyEvent{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyEvent_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-                <span class="varCompanyEvent{{id}}Deleted varCompanyEventDeleted ">{{companyEvent_.deleted}}</span>
-{%- endmacro %}
-
-{%- macro htmDeletedCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNameCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseResultPage %}
 {%- block htmTitleSitePagePage %}
-    <title>{% if searchListSitePage_ is defined %}{% if sitePageCount == int1 %}{% if id is defined %}article{% else %}article{% endif %}{% else %}no article found{% endif %}{% else %}articles{% endif %}</title>
+    <title>{% if searchListSitePage_ is defined %}{% if sitePageCount == 1 %}{% if id is defined %}article{% else %}article{% endif %}{% else %}no article found{% endif %}{% else %}articles{% endif %}</title>
 {%- endblock htmTitleSitePagePage %}
 {%- endblock htmTitleBaseResultPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsSitePagePage %}
     <script src="{{staticBaseUrl}}/js/enUS/SitePagePage.js"></script>
-    {% if id is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/SitePagePageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsSitePagePage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -153,7 +151,7 @@
 
 {%- block htmUrlSitePagePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlSitePagePage %}
 
-{%- macro htmButton_patchSitePage() %}<sl-button onclick="document.querySelector('#patchSitePageDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchSitePage() %}<sl-button id="htmButton_patchSitePage" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchSitePage() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -196,7 +194,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -207,18 +210,8 @@
                   {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -260,7 +253,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -278,7 +271,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postSitePage() %}<sl-button onclick="document.querySelector('#postSitePageDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postSitePage() %}<sl-button id="htmButton_postSitePage" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postSitePage() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -322,7 +315,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -333,18 +331,8 @@
                   {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -386,7 +374,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -404,7 +392,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportSitePage() %}<sl-button onclick="document.querySelector('#putimportSitePageDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportSitePage() %}<sl-button id="htmButton_putimportSitePage" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportSitePage() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -471,7 +459,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -482,18 +475,8 @@
                   {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -535,7 +518,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageImageUriSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -668,15 +651,16 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if sitePageCount == 1 %}<sl-button id="refreshThisSitePageGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSitePageGenPage')); }, function() { addError(document.querySelector('#refreshThisSitePageGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if sitePageCount > 0 %}<sl-button id="refreshAllSitePageGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if sitePageCount > 0 %}{{ htmButton_patchSitePage() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if sitePageCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postSitePage() }}{%- endif %}{%- else %}{{ htmButton_postSitePage() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportSitePage() }}{%- endif %}            </div>
+{% if sitePageCount == 1 %}<sl-button id="refreshThisSitePageGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisSitePageGenPage')); }, function() { addError(document.querySelector('#refreshThisSitePageGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if sitePageCount > 0 %}<sl-button id="refreshAllSitePageGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllSitePageGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if sitePageCount > 0 %}{{ htmButton_patchSitePage() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if sitePageCount == 1 %}{%- if id is defined %}{{ htmButton_postSitePage() }}{%- else %}{{ htmButton_postSitePage() }}{%- endif %}{%- else %}{{ htmButton_postSitePage() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportSitePage() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if sitePageCount > 0 %}
         {{ htmForm_patchSitePage() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if sitePageCount == int1 %}
+    {%- if sitePageCount == 1 %}
       {%- if id is defined %}
+        {{ htmForm_postSitePage() }}
       {%- else %}
         {{ htmForm_postSitePage() }}
       {%- endif %}
@@ -1242,70 +1226,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedSitePagePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ sitePage_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classSitePage inputSitePage{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classSitePage inputSitePage{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if sitePage_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-                <span class="varSitePage{{id}}Deleted varSitePageDeleted ">{{sitePage_.deleted}}</span>
-{%- endmacro %}
-
-{%- macro htmDeletedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedSitePagePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputPageIdSitePagePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

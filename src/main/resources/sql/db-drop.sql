@@ -1,2 +1,2 @@
-DROP TABLE WeatherObserved CASCADE;
 DROP TABLE SiteUser CASCADE;
+DROP TABLE WeatherObserved CASCADE;

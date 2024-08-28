@@ -494,8 +494,6 @@ ENABLE_CODE_GENERATION_SERVICE: true
 ENABLE_USER_KEY: true
 # Set the sessionId of the user session creating an object in the database. 
 ENABLE_SESSION_ID: true
-# Enable an object in the database to be deleted. 
-ENABLE_DELETED: true
 # Enable an object in the database to be archived. 
 ENABLE_ARCHIVED: true
 # Enable an admin role. 

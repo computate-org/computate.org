@@ -746,6 +746,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -1463,6 +1464,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		return promise.future();
 	}
 
+	public String searchVar(String varIndexed) {
+		return CompanyCourse.searchVarCompanyCourse(varIndexed);
+	}
+
+	@Override
+	public String getClassApiAddress() {
+		return CompanyCourse.CLASS_API_ADDRESS_CompanyCourse;
+	}
+
 	public Future<CompanyCourse> indexCompanyCourse(CompanyCourse o) {
 		Promise<CompanyCourse> promise = Promise.promise();
 		try {
@@ -1505,13 +1515,45 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		return promise.future();
 	}
 
-	public String searchVar(String varIndexed) {
-		return CompanyCourse.searchVarCompanyCourse(varIndexed);
-	}
-
-	@Override
-	public String getClassApiAddress() {
-		return CompanyCourse.CLASS_API_ADDRESS_CompanyCourse;
+	public Future<CompanyCourse> unindexCompanyCourse(CompanyCourse o) {
+		Promise<CompanyCourse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject delete = new JsonObject();
+				json.put("delete", delete);
+				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				delete.put("query", query);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("unindexCompanyCourse failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	@Override
@@ -1527,14 +1569,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_resourceUri, resourceUri);
 			page.persistForClass(CompanyCourse.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyCourse.VAR_inheritPk, CompanyCourse.staticSetInheritPk(siteRequest2, ctx.getString(CompanyCourse.VAR_inheritPk)));
-			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, ctx.getString(CompanyCourse.VAR_created)));
-			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, ctx.getString(CompanyCourse.VAR_archived)));
-			page.persistForClass(CompanyCourse.VAR_deleted, CompanyCourse.staticSetDeleted(siteRequest2, ctx.getString(CompanyCourse.VAR_deleted)));
-			page.persistForClass(CompanyCourse.VAR_sessionId, CompanyCourse.staticSetSessionId(siteRequest2, ctx.getString(CompanyCourse.VAR_sessionId)));
-			page.persistForClass(CompanyCourse.VAR_userKey, CompanyCourse.staticSetUserKey(siteRequest2, ctx.getString(CompanyCourse.VAR_userKey)));
-			page.persistForClass(CompanyCourse.VAR_objectId, CompanyCourse.staticSetObjectId(siteRequest2, ctx.getString(CompanyCourse.VAR_objectId)));
-			page.persistForClass(CompanyCourse.VAR_id, CompanyCourse.staticSetId(siteRequest2, ctx.getString(CompanyCourse.VAR_id)));
 			page.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, ctx.getString(CompanyCourse.VAR_name)));
 			page.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, ctx.getString(CompanyCourse.VAR_description)));
 			page.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, ctx.getString(CompanyCourse.VAR_price)));
@@ -1549,6 +1583,13 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_storeUrl)));
 			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, ctx.getString(CompanyCourse.VAR_title)));
 			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, ctx.getString(CompanyCourse.VAR_courseNum)));
+			page.persistForClass(CompanyCourse.VAR_inheritPk, CompanyCourse.staticSetInheritPk(siteRequest2, ctx.getString(CompanyCourse.VAR_inheritPk)));
+			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, ctx.getString(CompanyCourse.VAR_created)));
+			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, ctx.getString(CompanyCourse.VAR_archived)));
+			page.persistForClass(CompanyCourse.VAR_sessionId, CompanyCourse.staticSetSessionId(siteRequest2, ctx.getString(CompanyCourse.VAR_sessionId)));
+			page.persistForClass(CompanyCourse.VAR_userKey, CompanyCourse.staticSetUserKey(siteRequest2, ctx.getString(CompanyCourse.VAR_userKey)));
+			page.persistForClass(CompanyCourse.VAR_objectId, CompanyCourse.staticSetObjectId(siteRequest2, ctx.getString(CompanyCourse.VAR_objectId)));
+			page.persistForClass(CompanyCourse.VAR_id, CompanyCourse.staticSetId(siteRequest2, ctx.getString(CompanyCourse.VAR_id)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

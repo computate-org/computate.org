@@ -264,7 +264,7 @@ public class BaseResultGenPage extends BaseResultGenPageGen<PageLayout> {
       if(!StringUtils.contains(fq, "(")) {
         String fq1 = BaseResult.searchVarBaseResult(StringUtils.substringBefore(fq, ":"));
         String fq2 = StringUtils.substringAfter(fq, ":");
-        if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "deleted_", "sessionId", "userKeys"))
+        if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "sessionId", "userKeys"))
           fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", BaseResult.displayNameForClass(fq1)));
         }
       }

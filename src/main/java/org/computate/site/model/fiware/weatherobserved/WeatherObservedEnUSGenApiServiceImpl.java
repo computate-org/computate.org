@@ -138,6 +138,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -706,14 +707,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlArchived());
 						break;
-					case "setDeleted":
-							o2.setDeleted(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_deleted + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDeleted());
-						break;
 					case "setSessionId":
 							o2.setSessionId(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -873,14 +866,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_diffuseIrradiation + "=$" + num);
 							num++;
 							bParams.add(o2.sqlDiffuseIrradiation());
-						break;
-					case "setDirectIrradiation":
-							o2.setDirectIrradiation(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDirectIrradiation());
 						break;
 					case "setFeelsLikeTemperature":
 							o2.setFeelsLikeTemperature(jsonObject.getString(entityVar));
@@ -1073,6 +1058,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_entityId + "=$" + num);
 							num++;
 							bParams.add(o2.sqlEntityId());
+						break;
+					case "setDirectIrradiation":
+							o2.setDirectIrradiation(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDirectIrradiation());
 						break;
 				}
 			}
@@ -1420,15 +1413,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlArchived());
 						break;
-					case WeatherObserved.VAR_deleted:
-						o2.setDeleted(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_deleted + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDeleted());
-						break;
 					case WeatherObserved.VAR_sessionId:
 						o2.setSessionId(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1608,15 +1592,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_diffuseIrradiation + "=$" + num);
 						num++;
 						bParams.add(o2.sqlDiffuseIrradiation());
-						break;
-					case WeatherObserved.VAR_directIrradiation:
-						o2.setDirectIrradiation(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDirectIrradiation());
 						break;
 					case WeatherObserved.VAR_feelsLikeTemperature:
 						o2.setFeelsLikeTemperature(jsonObject.getString(entityVar));
@@ -1834,6 +1809,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlEntityId());
 						break;
+					case WeatherObserved.VAR_directIrradiation:
+						o2.setDirectIrradiation(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDirectIrradiation());
+						break;
 					}
 				}
 			}
@@ -1884,6 +1868,338 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return promise.future();
 	}
 
+	// DELETE //
+
+	@Override
+	public void deleteWeatherObserved(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("deleteWeatherObserved started. "));
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+							try {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listWeatherObserved.getRequest().getRows());
+								apiRequest.setNumFound(listWeatherObserved.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listWeatherObserved.first());
+								apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+
+								listDELETEWeatherObserved(apiRequest, listWeatherObserved).onSuccess(e -> {
+									response200DELETEWeatherObserved(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("deleteWeatherObserved succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
+									}).onFailure(ex -> {
+										LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+										error(siteRequest, eventHandler, ex);
+									});
+								}).onFailure(ex -> {
+									LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
+							} catch(Exception ex) {
+								LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							}
+						}).onFailure(ex -> {
+							LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("deleteWeatherObserved failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+
+	public Future<Void> listDELETEWeatherObserved(ApiRequest apiRequest, SearchList<WeatherObserved> listWeatherObserved) {
+		Promise<Void> promise = Promise.promise();
+		List<Future> futures = new ArrayList<>();
+		SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
+		listWeatherObserved.getList().forEach(o -> {
+			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			o.setSiteRequest_(siteRequest2);
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			futures.add(Future.future(promise1 -> {
+				deleteWeatherObservedFuture(o).onSuccess(a -> {
+					promise1.complete();
+				}).onFailure(ex -> {
+					LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+					promise1.fail(ex);
+				});
+			}));
+		});
+		CompositeFuture.all(futures).onSuccess( a -> {
+			listWeatherObserved.next().onSuccess(next -> {
+				if(next) {
+					listDELETEWeatherObserved(apiRequest, listWeatherObserved).onSuccess(b -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+						promise.fail(ex);
+					});
+				} else {
+					promise.complete();
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+				promise.fail(ex);
+			});
+		}).onFailure(ex -> {
+			LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		});
+		return promise.future();
+	}
+
+	@Override
+	public void deleteWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			try {
+				siteRequest.setJsonObject(body);
+				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+					try {
+						WeatherObserved o = listWeatherObserved.first();
+						if(o != null && listWeatherObserved.getResponse().getResponse().getNumFound() == 1) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1L);
+							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
+								siteRequest.getRequestVars().put( "refresh", "false" );
+							}
+							if(apiRequest.getNumFound() == 1L)
+								apiRequest.setOriginal(o);
+							apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
+							deleteWeatherObservedFuture(o).onSuccess(o2 -> {
+								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+							}).onFailure(ex -> {
+								eventHandler.handle(Future.failedFuture(ex));
+							});
+						} else {
+							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+						}
+					} catch(Exception ex) {
+						LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+						error(siteRequest, eventHandler, ex);
+					}
+				}).onFailure(ex -> {
+					LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+					error(siteRequest, eventHandler, ex);
+				});
+			} catch(Exception ex) {
+				LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		}).onFailure(ex -> {
+			LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+			error(null, eventHandler, ex);
+		});
+	}
+
+	public Future<WeatherObserved> deleteWeatherObservedFuture(WeatherObserved o) {
+		SiteRequest siteRequest = o.getSiteRequest_();
+		Promise<WeatherObserved> promise = Promise.promise();
+
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			Promise<WeatherObserved> promise1 = Promise.promise();
+			pgPool.withTransaction(sqlConnection -> {
+				siteRequest.setSqlConnection(sqlConnection);
+				varsWeatherObserved(siteRequest).onSuccess(a -> {
+					sqlDELETEWeatherObserved(o).onSuccess(weatherObserved -> {
+						relateWeatherObserved(o).onSuccess(d -> {
+							unindexWeatherObserved(o).onSuccess(o2 -> {
+								if(apiRequest != null) {
+									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+									if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+										o2.apiRequestWeatherObserved();
+										if(apiRequest.getVars().size() > 0)
+											eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+									}
+								}
+								promise1.complete();
+							}).onFailure(ex -> {
+								promise1.fail(ex);
+							});
+						}).onFailure(ex -> {
+							promise1.fail(ex);
+						});
+					}).onFailure(ex -> {
+						promise1.fail(ex);
+					});
+				}).onFailure(ex -> {
+					promise1.fail(ex);
+				});
+				return promise1.future();
+			}).onSuccess(a -> {
+				siteRequest.setSqlConnection(null);
+			}).onFailure(ex -> {
+				siteRequest.setSqlConnection(null);
+				promise.fail(ex);
+			}).compose(weatherObserved -> {
+				Promise<WeatherObserved> promise2 = Promise.promise();
+				refreshWeatherObserved(o).onSuccess(a -> {
+					promise2.complete(o);
+				}).onFailure(ex -> {
+					promise2.fail(ex);
+				});
+				return promise2.future();
+			}).onSuccess(weatherObserved -> {
+				promise.complete(weatherObserved);
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("deleteWeatherObservedFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<Void> sqlDELETEWeatherObserved(WeatherObserved o) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+			Integer num = 1;
+			StringBuilder bSql = new StringBuilder("DELETE FROM WeatherObserved ");
+			List<Object> bParams = new ArrayList<Object>();
+			Long pk = o.getPk();
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			WeatherObserved o2 = new WeatherObserved();
+			o2.setSiteRequest_(siteRequest);
+			List<Future> futures1 = new ArrayList<>();
+			List<Future> futures2 = new ArrayList<>();
+
+			if(jsonObject != null) {
+				Set<String> entityVars = jsonObject.fieldNames();
+				for(String entityVar : entityVars) {
+					switch(entityVar) {
+					}
+				}
+			}
+			bSql.append(" WHERE pk=$" + num);
+			bParams.add(pk);
+			num++;
+			futures2.add(0, Future.future(a -> {
+				sqlConnection.preparedQuery(bSql.toString())
+						.execute(Tuple.tuple(bParams)
+						).onSuccess(b -> {
+					a.handle(Future.succeededFuture());
+				}).onFailure(ex -> {
+					RuntimeException ex2 = new RuntimeException("value WeatherObserved failed", ex);
+					LOG.error(String.format("unrelateWeatherObserved failed. "), ex2);
+					a.handle(Future.failedFuture(ex2));
+				});
+			}));
+			CompositeFuture.all(futures1).onSuccess(a -> {
+				CompositeFuture.all(futures2).onSuccess(b -> {
+					promise.complete();
+				}).onFailure(ex -> {
+					LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<ServiceResponse> response200DELETEWeatherObserved(SiteRequest siteRequest) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			JsonObject json = new JsonObject();
+			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+		} catch(Exception ex) {
+			LOG.error(String.format("response200DELETEWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
 	// PUTImport //
 
 	@Override
@@ -1907,6 +2223,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -2212,6 +2529,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -2706,6 +3024,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return promise.future();
 	}
 
+	public String searchVar(String varIndexed) {
+		return WeatherObserved.searchVarWeatherObserved(varIndexed);
+	}
+
+	@Override
+	public String getClassApiAddress() {
+		return WeatherObserved.CLASS_API_ADDRESS_WeatherObserved;
+	}
+
 	public Future<WeatherObserved> indexWeatherObserved(WeatherObserved o) {
 		Promise<WeatherObserved> promise = Promise.promise();
 		try {
@@ -2748,13 +3075,45 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return promise.future();
 	}
 
-	public String searchVar(String varIndexed) {
-		return WeatherObserved.searchVarWeatherObserved(varIndexed);
-	}
-
-	@Override
-	public String getClassApiAddress() {
-		return WeatherObserved.CLASS_API_ADDRESS_WeatherObserved;
+	public Future<WeatherObserved> unindexWeatherObserved(WeatherObserved o) {
+		Promise<WeatherObserved> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject delete = new JsonObject();
+				json.put("delete", delete);
+				String query = String.format("filter(pk_docvalues_long:%s)", o.obtainForClass("pk"));
+				delete.put("query", query);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("unindexWeatherObserved failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("unindexWeatherObserved failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("unindexWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	public Future<Void> refreshWeatherObserved(WeatherObserved o) {

@@ -746,6 +746,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							.add("permission", String.format("%s#%s", CompanyWebsite.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyWebsite.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyWebsite.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyWebsite.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyWebsite.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -1463,6 +1464,15 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
+	public String searchVar(String varIndexed) {
+		return CompanyWebsite.searchVarCompanyWebsite(varIndexed);
+	}
+
+	@Override
+	public String getClassApiAddress() {
+		return CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite;
+	}
+
 	public Future<CompanyWebsite> indexCompanyWebsite(CompanyWebsite o) {
 		Promise<CompanyWebsite> promise = Promise.promise();
 		try {
@@ -1505,13 +1515,45 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
-	public String searchVar(String varIndexed) {
-		return CompanyWebsite.searchVarCompanyWebsite(varIndexed);
-	}
-
-	@Override
-	public String getClassApiAddress() {
-		return CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite;
+	public Future<CompanyWebsite> unindexCompanyWebsite(CompanyWebsite o) {
+		Promise<CompanyWebsite> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject delete = new JsonObject();
+				json.put("delete", delete);
+				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				delete.put("query", query);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("unindexCompanyWebsite failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("unindexCompanyWebsite failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("unindexCompanyWebsite failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	@Override
@@ -1530,7 +1572,6 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebsite.VAR_inheritPk, CompanyWebsite.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebsite.VAR_inheritPk)));
 			page.persistForClass(CompanyWebsite.VAR_created, CompanyWebsite.staticSetCreated(siteRequest2, ctx.getString(CompanyWebsite.VAR_created)));
 			page.persistForClass(CompanyWebsite.VAR_archived, CompanyWebsite.staticSetArchived(siteRequest2, ctx.getString(CompanyWebsite.VAR_archived)));
-			page.persistForClass(CompanyWebsite.VAR_deleted, CompanyWebsite.staticSetDeleted(siteRequest2, ctx.getString(CompanyWebsite.VAR_deleted)));
 			page.persistForClass(CompanyWebsite.VAR_sessionId, CompanyWebsite.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebsite.VAR_sessionId)));
 			page.persistForClass(CompanyWebsite.VAR_userKey, CompanyWebsite.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebsite.VAR_userKey)));
 			page.persistForClass(CompanyWebsite.VAR_objectId, CompanyWebsite.staticSetObjectId(siteRequest2, ctx.getString(CompanyWebsite.VAR_objectId)));

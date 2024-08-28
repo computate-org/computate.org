@@ -460,67 +460,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 		return archived;
 	}
 
-	/////////////
-	// deleted //
-	/////////////
-
-
-	/**	 The entity deleted
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected Boolean deleted;
-
-	/**	<br> The entity deleted
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResult&fq=entiteVar_enUS_indexed_string:deleted">Find the entity deleted in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _deleted(Wrap<Boolean> w);
-
-	public Boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(Boolean deleted) {
-		this.deleted = deleted;
-	}
-	@JsonIgnore
-	public void setDeleted(String o) {
-		this.deleted = BaseResult.staticSetDeleted(siteRequest_, o);
-	}
-	public static Boolean staticSetDeleted(SiteRequest siteRequest_, String o) {
-		return Boolean.parseBoolean(o);
-	}
-	protected BaseResult deletedInit() {
-		Wrap<Boolean> deletedWrap = new Wrap<Boolean>().var("deleted");
-		if(deleted == null) {
-			_deleted(deletedWrap);
-			Optional.ofNullable(deletedWrap.getO()).ifPresent(o -> {
-				setDeleted(o);
-			});
-		}
-		return (BaseResult)this;
-	}
-
-	public static Boolean staticSearchDeleted(SiteRequest siteRequest_, Boolean o) {
-		return o;
-	}
-
-	public static String staticSearchStrDeleted(SiteRequest siteRequest_, Boolean o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqDeleted(SiteRequest siteRequest_, String o) {
-		return BaseResult.staticSearchDeleted(siteRequest_, BaseResult.staticSetDeleted(siteRequest_, o)).toString();
-	}
-
-	public Boolean sqlDeleted() {
-		return deleted;
-	}
-
 	////////////////////////
 	// classCanonicalName //
 	////////////////////////
@@ -1421,7 +1360,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				createdInit();
 				modifiedInit();
 				archivedInit();
-				deletedInit();
 				classCanonicalNameInit();
 				classSimpleNameInit();
 				classCanonicalNamesInit();
@@ -1499,8 +1437,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				return oBaseResult.modified;
 			case "archived":
 				return oBaseResult.archived;
-			case "deleted":
-				return oBaseResult.deleted;
 			case "classCanonicalName":
 				return oBaseResult.classCanonicalName;
 			case "classSimpleName":
@@ -1578,8 +1514,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return BaseResult.staticSetModified(siteRequest_, o);
 		case "archived":
 			return BaseResult.staticSetArchived(siteRequest_, o);
-		case "deleted":
-			return BaseResult.staticSetDeleted(siteRequest_, o);
 		case "classCanonicalName":
 			return BaseResult.staticSetClassCanonicalName(siteRequest_, o);
 		case "classSimpleName":
@@ -1632,8 +1566,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return BaseResult.staticSearchModified(siteRequest_, (ZonedDateTime)o);
 		case "archived":
 			return BaseResult.staticSearchArchived(siteRequest_, (Boolean)o);
-		case "deleted":
-			return BaseResult.staticSearchDeleted(siteRequest_, (Boolean)o);
 		case "classCanonicalName":
 			return BaseResult.staticSearchClassCanonicalName(siteRequest_, (String)o);
 		case "classSimpleName":
@@ -1686,8 +1618,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return BaseResult.staticSearchStrModified(siteRequest_, (String)o);
 		case "archived":
 			return BaseResult.staticSearchStrArchived(siteRequest_, (Boolean)o);
-		case "deleted":
-			return BaseResult.staticSearchStrDeleted(siteRequest_, (Boolean)o);
 		case "classCanonicalName":
 			return BaseResult.staticSearchStrClassCanonicalName(siteRequest_, (String)o);
 		case "classSimpleName":
@@ -1740,8 +1670,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return BaseResult.staticSearchFqModified(siteRequest_, o);
 		case "archived":
 			return BaseResult.staticSearchFqArchived(siteRequest_, o);
-		case "deleted":
-			return BaseResult.staticSearchFqDeleted(siteRequest_, o);
 		case "classCanonicalName":
 			return BaseResult.staticSearchFqClassCanonicalName(siteRequest_, o);
 		case "classSimpleName":
@@ -1820,14 +1748,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				}
 				saves.add("archived");
 				return val;
-			} else if("deleted".equals(varLower)) {
-				if(val instanceof Boolean) {
-					setDeleted((Boolean)val);
-				} else {
-					setDeleted(val == null ? null : val.toString());
-				}
-				saves.add("deleted");
-				return val;
 			} else if("sessionid".equals(varLower)) {
 				if(val instanceof String) {
 					setSessionId((String)val);
@@ -1893,12 +1813,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				Boolean archived = (Boolean)doc.get("archived_docvalues_boolean");
 				if(archived != null)
 					oBaseResult.setArchived(archived);
-			}
-
-			if(saves.contains("deleted")) {
-				Boolean deleted = (Boolean)doc.get("deleted_docvalues_boolean");
-				if(deleted != null)
-					oBaseResult.setDeleted(deleted);
 			}
 
 			if(saves.contains("classCanonicalName")) {
@@ -1996,9 +1910,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 		if(archived != null) {
 			doc.put("archived_docvalues_boolean", archived);
 		}
-		if(deleted != null) {
-			doc.put("deleted_docvalues_boolean", deleted);
-		}
 		if(classCanonicalName != null) {
 			doc.put("classCanonicalName_docvalues_string", classCanonicalName);
 		}
@@ -2068,8 +1979,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				return "modified_docvalues_date";
 			case "archived":
 				return "archived_docvalues_boolean";
-			case "deleted":
-				return "deleted_docvalues_boolean";
 			case "classCanonicalName":
 				return "classCanonicalName_docvalues_string";
 			case "classSimpleName":
@@ -2109,8 +2018,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				return "modified_docvalues_date";
 			case "archived":
 				return "archived_docvalues_boolean";
-			case "deleted":
-				return "deleted_docvalues_boolean";
 			case "classCanonicalName":
 				return "classCanonicalName_docvalues_string";
 			case "classSimpleName":
@@ -2156,8 +2063,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				return "modified";
 			case "archived_docvalues_boolean":
 				return "archived";
-			case "deleted_docvalues_boolean":
-				return "deleted";
 			case "classCanonicalName_docvalues_string":
 				return "classCanonicalName";
 			case "classSimpleName_docvalues_string":
@@ -2228,7 +2133,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 		oBaseResult.setCreated(Optional.ofNullable(doc.get("created_docvalues_date")).map(v -> v.toString()).orElse(null));
 		oBaseResult.setModified(Optional.ofNullable(doc.get("modified_docvalues_date")).map(v -> v.toString()).orElse(null));
 		oBaseResult.setArchived(Optional.ofNullable(doc.get("archived_docvalues_boolean")).map(v -> v.toString()).orElse(null));
-		oBaseResult.setDeleted(Optional.ofNullable(doc.get("deleted_docvalues_boolean")).map(v -> v.toString()).orElse(null));
 		oBaseResult.setClassCanonicalName(Optional.ofNullable(doc.get("classCanonicalName_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oBaseResult.setClassSimpleName(Optional.ofNullable(doc.get("classSimpleName_docvalues_string")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("classCanonicalNames_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
@@ -2270,8 +2174,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 				apiRequest.addVars("modified");
 			if(!Objects.equals(archived, original.getArchived()))
 				apiRequest.addVars("archived");
-			if(!Objects.equals(deleted, original.getDeleted()))
-				apiRequest.addVars("deleted");
 			if(!Objects.equals(classCanonicalName, original.getClassCanonicalName()))
 				apiRequest.addVars("classCanonicalName");
 			if(!Objects.equals(classSimpleName, original.getClassSimpleName()))
@@ -2315,7 +2217,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 		sb.append(Optional.ofNullable(created).map(v -> "created: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(modified).map(v -> "modified: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(archived).map(v -> "archived: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(deleted).map(v -> "deleted: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(classCanonicalName).map(v -> "classCanonicalName: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(classSimpleName).map(v -> "classSimpleName: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(classCanonicalNames).map(v -> "classCanonicalNames: " + v + "\n").orElse(""));
@@ -2340,7 +2241,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public static final String VAR_created = "created";
 	public static final String VAR_modified = "modified";
 	public static final String VAR_archived = "archived";
-	public static final String VAR_deleted = "deleted";
 	public static final String VAR_classCanonicalName = "classCanonicalName";
 	public static final String VAR_classSimpleName = "classSimpleName";
 	public static final String VAR_classCanonicalNames = "classCanonicalNames";
@@ -2390,7 +2290,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_created = "created";
 	public static final String DISPLAY_NAME_modified = "modified";
 	public static final String DISPLAY_NAME_archived = "archived";
-	public static final String DISPLAY_NAME_deleted = "deleted";
 	public static final String DISPLAY_NAME_classCanonicalName = "";
 	public static final String DISPLAY_NAME_classSimpleName = "object type";
 	public static final String DISPLAY_NAME_classCanonicalNames = "";
@@ -2422,8 +2321,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return DISPLAY_NAME_modified;
 		case VAR_archived:
 			return DISPLAY_NAME_archived;
-		case VAR_deleted:
-			return DISPLAY_NAME_deleted;
 		case VAR_classCanonicalName:
 			return DISPLAY_NAME_classCanonicalName;
 		case VAR_classSimpleName:
@@ -2471,8 +2368,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return "A modified timestamp for this record in the database";
 		case VAR_archived:
 			return "For archiving this record";
-		case VAR_deleted:
-			return "For deleting this record";
 		case VAR_classCanonicalName:
 			return "the canonical name of this Java class";
 		case VAR_classSimpleName:
@@ -2519,8 +2414,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 		case VAR_modified:
 			return "ZonedDateTime";
 		case VAR_archived:
-			return "Boolean";
-		case VAR_deleted:
 			return "Boolean";
 		case VAR_classCanonicalName:
 			return "String";
@@ -2572,8 +2465,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return 1;
 		case VAR_archived:
 			return 2;
-		case VAR_deleted:
-			return 2;
 		case VAR_objectId:
 			return 1;
 			default:
@@ -2589,8 +2480,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return 3;
 		case VAR_archived:
 			return 1;
-		case VAR_deleted:
-			return 2;
 		case VAR_objectId:
 			return 4;
 			default:

@@ -1721,6 +1721,48 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTWeatherObservedResponse'
+    delete:
+      operationId: deleteWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - weather observed
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEWeatherObservedResponse'
   /api/weather-observed-import:
     put:
       operationId: putimportWeatherObserved
@@ -2739,7 +2781,7 @@ paths:
         '200':
           description: >+
           content:
-            application/json; charset=utf-8:
+            application/zip; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchDownloadCompanyProductResponse'
   /product/{id}:
@@ -6722,6 +6764,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTWeatherObservedResponse'
+    DELETEWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEWeatherObservedResponse'
     PUTImportWeatherObservedRequest:
       content:
         application/json:
@@ -6784,7 +6831,7 @@ components:
             $ref: '#/components/schemas/GETCompanyProductResponse'
     SearchDownloadCompanyProductResponse:
       content:
-        application/json; charset=utf-8:
+        application/zip; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchDownloadCompanyProductResponse'
     SearchPageCompanyProductResponse:
@@ -7035,15 +7082,25 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -7075,6 +7132,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -7096,6 +7160,13 @@ components:
               type: string
             removeAllTemplateUri:
               type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
             setUri:
               type: string
               nullable: true
@@ -7109,6 +7180,27 @@ components:
             removeUrl:
               type: string
             removeAllUrl:
+              type: string
+            setDownloadUri:
+              type: string
+              nullable: true
+            removeDownloadUri:
+              type: string
+            removeAllDownloadUri:
+              type: string
+            setUserUri:
+              type: string
+              nullable: true
+            removeUserUri:
+              type: string
+            removeAllUserUri:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
               type: string
             setTitle:
               type: string
@@ -7170,6 +7262,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -7191,6 +7290,13 @@ components:
               type: string
             removeAllTemplateUri:
               type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
             setUri:
               type: string
               nullable: true
@@ -7204,6 +7310,27 @@ components:
             removeUrl:
               type: string
             removeAllUrl:
+              type: string
+            setDownloadUri:
+              type: string
+              nullable: true
+            removeDownloadUri:
+              type: string
+            removeAllDownloadUri:
+              type: string
+            setUserUri:
+              type: string
+              nullable: true
+            removeUserUri:
+              type: string
+            removeAllUserUri:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
               type: string
             setTitle:
               type: string
@@ -7255,15 +7382,25 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
             resourceUri:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -7285,15 +7422,25 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
             resourceUri:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -7320,15 +7467,25 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -7350,15 +7507,25 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -7380,15 +7547,25 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
             resourceUri:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -9063,6 +9240,114 @@ components:
               type: string
             objectId:
               type: string
+    DELETEWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            address:
+              type: object
+            alternateName:
+              type: string
+            areaServedColors:
+              type: array
+              items:
+                type: string
+            areaServedTitles:
+              type: array
+              items:
+                type: string
+            areaServedLinks:
+              type: array
+              items:
+                type: string
+            areaServed:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            atmosphericPressure:
+              type: string
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            dewPoint:
+              type: string
+            diffuseIrradiation:
+              type: string
+            directIrradiation:
+              type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
+            illuminance:
+              type: string
+            location:
+              type: object
+            owner:
+              type: object
+            precipitation:
+              type: string
+            precipitationForecast:
+              type: string
+            pressureTendency:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: object
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: object
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
+              type: string
+            entityId:
+              type: string
+            entityShortId:
+              type: string
+            objectTitle:
+              type: string
+            objectId:
+              type: string
     PUTImportWeatherObservedRequest:
       allOf:
         - type: object
@@ -9423,9 +9708,17 @@ components:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -9476,6 +9769,13 @@ components:
               type: string
             removeAllTemplateUri:
               type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
             setUri:
               type: string
               nullable: true
@@ -9489,6 +9789,27 @@ components:
             removeUrl:
               type: string
             removeAllUrl:
+              type: string
+            setDownloadUri:
+              type: string
+              nullable: true
+            removeDownloadUri:
+              type: string
+            removeAllDownloadUri:
+              type: string
+            setUserUri:
+              type: string
+              nullable: true
+            removeUserUri:
+              type: string
+            removeAllUserUri:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
               type: string
             setTitle:
               type: string
@@ -9564,6 +9885,13 @@ components:
               type: string
             removeAllTemplateUri:
               type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
             setUri:
               type: string
               nullable: true
@@ -9577,6 +9905,27 @@ components:
             removeUrl:
               type: string
             removeAllUrl:
+              type: string
+            setDownloadUri:
+              type: string
+              nullable: true
+            removeDownloadUri:
+              type: string
+            removeAllDownloadUri:
+              type: string
+            setUserUri:
+              type: string
+              nullable: true
+            removeUserUri:
+              type: string
+            removeAllUserUri:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
               type: string
             setTitle:
               type: string
@@ -9627,9 +9976,17 @@ components:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -9655,9 +10012,17 @@ components:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -9688,9 +10053,17 @@ components:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -9716,9 +10089,17 @@ components:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string
@@ -9744,9 +10125,17 @@ components:
               type: string
             templateUri:
               type: string
+            emailTemplate:
+              type: string
             uri:
               type: string
             url:
+              type: string
+            downloadUri:
+              type: string
+            userUri:
+              type: string
+            storeUrl:
               type: string
             title:
               type: string
@@ -9786,9 +10175,17 @@ components:
                     type: string
                   templateUri:
                     type: string
+                  emailTemplate:
+                    type: string
                   uri:
                     type: string
                   url:
+                    type: string
+                  downloadUri:
+                    type: string
+                  userUri:
+                    type: string
+                  storeUrl:
                     type: string
                   title:
                     type: string

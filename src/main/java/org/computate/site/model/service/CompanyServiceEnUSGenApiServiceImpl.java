@@ -746,6 +746,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -1463,6 +1464,15 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
+	public String searchVar(String varIndexed) {
+		return CompanyService.searchVarCompanyService(varIndexed);
+	}
+
+	@Override
+	public String getClassApiAddress() {
+		return CompanyService.CLASS_API_ADDRESS_CompanyService;
+	}
+
 	public Future<CompanyService> indexCompanyService(CompanyService o) {
 		Promise<CompanyService> promise = Promise.promise();
 		try {
@@ -1505,13 +1515,45 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
-	public String searchVar(String varIndexed) {
-		return CompanyService.searchVarCompanyService(varIndexed);
-	}
-
-	@Override
-	public String getClassApiAddress() {
-		return CompanyService.CLASS_API_ADDRESS_CompanyService;
+	public Future<CompanyService> unindexCompanyService(CompanyService o) {
+		Promise<CompanyService> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject delete = new JsonObject();
+				json.put("delete", delete);
+				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				delete.put("query", query);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("unindexCompanyService failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("unindexCompanyService failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("unindexCompanyService failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	@Override
@@ -1530,7 +1572,6 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyService.VAR_inheritPk, CompanyService.staticSetInheritPk(siteRequest2, ctx.getString(CompanyService.VAR_inheritPk)));
 			page.persistForClass(CompanyService.VAR_created, CompanyService.staticSetCreated(siteRequest2, ctx.getString(CompanyService.VAR_created)));
 			page.persistForClass(CompanyService.VAR_archived, CompanyService.staticSetArchived(siteRequest2, ctx.getString(CompanyService.VAR_archived)));
-			page.persistForClass(CompanyService.VAR_deleted, CompanyService.staticSetDeleted(siteRequest2, ctx.getString(CompanyService.VAR_deleted)));
 			page.persistForClass(CompanyService.VAR_sessionId, CompanyService.staticSetSessionId(siteRequest2, ctx.getString(CompanyService.VAR_sessionId)));
 			page.persistForClass(CompanyService.VAR_userKey, CompanyService.staticSetUserKey(siteRequest2, ctx.getString(CompanyService.VAR_userKey)));
 			page.persistForClass(CompanyService.VAR_objectId, CompanyService.staticSetObjectId(siteRequest2, ctx.getString(CompanyService.VAR_objectId)));

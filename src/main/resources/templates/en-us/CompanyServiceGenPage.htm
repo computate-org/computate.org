@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseResultPage %}
 {%- block htmTitleCompanyServicePage %}
-    <title>{% if searchListCompanyService_ is defined %}{% if companyServiceCount == int1 %}{% if id is defined %}service{% else %}service{% endif %}{% else %}no service found{% endif %}{% else %}services{% endif %}</title>
+    <title>{% if searchListCompanyService_ is defined %}{% if companyServiceCount == 1 %}{% if id is defined %}service{% else %}service{% endif %}{% else %}no service found{% endif %}{% else %}services{% endif %}</title>
 {%- endblock htmTitleCompanyServicePage %}
 {%- endblock htmTitleBaseResultPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsCompanyServicePage %}
     <script src="{{staticBaseUrl}}/js/enUS/CompanyServicePage.js"></script>
-    {% if id is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyServicePageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsCompanyServicePage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -153,7 +151,7 @@
 
 {%- block htmUrlCompanyServicePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyServicePage %}
 
-{%- macro htmButton_patchCompanyService() %}<sl-button onclick="document.querySelector('#patchCompanyServiceDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyService() %}<sl-button id="htmButton_patchCompanyService" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyService() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -196,7 +194,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -207,18 +210,8 @@
                   {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -260,7 +253,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -278,7 +271,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyService() %}<sl-button onclick="document.querySelector('#postCompanyServiceDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyService() %}<sl-button id="htmButton_postCompanyService" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyService() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -322,7 +315,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -333,18 +331,8 @@
                   {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -386,7 +374,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -404,7 +392,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyService() %}<sl-button onclick="document.querySelector('#putimportCompanyServiceDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyService() %}<sl-button id="htmButton_putimportCompanyService" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyService() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -471,7 +459,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -482,18 +475,8 @@
                   {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -535,7 +518,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -668,15 +651,16 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if companyServiceCount == 1 %}<sl-button id="refreshThisCompanyServiceGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyServiceGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyServiceCount > 0 %}<sl-button id="refreshAllCompanyServiceGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyServiceCount > 0 %}{{ htmButton_patchCompanyService() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyServiceCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyService() }}{%- endif %}{%- else %}{{ htmButton_postCompanyService() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyService() }}{%- endif %}            </div>
+{% if companyServiceCount == 1 %}<sl-button id="refreshThisCompanyServiceGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyServiceGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyServiceCount > 0 %}<sl-button id="refreshAllCompanyServiceGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyServiceGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyServiceCount > 0 %}{{ htmButton_patchCompanyService() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyServiceCount == 1 %}{%- if id is defined %}{{ htmButton_postCompanyService() }}{%- else %}{{ htmButton_postCompanyService() }}{%- endif %}{%- else %}{{ htmButton_postCompanyService() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyService() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyServiceCount > 0 %}
         {{ htmForm_patchCompanyService() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if companyServiceCount == int1 %}
+    {%- if companyServiceCount == 1 %}
       {%- if id is defined %}
+        {{ htmForm_postCompanyService() }}
       {%- else %}
         {{ htmForm_postCompanyService() }}
       {%- endif %}
@@ -1242,70 +1226,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyService inputCompanyService{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ companyService_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyService inputCompanyService{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyService inputCompanyService{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyService inputCompanyService{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyService_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-                <span class="varCompanyService{{id}}Deleted varCompanyServiceDeleted ">{{companyService_.deleted}}</span>
-{%- endmacro %}
-
-{%- macro htmDeletedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedCompanyServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNameCompanyServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

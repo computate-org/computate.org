@@ -2,7 +2,7 @@
 
 {%- block htmTitlePageLayout %}
 {%- block htmTitleBaseResultPage %}
-    <title>{% if searchListBaseResult_ is defined %}{% if baseResultCount == int1 %}{% if id is defined %}{% else %}{% endif %}{% else %}{% endif %}{% else %}{% endif %}</title>
+    <title>{% if searchListBaseResult_ is defined %}{% if baseResultCount == 1 %}{% if id is defined %}{% else %}{% endif %}{% else %}{% endif %}{% else %}{% endif %}</title>
 {%- endblock htmTitleBaseResultPage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -55,7 +55,6 @@
         , customElements.whenDefined('sl-input')
       ]).then(() => {
 
-        window.eventBus = new EventBus('/eventbus');
         var pk = {% if pk is defined %}{{pk}}{% else %}null{% endif %};
 
         if(pk == null) {
@@ -96,15 +95,14 @@
           paramChange('BaseResult', event.target, document.querySelector('#qBaseResultDiv_start'));
         });
 
-        {%- block websocketBaseResultPage %}{%- endblock %}
       });
     </script>
 {%- endblock htmScriptBaseResultPage %}
 {%- endblock htmScriptPageLayout %}
 
 {%- block websocketPageLayout %}
-{{ super() }}
 {%- block websocketBaseResultPage %}
+        window.eventBus = new EventBus('/eventbus');
         websocketBaseResult(websocketBaseResultInner);
 {%- endblock websocketBaseResultPage %}
 {%- endblock websocketPageLayout %}
@@ -742,67 +740,4 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedBaseResultPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedBaseResultPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedBaseResultPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ baseResult_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseResult inputBaseResult{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classBaseResult inputBaseResult{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if baseResult_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDeletedBaseResultPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedBaseResultPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

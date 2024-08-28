@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseResultPage %}
 {%- block htmTitleCompanyCoursePage %}
-    <title>{% if searchListCompanyCourse_ is defined %}{% if companyCourseCount == int1 %}{% if id is defined %}course{% else %}course{% endif %}{% else %}no course found{% endif %}{% else %}courses{% endif %}</title>
+    <title>{% if searchListCompanyCourse_ is defined %}{% if companyCourseCount == 1 %}{% if id is defined %}course{% else %}course{% endif %}{% else %}no course found{% endif %}{% else %}courses{% endif %}</title>
 {%- endblock htmTitleCompanyCoursePage %}
 {%- endblock htmTitleBaseResultPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsCompanyCoursePage %}
     <script src="{{staticBaseUrl}}/js/enUS/CompanyCoursePage.js"></script>
-    {% if id is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/CompanyCoursePageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsCompanyCoursePage %}
 {%- endblock htmScriptsBaseResultPage %}
 
@@ -153,7 +151,7 @@
 
 {%- block htmUrlCompanyCoursePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyCoursePage %}
 
-{%- macro htmButton_patchCompanyCourse() %}<sl-button onclick="document.querySelector('#patchCompanyCourseDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyCourse() %}<sl-button id="htmButton_patchCompanyCourse" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyCourse() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -196,7 +194,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -207,18 +210,8 @@
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -270,7 +263,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -288,7 +281,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyCourse() %}<sl-button onclick="document.querySelector('#postCompanyCourseDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyCourse() %}<sl-button id="htmButton_postCompanyCourse" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyCourse() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -332,7 +325,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -343,18 +341,8 @@
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -406,7 +394,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -424,7 +412,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyCourse() %}<sl-button onclick="document.querySelector('#putimportCompanyCourseDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyCourse() %}<sl-button id="htmButton_putimportCompanyCourse" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyCourse() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -491,7 +479,12 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+            </sl-details>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -502,18 +495,8 @@
                   {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -565,7 +548,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="-1--1">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -698,15 +681,16 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if companyCourseCount == 1 %}<sl-button id="refreshThisCompanyCourseGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyCourseCount > 0 %}<sl-button id="refreshAllCompanyCourseGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyCourseCount > 0 %}{{ htmButton_patchCompanyCourse() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyCourseCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postCompanyCourse() }}{%- endif %}{%- else %}{{ htmButton_postCompanyCourse() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyCourse() }}{%- endif %}            </div>
+{% if companyCourseCount == 1 %}<sl-button id="refreshThisCompanyCourseGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if companyCourseCount > 0 %}<sl-button id="refreshAllCompanyCourseGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if companyCourseCount > 0 %}{{ htmButton_patchCompanyCourse() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if companyCourseCount == 1 %}{%- if id is defined %}{{ htmButton_postCompanyCourse() }}{%- else %}{{ htmButton_postCompanyCourse() }}{%- endif %}{%- else %}{{ htmButton_postCompanyCourse() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportCompanyCourse() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if companyCourseCount > 0 %}
         {{ htmForm_patchCompanyCourse() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if companyCourseCount == int1 %}
+    {%- if companyCourseCount == 1 %}
       {%- if id is defined %}
+        {{ htmForm_postCompanyCourse() }}
       {%- else %}
         {{ htmForm_postCompanyCourse() }}
       {%- endif %}
@@ -1272,70 +1256,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedCompanyCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{id}}Deleted "
-                      name="setDeleted"
-                      data-id="{{ id }}"
-                      data-val="{{ companyCourse_.deleted }}"
-                      >deleted</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="deleted"
-                      label="deleted"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{id}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classCompanyCourse inputCompanyCourse{{id}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classCompanyCourse inputCompanyCourse{{id}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if companyCourse_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-id="{{ id }}"
-                      >deleted</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-                <span class="varCompanyCourse{{id}}Deleted varCompanyCourseDeleted ">{{companyCourse_.deleted}}</span>
-{%- endmacro %}
-
-{%- macro htmDeletedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedCompanyCoursePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNameCompanyCoursePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}

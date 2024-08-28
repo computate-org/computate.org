@@ -746,6 +746,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
@@ -1463,6 +1464,15 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		return promise.future();
 	}
 
+	public String searchVar(String varIndexed) {
+		return CompanyEvent.searchVarCompanyEvent(varIndexed);
+	}
+
+	@Override
+	public String getClassApiAddress() {
+		return CompanyEvent.CLASS_API_ADDRESS_CompanyEvent;
+	}
+
 	public Future<CompanyEvent> indexCompanyEvent(CompanyEvent o) {
 		Promise<CompanyEvent> promise = Promise.promise();
 		try {
@@ -1505,13 +1515,45 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		return promise.future();
 	}
 
-	public String searchVar(String varIndexed) {
-		return CompanyEvent.searchVarCompanyEvent(varIndexed);
-	}
-
-	@Override
-	public String getClassApiAddress() {
-		return CompanyEvent.CLASS_API_ADDRESS_CompanyEvent;
+	public Future<CompanyEvent> unindexCompanyEvent(CompanyEvent o) {
+		Promise<CompanyEvent> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject delete = new JsonObject();
+				json.put("delete", delete);
+				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				delete.put("query", query);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("unindexCompanyEvent failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("unindexCompanyEvent failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("unindexCompanyEvent failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	@Override
@@ -1530,7 +1572,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			page.persistForClass(CompanyEvent.VAR_inheritPk, CompanyEvent.staticSetInheritPk(siteRequest2, ctx.getString(CompanyEvent.VAR_inheritPk)));
 			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, ctx.getString(CompanyEvent.VAR_created)));
 			page.persistForClass(CompanyEvent.VAR_archived, CompanyEvent.staticSetArchived(siteRequest2, ctx.getString(CompanyEvent.VAR_archived)));
-			page.persistForClass(CompanyEvent.VAR_deleted, CompanyEvent.staticSetDeleted(siteRequest2, ctx.getString(CompanyEvent.VAR_deleted)));
 			page.persistForClass(CompanyEvent.VAR_sessionId, CompanyEvent.staticSetSessionId(siteRequest2, ctx.getString(CompanyEvent.VAR_sessionId)));
 			page.persistForClass(CompanyEvent.VAR_userKey, CompanyEvent.staticSetUserKey(siteRequest2, ctx.getString(CompanyEvent.VAR_userKey)));
 			page.persistForClass(CompanyEvent.VAR_objectId, CompanyEvent.staticSetObjectId(siteRequest2, ctx.getString(CompanyEvent.VAR_objectId)));

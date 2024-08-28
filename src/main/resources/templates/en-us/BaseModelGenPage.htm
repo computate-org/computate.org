@@ -2,7 +2,7 @@
 
 {%- block htmTitlePageLayout %}
 {%- block htmTitleBaseModelPage %}
-    <title>{% if searchListBaseModel_ is defined %}{% if baseModelCount == int1 %}{% if id is defined %}{% else %}{% endif %}{% else %}{% endif %}{% else %}{% endif %}</title>
+    <title>{% if searchListBaseModel_ is defined %}{% if baseModelCount == 1 %}{% if id is defined %}{% else %}{% endif %}{% else %}{% endif %}{% else %}{% endif %}</title>
 {%- endblock htmTitleBaseModelPage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -778,67 +778,4 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedBaseModelPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="delete"
-                      label="delete"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseModel inputBaseModel{{pk}}Deleted "
-                      name="setDeleted"
-                      data-pk="{{ pk }}"
-                      data-val="{{ baseModel_.deleted }}"
-                      >delete</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="delete"
-                      label="delete"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseModel inputBaseModel{{pk}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classBaseModel inputBaseModel{{pk}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classBaseModel inputBaseModel{{pk}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if baseModel_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-pk="{{ pk }}"
-                      >delete</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDeletedBaseModelPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedBaseModelPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

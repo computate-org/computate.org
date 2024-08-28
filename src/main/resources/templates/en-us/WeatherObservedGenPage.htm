@@ -2,7 +2,7 @@
 
 {%- block htmTitleBaseModelPage %}
 {%- block htmTitleWeatherObservedPage %}
-    <title>{% if searchListWeatherObserved_ is defined %}{% if weatherObservedCount == int1 %}{% if id is defined %}weather observed device{% else %}weather observed device{% endif %}{% else %}no weather observed device found{% endif %}{% else %}weather observed devices{% endif %}</title>
+    <title>{% if searchListWeatherObserved_ is defined %}{% if weatherObservedCount == 1 %}{% if id is defined %}weather observed device{% else %}weather observed device{% endif %}{% else %}no weather observed device found{% endif %}{% else %}weather observed devices{% endif %}</title>
 {%- endblock htmTitleWeatherObservedPage %}
 {%- endblock htmTitleBaseModelPage %}
 
@@ -22,9 +22,7 @@
 {{ super() }}
 {%- block htmScriptsWeatherObservedPage %}
     <script src="{{staticBaseUrl}}/js/enUS/WeatherObservedPage.js"></script>
-    {% if pk is defined %}
     <script type="module" src="{{staticBaseUrl}}/js/enUS/WeatherObservedPageModule.js"></script>
-    {% endif %}
 {%- endblock htmScriptsWeatherObservedPage %}
 {%- endblock htmScriptsBaseModelPage %}
 
@@ -193,6 +191,16 @@
           return false;
         });
 
+        var submitForm_deleteWeatherObserved = document.querySelector('#htmForm_deleteWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deleteWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          deleteWeatherObserved(null, document.querySelector('#htmForm_deleteWeatherObserved'), document.querySelector('#htmFormButton_deleteWeatherObserved'), event.target.getAttribute('data-pk'));
+          return false;
+        });
+
         var submitForm_putimportWeatherObserved = document.querySelector('#htmForm_putimportWeatherObserved')?.addEventListener('submit', event => {
           event.preventDefault();
           return false;
@@ -226,7 +234,7 @@
 
 {%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
 
-{%- macro htmButton_patchWeatherObserved() %}<sl-button onclick="document.querySelector('#patchWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchWeatherObserved() %}<sl-button id="htmButton_patchWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -237,9 +245,9 @@
 {%- macro htmForm_patchWeatherObserved() %}
         <sl-dialog id="patchWeatherObservedDialog" label="Modify weather observed device">
           <form id="htmForm_patchWeatherObserved">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
-                <span>primary key, ID, created, modified, archive, delete details</span>
+                <span>primary key, ID, created, modified, archive details</span>
               </div>
               <div>
 
@@ -283,7 +291,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -292,16 +300,6 @@
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -784,7 +782,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postWeatherObserved() %}<sl-button onclick="document.querySelector('#postWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postWeatherObserved() %}<sl-button id="htmButton_postWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -796,9 +794,9 @@
         <sl-dialog id="postWeatherObservedDialog" label="Create a weather observed device">
           <form id="htmForm_postWeatherObserved">
             <div class="">You can override any default values below: </div>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
-                <span>primary key, ID, created, modified, archive, delete details</span>
+                <span>primary key, ID, created, modified, archive details</span>
               </div>
               <div>
 
@@ -842,7 +840,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -851,16 +849,6 @@
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1343,7 +1331,23 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportWeatherObserved() %}<sl-button onclick="document.querySelector('#putimportWeatherObservedDialog').show(); "><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteWeatherObserved() %}<sl-button id="htmButton_deleteWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+
+{%- macro htmFormButton_deleteWeatherObserved() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_deleteWeatherObserved"
+                >Delete weather observed device</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_deleteWeatherObserved() %}
+        <sl-dialog id="deleteWeatherObservedDialog" label="Delete weather observed device">
+          <form id="htmForm_deleteWeatherObserved">
+          </form>
+          {{ htmFormButton_deleteWeatherObserved() }}
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_putimportWeatherObserved() %}<sl-button id="htmButton_putimportWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1378,9 +1382,9 @@
 {%- macro htmForm_searchpageWeatherObserved() %}
         <div id="searchpageWeatherObservedDialog" label="Search weather observed devices">
           <div id="htmForm_searchpageWeatherObserved">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-delete-details">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
-                <span>primary key, ID, created, modified, archive, delete details</span>
+                <span>primary key, ID, created, modified, archive details</span>
               </div>
               <div>
 
@@ -1424,7 +1428,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive, delete details-primary key, ID, created, modified, archive, delete details">
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1433,16 +1437,6 @@
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmArchivedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDeletedWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -2040,20 +2034,30 @@
     {% if "PATCH" in scopes %}
             <sl-divider></sl-divider>
             <div id="htmButtonGroup">
-{% if weatherObservedCount == 1 %}<sl-button id="refreshThisWeatherObservedGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if weatherObservedCount > 0 %}<sl-button id="refreshAllWeatherObservedGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if weatherObservedCount > 0 %}{{ htmButton_patchWeatherObserved() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if weatherObservedCount == int1 %}{%- if id is defined %}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportWeatherObserved() }}{%- endif %}            </div>
+{% if weatherObservedCount == 1 %}<sl-button id="refreshThisWeatherObservedGenPage" onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; "><i slot="prefix" class="fas fa-sync-alt "></i>refresh</sl-button>{% endif %}{% if weatherObservedCount > 0 %}<sl-button id="refreshAllWeatherObservedGenPage{{id}}" onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "><i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>Refresh all </sl-button>{% endif %}{% endif %}{% endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{%- if weatherObservedCount > 0 %}{{ htmButton_patchWeatherObserved() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if weatherObservedCount == 1 %}{%- if pk is defined %}{{ htmButton_postWeatherObserved() }}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- else %}{{ htmButton_postWeatherObserved() }}{%- endif %}{%- endif %}{% if AUTH_SCOPE_ADMIN in scopes %}{%- if weatherObservedCount == 1 %}{%- if pk is defined %}{{ htmButton_deleteWeatherObserved() }}{%- else %}{%- endif %}{%- else %}{%- endif %}{%- endif %}{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}{{ htmButton_putimportWeatherObserved() }}{%- endif %}            </div>
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
     {%- if weatherObservedCount > 0 %}
         {{ htmForm_patchWeatherObserved() }}
     {%- endif %}
   {%- endif %}
   {% if AUTH_SCOPE_ADMIN in scopes %}
-    {%- if weatherObservedCount == int1 %}
-      {%- if id is defined %}
+    {%- if weatherObservedCount == 1 %}
+      {%- if pk is defined %}
+        {{ htmForm_postWeatherObserved() }}
       {%- else %}
         {{ htmForm_postWeatherObserved() }}
       {%- endif %}
     {%- else %}
         {{ htmForm_postWeatherObserved() }}
+    {%- endif %}
+  {%- endif %}
+  {% if AUTH_SCOPE_ADMIN in scopes %}
+    {%- if weatherObservedCount == 1 %}
+      {%- if pk is defined %}
+        {{ htmForm_deleteWeatherObserved() }}
+      {%- else %}
+      {%- endif %}
+    {%- else %}
     {%- endif %}
   {%- endif %}
   {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
@@ -2663,72 +2667,6 @@ A URL friendly unique ID for this object"
 
 {%- macro htmArchivedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputArchivedWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDeletedWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_deleted">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
-                      id="{{classApiMethodMethod}}_deleted"
-                      placeholder="delete"
-                      label="delete"
-                      help-text="For deleting this record"
-                      class="label-on-left {{classApiMethodMethod}}_deleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
-                      name="setDeleted"
-                      data-pk="{{ pk }}"
-                      data-val="{{ weatherObserved_.deleted }}"
-                      >delete</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_deleted"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_deleted"
-  {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="delete"
-                      label="delete"
-                      help-text="For deleting this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
-                      name="setDeleted"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
-                      name="setDeleted"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_deleted setDeleted valueDeleted classWeatherObserved inputWeatherObserved{{pk}}Deleted "
-                      name="setDeleted"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if weatherObserved_.deleted == true %}
-                      checked
-    {%- endif %}
-                      data-pk="{{ pk }}"
-                      >delete</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Deleted varWeatherObservedDeleted ">{{weatherObserved_.deleted}}</span>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDeletedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDeletedWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNameWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
