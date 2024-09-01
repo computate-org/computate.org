@@ -196,6 +196,9 @@ import org.computate.site.model.service.CompanyService;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
+import org.computate.site.model.webinar.CompanyWebinarEnUSGenApiService;
+import org.computate.site.model.webinar.CompanyWebinarEnUSApiServiceImpl;
+import org.computate.site.model.webinar.CompanyWebinar;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 
@@ -1168,6 +1171,10 @@ public class MainVerticle extends AbstractVerticle {
 
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
+
+			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = CompanyWebinarEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyWebinar.configureUi(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
+			apiCompanyWebinar.configureUserUi(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/webinar");
 
 			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 

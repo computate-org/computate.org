@@ -1,4 +1,4 @@
-package org.computate.site.model.course;
+package org.computate.site.model.webinar;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -101,44 +101,97 @@ import java.util.Base64;
 import java.time.ZonedDateTime;
 import org.apache.commons.lang3.BooleanUtils;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.course.CompanyCoursePage;
+import org.computate.site.model.webinar.CompanyWebinarPage;
 
 
 /**
  * Translate: false
  * Generated: true
  **/
-public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyCourseEnUSGenApiService {
+public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl implements CompanyWebinarEnUSGenApiService {
 
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourseEnUSGenApiServiceImpl.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarEnUSGenApiServiceImpl.class);
 
-	public CompanyCourseEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
+	public CompanyWebinarEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
 		super(eventBus, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 	}
 
 	// Search //
 
 	@Override
-	public void searchCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200SearchCompanyCourse(listCompanyCourse).onSuccess(response -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyWebinarList(siteRequest, false, true, false).onSuccess(listCompanyWebinar -> {
+							response200SearchCompanyWebinar(listCompanyWebinar).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchCompanyCourse succeeded. "));
+								LOG.debug(String.format("searchCompanyWebinar succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchCompanyCourse failed. "), ex);
+								LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchCompanyCourse failed. "), ex);
+							LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("searchCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchCompanyCourse failed. ", ex2));
+					LOG.error(String.format("searchCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -153,32 +206,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("searchCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200SearchCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200SearchCompanyWebinar(SearchList<CompanyWebinar> listCompanyWebinar) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			List<String> fls = listCompanyCourse.getRequest().getFields();
+			SiteRequest siteRequest = listCompanyWebinar.getSiteRequest_(SiteRequest.class);
+			List<String> fls = listCompanyWebinar.getRequest().getFields();
 			JsonObject json = new JsonObject();
 			JsonArray l = new JsonArray();
-			listCompanyCourse.getList().stream().forEach(o -> {
+			listCompanyWebinar.getList().stream().forEach(o -> {
 				JsonObject json2 = JsonObject.mapFrom(o);
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					for(String fieldName : json2.fieldNames()) {
-						String v = CompanyCourse.varIndexedCompanyCourse(fieldName);
+						String v = CompanyWebinar.varIndexedCompanyWebinar(fieldName);
 						if(v != null)
-							fieldNames.add(CompanyCourse.varIndexedCompanyCourse(fieldName));
+							fieldNames.add(CompanyWebinar.varIndexedCompanyWebinar(fieldName));
 					}
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
-						fieldNames.remove("_docvalues_long");
+						fieldNames.remove("pk_docvalues_long");
 						fieldNames.remove("created_docvalues_date");
 					}
 					else if(fls.size() >= 1) {
@@ -192,15 +245,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				l.add(json2);
 			});
 			json.put("list", l);
-			response200Search(listCompanyCourse.getRequest(), listCompanyCourse.getResponse(), json);
+			response200Search(listCompanyWebinar.getRequest(), listCompanyWebinar.getResponse(), json);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200SearchCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void responsePivotSearchCompanyCourse(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+	public void responsePivotSearchCompanyWebinar(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
 		if(pivots != null) {
 			for(SolrResponse.Pivot pivotField : pivots) {
 				String entityIndexed = pivotField.getField();
@@ -229,7 +282,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				if(pivotFields2 != null) {
 					JsonArray pivotArray2 = new JsonArray();
 					pivotJson.put("pivot", pivotArray2);
-					responsePivotSearchCompanyCourse(pivotFields2, pivotArray2);
+					responsePivotSearchCompanyWebinar(pivotFields2, pivotArray2);
 				}
 			}
 		}
@@ -238,26 +291,74 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// GET //
 
 	@Override
-	public void getCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void getCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200GETCompanyCourse(listCompanyCourse).onSuccess(response -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyWebinarList(siteRequest, false, true, false).onSuccess(listCompanyWebinar -> {
+							response200GETCompanyWebinar(listCompanyWebinar).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("getCompanyCourse succeeded. "));
+								LOG.debug(String.format("getCompanyWebinar succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("getCompanyCourse failed. "), ex);
+								LOG.error(String.format("getCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("getCompanyCourse failed. "), ex);
+							LOG.error(String.format("getCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("getCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("getCompanyCourse failed. ", ex2));
+					LOG.error(String.format("getCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -272,21 +373,21 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("getCompanyCourse failed. "), ex);
+				LOG.error(String.format("getCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200GETCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200GETCompanyWebinar(SearchList<CompanyWebinar> listCompanyWebinar) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			JsonObject json = JsonObject.mapFrom(listCompanyCourse.getList().stream().findFirst().orElse(null));
+			SiteRequest siteRequest = listCompanyWebinar.getSiteRequest_(SiteRequest.class);
+			JsonObject json = JsonObject.mapFrom(listCompanyWebinar.getList().stream().findFirst().orElse(null));
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200GETCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200GETCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -295,8 +396,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// PATCH //
 
 	@Override
-	public void patchCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("patchCompanyCourse started. "));
+	public void patchCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("patchCompanyWebinar started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -310,7 +411,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -340,41 +441,42 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
+						searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(listCompanyCourse.getRequest().getRows());
-								apiRequest.setNumFound(listCompanyCourse.getResponse().getResponse().getNumFound());
+								apiRequest.setRows(listCompanyWebinar.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyWebinar.getResponse().getResponse().getNumFound());
 								apiRequest.setNumPATCH(0L);
 								apiRequest.initDeepApiRequest(siteRequest);
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
-									apiRequest.setOriginal(listCompanyCourse.first());
-								eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+									apiRequest.setOriginal(listCompanyWebinar.first());
+								apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
 
-								listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
-									response200PATCHCompanyCourse(siteRequest).onSuccess(response -> {
-										LOG.debug(String.format("patchCompanyCourse succeeded. "));
+								listPATCHCompanyWebinar(apiRequest, listCompanyWebinar).onSuccess(e -> {
+									response200PATCHCompanyWebinar(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchCompanyWebinar succeeded. "));
 										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
-										LOG.error(String.format("patchCompanyCourse failed. "), ex);
+										LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
 								}).onFailure(ex -> {
-									LOG.error(String.format("patchCompanyCourse failed. "), ex);
+									LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							} catch(Exception ex) {
-								LOG.error(String.format("patchCompanyCourse failed. "), ex);
+								LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							}
 						}).onFailure(ex -> {
-							LOG.error(String.format("patchCompanyCourse failed. "), ex);
+							LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("patchCompanyCourse failed. "), ex);
+					LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -383,7 +485,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("patchCompanyCourse failed. ", ex2));
+					LOG.error(String.format("patchCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -398,63 +500,63 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("patchCompanyCourse failed. "), ex);
+				LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPATCHCompanyCourse(ApiRequest apiRequest, SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<Void> listPATCHCompanyWebinar(ApiRequest apiRequest, SearchList<CompanyWebinar> listCompanyWebinar) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
-		SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-		listCompanyCourse.getList().forEach(o -> {
+		SiteRequest siteRequest = listCompanyWebinar.getSiteRequest_(SiteRequest.class);
+		listCompanyWebinar.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			futures.add(Future.future(promise1 -> {
-				patchCompanyCourseFuture(o, false).onSuccess(a -> {
+				patchCompanyWebinarFuture(o, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
-					LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+					LOG.error(String.format("listPATCHCompanyWebinar failed. "), ex);
 					promise1.fail(ex);
 				});
 			}));
 		});
 		CompositeFuture.all(futures).onSuccess( a -> {
-			listCompanyCourse.next().onSuccess(next -> {
+			listCompanyWebinar.next().onSuccess(next -> {
 				if(next) {
-					listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(b -> {
+					listPATCHCompanyWebinar(apiRequest, listCompanyWebinar).onSuccess(b -> {
 						promise.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+						LOG.error(String.format("listPATCHCompanyWebinar failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete();
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+				LOG.error(String.format("listPATCHCompanyWebinar failed. "), ex);
 				promise.fail(ex);
 			});
 		}).onFailure(ex -> {
-			LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
+			LOG.error(String.format("listPATCHCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		});
 		return promise.future();
 	}
 
 	@Override
-	public void patchCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void patchCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
-				searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
+				searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 					try {
-						CompanyCourse o = listCompanyCourse.first();
-						if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
+						CompanyWebinar o = listCompanyWebinar.first();
+						if(o != null && listCompanyWebinar.getResponse().getResponse().getNumFound() == 1) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1L);
 							apiRequest.setNumFound(1L);
@@ -466,7 +568,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							patchCompanyCourseFuture(o, false).onSuccess(o2 -> {
+							apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+							patchCompanyWebinarFuture(o, false).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -475,52 +578,258 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("patchCompanyCourse failed. "), ex);
+						LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 						error(siteRequest, eventHandler, ex);
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("patchCompanyCourse failed. "), ex);
+					LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 					error(siteRequest, eventHandler, ex);
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("patchCompanyCourse failed. "), ex);
+				LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		}).onFailure(ex -> {
-			LOG.error(String.format("patchCompanyCourse failed. "), ex);
+			LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 			error(null, eventHandler, ex);
 		});
 	}
 
-	public Future<CompanyCourse> patchCompanyCourseFuture(CompanyCourse o, Boolean inheritPk) {
+	public Future<CompanyWebinar> patchCompanyWebinarFuture(CompanyWebinar o, Boolean inheritPk) {
 		SiteRequest siteRequest = o.getSiteRequest_();
-		Promise<CompanyCourse> promise = Promise.promise();
+		Promise<CompanyWebinar> promise = Promise.promise();
 
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			persistCompanyCourse(o, true).onSuccess(c -> {
-				indexCompanyCourse(o).onSuccess(e -> {
-					promise.complete(o);
+			Promise<CompanyWebinar> promise1 = Promise.promise();
+			pgPool.withTransaction(sqlConnection -> {
+				siteRequest.setSqlConnection(sqlConnection);
+				varsCompanyWebinar(siteRequest).onSuccess(a -> {
+					sqlPATCHCompanyWebinar(o, inheritPk).onSuccess(companyWebinar -> {
+						persistCompanyWebinar(companyWebinar).onSuccess(c -> {
+							relateCompanyWebinar(companyWebinar).onSuccess(d -> {
+								indexCompanyWebinar(companyWebinar).onSuccess(o2 -> {
+									if(apiRequest != null) {
+										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+										if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+											o2.apiRequestCompanyWebinar();
+											if(apiRequest.getVars().size() > 0)
+												eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
+										}
+									}
+									promise1.complete(companyWebinar);
+								}).onFailure(ex -> {
+									promise1.fail(ex);
+								});
+							}).onFailure(ex -> {
+								promise1.fail(ex);
+							});
+						}).onFailure(ex -> {
+							promise1.fail(ex);
+						});
+					}).onFailure(ex -> {
+						promise1.fail(ex);
+					});
 				}).onFailure(ex -> {
-					promise.fail(ex);
+					promise1.fail(ex);
 				});
+				return promise1.future();
+			}).onSuccess(a -> {
+				siteRequest.setSqlConnection(null);
+			}).onFailure(ex -> {
+				siteRequest.setSqlConnection(null);
+				promise.fail(ex);
+			}).compose(companyWebinar -> {
+				Promise<CompanyWebinar> promise2 = Promise.promise();
+				refreshCompanyWebinar(companyWebinar).onSuccess(a -> {
+					promise2.complete(companyWebinar);
+				}).onFailure(ex -> {
+					promise2.fail(ex);
+				});
+				return promise2.future();
+			}).onSuccess(companyWebinar -> {
+				promise.complete(companyWebinar);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("patchCompanyCourseFuture failed. "), ex);
+			LOG.error(String.format("patchCompanyWebinarFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200PATCHCompanyCourse(SiteRequest siteRequest) {
+	public Future<CompanyWebinar> sqlPATCHCompanyWebinar(CompanyWebinar o, Boolean inheritPk) {
+		Promise<CompanyWebinar> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+			Integer num = 1;
+			StringBuilder bSql = new StringBuilder("UPDATE CompanyWebinar SET ");
+			List<Object> bParams = new ArrayList<Object>();
+			Long pk = o.getPk();
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			Set<String> methodNames = jsonObject.fieldNames();
+			CompanyWebinar o2 = new CompanyWebinar();
+			o2.setSiteRequest_(siteRequest);
+			List<Future> futures1 = new ArrayList<>();
+			List<Future> futures2 = new ArrayList<>();
+
+			for(String entityVar : methodNames) {
+				switch(entityVar) {
+					case "setInheritPk":
+							o2.setInheritPk(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+							num++;
+							bParams.add(o2.sqlInheritPk());
+						break;
+					case "setCreated":
+							o2.setCreated(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCreated());
+						break;
+					case "setArchived":
+							o2.setArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlArchived());
+						break;
+					case "setSessionId":
+							o2.setSessionId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSessionId());
+						break;
+					case "setUserKey":
+							o2.setUserKey(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserKey());
+						break;
+					case "setName":
+							o2.setName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_name + "=$" + num);
+							num++;
+							bParams.add(o2.sqlName());
+						break;
+					case "setDescription":
+							o2.setDescription(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_description + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDescription());
+						break;
+					case "setPageId":
+							o2.setPageId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlPageId());
+						break;
+					case "setResourceUri":
+							o2.setResourceUri(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_resourceUri + "=$" + num);
+							num++;
+							bParams.add(o2.sqlResourceUri());
+						break;
+					case "setTemplateUri":
+							o2.setTemplateUri(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
+							num++;
+							bParams.add(o2.sqlTemplateUri());
+						break;
+					case "setWebinarUrl":
+							o2.setWebinarUrl(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_webinarUrl + "=$" + num);
+							num++;
+							bParams.add(o2.sqlWebinarUrl());
+						break;
+					case "setUri":
+							o2.setUri(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_uri + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUri());
+						break;
+					case "setUrl":
+							o2.setUrl(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_url + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUrl());
+						break;
+				}
+			}
+			bSql.append(" WHERE pk=$" + num);
+			if(bParams.size() > 0) {
+				bParams.add(pk);
+				num++;
+				futures2.add(0, Future.future(a -> {
+					sqlConnection.preparedQuery(bSql.toString())
+							.execute(Tuple.tuple(bParams)
+							).onSuccess(b -> {
+						a.handle(Future.succeededFuture());
+					}).onFailure(ex -> {
+						RuntimeException ex2 = new RuntimeException("value CompanyWebinar failed", ex);
+						LOG.error(String.format("relateCompanyWebinar failed. "), ex2);
+						a.handle(Future.failedFuture(ex2));
+					});
+				}));
+			}
+			CompositeFuture.all(futures1).onSuccess(a -> {
+				CompositeFuture.all(futures2).onSuccess(b -> {
+					CompanyWebinar o3 = new CompanyWebinar();
+					o3.setSiteRequest_(o.getSiteRequest_());
+					o3.setPk(pk);
+					promise.complete(o3);
+				}).onFailure(ex -> {
+					LOG.error(String.format("sqlPATCHCompanyWebinar failed. "), ex);
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("sqlPATCHCompanyWebinar failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("sqlPATCHCompanyWebinar failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<ServiceResponse> response200PATCHCompanyWebinar(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PATCHCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200PATCHCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -529,8 +838,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// POST //
 
 	@Override
-	public void postCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("postCompanyCourse started. "));
+	public void postCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("postCompanyWebinar started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -544,7 +853,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -580,7 +889,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
+						eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
@@ -599,18 +908,19 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						params.put("query", query);
 						JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 						JsonObject json = new JsonObject().put("context", context);
-						eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyCourseFuture")).onSuccess(a -> {
+						eventBus.request(CompanyWebinar.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyWebinarFuture")).onSuccess(a -> {
 							JsonObject responseMessage = (JsonObject)a.body();
 							JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
+							apiRequest.setPk(Long.parseLong(responseBody.getString("pk")));
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
-							LOG.debug(String.format("postCompanyCourse succeeded. "));
+							LOG.debug(String.format("postCompanyWebinar succeeded. "));
 						}).onFailure(ex -> {
-							LOG.error(String.format("postCompanyCourse failed. "), ex);
+							LOG.error(String.format("postCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("postCompanyCourse failed. "), ex);
+					LOG.error(String.format("postCompanyWebinar failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -619,7 +929,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postCompanyCourse failed. ", ex2));
+					LOG.error(String.format("postCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -634,7 +944,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("postCompanyCourse failed. "), ex);
+				LOG.error(String.format("postCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
@@ -642,7 +952,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 
 	@Override
-	public void postCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void postCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			ApiRequest apiRequest = new ApiRequest();
 			apiRequest.setRows(1L);
@@ -653,7 +963,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 				siteRequest.getRequestVars().put( "refresh", "false" );
 			}
-			postCompanyCourseFuture(siteRequest, false).onSuccess(o -> {
+			postCompanyWebinarFuture(siteRequest, false).onSuccess(o -> {
 				eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(o).encodePrettily()))));
 			}).onFailure(ex -> {
 				eventHandler.handle(Future.failedFuture(ex));
@@ -663,7 +973,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postCompanyCourse failed. ", ex2));
+					LOG.error(String.format("postCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -678,44 +988,282 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("postCompanyCourse failed. "), ex);
+				LOG.error(String.format("postCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<CompanyCourse> postCompanyCourseFuture(SiteRequest siteRequest, Boolean inheritPk) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyWebinar> postCompanyWebinarFuture(SiteRequest siteRequest, Boolean inheritPk) {
+		Promise<CompanyWebinar> promise = Promise.promise();
 
 		try {
-			createCompanyCourse(siteRequest).onSuccess(companyCourse -> {
-				persistCompanyCourse(companyCourse, false).onSuccess(c -> {
-					indexCompanyCourse(companyCourse).onSuccess(o2 -> {
-						promise.complete(companyCourse);
+			pgPool.withTransaction(sqlConnection -> {
+				Promise<CompanyWebinar> promise1 = Promise.promise();
+				siteRequest.setSqlConnection(sqlConnection);
+				varsCompanyWebinar(siteRequest).onSuccess(a -> {
+					createCompanyWebinar(siteRequest).onSuccess(companyWebinar -> {
+						sqlPOSTCompanyWebinar(companyWebinar, inheritPk).onSuccess(b -> {
+							persistCompanyWebinar(companyWebinar).onSuccess(c -> {
+								relateCompanyWebinar(companyWebinar).onSuccess(d -> {
+									indexCompanyWebinar(companyWebinar).onSuccess(o2 -> {
+										promise1.complete(companyWebinar);
+									}).onFailure(ex -> {
+										promise1.fail(ex);
+									});
+								}).onFailure(ex -> {
+									promise1.fail(ex);
+								});
+							}).onFailure(ex -> {
+								promise1.fail(ex);
+							});
+						}).onFailure(ex -> {
+							promise1.fail(ex);
+						});
 					}).onFailure(ex -> {
-						promise.fail(ex);
+						promise1.fail(ex);
 					});
 				}).onFailure(ex -> {
-					promise.fail(ex);
+					promise1.fail(ex);
 				});
+				return promise1.future();
+			}).onSuccess(a -> {
+				siteRequest.setSqlConnection(null);
+			}).onFailure(ex -> {
+				siteRequest.setSqlConnection(null);
+				promise.fail(ex);
+			}).compose(companyWebinar -> {
+				Promise<CompanyWebinar> promise2 = Promise.promise();
+				refreshCompanyWebinar(companyWebinar).onSuccess(a -> {
+					try {
+						ApiRequest apiRequest = siteRequest.getApiRequest_();
+						if(apiRequest != null) {
+							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+							companyWebinar.apiRequestCompanyWebinar();
+							eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
+						}
+						promise2.complete(companyWebinar);
+					} catch(Exception ex) {
+						LOG.error(String.format("postCompanyWebinarFuture failed. "), ex);
+						promise.fail(ex);
+					}
+				}).onFailure(ex -> {
+					promise2.fail(ex);
+				});
+				return promise2.future();
+			}).onSuccess(companyWebinar -> {
+				promise.complete(companyWebinar);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("postCompanyCourseFuture failed. "), ex);
+			LOG.error(String.format("postCompanyWebinarFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200POSTCompanyCourse(CompanyCourse o) {
+	public Future<Void> sqlPOSTCompanyWebinar(CompanyWebinar o, Boolean inheritPk) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = o.getSiteRequest_();
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+			Integer num = 1;
+			StringBuilder bSql = new StringBuilder("UPDATE CompanyWebinar SET ");
+			List<Object> bParams = new ArrayList<Object>();
+			Long pk = o.getPk();
+			JsonObject jsonObject = siteRequest.getJsonObject();
+			CompanyWebinar o2 = new CompanyWebinar();
+			o2.setSiteRequest_(siteRequest);
+			List<Future> futures1 = new ArrayList<>();
+			List<Future> futures2 = new ArrayList<>();
+
+			if(siteRequest.getSessionId() != null) {
+				if(bParams.size() > 0) {
+					bSql.append(", ");
+				}
+				bSql.append("sessionId=$" + num);
+				num++;
+				bParams.add(siteRequest.getSessionId());
+			}
+			if(siteRequest.getUserKey() != null) {
+				if(bParams.size() > 0) {
+					bSql.append(", ");
+				}
+				bSql.append("userKey=$" + num);
+				num++;
+				bParams.add(siteRequest.getUserKey());
+			}
+
+			if(jsonObject != null) {
+				Set<String> entityVars = jsonObject.fieldNames();
+				for(String entityVar : entityVars) {
+					switch(entityVar) {
+					case CompanyWebinar.VAR_inheritPk:
+						o2.setInheritPk(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+						num++;
+						bParams.add(o2.sqlInheritPk());
+						break;
+					case CompanyWebinar.VAR_created:
+						o2.setCreated(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCreated());
+						break;
+					case CompanyWebinar.VAR_archived:
+						o2.setArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlArchived());
+						break;
+					case CompanyWebinar.VAR_sessionId:
+						o2.setSessionId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSessionId());
+						break;
+					case CompanyWebinar.VAR_userKey:
+						o2.setUserKey(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserKey());
+						break;
+					case CompanyWebinar.VAR_name:
+						o2.setName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_name + "=$" + num);
+						num++;
+						bParams.add(o2.sqlName());
+						break;
+					case CompanyWebinar.VAR_description:
+						o2.setDescription(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_description + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDescription());
+						break;
+					case CompanyWebinar.VAR_pageId:
+						o2.setPageId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlPageId());
+						break;
+					case CompanyWebinar.VAR_resourceUri:
+						o2.setResourceUri(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_resourceUri + "=$" + num);
+						num++;
+						bParams.add(o2.sqlResourceUri());
+						break;
+					case CompanyWebinar.VAR_templateUri:
+						o2.setTemplateUri(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
+						num++;
+						bParams.add(o2.sqlTemplateUri());
+						break;
+					case CompanyWebinar.VAR_webinarUrl:
+						o2.setWebinarUrl(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_webinarUrl + "=$" + num);
+						num++;
+						bParams.add(o2.sqlWebinarUrl());
+						break;
+					case CompanyWebinar.VAR_uri:
+						o2.setUri(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_uri + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUri());
+						break;
+					case CompanyWebinar.VAR_url:
+						o2.setUrl(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_url + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUrl());
+						break;
+					}
+				}
+			}
+			bSql.append(" WHERE pk=$" + num);
+			if(bParams.size() > 0) {
+			bParams.add(pk);
+			num++;
+				futures2.add(0, Future.future(a -> {
+					sqlConnection.preparedQuery(bSql.toString())
+							.execute(Tuple.tuple(bParams)
+							).onSuccess(b -> {
+						a.handle(Future.succeededFuture());
+					}).onFailure(ex -> {
+						RuntimeException ex2 = new RuntimeException("value CompanyWebinar failed", ex);
+						LOG.error(String.format("relateCompanyWebinar failed. "), ex2);
+						a.handle(Future.failedFuture(ex2));
+					});
+				}));
+			}
+			CompositeFuture.all(futures1).onSuccess(a -> {
+				CompositeFuture.all(futures2).onSuccess(b -> {
+					promise.complete();
+				}).onFailure(ex -> {
+					LOG.error(String.format("sqlPOSTCompanyWebinar failed. "), ex);
+					promise.fail(ex);
+				});
+			}).onFailure(ex -> {
+				LOG.error(String.format("sqlPOSTCompanyWebinar failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("sqlPOSTCompanyWebinar failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<ServiceResponse> response200POSTCompanyWebinar(CompanyWebinar o) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200POSTCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200POSTCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -724,8 +1272,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// PUTImport //
 
 	@Override
-	public void putimportCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("putimportCompanyCourse started. "));
+	public void putimportCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("putimportCompanyWebinar started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -739,12 +1287,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -781,27 +1329,27 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
-						varsCompanyCourse(siteRequest).onSuccess(d -> {
-							listPUTImportCompanyCourse(apiRequest, siteRequest).onSuccess(e -> {
-								response200PUTImportCompanyCourse(siteRequest).onSuccess(response -> {
-									LOG.debug(String.format("putimportCompanyCourse succeeded. "));
+						eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
+						varsCompanyWebinar(siteRequest).onSuccess(d -> {
+							listPUTImportCompanyWebinar(apiRequest, siteRequest).onSuccess(e -> {
+								response200PUTImportCompanyWebinar(siteRequest).onSuccess(response -> {
+									LOG.debug(String.format("putimportCompanyWebinar succeeded. "));
 									eventHandler.handle(Future.succeededFuture(response));
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+									LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+								LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+							LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+					LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -810,7 +1358,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+					LOG.error(String.format("putimportCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -825,14 +1373,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+				LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPUTImportCompanyCourse(ApiRequest apiRequest, SiteRequest siteRequest) {
+	public Future<Void> listPUTImportCompanyWebinar(ApiRequest apiRequest, SiteRequest siteRequest) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -857,10 +1405,10 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					params.put("query", query);
 					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 					JsonObject json = new JsonObject().put("context", context);
-					eventBus.request(CompanyCourse.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyCourseFuture")).onSuccess(a -> {
+					eventBus.request(CompanyWebinar.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportCompanyWebinarFuture")).onSuccess(a -> {
 						promise1.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+						LOG.error(String.format("listPUTImportCompanyWebinar failed. "), ex);
 						promise1.fail(ex);
 					});
 				}));
@@ -869,18 +1417,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				promise.complete();
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+				LOG.error(String.format("listPUTImportCompanyWebinar failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
+			LOG.error(String.format("listPUTImportCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
 	@Override
-	public void putimportCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void putimportCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				ApiRequest apiRequest = new ApiRequest();
@@ -889,24 +1437,23 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyCourse.VAR_id)).orElse(body.getString(CompanyCourse.VAR_id));
+				String inheritPk = Optional.ofNullable(body.getString(CompanyWebinar.VAR_pk)).orElse(body.getString(CompanyWebinar.VAR_id));
 				body.put("inheritPk", inheritPk);
-				body.put("inheritPk", body.getValue("id"));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
 
-				SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+				SearchList<CompanyWebinar> searchList = new SearchList<CompanyWebinar>();
 				searchList.setStore(true);
 				searchList.q("*:*");
-				searchList.setC(CompanyCourse.class);
+				searchList.setC(CompanyWebinar.class);
 				searchList.fq("archived_docvalues_boolean:false");
 				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
-							CompanyCourse o = searchList.getList().stream().findFirst().orElse(null);
-							CompanyCourse o2 = new CompanyCourse();
+							CompanyWebinar o = searchList.getList().stream().findFirst().orElse(null);
+							CompanyWebinar o2 = new CompanyWebinar();
 							o2.setSiteRequest_(siteRequest);
 							JsonObject body2 = new JsonObject();
 							for(String f : body.fieldNames()) {
@@ -937,50 +1484,51 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
 							if(body2.size() > 0) {
 								if(searchList.size() == 1) {
 									apiRequest.setOriginal(o);
+									apiRequest.setPk(o.getPk());
 								}
 								siteRequest.setJsonObject(body2);
-								patchCompanyCourseFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyCourse {} succeeded, modified CompanyCourse. ", body.getValue(CompanyCourse.VAR_id));
+								patchCompanyWebinarFuture(o, true).onSuccess(b -> {
+									LOG.debug("Import CompanyWebinar {} succeeded, modified CompanyWebinar. ", body.getValue(CompanyWebinar.VAR_pk));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+									LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
 									eventHandler.handle(Future.failedFuture(ex));
 								});
 							} else {
 								eventHandler.handle(Future.succeededFuture());
 							}
 						} else {
-							postCompanyCourseFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyCourse {} succeeded, created new CompanyCourse. ", body.getValue(CompanyCourse.VAR_id));
+							postCompanyWebinarFuture(siteRequest, true).onSuccess(b -> {
+								LOG.debug("Import CompanyWebinar {} succeeded, created new CompanyWebinar. ", body.getValue(CompanyWebinar.VAR_pk));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+								LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
 								eventHandler.handle(Future.failedFuture(ex));
 							});
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+						LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
 						eventHandler.handle(Future.failedFuture(ex));
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+					LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
 					eventHandler.handle(Future.failedFuture(ex));
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("putimportCompanyCourseFuture failed. "), ex);
+				LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
 				eventHandler.handle(Future.failedFuture(ex));
 			}
 		}).onFailure(ex -> {
@@ -988,7 +1536,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportCompanyCourse failed. ", ex2));
+					LOG.error(String.format("putimportCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1003,19 +1551,19 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportCompanyCourse failed. "), ex);
+				LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<ServiceResponse> response200PUTImportCompanyCourse(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200PUTImportCompanyWebinar(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PUTImportCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200PUTImportCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1024,26 +1572,79 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	// SearchPage //
 
 	@Override
-	public void searchpageCompanyCourseId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchpageCompanyWebinarId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyWebinarList(siteRequest, false, true, false).onSuccess(listCompanyWebinar -> {
+							response200SearchPageCompanyWebinar(listCompanyWebinar).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageCompanyCourse succeeded. "));
+								LOG.debug(String.format("searchpageCompanyWebinar succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+								LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+							LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageCompanyCourse failed. ", ex2));
+					LOG.error(String.format("searchpageCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1058,25 +1659,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 	@Override
-	public void searchpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchpageCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
-							response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
+						searchCompanyWebinarList(siteRequest, false, true, false).onSuccess(listCompanyWebinar -> {
+							response200SearchPageCompanyWebinar(listCompanyWebinar).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageCompanyCourse succeeded. "));
+								LOG.debug(String.format("searchpageCompanyWebinar succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+								LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+							LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 		}).onFailure(ex -> {
@@ -1084,7 +1685,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageCompanyCourse failed. ", ex2));
+					LOG.error(String.format("searchpageCompanyWebinar failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1099,35 +1700,37 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							)
 					));
 			} else {
-				LOG.error(String.format("searchpageCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchpageCompanyWebinar failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public void searchpageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse) {
+	public void searchpageCompanyWebinarPageInit(CompanyWebinarPage page, SearchList<CompanyWebinar> listCompanyWebinar) {
 	}
 
-	public String templateSearchPageCompanyCourse() {
-		return "en-us/CompanyCoursePage.htm";
+	public String templateSearchPageCompanyWebinar() {
+		return "en-us/CompanyWebinarPage.htm";
 	}
-	public Future<ServiceResponse> response200SearchPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
+	public Future<ServiceResponse> response200SearchPageCompanyWebinar(SearchList<CompanyWebinar> listCompanyWebinar) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateSearchPageCompanyCourse();
+			SiteRequest siteRequest = listCompanyWebinar.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateSearchPageCompanyWebinar();
 			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
 			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-			CompanyCoursePage page = new CompanyCoursePage();
+			CompanyWebinarPage page = new CompanyWebinarPage();
 			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			page.setSearchListCompanyCourse_(listCompanyCourse);
+			if(listCompanyWebinar.size() == 1)
+				siteRequest.setRequestPk(listCompanyWebinar.get(0).getPk());
+			page.setSearchListCompanyWebinar_(listCompanyWebinar);
 			page.setSiteRequest_(siteRequest);
 			page.setServiceRequest(siteRequest.getServiceRequest());
-			page.promiseDeepCompanyCoursePage(siteRequest).onSuccess(a -> {
+			page.promiseDeepCompanyWebinarPage(siteRequest).onSuccess(a -> {
 				try {
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
@@ -1135,14 +1738,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					Buffer buffer = Buffer.buffer(renderedTemplate);
 					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
 				} catch(Exception ex) {
-					LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
+					LOG.error(String.format("response200SearchPageCompanyWebinar failed. "), ex);
 					promise.fail(ex);
 				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
+			LOG.error(String.format("response200SearchPageCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1150,62 +1753,78 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	// General //
 
-	public Future<CompanyCourse> createCompanyCourse(SiteRequest siteRequest) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyWebinar> createCompanyWebinar(SiteRequest siteRequest) {
+		Promise<CompanyWebinar> promise = Promise.promise();
 		try {
-			CompanyCourse o = new CompanyCourse();
-			o.setSiteRequest_(siteRequest);
-			promise.complete(o);
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+			String userId = siteRequest.getUserId();
+			Long userKey = siteRequest.getUserKey();
+			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER.withZone(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))))).orElse(ZonedDateTime.now(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))));
+
+			sqlConnection.preparedQuery("INSERT INTO CompanyWebinar(created, userKey) VALUES($1, $2) RETURNING pk")
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(created.toOffsetDateTime(), userKey)).onSuccess(result -> {
+				Row createLine = result.value().stream().findFirst().orElseGet(() -> null);
+				Long pk = createLine.getLong(0);
+				CompanyWebinar o = new CompanyWebinar();
+				o.setPk(pk);
+				o.setSiteRequest_(siteRequest);
+				promise.complete(o);
+			}).onFailure(ex -> {
+				RuntimeException ex2 = new RuntimeException(ex);
+				LOG.error("createCompanyWebinar failed. ", ex2);
+				promise.fail(ex2);
+			});
 		} catch(Exception ex) {
-			LOG.error(String.format("createCompanyCourse failed. "), ex);
+			LOG.error(String.format("createCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public void searchCompanyCourseQ(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchCompanyWebinarQ(SearchList<CompanyWebinar> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.q(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : SearchTool.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 		}
 	}
 
-	public String searchCompanyCourseFq(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public String searchCompanyWebinarFq(SearchList<CompanyWebinar> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		if(StringUtils.startsWith(valueIndexed, "[")) {
 			String[] fqs = StringUtils.substringAfter(StringUtils.substringBeforeLast(valueIndexed, "]"), "[").split(" TO ");
 			if(fqs.length != 2)
 				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
-			String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
-			String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
+			String fq1 = fqs[0].equals("*") ? fqs[0] : CompanyWebinar.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : CompanyWebinar.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
 			 return varIndexed + ":[" + fq1 + " TO " + fq2 + "]";
 		} else {
-			return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyCourse.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
+			return varIndexed + ":" + SearchTool.escapeQueryChars(CompanyWebinar.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
 		}
 	}
 
-	public void searchCompanyCourseSort(SearchList<CompanyCourse> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchCompanyWebinarSort(SearchList<CompanyWebinar> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.sort(varIndexed, valueIndexed);
 	}
 
-	public void searchCompanyCourseRows(SearchList<CompanyCourse> searchList, Long valueRows) {
+	public void searchCompanyWebinarRows(SearchList<CompanyWebinar> searchList, Long valueRows) {
 			searchList.rows(valueRows != null ? valueRows : 10L);
 	}
 
-	public void searchCompanyCourseStart(SearchList<CompanyCourse> searchList, Long valueStart) {
+	public void searchCompanyWebinarStart(SearchList<CompanyWebinar> searchList, Long valueStart) {
 		searchList.start(valueStart);
 	}
 
-	public void searchCompanyCourseVar(SearchList<CompanyCourse> searchList, String var, String value) {
+	public void searchCompanyWebinarVar(SearchList<CompanyWebinar> searchList, String var, String value) {
 		searchList.getSiteRequest_(SiteRequest.class).getRequestVars().put(var, value);
 	}
 
-	public void searchCompanyCourseUri(SearchList<CompanyCourse> searchList) {
+	public void searchCompanyWebinarUri(SearchList<CompanyWebinar> searchList) {
 	}
 
-	public Future<ServiceResponse> varsCompanyCourse(SiteRequest siteRequest) {
+	public Future<ServiceResponse> varsCompanyWebinar(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
@@ -1223,25 +1842,25 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						siteRequest.getRequestVars().put(entityVar, valueIndexed);
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchCompanyCourse failed. "), ex);
+					LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 					promise.fail(ex);
 				}
 			});
 			promise.complete();
 		} catch(Exception ex) {
-			LOG.error(String.format("searchCompanyCourse failed. "), ex);
+			LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<SearchList<CompanyCourse>> searchCompanyCourseList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
-		Promise<SearchList<CompanyCourse>> promise = Promise.promise();
+	public Future<SearchList<CompanyWebinar>> searchCompanyWebinarList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+		Promise<SearchList<CompanyWebinar>> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
 			String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+			SearchList<CompanyWebinar> searchList = new SearchList<CompanyWebinar>();
 			String facetRange = null;
 			Date facetRangeStart = null;
 			Date facetRangeEnd = null;
@@ -1251,18 +1870,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			searchList.setPopulate(populate);
 			searchList.setStore(store);
 			searchList.q("*:*");
-			searchList.setC(CompanyCourse.class);
+			searchList.setC(CompanyWebinar.class);
 			searchList.setSiteRequest_(siteRequest);
 			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
-					searchList.fl(CompanyCourse.varIndexedCompanyCourse(v));
+					searchList.fl(CompanyWebinar.varIndexedCompanyWebinar(v));
 				}
 			}
 
 			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
 			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
+				searchList.fq("(pk_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
 			} else if(id != null) {
 				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
 			}
@@ -1288,7 +1907,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							String[] varsIndexed = new String[entityVars.length];
 							for(Integer i = 0; i < entityVars.length; i++) {
 								entityVar = entityVars[i];
-								varsIndexed[i] = CompanyCourse.varIndexedCompanyCourse(entityVar);
+								varsIndexed[i] = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
 							}
 							searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
 						}
@@ -1302,8 +1921,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 									while(foundQ) {
 										entityVar = mQ.group(1).trim();
 										valueIndexed = mQ.group(2).trim();
-										varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-										String entityQ = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
+										String entityQ = searchCompanyWebinarFq(searchList, entityVar, valueIndexed, varIndexed);
 										mQ.appendReplacement(sb, entityQ);
 										foundQ = mQ.find();
 									}
@@ -1318,8 +1937,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 									while(foundFq) {
 										entityVar = mFq.group(1).trim();
 										valueIndexed = mFq.group(2).trim();
-										varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-										String entityFq = searchCompanyCourseFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
+										String entityFq = searchCompanyWebinarFq(searchList, entityVar, valueIndexed, varIndexed);
 										mFq.appendReplacement(sb, entityFq);
 										foundFq = mFq.find();
 									}
@@ -1329,14 +1948,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							} else if(paramName.equals("sort")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
-								searchCompanyCourseSort(searchList, entityVar, valueIndexed, varIndexed);
+								varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
+								searchCompanyWebinarSort(searchList, entityVar, valueIndexed, varIndexed);
 							} else if(paramName.equals("start")) {
 								valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchCompanyCourseStart(searchList, valueStart);
+								searchCompanyWebinarStart(searchList, valueStart);
 							} else if(paramName.equals("rows")) {
 								valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchCompanyCourseRows(searchList, valueRows);
+								searchCompanyWebinarRows(searchList, valueRows);
 							} else if(paramName.equals("stats")) {
 								searchList.stats((Boolean)paramObject);
 							} else if(paramName.equals("stats.field")) {
@@ -1345,7 +1964,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								if(foundStats) {
 									String solrLocalParams = mStats.group(1);
 									entityVar = mStats.group(2).trim();
-									varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+									varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
 									searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									statsField = entityVar;
 									statsFieldIndexed = varIndexed;
@@ -1372,32 +1991,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								if(foundFacetRange) {
 									String solrLocalParams = mFacetRange.group(1);
 									entityVar = mFacetRange.group(2).trim();
-									varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+									varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
 									searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									facetRange = entityVar;
 								}
 							} else if(paramName.equals("facet.field")) {
 								entityVar = (String)paramObject;
-								varIndexed = CompanyCourse.varIndexedCompanyCourse(entityVar);
+								varIndexed = CompanyWebinar.varIndexedCompanyWebinar(entityVar);
 								if(varIndexed != null)
 									searchList.facetField(varIndexed);
 							} else if(paramName.equals("var")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								searchCompanyCourseVar(searchList, entityVar, valueIndexed);
+								searchCompanyWebinarVar(searchList, entityVar, valueIndexed);
 							} else if(paramName.equals("cursorMark")) {
 								valueCursorMark = (String)paramObject;
 								searchList.cursorMark((String)paramObject);
 							}
 						}
-						searchCompanyCourseUri(searchList);
+						searchCompanyWebinarUri(searchList);
 					}
 				} catch(Exception e) {
 					ExceptionUtils.rethrow(e);
 				}
 			}
 			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.sort("courseNum_docvalues_int", "asc");
+				searchList.sort("created_docvalues_date", "desc");
 			}
 			String facetRange2 = facetRange;
 			Date facetRangeStart2 = facetRangeStart;
@@ -1405,7 +2024,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			String facetRangeGap2 = facetRangeGap;
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
-			searchCompanyCourse2(siteRequest, populate, store, modify, searchList);
+			searchCompanyWebinar2(siteRequest, populate, store, modify, searchList);
 			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
@@ -1441,72 +2060,83 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					searchList.query().onSuccess(b -> {
 						promise.complete(searchList);
 					}).onFailure(ex -> {
-						LOG.error(String.format("searchCompanyCourse failed. "), ex);
+						LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete(searchList);
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("searchCompanyCourse failed. "), ex);
+				LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("searchCompanyCourse failed. "), ex);
+			LOG.error(String.format("searchCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void searchCompanyCourse2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyCourse> searchList) {
+	public void searchCompanyWebinar2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyWebinar> searchList) {
 	}
 
-	public Future<Void> persistCompanyCourse(CompanyCourse o, Boolean patch) {
+	public Future<Void> persistCompanyWebinar(CompanyWebinar o) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
+			SqlConnection sqlConnection = siteRequest.getSqlConnection();
+			Long pk = o.getPk();
+			sqlConnection.preparedQuery("SELECT * FROM CompanyWebinar WHERE pk=$1")
+					.collecting(Collectors.toList())
+					.execute(Tuple.of(pk)
+					).onSuccess(result -> {
 				try {
-					JsonObject jsonObject = siteRequest.getJsonObject();
-					jsonObject.forEach(definition -> {
-							String columnName;
-							Object columnValue;
-						if(patch && StringUtils.startsWith(definition.getKey(), "set")) {
-							columnName = StringUtils.uncapitalize(StringUtils.substringAfter(definition.getKey(), "set"));
-							columnValue = definition.getValue();
-						} else {
-							columnName = definition.getKey();
-							columnValue = definition.getValue();
-						}
-						if(!"".equals(columnName)) {
-							try {
-								o.persistForClass(columnName, columnValue);
-							} catch(Exception e) {
-								LOG.error(String.format("persistCompanyCourse failed. "), e);
+					for(Row definition : result.value()) {
+						for(Integer i = 0; i < definition.size(); i++) {
+							String columnName = definition.getColumnName(i);
+							Object columnValue = definition.getValue(i);
+							if(!"pk".equals(columnName)) {
+								try {
+									o.persistForClass(columnName, columnValue);
+								} catch(Exception e) {
+									LOG.error(String.format("persistCompanyWebinar failed. "), e);
+								}
 							}
 						}
-					});
+					}
 					promise.complete();
 				} catch(Exception ex) {
-					LOG.error(String.format("persistCompanyCourse failed. "), ex);
+					LOG.error(String.format("persistCompanyWebinar failed. "), ex);
 					promise.fail(ex);
 				}
+			}).onFailure(ex -> {
+				RuntimeException ex2 = new RuntimeException(ex);
+				LOG.error(String.format("persistCompanyWebinar failed. "), ex2);
+				promise.fail(ex2);
+			});
 		} catch(Exception ex) {
-			LOG.error(String.format("persistCompanyCourse failed. "), ex);
+			LOG.error(String.format("persistCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
+		return promise.future();
+	}
+
+	public Future<Void> relateCompanyWebinar(CompanyWebinar o) {
+		Promise<Void> promise = Promise.promise();
+			promise.complete();
 		return promise.future();
 	}
 
 	public String searchVar(String varIndexed) {
-		return CompanyCourse.searchVarCompanyCourse(varIndexed);
+		return CompanyWebinar.searchVarCompanyWebinar(varIndexed);
 	}
 
 	@Override
 	public String getClassApiAddress() {
-		return CompanyCourse.CLASS_API_ADDRESS_CompanyCourse;
+		return CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar;
 	}
 
-	public Future<CompanyCourse> indexCompanyCourse(CompanyCourse o) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyWebinar> indexCompanyWebinar(CompanyWebinar o) {
+		Promise<CompanyWebinar> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1516,7 +2146,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				json.put("add", add);
 				JsonObject doc = new JsonObject();
 				add.put("doc", doc);
-				o.indexCompanyCourse(doc);
+				o.indexCompanyWebinar(doc);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
 				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
@@ -1533,22 +2163,22 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
-					LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
+					LOG.error(String.format("indexCompanyWebinar failed. "), new RuntimeException(ex));
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexCompanyCourse failed. "), ex);
+				LOG.error(String.format("indexCompanyWebinar failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("indexCompanyCourse failed. "), ex);
+			LOG.error(String.format("indexCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<CompanyCourse> unindexCompanyCourse(CompanyCourse o) {
-		Promise<CompanyCourse> promise = Promise.promise();
+	public Future<CompanyWebinar> unindexCompanyWebinar(CompanyWebinar o) {
+		Promise<CompanyWebinar> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1556,7 +2186,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				String query = String.format("filter(pk_docvalues_long:%s)", o.obtainForClass("pk"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1574,15 +2204,76 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
-					LOG.error(String.format("unindexCompanyCourse failed. "), new RuntimeException(ex));
+					LOG.error(String.format("unindexCompanyWebinar failed. "), new RuntimeException(ex));
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+				LOG.error(String.format("unindexCompanyWebinar failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("unindexCompanyCourse failed. "), ex);
+			LOG.error(String.format("unindexCompanyWebinar failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<Void> refreshCompanyWebinar(CompanyWebinar o) {
+		Promise<Void> promise = Promise.promise();
+		SiteRequest siteRequest = o.getSiteRequest_();
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
+			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
+			if(refresh && !Optional.ofNullable(siteRequest.getJsonObject()).map(JsonObject::isEmpty).orElse(true)) {
+				List<Future> futures = new ArrayList<>();
+
+				for(int i=0; i < pks.size(); i++) {
+					Long pk2 = pks.get(i);
+					String classSimpleName2 = classes.get(i);
+				}
+
+				CompositeFuture.all(futures).onSuccess(b -> {
+					JsonObject params = new JsonObject();
+					params.put("body", new JsonObject());
+					params.put("cookie", new JsonObject());
+					params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
+					params.put("form", new JsonObject());
+					params.put("path", new JsonObject());
+					JsonObject query = new JsonObject();
+					Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+					Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					if(softCommit != null)
+						query.put("softCommit", softCommit);
+					if(commitWithin != null)
+						query.put("commitWithin", commitWithin);
+					query.put("q", "*:*").put("fq", new JsonArray().add("pk:" + o.getPk())).put("var", new JsonArray().add("refresh:false"));
+					params.put("query", query);
+					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
+					JsonObject json = new JsonObject().put("context", context);
+					eventBus.request(CompanyWebinar.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "patchCompanyWebinarFuture")).onSuccess(c -> {
+						JsonObject responseMessage = (JsonObject)c.body();
+						Integer statusCode = responseMessage.getInteger("statusCode");
+						if(statusCode.equals(200))
+							promise.complete();
+						else
+							promise.fail(new RuntimeException(responseMessage.getString("statusMessage")));
+					}).onFailure(ex -> {
+						LOG.error("Refresh relations failed. ", ex);
+						promise.fail(ex);
+					});
+				}).onFailure(ex -> {
+					LOG.error("Refresh relations failed. ", ex);
+					promise.fail(ex);
+				});
+			} else {
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error(String.format("refreshCompanyWebinar failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1594,39 +2285,31 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		try {
 			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
 			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			String uri = ctx.getString(CompanyCourse.VAR_uri);
+			String uri = ctx.getString(CompanyWebinar.VAR_uri);
 			String url = String.format("%s%s", siteBaseUrl, uri);
-			CompanyCourse page = new CompanyCourse();
+			CompanyWebinar page = new CompanyWebinar();
 			page.setSiteRequest_((SiteRequest)siteRequest);
-			page.persistForClass(CompanyCourse.VAR_resourceUri, resourceUri);
-			page.persistForClass(CompanyCourse.VAR_templateUri, templateUri);
+			page.persistForClass(CompanyWebinar.VAR_resourceUri, resourceUri);
+			page.persistForClass(CompanyWebinar.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyCourse.VAR_inheritPk, CompanyCourse.staticSetInheritPk(siteRequest2, ctx.getString(CompanyCourse.VAR_inheritPk)));
-			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, ctx.getString(CompanyCourse.VAR_created)));
-			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, ctx.getString(CompanyCourse.VAR_archived)));
-			page.persistForClass(CompanyCourse.VAR_sessionId, CompanyCourse.staticSetSessionId(siteRequest2, ctx.getString(CompanyCourse.VAR_sessionId)));
-			page.persistForClass(CompanyCourse.VAR_userKey, CompanyCourse.staticSetUserKey(siteRequest2, ctx.getString(CompanyCourse.VAR_userKey)));
-			page.persistForClass(CompanyCourse.VAR_objectId, CompanyCourse.staticSetObjectId(siteRequest2, ctx.getString(CompanyCourse.VAR_objectId)));
-			page.persistForClass(CompanyCourse.VAR_id, CompanyCourse.staticSetId(siteRequest2, ctx.getString(CompanyCourse.VAR_id)));
-			page.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, ctx.getString(CompanyCourse.VAR_name)));
-			page.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, ctx.getString(CompanyCourse.VAR_description)));
-			page.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, ctx.getString(CompanyCourse.VAR_price)));
-			page.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, ctx.getString(CompanyCourse.VAR_pageId)));
-			page.persistForClass(CompanyCourse.VAR_resourceUri, CompanyCourse.staticSetResourceUri(siteRequest2, ctx.getString(CompanyCourse.VAR_resourceUri)));
-			page.persistForClass(CompanyCourse.VAR_templateUri, CompanyCourse.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyCourse.VAR_templateUri)));
-			page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, ctx.getString(CompanyCourse.VAR_emailTemplate)));
-			page.persistForClass(CompanyCourse.VAR_uri, CompanyCourse.staticSetUri(siteRequest2, ctx.getString(CompanyCourse.VAR_uri)));
-			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
-			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, ctx.getString(CompanyCourse.VAR_downloadUri)));
-			page.persistForClass(CompanyCourse.VAR_userUri, CompanyCourse.staticSetUserUri(siteRequest2, ctx.getString(CompanyCourse.VAR_userUri)));
-			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_storeUrl)));
-			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, ctx.getString(CompanyCourse.VAR_title)));
-			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, ctx.getString(CompanyCourse.VAR_courseNum)));
+			page.persistForClass(CompanyWebinar.VAR_inheritPk, CompanyWebinar.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebinar.VAR_inheritPk)));
+			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, ctx.getString(CompanyWebinar.VAR_created)));
+			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
+			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
+			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
+			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, ctx.getString(CompanyWebinar.VAR_name)));
+			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, ctx.getString(CompanyWebinar.VAR_description)));
+			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, ctx.getString(CompanyWebinar.VAR_pageId)));
+			page.persistForClass(CompanyWebinar.VAR_resourceUri, CompanyWebinar.staticSetResourceUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_resourceUri)));
+			page.persistForClass(CompanyWebinar.VAR_templateUri, CompanyWebinar.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_templateUri)));
+			page.persistForClass(CompanyWebinar.VAR_webinarUrl, CompanyWebinar.staticSetWebinarUrl(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrl)));
+			page.persistForClass(CompanyWebinar.VAR_uri, CompanyWebinar.staticSetUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_uri)));
+			page.persistForClass(CompanyWebinar.VAR_url, CompanyWebinar.staticSetUrl(siteRequest2, ctx.getString(CompanyWebinar.VAR_url)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {
 					JsonObject data = JsonObject.mapFrom(page);
-					data.put(CompanyCourse.VAR_id, uri);
+					data.put(CompanyWebinar.VAR_pk, uri);
 					promise.complete(data);
 				} catch(Exception ex) {
 					LOG.error(String.format(importModelFail, classSimpleName), ex);

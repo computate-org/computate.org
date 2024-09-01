@@ -10,8 +10,6 @@ COPY . /home/default/computate.org
 RUN git clone https://github.com/computate-org/computate-base.git /home/default/computate-base
 RUN git clone https://github.com/computate-org/computate-search.git /home/default/computate-search
 RUN git clone https://github.com/computate-org/computate-vertx.git /home/default/computate-vertx
-RUN git clone https://github.com/computate-org/computate.org-static.git /home/default/computate.org-static
-RUN git clone https://github.com/computate-org/smartvillage-platform.git /home/default/smartvillage-platform
 
 WORKDIR /home/default/computate-base
 RUN mvn clean install -DskipTests

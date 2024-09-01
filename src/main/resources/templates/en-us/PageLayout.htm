@@ -106,18 +106,14 @@
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
 {% endblock htmScriptsPageLayout %}
-
 {% block htmScriptPageLayout %}
 {% endblock htmScriptPageLayout %}
-
-    <script type="module">
-{% block websocketPageLayout %}
-{% endblock websocketPageLayout %}
-    </script>
-
 {% endblock htmHeadPageLayout %}
+
+    <script>
+{%- block websocketPageLayout %}{%- endblock websocketPageLayout %}
+    </script>
   </head>
   <body>
     <div id="site-grid">
@@ -125,7 +121,7 @@
 {% block htmBodyStartPageLayout %}
       <aside id="site-aside-left" class="hide-mobile ">
         <a id="img-keys-a" href="/">
-          <img id="site-aside-left-img-logo" src="https://computate.neocities.org/svg/computate-keys.svg"/>
+          <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
         </a>
         <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop">
           <i slot="prefix" class="fas fa-xmark"></i>
@@ -139,7 +135,7 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="Read the latest articles to learn more">
-              <sl-button href="{{ SITE_PAGE_URL }}/page">
+              <sl-button href="{{ SITE_BASE_URL }}/page">
                 <i class="fa-duotone fa-solid fa-newspaper"></i>
                 articles
               </sl-button>
@@ -147,7 +143,7 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
-              <sl-button href="{{ SITE_PAGE_URL }}/research">
+              <sl-button href="{{ SITE_BASE_URL }}/research">
                 <i class="fa-duotone fa-solid fa-school"></i>
                 research
               </sl-button>
@@ -155,7 +151,7 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
-              <sl-button href="{{ SITE_PAGE_URL }}/event">
+              <sl-button href="{{ SITE_BASE_URL }}/event">
                 <i class="fa-duotone fa-solid fa-map-location-dot"></i>
                 events
               </sl-button>
@@ -163,7 +159,7 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
-              <sl-button href="{{ SITE_PAGE_URL }}/course">
+              <sl-button href="{{ SITE_BASE_URL }}/course">
                 <i class="fa-regular fa-notebook"></i>
                 courses
               </sl-button>
@@ -171,7 +167,7 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-              <sl-button href="{{ SITE_PAGE_URL }}/product">
+              <sl-button href="{{ SITE_BASE_URL }}/product">
                 <i class="fa-regular fa-conveyor-belt"></i>
                 products
               </sl-button>
@@ -179,25 +175,33 @@
           </li>
           <li>
             <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
-              <sl-button href="{{ SITE_PAGE_URL }}/service">
+              <sl-button href="{{ SITE_BASE_URL }}/service">
                 <i class="fa-regular fa-conveyor-belt"></i>
                 services
               </sl-button>
             </sl-tooltip>
           </li>
           <li>
-            <sl-tooltip placement="right" content="See the live websites built with computate">
-              <sl-button href="{{ SITE_PAGE_URL }}/website">
-                <i class="fa-regular fa-globe-pointer"></i>
-                websites
+            <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
+              <sl-button href="{{ SITE_BASE_URL }}/webinar">
+                <i class="fa-regular fa-video"></i>
+                webinars
               </sl-button>
             </sl-tooltip>
           </li>
           <li>
             <sl-tooltip placement="right" content="ApiTag: weather observed">
-              <sl-button href="{{ SITE_PAGE_URL }}/weather-observed">
+              <sl-button href="{{ SITE_BASE_URL }}/weather-observed">
                 <i class="fa-regular fa-cloud-bolt-sun"></i>
                 weather observed devices
+              </sl-button>
+            </sl-tooltip>
+          </li>
+          <li>
+            <sl-tooltip placement="right" content="See the live websites built with computate">
+              <sl-button href="{{ SITE_BASE_URL }}/website">
+                <i class="fa-regular fa-globe-pointer"></i>
+                websites
               </sl-button>
             </sl-tooltip>
           </li>
@@ -210,15 +214,13 @@
               </div>
               <div>{{ userFullName }}</div>
               <div>{{ userEmail }}</div>
-              <div>
+              <div class="round-first-and-last-row">
                 <sl-tooltip placement="right" content="see or change your user profile">
                   <sl-button href="/user/{{ userKey }}" label="see or change your user profile">
                     <i slot="prefix" class="fad fa-house-user"></i>
                     <span>my user page</span>
                   </sl-button>
                 </sl-tooltip>
-              </div>
-              <div>
                 <sl-tooltip placement="right" content="sign out">
                   <sl-button href="{{ logoutUrl }}" label="sign out">
                     <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
@@ -239,13 +241,12 @@
       </aside>
       <main>
         <header id="top-bar">
-          <sl-button data-toggle-nav id="nav-toggle-button" class="only-mobile hide-desktop " label="open menu" appearance="text">
+          <sl-button data-toggle-nav id="nav-toggle-button" class="hide-desktop " label="open menu" appearance="text">
             <i slot="prefix" class="fas fa-bars"></i>
           </sl-button>
-            <sl-input placeholder="search" id="siteSearchInput">
-              <i slot="prefix" class="fa-light fa-magnifying-glass"></i>
-            </sl-input>
-            <!-- <sl-button type="submit" variant="primary" size="medium" slot="trigger" caret>Search</sl-button> -->
+          <sl-input placeholder="search" id="siteSearchInput">
+            <i slot="prefix" class="fa-light fa-magnifying-glass"></i>
+          </sl-input>
         </header>
         <sl-dropdown id="siteSearchDropdown" class="display-block ">
           <sl-menu id="siteSearchDropdownMenu">
@@ -259,41 +260,41 @@
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
       </main>
-      <footer class="split-block " id="site-footer">
-        {% if GITHUB_ORG is defined %}
-        <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
-          <div>
-            <div>
-              <i class="fa-brands fa-github fa-5x "></i>
-            </div>
-            <div>
-              This site is open source. 
-            </div>
-          </div>
-        </sl-button>
-        {% endif %}
-        <sl-button size="large" id="footer-generated-by" href="https://www.computate.org/" target="_blank">
-          <div>
-            <div>Generated with </div>
-            <div>
-              <img src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg"/>
-            </div>
-          </div>
-        </sl-button>
-        {% if SITE_POWERED_BY_URL is defined %}
-        <sl-button size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
-          <div>
-            <div>
-              <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>
-            </div>
-            <div>
-              Powered by {{ SITE_POWERED_BY_NAME }}
-            </div>
-          </div>
-        </sl-button>
-        {% endif %}
-      </footer>
     </div>
+    <footer id="site-footer" class="split-block round-first-and-last-column-x-large">
+      {% if GITHUB_ORG is defined %}
+      <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
+        <div>
+          <div>
+            <i class="fa-brands fa-github fa-5x "></i>
+          </div>
+          <div>
+            This site is open source. 
+          </div>
+        </div>
+      </sl-button>
+      {% endif %}
+      <sl-button size="large" id="footer-generated-by" href="https://www.computate.org/" target="_blank">
+        <div>
+          <div>Generated with </div>
+          <div>
+            <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg"/>
+          </div>
+        </div>
+      </sl-button>
+      {% if SITE_POWERED_BY_URL is defined %}
+      <sl-button size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+        <div>
+          <div>
+            <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>
+          </div>
+          <div>
+            Powered by {{ SITE_POWERED_BY_NAME }}
+          </div>
+        </div>
+      </sl-button>
+      {% endif %}
+    </footer>
 {% endblock htmBodyEndPageLayout %}
 {% endblock htmBodyPageLayout %}
   </body>

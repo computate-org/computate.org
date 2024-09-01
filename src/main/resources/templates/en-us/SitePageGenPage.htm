@@ -162,7 +162,11 @@
 {%- macro htmForm_patchSitePage() %}
         <sl-dialog id="patchSitePageDialog" label="Modify article">
           <form id="htmForm_patchSitePage">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -194,12 +198,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -283,7 +282,11 @@
         <sl-dialog id="postSitePageDialog" label="Create an article">
           <form id="htmForm_postSitePage">
             <div class="">You can override any default values below: </div>
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -315,12 +318,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -427,7 +425,11 @@
 {%- macro htmForm_searchpageSitePage() %}
         <div id="searchpageSitePageDialog" label="Search articles">
           <div id="htmForm_searchpageSitePage">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -459,12 +461,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedSitePagePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1012,7 +1009,6 @@
         {{ htmForm_searchpageSitePage() }}
   {% endif %}
         {%- endblock htmFormSitePagePage %}
-        </div>
       {%- endblock htmBodyMiddleSitePagePage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1088,7 +1084,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Created varSitePageCreated ">{{sitePage_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1118,7 +1113,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Modified varSitePageModified ">{{sitePage_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1157,7 +1151,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}ObjectId varSitePageObjectId ">{{sitePage_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1221,7 +1214,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Archived varSitePageArchived ">{{sitePage_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1260,7 +1252,6 @@ The ID for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}PageId varSitePagePageId ">{{sitePage_.pageId}}</span>
 {%- endmacro %}
 
 {%- macro htmPageIdSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1299,7 +1290,6 @@ The relative URI for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Uri varSitePageUri ">{{sitePage_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1338,7 +1328,6 @@ The URL for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Url varSitePageUrl ">{{sitePage_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1377,7 +1366,6 @@ The author"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}Author varSitePageAuthor ">{{sitePage_.author}}</span>
 {%- endmacro %}
 
 {%- macro htmAuthorSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1416,7 +1404,6 @@ The page image URI"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSitePage{{id}}PageImageUri varSitePagePageImageUri ">{{sitePage_.pageImageUri}}</span>
 {%- endmacro %}
 
 {%- macro htmPageImageUriSitePagePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

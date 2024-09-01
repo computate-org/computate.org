@@ -922,7 +922,6 @@
         {{ htmForm_searchpageSiteUser() }}
   {% endif %}
         {%- endblock htmFormSiteUserPage %}
-        </div>
       {%- endblock htmBodyMiddleSiteUserPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -1007,7 +1006,6 @@ The primary key of this object in the database"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}Pk varSiteUserPk ">{{siteUser_.pk}}</span>
 {%- endmacro %}
 
 {%- macro htmPkSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1046,7 +1044,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}ObjectId varSiteUserObjectId ">{{siteUser_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1076,7 +1073,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}Created varSiteUserCreated ">{{siteUser_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1106,7 +1102,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}Modified varSiteUserModified ">{{siteUser_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1170,7 +1165,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}Archived varSiteUserArchived ">{{siteUser_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1221,7 +1215,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}SeeArchived varSiteUserSeeArchived ">{{siteUser_.seeArchived}}</span>
 {%- endmacro %}
 
 {%- macro htmSeeArchivedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1272,7 +1265,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varSiteUser{{pk}}SeeDeleted varSiteUserSeeDeleted ">{{siteUser_.seeDeleted}}</span>
 {%- endmacro %}
 
 {%- macro htmSeeDeletedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

@@ -162,7 +162,11 @@
 {%- macro htmForm_patchCompanyResearch() %}
         <sl-dialog id="patchCompanyResearchDialog" label="Modify research">
           <form id="htmForm_patchCompanyResearch">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -194,12 +198,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -283,7 +282,11 @@
         <sl-dialog id="postCompanyResearchDialog" label="Create a research">
           <form id="htmForm_postCompanyResearch">
             <div class="">You can override any default values below: </div>
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -315,12 +318,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -427,7 +425,11 @@
 {%- macro htmForm_searchpageCompanyResearch() %}
         <div id="searchpageCompanyResearchDialog" label="Search research">
           <div id="htmForm_searchpageCompanyResearch">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -459,12 +461,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyResearchPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1012,7 +1009,6 @@
         {{ htmForm_searchpageCompanyResearch() }}
   {% endif %}
         {%- endblock htmFormCompanyResearchPage %}
-        </div>
       {%- endblock htmBodyMiddleCompanyResearchPage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1088,7 +1084,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Created varCompanyResearchCreated ">{{companyResearch_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1118,7 +1113,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Modified varCompanyResearchModified ">{{companyResearch_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1157,7 +1151,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}ObjectId varCompanyResearchObjectId ">{{companyResearch_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1221,7 +1214,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Archived varCompanyResearchArchived ">{{companyResearch_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1260,7 +1252,6 @@ The research name. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Name varCompanyResearchName ">{{companyResearch_.name}}</span>
 {%- endmacro %}
 
 {%- macro htmNameCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1299,7 +1290,6 @@ The research description. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Description varCompanyResearchDescription ">{{companyResearch_.description}}</span>
 {%- endmacro %}
 
 {%- macro htmDescriptionCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1338,7 +1328,6 @@ The relative URI for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Uri varCompanyResearchUri ">{{companyResearch_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1377,7 +1366,6 @@ The URL for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}Url varCompanyResearchUrl ">{{companyResearch_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1416,7 +1404,6 @@ The ID for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyResearch{{id}}PageId varCompanyResearchPageId ">{{companyResearch_.pageId}}</span>
 {%- endmacro %}
 
 {%- macro htmPageIdCompanyResearchPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

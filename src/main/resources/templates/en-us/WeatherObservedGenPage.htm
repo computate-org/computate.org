@@ -2404,7 +2404,6 @@
         {{ htmForm_searchpageWeatherObserved() }}
   {% endif %}
         {%- endblock htmFormWeatherObservedPage %}
-        </div>
       {%- endblock htmBodyMiddleWeatherObservedPage %}
       {%- endblock htmBodyMiddleBaseModelPage %}
 
@@ -2489,9 +2488,6 @@ The primary key of this object in the database"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Pk varWeatherObservedPk ">{{weatherObserved_.pk}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPkWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2530,9 +2526,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}ObjectId varWeatherObservedObjectId ">{{weatherObserved_.objectId}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmObjectIdWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2562,9 +2555,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Created varWeatherObservedCreated ">{{weatherObserved_.created}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmCreatedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2593,9 +2583,6 @@ A URL friendly unique ID for this object"
                   </sl-input>
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Modified varWeatherObservedModified ">{{weatherObserved_.modified}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -2660,9 +2647,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Archived varWeatherObservedArchived ">{{weatherObserved_.archived}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmArchivedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2700,9 +2684,6 @@ The name of this item"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Name varWeatherObservedName ">{{weatherObserved_.name}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -2742,9 +2723,6 @@ A description of this item"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Description varWeatherObservedDescription ">{{weatherObserved_.description}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDescriptionWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2782,9 +2760,6 @@ An alternative name for this item"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AlternateName varWeatherObservedAlternateName ">{{weatherObserved_.alternateName}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -2824,9 +2799,6 @@ The mailing address"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Address varWeatherObservedAddress ">{{weatherObserved_.address}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmAddressWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2864,9 +2836,6 @@ A unique ID for this Smart Data Model"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}EntityId varWeatherObservedEntityId ">{{weatherObserved_.entityId}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -2906,9 +2875,6 @@ Air quality index is a number used to report the quality of the air on any given
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AirQualityIndex varWeatherObservedAirQualityIndex ">{{weatherObserved_.airQualityIndex}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmAirQualityIndexWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -2946,9 +2912,6 @@ Forecasted overall Air Quality Index (AQI) over a certain duration in future"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AirQualityIndexForecast varWeatherObservedAirQualityIndexForecast ">{{weatherObserved_.airQualityIndexForecast}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -2988,9 +2951,6 @@ Major pollutant in the Air Quality Index (AQI)"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AqiMajorPollutant varWeatherObservedAqiMajorPollutant ">{{weatherObserved_.aqiMajorPollutant}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmAqiMajorPollutantWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3028,9 +2988,6 @@ Forecasted major air pollutant in the Air Quality Index (AQI) over a certain dur
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AqiMajorPollutantForecast varWeatherObservedAqiMajorPollutantForecast ">{{weatherObserved_.aqiMajorPollutantForecast}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3070,9 +3027,6 @@ Forecasted value of air temperature over a certain duration in future"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AirTemperatureForecast varWeatherObservedAirTemperatureForecast ">{{weatherObserved_.airTemperatureForecast}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmAirTemperatureForecastWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3110,9 +3064,6 @@ Air temperature time series aggregation"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AirTemperatureTSA varWeatherObservedAirTemperatureTSA ">{{weatherObserved_.airTemperatureTSA}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3152,9 +3103,6 @@ The geographic area where a service or offered item is provided"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AreaServed varWeatherObservedAreaServed ">{{weatherObserved_.areaServed}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmAreaServedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3192,9 +3140,6 @@ The atmospheric pressure observed measured in Hecto Pascals"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}AtmosphericPressure varWeatherObservedAtmosphericPressure ">{{weatherObserved_.atmosphericPressure}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3234,9 +3179,6 @@ A sequence of characters identifying the provider of the harmonised data entity"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DataProvider varWeatherObservedDataProvider ">{{weatherObserved_.dataProvider}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDataProviderWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3274,9 +3216,6 @@ Entity creation timestamp. This will usually be allocated by the storage platfor
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DateCreated varWeatherObservedDateCreated ">{{weatherObserved_.dateCreated}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3316,9 +3255,6 @@ Timestamp of the last modification of the entity. This will usually be allocated
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DateModified varWeatherObservedDateModified ">{{weatherObserved_.dateModified}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDateModifiedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3356,9 +3292,6 @@ Date of the observed entity defined by the user"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DateObserved varWeatherObservedDateObserved ">{{weatherObserved_.dateObserved}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3398,9 +3331,6 @@ The dew point encoded as a number. Observed temperature to which air must be coo
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DewPoint varWeatherObservedDewPoint ">{{weatherObserved_.dewPoint}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDewPointWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3438,9 +3368,6 @@ Diffuse irradiance is the part of the solar irradiance that is scattered by the 
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DiffuseIrradiation varWeatherObservedDiffuseIrradiation ">{{weatherObserved_.diffuseIrradiation}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3480,9 +3407,6 @@ Direct irradiance is the part of the solar irradiance that directly reaches a su
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}DirectIrradiation varWeatherObservedDirectIrradiation ">{{weatherObserved_.directIrradiation}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmDirectIrradiationWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3520,9 +3444,6 @@ Temperature appreciation of the item"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}FeelsLikeTemperature varWeatherObservedFeelsLikeTemperature ">{{weatherObserved_.feelsLikeTemperature}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3562,9 +3483,6 @@ A sudden burst of high-speed wind over the observed average wind speed lasting o
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}GustSpeed varWeatherObservedGustSpeed ">{{weatherObserved_.gustSpeed}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmGustSpeedWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3602,9 +3520,6 @@ A sudden burst of high-speed wind over the observed average wind speed lasting o
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Illuminance varWeatherObservedIlluminance ">{{weatherObserved_.illuminance}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3644,9 +3559,6 @@ Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint,
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Location varWeatherObservedLocation ">{{weatherObserved_.location}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmLocationWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3684,9 +3596,6 @@ A List containing a JSON encoded sequence of characters referencing the unique I
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Owner varWeatherObservedOwner ">{{weatherObserved_.owner}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3726,9 +3635,6 @@ Amount of water rain registered. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Precipitation varWeatherObservedPrecipitation ">{{weatherObserved_.precipitation}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPrecipitationWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3766,9 +3672,6 @@ Forecasted rainfall over a certain duration in future"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}PrecipitationForecast varWeatherObservedPrecipitationForecast ">{{weatherObserved_.precipitationForecast}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3808,9 +3711,6 @@ Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be ex
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}PressureTendency varWeatherObservedPressureTendency ">{{weatherObserved_.pressureTendency}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmPressureTendencyWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3848,9 +3748,6 @@ A reference to the device(s) which captured this observation"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}RefDevice varWeatherObservedRefDevice ">{{weatherObserved_.refDevice}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3890,9 +3787,6 @@ Point of interest related to the item"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}RefPointOfInterest varWeatherObservedRefPointOfInterest ">{{weatherObserved_.refPointOfInterest}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmRefPointOfInterestWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -3930,9 +3824,6 @@ Humidity in the Air. Observed instantaneous relative humidity (water vapour in a
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}RelativeHumidity varWeatherObservedRelativeHumidity ">{{weatherObserved_.relativeHumidity}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -3972,9 +3863,6 @@ Forecasted relative humidity (water vapour in air) over a certain duration in fu
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}RelativeHumidityForecast varWeatherObservedRelativeHumidityForecast ">{{weatherObserved_.relativeHumidityForecast}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmRelativeHumidityForecastWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4012,9 +3900,6 @@ list of uri pointing to additional resources about the item"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}SeeAlso varWeatherObservedSeeAlso ">{{weatherObserved_.seeAlso}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -4054,9 +3939,6 @@ The snow height observed by generic snow depth measurement sensors, expressed in
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}SnowHeight varWeatherObservedSnowHeight ">{{weatherObserved_.snowHeight}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmSnowHeightWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4094,9 +3976,6 @@ The solar radiation observed measured in Watts per square"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}SolarRadiation varWeatherObservedSolarRadiation ">{{weatherObserved_.solarRadiation}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -4136,9 +4015,6 @@ A sequence of characters giving the original source of the entity data as a URL.
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Source varWeatherObservedSource ">{{weatherObserved_.source}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmSourceWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4176,9 +4052,6 @@ The water level surface elevation observed by Hydrometric measurement sensors, n
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}StreamGauge varWeatherObservedStreamGauge ">{{weatherObserved_.streamGauge}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -4218,9 +4091,6 @@ Temperature of the item"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Temperature varWeatherObservedTemperature ">{{weatherObserved_.temperature}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmTemperatureWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4258,9 +4128,6 @@ The maximum UV index for the period, based on the World Health Organization's UV
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}UVIndexMax varWeatherObservedUVIndexMax ">{{weatherObserved_.uVIndexMax}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -4300,9 +4167,6 @@ Categories of visibility"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}Visibility varWeatherObservedVisibility ">{{weatherObserved_.visibility}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmVisibilityWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4340,9 +4204,6 @@ Text description of the weather"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}WeatherType varWeatherObservedWeatherType ">{{weatherObserved_.weatherType}}</span>
   {%- endif %}
 {%- endmacro %}
 
@@ -4382,9 +4243,6 @@ Direction of the wind bet"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}WindDirection varWeatherObservedWindDirection ">{{weatherObserved_.windDirection}}</span>
-  {%- endif %}
 {%- endmacro %}
 
 {%- macro htmWindDirectionWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -4422,9 +4280,6 @@ Intensity of the wind"
 
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
-  {%- endif %}
-  {%- if userKey in weatherObserved_.userKeys %}
-                <span class="varWeatherObserved{{pk}}WindSpeed varWeatherObservedWindSpeed ">{{weatherObserved_.windSpeed}}</span>
   {%- endif %}
 {%- endmacro %}
 

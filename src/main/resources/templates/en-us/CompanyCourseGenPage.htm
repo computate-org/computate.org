@@ -162,7 +162,11 @@
 {%- macro htmForm_patchCompanyCourse() %}
         <sl-dialog id="patchCompanyCourseDialog" label="Modify course">
           <form id="htmForm_patchCompanyCourse">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -194,12 +198,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -293,7 +292,11 @@
         <sl-dialog id="postCompanyCourseDialog" label="Create a course">
           <form id="htmForm_postCompanyCourse">
             <div class="">You can override any default values below: </div>
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -325,12 +328,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -447,7 +445,11 @@
 {%- macro htmForm_searchpageCompanyCourse() %}
         <div id="searchpageCompanyCourseDialog" label="Search courses">
           <div id="htmForm_searchpageCompanyCourse">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -479,12 +481,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyCoursePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1042,7 +1039,6 @@
         {{ htmForm_searchpageCompanyCourse() }}
   {% endif %}
         {%- endblock htmFormCompanyCoursePage %}
-        </div>
       {%- endblock htmBodyMiddleCompanyCoursePage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1118,7 +1114,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Created varCompanyCourseCreated ">{{companyCourse_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1148,7 +1143,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Modified varCompanyCourseModified ">{{companyCourse_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1187,7 +1181,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}ObjectId varCompanyCourseObjectId ">{{companyCourse_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1251,7 +1244,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Archived varCompanyCourseArchived ">{{companyCourse_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1291,7 +1283,6 @@ The course name. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Name varCompanyCourseName ">{{companyCourse_.name}}</span>
 {%- endmacro %}
 
 {%- macro htmNameCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1327,7 +1318,6 @@ The course description. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Description varCompanyCourseDescription ">{{companyCourse_.description}}</span>
 {%- endmacro %}
 
 {%- macro htmDescriptionCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1366,7 +1356,6 @@ The relative URI for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Uri varCompanyCourseUri ">{{companyCourse_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1405,7 +1394,6 @@ The URL for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Url varCompanyCourseUrl ">{{companyCourse_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1441,7 +1429,6 @@ The course description. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}Price varCompanyCoursePrice ">{{companyCourse_.price}}</span>
 {%- endmacro %}
 
 {%- macro htmPriceCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1480,7 +1467,6 @@ The ID for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyCourse{{id}}PageId varCompanyCoursePageId ">{{companyCourse_.pageId}}</span>
 {%- endmacro %}
 
 {%- macro htmPageIdCompanyCoursePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}

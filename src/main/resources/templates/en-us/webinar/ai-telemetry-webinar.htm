@@ -1,0 +1,234 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta property="site:pageId" content="ai-telemetry-webinar"/>
+    <meta property="site:uri" content="/en-us/webinar/{{ pageId }}"/>
+    <meta property="site:userUri" content="/en-us/user/webinar/{{ pageId }}"/>
+    <meta property="site:name" content="Red Hat Research AI Telemetry Webinar"/>
+    <meta property="site:title" content="{{ name }}"/>
+    <meta property="site:description" content="Learn about the Red Hat Research AI Telemetry open source project built with the Computate platform. "/>
+    <meta property="site:courseNum" content="1"/>
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+.intro-background {
+	background: linear-gradient(130deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
+	color: white;
+	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
+}
+.blue-teal-background {
+	background: linear-gradient(130deg, var(--sl-color-blue-300), var(--sl-color-teal-300));
+	color: white;
+	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
+}
+.red-pink-background {
+	background: linear-gradient(130deg, var(--sl-color-red-300), var(--sl-color-pink-300));
+	color: white;
+	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
+}
+.gradient-button {
+  &:not(sl-button), &:is(sl-button)::part(base) {
+    background: linear-gradient(90deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
+    border: solid 1px var(--sl-color-purple-300);
+    transition: transform 100ms, box-shadow 100ms;
+  }
+  &:is(sl-button)::part(base):hover {
+    box-shadow: var(--sl-shadow-medium);
+    transform: scale(105%);
+  }
+  &:is(sl-button)::part(base):active {
+    box-shadow: inset var(--sl-shadow-small);
+    transform: scale(100%);
+  }
+}
+.intro-content {
+	max-width: var(--content-width);
+	margin-inline: auto;
+	padding-inline: var(--sl-spacing-2x-large);
+}
+.intro-details {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	flex-wrap: wrap;
+	background-color: var(--sl-color-gray-200);
+	border-radius: 0.75rem;
+	font-size: 0.875rem;
+	padding: 1.5rem;
+}
+
+.summary-wrapper {
+	max-width: var(--content-width);
+	margin-block: var(--sl-spacing-3x-large);
+	margin-inline: auto;
+	padding-inline: var(--sl-spacing-3x-large);
+}
+.summary {
+	background-color: var(--sl-color-gray-200);
+	border-radius: 1.125rem;
+	color: white;
+	padding: var(--sl-spacing-2x-large);
+}
+.summary {
+  & > * + * {
+    margin-block-start: 2rem;
+  }
+}
+.summary-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
+	gap: 2rem;
+}
+#order-button {
+  &::part(label) {
+    font-weight: bold;
+  }
+  margin-inline: auto;
+}
+{% endblock htmStylePageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+
+        <div class="blue-teal-background">
+          <div class="intro-content">
+            <div class="wa-crown">
+              <h1 class="brand-font">
+                <i class="fa-duotone fa-solid fa-video fa-2x "></i>
+                {{ name }}
+              </h1>
+            </div>
+            <h2 class="brand-font">
+              Come learn how to Computate as we build a brand new custom data-driven platform 
+              for AI/ML GPU Telemetry with 
+              <i class="fa-brands fa-redhat fa-2xl fa-red" style="color: red; "></i>
+              Red Hat Research in the New England Research Cloud! 
+            </h2>
+            <h3 class="brand-font">
+              The {{ name }} series will occur live weekdays from Sep 2, 2024 — Feb 28, 2025. 
+            </h3>
+            <h3>
+              You can add our calendar to your calender with the ICS calendar link below. 
+            </h3>
+            <div>
+              <a href="https://user.fm/calendar/v1-1f13180574907ff09a03a3f56d315984/RH%20Research%20AI%20Telemetry%20Webinars.ics">
+                https://user.fm/calendar/v1-1f13180574907ff09a03a3f56d315984/RH%20Research%20AI%20Telemetry%20Webinars.ics
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="red-pink-background">
+          <div class="intro-content">
+            <h2 class="brand-font">
+              <i class="fa-brands fa-redhat fa-2xl"></i> Red Hatters — if you are a Red Hat associate and want to join the conversation, send me a Red Hat Slack message @computate and I'll get you connected. 
+            </h2>
+            <h2 class="brand-font">
+              <i class="fa-solid fa-cloud fa-2xl"></i> Mass Open Cloud — if you are a university researcher and part of the Red Hat Collaboratory, send me an MOC Slack message @computate and I'll get you connected. 
+            </h2>
+          </div>
+        </div>
+
+        <div class="intro-background">
+          <div class="intro-content">
+            <h2 class="brand-font">
+              <i class="fa-solid fa-computer-classic fa-2xl"></i> Computaters — if you are an open source developer who has purchased one of my products, you also have access to the webinar! 
+              Just click the link below to log in and get the Zoom link to the webinar. 
+            </h2>
+            <div class="intro-details">
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
+              <div>
+                <div>Download your copy of the {{ name }}! </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
+              </div>
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Order here
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
+              <!--sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral"-->
+              <sl-button id="order-button" class="gradient-button" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                <!-- Log in with GitHub -->
+                 Coming soon! 
+              </sl-button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-wrapper">
+          <div class="summary">
+            <h2 class="brand-font anchor-heading" id="whats-web-awesome">
+              What is the {{ name }}?
+            </h2>
+            <p>
+              Develop a platform for reporting on AI/ML cluster and GPU device usage data and performing telemetry on AI/ML workloads through a secure dashboard and API.
+            </p>
+
+            <div class="summary-grid">
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-server"></i>
+                  <h3>
+                    Where it's built
+                  </h3>
+                </div>
+                <p>
+                  The New England Research Cloud is a perfect environment for AI/ML related research. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-microchip"></i>
+                  <h3>
+                    GPU Utilization
+                  </h3>
+                </div>
+                <p>
+                  We wish to help researchers and managers of GPU devices in the New England Research Cloud (NERC) shared computing environment understand how the valueable and limited GPU resources are being utilized. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-shield-check"></i>
+                  <h3>
+                    Access Control
+                  </h3>
+                </div>
+                <p>
+                  We will provide access to researchers and managers through Keycloak and GitHub as identity provider to access the AI Cluster data and research project GPU allocation telemetry through a modern open source platform that will be built for the MOC and usable by other organizations wishing to collect the same telemetry. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-code"></i>
+                  <h3>
+                    Development Team
+                  </h3>
+                </div>
+                <p>
+                  Other Red Hat associates outside of Red Hat Research have also been invited to participate in building the platform through the Red Hat Internal Gig Program.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <img src="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-overview.png"/>
+
+        <iframe src="https://calendar.google.com/calendar/embed?src=lhtovc50306tmgqcp0kl2894pl9cla57%40import.calendar.google.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+{% endblock %}

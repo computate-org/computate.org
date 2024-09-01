@@ -162,7 +162,11 @@
 {%- macro htmForm_patchCompanyService() %}
         <sl-dialog id="patchCompanyServiceDialog" label="Modify service">
           <form id="htmForm_patchCompanyService">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -194,12 +198,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -283,7 +282,11 @@
         <sl-dialog id="postCompanyServiceDialog" label="Create a service">
           <form id="htmForm_postCompanyService">
             <div class="">You can override any default values below: </div>
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -315,12 +318,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -427,7 +425,11 @@
 {%- macro htmForm_searchpageCompanyService() %}
         <div id="searchpageCompanyServiceDialog" label="Search services">
           <div id="htmForm_searchpageCompanyService">
-              <div stuff="-1--1">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
                 {{ htmCreatedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -459,12 +461,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
-              <div slot="summary">
-                <span>primary key, ID, created, modified, archive details</span>
-              </div>
-              <div>
+              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1012,7 +1009,6 @@
         {{ htmForm_searchpageCompanyService() }}
   {% endif %}
         {%- endblock htmFormCompanyServicePage %}
-        </div>
       {%- endblock htmBodyMiddleCompanyServicePage %}
       {%- endblock htmBodyMiddleBaseResultPage %}
 
@@ -1088,7 +1084,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Created varCompanyServiceCreated ">{{companyService_.created}}</span>
 {%- endmacro %}
 
 {%- macro htmCreatedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1118,7 +1113,6 @@
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Modified varCompanyServiceModified ">{{companyService_.modified}}</span>
 {%- endmacro %}
 
 {%- macro htmModifiedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1157,7 +1151,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}ObjectId varCompanyServiceObjectId ">{{companyService_.objectId}}</span>
 {%- endmacro %}
 
 {%- macro htmObjectIdCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1221,7 +1214,6 @@ A URL friendly unique ID for this object"
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Archived varCompanyServiceArchived ">{{companyService_.archived}}</span>
 {%- endmacro %}
 
 {%- macro htmArchivedCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1260,7 +1252,6 @@ The service name. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Name varCompanyServiceName ">{{companyService_.name}}</span>
 {%- endmacro %}
 
 {%- macro htmNameCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1299,7 +1290,6 @@ The service description. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Description varCompanyServiceDescription ">{{companyService_.description}}</span>
 {%- endmacro %}
 
 {%- macro htmDescriptionCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1338,7 +1328,6 @@ The relative URI for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Uri varCompanyServiceUri ">{{companyService_.uri}}</span>
 {%- endmacro %}
 
 {%- macro htmUriCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1377,7 +1366,6 @@ The URL for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}Url varCompanyServiceUrl ">{{companyService_.url}}</span>
 {%- endmacro %}
 
 {%- macro htmUrlCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
@@ -1416,7 +1404,6 @@ The ID for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
-                <span class="varCompanyService{{id}}PageId varCompanyServicePageId ">{{companyService_.pageId}}</span>
 {%- endmacro %}
 
 {%- macro htmPageIdCompanyServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
