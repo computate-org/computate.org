@@ -266,16 +266,6 @@
                   {{ htmUrlCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
               <div stuff="webinar details-webinar details">
 
@@ -286,6 +276,36 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -411,16 +431,6 @@
                   {{ htmUrlCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
               <div stuff="webinar details-webinar details">
 
@@ -431,6 +441,36 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -579,16 +619,6 @@
                   {{ htmUrlCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmWebinarUrlCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
               <div stuff="webinar details-webinar details">
 
@@ -599,6 +629,36 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -620,42 +680,11 @@
             {{ htmFormsCompanyWebinarPage() }}
             <sl-divider></sl-divider>
             {{ htmPaginationButtonsCompanyWebinarPage() }}
-            <div class="grid-mode-details">
-            <div>
-                <i class="fa-regular fa-video"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>name</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by name ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>description</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by description ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by description descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              </div>
-            </div>
-            <div class="grid-mode-details" id="site-results-grid">
+            <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
               {% for item in listCompanyWebinar%}
               <a href="{{ item.pageUrlPk }}">
-                <i class="fa-regular fa-video"></i>
-                <div>{{ item.name }}</div>
+                <div>                  <i class="fa-regular fa-video"></i>
+{{ item.name }}</div>
                 <div>{{ item.description }}</div>
               </a>
               {% endfor %}
@@ -676,23 +705,6 @@
 
 {%- macro htmPaginationButtonsCompanyWebinarPage() %}
             <div id="htmPaginationButtons">
-              <sl-button-group>
-                <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button pill id="grid-toggle-details">
-                    <i class="fa-solid fa-list"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as a list">
-                  <sl-button id="grid-toggle-list">
-                    <i class="fa-solid fa-bars"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button pill id="grid-toggle-card">
-                    <i class="fa-solid fa-grid"></i>
-                  </sl-button>
-                </sl-tooltip>
-              </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
                   <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>
@@ -1485,44 +1497,6 @@ The URL for this page. "
                             {{ inputUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputWebinarUrlCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_webinarUrl">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="Webinar URL"
-                      label="Webinar URL"
-                      help-text="
-The actual link to the Webinar"
-                      id="{{classApiMethodMethod}}_webinarUrl"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrl setWebinarUrl classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrl "
-                      name="setWebinarUrl"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrl setWebinarUrl classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrl "
-                      name="setWebinarUrl"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrl valueWebinarUrl classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrl "
-                      name="webinarUrl"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.webinarUrl}}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmWebinarUrlCompanyWebinarPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputWebinarUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_pageId">
@@ -1559,4 +1533,118 @@ The ID for this page. "
 
 {%- macro htmPageIdCompanyWebinarPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputPageIdCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_webinarUrlAmericas">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Webinar URL Americas"
+                      label="Webinar URL Americas"
+                      help-text="
+The actual link to the Webinar in Americas"
+                      id="{{classApiMethodMethod}}_webinarUrlAmericas"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlAmericas "
+                      name="setWebinarUrlAmericas"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlAmericas "
+                      name="setWebinarUrlAmericas"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas valueWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlAmericas "
+                      name="webinarUrlAmericas"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyWebinar_.webinarUrlAmericas}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_webinarUrlApac">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Webinar URL APAC"
+                      label="Webinar URL APAC"
+                      help-text="
+The actual link to the Webinar in APAC"
+                      id="{{classApiMethodMethod}}_webinarUrlApac"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlApac "
+                      name="setWebinarUrlApac"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlApac "
+                      name="setWebinarUrlApac"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac valueWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlApac "
+                      name="webinarUrlApac"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyWebinar_.webinarUrlApac}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_webinarUrlEmea">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Webinar URL EMEA"
+                      label="Webinar URL EMEA"
+                      help-text="
+The actual link to the Webinar in EMEA"
+                      id="{{classApiMethodMethod}}_webinarUrlEmea"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlEmea "
+                      name="setWebinarUrlEmea"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlEmea "
+                      name="setWebinarUrlEmea"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea valueWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pk}}WebinarUrlEmea "
+                      name="webinarUrlEmea"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyWebinar_.webinarUrlEmea}}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

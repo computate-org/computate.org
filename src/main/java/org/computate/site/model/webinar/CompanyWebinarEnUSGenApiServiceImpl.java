@@ -760,13 +760,37 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							num++;
 							bParams.add(o2.sqlTemplateUri());
 						break;
-					case "setWebinarUrl":
-							o2.setWebinarUrl(jsonObject.getString(entityVar));
+					case "setUserUri":
+							o2.setUserUri(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_webinarUrl + "=$" + num);
+							bSql.append(CompanyWebinar.VAR_userUri + "=$" + num);
 							num++;
-							bParams.add(o2.sqlWebinarUrl());
+							bParams.add(o2.sqlUserUri());
+						break;
+					case "setWebinarUrlAmericas":
+							o2.setWebinarUrlAmericas(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_webinarUrlAmericas + "=$" + num);
+							num++;
+							bParams.add(o2.sqlWebinarUrlAmericas());
+						break;
+					case "setWebinarUrlApac":
+							o2.setWebinarUrlApac(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_webinarUrlApac + "=$" + num);
+							num++;
+							bParams.add(o2.sqlWebinarUrlApac());
+						break;
+					case "setWebinarUrlEmea":
+							o2.setWebinarUrlEmea(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_webinarUrlEmea + "=$" + num);
+							num++;
+							bParams.add(o2.sqlWebinarUrlEmea());
 						break;
 					case "setUri":
 							o2.setUri(jsonObject.getString(entityVar));
@@ -1192,14 +1216,41 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						num++;
 						bParams.add(o2.sqlTemplateUri());
 						break;
-					case CompanyWebinar.VAR_webinarUrl:
-						o2.setWebinarUrl(jsonObject.getString(entityVar));
+					case CompanyWebinar.VAR_userUri:
+						o2.setUserUri(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(CompanyWebinar.VAR_webinarUrl + "=$" + num);
+						bSql.append(CompanyWebinar.VAR_userUri + "=$" + num);
 						num++;
-						bParams.add(o2.sqlWebinarUrl());
+						bParams.add(o2.sqlUserUri());
+						break;
+					case CompanyWebinar.VAR_webinarUrlAmericas:
+						o2.setWebinarUrlAmericas(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_webinarUrlAmericas + "=$" + num);
+						num++;
+						bParams.add(o2.sqlWebinarUrlAmericas());
+						break;
+					case CompanyWebinar.VAR_webinarUrlApac:
+						o2.setWebinarUrlApac(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_webinarUrlApac + "=$" + num);
+						num++;
+						bParams.add(o2.sqlWebinarUrlApac());
+						break;
+					case CompanyWebinar.VAR_webinarUrlEmea:
+						o2.setWebinarUrlEmea(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_webinarUrlEmea + "=$" + num);
+						num++;
+						bParams.add(o2.sqlWebinarUrlEmea());
 						break;
 					case CompanyWebinar.VAR_uri:
 						o2.setUri(jsonObject.getString(entityVar));
@@ -2302,7 +2353,10 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, ctx.getString(CompanyWebinar.VAR_pageId)));
 			page.persistForClass(CompanyWebinar.VAR_resourceUri, CompanyWebinar.staticSetResourceUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_resourceUri)));
 			page.persistForClass(CompanyWebinar.VAR_templateUri, CompanyWebinar.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_templateUri)));
-			page.persistForClass(CompanyWebinar.VAR_webinarUrl, CompanyWebinar.staticSetWebinarUrl(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrl)));
+			page.persistForClass(CompanyWebinar.VAR_userUri, CompanyWebinar.staticSetUserUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_userUri)));
+			page.persistForClass(CompanyWebinar.VAR_webinarUrlAmericas, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlAmericas)));
+			page.persistForClass(CompanyWebinar.VAR_webinarUrlApac, CompanyWebinar.staticSetWebinarUrlApac(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlApac)));
+			page.persistForClass(CompanyWebinar.VAR_webinarUrlEmea, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlEmea)));
 			page.persistForClass(CompanyWebinar.VAR_uri, CompanyWebinar.staticSetUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_uri)));
 			page.persistForClass(CompanyWebinar.VAR_url, CompanyWebinar.staticSetUrl(siteRequest2, ctx.getString(CompanyWebinar.VAR_url)));
 

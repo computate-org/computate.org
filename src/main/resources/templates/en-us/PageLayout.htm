@@ -128,7 +128,7 @@
         </sl-button>
         <ul>
           <li>
-            <sl-button href="{{ SITE_BASE_URL }}">
+            <sl-button href="{{ SITE_BASE_URL }}" id="home-button">
               <i class="fa-regular fa-house"></i>
               home
             </sl-button>
@@ -205,7 +205,7 @@
               </sl-button>
             </sl-tooltip>
           </li>
-{% if userKey is defined %}
+{% if userName is defined %}
           <li>
             <sl-details>
               <div slot="summary">
@@ -214,9 +214,9 @@
               </div>
               <div>{{ userFullName }}</div>
               <div>{{ userEmail }}</div>
-              <div class="round-first-and-last-row">
+              <div class="round-first-and-last-row-x-large">
                 <sl-tooltip placement="right" content="see or change your user profile">
-                  <sl-button href="/user/{{ userKey }}" label="see or change your user profile">
+                  <sl-button href="/user" label="see or change your user profile">
                     <i slot="prefix" class="fad fa-house-user"></i>
                     <span>my user page</span>
                   </sl-button>

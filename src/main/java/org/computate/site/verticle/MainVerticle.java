@@ -1101,7 +1101,7 @@ public class MainVerticle extends AbstractVerticle {
 			SockJSBridgeOptions options = new SockJSBridgeOptions()
 					.addOutboundPermitted(new PermittedOptions().setAddressRegex("websocket.*"))
 					;
-			router.mountSubRouter("/eventbus", SockJSHandler.create(vertx).bridge(options));
+			router.route("/eventbus*").subRouter(SockJSHandler.create(vertx).bridge(options));
 			LOG.info("Configure websockets succeeded.");
 			promise.complete();
 		} catch (Exception ex) {
@@ -1143,8 +1143,8 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite","WeatherObserved");
-			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite");
+			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite","WeatherObserved");
+			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite");
 			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);

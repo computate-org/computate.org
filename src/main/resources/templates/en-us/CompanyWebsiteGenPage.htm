@@ -545,42 +545,11 @@
             {{ htmFormsCompanyWebsitePage() }}
             <sl-divider></sl-divider>
             {{ htmPaginationButtonsCompanyWebsitePage() }}
-            <div class="grid-mode-details">
-            <div>
-                <i class="fa-regular fa-globe-pointer"></i>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>service name</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by service name ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by service name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown>
-                <sl-button slot="trigger" caret>service description</sl-button>
-                <sl-menu>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
-                    sort by service description ascending
-                  </sl-menu-item>
-                  <sl-menu-item>
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
-                    sort by service description descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              </div>
-            </div>
-            <div class="grid-mode-details" id="site-results-grid">
+            <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
               {% for item in listCompanyWebsite%}
               <a href="{{ item.pageUrlPk }}">
-                <i class="fa-regular fa-globe-pointer"></i>
-                <div>{{ item.name }}</div>
+                <div>                  <i class="fa-regular fa-globe-pointer"></i>
+{{ item.name }}</div>
                 <div>{{ item.description }}</div>
               </a>
               {% endfor %}
@@ -601,23 +570,6 @@
 
 {%- macro htmPaginationButtonsCompanyWebsitePage() %}
             <div id="htmPaginationButtons">
-              <sl-button-group>
-                <sl-tooltip placement="top" content="Show the results as details" pill>
-                  <sl-button pill id="grid-toggle-details">
-                    <i class="fa-solid fa-list"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as a list">
-                  <sl-button id="grid-toggle-list">
-                    <i class="fa-solid fa-bars"></i>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="top" content="Show the results as cards" pill>
-                  <sl-button pill id="grid-toggle-card">
-                    <i class="fa-solid fa-grid"></i>
-                  </sl-button>
-                </sl-tooltip>
-              </sl-button-group>
               <sl-button-group>
                 <sl-tooltip placement="top" content="Show the previous results">
                   <sl-button pill{% if pagination.pagePrevious is defined %} href="{{pageUri}}?start={{pagination.pagePrevious.start}}&amp;rows={{pagination.rows}}"{% else %} disabled{% endif %}>

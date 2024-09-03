@@ -210,33 +210,6 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * DisplayName: air temperature forecast
-	 * Description: Forecasted value of air temperature over a certain duration in future
-	 * HtmRow: 5
-	 * HtmCell: 1
-	 * HtmRowTitle: air temerature details
-	 * Facet: true
-	 **/
-	protected void _airTemperatureForecast(Wrap<BigDecimal> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: air temperature tsa
-	 * Description: Air temperature time series aggregation
-	 * HtmRow: 5
-	 * HtmCell: 2
-	 * Facet: true
-	 **/
-	protected void _airTemperatureTSA(Wrap<JsonObject> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
 	 * DisplayName: atmospheric pressure
 	 * Description: The atmospheric pressure observed measured in Hecto Pascals
 	 * HtmRow: 6
@@ -335,19 +308,6 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Facet: true
 	 **/
 	protected void _directIrradiation(Wrap<BigDecimal> w) {}
-
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: feels like temperature
-	 * Description: Temperature appreciation of the item
-	 * HtmRow: 9
-	 * HtmCell: 1
-	 * Facet: true
-	 **/
-	protected void _feelsLikeTemperature(Wrap<BigDecimal> w) {}
 
 
 	/**
@@ -565,11 +525,51 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: temperature
 	 * Description: Temperature of the item
+	 * HtmRowTitle: air temperature details
 	 * HtmRow: 15
 	 * HtmCell: 1
 	 * Facet: true
 	 **/
 	protected void _temperature(Wrap<BigDecimal> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air temperature forecast
+	 * Description: Forecasted value of air temperature over a certain duration in future
+	 * HtmRow: 5
+	 * HtmCell: 1
+	 * Facet: true
+	 **/
+	protected void _airTemperatureForecast(Wrap<BigDecimal> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: air temperature tsa
+	 * Description: Air temperature time series aggregation
+	 * HtmRow: 5
+	 * HtmCell: 2
+	 * Facet: true
+	 **/
+	protected void _airTemperatureTSA(Wrap<JsonObject> w) {}
+
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: feels like temperature
+	 * Description: Temperature appreciation of the item
+	 * HtmRow: 9
+	 * HtmCell: 1
+	 * Facet: true
+	 **/
+	protected void _feelsLikeTemperature(Wrap<BigDecimal> w) {}
 
 
 	/**

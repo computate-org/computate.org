@@ -11,77 +11,13 @@
     <meta property="site:description" content="Build a custom data-driven website for your own ideas with the {{ name}}"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
-.intro-background {
-	background: linear-gradient(130deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
-	color: white;
-	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
-}
-.gradient-button {
-  &:not(sl-button), &:is(sl-button)::part(base) {
-    background: linear-gradient(90deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
-    border: solid 1px var(--sl-color-purple-300);
-    transition: transform 100ms, box-shadow 100ms;
-  }
-  &:is(sl-button)::part(base):hover {
-    box-shadow: var(--sl-shadow-medium);
-    transform: scale(105%);
-  }
-  &:is(sl-button)::part(base):active {
-    box-shadow: inset var(--sl-shadow-small);
-    transform: scale(100%);
-  }
-}
-.intro-content {
-	max-width: var(--content-width);
-	margin-inline: auto;
-	padding-inline: var(--sl-spacing-2x-large);
-}
-.intro-details {
-	display: flex;
-	align-items: center;
-	gap: 1.5rem;
-	flex-wrap: wrap;
-	background-color: var(--sl-color-gray-200);
-	border-radius: 0.75rem;
-	font-size: 0.875rem;
-	padding: 1.5rem;
-}
-
-.summary-wrapper {
-	max-width: var(--content-width);
-	margin-block: var(--sl-spacing-3x-large);
-	margin-inline: auto;
-	padding-inline: var(--sl-spacing-3x-large);
-}
-.summary {
-	background-color: var(--sl-color-gray-200);
-	border-radius: 1.125rem;
-	color: white;
-	padding: var(--sl-spacing-2x-large);
-}
-.summary {
-  & > * + * {
-    margin-block-start: 2rem;
-  }
-}
-.summary-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
-	gap: 2rem;
-}
-#order-button {
-  &::part(label) {
-    font-weight: bold;
-  }
-  margin-inline: auto;
-}
 {% endblock htmStylePageLayout %}
 {% block htmTitlePageLayout %}
     <title>{{ title }}</title>
 {% endblock htmTitlePageLayout %}
 {% block htmBodyMiddlePageLayout %}
 
-        <div class="intro-background">
+        <div class="pink-purple-background">
           <div class="intro-content">
             <div class="wa-crown">
               <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
@@ -97,7 +33,7 @@
               {% if scope is defined and scope == "GET" %}
               <div>
                 <div>Download your own customizable website building toolkit to launch your own data-driven website with the {{ name }} here! </div>
-                <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
                   <i class="fa-solid fa-person-running-fast"></i>
                   Download
                 </sl-button>
@@ -105,7 +41,7 @@
               {% else %}
               <div>
                 <div>You will use your GitHub username shown in the menu during checkout. </div>
-                <sl-button id="order-button" class="gradient-button" href="{{ storeUrl }}" variant="neutral">
+                <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ storeUrl }}" variant="neutral">
                   <i class="fa-solid fa-person-running-fast"></i>
                   Order here
                 </sl-button>
@@ -113,7 +49,7 @@
               {% endif %}
               {% else %}
               <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
-              <sl-button id="order-button" class="gradient-button" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
                 <i class="fa-duotone fa-right-to-bracket"></i>
                 Log in with GitHub
               </sl-button>

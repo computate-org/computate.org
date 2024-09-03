@@ -17,7 +17,9 @@ public class CompanyWebinarPage extends CompanyWebinarPageGen<CompanyWebinarGenP
   protected void _listCompanyWebinar(JsonArray l) {
     Optional.ofNullable(searchListCompanyWebinar_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> {
       JsonObject json = JsonObject.mapFrom(o);
-      json.remove(CompanyWebinar.VAR_webinarUrl);
+      json.remove(CompanyWebinar.VAR_webinarUrlAmericas);
+      json.remove(CompanyWebinar.VAR_webinarUrlApac);
+      json.remove(CompanyWebinar.VAR_webinarUrlEmea);
       return json;
     }).forEach(o -> l.add(o));
   }
@@ -27,7 +29,10 @@ public class CompanyWebinarPage extends CompanyWebinarPageGen<CompanyWebinarGenP
     if(searchListCompanyWebinar_ != null) {
       JsonObject response = JsonObject.mapFrom(searchListCompanyWebinar_.getResponse());
       response.getJsonObject("response").getJsonArray("docs").forEach(doc -> {
-        ((JsonObject)doc).getJsonObject("fields").remove(String.format("%s_docvalues_string", CompanyWebinar.VAR_webinarUrl));
+        JsonObject fields = ((JsonObject)doc).getJsonObject("fields");
+        fields.remove(String.format("%s_docvalues_string", CompanyWebinar.VAR_webinarUrlAmericas));
+        fields.remove(String.format("%s_docvalues_string", CompanyWebinar.VAR_webinarUrlApac));
+        fields.remove(String.format("%s_docvalues_string", CompanyWebinar.VAR_webinarUrlEmea));
       });
       w.o(response.encode());
     }

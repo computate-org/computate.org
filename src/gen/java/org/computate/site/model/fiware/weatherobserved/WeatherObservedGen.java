@@ -1059,147 +1059,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return aqiMajorPollutantForecast;
 	}
 
-	////////////////////////////
-	// airTemperatureForecast //
-	////////////////////////////
-
-
-	/**	 The entity airTemperatureForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal airTemperatureForecast;
-
-	/**	<br> The entity airTemperatureForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
-		this.airTemperatureForecast = airTemperatureForecast;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(String o) {
-		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Double o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Integer o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Number o) {
-		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved airTemperatureForecastInit() {
-		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
-		if(airTemperatureForecast == null) {
-			_airTemperatureForecast(airTemperatureForecastWrap);
-			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
-				setAirTemperatureForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	///////////////////////
-	// airTemperatureTSA //
-	///////////////////////
-
-
-	/**	 The entity airTemperatureTSA
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject airTemperatureTSA;
-
-	/**	<br> The entity airTemperatureTSA
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
-
-	public JsonObject getAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
-	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
-		this.airTemperatureTSA = airTemperatureTSA;
-	}
-	@JsonIgnore
-	public void setAirTemperatureTSA(String o) {
-		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
-	}
-	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved airTemperatureTSAInit() {
-		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
-		if(airTemperatureTSA == null) {
-			_airTemperatureTSA(airTemperatureTSAWrap);
-			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
-				setAirTemperatureTSA(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
 	/////////////////////////
 	// atmosphericPressure //
 	/////////////////////////
@@ -1730,83 +1589,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public BigDecimal sqlDirectIrradiation() {
 		return directIrradiation;
-	}
-
-	//////////////////////////
-	// feelsLikeTemperature //
-	//////////////////////////
-
-
-	/**	 The entity feelsLikeTemperature
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal feelsLikeTemperature;
-
-	/**	<br> The entity feelsLikeTemperature
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:feelsLikeTemperature">Find the entity feelsLikeTemperature in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _feelsLikeTemperature(Wrap<BigDecimal> w);
-
-	public BigDecimal getFeelsLikeTemperature() {
-		return feelsLikeTemperature;
-	}
-
-	public void setFeelsLikeTemperature(BigDecimal feelsLikeTemperature) {
-		this.feelsLikeTemperature = feelsLikeTemperature;
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(String o) {
-		this.feelsLikeTemperature = WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
-	}
-	public static BigDecimal staticSetFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Double o) {
-		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Integer o) {
-		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Number o) {
-		setFeelsLikeTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved feelsLikeTemperatureInit() {
-		Wrap<BigDecimal> feelsLikeTemperatureWrap = new Wrap<BigDecimal>().var("feelsLikeTemperature");
-		if(feelsLikeTemperature == null) {
-			_feelsLikeTemperature(feelsLikeTemperatureWrap);
-			Optional.ofNullable(feelsLikeTemperatureWrap.getO()).ifPresent(o -> {
-				setFeelsLikeTemperature(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchFeelsLikeTemperature(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrFeelsLikeTemperature(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlFeelsLikeTemperature() {
-		return feelsLikeTemperature;
 	}
 
 	///////////////
@@ -3050,6 +2832,224 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return temperature;
 	}
 
+	////////////////////////////
+	// airTemperatureForecast //
+	////////////////////////////
+
+
+	/**	 The entity airTemperatureForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal airTemperatureForecast;
+
+	/**	<br> The entity airTemperatureForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
+		this.airTemperatureForecast = airTemperatureForecast;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(String o) {
+		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Double o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Integer o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Number o) {
+		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved airTemperatureForecastInit() {
+		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
+		if(airTemperatureForecast == null) {
+			_airTemperatureForecast(airTemperatureForecastWrap);
+			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
+				setAirTemperatureForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	///////////////////////
+	// airTemperatureTSA //
+	///////////////////////
+
+
+	/**	 The entity airTemperatureTSA
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject airTemperatureTSA;
+
+	/**	<br> The entity airTemperatureTSA
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
+
+	public JsonObject getAirTemperatureTSA() {
+		return airTemperatureTSA;
+	}
+
+	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
+		this.airTemperatureTSA = airTemperatureTSA;
+	}
+	@JsonIgnore
+	public void setAirTemperatureTSA(String o) {
+		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
+	}
+	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved airTemperatureTSAInit() {
+		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
+		if(airTemperatureTSA == null) {
+			_airTemperatureTSA(airTemperatureTSAWrap);
+			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
+				setAirTemperatureTSA(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlAirTemperatureTSA() {
+		return airTemperatureTSA;
+	}
+
+	//////////////////////////
+	// feelsLikeTemperature //
+	//////////////////////////
+
+
+	/**	 The entity feelsLikeTemperature
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal feelsLikeTemperature;
+
+	/**	<br> The entity feelsLikeTemperature
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:feelsLikeTemperature">Find the entity feelsLikeTemperature in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _feelsLikeTemperature(Wrap<BigDecimal> w);
+
+	public BigDecimal getFeelsLikeTemperature() {
+		return feelsLikeTemperature;
+	}
+
+	public void setFeelsLikeTemperature(BigDecimal feelsLikeTemperature) {
+		this.feelsLikeTemperature = feelsLikeTemperature;
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(String o) {
+		this.feelsLikeTemperature = WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
+	}
+	public static BigDecimal staticSetFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Double o) {
+		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Integer o) {
+		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Number o) {
+		setFeelsLikeTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved feelsLikeTemperatureInit() {
+		Wrap<BigDecimal> feelsLikeTemperatureWrap = new Wrap<BigDecimal>().var("feelsLikeTemperature");
+		if(feelsLikeTemperature == null) {
+			_feelsLikeTemperature(feelsLikeTemperatureWrap);
+			Optional.ofNullable(feelsLikeTemperatureWrap.getO()).ifPresent(o -> {
+				setFeelsLikeTemperature(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchFeelsLikeTemperature(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrFeelsLikeTemperature(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlFeelsLikeTemperature() {
+		return feelsLikeTemperature;
+	}
+
 	////////////////
 	// uVIndexMax //
 	////////////////
@@ -3550,8 +3550,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				airQualityIndexForecastInit();
 				aqiMajorPollutantInit();
 				aqiMajorPollutantForecastInit();
-				airTemperatureForecastInit();
-				airTemperatureTSAInit();
 				atmosphericPressureInit();
 				dataProviderInit();
 				dateCreatedInit();
@@ -3560,7 +3558,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				dewPointInit();
 				diffuseIrradiationInit();
 				directIrradiationInit();
-				feelsLikeTemperatureInit();
 				gustSpeedInit();
 				illuminanceInit();
 				locationInit();
@@ -3578,6 +3575,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				sourceInit();
 				streamGaugeInit();
 				temperatureInit();
+				airTemperatureForecastInit();
+				airTemperatureTSAInit();
+				feelsLikeTemperatureInit();
 				uVIndexMaxInit();
 				visibilityInit();
 				weatherTypeInit();
@@ -3662,10 +3662,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.aqiMajorPollutant;
 			case "aqiMajorPollutantForecast":
 				return oWeatherObserved.aqiMajorPollutantForecast;
-			case "airTemperatureForecast":
-				return oWeatherObserved.airTemperatureForecast;
-			case "airTemperatureTSA":
-				return oWeatherObserved.airTemperatureTSA;
 			case "atmosphericPressure":
 				return oWeatherObserved.atmosphericPressure;
 			case "dataProvider":
@@ -3682,8 +3678,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.diffuseIrradiation;
 			case "directIrradiation":
 				return oWeatherObserved.directIrradiation;
-			case "feelsLikeTemperature":
-				return oWeatherObserved.feelsLikeTemperature;
 			case "gustSpeed":
 				return oWeatherObserved.gustSpeed;
 			case "illuminance":
@@ -3718,6 +3712,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.streamGauge;
 			case "temperature":
 				return oWeatherObserved.temperature;
+			case "airTemperatureForecast":
+				return oWeatherObserved.airTemperatureForecast;
+			case "airTemperatureTSA":
+				return oWeatherObserved.airTemperatureTSA;
+			case "feelsLikeTemperature":
+				return oWeatherObserved.feelsLikeTemperature;
 			case "uVIndexMax":
 				return oWeatherObserved.uVIndexMax;
 			case "visibility":
@@ -3795,10 +3795,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetAqiMajorPollutant(siteRequest_, o);
 		case "aqiMajorPollutantForecast":
 			return WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSetAtmosphericPressure(siteRequest_, o);
 		case "dataProvider":
@@ -3815,8 +3811,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetDiffuseIrradiation(siteRequest_, o);
 		case "directIrradiation":
 			return WeatherObserved.staticSetDirectIrradiation(siteRequest_, o);
-		case "feelsLikeTemperature":
-			return WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
 		case "gustSpeed":
 			return WeatherObserved.staticSetGustSpeed(siteRequest_, o);
 		case "illuminance":
@@ -3851,6 +3845,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetStreamGauge(siteRequest_, o);
 		case "temperature":
 			return WeatherObserved.staticSetTemperature(siteRequest_, o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
+		case "feelsLikeTemperature":
+			return WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSetUVIndexMax(siteRequest_, o);
 		case "visibility":
@@ -3903,10 +3903,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchAqiMajorPollutant(siteRequest_, (String)o);
 		case "aqiMajorPollutantForecast":
 			return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, (String)o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, (BigDecimal)o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, (JsonObject)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchAtmosphericPressure(siteRequest_, (BigDecimal)o);
 		case "dataProvider":
@@ -3923,8 +3919,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchDiffuseIrradiation(siteRequest_, (BigDecimal)o);
 		case "directIrradiation":
 			return WeatherObserved.staticSearchDirectIrradiation(siteRequest_, (BigDecimal)o);
-		case "feelsLikeTemperature":
-			return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, (BigDecimal)o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchGustSpeed(siteRequest_, (BigDecimal)o);
 		case "illuminance":
@@ -3959,6 +3953,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStreamGauge(siteRequest_, (BigDecimal)o);
 		case "temperature":
 			return WeatherObserved.staticSearchTemperature(siteRequest_, (BigDecimal)o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, (BigDecimal)o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, (JsonObject)o);
+		case "feelsLikeTemperature":
+			return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, (BigDecimal)o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchUVIndexMax(siteRequest_, (BigDecimal)o);
 		case "visibility":
@@ -4011,10 +4011,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrAqiMajorPollutant(siteRequest_, (String)o);
 		case "aqiMajorPollutantForecast":
 			return WeatherObserved.staticSearchStrAqiMajorPollutantForecast(siteRequest_, (String)o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchStrAirTemperatureForecast(siteRequest_, (Double)o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchStrAirTemperatureTSA(siteRequest_, (String)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchStrAtmosphericPressure(siteRequest_, (Double)o);
 		case "dataProvider":
@@ -4031,8 +4027,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrDiffuseIrradiation(siteRequest_, (Double)o);
 		case "directIrradiation":
 			return WeatherObserved.staticSearchStrDirectIrradiation(siteRequest_, (Double)o);
-		case "feelsLikeTemperature":
-			return WeatherObserved.staticSearchStrFeelsLikeTemperature(siteRequest_, (Double)o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchStrGustSpeed(siteRequest_, (Double)o);
 		case "illuminance":
@@ -4067,6 +4061,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrStreamGauge(siteRequest_, (Double)o);
 		case "temperature":
 			return WeatherObserved.staticSearchStrTemperature(siteRequest_, (Double)o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchStrAirTemperatureForecast(siteRequest_, (Double)o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchStrAirTemperatureTSA(siteRequest_, (String)o);
+		case "feelsLikeTemperature":
+			return WeatherObserved.staticSearchStrFeelsLikeTemperature(siteRequest_, (Double)o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchStrUVIndexMax(siteRequest_, (Double)o);
 		case "visibility":
@@ -4119,10 +4119,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqAqiMajorPollutant(siteRequest_, o);
 		case "aqiMajorPollutantForecast":
 			return WeatherObserved.staticSearchFqAqiMajorPollutantForecast(siteRequest_, o);
-		case "airTemperatureForecast":
-			return WeatherObserved.staticSearchFqAirTemperatureForecast(siteRequest_, o);
-		case "airTemperatureTSA":
-			return WeatherObserved.staticSearchFqAirTemperatureTSA(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchFqAtmosphericPressure(siteRequest_, o);
 		case "dataProvider":
@@ -4139,8 +4135,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqDiffuseIrradiation(siteRequest_, o);
 		case "directIrradiation":
 			return WeatherObserved.staticSearchFqDirectIrradiation(siteRequest_, o);
-		case "feelsLikeTemperature":
-			return WeatherObserved.staticSearchFqFeelsLikeTemperature(siteRequest_, o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchFqGustSpeed(siteRequest_, o);
 		case "illuminance":
@@ -4175,6 +4169,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqStreamGauge(siteRequest_, o);
 		case "temperature":
 			return WeatherObserved.staticSearchFqTemperature(siteRequest_, o);
+		case "airTemperatureForecast":
+			return WeatherObserved.staticSearchFqAirTemperatureForecast(siteRequest_, o);
+		case "airTemperatureTSA":
+			return WeatherObserved.staticSearchFqAirTemperatureTSA(siteRequest_, o);
+		case "feelsLikeTemperature":
+			return WeatherObserved.staticSearchFqFeelsLikeTemperature(siteRequest_, o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchFqUVIndexMax(siteRequest_, o);
 		case "visibility":
@@ -4277,22 +4277,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("aqiMajorPollutantForecast");
 				return val;
-			} else if("airtemperatureforecast".equals(varLower)) {
-				if(val instanceof String) {
-					setAirTemperatureForecast((String)val);
-				} else if(val instanceof Number) {
-					setAirTemperatureForecast(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("airTemperatureForecast");
-				return val;
-			} else if("airtemperaturetsa".equals(varLower)) {
-				if(val instanceof String) {
-					setAirTemperatureTSA((String)val);
-				} else if(val instanceof JsonObject) {
-					setAirTemperatureTSA((JsonObject)val);
-				}
-				saves.add("airTemperatureTSA");
-				return val;
 			} else if("atmosphericpressure".equals(varLower)) {
 				if(val instanceof String) {
 					setAtmosphericPressure((String)val);
@@ -4348,14 +4332,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setDirectIrradiation(new BigDecimal(((Number)val).doubleValue()));
 				}
 				saves.add("directIrradiation");
-				return val;
-			} else if("feelsliketemperature".equals(varLower)) {
-				if(val instanceof String) {
-					setFeelsLikeTemperature((String)val);
-				} else if(val instanceof Number) {
-					setFeelsLikeTemperature(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("feelsLikeTemperature");
 				return val;
 			} else if("gustspeed".equals(varLower)) {
 				if(val instanceof String) {
@@ -4488,6 +4464,30 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setTemperature(new BigDecimal(((Number)val).doubleValue()));
 				}
 				saves.add("temperature");
+				return val;
+			} else if("airtemperatureforecast".equals(varLower)) {
+				if(val instanceof String) {
+					setAirTemperatureForecast((String)val);
+				} else if(val instanceof Number) {
+					setAirTemperatureForecast(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("airTemperatureForecast");
+				return val;
+			} else if("airtemperaturetsa".equals(varLower)) {
+				if(val instanceof String) {
+					setAirTemperatureTSA((String)val);
+				} else if(val instanceof JsonObject) {
+					setAirTemperatureTSA((JsonObject)val);
+				}
+				saves.add("airTemperatureTSA");
+				return val;
+			} else if("feelsliketemperature".equals(varLower)) {
+				if(val instanceof String) {
+					setFeelsLikeTemperature((String)val);
+				} else if(val instanceof Number) {
+					setFeelsLikeTemperature(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("feelsLikeTemperature");
 				return val;
 			} else if("uvindexmax".equals(varLower)) {
 				if(val instanceof String) {
@@ -4622,18 +4622,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setAqiMajorPollutantForecast(aqiMajorPollutantForecast);
 			}
 
-			if(saves.contains("airTemperatureForecast")) {
-				Double airTemperatureForecast = (Double)doc.get("airTemperatureForecast_docvalues_double");
-				if(airTemperatureForecast != null)
-					oWeatherObserved.setAirTemperatureForecast(airTemperatureForecast);
-			}
-
-			if(saves.contains("airTemperatureTSA")) {
-				String airTemperatureTSA = (String)doc.get("airTemperatureTSA_docvalues_string");
-				if(airTemperatureTSA != null)
-					oWeatherObserved.setAirTemperatureTSA(airTemperatureTSA);
-			}
-
 			if(saves.contains("atmosphericPressure")) {
 				Double atmosphericPressure = (Double)doc.get("atmosphericPressure_docvalues_double");
 				if(atmosphericPressure != null)
@@ -4680,12 +4668,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				Double directIrradiation = (Double)doc.get("directIrradiation_docvalues_double");
 				if(directIrradiation != null)
 					oWeatherObserved.setDirectIrradiation(directIrradiation);
-			}
-
-			if(saves.contains("feelsLikeTemperature")) {
-				Double feelsLikeTemperature = (Double)doc.get("feelsLikeTemperature_docvalues_double");
-				if(feelsLikeTemperature != null)
-					oWeatherObserved.setFeelsLikeTemperature(feelsLikeTemperature);
 			}
 
 			if(saves.contains("gustSpeed")) {
@@ -4790,6 +4772,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setTemperature(temperature);
 			}
 
+			if(saves.contains("airTemperatureForecast")) {
+				Double airTemperatureForecast = (Double)doc.get("airTemperatureForecast_docvalues_double");
+				if(airTemperatureForecast != null)
+					oWeatherObserved.setAirTemperatureForecast(airTemperatureForecast);
+			}
+
+			if(saves.contains("airTemperatureTSA")) {
+				String airTemperatureTSA = (String)doc.get("airTemperatureTSA_docvalues_string");
+				if(airTemperatureTSA != null)
+					oWeatherObserved.setAirTemperatureTSA(airTemperatureTSA);
+			}
+
+			if(saves.contains("feelsLikeTemperature")) {
+				Double feelsLikeTemperature = (Double)doc.get("feelsLikeTemperature_docvalues_double");
+				if(feelsLikeTemperature != null)
+					oWeatherObserved.setFeelsLikeTemperature(feelsLikeTemperature);
+			}
+
 			if(saves.contains("uVIndexMax")) {
 				Double uVIndexMax = (Double)doc.get("uVIndexMax_docvalues_double");
 				if(uVIndexMax != null)
@@ -4881,12 +4881,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(aqiMajorPollutantForecast != null) {
 			doc.put("aqiMajorPollutantForecast_docvalues_string", aqiMajorPollutantForecast);
 		}
-		if(airTemperatureForecast != null) {
-			doc.put("airTemperatureForecast_docvalues_double", airTemperatureForecast.doubleValue());
-		}
-		if(airTemperatureTSA != null) {
-			doc.put("airTemperatureTSA_docvalues_string", airTemperatureTSA.toString());
-		}
 		if(atmosphericPressure != null) {
 			doc.put("atmosphericPressure_docvalues_double", atmosphericPressure.doubleValue());
 		}
@@ -4910,9 +4904,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		}
 		if(directIrradiation != null) {
 			doc.put("directIrradiation_docvalues_double", directIrradiation.doubleValue());
-		}
-		if(feelsLikeTemperature != null) {
-			doc.put("feelsLikeTemperature_docvalues_double", feelsLikeTemperature.doubleValue());
 		}
 		if(gustSpeed != null) {
 			doc.put("gustSpeed_docvalues_double", gustSpeed.doubleValue());
@@ -4965,6 +4956,15 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(temperature != null) {
 			doc.put("temperature_docvalues_double", temperature.doubleValue());
 		}
+		if(airTemperatureForecast != null) {
+			doc.put("airTemperatureForecast_docvalues_double", airTemperatureForecast.doubleValue());
+		}
+		if(airTemperatureTSA != null) {
+			doc.put("airTemperatureTSA_docvalues_string", airTemperatureTSA.toString());
+		}
+		if(feelsLikeTemperature != null) {
+			doc.put("feelsLikeTemperature_docvalues_double", feelsLikeTemperature.doubleValue());
+		}
 		if(uVIndexMax != null) {
 			doc.put("uVIndexMax_docvalues_double", uVIndexMax.doubleValue());
 		}
@@ -5013,10 +5013,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutant_docvalues_string";
 			case "aqiMajorPollutantForecast":
 				return "aqiMajorPollutantForecast_docvalues_string";
-			case "airTemperatureForecast":
-				return "airTemperatureForecast_docvalues_double";
-			case "airTemperatureTSA":
-				return "airTemperatureTSA_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
 			case "dataProvider":
@@ -5033,8 +5029,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "diffuseIrradiation_docvalues_double";
 			case "directIrradiation":
 				return "directIrradiation_docvalues_double";
-			case "feelsLikeTemperature":
-				return "feelsLikeTemperature_docvalues_double";
 			case "gustSpeed":
 				return "gustSpeed_docvalues_double";
 			case "illuminance":
@@ -5069,6 +5063,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "streamGauge_docvalues_double";
 			case "temperature":
 				return "temperature_docvalues_double";
+			case "airTemperatureForecast":
+				return "airTemperatureForecast_docvalues_double";
+			case "airTemperatureTSA":
+				return "airTemperatureTSA_docvalues_string";
+			case "feelsLikeTemperature":
+				return "feelsLikeTemperature_docvalues_double";
 			case "uVIndexMax":
 				return "uVIndexMax_docvalues_double";
 			case "visibility":
@@ -5112,10 +5112,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutant_docvalues_string";
 			case "aqiMajorPollutantForecast":
 				return "aqiMajorPollutantForecast_docvalues_string";
-			case "airTemperatureForecast":
-				return "airTemperatureForecast_docvalues_double";
-			case "airTemperatureTSA":
-				return "airTemperatureTSA_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
 			case "dataProvider":
@@ -5132,8 +5128,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "diffuseIrradiation_docvalues_double";
 			case "directIrradiation":
 				return "directIrradiation_docvalues_double";
-			case "feelsLikeTemperature":
-				return "feelsLikeTemperature_docvalues_double";
 			case "gustSpeed":
 				return "gustSpeed_docvalues_double";
 			case "illuminance":
@@ -5168,6 +5162,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "streamGauge_docvalues_double";
 			case "temperature":
 				return "temperature_docvalues_double";
+			case "airTemperatureForecast":
+				return "airTemperatureForecast_docvalues_double";
+			case "airTemperatureTSA":
+				return "airTemperatureTSA_docvalues_string";
+			case "feelsLikeTemperature":
+				return "feelsLikeTemperature_docvalues_double";
 			case "uVIndexMax":
 				return "uVIndexMax_docvalues_double";
 			case "visibility":
@@ -5211,10 +5211,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutant";
 			case "aqiMajorPollutantForecast_docvalues_string":
 				return "aqiMajorPollutantForecast";
-			case "airTemperatureForecast_docvalues_double":
-				return "airTemperatureForecast";
-			case "airTemperatureTSA_docvalues_string":
-				return "airTemperatureTSA";
 			case "atmosphericPressure_docvalues_double":
 				return "atmosphericPressure";
 			case "dataProvider_docvalues_string":
@@ -5231,8 +5227,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "diffuseIrradiation";
 			case "directIrradiation_docvalues_double":
 				return "directIrradiation";
-			case "feelsLikeTemperature_docvalues_double":
-				return "feelsLikeTemperature";
 			case "gustSpeed_docvalues_double":
 				return "gustSpeed";
 			case "illuminance_docvalues_double":
@@ -5267,6 +5261,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "streamGauge";
 			case "temperature_docvalues_double":
 				return "temperature";
+			case "airTemperatureForecast_docvalues_double":
+				return "airTemperatureForecast";
+			case "airTemperatureTSA_docvalues_string":
+				return "airTemperatureTSA";
+			case "feelsLikeTemperature_docvalues_double":
+				return "feelsLikeTemperature";
 			case "uVIndexMax_docvalues_double":
 				return "uVIndexMax";
 			case "visibility_docvalues_string":
@@ -5327,8 +5327,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setAirQualityIndexForecast(Optional.ofNullable(doc.get("airQualityIndexForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAqiMajorPollutant(Optional.ofNullable(doc.get("aqiMajorPollutant_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAqiMajorPollutantForecast(Optional.ofNullable(doc.get("aqiMajorPollutantForecast_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirTemperatureForecast(Optional.ofNullable(doc.get("airTemperatureForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setAirTemperatureTSA(Optional.ofNullable(doc.get("airTemperatureTSA_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAtmosphericPressure(Optional.ofNullable(doc.get("atmosphericPressure_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDataProvider(Optional.ofNullable(doc.get("dataProvider_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDateCreated(Optional.ofNullable(doc.get("dateCreated_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -5337,7 +5335,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setDewPoint(Optional.ofNullable(doc.get("dewPoint_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDiffuseIrradiation(Optional.ofNullable(doc.get("diffuseIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setDirectIrradiation(Optional.ofNullable(doc.get("directIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setFeelsLikeTemperature(Optional.ofNullable(doc.get("feelsLikeTemperature_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setGustSpeed(Optional.ofNullable(doc.get("gustSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setIlluminance(Optional.ofNullable(doc.get("illuminance_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
@@ -5355,6 +5352,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setSource(Optional.ofNullable(doc.get("source_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setStreamGauge(Optional.ofNullable(doc.get("streamGauge_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setTemperature(Optional.ofNullable(doc.get("temperature_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirTemperatureForecast(Optional.ofNullable(doc.get("airTemperatureForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setAirTemperatureTSA(Optional.ofNullable(doc.get("airTemperatureTSA_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setFeelsLikeTemperature(Optional.ofNullable(doc.get("feelsLikeTemperature_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setUVIndexMax(Optional.ofNullable(doc.get("uVIndexMax_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setVisibility(Optional.ofNullable(doc.get("visibility_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setWeatherType(Optional.ofNullable(doc.get("weatherType_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -5398,10 +5398,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("aqiMajorPollutant");
 			if(!Objects.equals(aqiMajorPollutantForecast, original.getAqiMajorPollutantForecast()))
 				apiRequest.addVars("aqiMajorPollutantForecast");
-			if(!Objects.equals(airTemperatureForecast, original.getAirTemperatureForecast()) && airTemperatureForecast != null && original.getAirTemperatureForecast() != null && airTemperatureForecast.compareTo(original.getAirTemperatureForecast()) != 0)
-				apiRequest.addVars("airTemperatureForecast");
-			if(!Objects.equals(airTemperatureTSA, original.getAirTemperatureTSA()))
-				apiRequest.addVars("airTemperatureTSA");
 			if(!Objects.equals(atmosphericPressure, original.getAtmosphericPressure()) && atmosphericPressure != null && original.getAtmosphericPressure() != null && atmosphericPressure.compareTo(original.getAtmosphericPressure()) != 0)
 				apiRequest.addVars("atmosphericPressure");
 			if(!Objects.equals(dataProvider, original.getDataProvider()))
@@ -5418,8 +5414,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("diffuseIrradiation");
 			if(!Objects.equals(directIrradiation, original.getDirectIrradiation()) && directIrradiation != null && original.getDirectIrradiation() != null && directIrradiation.compareTo(original.getDirectIrradiation()) != 0)
 				apiRequest.addVars("directIrradiation");
-			if(!Objects.equals(feelsLikeTemperature, original.getFeelsLikeTemperature()) && feelsLikeTemperature != null && original.getFeelsLikeTemperature() != null && feelsLikeTemperature.compareTo(original.getFeelsLikeTemperature()) != 0)
-				apiRequest.addVars("feelsLikeTemperature");
 			if(!Objects.equals(gustSpeed, original.getGustSpeed()) && gustSpeed != null && original.getGustSpeed() != null && gustSpeed.compareTo(original.getGustSpeed()) != 0)
 				apiRequest.addVars("gustSpeed");
 			if(!Objects.equals(illuminance, original.getIlluminance()) && illuminance != null && original.getIlluminance() != null && illuminance.compareTo(original.getIlluminance()) != 0)
@@ -5454,6 +5448,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("streamGauge");
 			if(!Objects.equals(temperature, original.getTemperature()) && temperature != null && original.getTemperature() != null && temperature.compareTo(original.getTemperature()) != 0)
 				apiRequest.addVars("temperature");
+			if(!Objects.equals(airTemperatureForecast, original.getAirTemperatureForecast()) && airTemperatureForecast != null && original.getAirTemperatureForecast() != null && airTemperatureForecast.compareTo(original.getAirTemperatureForecast()) != 0)
+				apiRequest.addVars("airTemperatureForecast");
+			if(!Objects.equals(airTemperatureTSA, original.getAirTemperatureTSA()))
+				apiRequest.addVars("airTemperatureTSA");
+			if(!Objects.equals(feelsLikeTemperature, original.getFeelsLikeTemperature()) && feelsLikeTemperature != null && original.getFeelsLikeTemperature() != null && feelsLikeTemperature.compareTo(original.getFeelsLikeTemperature()) != 0)
+				apiRequest.addVars("feelsLikeTemperature");
 			if(!Objects.equals(uVIndexMax, original.getUVIndexMax()) && uVIndexMax != null && original.getUVIndexMax() != null && uVIndexMax.compareTo(original.getUVIndexMax()) != 0)
 				apiRequest.addVars("uVIndexMax");
 			if(!Objects.equals(visibility, original.getVisibility()))
@@ -5489,8 +5489,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(airQualityIndexForecast).map(v -> "airQualityIndexForecast: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(aqiMajorPollutant).map(v -> "aqiMajorPollutant: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(aqiMajorPollutantForecast).map(v -> "aqiMajorPollutantForecast: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(airTemperatureForecast).map(v -> "airTemperatureForecast: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(airTemperatureTSA).map(v -> "airTemperatureTSA: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(atmosphericPressure).map(v -> "atmosphericPressure: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(dataProvider).map(v -> "dataProvider: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(dateCreated).map(v -> "dateCreated: \"" + v + "\"\n" ).orElse(""));
@@ -5499,7 +5497,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(dewPoint).map(v -> "dewPoint: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(diffuseIrradiation).map(v -> "diffuseIrradiation: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(directIrradiation).map(v -> "directIrradiation: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(feelsLikeTemperature).map(v -> "feelsLikeTemperature: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(gustSpeed).map(v -> "gustSpeed: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(illuminance).map(v -> "illuminance: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
@@ -5517,6 +5514,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(source).map(v -> "source: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(streamGauge).map(v -> "streamGauge: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(temperature).map(v -> "temperature: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(airTemperatureForecast).map(v -> "airTemperatureForecast: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(airTemperatureTSA).map(v -> "airTemperatureTSA: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(feelsLikeTemperature).map(v -> "feelsLikeTemperature: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(uVIndexMax).map(v -> "uVIndexMax: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(visibility).map(v -> "visibility: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(weatherType).map(v -> "weatherType: \"" + v + "\"\n" ).orElse(""));
@@ -5543,8 +5543,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_airQualityIndexForecast = "airQualityIndexForecast";
 	public static final String VAR_aqiMajorPollutant = "aqiMajorPollutant";
 	public static final String VAR_aqiMajorPollutantForecast = "aqiMajorPollutantForecast";
-	public static final String VAR_airTemperatureForecast = "airTemperatureForecast";
-	public static final String VAR_airTemperatureTSA = "airTemperatureTSA";
 	public static final String VAR_atmosphericPressure = "atmosphericPressure";
 	public static final String VAR_dataProvider = "dataProvider";
 	public static final String VAR_dateCreated = "dateCreated";
@@ -5553,7 +5551,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_dewPoint = "dewPoint";
 	public static final String VAR_diffuseIrradiation = "diffuseIrradiation";
 	public static final String VAR_directIrradiation = "directIrradiation";
-	public static final String VAR_feelsLikeTemperature = "feelsLikeTemperature";
 	public static final String VAR_gustSpeed = "gustSpeed";
 	public static final String VAR_illuminance = "illuminance";
 	public static final String VAR_location = "location";
@@ -5571,6 +5568,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_source = "source";
 	public static final String VAR_streamGauge = "streamGauge";
 	public static final String VAR_temperature = "temperature";
+	public static final String VAR_airTemperatureForecast = "airTemperatureForecast";
+	public static final String VAR_airTemperatureTSA = "airTemperatureTSA";
+	public static final String VAR_feelsLikeTemperature = "feelsLikeTemperature";
 	public static final String VAR_uVIndexMax = "uVIndexMax";
 	public static final String VAR_visibility = "visibility";
 	public static final String VAR_weatherType = "weatherType";
@@ -5600,8 +5600,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_airQualityIndexForecast);
 		vars.add(VAR_aqiMajorPollutant);
 		vars.add(VAR_aqiMajorPollutantForecast);
-		vars.add(VAR_airTemperatureForecast);
-		vars.add(VAR_airTemperatureTSA);
 		vars.add(VAR_atmosphericPressure);
 		vars.add(VAR_dataProvider);
 		vars.add(VAR_dateCreated);
@@ -5610,7 +5608,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_dewPoint);
 		vars.add(VAR_diffuseIrradiation);
 		vars.add(VAR_directIrradiation);
-		vars.add(VAR_feelsLikeTemperature);
 		vars.add(VAR_gustSpeed);
 		vars.add(VAR_illuminance);
 		vars.add(VAR_location);
@@ -5628,6 +5625,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_source);
 		vars.add(VAR_streamGauge);
 		vars.add(VAR_temperature);
+		vars.add(VAR_airTemperatureForecast);
+		vars.add(VAR_airTemperatureTSA);
+		vars.add(VAR_feelsLikeTemperature);
 		vars.add(VAR_uVIndexMax);
 		vars.add(VAR_visibility);
 		vars.add(VAR_weatherType);
@@ -5645,13 +5645,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_address);
 		vars.add(VAR_airQualityIndex);
 		vars.add(VAR_airQualityIndexForecast);
-		vars.add(VAR_airTemperatureForecast);
-		vars.add(VAR_airTemperatureTSA);
 		vars.add(VAR_atmosphericPressure);
 		vars.add(VAR_dewPoint);
 		vars.add(VAR_diffuseIrradiation);
 		vars.add(VAR_directIrradiation);
-		vars.add(VAR_feelsLikeTemperature);
 		vars.add(VAR_gustSpeed);
 		vars.add(VAR_illuminance);
 		vars.add(VAR_location);
@@ -5667,6 +5664,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_solarRadiation);
 		vars.add(VAR_streamGauge);
 		vars.add(VAR_temperature);
+		vars.add(VAR_airTemperatureForecast);
+		vars.add(VAR_airTemperatureTSA);
+		vars.add(VAR_feelsLikeTemperature);
 		vars.add(VAR_uVIndexMax);
 		vars.add(VAR_visibility);
 		vars.add(VAR_windDirection);
@@ -5687,8 +5687,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_airQualityIndexForecast = "air quality index forecast";
 	public static final String DISPLAY_NAME_aqiMajorPollutant = "aqi major pollutant";
 	public static final String DISPLAY_NAME_aqiMajorPollutantForecast = "aqi major pollutant forecast";
-	public static final String DISPLAY_NAME_airTemperatureForecast = "air temperature forecast";
-	public static final String DISPLAY_NAME_airTemperatureTSA = "air temperature tsa";
 	public static final String DISPLAY_NAME_atmosphericPressure = "atmospheric pressure";
 	public static final String DISPLAY_NAME_dataProvider = "data provider";
 	public static final String DISPLAY_NAME_dateCreated = "date created";
@@ -5697,7 +5695,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_dewPoint = "dew point";
 	public static final String DISPLAY_NAME_diffuseIrradiation = "diffuse irradiation";
 	public static final String DISPLAY_NAME_directIrradiation = "direct irradiation";
-	public static final String DISPLAY_NAME_feelsLikeTemperature = "feels like temperature";
 	public static final String DISPLAY_NAME_gustSpeed = "gust speed";
 	public static final String DISPLAY_NAME_illuminance = "illuminance";
 	public static final String DISPLAY_NAME_location = "location";
@@ -5715,6 +5712,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_source = "source";
 	public static final String DISPLAY_NAME_streamGauge = "stream gauge";
 	public static final String DISPLAY_NAME_temperature = "temperature";
+	public static final String DISPLAY_NAME_airTemperatureForecast = "air temperature forecast";
+	public static final String DISPLAY_NAME_airTemperatureTSA = "air temperature tsa";
+	public static final String DISPLAY_NAME_feelsLikeTemperature = "feels like temperature";
 	public static final String DISPLAY_NAME_uVIndexMax = "u v index max";
 	public static final String DISPLAY_NAME_visibility = "visibility";
 	public static final String DISPLAY_NAME_weatherType = "weather type";
@@ -5752,10 +5752,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_aqiMajorPollutant;
 		case VAR_aqiMajorPollutantForecast:
 			return DISPLAY_NAME_aqiMajorPollutantForecast;
-		case VAR_airTemperatureForecast:
-			return DISPLAY_NAME_airTemperatureForecast;
-		case VAR_airTemperatureTSA:
-			return DISPLAY_NAME_airTemperatureTSA;
 		case VAR_atmosphericPressure:
 			return DISPLAY_NAME_atmosphericPressure;
 		case VAR_dataProvider:
@@ -5772,8 +5768,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_diffuseIrradiation;
 		case VAR_directIrradiation:
 			return DISPLAY_NAME_directIrradiation;
-		case VAR_feelsLikeTemperature:
-			return DISPLAY_NAME_feelsLikeTemperature;
 		case VAR_gustSpeed:
 			return DISPLAY_NAME_gustSpeed;
 		case VAR_illuminance:
@@ -5808,6 +5802,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_streamGauge;
 		case VAR_temperature:
 			return DISPLAY_NAME_temperature;
+		case VAR_airTemperatureForecast:
+			return DISPLAY_NAME_airTemperatureForecast;
+		case VAR_airTemperatureTSA:
+			return DISPLAY_NAME_airTemperatureTSA;
+		case VAR_feelsLikeTemperature:
+			return DISPLAY_NAME_feelsLikeTemperature;
 		case VAR_uVIndexMax:
 			return DISPLAY_NAME_uVIndexMax;
 		case VAR_visibility:
@@ -5853,10 +5853,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Major pollutant in the Air Quality Index (AQI)";
 		case VAR_aqiMajorPollutantForecast:
 			return "Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future";
-		case VAR_airTemperatureForecast:
-			return "Forecasted value of air temperature over a certain duration in future";
-		case VAR_airTemperatureTSA:
-			return "Air temperature time series aggregation";
 		case VAR_atmosphericPressure:
 			return "The atmospheric pressure observed measured in Hecto Pascals";
 		case VAR_dataProvider:
@@ -5873,8 +5869,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Diffuse irradiance is the part of the solar irradiance that is scattered by the atmosphere";
 		case VAR_directIrradiation:
 			return "Direct irradiance is the part of the solar irradiance that directly reaches a surface";
-		case VAR_feelsLikeTemperature:
-			return "Temperature appreciation of the item";
 		case VAR_gustSpeed:
 			return "A sudden burst of high-speed wind over the observed average wind speed lasting only for a few seconds";
 		case VAR_illuminance:
@@ -5909,6 +5903,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The water level surface elevation observed by Hydrometric measurement sensors, namely a [Stream Gauge](https://en.wikipedia.org/wiki/Stream_gauge) expressed in centimeters";
 		case VAR_temperature:
 			return "Temperature of the item";
+		case VAR_airTemperatureForecast:
+			return "Forecasted value of air temperature over a certain duration in future";
+		case VAR_airTemperatureTSA:
+			return "Air temperature time series aggregation";
+		case VAR_feelsLikeTemperature:
+			return "Temperature appreciation of the item";
 		case VAR_uVIndexMax:
 			return "The maximum UV index for the period, based on the World Health Organization's UV Index measure. [http://www.who.int/uv/intersunprogramme/activities/uv_index/en/](http://www.who.int/uv/intersunprogramme/activities/uv_index/en/) the values between 1 and 11 are the valid range for the index. The value 0 is for describing that no signal is detected so no value is stored";
 		case VAR_visibility:
@@ -5954,10 +5954,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_aqiMajorPollutantForecast:
 			return "String";
-		case VAR_airTemperatureForecast:
-			return "BigDecimal";
-		case VAR_airTemperatureTSA:
-			return "JsonObject";
 		case VAR_atmosphericPressure:
 			return "BigDecimal";
 		case VAR_dataProvider:
@@ -5973,8 +5969,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_diffuseIrradiation:
 			return "BigDecimal";
 		case VAR_directIrradiation:
-			return "BigDecimal";
-		case VAR_feelsLikeTemperature:
 			return "BigDecimal";
 		case VAR_gustSpeed:
 			return "BigDecimal";
@@ -6009,6 +6003,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_streamGauge:
 			return "BigDecimal";
 		case VAR_temperature:
+			return "BigDecimal";
+		case VAR_airTemperatureForecast:
+			return "BigDecimal";
+		case VAR_airTemperatureTSA:
+			return "JsonObject";
+		case VAR_feelsLikeTemperature:
 			return "BigDecimal";
 		case VAR_uVIndexMax:
 			return "BigDecimal";
@@ -6060,10 +6060,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 4;
 		case VAR_aqiMajorPollutantForecast:
 			return 4;
-		case VAR_airTemperatureForecast:
-			return 5;
-		case VAR_airTemperatureTSA:
-			return 5;
 		case VAR_atmosphericPressure:
 			return 6;
 		case VAR_dataProvider:
@@ -6080,8 +6076,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 8;
 		case VAR_directIrradiation:
 			return 8;
-		case VAR_feelsLikeTemperature:
-			return 9;
 		case VAR_gustSpeed:
 			return 9;
 		case VAR_illuminance:
@@ -6116,6 +6110,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 14;
 		case VAR_temperature:
 			return 15;
+		case VAR_airTemperatureForecast:
+			return 5;
+		case VAR_airTemperatureTSA:
+			return 5;
+		case VAR_feelsLikeTemperature:
+			return 9;
 		case VAR_uVIndexMax:
 			return 15;
 		case VAR_visibility:
@@ -6153,10 +6153,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_aqiMajorPollutantForecast:
 			return 4;
-		case VAR_airTemperatureForecast:
-			return 1;
-		case VAR_airTemperatureTSA:
-			return 2;
 		case VAR_atmosphericPressure:
 			return 1;
 		case VAR_dataProvider:
@@ -6173,8 +6169,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 2;
 		case VAR_directIrradiation:
 			return 3;
-		case VAR_feelsLikeTemperature:
-			return 1;
 		case VAR_gustSpeed:
 			return 2;
 		case VAR_illuminance:
@@ -6208,6 +6202,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_streamGauge:
 			return 3;
 		case VAR_temperature:
+			return 1;
+		case VAR_airTemperatureForecast:
+			return 1;
+		case VAR_airTemperatureTSA:
+			return 2;
+		case VAR_feelsLikeTemperature:
 			return 1;
 		case VAR_uVIndexMax:
 			return 2;

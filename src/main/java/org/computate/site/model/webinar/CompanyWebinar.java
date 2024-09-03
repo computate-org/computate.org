@@ -114,17 +114,52 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	protected void _templateUri(Wrap<String> w) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: user URI
+	 * Description: The user relative URI for this page. 
+	 */
+	protected void _userUri(Wrap<String> w) {
+	}
+
   /**
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: Webinar URL
-   * Description: The actual link to the Webinar
-   * HtmRow: 3
+   * DisplayName: Webinar URL Americas
+   * Description: The actual link to the Webinar in Americas
+   * HtmRow: 4
+   * HtmCell: 1
+   * Facet: true
+   **/
+  protected void _webinarUrlAmericas(Wrap<String> w) {}
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: Webinar URL APAC
+   * Description: The actual link to the Webinar in APAC
+   * HtmRow: 4
+   * HtmCell: 2
+   * Facet: true
+   **/
+  protected void _webinarUrlApac(Wrap<String> w) {}
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: Webinar URL EMEA
+   * Description: The actual link to the Webinar in EMEA
+   * HtmRow: 4
    * HtmCell: 3
    * Facet: true
    **/
-  protected void _webinarUrl(Wrap<String> w) {}
+  protected void _webinarUrlEmea(Wrap<String> w) {}
 
 	/**
 	 * {@inheritDoc}
@@ -172,10 +207,11 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 
   @Override
   protected void _objectId(Wrap<String> w) {
-  if(objectTitle != null) {
-      w.o(toId(objectTitle));
-    } else if(id != null){
-      w.o(id.toString());
-    }
+    w.o(pageId);
   }
+
+	@Override
+	protected void _id(Wrap<String> w) {
+		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
+	}
 }

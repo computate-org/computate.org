@@ -3,72 +3,6 @@
 		<title>computate.org — Home of the Smart Device Platform Builder</title>
 {% endblock %}
 {% block htmStylePageLayout %}
-.intro-background {
-	background: linear-gradient(130deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
-	color: white;
-	padding: calc(var(--sl-spacing-3x-large) * 1.875) 0 var(--sl-spacing-3x-large) 0;
-  border-radius: var(--sl-border-radius-x-large);
-}
-.gradient-button {
-  &:not(sl-button), &:is(sl-button)::part(base) {
-    background: linear-gradient(90deg, var(--sl-color-pink-300), var(--sl-color-purple-300));
-    border: solid 1px var(--sl-color-purple-300);
-    transition: transform 100ms, box-shadow 100ms;
-  }
-  &:is(sl-button)::part(base):hover {
-    box-shadow: var(--sl-shadow-medium);
-    transform: scale(105%);
-  }
-  &:is(sl-button)::part(base):active {
-    box-shadow: inset var(--sl-shadow-small);
-    transform: scale(100%);
-  }
-}
-.intro-content {
-	max-width: var(--content-width);
-	margin-inline: auto;
-	padding-inline: var(--sl-spacing-2x-large);
-}
-.intro-details {
-  display: flex;
-  justify-content: center;
-}
-.intro-details > div {
-	background-color: var(--sl-color-gray-100);
-	border-radius: var(--sl-border-radius-pill);
-	font-size: 0.875rem;
-	padding: 1.5rem;
-  display: inline-block;
-}
-
-.summary-wrapper {
-	max-width: var(--content-width);
-	margin-block: var(--sl-spacing-3x-large);
-	margin-inline: auto;
-	padding-inline: var(--sl-spacing-3x-large);
-}
-.summary {
-	background-color: var(--sl-color-gray-200);
-	border-radius: 1.125rem;
-	color: white;
-	padding: var(--sl-spacing-2x-large);
-}
-.summary {
-  & > * + * {
-    margin-block-start: 2rem;
-  }
-}
-.summary-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(30ch, 100%), 1fr));
-	gap: 2rem;
-}
-#order-button {
-  &::part(label) {
-    font-weight: bold;
-  }
-  margin-inline: auto;
-}
 
 @media (max-width:800px) {
   .intro-content > h1 {
@@ -157,7 +91,7 @@
           </div>
         </div>
 
-        <div class="intro-background">
+        <div class="pink-purple-background">
           <div class="intro-content">
             <div class="wa-crown">
               <i class="fa-duotone fa-solid fa-conveyor-belt fa-5x "></i>
@@ -168,7 +102,7 @@
             </h1>
             <div class="intro-details">
               <div>
-                <sl-button pill id="order-button" size="large" class="gradient-button" href="{{ SITE_BASE_URL }}/en-us/product/computate-smart-cloud-deployer" variant="neutral">
+                <sl-button pill id="order-button" size="large" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}/en-us/product/computate-smart-cloud-deployer" variant="neutral">
                   <i class="fa-solid fa-person-running-fast"></i>
                   Learn more
                 </sl-button>
@@ -176,4 +110,99 @@
             </div>
           </div>
         </div>
+
+        <div class="blue-teal-background background border-radius-x-large ">
+          <div class="intro-content">
+            <div class="wa-crown">
+              <h1 class="brand-font">
+                <i class="fa-duotone fa-solid fa-video fa-2x "></i>
+                AI Telemetry Community Webinar
+              </h1>
+            </div>
+            <h2 class="brand-font">
+              Come learn how to Computate as we build a brand new custom data-driven platform 
+              for AI/ML GPU Telemetry with 
+              <i class="fa-brands fa-redhat fa-2xl fa-red" style="color: red; "></i>
+              Red Hat Research in the New England Research Cloud! 
+            </h2>
+            <h3 class="brand-font">
+              The AI Telemetry Community Webinar series will occur live weekdays from Sep 2, 2024 — Feb 28, 2025. 
+            </h3>
+
+            <div class="zoom-details ">
+              <div>
+                <sl-button pill id="order-button" size="large" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}/en-us/webinar/ai-telemetry-webinar" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Learn more
+                </sl-button>
+              </div>
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-asia fa-xl"></i>
+                <div>
+                </div>
+                <div>
+                  <div>
+                    Mondays: Asia Pacific
+                  </div>
+                  <div class="font-size-x-small">
+                    09:00 Indian Time, 11:30 PM US Eastern
+                  </div>
+                </div>
+              </div>
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-europe fa-xl"></i>
+                <div>
+                </div>
+                <div>
+                  <div>
+                    Tuesdays: Europe, Middle East, Africa
+                  </div>
+                  <div class="font-size-x-small">
+                    16:00 Central European Time, 10:00 AM US Eastern
+                  </div>
+                </div>
+              </div>
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-asia fa-xl"></i>
+                <div>
+                </div>
+                <div>
+                  <div>
+                    Wednesdays: Asia Pacific
+                  </div>
+                  <div class="font-size-x-small">
+                    09:00 Indian Time, 11:30 PM US Eastern
+                  </div>
+                </div>
+              </div>
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-europe fa-xl"></i>
+                <div>
+                </div>
+                <div>
+                  <div>
+                    Thursdays: Europe, Middle East, Africa
+                  </div>
+                  <div class="font-size-x-small">
+                    16:00 Central European Time, 10:00 AM US Eastern
+                  </div>
+                </div>
+              </div>
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-americas fa-xl"></i>
+                <div>
+                </div>
+                <div>
+                  <div>
+                    Fridays: Americas
+                  </div>
+                  <div class="font-size-x-small">
+                    12:00 PM US Eastern
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
 {% endblock %}
