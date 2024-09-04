@@ -229,7 +229,7 @@ ZOOKEEPER_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # The default hostname for the Zookeeper cluster manager. 
 ZOOKEEPER_HOST_NAME: "zookeeper"
 # The default port that Zookeeper runs to manage the cluster. 
-ZOOKEEPER_PORT: 30081
+ZOOKEEPER_PORT: 2181
 ZOOKEEPER_MAX_RETRIES: 0
 ZOOKEEPER_BASE_SLEEP_TIME_MILLIS: 5000
 ZOOKEEPER_MAX_SLEEP_MILLIS: 5000
@@ -247,7 +247,7 @@ SOLR_SSL: true
 # The host name to connect to Solr in OpenShift. 
 SOLR_HOST_NAME: "solr"
 # The default port that Solr runs. 
-SOLR_PORT: 443
+SOLR_PORT: 8983
 # The solr pod name to connect and create Solr configsets and collections. 
 SOLR_POD_NAME: "solr-0"
 # The solr collection to use for the site. 
@@ -265,7 +265,7 @@ SOLR_SSL_COMPUTATE: true
 # The host name to connect to Solr in OpenShift. 
 SOLR_HOST_NAME_COMPUTATE: "solr"
 # The default port that Solr runs. 
-SOLR_PORT_COMPUTATE: 443
+SOLR_PORT_COMPUTATE: 8983
 # The solr collection to use for the site. 
 SOLR_COLLECTION_COMPUTATE: computate
 # The URL to the Solr collection for the watched Java code API. 
@@ -286,7 +286,7 @@ DATABASE_SECRET: postgres-pguser-smartvillage
 # The PostgreSQL database host name. 
 DATABASE_HOST: "postgres"
 # The PostgreSQL database port. 
-DATABASE_PORT: 30432
+DATABASE_PORT: 5432
 # The PostgreSQL database user name of the site. 
 DATABASE_USERNAME: "{{ SITE_SHORT_NAME }}"
 # The PostgreSQL database password of the site. 
