@@ -1,7 +1,6 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  namespace: computateorg
   name: computate.org
   labels:
     app.kubernetes.io/instance: computateorg

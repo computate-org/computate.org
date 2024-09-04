@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: computateorg
+  labels:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: cluster
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+  sessionAffinity: None
+  type: ClusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: computateorg
+  name: computateorg
+  labels:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: cluster
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app.kubernetes.io/instance: computateorg
+    app.kubernetes.io/name: computateorg
+    deployment: computateorg
+    app: computateorg
+  sessionAffinity: None
+  type: ClusterIP

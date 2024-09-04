@@ -228,6 +228,7 @@
 {%- block websocketBaseModelPage %}
 {%- block websocketWeatherObservedPage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketWeatherObserved(websocketWeatherObservedInner);
 {%- endblock websocketWeatherObservedPage %}
 {%- endblock websocketBaseModelPage %}
