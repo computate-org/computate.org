@@ -398,12 +398,29 @@ KAFKA_SSL_TRUSTSTORE_PASSWORD: ""
 # Context Broker #
 ##################
 
+# The Context Broker namespace. 
+CONTEXT_BROKER_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # Whether to use SSL when connecting to the Context Broker. 
 CONTEXT_BROKER_SSL: false
 # The host name to connect to the Context Broker in OpenShift. 
-CONTEXT_BROKER_HOST_NAME: "scorpiobroker.scorpiobroker.svc"
+CONTEXT_BROKER_HOST_NAME: "scorpiobroker.{{ PROJECT_NAMESPACE }}.svc"
 # The default port that the Context Broker runs. 
 CONTEXT_BROKER_PORT: 9090
+
+#################
+# iotagent-json #
+#################
+
+# The IoT Agent JSON namespace. 
+IOTAGENT_JSON_NAMESPACE: "{{ SITE_NAMESPACE }}"
+# Whether to use SSL when connecting to the IoT Agent JSON. 
+IOTAGENT_JSON_SSL: false
+# The host name to connect to the IoT Agent JSON in OpenShift. 
+IOTAGENT_JSON_NAME: "iotagent-json.{{ PROJECT_NAMESPACE }}.svc"
+# The HTTP port that the IoT Agent JSON runs. 
+IOTAGENT_JSON_HTTP_PORT: 7896
+# The North port that the IoT Agent JSON runs. 
+IOTAGENT_JSON_NORTH_PORT: 4041
 
 #############
 # MQTT vars #
