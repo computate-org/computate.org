@@ -227,7 +227,7 @@ SITE_POWERED_BY_IMAGE_URI: /svg/google-gke.svg
 # The namespace in OpenShift where Zookeeper will run. 
 ZOOKEEPER_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # The default hostname for the Zookeeper cluster manager. 
-ZOOKEEPER_HOST_NAME: "zookeeper.{{ OPENSHIFT_APPS_DOMAIN }}"
+ZOOKEEPER_HOST_NAME: "zookeeper"
 # The default port that Zookeeper runs to manage the cluster. 
 ZOOKEEPER_PORT: 30081
 ZOOKEEPER_MAX_RETRIES: 0
@@ -245,7 +245,7 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL: true
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME: "solr"
 # The default port that Solr runs. 
 SOLR_PORT: 443
 # The solr pod name to connect and create Solr configsets and collections. 
@@ -263,7 +263,7 @@ SOLR_URL: "https://{{ SOLR_HOST_NAME }}:{{ SOLR_PORT }}/solr/{{ SOLR_COLLECTION 
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL_COMPUTATE: true
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME_COMPUTATE: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME_COMPUTATE: "solr"
 # The default port that Solr runs. 
 SOLR_PORT_COMPUTATE: 443
 # The solr collection to use for the site. 
@@ -284,7 +284,7 @@ DATABASE_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # The database secret containing the user password to connect to the database. 
 DATABASE_SECRET: postgres-pguser-smartvillage
 # The PostgreSQL database host name. 
-DATABASE_HOST: "postgres.{{ OPENSHIFT_APPS_DOMAIN }}"
+DATABASE_HOST: "postgres"
 # The PostgreSQL database port. 
 DATABASE_PORT: 30432
 # The PostgreSQL database user name of the site. 
