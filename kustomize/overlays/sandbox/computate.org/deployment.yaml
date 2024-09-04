@@ -52,11 +52,11 @@ spec:
             failureThreshold: 10
           resources:
             requests:
-              cpu: '700m'
-              memory: '500Mi'
+              cpu: '200m'
+              memory: '300Mi'
             limits:
               cpu: '1'
-              memory: '1500Mi'
+              memory: '1Gi'
           envFrom:
             - secretRef:
                 name: computate.org-zookeeper
@@ -76,8 +76,6 @@ spec:
                 name: computate.org-rabbitmq
             - secretRef:
                 name: computate.org-context-broker
-            - secretRef:
-                name: computate.org-square
           env:
             - name: SITE_ZONE
               value: "America/New_York"
