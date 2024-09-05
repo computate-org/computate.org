@@ -77,6 +77,8 @@ spec:
             - secretRef:
                 name: computate.org-context-broker
           env:
+            - name: SITE_NAME
+              value: "computate.org"
             - name: SITE_ZONE
               value: "America/New_York"
             - name: SITE_LOCALE
@@ -86,7 +88,7 @@ spec:
             - name: SITE_HOST_NAME
               value: "computateorg"
             - name: SITE_BASE_URL
-              value: "computateorg.apps-crc.testing"
+              value: "https://computateorg.apps-crc.testing"
             - name: SITE_PUBLIC_URL
               value: "https://www.computate.org"
             - name: CLUSTER_PORT
