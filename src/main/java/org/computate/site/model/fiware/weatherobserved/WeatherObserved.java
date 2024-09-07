@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.search.tool.SearchTool;
 import org.computate.search.wrap.Wrap;
 import org.computate.site.model.BaseModel;
+import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.search.list.SearchList;
 import io.vertx.core.Promise;
 import io.vertx.core.json.JsonArray;
@@ -699,8 +700,23 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * HtmRow: 3
 	 * HtmCell: 6
 	 * Facet: true
+	 * Multiline: true
 	 */
 	protected void _ngsildData(Wrap<JsonObject> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD context
+	 * Description: The NGSILD context URL for @context data. 
+	 * HtmRow: 3
+	 * HtmCell: 6
+	 * Facet: true
+	 */
+	protected void _ngsildContext(Wrap<String> w) {
+		w.o(String.format("https://raw.githubusercontent.com/%s/%s/main/fiware/context.jsonld", siteRequest_.getConfig().getString(ComputateConfigKeys.GITHUB_ORG), siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_STATIC_NAME)));
 	}
 
 	@Override

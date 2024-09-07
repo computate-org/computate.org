@@ -390,6 +390,16 @@
                   {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             <sl-details class="HtmRow" id="air-quality-details">
@@ -967,6 +977,16 @@
                   {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1585,6 +1605,16 @@
                   {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -2524,7 +2554,7 @@ The primary key of this object in the database"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.pk}}"
+                      value="{{weatherObserved_.pk | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2562,7 +2592,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.objectId}}"
+                      value="{{weatherObserved_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2721,7 +2751,7 @@ The name of this item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.name}}"
+                      value="{{weatherObserved_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2759,7 +2789,7 @@ A description of this item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.description}}"
+                      value="{{weatherObserved_.description | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2797,7 +2827,7 @@ An alternative name for this item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.alternateName}}"
+                      value="{{weatherObserved_.alternateName | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2835,7 +2865,7 @@ The mailing address"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.address) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.address) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2873,7 +2903,7 @@ A unique ID for this Smart Data Model"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.entityId}}"
+                      value="{{weatherObserved_.entityId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2911,7 +2941,7 @@ The NGSILD-Tenant or Fiware-Service"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.ngsildTenant}}"
+                      value="{{weatherObserved_.ngsildTenant | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2949,7 +2979,7 @@ The NGSILD-Path or Fiware-ServicePath"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.ngsildPath}}"
+                      value="{{weatherObserved_.ngsildPath | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2966,7 +2996,7 @@ The NGSILD-Path or Fiware-ServicePath"
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_ngsildData">
   {%- endif %}
-                  <sl-input
+                  <sl-textarea resize="auto"
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="NGSILD data"
                       label="NGSILD data"
@@ -2986,8 +3016,43 @@ The NGSILD data with @context from the context broker"
                       name="ngsildData"
     {%- endif %}
   {%- endif %}
+                      >{{weatherObserved_.ngsildData}}
+</sl-textarea>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildDataWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_ngsildContext">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="NGSILD context"
+                      label="NGSILD context"
+                      help-text="
+The NGSILD context URL for @context data. "
+                      id="{{classApiMethodMethod}}_ngsildContext"
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.ngsildData) }}"
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="setNgsildContext"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="setNgsildContext"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext valueNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="ngsildContext"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.ngsildContext | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -2996,8 +3061,8 @@ The NGSILD data with @context from the context broker"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputNgsildDataWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildContextWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputAirQualityIndexWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -3025,7 +3090,7 @@ Air quality index is a number used to report the quality of the air on any given
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.airQualityIndex}}"
+                      value="{{weatherObserved_.airQualityIndex | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3063,7 +3128,7 @@ Forecasted overall Air Quality Index (AQI) over a certain duration in future"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.airQualityIndexForecast}}"
+                      value="{{weatherObserved_.airQualityIndexForecast | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3101,7 +3166,7 @@ Major pollutant in the Air Quality Index (AQI)"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.aqiMajorPollutant}}"
+                      value="{{weatherObserved_.aqiMajorPollutant | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3139,7 +3204,7 @@ Forecasted major air pollutant in the Air Quality Index (AQI) over a certain dur
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.aqiMajorPollutantForecast}}"
+                      value="{{weatherObserved_.aqiMajorPollutantForecast | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3177,7 +3242,7 @@ Forecasted value of air temperature over a certain duration in future"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.airTemperatureForecast}}"
+                      value="{{weatherObserved_.airTemperatureForecast | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3215,7 +3280,7 @@ Air temperature time series aggregation"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.airTemperatureTSA) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.airTemperatureTSA) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3253,7 +3318,7 @@ The geographic area where a service or offered item is provided"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.areaServed) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.areaServed) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3291,7 +3356,7 @@ The atmospheric pressure observed measured in Hecto Pascals"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.atmosphericPressure}}"
+                      value="{{weatherObserved_.atmosphericPressure | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3329,7 +3394,7 @@ A sequence of characters identifying the provider of the harmonised data entity"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.dataProvider}}"
+                      value="{{weatherObserved_.dataProvider | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3367,7 +3432,7 @@ Entity creation timestamp. This will usually be allocated by the storage platfor
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.dateCreated}}"
+                      value="{{weatherObserved_.dateCreated | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3405,7 +3470,7 @@ Timestamp of the last modification of the entity. This will usually be allocated
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.dateModified}}"
+                      value="{{weatherObserved_.dateModified | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3443,7 +3508,7 @@ Date of the observed entity defined by the user"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.dateObserved}}"
+                      value="{{weatherObserved_.dateObserved | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3481,7 +3546,7 @@ The dew point encoded as a number. Observed temperature to which air must be coo
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.dewPoint}}"
+                      value="{{weatherObserved_.dewPoint | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3519,7 +3584,7 @@ Diffuse irradiance is the part of the solar irradiance that is scattered by the 
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.diffuseIrradiation}}"
+                      value="{{weatherObserved_.diffuseIrradiation | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3557,7 +3622,7 @@ Direct irradiance is the part of the solar irradiance that directly reaches a su
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.directIrradiation}}"
+                      value="{{weatherObserved_.directIrradiation | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3595,7 +3660,7 @@ Temperature appreciation of the item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.feelsLikeTemperature}}"
+                      value="{{weatherObserved_.feelsLikeTemperature | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3633,7 +3698,7 @@ A sudden burst of high-speed wind over the observed average wind speed lasting o
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.gustSpeed}}"
+                      value="{{weatherObserved_.gustSpeed | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3671,7 +3736,7 @@ A sudden burst of high-speed wind over the observed average wind speed lasting o
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.illuminance}}"
+                      value="{{weatherObserved_.illuminance | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3709,7 +3774,7 @@ Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint,
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.location) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.location) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3747,7 +3812,7 @@ A List containing a JSON encoded sequence of characters referencing the unique I
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.owner) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.owner) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3785,7 +3850,7 @@ Amount of water rain registered. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.precipitation}}"
+                      value="{{weatherObserved_.precipitation | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3823,7 +3888,7 @@ Forecasted rainfall over a certain duration in future"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.precipitationForecast}}"
+                      value="{{weatherObserved_.precipitationForecast | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3861,7 +3926,7 @@ Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be ex
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.pressureTendency) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.pressureTendency) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3899,7 +3964,7 @@ A reference to the device(s) which captured this observation"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.refDevice) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.refDevice) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3937,7 +4002,7 @@ Point of interest related to the item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.refPointOfInterest}}"
+                      value="{{weatherObserved_.refPointOfInterest | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -3975,7 +4040,7 @@ Humidity in the Air. Observed instantaneous relative humidity (water vapour in a
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.relativeHumidity}}"
+                      value="{{weatherObserved_.relativeHumidity | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4013,7 +4078,7 @@ Forecasted relative humidity (water vapour in air) over a certain duration in fu
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.relativeHumidityForecast}}"
+                      value="{{weatherObserved_.relativeHumidityForecast | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4051,7 +4116,7 @@ list of uri pointing to additional resources about the item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.seeAlso) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.seeAlso) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4089,7 +4154,7 @@ The snow height observed by generic snow depth measurement sensors, expressed in
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.snowHeight}}"
+                      value="{{weatherObserved_.snowHeight | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4127,7 +4192,7 @@ The solar radiation observed measured in Watts per square"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.solarRadiation}}"
+                      value="{{weatherObserved_.solarRadiation | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4165,7 +4230,7 @@ A sequence of characters giving the original source of the entity data as a URL.
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.source}}"
+                      value="{{weatherObserved_.source | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4203,7 +4268,7 @@ The water level surface elevation observed by Hydrometric measurement sensors, n
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.streamGauge}}"
+                      value="{{weatherObserved_.streamGauge | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4241,7 +4306,7 @@ Temperature of the item"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.temperature}}"
+                      value="{{weatherObserved_.temperature | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4279,7 +4344,7 @@ The maximum UV index for the period, based on the World Health Organization's UV
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.uVIndexMax}}"
+                      value="{{weatherObserved_.uVIndexMax | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4317,7 +4382,7 @@ Categories of visibility"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.visibility) }}"
+                      value="{{ toJsonObjectString(weatherObserved_.visibility) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4355,7 +4420,7 @@ Text description of the weather"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.weatherType}}"
+                      value="{{weatherObserved_.weatherType | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4393,7 +4458,7 @@ Direction of the wind bet"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.windDirection}}"
+                      value="{{weatherObserved_.windDirection | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -4431,7 +4496,7 @@ Intensity of the wind"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.windSpeed}}"
+                      value="{{weatherObserved_.windSpeed | e }}"
   {%- endif %}
                       ></sl-input>
 

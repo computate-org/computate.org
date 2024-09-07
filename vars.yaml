@@ -466,20 +466,19 @@ AMQP_VIRTUAL_HOST: "%2F"
 #################
 
 # Enable RabbitMQ message integration. 
-ENABLE_RABBITMQ: false
+ENABLE_RABBITMQ: true
 # The namespace in OpenShift where the AMQP message broker will run. 
 RABBITMQ_NAMESPACE: rabbitmq
 # The AMQP port. 
-RABBITMQ_PORT: 5672
+RABBITMQ_PORT: 30072
 # The AMQP host name. 
-RABBITMQ_HOST_NAME: "rabbitmq.{{ AMQP_NAMESPACE }}.svc"
+RABBITMQ_HOST_NAME: "rabbitmq.apps-crc.testing"
 # The AMQP user. 
-RABBITMQ_HOST_USER: "user"
+RABBITMQ_USER: "user"
 # The AMQP password. 
-RABBITMQ_HOST_PASSWORD: ""
-#RABBITMQ_HOST_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='iotagent-json-message-broker-secret', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
+RABBITMQ_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='rabbitmq', namespace=RABBITMQ_NAMESPACE)[0].data['rabbitmq-password'] | b64decode }}"
 # The AMQP virtual host. 
-RABBITMQ_VIRTUAL_HOST: "%2F"
+RABBITMQ_VIRTUAL_HOST: "/"
 
 ################################
 # OpenShift Deployment Details #

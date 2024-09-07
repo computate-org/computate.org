@@ -10348,6 +10348,10 @@ components:
                     type: string
                   ngsildPath:
                     type: string
+                  ngsildData:
+                    type: object
+                  ngsildContext:
+                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -10728,6 +10732,20 @@ components:
             removeNgsildPath:
               type: string
             removeAllNgsildPath:
+              type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
+            setNgsildContext:
+              type: string
+              nullable: true
+            removeNgsildContext:
+              type: string
+            removeAllNgsildContext:
               type: string
             setObjectTitle:
               type: string
@@ -11120,6 +11138,20 @@ components:
               type: string
             removeAllNgsildPath:
               type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
+            setNgsildContext:
+              type: string
+              nullable: true
+            removeNgsildContext:
+              type: string
+            removeAllNgsildContext:
+              type: string
             setObjectTitle:
               type: string
               nullable: true
@@ -11242,6 +11274,10 @@ components:
               type: string
             ngsildPath:
               type: string
+            ngsildData:
+              type: object
+            ngsildContext:
+              type: string
             objectTitle:
               type: string
             objectId:
@@ -11354,6 +11390,10 @@ components:
               type: string
             ngsildPath:
               type: string
+            ngsildData:
+              type: object
+            ngsildContext:
+              type: string
             objectTitle:
               type: string
             objectId:
@@ -11465,6 +11505,10 @@ components:
             ngsildTenant:
               type: string
             ngsildPath:
+              type: string
+            ngsildData:
+              type: object
+            ngsildContext:
               type: string
             objectTitle:
               type: string
@@ -11583,6 +11627,10 @@ components:
                     type: string
                   ngsildPath:
                     type: string
+                  ngsildData:
+                    type: object
+                  ngsildContext:
+                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -11695,6 +11743,10 @@ components:
                     type: string
                   ngsildPath:
                     type: string
+                  ngsildData:
+                    type: object
+                  ngsildContext:
+                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -11806,6 +11858,10 @@ components:
             ngsildTenant:
               type: string
             ngsildPath:
+              type: string
+            ngsildData:
+              type: object
+            ngsildContext:
               type: string
             objectTitle:
               type: string

@@ -1088,6 +1088,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlNgsildData());
 						break;
+					case "setNgsildContext":
+							o2.setNgsildContext(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_ngsildContext + "=$" + num);
+							num++;
+							bParams.add(o2.sqlNgsildContext());
+						break;
 				}
 			}
 			bSql.append(" WHERE pk=$" + num);
@@ -1864,6 +1872,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_ngsildData + "=$" + num);
 						num++;
 						bParams.add(o2.sqlNgsildData());
+						break;
+					case WeatherObserved.VAR_ngsildContext:
+						o2.setNgsildContext(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_ngsildContext + "=$" + num);
+						num++;
+						bParams.add(o2.sqlNgsildContext());
 						break;
 					}
 				}

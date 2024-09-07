@@ -3,6 +3,7 @@ package org.computate.site.model.fiware.weatherobserved;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 
@@ -38,8 +39,13 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		Promise<Void> promise = Promise.promise();
 		super.persistWeatherObserved(weatherObserved, patch).onSuccess(a -> {
 			iotagentCreateDevice(weatherObserved, patch).onSuccess(b -> {
-				iotagentCreateSubscription(weatherObserved, patch).onSuccess(c -> {
+				iotagentSendMessage(weatherObserved, patch).onSuccess(c -> {
+				// iotagentCreateSubscription(weatherObserved, patch).onSuccess(c -> {
 					promise.complete();
+				// }).onFailure(ex -> {
+				// 	LOG.error(String.format("patchIotServiceFuture failed. "), ex);
+				// 	promise.fail(ex);
+				// });
 				}).onFailure(ex -> {
 					LOG.error(String.format("patchIotServiceFuture failed. "), ex);
 					promise.fail(ex);
@@ -210,17 +216,84 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		return promise.future();
 	}
 
+	public Future<Void> iotagentSendMessage(WeatherObserved weatherObserved, Boolean patch) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			String entityName = weatherObserved.getName();
+			String entityType = WeatherObserved.CLASS_SIMPLE_NAME;
+
+			String exchange = "amq.topic";
+			String routingKey = String.format(".%s.%s.attrs", entityType, entityName);
+			JsonObject attributes = new JsonObject();
+			List<String> vars = WeatherObserved.varsFqForClass();
+			for (String var : vars) {
+				String ngsiType = WeatherObserved.ngsiType(var);
+				if (ngsiType != null && !"type".equals(var) && !"id".equals(var)) {
+					attributes.put(var, weatherObserved.obtainForClass(var));
+				}
+			}
+			rabbitmqClient.basicPublish(exchange, routingKey, attributes.toBuffer()).onSuccess(a -> {
+				promise.complete();
+			}).onFailure(ex -> {
+				LOG.error(String.format("postIotServiceFuture failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Throwable ex) {
+			LOG.error(String.format("postIotServiceFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<JsonObject> ngsildGetEntity(WeatherObserved weatherObserved) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			String entityName = weatherObserved.getName();
+			String entityType = WeatherObserved.CLASS_SIMPLE_NAME;
+			String entityId = weatherObserved.getEntityId();
+			String ngsildUri = String.format("/ngsi-ld/v1/entities/%s", urlEncode(entityId));
+			String ngsildContext = weatherObserved.getNgsildContext();
+			String link = String.format("<%s>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\"", ngsildContext);
+	
+			webClient.get(
+					config.getInteger(ComputateConfigKeys.CONTEXT_BROKER_PORT)
+					, config.getString(ComputateConfigKeys.CONTEXT_BROKER_HOST_NAME)
+					, ngsildUri
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.CONTEXT_BROKER_SSL))
+					.putHeader("Content-Type", "application/ld+json")
+					.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
+					.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
+					.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
+					.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
+					.putHeader("Link", link)
+					.putHeader("Accept", "*/*")
+					.send()
+					.expecting(HttpResponseExpectation.SC_OK).onSuccess(entityResponse -> {
+				JsonObject entity = entityResponse.bodyAsJsonObject();
+				promise.complete(entity);
+			}).onFailure(ex -> {
+				LOG.error(String.format("postIotServiceFuture failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Throwable ex) {
+			LOG.error(String.format("postIotServiceFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
 	@Override
 	public Future<Void> sqlDELETEWeatherObserved(WeatherObserved o) {
 		Promise<Void> promise = Promise.promise();
 		super.sqlDELETEWeatherObserved(o).onSuccess(a -> {
 			iotagentDeleteDevice(o).onSuccess(b -> {
-				iotagentDeleteSubscription(o).onSuccess(c -> {
+				// iotagentDeleteSubscription(o).onSuccess(c -> {
 					promise.complete();
-				}).onFailure(ex -> {
-					LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
-					promise.fail(ex);
-				});
+				// }).onFailure(ex -> {
+				// 	LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+				// 	promise.fail(ex);
+				// });
 			}).onFailure(ex -> {
 				LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
 				promise.fail(ex);
@@ -291,6 +364,41 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 			});
 		} catch(Throwable ex) {
 			LOG.error(String.format("postIotServiceFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<WeatherObserved> sqlPATCHWeatherObserved(WeatherObserved o, Boolean inheritPk) {
+		Promise<WeatherObserved> promise = Promise.promise();
+		try {
+			JsonObject jsonObject = o.getSiteRequest_().getJsonObject();
+			if(jsonObject.isEmpty()) {
+				ngsildGetEntity(o).onSuccess(ngsildData -> {
+					String setNgsildData = String.format("set%s",StringUtils.capitalize(WeatherObserved.VAR_ngsildData));
+					jsonObject.put(setNgsildData, ngsildData);
+					super.sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved2 -> {
+						jsonObject.remove(setNgsildData);
+						promise.complete(weatherObserved2);
+					}).onFailure(ex -> {
+						LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+						promise.fail(ex);
+					});
+				}).onFailure(ex -> {
+					LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+					promise.fail(ex);
+				});
+			} else {
+				super.sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved2 -> {
+					promise.complete(weatherObserved2);
+				}).onFailure(ex -> {
+					LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+					promise.fail(ex);
+				});
+			}
+		} catch(Exception ex) {
+			LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

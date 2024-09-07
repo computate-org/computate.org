@@ -101,6 +101,8 @@ ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS windSpeed decimal;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS entityId text;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS ngsildTenant text;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS ngsildPath text;
+ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS ngsildData jsonb;
+ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS ngsildContext text;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS pk bigserial primary key;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS inheritPk text;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS created timestamp with time zone;

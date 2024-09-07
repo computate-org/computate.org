@@ -126,7 +126,7 @@
         </sl-button>
         <ul>
           <li>
-            <sl-button href="{{ SITE_BASE_URL }}">
+            <sl-button id="home-button" href="{{ SITE_BASE_URL }}">
               <i class="fa-regular fa-house"></i>
               home
             </sl-button>
@@ -258,7 +258,6 @@
           <sl-menu id="siteSearchDropdownMenu">
           </sl-menu>
         </sl-dropdown>
-        </header>
 {% endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}
         <div class="pageContent w3-content ">
@@ -267,7 +266,7 @@
 {% endblock htmBodyMiddlePageLayout %}
 {% block htmBodyEndPageLayout %}
       </main>
-      <footer id="site-footer" class="split-block round-first-and-last-column-x-large ">
+      <footer id="site-footer" class="split-block round-row-xl-mobile-round-column-xl-desktop ">
         {% if GITHUB_ORG is defined %}
         <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
           <div>
@@ -282,7 +281,7 @@
           <div>
             <div>Generated with </div>
             <div>
-              <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg"/>
+              <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" alt="computate logo"/>
             </div>
           </div>
         </sl-button>

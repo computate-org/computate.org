@@ -93,7 +93,11 @@ public class IotService extends IotServiceGen<BaseModel> {
    * Facet: true
    **/
   protected void _cbHost(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ComputateConfigKeys.CONTEXT_BROKER_HOST_NAME));
+    String cbHostName = siteRequest_.getConfig().getString(ComputateConfigKeys.CONTEXT_BROKER_HOST_NAME);
+    Integer cbPort = siteRequest_.getConfig().getInteger(ComputateConfigKeys.CONTEXT_BROKER_PORT);
+    Boolean cbSsl = siteRequest_.getConfig().getBoolean(ComputateConfigKeys.CONTEXT_BROKER_SSL);
+    String cbBaseUrl = String.format("%s://%s:%s", cbSsl ? "https" : "http", cbHostName, cbPort);
+    w.o(cbBaseUrl);
   }
 
   /**

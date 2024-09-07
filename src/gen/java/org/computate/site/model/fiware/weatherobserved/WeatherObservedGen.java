@@ -3685,6 +3685,62 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return ngsildData;
 	}
 
+	///////////////////
+	// ngsildContext //
+	///////////////////
+
+
+	/**	 The entity ngsildContext
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String ngsildContext;
+
+	/**	<br> The entity ngsildContext
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildContext">Find the entity ngsildContext in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _ngsildContext(Wrap<String> w);
+
+	public String getNgsildContext() {
+		return ngsildContext;
+	}
+	public void setNgsildContext(String o) {
+		this.ngsildContext = WeatherObserved.staticSetNgsildContext(siteRequest_, o);
+	}
+	public static String staticSetNgsildContext(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved ngsildContextInit() {
+		Wrap<String> ngsildContextWrap = new Wrap<String>().var("ngsildContext");
+		if(ngsildContext == null) {
+			_ngsildContext(ngsildContextWrap);
+			Optional.ofNullable(ngsildContextWrap.getO()).ifPresent(o -> {
+				setNgsildContext(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchNgsildContext(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrNgsildContext(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqNgsildContext(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchNgsildContext(siteRequest_, WeatherObserved.staticSetNgsildContext(siteRequest_, o)).toString();
+	}
+
+	public String sqlNgsildContext() {
+		return ngsildContext;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -3764,6 +3820,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				ngsildTenantInit();
 				ngsildPathInit();
 				ngsildDataInit();
+				ngsildContextInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -3917,6 +3974,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.ngsildPath;
 			case "ngsildData":
 				return oWeatherObserved.ngsildData;
+			case "ngsildContext":
+				return oWeatherObserved.ngsildContext;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -4056,6 +4115,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetNgsildPath(siteRequest_, o);
 		case "ngsildData":
 			return WeatherObserved.staticSetNgsildData(siteRequest_, o);
+		case "ngsildContext":
+			return WeatherObserved.staticSetNgsildContext(siteRequest_, o);
 			default:
 				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4170,6 +4231,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchNgsildPath(siteRequest_, (String)o);
 		case "ngsildData":
 			return WeatherObserved.staticSearchNgsildData(siteRequest_, (JsonObject)o);
+		case "ngsildContext":
+			return WeatherObserved.staticSearchNgsildContext(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4284,6 +4347,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrNgsildPath(siteRequest_, (String)o);
 		case "ngsildData":
 			return WeatherObserved.staticSearchStrNgsildData(siteRequest_, (String)o);
+		case "ngsildContext":
+			return WeatherObserved.staticSearchStrNgsildContext(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4398,6 +4463,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqNgsildPath(siteRequest_, o);
 		case "ngsildData":
 			return WeatherObserved.staticSearchFqNgsildData(siteRequest_, o);
+		case "ngsildContext":
+			return WeatherObserved.staticSearchFqNgsildContext(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4762,6 +4829,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("ngsildData");
 				return val;
+			} else if("ngsildcontext".equals(varLower)) {
+				if(val instanceof String) {
+					setNgsildContext((String)val);
+				}
+				saves.add("ngsildContext");
+				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -5072,6 +5145,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				if(ngsildData != null)
 					oWeatherObserved.setNgsildData(ngsildData);
 			}
+
+			if(saves.contains("ngsildContext")) {
+				String ngsildContext = (String)doc.get("ngsildContext_docvalues_string");
+				if(ngsildContext != null)
+					oWeatherObserved.setNgsildContext(ngsildContext);
+			}
 		}
 
 		super.populateBaseModel(doc);
@@ -5239,6 +5318,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(ngsildData != null) {
 			doc.put("ngsildData_docvalues_string", ngsildData.toString());
 		}
+		if(ngsildContext != null) {
+			doc.put("ngsildContext_docvalues_string", ngsildContext);
+		}
 		super.indexBaseModel(doc);
 
 	}
@@ -5343,6 +5425,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "ngsildPath_docvalues_string";
 			case "ngsildData":
 				return "ngsildData_docvalues_string";
+			case "ngsildContext":
+				return "ngsildContext_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -5448,6 +5532,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "ngsildPath_docvalues_string";
 			case "ngsildData":
 				return "ngsildData_docvalues_string";
+			case "ngsildContext":
+				return "ngsildContext_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -5553,6 +5639,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "ngsildPath";
 			case "ngsildData_docvalues_string":
 				return "ngsildData";
+			case "ngsildContext_docvalues_string":
+				return "ngsildContext";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -5638,6 +5726,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setNgsildTenant(Optional.ofNullable(doc.get("ngsildTenant_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setNgsildPath(Optional.ofNullable(doc.get("ngsildPath_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setNgsildData(Optional.ofNullable(doc.get("ngsildData_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setNgsildContext(Optional.ofNullable(doc.get("ngsildContext_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -5749,6 +5838,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("ngsildPath");
 			if(!Objects.equals(ngsildData, original.getNgsildData()))
 				apiRequest.addVars("ngsildData");
+			if(!Objects.equals(ngsildContext, original.getNgsildContext()))
+				apiRequest.addVars("ngsildContext");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -5809,6 +5900,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(ngsildTenant).map(v -> "ngsildTenant: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(ngsildPath).map(v -> "ngsildPath: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(ngsildData).map(v -> "ngsildData: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(ngsildContext).map(v -> "ngsildContext: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -5867,6 +5959,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_ngsildTenant = "ngsildTenant";
 	public static final String VAR_ngsildPath = "ngsildPath";
 	public static final String VAR_ngsildData = "ngsildData";
+	public static final String VAR_ngsildContext = "ngsildContext";
 
 	public static List<String> varsQForClass() {
 		return WeatherObserved.varsQWeatherObserved(new ArrayList<String>());
@@ -5926,6 +6019,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_ngsildTenant);
 		vars.add(VAR_ngsildPath);
 		vars.add(VAR_ngsildData);
+		vars.add(VAR_ngsildContext);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
 	}
@@ -6018,6 +6112,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_ngsildTenant = "NGSILD-Tenant";
 	public static final String DISPLAY_NAME_ngsildPath = "NGSILD-Path";
 	public static final String DISPLAY_NAME_ngsildData = "NGSILD data";
+	public static final String DISPLAY_NAME_ngsildContext = "NGSILD context";
 
 	public static String displayNameForClass(String var) {
 		return WeatherObserved.displayNameWeatherObserved(var);
@@ -6124,6 +6219,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_ngsildPath;
 		case VAR_ngsildData:
 			return DISPLAY_NAME_ngsildData;
+		case VAR_ngsildContext:
+			return DISPLAY_NAME_ngsildContext;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
@@ -6231,6 +6328,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The NGSILD-Path or Fiware-ServicePath";
 		case VAR_ngsildData:
 			return "The NGSILD data with @context from the context broker";
+		case VAR_ngsildContext:
+			return "The NGSILD context URL for @context data. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -6338,6 +6437,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_ngsildData:
 			return "JsonObject";
+		case VAR_ngsildContext:
+			return "String";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
 		}
@@ -6444,6 +6545,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_ngsildPath:
 			return "Property";
 		case VAR_ngsildData:
+			return "Property";
+		case VAR_ngsildContext:
 			return "Property";
 			default:
 				return null;
@@ -6555,6 +6658,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_ngsildData:
 			return 3;
+		case VAR_ngsildContext:
+			return 3;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -6653,6 +6758,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_ngsildPath:
 			return 5;
 		case VAR_ngsildData:
+			return 6;
+		case VAR_ngsildContext:
 			return 6;
 			default:
 				return BaseModel.htmCellBaseModel(var);
