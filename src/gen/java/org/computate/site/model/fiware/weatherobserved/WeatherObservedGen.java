@@ -3509,6 +3509,182 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return WeatherObserved.staticSearchEntityShortId(siteRequest_, WeatherObserved.staticSetEntityShortId(siteRequest_, o)).toString();
 	}
 
+	//////////////////
+	// ngsildTenant //
+	//////////////////
+
+
+	/**	 The entity ngsildTenant
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String ngsildTenant;
+
+	/**	<br> The entity ngsildTenant
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildTenant">Find the entity ngsildTenant in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _ngsildTenant(Wrap<String> w);
+
+	public String getNgsildTenant() {
+		return ngsildTenant;
+	}
+	public void setNgsildTenant(String o) {
+		this.ngsildTenant = WeatherObserved.staticSetNgsildTenant(siteRequest_, o);
+	}
+	public static String staticSetNgsildTenant(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved ngsildTenantInit() {
+		Wrap<String> ngsildTenantWrap = new Wrap<String>().var("ngsildTenant");
+		if(ngsildTenant == null) {
+			_ngsildTenant(ngsildTenantWrap);
+			Optional.ofNullable(ngsildTenantWrap.getO()).ifPresent(o -> {
+				setNgsildTenant(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchNgsildTenant(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrNgsildTenant(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqNgsildTenant(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchNgsildTenant(siteRequest_, WeatherObserved.staticSetNgsildTenant(siteRequest_, o)).toString();
+	}
+
+	public String sqlNgsildTenant() {
+		return ngsildTenant;
+	}
+
+	////////////////
+	// ngsildPath //
+	////////////////
+
+
+	/**	 The entity ngsildPath
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String ngsildPath;
+
+	/**	<br> The entity ngsildPath
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildPath">Find the entity ngsildPath in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _ngsildPath(Wrap<String> w);
+
+	public String getNgsildPath() {
+		return ngsildPath;
+	}
+	public void setNgsildPath(String o) {
+		this.ngsildPath = WeatherObserved.staticSetNgsildPath(siteRequest_, o);
+	}
+	public static String staticSetNgsildPath(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved ngsildPathInit() {
+		Wrap<String> ngsildPathWrap = new Wrap<String>().var("ngsildPath");
+		if(ngsildPath == null) {
+			_ngsildPath(ngsildPathWrap);
+			Optional.ofNullable(ngsildPathWrap.getO()).ifPresent(o -> {
+				setNgsildPath(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchNgsildPath(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrNgsildPath(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqNgsildPath(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchNgsildPath(siteRequest_, WeatherObserved.staticSetNgsildPath(siteRequest_, o)).toString();
+	}
+
+	public String sqlNgsildPath() {
+		return ngsildPath;
+	}
+
+	////////////////
+	// ngsildData //
+	////////////////
+
+
+	/**	 The entity ngsildData
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject ngsildData;
+
+	/**	<br> The entity ngsildData
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildData">Find the entity ngsildData in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _ngsildData(Wrap<JsonObject> w);
+
+	public JsonObject getNgsildData() {
+		return ngsildData;
+	}
+
+	public void setNgsildData(JsonObject ngsildData) {
+		this.ngsildData = ngsildData;
+	}
+	@JsonIgnore
+	public void setNgsildData(String o) {
+		this.ngsildData = WeatherObserved.staticSetNgsildData(siteRequest_, o);
+	}
+	public static JsonObject staticSetNgsildData(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved ngsildDataInit() {
+		Wrap<JsonObject> ngsildDataWrap = new Wrap<JsonObject>().var("ngsildData");
+		if(ngsildData == null) {
+			_ngsildData(ngsildDataWrap);
+			Optional.ofNullable(ngsildDataWrap.getO()).ifPresent(o -> {
+				setNgsildData(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchNgsildData(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrNgsildData(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqNgsildData(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchNgsildData(siteRequest_, WeatherObserved.staticSetNgsildData(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlNgsildData() {
+		return ngsildData;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -3585,6 +3761,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				windSpeedInit();
 				entityIdInit();
 				entityShortIdInit();
+				ngsildTenantInit();
+				ngsildPathInit();
+				ngsildDataInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -3732,6 +3911,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.entityId;
 			case "entityShortId":
 				return oWeatherObserved.entityShortId;
+			case "ngsildTenant":
+				return oWeatherObserved.ngsildTenant;
+			case "ngsildPath":
+				return oWeatherObserved.ngsildPath;
+			case "ngsildData":
+				return oWeatherObserved.ngsildData;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -3865,6 +4050,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetEntityId(siteRequest_, o);
 		case "entityShortId":
 			return WeatherObserved.staticSetEntityShortId(siteRequest_, o);
+		case "ngsildTenant":
+			return WeatherObserved.staticSetNgsildTenant(siteRequest_, o);
+		case "ngsildPath":
+			return WeatherObserved.staticSetNgsildPath(siteRequest_, o);
+		case "ngsildData":
+			return WeatherObserved.staticSetNgsildData(siteRequest_, o);
 			default:
 				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -3973,6 +4164,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchEntityId(siteRequest_, (String)o);
 		case "entityShortId":
 			return WeatherObserved.staticSearchEntityShortId(siteRequest_, (String)o);
+		case "ngsildTenant":
+			return WeatherObserved.staticSearchNgsildTenant(siteRequest_, (String)o);
+		case "ngsildPath":
+			return WeatherObserved.staticSearchNgsildPath(siteRequest_, (String)o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchNgsildData(siteRequest_, (JsonObject)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4081,6 +4278,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrEntityId(siteRequest_, (String)o);
 		case "entityShortId":
 			return WeatherObserved.staticSearchStrEntityShortId(siteRequest_, (String)o);
+		case "ngsildTenant":
+			return WeatherObserved.staticSearchStrNgsildTenant(siteRequest_, (String)o);
+		case "ngsildPath":
+			return WeatherObserved.staticSearchStrNgsildPath(siteRequest_, (String)o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchStrNgsildData(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4189,6 +4392,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqEntityId(siteRequest_, o);
 		case "entityShortId":
 			return WeatherObserved.staticSearchFqEntityShortId(siteRequest_, o);
+		case "ngsildTenant":
+			return WeatherObserved.staticSearchFqNgsildTenant(siteRequest_, o);
+		case "ngsildPath":
+			return WeatherObserved.staticSearchFqNgsildPath(siteRequest_, o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchFqNgsildData(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -4533,6 +4742,26 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("entityId");
 				return val;
+			} else if("ngsildtenant".equals(varLower)) {
+				if(val instanceof String) {
+					setNgsildTenant((String)val);
+				}
+				saves.add("ngsildTenant");
+				return val;
+			} else if("ngsildpath".equals(varLower)) {
+				if(val instanceof String) {
+					setNgsildPath((String)val);
+				}
+				saves.add("ngsildPath");
+				return val;
+			} else if("ngsilddata".equals(varLower)) {
+				if(val instanceof String) {
+					setNgsildData((String)val);
+				} else if(val instanceof JsonObject) {
+					setNgsildData((JsonObject)val);
+				}
+				saves.add("ngsildData");
+				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -4825,6 +5054,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				if(entityId != null)
 					oWeatherObserved.setEntityId(entityId);
 			}
+
+			if(saves.contains("ngsildTenant")) {
+				String ngsildTenant = (String)doc.get("ngsildTenant_docvalues_string");
+				if(ngsildTenant != null)
+					oWeatherObserved.setNgsildTenant(ngsildTenant);
+			}
+
+			if(saves.contains("ngsildPath")) {
+				String ngsildPath = (String)doc.get("ngsildPath_docvalues_string");
+				if(ngsildPath != null)
+					oWeatherObserved.setNgsildPath(ngsildPath);
+			}
+
+			if(saves.contains("ngsildData")) {
+				String ngsildData = (String)doc.get("ngsildData_docvalues_string");
+				if(ngsildData != null)
+					oWeatherObserved.setNgsildData(ngsildData);
+			}
 		}
 
 		super.populateBaseModel(doc);
@@ -4983,6 +5230,15 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(entityId != null) {
 			doc.put("entityId_docvalues_string", entityId);
 		}
+		if(ngsildTenant != null) {
+			doc.put("ngsildTenant_docvalues_string", ngsildTenant);
+		}
+		if(ngsildPath != null) {
+			doc.put("ngsildPath_docvalues_string", ngsildPath);
+		}
+		if(ngsildData != null) {
+			doc.put("ngsildData_docvalues_string", ngsildData.toString());
+		}
 		super.indexBaseModel(doc);
 
 	}
@@ -5081,6 +5337,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "windSpeed_docvalues_double";
 			case "entityId":
 				return "entityId_docvalues_string";
+			case "ngsildTenant":
+				return "ngsildTenant_docvalues_string";
+			case "ngsildPath":
+				return "ngsildPath_docvalues_string";
+			case "ngsildData":
+				return "ngsildData_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -5180,6 +5442,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "windSpeed_docvalues_double";
 			case "entityId":
 				return "entityId_docvalues_string";
+			case "ngsildTenant":
+				return "ngsildTenant_docvalues_string";
+			case "ngsildPath":
+				return "ngsildPath_docvalues_string";
+			case "ngsildData":
+				return "ngsildData_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -5279,6 +5547,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "windSpeed";
 			case "entityId_docvalues_string":
 				return "entityId";
+			case "ngsildTenant_docvalues_string":
+				return "ngsildTenant";
+			case "ngsildPath_docvalues_string":
+				return "ngsildPath";
+			case "ngsildData_docvalues_string":
+				return "ngsildData";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -5361,6 +5635,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setWindDirection(Optional.ofNullable(doc.get("windDirection_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setWindSpeed(Optional.ofNullable(doc.get("windSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setEntityId(Optional.ofNullable(doc.get("entityId_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setNgsildTenant(Optional.ofNullable(doc.get("ngsildTenant_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setNgsildPath(Optional.ofNullable(doc.get("ngsildPath_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setNgsildData(Optional.ofNullable(doc.get("ngsildData_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -5466,6 +5743,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("windSpeed");
 			if(!Objects.equals(entityId, original.getEntityId()))
 				apiRequest.addVars("entityId");
+			if(!Objects.equals(ngsildTenant, original.getNgsildTenant()))
+				apiRequest.addVars("ngsildTenant");
+			if(!Objects.equals(ngsildPath, original.getNgsildPath()))
+				apiRequest.addVars("ngsildPath");
+			if(!Objects.equals(ngsildData, original.getNgsildData()))
+				apiRequest.addVars("ngsildData");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -5523,6 +5806,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(windDirection).map(v -> "windDirection: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(windSpeed).map(v -> "windSpeed: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(entityId).map(v -> "entityId: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(ngsildTenant).map(v -> "ngsildTenant: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(ngsildPath).map(v -> "ngsildPath: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(ngsildData).map(v -> "ngsildData: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
 
@@ -5578,6 +5864,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_windSpeed = "windSpeed";
 	public static final String VAR_entityId = "entityId";
 	public static final String VAR_entityShortId = "entityShortId";
+	public static final String VAR_ngsildTenant = "ngsildTenant";
+	public static final String VAR_ngsildPath = "ngsildPath";
+	public static final String VAR_ngsildData = "ngsildData";
 
 	public static List<String> varsQForClass() {
 		return WeatherObserved.varsQWeatherObserved(new ArrayList<String>());
@@ -5634,6 +5923,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_windDirection);
 		vars.add(VAR_windSpeed);
 		vars.add(VAR_entityId);
+		vars.add(VAR_ngsildTenant);
+		vars.add(VAR_ngsildPath);
+		vars.add(VAR_ngsildData);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
 	}
@@ -5671,6 +5963,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_visibility);
 		vars.add(VAR_windDirection);
 		vars.add(VAR_windSpeed);
+		vars.add(VAR_ngsildData);
 		BaseModel.varsRangeBaseModel(vars);
 		return vars;
 	}
@@ -5722,6 +6015,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_windSpeed = "wind speed";
 	public static final String DISPLAY_NAME_entityId = "entity ID";
 	public static final String DISPLAY_NAME_entityShortId = "short entity ID";
+	public static final String DISPLAY_NAME_ngsildTenant = "NGSILD-Tenant";
+	public static final String DISPLAY_NAME_ngsildPath = "NGSILD-Path";
+	public static final String DISPLAY_NAME_ngsildData = "NGSILD data";
 
 	public static String displayNameForClass(String var) {
 		return WeatherObserved.displayNameWeatherObserved(var);
@@ -5822,6 +6118,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_entityId;
 		case VAR_entityShortId:
 			return DISPLAY_NAME_entityShortId;
+		case VAR_ngsildTenant:
+			return DISPLAY_NAME_ngsildTenant;
+		case VAR_ngsildPath:
+			return DISPLAY_NAME_ngsildPath;
+		case VAR_ngsildData:
+			return DISPLAY_NAME_ngsildData;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
@@ -5923,6 +6225,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "A unique ID for this Smart Data Model";
 		case VAR_entityShortId:
 			return "A short ID for this Smart Data Model";
+		case VAR_ngsildTenant:
+			return "The NGSILD-Tenant or Fiware-Service";
+		case VAR_ngsildPath:
+			return "The NGSILD-Path or Fiware-ServicePath";
+		case VAR_ngsildData:
+			return "The NGSILD data with @context from the context broker";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -6024,8 +6332,121 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_entityShortId:
 			return "String";
+		case VAR_ngsildTenant:
+			return "String";
+		case VAR_ngsildPath:
+			return "String";
+		case VAR_ngsildData:
+			return "JsonObject";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
+		}
+	}
+
+	public static String ngsiType(String var) {
+		switch(var) {
+		case VAR_name:
+			return "Property";
+		case VAR_description:
+			return "Property";
+		case VAR_address:
+			return "Property";
+		case VAR_alternateName:
+			return "Property";
+		case VAR_areaServedColors:
+			return "Property";
+		case VAR_areaServedTitles:
+			return "Property";
+		case VAR_areaServedLinks:
+			return "Property";
+		case VAR_areaServed:
+			return "GeoProperty";
+		case VAR_airQualityIndex:
+			return "Property";
+		case VAR_airQualityIndexForecast:
+			return "Property";
+		case VAR_aqiMajorPollutant:
+			return "Property";
+		case VAR_aqiMajorPollutantForecast:
+			return "Property";
+		case VAR_atmosphericPressure:
+			return "Property";
+		case VAR_dataProvider:
+			return "Property";
+		case VAR_dateCreated:
+			return "Property";
+		case VAR_dateModified:
+			return "Property";
+		case VAR_dateObserved:
+			return "Property";
+		case VAR_dewPoint:
+			return "Property";
+		case VAR_diffuseIrradiation:
+			return "Property";
+		case VAR_directIrradiation:
+			return "Property";
+		case VAR_gustSpeed:
+			return "Property";
+		case VAR_illuminance:
+			return "Property";
+		case VAR_location:
+			return "GeoProperty";
+		case VAR_owner:
+			return "Property";
+		case VAR_precipitation:
+			return "Property";
+		case VAR_precipitationForecast:
+			return "Property";
+		case VAR_pressureTendency:
+			return "Property";
+		case VAR_refDevice:
+			return "Property";
+		case VAR_refPointOfInterest:
+			return "Property";
+		case VAR_relativeHumidity:
+			return "Property";
+		case VAR_relativeHumidityForecast:
+			return "Property";
+		case VAR_seeAlso:
+			return "Property";
+		case VAR_snowHeight:
+			return "Property";
+		case VAR_solarRadiation:
+			return "Property";
+		case VAR_source:
+			return "Property";
+		case VAR_streamGauge:
+			return "Property";
+		case VAR_temperature:
+			return "Property";
+		case VAR_airTemperatureForecast:
+			return "Property";
+		case VAR_airTemperatureTSA:
+			return "Property";
+		case VAR_feelsLikeTemperature:
+			return "Property";
+		case VAR_uVIndexMax:
+			return "Property";
+		case VAR_visibility:
+			return "Property";
+		case VAR_weatherType:
+			return "Property";
+		case VAR_windDirection:
+			return "Property";
+		case VAR_windSpeed:
+			return "Property";
+		case VAR_entityId:
+			return "Property";
+		case VAR_entityShortId:
+			return "Property";
+		case VAR_ngsildTenant:
+			return "Property";
+		case VAR_ngsildPath:
+			return "Property";
+		case VAR_ngsildData:
+			return "Property";
+			default:
+				return null;
 		}
 	}
 
@@ -6128,6 +6549,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 16;
 		case VAR_entityId:
 			return 3;
+		case VAR_ngsildTenant:
+			return 3;
+		case VAR_ngsildPath:
+			return 3;
+		case VAR_ngsildData:
+			return 3;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -6221,6 +6648,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_entityId:
 			return 4;
+		case VAR_ngsildTenant:
+			return 5;
+		case VAR_ngsildPath:
+			return 5;
+		case VAR_ngsildData:
+			return 6;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

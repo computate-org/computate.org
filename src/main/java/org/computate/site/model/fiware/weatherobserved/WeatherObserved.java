@@ -663,6 +663,46 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 		}
 	}
 
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Tenant
+	 * Description: The NGSILD-Tenant or Fiware-Service
+	 * HtmRow: 3
+	 * HtmCell: 5
+	 * Facet: true
+	 */
+	protected void _ngsildTenant(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Path
+	 * Description: The NGSILD-Path or Fiware-ServicePath
+	 * HtmRow: 3
+	 * HtmCell: 5
+	 * Facet: true
+	 */
+	protected void _ngsildPath(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD data
+	 * Description: The NGSILD data with @context from the context broker
+	 * HtmRow: 3
+	 * HtmCell: 6
+	 * Facet: true
+	 */
+	protected void _ngsildData(Wrap<JsonObject> w) {
+	}
+
 	@Override
 	protected void _objectTitle(Wrap<String> w) {
 		StringBuilder b = new StringBuilder();

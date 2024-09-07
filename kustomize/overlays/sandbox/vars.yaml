@@ -243,7 +243,7 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Name of the solr deployment in OpenShift. 
 #SOLR_NAME: solr
 # Whether to use SSL when connecting to Solr. 
-SOLR_SSL: true
+SOLR_SSL: false
 # The host name to connect to Solr in OpenShift. 
 SOLR_HOST_NAME: "solr"
 # The default port that Solr runs. 

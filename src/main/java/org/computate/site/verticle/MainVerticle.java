@@ -169,12 +169,13 @@ import io.vertx.tracing.opentelemetry.OpenTelemetryOptions;
 
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
-import org.computate.site.result.BaseResult;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
 import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.site.result.BaseResult;
+import org.computate.site.model.BaseModel;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
@@ -193,14 +194,17 @@ import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.service.CompanyServiceEnUSGenApiService;
 import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
 import org.computate.site.model.service.CompanyService;
-import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
-import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.webinar.CompanyWebinarEnUSGenApiService;
 import org.computate.site.model.webinar.CompanyWebinarEnUSApiServiceImpl;
 import org.computate.site.model.webinar.CompanyWebinar;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
+import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
+import org.computate.site.model.fiware.iotservice.IotService;
 
 
 /**
@@ -1143,8 +1147,8 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite","WeatherObserved");
-			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite");
+			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite","WeatherObserved","IotService");
+			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite");
 			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
@@ -1169,14 +1173,18 @@ public class MainVerticle extends AbstractVerticle {
 			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyService.configureUi(router, CompanyService.class, SiteRequest.class, "/en-us/service");
 
+			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = CompanyWebinarEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiCompanyWebinar.configureUi(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
+			apiCompanyWebinar.configureUserUi(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/webinar", "/en-us/user/webinar");
+
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = CompanyWebinarEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-			apiCompanyWebinar.configureUi(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
-			apiCompanyWebinar.configureUserUi(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/webinar");
-
 			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+
+			IotServiceEnUSApiServiceImpl apiIotService = IotServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiIotService.configureUi(router, IotService.class, SiteRequest.class, "/en-us/iot-service");
+			apiIotService.configureUserUi(router, IotService.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/iot-service", "/en-us/user/iot-service");
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");
@@ -1545,11 +1553,24 @@ public class MainVerticle extends AbstractVerticle {
 				});
 			});
 
+			router.post("/ngsi-ld/subscription").handler(ctx -> {
+				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+				apiSiteUser.listPUTImportSmartDataModel(ctx).onSuccess(a -> {
+					ctx.response().setStatusCode(200);
+					ctx.end();
+				}).onFailure(ex -> {
+					LOG.error("NGSI-LD subscription failed", ex);
+					promise.fail(ex);
+				});
+			});
+
 			router.get("/hackathons").handler(ctx -> {
 				ctx.response().putHeader("location", "/en-us/article/hackathons");
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});
+
+			router.route("/static/*").handler(staticHandler);
 
 			LOG.info("The UI was configured properly.");
 			promise.complete();

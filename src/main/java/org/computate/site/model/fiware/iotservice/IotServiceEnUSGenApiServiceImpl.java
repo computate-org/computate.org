@@ -1,4 +1,4 @@
-package org.computate.site.model.fiware.weatherobserved;
+package org.computate.site.model.fiware.iotservice;
 
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -101,25 +101,25 @@ import java.util.Base64;
 import java.time.ZonedDateTime;
 import org.apache.commons.lang3.BooleanUtils;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedPage;
+import org.computate.site.model.fiware.iotservice.IotServicePage;
 
 
 /**
  * Translate: false
  * Generated: true
  **/
-public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl implements WeatherObservedEnUSGenApiService {
+public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implements IotServiceEnUSGenApiService {
 
-	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObservedEnUSGenApiServiceImpl.class);
+	protected static final Logger LOG = LoggerFactory.getLogger(IotServiceEnUSGenApiServiceImpl.class);
 
-	public WeatherObservedEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
+	public IotServiceEnUSGenApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
 		super(eventBus, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 	}
 
 	// Search //
 
 	@Override
-	public void searchWeatherObserved(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchIotService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -133,12 +133,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -168,21 +168,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
-							response200SearchWeatherObserved(listWeatherObserved).onSuccess(response -> {
+						searchIotServiceList(siteRequest, false, true, false).onSuccess(listIotService -> {
+							response200SearchIotService(listIotService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchWeatherObserved succeeded. "));
+								LOG.debug(String.format("searchIotService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchWeatherObserved failed. "), ex);
+								LOG.error(String.format("searchIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchWeatherObserved failed. "), ex);
+							LOG.error(String.format("searchIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchWeatherObserved failed. "), ex);
+					LOG.error(String.format("searchIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -191,7 +191,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchWeatherObserved failed. ", ex2));
+					LOG.error(String.format("searchIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -206,28 +206,28 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("searchWeatherObserved failed. "), ex);
+				LOG.error(String.format("searchIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200SearchWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
+	public Future<ServiceResponse> response200SearchIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-			List<String> fls = listWeatherObserved.getRequest().getFields();
+			SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
+			List<String> fls = listIotService.getRequest().getFields();
 			JsonObject json = new JsonObject();
 			JsonArray l = new JsonArray();
-			listWeatherObserved.getList().stream().forEach(o -> {
+			listIotService.getList().stream().forEach(o -> {
 				JsonObject json2 = JsonObject.mapFrom(o);
 				if(fls.size() > 0) {
 					Set<String> fieldNames = new HashSet<String>();
 					for(String fieldName : json2.fieldNames()) {
-						String v = WeatherObserved.varIndexedWeatherObserved(fieldName);
+						String v = IotService.varIndexedIotService(fieldName);
 						if(v != null)
-							fieldNames.add(WeatherObserved.varIndexedWeatherObserved(fieldName));
+							fieldNames.add(IotService.varIndexedIotService(fieldName));
 					}
 					if(fls.size() == 1 && fls.stream().findFirst().orElse(null).equals("saves_docvalues_strings")) {
 						fieldNames.removeAll(Optional.ofNullable(json2.getJsonArray("saves_docvalues_strings")).orElse(new JsonArray()).stream().map(s -> s.toString()).collect(Collectors.toList()));
@@ -245,15 +245,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				l.add(json2);
 			});
 			json.put("list", l);
-			response200Search(listWeatherObserved.getRequest(), listWeatherObserved.getResponse(), json);
+			response200Search(listIotService.getRequest(), listIotService.getResponse(), json);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200SearchIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void responsePivotSearchWeatherObserved(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+	public void responsePivotSearchIotService(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
 		if(pivots != null) {
 			for(SolrResponse.Pivot pivotField : pivots) {
 				String entityIndexed = pivotField.getField();
@@ -282,7 +282,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				if(pivotFields2 != null) {
 					JsonArray pivotArray2 = new JsonArray();
 					pivotJson.put("pivot", pivotArray2);
-					responsePivotSearchWeatherObserved(pivotFields2, pivotArray2);
+					responsePivotSearchIotService(pivotFields2, pivotArray2);
 				}
 			}
 		}
@@ -291,7 +291,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// GET //
 
 	@Override
-	public void getWeatherObserved(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void getIotService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -305,7 +305,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "GET"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -335,21 +335,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
-							response200GETWeatherObserved(listWeatherObserved).onSuccess(response -> {
+						searchIotServiceList(siteRequest, false, true, false).onSuccess(listIotService -> {
+							response200GETIotService(listIotService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("getWeatherObserved succeeded. "));
+								LOG.debug(String.format("getIotService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("getWeatherObserved failed. "), ex);
+								LOG.error(String.format("getIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("getWeatherObserved failed. "), ex);
+							LOG.error(String.format("getIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("getWeatherObserved failed. "), ex);
+					LOG.error(String.format("getIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -358,7 +358,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("getWeatherObserved failed. ", ex2));
+					LOG.error(String.format("getIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -373,21 +373,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("getWeatherObserved failed. "), ex);
+				LOG.error(String.format("getIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<ServiceResponse> response200GETWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
+	public Future<ServiceResponse> response200GETIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-			JsonObject json = JsonObject.mapFrom(listWeatherObserved.getList().stream().findFirst().orElse(null));
+			SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
+			JsonObject json = JsonObject.mapFrom(listIotService.getList().stream().findFirst().orElse(null));
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200GETWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200GETIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -396,8 +396,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// PATCH //
 
 	@Override
-	public void patchWeatherObserved(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("patchWeatherObserved started. "));
+	public void patchIotService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("patchIotService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -411,7 +411,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -441,42 +441,42 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+						searchIotServiceList(siteRequest, false, true, true).onSuccess(listIotService -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(listWeatherObserved.getRequest().getRows());
-								apiRequest.setNumFound(listWeatherObserved.getResponse().getResponse().getNumFound());
+								apiRequest.setRows(listIotService.getRequest().getRows());
+								apiRequest.setNumFound(listIotService.getResponse().getResponse().getNumFound());
 								apiRequest.setNumPATCH(0L);
 								apiRequest.initDeepApiRequest(siteRequest);
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
-									apiRequest.setOriginal(listWeatherObserved.first());
-								apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
-								eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+									apiRequest.setOriginal(listIotService.first());
+								apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 
-								listPATCHWeatherObserved(apiRequest, listWeatherObserved).onSuccess(e -> {
-									response200PATCHWeatherObserved(siteRequest).onSuccess(response -> {
-										LOG.debug(String.format("patchWeatherObserved succeeded. "));
+								listPATCHIotService(apiRequest, listIotService).onSuccess(e -> {
+									response200PATCHIotService(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("patchIotService succeeded. "));
 										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
-										LOG.error(String.format("patchWeatherObserved failed. "), ex);
+										LOG.error(String.format("patchIotService failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
 								}).onFailure(ex -> {
-									LOG.error(String.format("patchWeatherObserved failed. "), ex);
+									LOG.error(String.format("patchIotService failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							} catch(Exception ex) {
-								LOG.error(String.format("patchWeatherObserved failed. "), ex);
+								LOG.error(String.format("patchIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							}
 						}).onFailure(ex -> {
-							LOG.error(String.format("patchWeatherObserved failed. "), ex);
+							LOG.error(String.format("patchIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("patchWeatherObserved failed. "), ex);
+					LOG.error(String.format("patchIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -485,7 +485,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("patchWeatherObserved failed. ", ex2));
+					LOG.error(String.format("patchIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -500,63 +500,63 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("patchWeatherObserved failed. "), ex);
+				LOG.error(String.format("patchIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPATCHWeatherObserved(ApiRequest apiRequest, SearchList<WeatherObserved> listWeatherObserved) {
+	public Future<Void> listPATCHIotService(ApiRequest apiRequest, SearchList<IotService> listIotService) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
-		SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-		listWeatherObserved.getList().forEach(o -> {
+		SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
+		listIotService.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			futures.add(Future.future(promise1 -> {
-				patchWeatherObservedFuture(o, false).onSuccess(a -> {
+				patchIotServiceFuture(o, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
-					LOG.error(String.format("listPATCHWeatherObserved failed. "), ex);
+					LOG.error(String.format("listPATCHIotService failed. "), ex);
 					promise1.fail(ex);
 				});
 			}));
 		});
 		CompositeFuture.all(futures).onSuccess( a -> {
-			listWeatherObserved.next().onSuccess(next -> {
+			listIotService.next().onSuccess(next -> {
 				if(next) {
-					listPATCHWeatherObserved(apiRequest, listWeatherObserved).onSuccess(b -> {
+					listPATCHIotService(apiRequest, listIotService).onSuccess(b -> {
 						promise.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPATCHWeatherObserved failed. "), ex);
+						LOG.error(String.format("listPATCHIotService failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete();
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPATCHWeatherObserved failed. "), ex);
+				LOG.error(String.format("listPATCHIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		}).onFailure(ex -> {
-			LOG.error(String.format("listPATCHWeatherObserved failed. "), ex);
+			LOG.error(String.format("listPATCHIotService failed. "), ex);
 			promise.fail(ex);
 		});
 		return promise.future();
 	}
 
 	@Override
-	public void patchWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void patchIotServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
-				searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+				searchIotServiceList(siteRequest, false, true, true).onSuccess(listIotService -> {
 					try {
-						WeatherObserved o = listWeatherObserved.first();
-						if(o != null && listWeatherObserved.getResponse().getResponse().getNumFound() == 1) {
+						IotService o = listIotService.first();
+						if(o != null && listIotService.getResponse().getResponse().getNumFound() == 1) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1L);
 							apiRequest.setNumFound(1L);
@@ -568,8 +568,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
-							patchWeatherObservedFuture(o, false).onSuccess(o2 -> {
+							apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
+							patchIotServiceFuture(o, false).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -578,46 +578,46 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("patchWeatherObserved failed. "), ex);
+						LOG.error(String.format("patchIotService failed. "), ex);
 						error(siteRequest, eventHandler, ex);
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("patchWeatherObserved failed. "), ex);
+					LOG.error(String.format("patchIotService failed. "), ex);
 					error(siteRequest, eventHandler, ex);
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("patchWeatherObserved failed. "), ex);
+				LOG.error(String.format("patchIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		}).onFailure(ex -> {
-			LOG.error(String.format("patchWeatherObserved failed. "), ex);
+			LOG.error(String.format("patchIotService failed. "), ex);
 			error(null, eventHandler, ex);
 		});
 	}
 
-	public Future<WeatherObserved> patchWeatherObservedFuture(WeatherObserved o, Boolean inheritPk) {
+	public Future<IotService> patchIotServiceFuture(IotService o, Boolean inheritPk) {
 		SiteRequest siteRequest = o.getSiteRequest_();
-		Promise<WeatherObserved> promise = Promise.promise();
+		Promise<IotService> promise = Promise.promise();
 
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			Promise<WeatherObserved> promise1 = Promise.promise();
+			Promise<IotService> promise1 = Promise.promise();
 			pgPool.withTransaction(sqlConnection -> {
 				siteRequest.setSqlConnection(sqlConnection);
-				varsWeatherObserved(siteRequest).onSuccess(a -> {
-					sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved -> {
-						persistWeatherObserved(weatherObserved, true).onSuccess(c -> {
-							relateWeatherObserved(weatherObserved).onSuccess(d -> {
-								indexWeatherObserved(weatherObserved).onSuccess(o2 -> {
+				varsIotService(siteRequest).onSuccess(a -> {
+					sqlPATCHIotService(o, inheritPk).onSuccess(iotService -> {
+						persistIotService(iotService, true).onSuccess(c -> {
+							relateIotService(iotService).onSuccess(d -> {
+								indexIotService(iotService).onSuccess(o2 -> {
 									if(apiRequest != null) {
 										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 										if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
-											o2.apiRequestWeatherObserved();
+											o2.apiRequestIotService();
 											if(apiRequest.getVars().size() > 0)
-												eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+												eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 										}
 									}
-									promise1.complete(weatherObserved);
+									promise1.complete(iotService);
 								}).onFailure(ex -> {
 									promise1.fail(ex);
 								});
@@ -639,28 +639,28 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}).onFailure(ex -> {
 				siteRequest.setSqlConnection(null);
 				promise.fail(ex);
-			}).compose(weatherObserved -> {
-				Promise<WeatherObserved> promise2 = Promise.promise();
-				refreshWeatherObserved(weatherObserved).onSuccess(a -> {
-					promise2.complete(weatherObserved);
+			}).compose(iotService -> {
+				Promise<IotService> promise2 = Promise.promise();
+				refreshIotService(iotService).onSuccess(a -> {
+					promise2.complete(iotService);
 				}).onFailure(ex -> {
 					promise2.fail(ex);
 				});
 				return promise2.future();
-			}).onSuccess(weatherObserved -> {
-				promise.complete(weatherObserved);
+			}).onSuccess(iotService -> {
+				promise.complete(iotService);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("patchWeatherObservedFuture failed. "), ex);
+			LOG.error(String.format("patchIotServiceFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<WeatherObserved> sqlPATCHWeatherObserved(WeatherObserved o, Boolean inheritPk) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> sqlPATCHIotService(IotService o, Boolean inheritPk) {
+		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -668,12 +668,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
-			StringBuilder bSql = new StringBuilder("UPDATE WeatherObserved SET ");
+			StringBuilder bSql = new StringBuilder("UPDATE IotService SET ");
 			List<Object> bParams = new ArrayList<Object>();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
 			Set<String> methodNames = jsonObject.fieldNames();
-			WeatherObserved o2 = new WeatherObserved();
+			IotService o2 = new IotService();
 			o2.setSiteRequest_(siteRequest);
 			List<Future> futures1 = new ArrayList<>();
 			List<Future> futures2 = new ArrayList<>();
@@ -684,7 +684,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							o2.setInheritPk(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_inheritPk + "=$" + num);
+							bSql.append(IotService.VAR_inheritPk + "=$" + num);
 							num++;
 							bParams.add(o2.sqlInheritPk());
 						break;
@@ -692,7 +692,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							o2.setCreated(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_created + "=$" + num);
+							bSql.append(IotService.VAR_created + "=$" + num);
 							num++;
 							bParams.add(o2.sqlCreated());
 						break;
@@ -700,7 +700,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							o2.setArchived(jsonObject.getBoolean(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_archived + "=$" + num);
+							bSql.append(IotService.VAR_archived + "=$" + num);
 							num++;
 							bParams.add(o2.sqlArchived());
 						break;
@@ -708,7 +708,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							o2.setSessionId(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_sessionId + "=$" + num);
+							bSql.append(IotService.VAR_sessionId + "=$" + num);
 							num++;
 							bParams.add(o2.sqlSessionId());
 						break;
@@ -716,377 +716,113 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							o2.setUserKey(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_userKey + "=$" + num);
+							bSql.append(IotService.VAR_userKey + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUserKey());
 						break;
-					case "setName":
-							o2.setName(jsonObject.getString(entityVar));
+					case "setEntityType":
+							o2.setEntityType(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_name + "=$" + num);
+							bSql.append(IotService.VAR_entityType + "=$" + num);
 							num++;
-							bParams.add(o2.sqlName());
+							bParams.add(o2.sqlEntityType());
 						break;
-					case "setDescription":
-							o2.setDescription(jsonObject.getString(entityVar));
+					case "setApiKey":
+							o2.setApiKey(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_description + "=$" + num);
+							bSql.append(IotService.VAR_apiKey + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDescription());
+							bParams.add(o2.sqlApiKey());
 						break;
-					case "setAddress":
-							o2.setAddress(jsonObject.getJsonObject(entityVar));
+					case "setCbHost":
+							o2.setCbHost(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_address + "=$" + num);
+							bSql.append(IotService.VAR_cbHost + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAddress());
+							bParams.add(o2.sqlCbHost());
 						break;
-					case "setAlternateName":
-							o2.setAlternateName(jsonObject.getString(entityVar));
+					case "setResource":
+							o2.setResource(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+							bSql.append(IotService.VAR_resource + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAlternateName());
+							bParams.add(o2.sqlResource());
 						break;
-					case "setAreaServed":
-							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+					case "setAttributes":
+							o2.setAttributes(jsonObject.getJsonArray(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							bSql.append(IotService.VAR_attributes + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAreaServed());
+							bParams.add(o2.sqlAttributes());
 						break;
-					case "setAirQualityIndex":
-							o2.setAirQualityIndex(jsonObject.getString(entityVar));
+					case "setService":
+							o2.setService(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airQualityIndex + "=$" + num);
+							bSql.append(IotService.VAR_service + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAirQualityIndex());
+							bParams.add(o2.sqlService());
 						break;
-					case "setAirQualityIndexForecast":
-							o2.setAirQualityIndexForecast(jsonObject.getString(entityVar));
+					case "setServicePath":
+							o2.setServicePath(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airQualityIndexForecast + "=$" + num);
+							bSql.append(IotService.VAR_servicePath + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAirQualityIndexForecast());
+							bParams.add(o2.sqlServicePath());
 						break;
-					case "setAqiMajorPollutant":
-							o2.setAqiMajorPollutant(jsonObject.getString(entityVar));
+					case "setPageId":
+							o2.setPageId(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_aqiMajorPollutant + "=$" + num);
+							bSql.append(IotService.VAR_pageId + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAqiMajorPollutant());
+							bParams.add(o2.sqlPageId());
 						break;
-					case "setAqiMajorPollutantForecast":
-							o2.setAqiMajorPollutantForecast(jsonObject.getString(entityVar));
+					case "setResourceUri":
+							o2.setResourceUri(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_aqiMajorPollutantForecast + "=$" + num);
+							bSql.append(IotService.VAR_resourceUri + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAqiMajorPollutantForecast());
+							bParams.add(o2.sqlResourceUri());
 						break;
-					case "setAtmosphericPressure":
-							o2.setAtmosphericPressure(jsonObject.getString(entityVar));
+					case "setTemplateUri":
+							o2.setTemplateUri(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_atmosphericPressure + "=$" + num);
+							bSql.append(IotService.VAR_templateUri + "=$" + num);
 							num++;
-							bParams.add(o2.sqlAtmosphericPressure());
+							bParams.add(o2.sqlTemplateUri());
 						break;
-					case "setDataProvider":
-							o2.setDataProvider(jsonObject.getString(entityVar));
+					case "setUri":
+							o2.setUri(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
+							bSql.append(IotService.VAR_uri + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDataProvider());
+							bParams.add(o2.sqlUri());
 						break;
-					case "setDateCreated":
-							o2.setDateCreated(jsonObject.getString(entityVar));
+					case "setUrl":
+							o2.setUrl(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
+							bSql.append(IotService.VAR_url + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDateCreated());
+							bParams.add(o2.sqlUrl());
 						break;
-					case "setDateModified":
-							o2.setDateModified(jsonObject.getString(entityVar));
+					case "setTitle":
+							o2.setTitle(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
+							bSql.append(IotService.VAR_title + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDateModified());
-						break;
-					case "setDateObserved":
-							o2.setDateObserved(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDateObserved());
-						break;
-					case "setDewPoint":
-							o2.setDewPoint(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dewPoint + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDewPoint());
-						break;
-					case "setDiffuseIrradiation":
-							o2.setDiffuseIrradiation(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_diffuseIrradiation + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDiffuseIrradiation());
-						break;
-					case "setDirectIrradiation":
-							o2.setDirectIrradiation(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDirectIrradiation());
-						break;
-					case "setGustSpeed":
-							o2.setGustSpeed(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_gustSpeed + "=$" + num);
-							num++;
-							bParams.add(o2.sqlGustSpeed());
-						break;
-					case "setIlluminance":
-							o2.setIlluminance(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_illuminance + "=$" + num);
-							num++;
-							bParams.add(o2.sqlIlluminance());
-						break;
-					case "setLocation":
-							o2.setLocation(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_location + "=$" + num);
-							num++;
-							bParams.add(o2.sqlLocation());
-						break;
-					case "setOwner":
-							o2.setOwner(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-							num++;
-							bParams.add(o2.sqlOwner());
-						break;
-					case "setPrecipitation":
-							o2.setPrecipitation(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_precipitation + "=$" + num);
-							num++;
-							bParams.add(o2.sqlPrecipitation());
-						break;
-					case "setPrecipitationForecast":
-							o2.setPrecipitationForecast(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_precipitationForecast + "=$" + num);
-							num++;
-							bParams.add(o2.sqlPrecipitationForecast());
-						break;
-					case "setPressureTendency":
-							o2.setPressureTendency(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_pressureTendency + "=$" + num);
-							num++;
-							bParams.add(o2.sqlPressureTendency());
-						break;
-					case "setRefDevice":
-							o2.setRefDevice(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRefDevice());
-						break;
-					case "setRefPointOfInterest":
-							o2.setRefPointOfInterest(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRefPointOfInterest());
-						break;
-					case "setRelativeHumidity":
-							o2.setRelativeHumidity(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_relativeHumidity + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRelativeHumidity());
-						break;
-					case "setRelativeHumidityForecast":
-							o2.setRelativeHumidityForecast(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_relativeHumidityForecast + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRelativeHumidityForecast());
-						break;
-					case "setSeeAlso":
-							o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSeeAlso());
-						break;
-					case "setSnowHeight":
-							o2.setSnowHeight(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_snowHeight + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSnowHeight());
-						break;
-					case "setSolarRadiation":
-							o2.setSolarRadiation(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_solarRadiation + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSolarRadiation());
-						break;
-					case "setSource":
-							o2.setSource(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_source + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSource());
-						break;
-					case "setStreamGauge":
-							o2.setStreamGauge(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_streamGauge + "=$" + num);
-							num++;
-							bParams.add(o2.sqlStreamGauge());
-						break;
-					case "setTemperature":
-							o2.setTemperature(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_temperature + "=$" + num);
-							num++;
-							bParams.add(o2.sqlTemperature());
-						break;
-					case "setAirTemperatureForecast":
-							o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAirTemperatureForecast());
-						break;
-					case "setAirTemperatureTSA":
-							o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAirTemperatureTSA());
-						break;
-					case "setFeelsLikeTemperature":
-							o2.setFeelsLikeTemperature(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_feelsLikeTemperature + "=$" + num);
-							num++;
-							bParams.add(o2.sqlFeelsLikeTemperature());
-						break;
-					case "setUVIndexMax":
-							o2.setUVIndexMax(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUVIndexMax());
-						break;
-					case "setVisibility":
-							o2.setVisibility(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_visibility + "=$" + num);
-							num++;
-							bParams.add(o2.sqlVisibility());
-						break;
-					case "setWeatherType":
-							o2.setWeatherType(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_weatherType + "=$" + num);
-							num++;
-							bParams.add(o2.sqlWeatherType());
-						break;
-					case "setWindDirection":
-							o2.setWindDirection(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_windDirection + "=$" + num);
-							num++;
-							bParams.add(o2.sqlWindDirection());
-						break;
-					case "setWindSpeed":
-							o2.setWindSpeed(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_windSpeed + "=$" + num);
-							num++;
-							bParams.add(o2.sqlWindSpeed());
-						break;
-					case "setEntityId":
-							o2.setEntityId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_entityId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlEntityId());
-						break;
-					case "setNgsildTenant":
-							o2.setNgsildTenant(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_ngsildTenant + "=$" + num);
-							num++;
-							bParams.add(o2.sqlNgsildTenant());
-						break;
-					case "setNgsildPath":
-							o2.setNgsildPath(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_ngsildPath + "=$" + num);
-							num++;
-							bParams.add(o2.sqlNgsildPath());
-						break;
-					case "setNgsildData":
-							o2.setNgsildData(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_ngsildData + "=$" + num);
-							num++;
-							bParams.add(o2.sqlNgsildData());
+							bParams.add(o2.sqlTitle());
 						break;
 				}
 			}
@@ -1100,40 +836,40 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							).onSuccess(b -> {
 						a.handle(Future.succeededFuture());
 					}).onFailure(ex -> {
-						RuntimeException ex2 = new RuntimeException("value WeatherObserved failed", ex);
-						LOG.error(String.format("relateWeatherObserved failed. "), ex2);
+						RuntimeException ex2 = new RuntimeException("value IotService failed", ex);
+						LOG.error(String.format("relateIotService failed. "), ex2);
 						a.handle(Future.failedFuture(ex2));
 					});
 				}));
 			}
 			CompositeFuture.all(futures1).onSuccess(a -> {
 				CompositeFuture.all(futures2).onSuccess(b -> {
-					WeatherObserved o3 = new WeatherObserved();
+					IotService o3 = new IotService();
 					o3.setSiteRequest_(o.getSiteRequest_());
 					o3.setPk(pk);
 					promise.complete(o3);
 				}).onFailure(ex -> {
-					LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+					LOG.error(String.format("sqlPATCHIotService failed. "), ex);
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+				LOG.error(String.format("sqlPATCHIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);
+			LOG.error(String.format("sqlPATCHIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200PATCHWeatherObserved(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200PATCHIotService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PATCHWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200PATCHIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1142,8 +878,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// POST //
 
 	@Override
-	public void postWeatherObserved(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("postWeatherObserved started. "));
+	public void postIotService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("postIotService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -1157,7 +893,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "POST"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1193,7 +929,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+						eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
@@ -1212,19 +948,19 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						params.put("query", query);
 						JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 						JsonObject json = new JsonObject().put("context", context);
-						eventBus.request(WeatherObserved.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postWeatherObservedFuture")).onSuccess(a -> {
+						eventBus.request(IotService.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postIotServiceFuture")).onSuccess(a -> {
 							JsonObject responseMessage = (JsonObject)a.body();
 							JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
 							apiRequest.setPk(Long.parseLong(responseBody.getString("pk")));
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
-							LOG.debug(String.format("postWeatherObserved succeeded. "));
+							LOG.debug(String.format("postIotService succeeded. "));
 						}).onFailure(ex -> {
-							LOG.error(String.format("postWeatherObserved failed. "), ex);
+							LOG.error(String.format("postIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("postWeatherObserved failed. "), ex);
+					LOG.error(String.format("postIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -1233,7 +969,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postWeatherObserved failed. ", ex2));
+					LOG.error(String.format("postIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1248,7 +984,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("postWeatherObserved failed. "), ex);
+				LOG.error(String.format("postIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
@@ -1256,7 +992,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 
 	@Override
-	public void postWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void postIotServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			ApiRequest apiRequest = new ApiRequest();
 			apiRequest.setRows(1L);
@@ -1267,7 +1003,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 				siteRequest.getRequestVars().put( "refresh", "false" );
 			}
-			postWeatherObservedFuture(siteRequest, false).onSuccess(o -> {
+			postIotServiceFuture(siteRequest, false).onSuccess(o -> {
 				eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(JsonObject.mapFrom(o).encodePrettily()))));
 			}).onFailure(ex -> {
 				eventHandler.handle(Future.failedFuture(ex));
@@ -1277,7 +1013,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("postWeatherObserved failed. ", ex2));
+					LOG.error(String.format("postIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -1292,26 +1028,26 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("postWeatherObserved failed. "), ex);
+				LOG.error(String.format("postIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<WeatherObserved> postWeatherObservedFuture(SiteRequest siteRequest, Boolean inheritPk) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> postIotServiceFuture(SiteRequest siteRequest, Boolean inheritPk) {
+		Promise<IotService> promise = Promise.promise();
 
 		try {
 			pgPool.withTransaction(sqlConnection -> {
-				Promise<WeatherObserved> promise1 = Promise.promise();
+				Promise<IotService> promise1 = Promise.promise();
 				siteRequest.setSqlConnection(sqlConnection);
-				varsWeatherObserved(siteRequest).onSuccess(a -> {
-					createWeatherObserved(siteRequest).onSuccess(weatherObserved -> {
-						sqlPOSTWeatherObserved(weatherObserved, inheritPk).onSuccess(b -> {
-							persistWeatherObserved(weatherObserved, false).onSuccess(c -> {
-								relateWeatherObserved(weatherObserved).onSuccess(d -> {
-									indexWeatherObserved(weatherObserved).onSuccess(o2 -> {
-										promise1.complete(weatherObserved);
+				varsIotService(siteRequest).onSuccess(a -> {
+					createIotService(siteRequest).onSuccess(iotService -> {
+						sqlPOSTIotService(iotService, inheritPk).onSuccess(b -> {
+							persistIotService(iotService, false).onSuccess(c -> {
+								relateIotService(iotService).onSuccess(d -> {
+									indexIotService(iotService).onSuccess(o2 -> {
+										promise1.complete(iotService);
 									}).onFailure(ex -> {
 										promise1.fail(ex);
 									});
@@ -1336,39 +1072,39 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}).onFailure(ex -> {
 				siteRequest.setSqlConnection(null);
 				promise.fail(ex);
-			}).compose(weatherObserved -> {
-				Promise<WeatherObserved> promise2 = Promise.promise();
-				refreshWeatherObserved(weatherObserved).onSuccess(a -> {
+			}).compose(iotService -> {
+				Promise<IotService> promise2 = Promise.promise();
+				refreshIotService(iotService).onSuccess(a -> {
 					try {
 						ApiRequest apiRequest = siteRequest.getApiRequest_();
 						if(apiRequest != null) {
 							apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
-							weatherObserved.apiRequestWeatherObserved();
-							eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+							iotService.apiRequestIotService();
+							eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 						}
-						promise2.complete(weatherObserved);
+						promise2.complete(iotService);
 					} catch(Exception ex) {
-						LOG.error(String.format("postWeatherObservedFuture failed. "), ex);
+						LOG.error(String.format("postIotServiceFuture failed. "), ex);
 						promise.fail(ex);
 					}
 				}).onFailure(ex -> {
 					promise2.fail(ex);
 				});
 				return promise2.future();
-			}).onSuccess(weatherObserved -> {
-				promise.complete(weatherObserved);
+			}).onSuccess(iotService -> {
+				promise.complete(iotService);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("postWeatherObservedFuture failed. "), ex);
+			LOG.error(String.format("postIotServiceFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<WeatherObserved> sqlPOSTWeatherObserved(WeatherObserved o, Boolean inheritPk) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> sqlPOSTIotService(IotService o, Boolean inheritPk) {
+		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1376,11 +1112,11 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
-			StringBuilder bSql = new StringBuilder("UPDATE WeatherObserved SET ");
+			StringBuilder bSql = new StringBuilder("UPDATE IotService SET ");
 			List<Object> bParams = new ArrayList<Object>();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			WeatherObserved o2 = new WeatherObserved();
+			IotService o2 = new IotService();
 			o2.setSiteRequest_(siteRequest);
 			List<Future> futures1 = new ArrayList<>();
 			List<Future> futures2 = new ArrayList<>();
@@ -1406,464 +1142,167 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case WeatherObserved.VAR_inheritPk:
+					case IotService.VAR_inheritPk:
 						o2.setInheritPk(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_inheritPk + "=$" + num);
+						bSql.append(IotService.VAR_inheritPk + "=$" + num);
 						num++;
 						bParams.add(o2.sqlInheritPk());
 						break;
-					case WeatherObserved.VAR_created:
+					case IotService.VAR_created:
 						o2.setCreated(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_created + "=$" + num);
+						bSql.append(IotService.VAR_created + "=$" + num);
 						num++;
 						bParams.add(o2.sqlCreated());
 						break;
-					case WeatherObserved.VAR_archived:
+					case IotService.VAR_archived:
 						o2.setArchived(jsonObject.getBoolean(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_archived + "=$" + num);
+						bSql.append(IotService.VAR_archived + "=$" + num);
 						num++;
 						bParams.add(o2.sqlArchived());
 						break;
-					case WeatherObserved.VAR_sessionId:
+					case IotService.VAR_sessionId:
 						o2.setSessionId(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_sessionId + "=$" + num);
+						bSql.append(IotService.VAR_sessionId + "=$" + num);
 						num++;
 						bParams.add(o2.sqlSessionId());
 						break;
-					case WeatherObserved.VAR_userKey:
+					case IotService.VAR_userKey:
 						o2.setUserKey(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_userKey + "=$" + num);
+						bSql.append(IotService.VAR_userKey + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUserKey());
 						break;
-					case WeatherObserved.VAR_name:
-						o2.setName(jsonObject.getString(entityVar));
+					case IotService.VAR_entityType:
+						o2.setEntityType(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_name + "=$" + num);
+						bSql.append(IotService.VAR_entityType + "=$" + num);
 						num++;
-						bParams.add(o2.sqlName());
+						bParams.add(o2.sqlEntityType());
 						break;
-					case WeatherObserved.VAR_description:
-						o2.setDescription(jsonObject.getString(entityVar));
+					case IotService.VAR_apiKey:
+						o2.setApiKey(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_description + "=$" + num);
+						bSql.append(IotService.VAR_apiKey + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDescription());
+						bParams.add(o2.sqlApiKey());
 						break;
-					case WeatherObserved.VAR_address:
-						o2.setAddress(jsonObject.getJsonObject(entityVar));
+					case IotService.VAR_cbHost:
+						o2.setCbHost(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_address + "=$" + num);
+						bSql.append(IotService.VAR_cbHost + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAddress());
+						bParams.add(o2.sqlCbHost());
 						break;
-					case WeatherObserved.VAR_alternateName:
-						o2.setAlternateName(jsonObject.getString(entityVar));
+					case IotService.VAR_resource:
+						o2.setResource(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+						bSql.append(IotService.VAR_resource + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAlternateName());
+						bParams.add(o2.sqlResource());
 						break;
-					case WeatherObserved.VAR_areaServed:
-						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+					case IotService.VAR_attributes:
+						o2.setAttributes(jsonObject.getJsonArray(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						bSql.append(IotService.VAR_attributes + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAreaServed());
+						bParams.add(o2.sqlAttributes());
 						break;
-					case WeatherObserved.VAR_airQualityIndex:
-						o2.setAirQualityIndex(jsonObject.getString(entityVar));
+					case IotService.VAR_service:
+						o2.setService(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_airQualityIndex + "=$" + num);
+						bSql.append(IotService.VAR_service + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAirQualityIndex());
+						bParams.add(o2.sqlService());
 						break;
-					case WeatherObserved.VAR_airQualityIndexForecast:
-						o2.setAirQualityIndexForecast(jsonObject.getString(entityVar));
+					case IotService.VAR_servicePath:
+						o2.setServicePath(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_airQualityIndexForecast + "=$" + num);
+						bSql.append(IotService.VAR_servicePath + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAirQualityIndexForecast());
+						bParams.add(o2.sqlServicePath());
 						break;
-					case WeatherObserved.VAR_aqiMajorPollutant:
-						o2.setAqiMajorPollutant(jsonObject.getString(entityVar));
+					case IotService.VAR_pageId:
+						o2.setPageId(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_aqiMajorPollutant + "=$" + num);
+						bSql.append(IotService.VAR_pageId + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAqiMajorPollutant());
+						bParams.add(o2.sqlPageId());
 						break;
-					case WeatherObserved.VAR_aqiMajorPollutantForecast:
-						o2.setAqiMajorPollutantForecast(jsonObject.getString(entityVar));
+					case IotService.VAR_resourceUri:
+						o2.setResourceUri(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_aqiMajorPollutantForecast + "=$" + num);
+						bSql.append(IotService.VAR_resourceUri + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAqiMajorPollutantForecast());
+						bParams.add(o2.sqlResourceUri());
 						break;
-					case WeatherObserved.VAR_atmosphericPressure:
-						o2.setAtmosphericPressure(jsonObject.getString(entityVar));
+					case IotService.VAR_templateUri:
+						o2.setTemplateUri(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_atmosphericPressure + "=$" + num);
+						bSql.append(IotService.VAR_templateUri + "=$" + num);
 						num++;
-						bParams.add(o2.sqlAtmosphericPressure());
+						bParams.add(o2.sqlTemplateUri());
 						break;
-					case WeatherObserved.VAR_dataProvider:
-						o2.setDataProvider(jsonObject.getString(entityVar));
+					case IotService.VAR_uri:
+						o2.setUri(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
+						bSql.append(IotService.VAR_uri + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDataProvider());
+						bParams.add(o2.sqlUri());
 						break;
-					case WeatherObserved.VAR_dateCreated:
-						o2.setDateCreated(jsonObject.getString(entityVar));
+					case IotService.VAR_url:
+						o2.setUrl(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
+						bSql.append(IotService.VAR_url + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDateCreated());
+						bParams.add(o2.sqlUrl());
 						break;
-					case WeatherObserved.VAR_dateModified:
-						o2.setDateModified(jsonObject.getString(entityVar));
+					case IotService.VAR_title:
+						o2.setTitle(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
+						bSql.append(IotService.VAR_title + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDateModified());
-						break;
-					case WeatherObserved.VAR_dateObserved:
-						o2.setDateObserved(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDateObserved());
-						break;
-					case WeatherObserved.VAR_dewPoint:
-						o2.setDewPoint(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dewPoint + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDewPoint());
-						break;
-					case WeatherObserved.VAR_diffuseIrradiation:
-						o2.setDiffuseIrradiation(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_diffuseIrradiation + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDiffuseIrradiation());
-						break;
-					case WeatherObserved.VAR_directIrradiation:
-						o2.setDirectIrradiation(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_directIrradiation + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDirectIrradiation());
-						break;
-					case WeatherObserved.VAR_gustSpeed:
-						o2.setGustSpeed(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_gustSpeed + "=$" + num);
-						num++;
-						bParams.add(o2.sqlGustSpeed());
-						break;
-					case WeatherObserved.VAR_illuminance:
-						o2.setIlluminance(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_illuminance + "=$" + num);
-						num++;
-						bParams.add(o2.sqlIlluminance());
-						break;
-					case WeatherObserved.VAR_location:
-						o2.setLocation(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_location + "=$" + num);
-						num++;
-						bParams.add(o2.sqlLocation());
-						break;
-					case WeatherObserved.VAR_owner:
-						o2.setOwner(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-						num++;
-						bParams.add(o2.sqlOwner());
-						break;
-					case WeatherObserved.VAR_precipitation:
-						o2.setPrecipitation(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_precipitation + "=$" + num);
-						num++;
-						bParams.add(o2.sqlPrecipitation());
-						break;
-					case WeatherObserved.VAR_precipitationForecast:
-						o2.setPrecipitationForecast(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_precipitationForecast + "=$" + num);
-						num++;
-						bParams.add(o2.sqlPrecipitationForecast());
-						break;
-					case WeatherObserved.VAR_pressureTendency:
-						o2.setPressureTendency(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_pressureTendency + "=$" + num);
-						num++;
-						bParams.add(o2.sqlPressureTendency());
-						break;
-					case WeatherObserved.VAR_refDevice:
-						o2.setRefDevice(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRefDevice());
-						break;
-					case WeatherObserved.VAR_refPointOfInterest:
-						o2.setRefPointOfInterest(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRefPointOfInterest());
-						break;
-					case WeatherObserved.VAR_relativeHumidity:
-						o2.setRelativeHumidity(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_relativeHumidity + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRelativeHumidity());
-						break;
-					case WeatherObserved.VAR_relativeHumidityForecast:
-						o2.setRelativeHumidityForecast(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_relativeHumidityForecast + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRelativeHumidityForecast());
-						break;
-					case WeatherObserved.VAR_seeAlso:
-						o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSeeAlso());
-						break;
-					case WeatherObserved.VAR_snowHeight:
-						o2.setSnowHeight(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_snowHeight + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSnowHeight());
-						break;
-					case WeatherObserved.VAR_solarRadiation:
-						o2.setSolarRadiation(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_solarRadiation + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSolarRadiation());
-						break;
-					case WeatherObserved.VAR_source:
-						o2.setSource(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_source + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSource());
-						break;
-					case WeatherObserved.VAR_streamGauge:
-						o2.setStreamGauge(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_streamGauge + "=$" + num);
-						num++;
-						bParams.add(o2.sqlStreamGauge());
-						break;
-					case WeatherObserved.VAR_temperature:
-						o2.setTemperature(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_temperature + "=$" + num);
-						num++;
-						bParams.add(o2.sqlTemperature());
-						break;
-					case WeatherObserved.VAR_airTemperatureForecast:
-						o2.setAirTemperatureForecast(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_airTemperatureForecast + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAirTemperatureForecast());
-						break;
-					case WeatherObserved.VAR_airTemperatureTSA:
-						o2.setAirTemperatureTSA(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_airTemperatureTSA + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAirTemperatureTSA());
-						break;
-					case WeatherObserved.VAR_feelsLikeTemperature:
-						o2.setFeelsLikeTemperature(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_feelsLikeTemperature + "=$" + num);
-						num++;
-						bParams.add(o2.sqlFeelsLikeTemperature());
-						break;
-					case WeatherObserved.VAR_uVIndexMax:
-						o2.setUVIndexMax(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUVIndexMax());
-						break;
-					case WeatherObserved.VAR_visibility:
-						o2.setVisibility(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_visibility + "=$" + num);
-						num++;
-						bParams.add(o2.sqlVisibility());
-						break;
-					case WeatherObserved.VAR_weatherType:
-						o2.setWeatherType(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_weatherType + "=$" + num);
-						num++;
-						bParams.add(o2.sqlWeatherType());
-						break;
-					case WeatherObserved.VAR_windDirection:
-						o2.setWindDirection(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_windDirection + "=$" + num);
-						num++;
-						bParams.add(o2.sqlWindDirection());
-						break;
-					case WeatherObserved.VAR_windSpeed:
-						o2.setWindSpeed(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_windSpeed + "=$" + num);
-						num++;
-						bParams.add(o2.sqlWindSpeed());
-						break;
-					case WeatherObserved.VAR_entityId:
-						o2.setEntityId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_entityId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlEntityId());
-						break;
-					case WeatherObserved.VAR_ngsildTenant:
-						o2.setNgsildTenant(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_ngsildTenant + "=$" + num);
-						num++;
-						bParams.add(o2.sqlNgsildTenant());
-						break;
-					case WeatherObserved.VAR_ngsildPath:
-						o2.setNgsildPath(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_ngsildPath + "=$" + num);
-						num++;
-						bParams.add(o2.sqlNgsildPath());
-						break;
-					case WeatherObserved.VAR_ngsildData:
-						o2.setNgsildData(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_ngsildData + "=$" + num);
-						num++;
-						bParams.add(o2.sqlNgsildData());
+						bParams.add(o2.sqlTitle());
 						break;
 					}
 				}
@@ -1878,8 +1317,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							).onSuccess(b -> {
 						a.handle(Future.succeededFuture());
 					}).onFailure(ex -> {
-						RuntimeException ex2 = new RuntimeException("value WeatherObserved failed", ex);
-						LOG.error(String.format("relateWeatherObserved failed. "), ex2);
+						RuntimeException ex2 = new RuntimeException("value IotService failed", ex);
+						LOG.error(String.format("relateIotService failed. "), ex2);
 						a.handle(Future.failedFuture(ex2));
 					});
 				}));
@@ -1888,28 +1327,28 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				CompositeFuture.all(futures2).onSuccess(b -> {
 					promise.complete(o2);
 				}).onFailure(ex -> {
-					LOG.error(String.format("sqlPOSTWeatherObserved failed. "), ex);
+					LOG.error(String.format("sqlPOSTIotService failed. "), ex);
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("sqlPOSTWeatherObserved failed. "), ex);
+				LOG.error(String.format("sqlPOSTIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("sqlPOSTWeatherObserved failed. "), ex);
+			LOG.error(String.format("sqlPOSTIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200POSTWeatherObserved(WeatherObserved o) {
+	public Future<ServiceResponse> response200POSTIotService(IotService o) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200POSTWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200POSTIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -1918,8 +1357,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// DELETE //
 
 	@Override
-	public void deleteWeatherObserved(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("deleteWeatherObserved started. "));
+	public void deleteIotService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("deleteIotService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -1933,7 +1372,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "DELETE"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1963,42 +1402,42 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+						searchIotServiceList(siteRequest, false, true, true).onSuccess(listIotService -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
-								apiRequest.setRows(listWeatherObserved.getRequest().getRows());
-								apiRequest.setNumFound(listWeatherObserved.getResponse().getResponse().getNumFound());
+								apiRequest.setRows(listIotService.getRequest().getRows());
+								apiRequest.setNumFound(listIotService.getResponse().getResponse().getNumFound());
 								apiRequest.setNumPATCH(0L);
 								apiRequest.initDeepApiRequest(siteRequest);
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
-									apiRequest.setOriginal(listWeatherObserved.first());
-								apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
-								eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+									apiRequest.setOriginal(listIotService.first());
+								apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
+								eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 
-								listDELETEWeatherObserved(apiRequest, listWeatherObserved).onSuccess(e -> {
-									response200DELETEWeatherObserved(siteRequest).onSuccess(response -> {
-										LOG.debug(String.format("deleteWeatherObserved succeeded. "));
+								listDELETEIotService(apiRequest, listIotService).onSuccess(e -> {
+									response200DELETEIotService(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("deleteIotService succeeded. "));
 										eventHandler.handle(Future.succeededFuture(response));
 									}).onFailure(ex -> {
-										LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+										LOG.error(String.format("deleteIotService failed. "), ex);
 										error(siteRequest, eventHandler, ex);
 									});
 								}).onFailure(ex -> {
-									LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+									LOG.error(String.format("deleteIotService failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							} catch(Exception ex) {
-								LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+								LOG.error(String.format("deleteIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							}
 						}).onFailure(ex -> {
-							LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+							LOG.error(String.format("deleteIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+					LOG.error(String.format("deleteIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -2007,7 +1446,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("deleteWeatherObserved failed. ", ex2));
+					LOG.error(String.format("deleteIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2022,63 +1461,63 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+				LOG.error(String.format("deleteIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listDELETEWeatherObserved(ApiRequest apiRequest, SearchList<WeatherObserved> listWeatherObserved) {
+	public Future<Void> listDELETEIotService(ApiRequest apiRequest, SearchList<IotService> listIotService) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
-		SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-		listWeatherObserved.getList().forEach(o -> {
+		SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
+		listIotService.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			futures.add(Future.future(promise1 -> {
-				deleteWeatherObservedFuture(o).onSuccess(a -> {
+				deleteIotServiceFuture(o).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
-					LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+					LOG.error(String.format("listDELETEIotService failed. "), ex);
 					promise1.fail(ex);
 				});
 			}));
 		});
 		CompositeFuture.all(futures).onSuccess( a -> {
-			listWeatherObserved.next().onSuccess(next -> {
+			listIotService.next().onSuccess(next -> {
 				if(next) {
-					listDELETEWeatherObserved(apiRequest, listWeatherObserved).onSuccess(b -> {
+					listDELETEIotService(apiRequest, listIotService).onSuccess(b -> {
 						promise.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+						LOG.error(String.format("listDELETEIotService failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete();
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+				LOG.error(String.format("listDELETEIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		}).onFailure(ex -> {
-			LOG.error(String.format("listDELETEWeatherObserved failed. "), ex);
+			LOG.error(String.format("listDELETEIotService failed. "), ex);
 			promise.fail(ex);
 		});
 		return promise.future();
 	}
 
 	@Override
-	public void deleteWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void deleteIotServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
-				searchWeatherObservedList(siteRequest, false, true, true).onSuccess(listWeatherObserved -> {
+				searchIotServiceList(siteRequest, false, true, true).onSuccess(listIotService -> {
 					try {
-						WeatherObserved o = listWeatherObserved.first();
-						if(o != null && listWeatherObserved.getResponse().getResponse().getNumFound() == 1) {
+						IotService o = listIotService.first();
+						if(o != null && listIotService.getResponse().getResponse().getNumFound() == 1) {
 							ApiRequest apiRequest = new ApiRequest();
 							apiRequest.setRows(1L);
 							apiRequest.setNumFound(1L);
@@ -2090,8 +1529,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setPk(Optional.ofNullable(listWeatherObserved.first()).map(o2 -> o2.getPk()).orElse(null));
-							deleteWeatherObservedFuture(o).onSuccess(o2 -> {
+							apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
+							deleteIotServiceFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -2100,42 +1539,42 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+						LOG.error(String.format("deleteIotService failed. "), ex);
 						error(siteRequest, eventHandler, ex);
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+					LOG.error(String.format("deleteIotService failed. "), ex);
 					error(siteRequest, eventHandler, ex);
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+				LOG.error(String.format("deleteIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		}).onFailure(ex -> {
-			LOG.error(String.format("deleteWeatherObserved failed. "), ex);
+			LOG.error(String.format("deleteIotService failed. "), ex);
 			error(null, eventHandler, ex);
 		});
 	}
 
-	public Future<WeatherObserved> deleteWeatherObservedFuture(WeatherObserved o) {
+	public Future<IotService> deleteIotServiceFuture(IotService o) {
 		SiteRequest siteRequest = o.getSiteRequest_();
-		Promise<WeatherObserved> promise = Promise.promise();
+		Promise<IotService> promise = Promise.promise();
 
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			Promise<WeatherObserved> promise1 = Promise.promise();
+			Promise<IotService> promise1 = Promise.promise();
 			pgPool.withTransaction(sqlConnection -> {
 				siteRequest.setSqlConnection(sqlConnection);
-				varsWeatherObserved(siteRequest).onSuccess(a -> {
-					sqlDELETEWeatherObserved(o).onSuccess(weatherObserved -> {
-						relateWeatherObserved(o).onSuccess(d -> {
-							unindexWeatherObserved(o).onSuccess(o2 -> {
+				varsIotService(siteRequest).onSuccess(a -> {
+					sqlDELETEIotService(o).onSuccess(iotService -> {
+						relateIotService(o).onSuccess(d -> {
+							unindexIotService(o).onSuccess(o2 -> {
 								if(apiRequest != null) {
 									apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 									if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
-										o2.apiRequestWeatherObserved();
+										o2.apiRequestIotService();
 										if(apiRequest.getVars().size() > 0)
-											eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
+											eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 									}
 								}
 								promise1.complete();
@@ -2157,27 +1596,27 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}).onFailure(ex -> {
 				siteRequest.setSqlConnection(null);
 				promise.fail(ex);
-			}).compose(weatherObserved -> {
-				Promise<WeatherObserved> promise2 = Promise.promise();
-				refreshWeatherObserved(o).onSuccess(a -> {
+			}).compose(iotService -> {
+				Promise<IotService> promise2 = Promise.promise();
+				refreshIotService(o).onSuccess(a -> {
 					promise2.complete(o);
 				}).onFailure(ex -> {
 					promise2.fail(ex);
 				});
 				return promise2.future();
-			}).onSuccess(weatherObserved -> {
-				promise.complete(weatherObserved);
+			}).onSuccess(iotService -> {
+				promise.complete(iotService);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("deleteWeatherObservedFuture failed. "), ex);
+			LOG.error(String.format("deleteIotServiceFuture failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<Void> sqlDELETEWeatherObserved(WeatherObserved o) {
+	public Future<Void> sqlDELETEIotService(IotService o) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -2186,11 +1625,11 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
-			StringBuilder bSql = new StringBuilder("DELETE FROM WeatherObserved ");
+			StringBuilder bSql = new StringBuilder("DELETE FROM IotService ");
 			List<Object> bParams = new ArrayList<Object>();
 			Long pk = o.getPk();
 			JsonObject jsonObject = siteRequest.getJsonObject();
-			WeatherObserved o2 = new WeatherObserved();
+			IotService o2 = new IotService();
 			o2.setSiteRequest_(siteRequest);
 			List<Future> futures1 = new ArrayList<>();
 			List<Future> futures2 = new ArrayList<>();
@@ -2211,8 +1650,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						).onSuccess(b -> {
 					a.handle(Future.succeededFuture());
 				}).onFailure(ex -> {
-					RuntimeException ex2 = new RuntimeException("value WeatherObserved failed", ex);
-					LOG.error(String.format("unrelateWeatherObserved failed. "), ex2);
+					RuntimeException ex2 = new RuntimeException("value IotService failed", ex);
+					LOG.error(String.format("unrelateIotService failed. "), ex2);
 					a.handle(Future.failedFuture(ex2));
 				});
 			}));
@@ -2220,27 +1659,27 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				CompositeFuture.all(futures2).onSuccess(b -> {
 					promise.complete();
 				}).onFailure(ex -> {
-					LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+					LOG.error(String.format("sqlDELETEIotService failed. "), ex);
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+				LOG.error(String.format("sqlDELETEIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
+			LOG.error(String.format("sqlDELETEIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<ServiceResponse> response200DELETEWeatherObserved(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200DELETEIotService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200DELETEWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200DELETEIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -2249,8 +1688,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// PUTImport //
 
 	@Override
-	public void putimportWeatherObserved(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		LOG.debug(String.format("putimportWeatherObserved started. "));
+	public void putimportIotService(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("putimportIotService started. "));
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -2264,12 +1703,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -2306,27 +1745,27 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						apiRequest.setNumPATCH(0L);
 						apiRequest.initDeepApiRequest(siteRequest);
 						siteRequest.setApiRequest_(apiRequest);
-						eventBus.publish("websocketWeatherObserved", JsonObject.mapFrom(apiRequest).toString());
-						varsWeatherObserved(siteRequest).onSuccess(d -> {
-							listPUTImportWeatherObserved(apiRequest, siteRequest).onSuccess(e -> {
-								response200PUTImportWeatherObserved(siteRequest).onSuccess(response -> {
-									LOG.debug(String.format("putimportWeatherObserved succeeded. "));
+						eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
+						varsIotService(siteRequest).onSuccess(d -> {
+							listPUTImportIotService(apiRequest, siteRequest).onSuccess(e -> {
+								response200PUTImportIotService(siteRequest).onSuccess(response -> {
+									LOG.debug(String.format("putimportIotService succeeded. "));
 									eventHandler.handle(Future.succeededFuture(response));
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+									LOG.error(String.format("putimportIotService failed. "), ex);
 									error(siteRequest, eventHandler, ex);
 								});
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+								LOG.error(String.format("putimportIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+							LOG.error(String.format("putimportIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+					LOG.error(String.format("putimportIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -2335,7 +1774,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportWeatherObserved failed. ", ex2));
+					LOG.error(String.format("putimportIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2350,14 +1789,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+				LOG.error(String.format("putimportIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public Future<Void> listPUTImportWeatherObserved(ApiRequest apiRequest, SiteRequest siteRequest) {
+	public Future<Void> listPUTImportIotService(ApiRequest apiRequest, SiteRequest siteRequest) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
 		JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -2382,10 +1821,10 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					params.put("query", query);
 					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 					JsonObject json = new JsonObject().put("context", context);
-					eventBus.request(WeatherObserved.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportWeatherObservedFuture")).onSuccess(a -> {
+					eventBus.request(IotService.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "putimportIotServiceFuture")).onSuccess(a -> {
 						promise1.complete();
 					}).onFailure(ex -> {
-						LOG.error(String.format("listPUTImportWeatherObserved failed. "), ex);
+						LOG.error(String.format("listPUTImportIotService failed. "), ex);
 						promise1.fail(ex);
 					});
 				}));
@@ -2394,18 +1833,18 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 				promise.complete();
 			}).onFailure(ex -> {
-				LOG.error(String.format("listPUTImportWeatherObserved failed. "), ex);
+				LOG.error(String.format("listPUTImportIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("listPUTImportWeatherObserved failed. "), ex);
+			LOG.error(String.format("listPUTImportIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
 	@Override
-	public void putimportWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void putimportIotServiceFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			try {
 				ApiRequest apiRequest = new ApiRequest();
@@ -2414,23 +1853,23 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(WeatherObserved.VAR_pk)).orElse(body.getString(WeatherObserved.VAR_id));
+				String inheritPk = Optional.ofNullable(body.getString(IotService.VAR_pk)).orElse(body.getString(IotService.VAR_id));
 				body.put("inheritPk", inheritPk);
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
 
-				SearchList<WeatherObserved> searchList = new SearchList<WeatherObserved>();
+				SearchList<IotService> searchList = new SearchList<IotService>();
 				searchList.setStore(true);
 				searchList.q("*:*");
-				searchList.setC(WeatherObserved.class);
+				searchList.setC(IotService.class);
 				searchList.fq("archived_docvalues_boolean:false");
 				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
-							WeatherObserved o = searchList.getList().stream().findFirst().orElse(null);
-							WeatherObserved o2 = new WeatherObserved();
+							IotService o = searchList.getList().stream().findFirst().orElse(null);
+							IotService o2 = new IotService();
 							o2.setSiteRequest_(siteRequest);
 							JsonObject body2 = new JsonObject();
 							for(String f : body.fieldNames()) {
@@ -2477,35 +1916,35 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 									apiRequest.setPk(o.getPk());
 								}
 								siteRequest.setJsonObject(body2);
-								patchWeatherObservedFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import WeatherObserved {} succeeded, modified WeatherObserved. ", body.getValue(WeatherObserved.VAR_pk));
+								patchIotServiceFuture(o, true).onSuccess(b -> {
+									LOG.debug("Import IotService {} succeeded, modified IotService. ", body.getValue(IotService.VAR_pk));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
-									LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
+									LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
 									eventHandler.handle(Future.failedFuture(ex));
 								});
 							} else {
 								eventHandler.handle(Future.succeededFuture());
 							}
 						} else {
-							postWeatherObservedFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import WeatherObserved {} succeeded, created new WeatherObserved. ", body.getValue(WeatherObserved.VAR_pk));
+							postIotServiceFuture(siteRequest, true).onSuccess(b -> {
+								LOG.debug("Import IotService {} succeeded, created new IotService. ", body.getValue(IotService.VAR_pk));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
-								LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
+								LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
 								eventHandler.handle(Future.failedFuture(ex));
 							});
 						}
 					} catch(Exception ex) {
-						LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
+						LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
 						eventHandler.handle(Future.failedFuture(ex));
 					}
 				}).onFailure(ex -> {
-					LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
+					LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
 					eventHandler.handle(Future.failedFuture(ex));
 				});
 			} catch(Exception ex) {
-				LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
+				LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
 				eventHandler.handle(Future.failedFuture(ex));
 			}
 		}).onFailure(ex -> {
@@ -2513,7 +1952,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("putimportWeatherObserved failed. ", ex2));
+					LOG.error(String.format("putimportIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2528,19 +1967,19 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("putimportWeatherObserved failed. "), ex);
+				LOG.error(String.format("putimportIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
-	public Future<ServiceResponse> response200PUTImportWeatherObserved(SiteRequest siteRequest) {
+	public Future<ServiceResponse> response200PUTImportIotService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
-			LOG.error(String.format("response200PUTImportWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200PUTImportIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -2549,7 +1988,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// SearchPage //
 
 	@Override
-	public void searchpageWeatherObservedId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchpageIotServiceId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -2563,12 +2002,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -2598,21 +2037,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
-							response200SearchPageWeatherObserved(listWeatherObserved).onSuccess(response -> {
+						searchIotServiceList(siteRequest, false, true, false).onSuccess(listIotService -> {
+							response200SearchPageIotService(listIotService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageWeatherObserved succeeded. "));
+								LOG.debug(String.format("searchpageIotService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+								LOG.error(String.format("searchpageIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+							LOG.error(String.format("searchpageIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+					LOG.error(String.format("searchpageIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -2621,7 +2060,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageWeatherObserved failed. ", ex2));
+					LOG.error(String.format("searchpageIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2636,14 +2075,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+				LOG.error(String.format("searchpageIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 	@Override
-	public void searchpageWeatherObserved(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+	public void searchpageIotService(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -2657,12 +2096,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", IotService.CLASS_SIMPLE_NAME, "PATCH"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -2692,21 +2131,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						));
 					} else {
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
-							response200SearchPageWeatherObserved(listWeatherObserved).onSuccess(response -> {
+						searchIotServiceList(siteRequest, false, true, false).onSuccess(listIotService -> {
+							response200SearchPageIotService(listIotService).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageWeatherObserved succeeded. "));
+								LOG.debug(String.format("searchpageIotService succeeded. "));
 							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+								LOG.error(String.format("searchpageIotService failed. "), ex);
 								error(siteRequest, eventHandler, ex);
 							});
 						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+							LOG.error(String.format("searchpageIotService failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+					LOG.error(String.format("searchpageIotService failed. "), ex);
 					error(null, eventHandler, ex);
 				}
 			});
@@ -2715,7 +2154,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				try {
 					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
 				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageWeatherObserved failed. ", ex2));
+					LOG.error(String.format("searchpageIotService failed. ", ex2));
 					error(null, eventHandler, ex2);
 				}
 			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
@@ -2730,37 +2169,37 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							)
 					));
 			} else {
-				LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
+				LOG.error(String.format("searchpageIotService failed. "), ex);
 				error(null, eventHandler, ex);
 			}
 		});
 	}
 
 
-	public void searchpageWeatherObservedPageInit(WeatherObservedPage page, SearchList<WeatherObserved> listWeatherObserved) {
+	public void searchpageIotServicePageInit(IotServicePage page, SearchList<IotService> listIotService) {
 	}
 
-	public String templateSearchPageWeatherObserved() {
-		return "en-us/WeatherObservedPage.htm";
+	public String templateSearchPageIotService() {
+		return "en-us/IotServicePage.htm";
 	}
-	public Future<ServiceResponse> response200SearchPageWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
+	public Future<ServiceResponse> response200SearchPageIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
-			SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateSearchPageWeatherObserved();
+			SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateSearchPageIotService();
 			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
 			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-			WeatherObservedPage page = new WeatherObservedPage();
+			IotServicePage page = new IotServicePage();
 			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
 			siteRequest.setRequestHeaders(requestHeaders);
 
-			if(listWeatherObserved.size() == 1)
-				siteRequest.setRequestPk(listWeatherObserved.get(0).getPk());
-			page.setSearchListWeatherObserved_(listWeatherObserved);
+			if(listIotService.size() == 1)
+				siteRequest.setRequestPk(listIotService.get(0).getPk());
+			page.setSearchListIotService_(listIotService);
 			page.setSiteRequest_(siteRequest);
 			page.setServiceRequest(siteRequest.getServiceRequest());
-			page.promiseDeepWeatherObservedPage(siteRequest).onSuccess(a -> {
+			page.promiseDeepIotServicePage(siteRequest).onSuccess(a -> {
 				try {
 					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
@@ -2768,14 +2207,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					Buffer buffer = Buffer.buffer(renderedTemplate);
 					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
 				} catch(Exception ex) {
-					LOG.error(String.format("response200SearchPageWeatherObserved failed. "), ex);
+					LOG.error(String.format("response200SearchPageIotService failed. "), ex);
 					promise.fail(ex);
 				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchPageWeatherObserved failed. "), ex);
+			LOG.error(String.format("response200SearchPageIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -2783,78 +2222,78 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	// General //
 
-	public Future<WeatherObserved> createWeatherObserved(SiteRequest siteRequest) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> createIotService(SiteRequest siteRequest) {
+		Promise<IotService> promise = Promise.promise();
 		try {
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			String userId = siteRequest.getUserId();
 			Long userKey = siteRequest.getUserKey();
 			ZonedDateTime created = Optional.ofNullable(siteRequest.getJsonObject()).map(j -> j.getString("created")).map(s -> ZonedDateTime.parse(s, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER.withZone(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))))).orElse(ZonedDateTime.now(ZoneId.of(config.getString(ConfigKeys.SITE_ZONE))));
 
-			sqlConnection.preparedQuery("INSERT INTO WeatherObserved(created, userKey) VALUES($1, $2) RETURNING pk")
+			sqlConnection.preparedQuery("INSERT INTO IotService(created, userKey) VALUES($1, $2) RETURNING pk")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(created.toOffsetDateTime(), userKey)).onSuccess(result -> {
 				Row createLine = result.value().stream().findFirst().orElseGet(() -> null);
 				Long pk = createLine.getLong(0);
-				WeatherObserved o = new WeatherObserved();
+				IotService o = new IotService();
 				o.setPk(pk);
 				o.setSiteRequest_(siteRequest);
 				promise.complete(o);
 			}).onFailure(ex -> {
 				RuntimeException ex2 = new RuntimeException(ex);
-				LOG.error("createWeatherObserved failed. ", ex2);
+				LOG.error("createIotService failed. ", ex2);
 				promise.fail(ex2);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("createWeatherObserved failed. "), ex);
+			LOG.error(String.format("createIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public void searchWeatherObservedQ(SearchList<WeatherObserved> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchIotServiceQ(SearchList<IotService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		searchList.q(varIndexed + ":" + ("*".equals(valueIndexed) ? valueIndexed : SearchTool.escapeQueryChars(valueIndexed)));
 		if(!"*".equals(entityVar)) {
 		}
 	}
 
-	public String searchWeatherObservedFq(SearchList<WeatherObserved> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public String searchIotServiceFq(SearchList<IotService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		if(StringUtils.startsWith(valueIndexed, "[")) {
 			String[] fqs = StringUtils.substringAfter(StringUtils.substringBeforeLast(valueIndexed, "]"), "[").split(" TO ");
 			if(fqs.length != 2)
 				throw new RuntimeException(String.format("\"%s\" invalid range query. ", valueIndexed));
-			String fq1 = fqs[0].equals("*") ? fqs[0] : WeatherObserved.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
-			String fq2 = fqs[1].equals("*") ? fqs[1] : WeatherObserved.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
+			String fq1 = fqs[0].equals("*") ? fqs[0] : IotService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[0]);
+			String fq2 = fqs[1].equals("*") ? fqs[1] : IotService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), fqs[1]);
 			 return varIndexed + ":[" + fq1 + " TO " + fq2 + "]";
 		} else {
-			return varIndexed + ":" + SearchTool.escapeQueryChars(WeatherObserved.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
+			return varIndexed + ":" + SearchTool.escapeQueryChars(IotService.staticSearchFqForClass(entityVar, searchList.getSiteRequest_(SiteRequest.class), valueIndexed)).replace("\\", "\\\\");
 		}
 	}
 
-	public void searchWeatherObservedSort(SearchList<WeatherObserved> searchList, String entityVar, String valueIndexed, String varIndexed) {
+	public void searchIotServiceSort(SearchList<IotService> searchList, String entityVar, String valueIndexed, String varIndexed) {
 		if(varIndexed == null)
 			throw new RuntimeException(String.format("\"%s\" is not an indexed entity. ", entityVar));
 		searchList.sort(varIndexed, valueIndexed);
 	}
 
-	public void searchWeatherObservedRows(SearchList<WeatherObserved> searchList, Long valueRows) {
+	public void searchIotServiceRows(SearchList<IotService> searchList, Long valueRows) {
 			searchList.rows(valueRows != null ? valueRows : 10L);
 	}
 
-	public void searchWeatherObservedStart(SearchList<WeatherObserved> searchList, Long valueStart) {
+	public void searchIotServiceStart(SearchList<IotService> searchList, Long valueStart) {
 		searchList.start(valueStart);
 	}
 
-	public void searchWeatherObservedVar(SearchList<WeatherObserved> searchList, String var, String value) {
+	public void searchIotServiceVar(SearchList<IotService> searchList, String var, String value) {
 		searchList.getSiteRequest_(SiteRequest.class).getRequestVars().put(var, value);
 	}
 
-	public void searchWeatherObservedUri(SearchList<WeatherObserved> searchList) {
+	public void searchIotServiceUri(SearchList<IotService> searchList) {
 	}
 
-	public Future<ServiceResponse> varsWeatherObserved(SiteRequest siteRequest) {
+	public Future<ServiceResponse> varsIotService(SiteRequest siteRequest) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
@@ -2872,25 +2311,25 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						siteRequest.getRequestVars().put(entityVar, valueIndexed);
 					}
 				} catch(Exception ex) {
-					LOG.error(String.format("searchWeatherObserved failed. "), ex);
+					LOG.error(String.format("searchIotService failed. "), ex);
 					promise.fail(ex);
 				}
 			});
 			promise.complete();
 		} catch(Exception ex) {
-			LOG.error(String.format("searchWeatherObserved failed. "), ex);
+			LOG.error(String.format("searchIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<SearchList<WeatherObserved>> searchWeatherObservedList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
-		Promise<SearchList<WeatherObserved>> promise = Promise.promise();
+	public Future<SearchList<IotService>> searchIotServiceList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+		Promise<SearchList<IotService>> promise = Promise.promise();
 		try {
 			ServiceRequest serviceRequest = siteRequest.getServiceRequest();
 			String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
 			String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-			SearchList<WeatherObserved> searchList = new SearchList<WeatherObserved>();
+			SearchList<IotService> searchList = new SearchList<IotService>();
 			String facetRange = null;
 			Date facetRangeStart = null;
 			Date facetRangeEnd = null;
@@ -2900,12 +2339,12 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			searchList.setPopulate(populate);
 			searchList.setStore(store);
 			searchList.q("*:*");
-			searchList.setC(WeatherObserved.class);
+			searchList.setC(IotService.class);
 			searchList.setSiteRequest_(siteRequest);
 			searchList.facetMinCount(1);
 			if(entityList != null) {
 				for(String v : entityList) {
-					searchList.fl(WeatherObserved.varIndexedWeatherObserved(v));
+					searchList.fl(IotService.varIndexedIotService(v));
 				}
 			}
 
@@ -2937,7 +2376,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							String[] varsIndexed = new String[entityVars.length];
 							for(Integer i = 0; i < entityVars.length; i++) {
 								entityVar = entityVars[i];
-								varsIndexed[i] = WeatherObserved.varIndexedWeatherObserved(entityVar);
+								varsIndexed[i] = IotService.varIndexedIotService(entityVar);
 							}
 							searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
 						}
@@ -2951,8 +2390,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 									while(foundQ) {
 										entityVar = mQ.group(1).trim();
 										valueIndexed = mQ.group(2).trim();
-										varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
-										String entityQ = searchWeatherObservedFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = IotService.varIndexedIotService(entityVar);
+										String entityQ = searchIotServiceFq(searchList, entityVar, valueIndexed, varIndexed);
 										mQ.appendReplacement(sb, entityQ);
 										foundQ = mQ.find();
 									}
@@ -2967,8 +2406,8 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 									while(foundFq) {
 										entityVar = mFq.group(1).trim();
 										valueIndexed = mFq.group(2).trim();
-										varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
-										String entityFq = searchWeatherObservedFq(searchList, entityVar, valueIndexed, varIndexed);
+										varIndexed = IotService.varIndexedIotService(entityVar);
+										String entityFq = searchIotServiceFq(searchList, entityVar, valueIndexed, varIndexed);
 										mFq.appendReplacement(sb, entityFq);
 										foundFq = mFq.find();
 									}
@@ -2978,14 +2417,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							} else if(paramName.equals("sort")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
 								valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-								varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
-								searchWeatherObservedSort(searchList, entityVar, valueIndexed, varIndexed);
+								varIndexed = IotService.varIndexedIotService(entityVar);
+								searchIotServiceSort(searchList, entityVar, valueIndexed, varIndexed);
 							} else if(paramName.equals("start")) {
 								valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchWeatherObservedStart(searchList, valueStart);
+								searchIotServiceStart(searchList, valueStart);
 							} else if(paramName.equals("rows")) {
 								valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-								searchWeatherObservedRows(searchList, valueRows);
+								searchIotServiceRows(searchList, valueRows);
 							} else if(paramName.equals("stats")) {
 								searchList.stats((Boolean)paramObject);
 							} else if(paramName.equals("stats.field")) {
@@ -2994,7 +2433,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								if(foundStats) {
 									String solrLocalParams = mStats.group(1);
 									entityVar = mStats.group(2).trim();
-									varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
+									varIndexed = IotService.varIndexedIotService(entityVar);
 									searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									statsField = entityVar;
 									statsFieldIndexed = varIndexed;
@@ -3021,25 +2460,25 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								if(foundFacetRange) {
 									String solrLocalParams = mFacetRange.group(1);
 									entityVar = mFacetRange.group(2).trim();
-									varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
+									varIndexed = IotService.varIndexedIotService(entityVar);
 									searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
 									facetRange = entityVar;
 								}
 							} else if(paramName.equals("facet.field")) {
 								entityVar = (String)paramObject;
-								varIndexed = WeatherObserved.varIndexedWeatherObserved(entityVar);
+								varIndexed = IotService.varIndexedIotService(entityVar);
 								if(varIndexed != null)
 									searchList.facetField(varIndexed);
 							} else if(paramName.equals("var")) {
 								entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
 								valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-								searchWeatherObservedVar(searchList, entityVar, valueIndexed);
+								searchIotServiceVar(searchList, entityVar, valueIndexed);
 							} else if(paramName.equals("cursorMark")) {
 								valueCursorMark = (String)paramObject;
 								searchList.cursorMark((String)paramObject);
 							}
 						}
-						searchWeatherObservedUri(searchList);
+						searchIotServiceUri(searchList);
 					}
 				} catch(Exception e) {
 					ExceptionUtils.rethrow(e);
@@ -3054,7 +2493,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			String facetRangeGap2 = facetRangeGap;
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
-			searchWeatherObserved2(siteRequest, populate, store, modify, searchList);
+			searchIotService2(siteRequest, populate, store, modify, searchList);
 			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
@@ -3090,32 +2529,32 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					searchList.query().onSuccess(b -> {
 						promise.complete(searchList);
 					}).onFailure(ex -> {
-						LOG.error(String.format("searchWeatherObserved failed. "), ex);
+						LOG.error(String.format("searchIotService failed. "), ex);
 						promise.fail(ex);
 					});
 				} else {
 					promise.complete(searchList);
 				}
 			}).onFailure(ex -> {
-				LOG.error(String.format("searchWeatherObserved failed. "), ex);
+				LOG.error(String.format("searchIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("searchWeatherObserved failed. "), ex);
+			LOG.error(String.format("searchIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
-	public void searchWeatherObserved2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<WeatherObserved> searchList) {
+	public void searchIotService2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<IotService> searchList) {
 	}
 
-	public Future<Void> persistWeatherObserved(WeatherObserved o, Boolean patch) {
+	public Future<Void> persistIotService(IotService o, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT * FROM WeatherObserved WHERE pk=$1")
+			sqlConnection.preparedQuery("SELECT * FROM IotService WHERE pk=$1")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(pk)
 					).onSuccess(result -> {
@@ -3128,45 +2567,45 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								try {
 									o.persistForClass(columnName, columnValue);
 								} catch(Exception e) {
-									LOG.error(String.format("persistWeatherObserved failed. "), e);
+									LOG.error(String.format("persistIotService failed. "), e);
 								}
 							}
 						}
 					}
 					promise.complete();
 				} catch(Exception ex) {
-					LOG.error(String.format("persistWeatherObserved failed. "), ex);
+					LOG.error(String.format("persistIotService failed. "), ex);
 					promise.fail(ex);
 				}
 			}).onFailure(ex -> {
 				RuntimeException ex2 = new RuntimeException(ex);
-				LOG.error(String.format("persistWeatherObserved failed. "), ex2);
+				LOG.error(String.format("persistIotService failed. "), ex2);
 				promise.fail(ex2);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("persistWeatherObserved failed. "), ex);
+			LOG.error(String.format("persistIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<Void> relateWeatherObserved(WeatherObserved o) {
+	public Future<Void> relateIotService(IotService o) {
 		Promise<Void> promise = Promise.promise();
 			promise.complete();
 		return promise.future();
 	}
 
 	public String searchVar(String varIndexed) {
-		return WeatherObserved.searchVarWeatherObserved(varIndexed);
+		return IotService.searchVarIotService(varIndexed);
 	}
 
 	@Override
 	public String getClassApiAddress() {
-		return WeatherObserved.CLASS_API_ADDRESS_WeatherObserved;
+		return IotService.CLASS_API_ADDRESS_IotService;
 	}
 
-	public Future<WeatherObserved> indexWeatherObserved(WeatherObserved o) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> indexIotService(IotService o) {
+		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -3176,7 +2615,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				json.put("add", add);
 				JsonObject doc = new JsonObject();
 				add.put("doc", doc);
-				o.indexWeatherObserved(doc);
+				o.indexIotService(doc);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
 				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
@@ -3193,22 +2632,22 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
-					LOG.error(String.format("indexWeatherObserved failed. "), new RuntimeException(ex));
+					LOG.error(String.format("indexIotService failed. "), new RuntimeException(ex));
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexWeatherObserved failed. "), ex);
+				LOG.error(String.format("indexIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("indexWeatherObserved failed. "), ex);
+			LOG.error(String.format("indexIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<WeatherObserved> unindexWeatherObserved(WeatherObserved o) {
-		Promise<WeatherObserved> promise = Promise.promise();
+	public Future<IotService> unindexIotService(IotService o) {
+		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -3234,21 +2673,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
 					promise.complete(o);
 				}).onFailure(ex -> {
-					LOG.error(String.format("unindexWeatherObserved failed. "), new RuntimeException(ex));
+					LOG.error(String.format("unindexIotService failed. "), new RuntimeException(ex));
 					promise.fail(ex);
 				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("unindexWeatherObserved failed. "), ex);
+				LOG.error(String.format("unindexIotService failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
-			LOG.error(String.format("unindexWeatherObserved failed. "), ex);
+			LOG.error(String.format("unindexIotService failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
 	}
 
-	public Future<Void> refreshWeatherObserved(WeatherObserved o) {
+	public Future<Void> refreshIotService(IotService o) {
 		Promise<Void> promise = Promise.promise();
 		SiteRequest siteRequest = o.getSiteRequest_();
 		try {
@@ -3284,7 +2723,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					params.put("query", query);
 					JsonObject context = new JsonObject().put("params", params).put("user", siteRequest.getUserPrincipal());
 					JsonObject json = new JsonObject().put("context", context);
-					eventBus.request(WeatherObserved.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "patchWeatherObservedFuture")).onSuccess(c -> {
+					eventBus.request(IotService.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "patchIotServiceFuture")).onSuccess(c -> {
 						JsonObject responseMessage = (JsonObject)c.body();
 						Integer statusCode = responseMessage.getInteger("statusCode");
 						if(statusCode.equals(200))
@@ -3303,7 +2742,59 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				promise.complete();
 			}
 		} catch(Exception ex) {
-			LOG.error(String.format("refreshWeatherObserved failed. "), ex);
+			LOG.error(String.format("refreshIotService failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, JsonObject ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			String uri = ctx.getString(IotService.VAR_uri);
+			String url = String.format("%s%s", siteBaseUrl, uri);
+			IotService page = new IotService();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+			page.persistForClass(IotService.VAR_resourceUri, resourceUri);
+			page.persistForClass(IotService.VAR_templateUri, templateUri);
+
+			page.persistForClass(IotService.VAR_inheritPk, IotService.staticSetInheritPk(siteRequest2, ctx.getString(IotService.VAR_inheritPk)));
+			page.persistForClass(IotService.VAR_created, IotService.staticSetCreated(siteRequest2, ctx.getString(IotService.VAR_created)));
+			page.persistForClass(IotService.VAR_archived, IotService.staticSetArchived(siteRequest2, ctx.getString(IotService.VAR_archived)));
+			page.persistForClass(IotService.VAR_sessionId, IotService.staticSetSessionId(siteRequest2, ctx.getString(IotService.VAR_sessionId)));
+			page.persistForClass(IotService.VAR_userKey, IotService.staticSetUserKey(siteRequest2, ctx.getString(IotService.VAR_userKey)));
+			page.persistForClass(IotService.VAR_entityType, IotService.staticSetEntityType(siteRequest2, ctx.getString(IotService.VAR_entityType)));
+			page.persistForClass(IotService.VAR_apiKey, IotService.staticSetApiKey(siteRequest2, ctx.getString(IotService.VAR_apiKey)));
+			page.persistForClass(IotService.VAR_cbHost, IotService.staticSetCbHost(siteRequest2, ctx.getString(IotService.VAR_cbHost)));
+			page.persistForClass(IotService.VAR_resource, IotService.staticSetResource(siteRequest2, ctx.getString(IotService.VAR_resource)));
+			page.persistForClass(IotService.VAR_attributes, IotService.staticSetAttributes(siteRequest2, ctx.getString(IotService.VAR_attributes)));
+			page.persistForClass(IotService.VAR_service, IotService.staticSetService(siteRequest2, ctx.getString(IotService.VAR_service)));
+			page.persistForClass(IotService.VAR_servicePath, IotService.staticSetServicePath(siteRequest2, ctx.getString(IotService.VAR_servicePath)));
+			page.persistForClass(IotService.VAR_pageId, IotService.staticSetPageId(siteRequest2, ctx.getString(IotService.VAR_pageId)));
+			page.persistForClass(IotService.VAR_resourceUri, IotService.staticSetResourceUri(siteRequest2, ctx.getString(IotService.VAR_resourceUri)));
+			page.persistForClass(IotService.VAR_templateUri, IotService.staticSetTemplateUri(siteRequest2, ctx.getString(IotService.VAR_templateUri)));
+			page.persistForClass(IotService.VAR_uri, IotService.staticSetUri(siteRequest2, ctx.getString(IotService.VAR_uri)));
+			page.persistForClass(IotService.VAR_url, IotService.staticSetUrl(siteRequest2, ctx.getString(IotService.VAR_url)));
+			page.persistForClass(IotService.VAR_title, IotService.staticSetTitle(siteRequest2, ctx.getString(IotService.VAR_title)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(page);
+					data.put(IotService.VAR_pk, uri);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

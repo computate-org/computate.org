@@ -1,0 +1,35 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta property="site:pageId" content="esp32-demo"/>
+    <meta property="site:uri" content="/en-us/iot-service/{{ pageId }}"/>
+    <meta property="site:userUri" content="/en-us/user/iot-service/{{ pageId }}"/>
+    <meta property="site:name" content="ESP32 Demo"/>
+    <meta property="site:title" content="{{ name }}"/>
+    <meta property="site:description" content="An edge-to-cloud demonstration of a WeatherObserved FIWARE Smart Data Model device using an ESP32 and Si7021 temperature sensor with MicroPython and Arduino IDE"/>
+    <meta property="site:apiKey" content="WeatherObserved"/>
+    <meta property="site:entityType" content="WeatherObserved"/>
+    <meta property="site:resource" content="/iot/json"/>
+    <meta property="site:service" content="esp32-demo"/>
+    <meta property="site:servicePath" content="/Italy/Naples/MostraDOltremare"/>
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+
+@media (max-width:800px) {
+  .intro-content > h1 {
+    font-size: var(--sl-font-size-large);
+  }
+  sl-carousel {
+    --aspect-ratio: 16/8;
+  }
+}
+@media (min-width:801px) {
+  sl-carousel {
+    --aspect-ratio: 16/8;
+  }
+}
+{% endblock htmStylePageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+{% endblock %}

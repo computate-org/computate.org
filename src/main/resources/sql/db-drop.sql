@@ -1,3 +1,4 @@
-DROP TABLE WeatherObserved CASCADE;
 DROP TABLE SiteUser CASCADE;
 DROP TABLE CompanyWebinar CASCADE;
+DROP TABLE IotService CASCADE;
+DROP TABLE WeatherObserved CASCADE;

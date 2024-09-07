@@ -50,10 +50,12 @@ import org.computate.site.model.service.CompanyService;
 import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
 import org.computate.site.model.webinar.CompanyWebinar;
 import org.computate.site.model.webinar.CompanyWebinarEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.model.fiware.iotservice.IotService;
+import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -478,6 +480,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
 			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
 			apiSitePage.importTimer(Paths.get(templatePath, "/en-us/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q1 -> {
 				apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q2 -> {
 					apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q3 -> {
@@ -486,8 +489,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 								apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q6 -> {
 									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar).onSuccess(q7 -> {
 										apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q8 -> {
-											LOG.info("data import complete");
-											promise.complete();
+											apiIotService.importTimer(Paths.get(templatePath, "/en-us/iot-service"), vertx, siteRequest, IotService.CLASS_SIMPLE_NAME, IotService.CLASS_API_ADDRESS_IotService).onSuccess(q9 -> {
+												LOG.info("data import complete");
+												promise.complete();
+											}).onFailure(ex -> promise.fail(ex));
 										}).onFailure(ex -> promise.fail(ex));
 									}).onFailure(ex -> promise.fail(ex));
 								}).onFailure(ex -> promise.fail(ex));
