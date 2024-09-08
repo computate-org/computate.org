@@ -225,13 +225,13 @@
 {%- endblock htmScriptWeatherObservedPage %}
 {%- endblock htmScriptBaseModelPage %}
 
-{%- block websocketBaseModelPage %}
+{%- block websocketPageLayout %}
 {%- block websocketWeatherObservedPage %}
         window.eventBus = new EventBus('/eventbus');
         window.eventBus.enableReconnect(true);
         websocketWeatherObserved(websocketWeatherObservedInner);
 {%- endblock websocketWeatherObservedPage %}
-{%- endblock websocketBaseModelPage %}
+{%- endblock websocketPageLayout %}
 
 {%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
 
@@ -3016,7 +3016,10 @@ The NGSILD data with @context from the context broker"
                       name="ngsildData"
     {%- endif %}
   {%- endif %}
-                      >{{weatherObserved_.ngsildData}}
+{%- if "Page" == classApiMethodMethod %}
+                      value="{{ toJsonObjectString(weatherObserved_.ngsildData) | e }}"
+{%- endif %}
+                      >
 </sl-textarea>
   {%- if 'Page' == classApiMethodMethod %}
                 </form>

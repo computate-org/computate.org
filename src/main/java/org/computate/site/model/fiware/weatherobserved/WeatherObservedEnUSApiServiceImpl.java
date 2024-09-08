@@ -12,6 +12,7 @@ import com.hubspot.jinjava.Jinjava;
 import io.vertx.amqp.AmqpSender;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpResponseExpectation;
@@ -30,6 +31,11 @@ import io.vertx.rabbitmq.RabbitMQClient;
  **/
 public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApiServiceImpl {
 
+	private Vertx vertx;
+	public void setVertx(Vertx vertx) {
+		this.vertx = vertx;
+	}
+
 	public WeatherObservedEnUSApiServiceImpl(EventBus eventBus, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
 		super(eventBus, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 	}
@@ -39,17 +45,19 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		Promise<Void> promise = Promise.promise();
 		super.persistWeatherObserved(weatherObserved, patch).onSuccess(a -> {
 			iotagentCreateDevice(weatherObserved, patch).onSuccess(b -> {
-				iotagentSendMessage(weatherObserved, patch).onSuccess(c -> {
-				// iotagentCreateSubscription(weatherObserved, patch).onSuccess(c -> {
-					promise.complete();
-				// }).onFailure(ex -> {
-				// 	LOG.error(String.format("patchIotServiceFuture failed. "), ex);
-				// 	promise.fail(ex);
+				// vertx.setTimer(config.getInteger(ComputateConfigKeys.CONTEXT_BROKER_DELAY_MILLIS, 1000), delay -> {
+					iotagentSendMessage(weatherObserved, patch).onSuccess(c -> {
+					// iotagentCreateSubscription(weatherObserved, patch).onSuccess(c -> {
+						promise.complete();
+					// }).onFailure(ex -> {
+					// 	LOG.error(String.format("patchIotServiceFuture failed. "), ex);
+					// 	promise.fail(ex);
+					// });
+					}).onFailure(ex -> {
+						LOG.error(String.format("patchIotServiceFuture failed. "), ex);
+						promise.fail(ex);
+					});
 				// });
-				}).onFailure(ex -> {
-					LOG.error(String.format("patchIotServiceFuture failed. "), ex);
-					promise.fail(ex);
-				});
 			}).onFailure(ex -> {
 				LOG.error(String.format("patchIotServiceFuture failed. "), ex);
 				promise.fail(ex);
@@ -271,6 +279,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 					.send()
 					.expecting(HttpResponseExpectation.SC_OK).onSuccess(entityResponse -> {
 				JsonObject entity = entityResponse.bodyAsJsonObject();
+				entity.remove("NGSILD data");
 				promise.complete(entity);
 			}).onFailure(ex -> {
 				LOG.error(String.format("postIotServiceFuture failed. "), ex);
@@ -379,7 +388,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 					String setNgsildData = String.format("set%s",StringUtils.capitalize(WeatherObserved.VAR_ngsildData));
 					jsonObject.put(setNgsildData, ngsildData);
 					super.sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved2 -> {
-						jsonObject.remove(setNgsildData);
+						// jsonObject.remove(setNgsildData);
 						promise.complete(weatherObserved2);
 					}).onFailure(ex -> {
 						LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);

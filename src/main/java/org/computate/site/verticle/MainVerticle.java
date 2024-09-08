@@ -1180,7 +1180,8 @@ public class MainVerticle extends AbstractVerticle {
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = WeatherObservedEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+			apiWeatherObserved.setVertx(vertx);
 
 			IotServiceEnUSApiServiceImpl apiIotService = IotServiceEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
 			apiIotService.configureUi(router, IotService.class, SiteRequest.class, "/en-us/iot-service");

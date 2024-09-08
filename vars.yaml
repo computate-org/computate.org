@@ -406,6 +406,8 @@ CONTEXT_BROKER_SSL: true
 CONTEXT_BROKER_HOST_NAME: "scorpiobroker.apps-crc.testing"
 # The default port that the Context Broker runs. 
 CONTEXT_BROKER_PORT: 443
+# The delay between messages and requerying entity @context. 
+CONTEXT_BROKER_DELAY_MILLIS: 0
 
 #################
 # iotagent-json #
