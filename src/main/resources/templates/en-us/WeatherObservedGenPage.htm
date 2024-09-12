@@ -225,13 +225,13 @@
 {%- endblock htmScriptWeatherObservedPage %}
 {%- endblock htmScriptBaseModelPage %}
 
-{%- block websocketPageLayout %}
+{%- block websocketBaseModelPage %}
 {%- block websocketWeatherObservedPage %}
         window.eventBus = new EventBus('/eventbus');
         window.eventBus.enableReconnect(true);
         websocketWeatherObserved(websocketWeatherObservedInner);
 {%- endblock websocketWeatherObservedPage %}
-{%- endblock websocketPageLayout %}
+{%- endblock websocketBaseModelPage %}
 
 {%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
 
@@ -245,7 +245,7 @@
 
 {%- macro htmForm_patchWeatherObserved() %}
         <sl-dialog id="patchWeatherObservedDialog" label="Modify weather observed device">
-          <form id="htmForm_patchWeatherObserved">
+          <form id="htmForm_patchWeatherObserved" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -833,7 +833,7 @@
 
 {%- macro htmForm_postWeatherObserved() %}
         <sl-dialog id="postWeatherObservedDialog" label="Create a weather observed device">
-          <form id="htmForm_postWeatherObserved">
+          <form id="htmForm_postWeatherObserved" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -1422,7 +1422,7 @@
 
 {%- macro htmForm_deleteWeatherObserved() %}
         <sl-dialog id="deleteWeatherObservedDialog" label="Delete weather observed device">
-          <form id="htmForm_deleteWeatherObserved">
+          <form id="htmForm_deleteWeatherObserved" class="round-first-and-last-row-x-large ">
           </form>
           {{ htmFormButton_deleteWeatherObserved() }}
         </sl-dialog>
@@ -1438,7 +1438,7 @@
 
 {%- macro htmForm_putimportWeatherObserved() %}
         <sl-dialog id="putimportWeatherObservedDialog" label="Import weather observed devices">
-          <form id="htmForm_putimportWeatherObserved">
+          <form id="htmForm_putimportWeatherObserved" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -1462,7 +1462,7 @@
 
 {%- macro htmForm_searchpageWeatherObserved() %}
         <div id="searchpageWeatherObservedDialog" label="Search weather observed devices">
-          <div id="htmForm_searchpageWeatherObserved">
+          <div id="htmForm_searchpageWeatherObserved" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -2619,7 +2619,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if weatherObserved_.created is defined %}{{ formatZonedDateTime(weatherObserved_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if weatherObserved_.created is defined %}{{ formatZonedDateTime(weatherObserved_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -2648,7 +2648,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if weatherObserved_.modified is defined %}{{ formatZonedDateTime(weatherObserved_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if weatherObserved_.modified is defined %}{{ formatZonedDateTime(weatherObserved_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"

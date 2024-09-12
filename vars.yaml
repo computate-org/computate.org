@@ -3,6 +3,8 @@
 # Site vars #
 #############
 
+OVERLAY_SITE_PATH: kustomize/overlays/prod
+
 # The name of this application. 
 SITE_NAME: computate.org
 # The source code directory for the project. 

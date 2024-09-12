@@ -27,6 +27,10 @@ spec:
         deployment: computateorg
         app: computateorg
     spec:
+      hostAliases:
+      - hostnames:
+        - sso.computate.org
+        ip: 34.36.213.80
       volumes:
         - name: computateorg-downloads
           persistentVolumeClaim:

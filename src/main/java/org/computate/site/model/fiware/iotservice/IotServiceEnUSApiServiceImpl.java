@@ -123,7 +123,7 @@ public class IotServiceEnUSApiServiceImpl extends IotServiceEnUSGenApiServiceImp
 						.putHeader("NGSILD-Path", o.getServicePath())
 						.putHeader("Cache-Control", "no-cache")
 						.send()
-						.expecting(HttpResponseExpectation.SC_NO_CONTENT).onSuccess(b -> {
+						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND)).onSuccess(b -> {
 					promise.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("postIotServiceFuture failed. "), ex);

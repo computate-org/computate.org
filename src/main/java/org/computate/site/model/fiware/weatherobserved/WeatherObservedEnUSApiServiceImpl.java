@@ -277,7 +277,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 					.putHeader("Link", link)
 					.putHeader("Accept", "*/*")
 					.send()
-					.expecting(HttpResponseExpectation.SC_OK).onSuccess(entityResponse -> {
+					.expecting(HttpResponseExpectation.SC_OK.or(HttpResponseExpectation.SC_NOT_FOUND)).onSuccess(entityResponse -> {
 				JsonObject entity = entityResponse.bodyAsJsonObject();
 				entity.remove("NGSILD data");
 				promise.complete(entity);
@@ -332,7 +332,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 					.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
 					.putHeader("Cache-Control", "no-cache")
 					.send()
-					.expecting(HttpResponseExpectation.SC_NO_CONTENT).onSuccess(b -> {
+					.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND)).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				LOG.error(String.format("postIotServiceFuture failed. "), ex);
@@ -388,7 +388,6 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 					String setNgsildData = String.format("set%s",StringUtils.capitalize(WeatherObserved.VAR_ngsildData));
 					jsonObject.put(setNgsildData, ngsildData);
 					super.sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved2 -> {
-						// jsonObject.remove(setNgsildData);
 						promise.complete(weatherObserved2);
 					}).onFailure(ex -> {
 						LOG.error(String.format("sqlPATCHWeatherObserved failed. "), ex);

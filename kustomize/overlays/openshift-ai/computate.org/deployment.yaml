@@ -70,6 +70,8 @@ spec:
                 name: computate.org-rabbitmq
             - secretRef:
                 name: computate.org-context-broker
+            - secretRef:
+                name: computate.org-iotagent-json
           env:
             - name: SITE_ZONE
               value: "America/New_York"
