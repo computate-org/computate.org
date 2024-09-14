@@ -671,8 +671,8 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: NGSILD-Tenant
 	 * Description: The NGSILD-Tenant or Fiware-Service
-	 * HtmRow: 3
-	 * HtmCell: 5
+	 * HtmRow: 5
+	 * HtmCell: 1
 	 * Facet: true
 	 */
 	protected void _ngsildTenant(Wrap<String> w) {
@@ -684,8 +684,8 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: NGSILD-Path
 	 * Description: The NGSILD-Path or Fiware-ServicePath
-	 * HtmRow: 3
-	 * HtmCell: 5
+	 * HtmRow: 5
+	 * HtmCell: 2
 	 * Facet: true
 	 */
 	protected void _ngsildPath(Wrap<String> w) {
@@ -697,8 +697,8 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: NGSILD data
 	 * Description: The NGSILD data with @context from the context broker
-	 * HtmRow: 3
-	 * HtmCell: 6
+	 * HtmRow: 5
+	 * HtmCell: 3
 	 * Facet: true
 	 * Multiline: true
 	 */
@@ -711,8 +711,8 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: NGSILD context
 	 * Description: The NGSILD context URL for @context data. 
-	 * HtmRow: 3
-	 * HtmCell: 6
+	 * HtmRow: 5
+	 * HtmCell: 4
 	 * Facet: true
 	 */
 	protected void _ngsildContext(Wrap<String> w) {
