@@ -127,126 +127,98 @@
         <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop">
           <i slot="prefix" class="fas fa-xmark"></i>
         </sl-button>
-        <ul>
-          <li>
-            <sl-button id="home-button" href="{{ SITE_BASE_URL }}">
-              <i class="fa-regular fa-house"></i>
-              home
-            </sl-button>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="Read the latest articles to learn more">
-              <sl-button href="{{ SITE_BASE_URL }}/page">
-                <i class="fa-duotone fa-solid fa-newspaper"></i>
-                articles
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
-              <sl-button href="{{ SITE_BASE_URL }}/research">
-                <i class="fa-duotone fa-solid fa-school"></i>
-                research
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
-              <sl-button href="{{ SITE_BASE_URL }}/event">
-                <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-                events
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
-              <sl-button href="{{ SITE_BASE_URL }}/course">
-                <i class="fa-regular fa-notebook"></i>
-                courses
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-              <sl-button href="{{ SITE_BASE_URL }}/product">
-                <i class="fa-regular fa-conveyor-belt"></i>
-                products
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
-              <sl-button href="{{ SITE_BASE_URL }}/service">
-                <i class="fa-regular fa-conveyor-belt"></i>
-                services
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
-              <sl-button href="{{ SITE_BASE_URL }}/webinar">
-                <i class="fa-regular fa-video"></i>
-                webinars
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="See the live websites built with computate">
-              <sl-button href="{{ SITE_BASE_URL }}/website">
-                <i class="fa-regular fa-globe-pointer"></i>
-                websites
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="ApiTag: weather observed">
-              <sl-button href="{{ SITE_BASE_URL }}/weather-observed">
-                <i class="fa-regular fa-cloud-bolt-sun"></i>
-                weather observed devices
-              </sl-button>
-            </sl-tooltip>
-          </li>
-          <li>
-            <sl-tooltip placement="right" content="A service within a service path in the NGSI-LD standard">
-              <sl-button href="{{ SITE_BASE_URL }}/iot-service">
-                <i class="fa-solid fa-tower-cell"></i>
-                IoT services
-              </sl-button>
-            </sl-tooltip>
-          </li>
+        <div class="round-first-and-last-row-x-large">
 {% if userName is defined %}
-          <li>
-            <sl-details>
-              <div slot="summary">
-                <sl-avatar label="user"></sl-avatar>
-                user: {{userName}}
-              </div>
-              <div>{{ userFullName }}</div>
-              <div>{{ userEmail }}</div>
-              <div>
-                <sl-tooltip placement="right" content="see or change your user profile">
-                  <sl-button href="/user" label="see or change your user profile">
-                    <i slot="prefix" class="fad fa-house-user"></i>
-                    <span>my user page</span>
-                  </sl-button>
-                </sl-tooltip>
-                <sl-tooltip placement="right" content="sign out">
-                  <sl-button href="{{ logoutUrl }}" label="sign out">
-                    <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
-                    <span>sign out</span>
-                  </sl-button>
-                </sl-tooltip>
-              </div>
-            </sl-details>
-          </li>
+          <sl-details>
+            <div slot="summary">
+              <sl-avatar label="user"></sl-avatar>
+              user: {{userName}}
+            </div>
+            <div>{{ userFullName }}</div>
+            <div>{{ userEmail }}</div>
+            <div>
+              <sl-tooltip placement="right" content="see or change your user profile">
+                <sl-button href="/user" label="see or change your user profile">
+                  <i slot="prefix" class="fad fa-house-user"></i>
+                  <span>my user page</span>
+                </sl-button>
+              </sl-tooltip>
+              <sl-tooltip placement="right" content="sign out">
+                <sl-button href="{{ logoutUrl }}" label="sign out">
+                  <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
+                  <span>sign out</span>
+                </sl-button>
+              </sl-tooltip>
+            </div>
+          </sl-details>
 {% else %}
-          <li>
-            <sl-button href="{{ SITE_BASE_URL }}/user">
-              <i class="fa-duotone fa-person-to-portal"></i> login
-            </sl-button>
-          </li>
+          <sl-button href="{{ SITE_BASE_URL }}/user">
+            <i class="fa-duotone fa-person-to-portal"></i> login
+          </sl-button>
 {% endif %}
-        </ul>
+        </div>
+        <div class="round-first-and-last-row-x-large">
+          <sl-tooltip placement="right" content="Read the latest articles to learn more">
+            <sl-button href="{{ SITE_BASE_URL }}/page">
+              <i class="fa-duotone fa-solid fa-newspaper"></i>
+              articles
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
+            <sl-button href="{{ SITE_BASE_URL }}/research">
+              <i class="fa-duotone fa-solid fa-school"></i>
+              research
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
+            <sl-button href="{{ SITE_BASE_URL }}/event">
+              <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+              events
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
+            <sl-button href="{{ SITE_BASE_URL }}/course">
+              <i class="fa-regular fa-notebook"></i>
+              courses
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
+            <sl-button href="{{ SITE_BASE_URL }}/product">
+              <i class="fa-regular fa-conveyor-belt"></i>
+              products
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
+            <sl-button href="{{ SITE_BASE_URL }}/service">
+              <i class="fa-regular fa-conveyor-belt"></i>
+              services
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
+            <sl-button href="{{ SITE_BASE_URL }}/webinar">
+              <i class="fa-regular fa-video"></i>
+              webinars
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="See the live websites built with computate">
+            <sl-button href="{{ SITE_BASE_URL }}/website">
+              <i class="fa-regular fa-globe-pointer"></i>
+              websites
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="ApiTag: weather observed">
+            <sl-button href="{{ SITE_BASE_URL }}/weather-observed">
+              <i class="fa-regular fa-cloud-bolt-sun"></i>
+              weather observed devices
+            </sl-button>
+          </sl-tooltip>
+          <sl-tooltip placement="right" content="A service within a service path in the NGSI-LD standard">
+            <sl-button href="{{ SITE_BASE_URL }}/iot-service">
+              <i class="fa-solid fa-tower-cell"></i>
+              IoT services
+            </sl-button>
+          </sl-tooltip>
+        </div>
       </aside>
       <main>
         <header id="top-bar">
