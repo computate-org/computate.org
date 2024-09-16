@@ -145,6 +145,7 @@
 {%- block websocketBaseModelPage %}
 {%- block websocketSiteUserPage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketSiteUser(websocketSiteUserInner);
 {%- endblock websocketSiteUserPage %}
 {%- endblock websocketBaseModelPage %}
@@ -161,7 +162,7 @@
 
 {%- macro htmForm_patchSiteUser() %}
         <sl-dialog id="patchSiteUserDialog" label="Modify site user">
-          <form id="htmForm_patchSiteUser">
+          <form id="htmForm_patchSiteUser" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -263,7 +264,7 @@
 
 {%- macro htmForm_postSiteUser() %}
         <sl-dialog id="postSiteUserDialog" label="Create a site user">
-          <form id="htmForm_postSiteUser">
+          <form id="htmForm_postSiteUser" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -366,7 +367,7 @@
 
 {%- macro htmForm_putimportSiteUser() %}
         <sl-dialog id="putimportSiteUserDialog" label="Import site users">
-          <form id="htmForm_putimportSiteUser">
+          <form id="htmForm_putimportSiteUser" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -390,7 +391,7 @@
 
 {%- macro htmForm_searchpageSiteUser() %}
         <div id="searchpageSiteUserDialog" label="Search site users">
-          <div id="htmForm_searchpageSiteUser">
+          <div id="htmForm_searchpageSiteUser" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -976,7 +977,7 @@ The primary key of this object in the database"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{siteUser_.pk}}"
+                      value="{{siteUser_.pk | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1014,7 +1015,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{siteUser_.objectId}}"
+                      value="{{siteUser_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1041,7 +1042,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if siteUser_.created is defined %}{{ formatZonedDateTime(siteUser_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if siteUser_.created is defined %}{{ formatZonedDateTime(siteUser_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -1070,7 +1071,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if siteUser_.modified is defined %}{{ formatZonedDateTime(siteUser_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if siteUser_.modified is defined %}{{ formatZonedDateTime(siteUser_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"

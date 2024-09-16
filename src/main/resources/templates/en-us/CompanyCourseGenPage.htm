@@ -145,6 +145,7 @@
 {%- block websocketBaseResultPage %}
 {%- block websocketCompanyCoursePage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketCompanyCourse(websocketCompanyCourseInner);
 {%- endblock websocketCompanyCoursePage %}
 {%- endblock websocketBaseResultPage %}
@@ -161,7 +162,7 @@
 
 {%- macro htmForm_patchCompanyCourse() %}
         <sl-dialog id="patchCompanyCourseDialog" label="Modify course">
-          <form id="htmForm_patchCompanyCourse">
+          <form id="htmForm_patchCompanyCourse" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -290,7 +291,7 @@
 
 {%- macro htmForm_postCompanyCourse() %}
         <sl-dialog id="postCompanyCourseDialog" label="Create a course">
-          <form id="htmForm_postCompanyCourse">
+          <form id="htmForm_postCompanyCourse" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -420,7 +421,7 @@
 
 {%- macro htmForm_putimportCompanyCourse() %}
         <sl-dialog id="putimportCompanyCourseDialog" label="Import courses">
-          <form id="htmForm_putimportCompanyCourse">
+          <form id="htmForm_putimportCompanyCourse" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -444,7 +445,7 @@
 
 {%- macro htmForm_searchpageCompanyCourse() %}
         <div id="searchpageCompanyCourseDialog" label="Search courses">
-          <div id="htmForm_searchpageCompanyCourse">
+          <div id="htmForm_searchpageCompanyCourse" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1057,7 +1058,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if companyCourse_.created is defined %}{{ formatZonedDateTime(companyCourse_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyCourse_.created is defined %}{{ formatZonedDateTime(companyCourse_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1086,7 +1087,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if companyCourse_.modified is defined %}{{ formatZonedDateTime(companyCourse_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyCourse_.modified is defined %}{{ formatZonedDateTime(companyCourse_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1126,7 +1127,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyCourse_.objectId}}"
+                      value="{{companyCourse_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1228,7 +1229,7 @@ The course name. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyCourse_.name}}"
+                      value="{{companyCourse_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1245,7 +1246,7 @@ The course name. "
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_description">
   {%- endif %}
-                  <sl-textarea
+                  <sl-textarea resize="auto"
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="course description"
                       label="course description"
@@ -1265,7 +1266,10 @@ The course description. "
                       name="description"
     {%- endif %}
   {%- endif %}
-                      >{{companyCourse_.description}}
+{%- if "Page" == classApiMethodMethod %}
+                      value="{{companyCourse_.description | e }}"
+{%- endif %}
+                      >
 </sl-textarea>
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
@@ -1301,7 +1305,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyCourse_.uri}}"
+                      value="{{companyCourse_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1339,7 +1343,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyCourse_.url}}"
+                      value="{{companyCourse_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1356,7 +1360,7 @@ The URL for this page. "
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_price">
   {%- endif %}
-                  <sl-textarea
+                  <sl-textarea resize="auto"
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="course description"
                       label="course description"
@@ -1376,7 +1380,10 @@ The course description. "
                       name="price"
     {%- endif %}
   {%- endif %}
-                      >{{companyCourse_.price}}
+{%- if "Page" == classApiMethodMethod %}
+                      value="{{companyCourse_.price | e }}"
+{%- endif %}
+                      >
 </sl-textarea>
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
@@ -1412,7 +1419,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyCourse_.pageId}}"
+                      value="{{companyCourse_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 

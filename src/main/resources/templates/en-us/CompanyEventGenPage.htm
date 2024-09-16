@@ -218,6 +218,7 @@
 {%- block websocketBaseResultPage %}
 {%- block websocketCompanyEventPage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketCompanyEvent(websocketCompanyEventInner);
 {%- endblock websocketCompanyEventPage %}
 {%- endblock websocketBaseResultPage %}
@@ -234,7 +235,7 @@
 
 {%- macro htmForm_patchCompanyEvent() %}
         <sl-dialog id="patchCompanyEventDialog" label="Modify event">
-          <form id="htmForm_patchCompanyEvent">
+          <form id="htmForm_patchCompanyEvent" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -306,16 +307,6 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmUriCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -332,6 +323,16 @@
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -363,7 +364,7 @@
 
 {%- macro htmForm_postCompanyEvent() %}
         <sl-dialog id="postCompanyEventDialog" label="Create an event">
-          <form id="htmForm_postCompanyEvent">
+          <form id="htmForm_postCompanyEvent" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -436,16 +437,6 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmUriCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -462,6 +453,16 @@
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -493,7 +494,7 @@
 
 {%- macro htmForm_putimportCompanyEvent() %}
         <sl-dialog id="putimportCompanyEventDialog" label="Import events">
-          <form id="htmForm_putimportCompanyEvent">
+          <form id="htmForm_putimportCompanyEvent" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -517,7 +518,7 @@
 
 {%- macro htmForm_searchpageCompanyEvent() %}
         <div id="searchpageCompanyEventDialog" label="Search events">
-          <div id="htmForm_searchpageCompanyEvent">
+          <div id="htmForm_searchpageCompanyEvent" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -589,16 +590,6 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmUriCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -615,6 +606,16 @@
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmUrlCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1130,7 +1131,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if companyEvent_.created is defined %}{{ formatZonedDateTime(companyEvent_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyEvent_.created is defined %}{{ formatZonedDateTime(companyEvent_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1159,7 +1160,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if companyEvent_.modified is defined %}{{ formatZonedDateTime(companyEvent_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyEvent_.modified is defined %}{{ formatZonedDateTime(companyEvent_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1199,7 +1200,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.objectId}}"
+                      value="{{companyEvent_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1300,7 +1301,7 @@ The event name. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.name}}"
+                      value="{{companyEvent_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1336,7 +1337,7 @@ The event name. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(companyEvent_.location) }}"
+                      value="{{ toJsonObjectString(companyEvent_.location) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1347,44 +1348,6 @@ The event name. "
 
 {%- macro htmLocationCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputLocationCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputDescriptionCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_description">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="event description"
-                      label="event description"
-                      help-text="
-The event description. "
-                      id="{{classApiMethodMethod}}_description"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-id="{{ id }}"
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{id}}Description "
-                      name="setDescription"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{id}}Description "
-                      name="setDescription"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyEvent inputCompanyEvent{{id}}Description "
-                      name="description"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.description}}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDescriptionCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDescriptionCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputUriCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -1412,7 +1375,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.uri}}"
+                      value="{{companyEvent_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1450,7 +1413,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.url}}"
+                      value="{{companyEvent_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1461,6 +1424,44 @@ The URL for this page. "
 
 {%- macro htmUrlCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputUrlCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputDescriptionCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_description">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="event description"
+                      label="event description"
+                      help-text="
+The event description. "
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{id}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{id}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyEvent inputCompanyEvent{{id}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{companyEvent_.description | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionCompanyEventPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputDescriptionCompanyEventPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputPageIdCompanyEventPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -1488,7 +1489,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyEvent_.pageId}}"
+                      value="{{companyEvent_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 

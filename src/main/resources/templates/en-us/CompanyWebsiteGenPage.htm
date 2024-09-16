@@ -145,6 +145,7 @@
 {%- block websocketBaseResultPage %}
 {%- block websocketCompanyWebsitePage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketCompanyWebsite(websocketCompanyWebsiteInner);
 {%- endblock websocketCompanyWebsitePage %}
 {%- endblock websocketBaseResultPage %}
@@ -161,7 +162,7 @@
 
 {%- macro htmForm_patchCompanyWebsite() %}
         <sl-dialog id="patchCompanyWebsiteDialog" label="Modify website">
-          <form id="htmForm_patchCompanyWebsite">
+          <form id="htmForm_patchCompanyWebsite" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -280,7 +281,7 @@
 
 {%- macro htmForm_postCompanyWebsite() %}
         <sl-dialog id="postCompanyWebsiteDialog" label="Create a website">
-          <form id="htmForm_postCompanyWebsite">
+          <form id="htmForm_postCompanyWebsite" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -400,7 +401,7 @@
 
 {%- macro htmForm_putimportCompanyWebsite() %}
         <sl-dialog id="putimportCompanyWebsiteDialog" label="Import websites">
-          <form id="htmForm_putimportCompanyWebsite">
+          <form id="htmForm_putimportCompanyWebsite" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -424,7 +425,7 @@
 
 {%- macro htmForm_searchpageCompanyWebsite() %}
         <div id="searchpageCompanyWebsiteDialog" label="Search websites">
-          <div id="htmForm_searchpageCompanyWebsite">
+          <div id="htmForm_searchpageCompanyWebsite" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1027,7 +1028,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if companyWebsite_.created is defined %}{{ formatZonedDateTime(companyWebsite_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyWebsite_.created is defined %}{{ formatZonedDateTime(companyWebsite_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1056,7 +1057,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if companyWebsite_.modified is defined %}{{ formatZonedDateTime(companyWebsite_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyWebsite_.modified is defined %}{{ formatZonedDateTime(companyWebsite_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1096,7 +1097,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.objectId}}"
+                      value="{{companyWebsite_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1197,7 +1198,7 @@ The service name. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.name}}"
+                      value="{{companyWebsite_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1235,7 +1236,7 @@ The service description. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.description}}"
+                      value="{{companyWebsite_.description | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1273,7 +1274,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.uri}}"
+                      value="{{companyWebsite_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1311,7 +1312,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.url}}"
+                      value="{{companyWebsite_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1349,7 +1350,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebsite_.pageId}}"
+                      value="{{companyWebsite_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 

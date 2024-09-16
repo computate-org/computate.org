@@ -172,7 +172,7 @@
 
 {%- macro htmForm_patchIotService() %}
         <sl-dialog id="patchIotServiceDialog" label="Modify IoT service">
-          <form id="htmForm_patchIotService">
+          <form id="htmForm_patchIotService" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -358,7 +358,7 @@
 
 {%- macro htmForm_postIotService() %}
         <sl-dialog id="postIotServiceDialog" label="Create an IoT service">
-          <form id="htmForm_postIotService">
+          <form id="htmForm_postIotService" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -545,7 +545,7 @@
 
 {%- macro htmForm_deleteIotService() %}
         <sl-dialog id="deleteIotServiceDialog" label="Delete IoT service">
-          <form id="htmForm_deleteIotService">
+          <form id="htmForm_deleteIotService" class="round-first-and-last-row-x-large ">
           </form>
           {{ htmFormButton_deleteIotService() }}
         </sl-dialog>
@@ -561,7 +561,7 @@
 
 {%- macro htmForm_putimportIotService() %}
         <sl-dialog id="putimportIotServiceDialog" label="Import IoT services">
-          <form id="htmForm_putimportIotService">
+          <form id="htmForm_putimportIotService" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -585,7 +585,7 @@
 
 {%- macro htmForm_searchpageIotService() %}
         <div id="searchpageIotServiceDialog" label="Search IoT services">
-          <div id="htmForm_searchpageIotService">
+          <div id="htmForm_searchpageIotService" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1275,7 +1275,7 @@ The primary key of this object in the database"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.pk}}"
+                      value="{{iotService_.pk | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1313,7 +1313,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.objectId}}"
+                      value="{{iotService_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1340,7 +1340,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if iotService_.created is defined %}{{ formatZonedDateTime(iotService_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if iotService_.created is defined %}{{ formatZonedDateTime(iotService_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -1369,7 +1369,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if iotService_.modified is defined %}{{ formatZonedDateTime(iotService_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if iotService_.modified is defined %}{{ formatZonedDateTime(iotService_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -1472,7 +1472,7 @@ The NGSI-LD entity type"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.entityType}}"
+                      value="{{iotService_.entityType | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1510,7 +1510,7 @@ The NGSI-LD API Key"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.apiKey}}"
+                      value="{{iotService_.apiKey | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1548,7 +1548,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.uri}}"
+                      value="{{iotService_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1586,7 +1586,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.url}}"
+                      value="{{iotService_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1624,7 +1624,7 @@ The NGSI-LD Context Broker host"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.cbHost}}"
+                      value="{{iotService_.cbHost | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1662,7 +1662,7 @@ The NGSI-LD resource"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.resource}}"
+                      value="{{iotService_.resource | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1700,7 +1700,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.pageId}}"
+                      value="{{iotService_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1738,7 +1738,7 @@ The NGSI-LD attributes"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonArrayString(iotService_.attributes) }}"
+                      value="{{ toJsonArrayString(iotService_.attributes) | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1776,7 +1776,7 @@ The NGSI-LD service"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.service}}"
+                      value="{{iotService_.service | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1814,7 +1814,7 @@ The NGSI-LD service path"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.servicePath}}"
+                      value="{{iotService_.servicePath | e }}"
   {%- endif %}
                       ></sl-input>
 

@@ -1609,7 +1609,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			page.persistForClass(CompanyEvent.VAR_objectId, CompanyEvent.staticSetObjectId(siteRequest2, ctx.getString(CompanyEvent.VAR_objectId)));
 			page.persistForClass(CompanyEvent.VAR_id, CompanyEvent.staticSetId(siteRequest2, ctx.getString(CompanyEvent.VAR_id)));
 			page.persistForClass(CompanyEvent.VAR_name, CompanyEvent.staticSetName(siteRequest2, ctx.getString(CompanyEvent.VAR_name)));
-			page.persistForClass(CompanyEvent.VAR_description, CompanyEvent.staticSetDescription(siteRequest2, ctx.getString(CompanyEvent.VAR_description)));
 			page.persistForClass(CompanyEvent.VAR_pageId, CompanyEvent.staticSetPageId(siteRequest2, ctx.getString(CompanyEvent.VAR_pageId)));
 			page.persistForClass(CompanyEvent.VAR_resourceUri, CompanyEvent.staticSetResourceUri(siteRequest2, ctx.getString(CompanyEvent.VAR_resourceUri)));
 			page.persistForClass(CompanyEvent.VAR_templateUri, CompanyEvent.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyEvent.VAR_templateUri)));
@@ -1617,6 +1616,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			page.persistForClass(CompanyEvent.VAR_url, CompanyEvent.staticSetUrl(siteRequest2, ctx.getString(CompanyEvent.VAR_url)));
 			page.persistForClass(CompanyEvent.VAR_title, CompanyEvent.staticSetTitle(siteRequest2, ctx.getString(CompanyEvent.VAR_title)));
 			page.persistForClass(CompanyEvent.VAR_location, CompanyEvent.staticSetLocation(siteRequest2, ctx.getString(CompanyEvent.VAR_location)));
+			page.persistForClass(CompanyEvent.VAR_description, CompanyEvent.staticSetDescription(siteRequest2, ctx.getString(CompanyEvent.VAR_description)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

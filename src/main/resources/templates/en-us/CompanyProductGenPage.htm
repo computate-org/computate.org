@@ -145,6 +145,7 @@
 {%- block websocketBaseResultPage %}
 {%- block websocketCompanyProductPage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketCompanyProduct(websocketCompanyProductInner);
 {%- endblock websocketCompanyProductPage %}
 {%- endblock websocketBaseResultPage %}
@@ -161,7 +162,7 @@
 
 {%- macro htmForm_patchCompanyProduct() %}
         <sl-dialog id="patchCompanyProductDialog" label="Modify product">
-          <form id="htmForm_patchCompanyProduct">
+          <form id="htmForm_patchCompanyProduct" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -280,7 +281,7 @@
 
 {%- macro htmForm_postCompanyProduct() %}
         <sl-dialog id="postCompanyProductDialog" label="Create a product">
-          <form id="htmForm_postCompanyProduct">
+          <form id="htmForm_postCompanyProduct" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -400,7 +401,7 @@
 
 {%- macro htmForm_putimportCompanyProduct() %}
         <sl-dialog id="putimportCompanyProductDialog" label="Import products">
-          <form id="htmForm_putimportCompanyProduct">
+          <form id="htmForm_putimportCompanyProduct" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -424,7 +425,7 @@
 
 {%- macro htmForm_searchpageCompanyProduct() %}
         <div id="searchpageCompanyProductDialog" label="Search products">
-          <div id="htmForm_searchpageCompanyProduct">
+          <div id="htmForm_searchpageCompanyProduct" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1027,7 +1028,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if companyProduct_.created is defined %}{{ formatZonedDateTime(companyProduct_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyProduct_.created is defined %}{{ formatZonedDateTime(companyProduct_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1056,7 +1057,7 @@
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if companyProduct_.modified is defined %}{{ formatZonedDateTime(companyProduct_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyProduct_.modified is defined %}{{ formatZonedDateTime(companyProduct_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-id="{{ id }}"
@@ -1096,7 +1097,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.objectId}}"
+                      value="{{companyProduct_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1197,7 +1198,7 @@ The product name. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.name}}"
+                      value="{{companyProduct_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1235,7 +1236,7 @@ The product description. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.description}}"
+                      value="{{companyProduct_.description | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1273,7 +1274,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.uri}}"
+                      value="{{companyProduct_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1311,7 +1312,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.url}}"
+                      value="{{companyProduct_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1349,7 +1350,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyProduct_.pageId}}"
+                      value="{{companyProduct_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 

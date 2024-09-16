@@ -606,7 +606,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				siteRequest.setSqlConnection(sqlConnection);
 				varsCompanyWebinar(siteRequest).onSuccess(a -> {
 					sqlPATCHCompanyWebinar(o, inheritPk).onSuccess(companyWebinar -> {
-						persistCompanyWebinar(companyWebinar).onSuccess(c -> {
+						persistCompanyWebinar(companyWebinar, true).onSuccess(c -> {
 							relateCompanyWebinar(companyWebinar).onSuccess(d -> {
 								indexCompanyWebinar(companyWebinar).onSuccess(o2 -> {
 									if(apiRequest != null) {
@@ -680,54 +680,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
-					case "setCreated":
-							o2.setCreated(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_created + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCreated());
-						break;
-					case "setArchived":
-							o2.setArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlArchived());
-						break;
-					case "setSessionId":
-							o2.setSessionId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSessionId());
-						break;
-					case "setUserKey":
-							o2.setUserKey(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUserKey());
-						break;
-					case "setName":
-							o2.setName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_name + "=$" + num);
-							num++;
-							bParams.add(o2.sqlName());
-						break;
 					case "setDescription":
 							o2.setDescription(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -775,6 +727,54 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							bSql.append(CompanyWebinar.VAR_webinarUrlAmericas + "=$" + num);
 							num++;
 							bParams.add(o2.sqlWebinarUrlAmericas());
+						break;
+					case "setInheritPk":
+							o2.setInheritPk(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+							num++;
+							bParams.add(o2.sqlInheritPk());
+						break;
+					case "setCreated":
+							o2.setCreated(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCreated());
+						break;
+					case "setArchived":
+							o2.setArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlArchived());
+						break;
+					case "setSessionId":
+							o2.setSessionId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSessionId());
+						break;
+					case "setUserKey":
+							o2.setUserKey(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserKey());
+						break;
+					case "setName":
+							o2.setName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_name + "=$" + num);
+							num++;
+							bParams.add(o2.sqlName());
 						break;
 					case "setWebinarUrlApac":
 							o2.setWebinarUrlApac(jsonObject.getString(entityVar));
@@ -1028,7 +1028,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				varsCompanyWebinar(siteRequest).onSuccess(a -> {
 					createCompanyWebinar(siteRequest).onSuccess(companyWebinar -> {
 						sqlPOSTCompanyWebinar(companyWebinar, inheritPk).onSuccess(b -> {
-							persistCompanyWebinar(companyWebinar).onSuccess(c -> {
+							persistCompanyWebinar(companyWebinar, false).onSuccess(c -> {
 								relateCompanyWebinar(companyWebinar).onSuccess(d -> {
 									indexCompanyWebinar(companyWebinar).onSuccess(o2 -> {
 										promise1.complete(companyWebinar);
@@ -1087,8 +1087,8 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
-	public Future<Void> sqlPOSTCompanyWebinar(CompanyWebinar o, Boolean inheritPk) {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyWebinar> sqlPOSTCompanyWebinar(CompanyWebinar o, Boolean inheritPk) {
+		Promise<CompanyWebinar> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -1126,60 +1126,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case CompanyWebinar.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
-					case CompanyWebinar.VAR_created:
-						o2.setCreated(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_created + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCreated());
-						break;
-					case CompanyWebinar.VAR_archived:
-						o2.setArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlArchived());
-						break;
-					case CompanyWebinar.VAR_sessionId:
-						o2.setSessionId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSessionId());
-						break;
-					case CompanyWebinar.VAR_userKey:
-						o2.setUserKey(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUserKey());
-						break;
-					case CompanyWebinar.VAR_name:
-						o2.setName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_name + "=$" + num);
-						num++;
-						bParams.add(o2.sqlName());
-						break;
 					case CompanyWebinar.VAR_description:
 						o2.setDescription(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1233,6 +1179,60 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_webinarUrlAmericas + "=$" + num);
 						num++;
 						bParams.add(o2.sqlWebinarUrlAmericas());
+						break;
+					case CompanyWebinar.VAR_inheritPk:
+						o2.setInheritPk(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+						num++;
+						bParams.add(o2.sqlInheritPk());
+						break;
+					case CompanyWebinar.VAR_created:
+						o2.setCreated(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCreated());
+						break;
+					case CompanyWebinar.VAR_archived:
+						o2.setArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlArchived());
+						break;
+					case CompanyWebinar.VAR_sessionId:
+						o2.setSessionId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSessionId());
+						break;
+					case CompanyWebinar.VAR_userKey:
+						o2.setUserKey(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserKey());
+						break;
+					case CompanyWebinar.VAR_name:
+						o2.setName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_name + "=$" + num);
+						num++;
+						bParams.add(o2.sqlName());
 						break;
 					case CompanyWebinar.VAR_webinarUrlApac:
 						o2.setWebinarUrlApac(jsonObject.getString(entityVar));
@@ -1291,7 +1291,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 			CompositeFuture.all(futures1).onSuccess(a -> {
 				CompositeFuture.all(futures2).onSuccess(b -> {
-					promise.complete();
+					promise.complete(o2);
 				}).onFailure(ex -> {
 					LOG.error(String.format("sqlPOSTCompanyWebinar failed. "), ex);
 					promise.fail(ex);
@@ -2130,7 +2130,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	public void searchCompanyWebinar2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<CompanyWebinar> searchList) {
 	}
 
-	public Future<Void> persistCompanyWebinar(CompanyWebinar o) {
+	public Future<Void> persistCompanyWebinar(CompanyWebinar o, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -2343,18 +2343,18 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_resourceUri, resourceUri);
 			page.persistForClass(CompanyWebinar.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyWebinar.VAR_inheritPk, CompanyWebinar.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebinar.VAR_inheritPk)));
-			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, ctx.getString(CompanyWebinar.VAR_created)));
-			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
-			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
-			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
-			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, ctx.getString(CompanyWebinar.VAR_name)));
 			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, ctx.getString(CompanyWebinar.VAR_description)));
 			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, ctx.getString(CompanyWebinar.VAR_pageId)));
 			page.persistForClass(CompanyWebinar.VAR_resourceUri, CompanyWebinar.staticSetResourceUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_resourceUri)));
 			page.persistForClass(CompanyWebinar.VAR_templateUri, CompanyWebinar.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_templateUri)));
 			page.persistForClass(CompanyWebinar.VAR_userUri, CompanyWebinar.staticSetUserUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_userUri)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlAmericas, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlAmericas)));
+			page.persistForClass(CompanyWebinar.VAR_inheritPk, CompanyWebinar.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebinar.VAR_inheritPk)));
+			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, ctx.getString(CompanyWebinar.VAR_created)));
+			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
+			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
+			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
+			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, ctx.getString(CompanyWebinar.VAR_name)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlApac, CompanyWebinar.staticSetWebinarUrlApac(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlApac)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlEmea, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlEmea)));
 			page.persistForClass(CompanyWebinar.VAR_uri, CompanyWebinar.staticSetUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_uri)));

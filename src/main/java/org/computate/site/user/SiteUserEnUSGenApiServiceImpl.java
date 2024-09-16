@@ -400,7 +400,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				siteRequest.setSqlConnection(sqlConnection);
 				varsSiteUser(siteRequest).onSuccess(a -> {
 					sqlPATCHSiteUser(o, inheritPk).onSuccess(siteUser -> {
-						persistSiteUser(siteUser).onSuccess(c -> {
+						persistSiteUser(siteUser, true).onSuccess(c -> {
 							relateSiteUser(siteUser).onSuccess(d -> {
 								indexSiteUser(siteUser).onSuccess(o2 -> {
 									if(apiRequest != null) {
@@ -750,7 +750,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				varsSiteUser(siteRequest).onSuccess(a -> {
 					createSiteUser(siteRequest).onSuccess(siteUser -> {
 						sqlPOSTSiteUser(siteUser, inheritPk).onSuccess(b -> {
-							persistSiteUser(siteUser).onSuccess(c -> {
+							persistSiteUser(siteUser, false).onSuccess(c -> {
 								relateSiteUser(siteUser).onSuccess(d -> {
 									indexSiteUser(siteUser).onSuccess(o2 -> {
 										promise1.complete(siteUser);
@@ -809,8 +809,8 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		return promise.future();
 	}
 
-	public Future<Void> sqlPOSTSiteUser(SiteUser o, Boolean inheritPk) {
-		Promise<Void> promise = Promise.promise();
+	public Future<SiteUser> sqlPOSTSiteUser(SiteUser o, Boolean inheritPk) {
+		Promise<SiteUser> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
@@ -994,7 +994,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			}
 			CompositeFuture.all(futures1).onSuccess(a -> {
 				CompositeFuture.all(futures2).onSuccess(b -> {
-					promise.complete();
+					promise.complete(o2);
 				}).onFailure(ex -> {
 					LOG.error(String.format("sqlPOSTSiteUser failed. "), ex);
 					promise.fail(ex);
@@ -1732,7 +1732,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	public void searchSiteUser2(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, SearchList<SiteUser> searchList) {
 	}
 
-	public Future<Void> persistSiteUser(SiteUser o) {
+	public Future<Void> persistSiteUser(SiteUser o, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();

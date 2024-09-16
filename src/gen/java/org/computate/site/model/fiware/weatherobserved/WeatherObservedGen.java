@@ -193,7 +193,7 @@ import org.computate.search.response.solr.SolrResponse;
 public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObserved.class);
 
-	public static final String WeatherObserved_Description_enUS = "ApiTag: weather observed";
+	public static final String WeatherObserved_Description_enUS = "For keeping track of temperature, humidity, and other weather related details. ";
 	public static final String WeatherObserved_AName_enUS = "a weather observed device";
 	public static final String WeatherObserved_This_enUS = "this ";
 	public static final String WeatherObserved_ThisName_enUS = "this weather observed device";
@@ -6653,13 +6653,13 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_entityId:
 			return 3;
 		case VAR_ngsildTenant:
-			return 3;
+			return 5;
 		case VAR_ngsildPath:
-			return 3;
+			return 5;
 		case VAR_ngsildData:
-			return 3;
+			return 5;
 		case VAR_ngsildContext:
-			return 3;
+			return 5;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -6754,13 +6754,13 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_entityId:
 			return 4;
 		case VAR_ngsildTenant:
-			return 5;
+			return 1;
 		case VAR_ngsildPath:
-			return 5;
+			return 2;
 		case VAR_ngsildData:
-			return 6;
+			return 3;
 		case VAR_ngsildContext:
-			return 6;
+			return 4;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

@@ -504,7 +504,7 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("ApiTag: weather observed");
+      c.o("For keeping track of temperature, humidity, and other weather related details. ");
   }
 
   @Override

@@ -1462,101 +1462,101 @@ public class MainVerticle extends AbstractVerticle {
 						handler.fail(ex);
 					}
 				});
+			}
 
-				router.getWithRegex("\\/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
-					String originalUri = handler.pathParam("uri");
-					SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
-					ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
-					apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						try {
+			router.getWithRegex("\\/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
+				String originalUri = handler.pathParam("uri");
+				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);
+				ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+					try {
 
-							String uri = handler.pathParam("uri");
-							String url = String.format("%s%s", config().getString(ComputateConfigKeys.SITE_BASE_URL), uri);
-							webClient.post(
-									config().getInteger(ComputateConfigKeys.AUTH_PORT)
-									, config().getString(ComputateConfigKeys.AUTH_HOST_NAME)
-									, config().getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-									)
-									.ssl(config().getBoolean(ComputateConfigKeys.AUTH_SSL))
-									.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-									.expect(ResponsePredicate.status(200))
-									.sendForm(MultiMap.caseInsensitiveMultiMap()
-											.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
-											.add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
-											.add("response_mode", "permissions")
-											.add("permission", String.format("%s#%s", uri, "GET"))
-							).onFailure(ex -> {
-								String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-								LOG.error(String.format("Failed to render page %s", originalUri), ex);
-								handler.fail(403, ex);
-							}).onSuccess(authorizationDecision -> {
-								try {
-									JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-									if(!scopes.contains("GET")) {
-										String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-										Throwable ex = new RuntimeException(msg);
-										LOG.error(String.format("Failed to render page %s", originalUri), ex);
-										handler.fail(403, ex);
-									} else {
-										SiteUser user = siteRequest.getSiteUser_(SiteUser.class);
-										JsonObject query = new JsonObject();
-										MultiMap queryParams = handler.queryParams();
-										for(String name : queryParams.names()) {
-											JsonArray array = query.getJsonArray(name);
-											List<String> vals = queryParams.getAll(name);
-											if(array == null) {
-												array = new JsonArray();
-												query.put(name, array);
-											}
-											for(String val : vals) {
-												array.add(val);
-											}
+						String uri = handler.pathParam("uri");
+						String url = String.format("%s%s", config().getString(ComputateConfigKeys.SITE_BASE_URL), uri);
+						webClient.post(
+								config().getInteger(ComputateConfigKeys.AUTH_PORT)
+								, config().getString(ComputateConfigKeys.AUTH_HOST_NAME)
+								, config().getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+								)
+								.ssl(config().getBoolean(ComputateConfigKeys.AUTH_SSL))
+								.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+								.expect(ResponsePredicate.status(200))
+								.sendForm(MultiMap.caseInsensitiveMultiMap()
+										.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+										.add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
+										.add("response_mode", "permissions")
+										.add("permission", String.format("%s#%s", uri, "GET"))
+						).onFailure(ex -> {
+							String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+							LOG.error(String.format("Failed to render page %s", originalUri), ex);
+							handler.fail(403, ex);
+						}).onSuccess(authorizationDecision -> {
+							try {
+								JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+								if(!scopes.contains("GET")) {
+									String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+									Throwable ex = new RuntimeException(msg);
+									LOG.error(String.format("Failed to render page %s", originalUri), ex);
+									handler.fail(403, ex);
+								} else {
+									SiteUser user = siteRequest.getSiteUser_(SiteUser.class);
+									JsonObject query = new JsonObject();
+									MultiMap queryParams = handler.queryParams();
+									for(String name : queryParams.names()) {
+										JsonArray array = query.getJsonArray(name);
+										List<String> vals = queryParams.getAll(name);
+										if(array == null) {
+											array = new JsonArray();
+											query.put(name, array);
 										}
-										SearchList<BaseResult> l = new SearchList<>();
-										l.q("*:*");
-										l.setC(BaseResult.class);
-										l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
-										l.setStore(true);
-										handler.response().headers().add("Content-Type", "text/html");
-										l.promiseDeepForClass(siteRequest).onSuccess(a -> {
-											BaseResult result = l.first();
-											try {
-												String downloadPath = String.format("%s%s.zip", config().getString(ConfigKeys.DOWNLOAD_PATH), uri);
-												vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
-													handler.response().putHeader("Content-Type", "application/zip")
-															.putHeader("Content-Disposition", "attachment; filename=\"" + (String)result.obtainForClass("pageId") + ".zip\"");
-													handler.end(buffer);
-												}).onFailure(ex -> {
-													LOG.error(String.format("Failed to find download %s", uri), ex);
-													handler.fail(ex);
-												});
-											} catch (Exception ex) {
-												LOG.error(String.format("Failed to render page %s", uri), ex);
+										for(String val : vals) {
+											array.add(val);
+										}
+									}
+									SearchList<BaseResult> l = new SearchList<>();
+									l.q("*:*");
+									l.setC(BaseResult.class);
+									l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
+									l.setStore(true);
+									handler.response().headers().add("Content-Type", "text/html");
+									l.promiseDeepForClass(siteRequest).onSuccess(a -> {
+										BaseResult result = l.first();
+										try {
+											String downloadPath = String.format("%s%s.zip", config().getString(ConfigKeys.DOWNLOAD_PATH), uri);
+											vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
+												handler.response().putHeader("Content-Type", "application/zip")
+														.putHeader("Content-Disposition", "attachment; filename=\"" + (String)result.obtainForClass("pageId") + ".zip\"");
+												handler.end(buffer);
+											}).onFailure(ex -> {
+												LOG.error(String.format("Failed to find download %s", uri), ex);
 												handler.fail(ex);
-											}
-										}).onFailure(ex -> {
+											});
+										} catch (Exception ex) {
 											LOG.error(String.format("Failed to render page %s", uri), ex);
 											handler.fail(ex);
-										});
-									}
-								} catch (Exception ex) {
-									LOG.error(String.format("Failed to render page %s", uri), ex);
-									handler.fail(ex);
+										}
+									}).onFailure(ex -> {
+										LOG.error(String.format("Failed to render page %s", uri), ex);
+										handler.fail(ex);
+									});
 								}
-							}).onFailure(ex -> {
-								LOG.error(String.format("Failed to render page %s", originalUri), ex);
+							} catch (Exception ex) {
+								LOG.error(String.format("Failed to render page %s", uri), ex);
 								handler.fail(ex);
-							});
-						} catch(Exception ex) {
-							LOG.error("Failed to load page. ", ex);
+							}
+						}).onFailure(ex -> {
+							LOG.error(String.format("Failed to render page %s", originalUri), ex);
 							handler.fail(ex);
-						}
-					}).onFailure(ex -> {
-						LOG.error(String.format("Failed to render page %s", originalUri), ex);
+						});
+					} catch(Exception ex) {
+						LOG.error("Failed to load page. ", ex);
 						handler.fail(ex);
-					});
+					}
+				}).onFailure(ex -> {
+					LOG.error(String.format("Failed to render page %s", originalUri), ex);
+					handler.fail(ex);
 				});
-			}
+			});
 
 			router.post("/ngsi-ld/subscription").handler(ctx -> {
 				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx.eventBus(), config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava, vertx);

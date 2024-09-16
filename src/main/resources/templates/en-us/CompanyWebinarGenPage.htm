@@ -145,6 +145,7 @@
 {%- block websocketBaseModelPage %}
 {%- block websocketCompanyWebinarPage %}
         window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
         websocketCompanyWebinar(websocketCompanyWebinarInner);
 {%- endblock websocketCompanyWebinarPage %}
 {%- endblock websocketBaseModelPage %}
@@ -161,7 +162,7 @@
 
 {%- macro htmForm_patchCompanyWebinar() %}
         <sl-dialog id="patchCompanyWebinarDialog" label="Modify webinar">
-          <form id="htmForm_patchCompanyWebinar">
+          <form id="htmForm_patchCompanyWebinar" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -325,7 +326,7 @@
 
 {%- macro htmForm_postCompanyWebinar() %}
         <sl-dialog id="postCompanyWebinarDialog" label="Create a webinar">
-          <form id="htmForm_postCompanyWebinar">
+          <form id="htmForm_postCompanyWebinar" class="round-first-and-last-row-x-large ">
             <div class="">You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
@@ -490,7 +491,7 @@
 
 {%- macro htmForm_putimportCompanyWebinar() %}
         <sl-dialog id="putimportCompanyWebinarDialog" label="Import webinars">
-          <form id="htmForm_putimportCompanyWebinar">
+          <form id="htmForm_putimportCompanyWebinar" class="round-first-and-last-row-x-large ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -514,7 +515,7 @@
 
 {%- macro htmForm_searchpageCompanyWebinar() %}
         <div id="searchpageCompanyWebinarDialog" label="Search webinars">
-          <div id="htmForm_searchpageCompanyWebinar">
+          <div id="htmForm_searchpageCompanyWebinar" class="round-first-and-last-row-x-large ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1173,7 +1174,7 @@ The primary key of this object in the database"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.pk}}"
+                      value="{{companyWebinar_.pk | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1211,7 +1212,7 @@ A URL friendly unique ID for this object"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.objectId}}"
+                      value="{{companyWebinar_.objectId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1238,7 +1239,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_created"
-                      value="{%- if companyWebinar_.created is defined %}{{ formatZonedDateTime(companyWebinar_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyWebinar_.created is defined %}{{ formatZonedDateTime(companyWebinar_.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -1267,7 +1268,7 @@ A URL friendly unique ID for this object"
                       placeholder="MM/dd/yyyy h:mm a '['VV']'"
                       data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
                       id="{{classApiMethodMethod}}_modified"
-                      value="{%- if companyWebinar_.modified is defined %}{{ formatZonedDateTime(companyWebinar_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) }}{%- endif %}"
+                      value="{%- if companyWebinar_.modified is defined %}{{ formatZonedDateTime(companyWebinar_.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
   {%- if 'Page' == classApiMethodMethod %}
   {%- endif %}
                       data-pk="{{ pk }}"
@@ -1370,7 +1371,7 @@ The name of this webinar"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.name}}"
+                      value="{{companyWebinar_.name | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1408,7 +1409,7 @@ A description of this webinar"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.description}}"
+                      value="{{companyWebinar_.description | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1446,7 +1447,7 @@ The relative URI for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.uri}}"
+                      value="{{companyWebinar_.uri | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1484,7 +1485,7 @@ The URL for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.url}}"
+                      value="{{companyWebinar_.url | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1522,7 +1523,7 @@ The ID for this page. "
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.pageId}}"
+                      value="{{companyWebinar_.pageId | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1560,7 +1561,7 @@ The actual link to the Webinar in Americas"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.webinarUrlAmericas}}"
+                      value="{{companyWebinar_.webinarUrlAmericas | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1598,7 +1599,7 @@ The actual link to the Webinar in APAC"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.webinarUrlApac}}"
+                      value="{{companyWebinar_.webinarUrlApac | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1636,7 +1637,7 @@ The actual link to the Webinar in EMEA"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{companyWebinar_.webinarUrlEmea}}"
+                      value="{{companyWebinar_.webinarUrlEmea | e }}"
   {%- endif %}
                       ></sl-input>
 

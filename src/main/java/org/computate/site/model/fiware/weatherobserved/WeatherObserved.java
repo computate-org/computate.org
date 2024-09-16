@@ -26,7 +26,7 @@ import io.vertx.pgclient.data.Polygon;
  * SuperPage: BaseModelPage
  * Indexed: true
  * Order: 9
- * Description: 
+ * Description: For keeping track of temperature, humidity, and other weather related details. 
  * ApiTag: weather observed
  * ApiUri: /api/weather-observed
  *
