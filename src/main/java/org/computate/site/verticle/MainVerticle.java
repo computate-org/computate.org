@@ -1256,7 +1256,7 @@ public class MainVerticle extends AbstractVerticle {
 								if(item.getModifiers() != null) {
 									for(OrderLineItemModifier modifier : item.getModifiers()) {
 										String modifierName = modifier.getName();
-										Matcher m = Pattern.compile("GitHub username: (.*)", Pattern.MULTILINE).matcher(modifierName);
+										Matcher m = Pattern.compile("GitHub username lowercase: (.*)", Pattern.MULTILINE).matcher(modifierName);
 										if (m.find())
 											githubU = m.group(1).trim();
 									}

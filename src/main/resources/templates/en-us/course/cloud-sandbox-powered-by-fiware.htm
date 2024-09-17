@@ -8,7 +8,7 @@
     <meta property="site:emailTemplate" content="/en-us/email/order-details.htm"/>
     <meta property="site:name" content="Cloud Sandbox powered by FIWARE"/>
     <meta property="site:title" content="{{ name }}"/>
-    <meta property="site:description" content="Configure IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a free Red Hat OpenShift Developer Sandbox"/>
+    <meta property="site:description" content="Configure IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a Red Hat OpenShift Developer Sandbox"/>
     <meta property="site:courseNum" content="2"/>
     <meta property="site:price" content="2048"/>
 {% endblock htmMetaPageLayout %}
@@ -25,11 +25,14 @@
               <i class="fa-kit fa-fiware fa-5x "></i>
             </div>
             <h1 class="brand-font">
-              Configure IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a free Red Hat OpenShift Developer Sandbox
+              Configure IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a Red Hat OpenShift Developer Sandbox
             </h1>
             <h2 class="brand-font">
               with the {{ name }} course
             </h2>
+            <h1 class="brand-font">
+              Free this week during the <i class="fa-kit fa-fiware"></i> FIWARE Summit! 
+            </h1>
             <div class="intro-details">
               {% if userName is defined %}
               {% if scope is defined and scope == "GET" %}
@@ -50,14 +53,10 @@
               </div>
               {% endif %}
               {% else %}
-              <div>
-                This course will become available for the 
-                <a href="https://www.eventbrite.de/e/fiware-tech-training-naples-tickets-920143322447">FIWARE Summit Technical Training</a>
-                in Naples, Italy September 18 2024 · 9:30am – September 19 · 5:30pm CEST 
-              </div>
-              <sl-button id="order-button" class="gradient-button orange-blue-background" variant="neutral" href="https://www.eventbrite.de/e/fiware-tech-training-naples-tickets-920143322447">
-                <i class="fa-solid fa-person-running-fast"></i>
-                Register for the training
+              <div>Want to get started with the {{ name }} course? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button orange-blue-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
               </sl-button>
               {% endif %}
             </div>
@@ -92,7 +91,7 @@
                 <div class="icon-heading">
                   <i class="fa-solid fa-cloud-binary"></i>
                   <h3>
-                    Free Red Hat OpenShift Developer Sandbox
+                    Red Hat OpenShift Developer Sandbox
                   </h3>
                 </div>
                 <p>
@@ -193,7 +192,7 @@
               Red Hat Research in the New England Research Cloud! 
             </h2>
             <h3 class="brand-font">
-              By purchasing the {{ name }}, you get free access to the AI Telemetry Community Webinar! 
+              By purchasing the {{ name }}, you get access to the AI Telemetry Community Webinar! 
               Learn together how a real cloud platform powered by FIWARE is built, 
               there is also time for questions and answers from the community to your own projects. 
             </h3>
