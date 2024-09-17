@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.lang.Integer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -878,6 +879,70 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return title;
 	}
 
+	////////////////
+	// productNum //
+	////////////////
+
+
+	/**	 The entity productNum
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer productNum;
+
+	/**	<br> The entity productNum
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:productNum">Find the entity productNum in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _productNum(Wrap<Integer> w);
+
+	public Integer getProductNum() {
+		return productNum;
+	}
+
+	public void setProductNum(Integer productNum) {
+		this.productNum = productNum;
+	}
+	@JsonIgnore
+	public void setProductNum(String o) {
+		this.productNum = CompanyProduct.staticSetProductNum(siteRequest_, o);
+	}
+	public static Integer staticSetProductNum(SiteRequest siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
+	}
+	protected CompanyProduct productNumInit() {
+		Wrap<Integer> productNumWrap = new Wrap<Integer>().var("productNum");
+		if(productNum == null) {
+			_productNum(productNumWrap);
+			Optional.ofNullable(productNumWrap.getO()).ifPresent(o -> {
+				setProductNum(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static Integer staticSearchProductNum(SiteRequest siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSearchStrProductNum(SiteRequest siteRequest_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqProductNum(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchProductNum(siteRequest_, CompanyProduct.staticSetProductNum(siteRequest_, o)).toString();
+	}
+
+	public Integer sqlProductNum() {
+		return productNum;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -919,6 +984,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				userUriInit();
 				storeUrlInit();
 				titleInit();
+				productNumInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -996,6 +1062,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return oCompanyProduct.storeUrl;
 			case "title":
 				return oCompanyProduct.title;
+			case "productNum":
+				return oCompanyProduct.productNum;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -1059,6 +1127,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSetStoreUrl(siteRequest_, o);
 		case "title":
 			return CompanyProduct.staticSetTitle(siteRequest_, o);
+		case "productNum":
+			return CompanyProduct.staticSetProductNum(siteRequest_, o);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1097,6 +1167,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStoreUrl(siteRequest_, (String)o);
 		case "title":
 			return CompanyProduct.staticSearchTitle(siteRequest_, (String)o);
+		case "productNum":
+			return CompanyProduct.staticSearchProductNum(siteRequest_, (Integer)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1135,6 +1207,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStrStoreUrl(siteRequest_, (String)o);
 		case "title":
 			return CompanyProduct.staticSearchStrTitle(siteRequest_, (String)o);
+		case "productNum":
+			return CompanyProduct.staticSearchStrProductNum(siteRequest_, (Integer)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1173,6 +1247,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchFqStoreUrl(siteRequest_, o);
 		case "title":
 			return CompanyProduct.staticSearchFqTitle(siteRequest_, o);
+		case "productNum":
+			return CompanyProduct.staticSearchFqProductNum(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1271,6 +1347,14 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				}
 				saves.add("title");
 				return val;
+			} else if("productnum".equals(varLower)) {
+				if(val instanceof Integer) {
+					setProductNum((Integer)val);
+				} else {
+					setProductNum(val == null ? null : val.toString());
+				}
+				saves.add("productNum");
+				return val;
 		} else {
 			return super.persistBaseResult(var, val);
 		}
@@ -1359,6 +1443,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				if(title != null)
 					oCompanyProduct.setTitle(title);
 			}
+
+			if(saves.contains("productNum")) {
+				Integer productNum = (Integer)doc.get("productNum_docvalues_int");
+				if(productNum != null)
+					oCompanyProduct.setProductNum(productNum);
+			}
 		}
 
 		super.populateBaseResult(doc);
@@ -1401,6 +1491,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(title != null) {
 			doc.put("title_docvalues_string", title);
 		}
+		if(productNum != null) {
+			doc.put("productNum_docvalues_int", productNum);
+		}
 		super.indexBaseResult(doc);
 
 	}
@@ -1431,6 +1524,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "storeUrl_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
+			case "productNum":
+				return "productNum_docvalues_int";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
@@ -1462,6 +1557,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "storeUrl_docvalues_string";
 			case "title":
 				return "title_docvalues_string";
+			case "productNum":
+				return "productNum_docvalues_int";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
@@ -1493,6 +1590,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "storeUrl";
 			case "title_docvalues_string":
 				return "title";
+			case "productNum_docvalues_int":
+				return "productNum";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
@@ -1535,6 +1634,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		oCompanyProduct.setUserUri(Optional.ofNullable(doc.get("userUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setProductNum(Optional.ofNullable(doc.get("productNum_docvalues_int")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1572,6 +1672,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				apiRequest.addVars("storeUrl");
 			if(!Objects.equals(title, original.getTitle()))
 				apiRequest.addVars("title");
+			if(!Objects.equals(productNum, original.getProductNum()))
+				apiRequest.addVars("productNum");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1595,6 +1697,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(userUri).map(v -> "userUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(productNum).map(v -> "productNum: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
 
@@ -1615,6 +1718,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String VAR_userUri = "userUri";
 	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_title = "title";
+	public static final String VAR_productNum = "productNum";
 
 	public static List<String> varsQForClass() {
 		return CompanyProduct.varsQCompanyProduct(new ArrayList<String>());
@@ -1639,6 +1743,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		vars.add(VAR_downloadUri);
 		vars.add(VAR_userUri);
 		vars.add(VAR_storeUrl);
+		vars.add(VAR_productNum);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
@@ -1647,6 +1752,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return CompanyProduct.varsRangeCompanyProduct(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyProduct(List<String> vars) {
+		vars.add(VAR_productNum);
 		BaseResult.varsRangeBaseResult(vars);
 		return vars;
 	}
@@ -1663,6 +1769,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_userUri = "user URI";
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_title = "title";
+	public static final String DISPLAY_NAME_productNum = "Product Number";
 
 	public static String displayNameForClass(String var) {
 		return CompanyProduct.displayNameCompanyProduct(var);
@@ -1693,6 +1800,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_storeUrl;
 		case VAR_title:
 			return DISPLAY_NAME_title;
+		case VAR_productNum:
+			return DISPLAY_NAME_productNum;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
@@ -1724,6 +1833,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "The store URL for this page. ";
 		case VAR_title:
 			return "The title of this page. ";
+		case VAR_productNum:
+			return "The product number for this page. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
@@ -1755,6 +1866,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_title:
 			return "String";
+		case VAR_productNum:
+			return "Integer";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
 		}

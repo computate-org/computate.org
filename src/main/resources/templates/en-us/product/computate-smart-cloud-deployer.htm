@@ -9,7 +9,7 @@
     <meta property="site:name" content="Computate Smart Cloud Deployer"/>
     <meta property="site:title" content="{{ name }}"/>
     <meta property="site:description" content="Learn how to deploy open source smart device microservices to the cloud and try out your own secure IoT smart platform with built-in security. "/>
-    <meta property="site:courseNum" content="1"/>
+    <meta property="site:productNum" content="1"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 {% endblock htmStylePageLayout %}
@@ -252,6 +252,47 @@
               </div>
             </div>
 
+          </div>
+        </div>
+
+        <div class="pink-purple-background">
+          <div class="intro-content">
+            <div class="wa-crown">
+              <i class="fa-duotone fa-solid fa-browser fa-5x "></i>
+            </div>
+            <h1 class="brand-font">
+              Learn how to deploy open source smart device microservices to the cloud
+            </h1>
+            <h2 class="brand-font">
+              with the {{ name }}
+            </h2>
+            <div class="intro-details">
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
+              <div>
+                <div>Download your copy of the {{ name }}! </div>
+                <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
+              </div>
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Order here
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }}? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
+              </sl-button>
+              {% endif %}
+            </div>
           </div>
         </div>
 {% endblock %}

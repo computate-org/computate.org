@@ -43,6 +43,7 @@ import io.vertx.pgclient.data.Point;
  * AName: a product
  * PluralName: products
  * Icon: <i class="fa-regular fa-conveyor-belt"></i>
+ * Sort.asc: productNum
  */
 public class CompanyProduct extends CompanyProductGen<BaseResult> {
 
@@ -191,6 +192,17 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 */
 	protected void _title(Wrap<String> w) {
 		w.o(name);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: Product Number
+	 * Description: The product number for this page. 
+	 */
+	protected void _productNum(Wrap<Integer> w) {
 	}
 
 	@Override

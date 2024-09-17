@@ -1516,7 +1516,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				}
 			}
 			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-				searchList.sort("created_docvalues_date", "desc");
+				searchList.sort("productNum_docvalues_int", "asc");
 			}
 			String facetRange2 = facetRange;
 			Date facetRangeStart2 = facetRangeStart;
@@ -1739,6 +1739,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_userUri, CompanyProduct.staticSetUserUri(siteRequest2, ctx.getString(CompanyProduct.VAR_userUri)));
 			page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyProduct.VAR_storeUrl)));
 			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, ctx.getString(CompanyProduct.VAR_title)));
+			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, ctx.getString(CompanyProduct.VAR_productNum)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

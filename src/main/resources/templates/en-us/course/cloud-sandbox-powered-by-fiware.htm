@@ -212,4 +212,39 @@
 
           </div>
         </div>
+
+        <div class="orange-blue-background">
+          <div class="intro-content">
+            <h1 class="brand-font">
+              Free this week during the <i class="fa-kit fa-fiware"></i> FIWARE Summit! 
+            </h1>
+            <div class="intro-details">
+              {% if userName is defined %}
+              {% if scope is defined and scope == "GET" %}
+              <div>
+                <div>Download your copy of the {{ name }}! </div>
+                <sl-button id="order-button" class="gradient-button orange-blue-background" href="{{ SITE_BASE_URL }}{{ downloadUri }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Download
+                </sl-button>
+              </div>
+              {% else %}
+              <div>
+                <div>You will use your GitHub username shown in the menu during checkout. </div>
+                <sl-button id="order-button" class="gradient-button orange-blue-background" href="{{ storeUrl }}" variant="neutral">
+                  <i class="fa-solid fa-person-running-fast"></i>
+                  Order here
+                </sl-button>
+              </div>
+              {% endif %}
+              {% else %}
+              <div>Want to get started with the {{ name }} course? Start by logging into computate.org with your GitHub account. </div>
+              <sl-button id="order-button" class="gradient-button orange-blue-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                <i class="fa-duotone fa-right-to-bracket"></i>
+                Log in with GitHub
+              </sl-button>
+              {% endif %}
+            </div>
+          </div>
+        </div>
 {% endblock %}
