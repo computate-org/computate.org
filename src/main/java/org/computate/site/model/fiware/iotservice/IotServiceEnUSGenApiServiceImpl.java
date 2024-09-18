@@ -760,21 +760,21 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							num++;
 							bParams.add(o2.sqlAttributes());
 						break;
-					case "setService":
-							o2.setService(jsonObject.getString(entityVar));
+					case "setNgsildTenant":
+							o2.setNgsildTenant(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(IotService.VAR_service + "=$" + num);
+							bSql.append(IotService.VAR_ngsildTenant + "=$" + num);
 							num++;
-							bParams.add(o2.sqlService());
+							bParams.add(o2.sqlNgsildTenant());
 						break;
-					case "setServicePath":
-							o2.setServicePath(jsonObject.getString(entityVar));
+					case "setNgsildPath":
+							o2.setNgsildPath(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(IotService.VAR_servicePath + "=$" + num);
+							bSql.append(IotService.VAR_ngsildPath + "=$" + num);
 							num++;
-							bParams.add(o2.sqlServicePath());
+							bParams.add(o2.sqlNgsildPath());
 						break;
 					case "setPageId":
 							o2.setPageId(jsonObject.getString(entityVar));
@@ -1232,23 +1232,23 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						num++;
 						bParams.add(o2.sqlAttributes());
 						break;
-					case IotService.VAR_service:
-						o2.setService(jsonObject.getString(entityVar));
+					case IotService.VAR_ngsildTenant:
+						o2.setNgsildTenant(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(IotService.VAR_service + "=$" + num);
+						bSql.append(IotService.VAR_ngsildTenant + "=$" + num);
 						num++;
-						bParams.add(o2.sqlService());
+						bParams.add(o2.sqlNgsildTenant());
 						break;
-					case IotService.VAR_servicePath:
-						o2.setServicePath(jsonObject.getString(entityVar));
+					case IotService.VAR_ngsildPath:
+						o2.setNgsildPath(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(IotService.VAR_servicePath + "=$" + num);
+						bSql.append(IotService.VAR_ngsildPath + "=$" + num);
 						num++;
-						bParams.add(o2.sqlServicePath());
+						bParams.add(o2.sqlNgsildPath());
 						break;
 					case IotService.VAR_pageId:
 						o2.setPageId(jsonObject.getString(entityVar));
@@ -2771,8 +2771,8 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			page.persistForClass(IotService.VAR_cbHost, IotService.staticSetCbHost(siteRequest2, ctx.getString(IotService.VAR_cbHost)));
 			page.persistForClass(IotService.VAR_resource, IotService.staticSetResource(siteRequest2, ctx.getString(IotService.VAR_resource)));
 			page.persistForClass(IotService.VAR_attributes, IotService.staticSetAttributes(siteRequest2, ctx.getString(IotService.VAR_attributes)));
-			page.persistForClass(IotService.VAR_service, IotService.staticSetService(siteRequest2, ctx.getString(IotService.VAR_service)));
-			page.persistForClass(IotService.VAR_servicePath, IotService.staticSetServicePath(siteRequest2, ctx.getString(IotService.VAR_servicePath)));
+			page.persistForClass(IotService.VAR_ngsildTenant, IotService.staticSetNgsildTenant(siteRequest2, ctx.getString(IotService.VAR_ngsildTenant)));
+			page.persistForClass(IotService.VAR_ngsildPath, IotService.staticSetNgsildPath(siteRequest2, ctx.getString(IotService.VAR_ngsildPath)));
 			page.persistForClass(IotService.VAR_pageId, IotService.staticSetPageId(siteRequest2, ctx.getString(IotService.VAR_pageId)));
 			page.persistForClass(IotService.VAR_resourceUri, IotService.staticSetResourceUri(siteRequest2, ctx.getString(IotService.VAR_resourceUri)));
 			page.persistForClass(IotService.VAR_templateUri, IotService.staticSetTemplateUri(siteRequest2, ctx.getString(IotService.VAR_templateUri)));

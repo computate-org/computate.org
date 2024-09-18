@@ -52,10 +52,10 @@ public class IotServiceEnUSApiServiceImpl extends IotServiceEnUSGenApiServiceImp
 							.addQueryParam("resource", iotService.getResource())
 							.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
 							.putHeader("Content-Type", "application/json")
-							.putHeader("Fiware-Service", iotService.getService())
-							.putHeader("Fiware-ServicePath", iotService.getServicePath())
-							.putHeader("NGSILD-Tenant", iotService.getService())
-							.putHeader("NGSILD-Path", iotService.getServicePath())
+							.putHeader("Fiware-Service", iotService.getNgsildTenant())
+							.putHeader("Fiware-ServicePath", iotService.getNgsildPath())
+							.putHeader("NGSILD-Tenant", iotService.getNgsildTenant())
+							.putHeader("NGSILD-Path", iotService.getNgsildPath())
 							.putHeader("Cache-Control", "no-cache")
 							.sendJsonObject(body)
 							.expecting(HttpResponseExpectation.SC_NO_CONTENT).onSuccess(b -> {
@@ -79,10 +79,10 @@ public class IotServiceEnUSApiServiceImpl extends IotServiceEnUSGenApiServiceImp
 							)
 							.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
 							.putHeader("Content-Type", "application/json")
-							.putHeader("Fiware-Service", iotService.getService())
-							.putHeader("Fiware-ServicePath", iotService.getServicePath())
-							.putHeader("NGSILD-Tenant", iotService.getService())
-							.putHeader("NGSILD-Path", iotService.getServicePath())
+							.putHeader("Fiware-Service", iotService.getNgsildTenant())
+							.putHeader("Fiware-ServicePath", iotService.getNgsildPath())
+							.putHeader("NGSILD-Tenant", iotService.getNgsildTenant())
+							.putHeader("NGSILD-Path", iotService.getNgsildPath())
 							.putHeader("Cache-Control", "no-cache")
 							.sendJsonObject(body)
 							.expecting(HttpResponseExpectation.SC_CREATED).onSuccess(b -> {
@@ -117,13 +117,13 @@ public class IotServiceEnUSApiServiceImpl extends IotServiceEnUSGenApiServiceImp
 						.addQueryParam("resource", o.getResource())
 						.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
 						.putHeader("Content-Type", "application/json")
-						.putHeader("Fiware-Service", o.getService())
-						.putHeader("Fiware-ServicePath", o.getServicePath())
-						.putHeader("NGSILD-Tenant", o.getService())
-						.putHeader("NGSILD-Path", o.getServicePath())
+						.putHeader("Fiware-Service", o.getNgsildTenant())
+						.putHeader("Fiware-ServicePath", o.getNgsildPath())
+						.putHeader("NGSILD-Tenant", o.getNgsildTenant())
+						.putHeader("NGSILD-Path", o.getNgsildPath())
 						.putHeader("Cache-Control", "no-cache")
 						.send()
-						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND)).onSuccess(b -> {
+						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND.or(HttpResponseExpectation.SC_BAD_REQUEST))).onSuccess(b -> {
 					promise.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("postIotServiceFuture failed. "), ex);

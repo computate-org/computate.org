@@ -323,22 +323,22 @@
               <div stuff="IoT service details-IoT service details">
 
               {%- if "PATCH" in scopes %}
-                {{ htmServiceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildTenantIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmServicePathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildPathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -510,22 +510,22 @@
               <div stuff="IoT service details-IoT service details">
 
               {%- if "PATCH" in scopes %}
-                {{ htmServiceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildTenantIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmServicePathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildPathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -736,22 +736,22 @@
               <div stuff="IoT service details-IoT service details">
 
               {%- if "PATCH" in scopes %}
-                {{ htmServiceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildTenantIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServiceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildTenantIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmServicePathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildPathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmServicePathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildPathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -777,15 +777,15 @@
               {% for item in listIotService%}
               <a href="{{ item.pageUrlPk }}">
                 <div>                  <i class="fa-solid fa-tower-cell"></i>
-{{ item.service }}</div>
-                <div>{{ item.servicePath }}</div>
+{{ item.ngsildTenant }}</div>
+                <div>{{ item.ngsildPath }}</div>
               </a>
               {% endfor %}
-                      {% if getColumnService is defined %}
+                      {% if getColumnNgsildTenant is defined %}
                         <div>
                         </div>
                       {% endif %}
-                      {% if getColumnServicePath is defined %}
+                      {% if getColumnNgsildPath is defined %}
                         <div>
                         </div>
                       {% endif %}
@@ -1751,32 +1751,32 @@ The NGSI-LD attributes"
                             {{ inputAttributesIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputServiceIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputNgsildTenantIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_service">
+                <form id="PageForm_ngsildTenant">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="service"
-                      label="service"
+                      placeholder="NGSILD-Tenant"
+                      label="NGSILD-Tenant"
                       help-text="
-The NGSI-LD service"
-                      id="{{classApiMethodMethod}}_service"
+The NGSILD-Tenant or Fiware-Service"
+                      id="{{classApiMethodMethod}}_ngsildTenant"
   {%- if "Page" == classApiMethodMethod %}
                       data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_service setService classIotService inputIotService{{pk}}Service "
-                      name="setService"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant setNgsildTenant classIotService inputIotService{{pk}}NgsildTenant "
+                      name="setNgsildTenant"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_service setService classIotService inputIotService{{pk}}Service "
-                      name="setService"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant setNgsildTenant classIotService inputIotService{{pk}}NgsildTenant "
+                      name="setNgsildTenant"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_service valueService classIotService inputIotService{{pk}}Service "
-                      name="service"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant valueNgsildTenant classIotService inputIotService{{pk}}NgsildTenant "
+                      name="ngsildTenant"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.service | e }}"
+                      value="{{iotService_.ngsildTenant | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1785,36 +1785,36 @@ The NGSI-LD service"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmServiceIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputServiceIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmNgsildTenantIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildTenantIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputServicePathIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputNgsildPathIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_servicePath">
+                <form id="PageForm_ngsildPath">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="service path"
-                      label="service path"
+                      placeholder="NGSILD-Path"
+                      label="NGSILD-Path"
                       help-text="
-The NGSI-LD service path"
-                      id="{{classApiMethodMethod}}_servicePath"
+The NGSILD-Path or Fiware-ServicePath"
+                      id="{{classApiMethodMethod}}_ngsildPath"
   {%- if "Page" == classApiMethodMethod %}
                       data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_servicePath setServicePath classIotService inputIotService{{pk}}ServicePath "
-                      name="setServicePath"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath setNgsildPath classIotService inputIotService{{pk}}NgsildPath "
+                      name="setNgsildPath"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_servicePath setServicePath classIotService inputIotService{{pk}}ServicePath "
-                      name="setServicePath"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath setNgsildPath classIotService inputIotService{{pk}}NgsildPath "
+                      name="setNgsildPath"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_servicePath valueServicePath classIotService inputIotService{{pk}}ServicePath "
-                      name="servicePath"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath valueNgsildPath classIotService inputIotService{{pk}}NgsildPath "
+                      name="ngsildPath"
     {%- endif %}
   {%- endif %}
   {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.servicePath | e }}"
+                      value="{{iotService_.ngsildPath | e }}"
   {%- endif %}
                       ></sl-input>
 
@@ -1823,6 +1823,6 @@ The NGSI-LD service path"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmServicePathIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputServicePathIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmNgsildPathIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildPathIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

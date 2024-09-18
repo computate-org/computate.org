@@ -498,116 +498,116 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		return attributes;
 	}
 
-	/////////////
-	// service //
-	/////////////
+	//////////////////
+	// ngsildTenant //
+	//////////////////
 
 
-	/**	 The entity service
+	/**	 The entity ngsildTenant
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String service;
+	protected String ngsildTenant;
 
-	/**	<br> The entity service
+	/**	<br> The entity ngsildTenant
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:service">Find the entity service in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:ngsildTenant">Find the entity ngsildTenant in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _service(Wrap<String> w);
+	protected abstract void _ngsildTenant(Wrap<String> w);
 
-	public String getService() {
-		return service;
+	public String getNgsildTenant() {
+		return ngsildTenant;
 	}
-	public void setService(String o) {
-		this.service = IotService.staticSetService(siteRequest_, o);
+	public void setNgsildTenant(String o) {
+		this.ngsildTenant = IotService.staticSetNgsildTenant(siteRequest_, o);
 	}
-	public static String staticSetService(SiteRequest siteRequest_, String o) {
+	public static String staticSetNgsildTenant(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected IotService serviceInit() {
-		Wrap<String> serviceWrap = new Wrap<String>().var("service");
-		if(service == null) {
-			_service(serviceWrap);
-			Optional.ofNullable(serviceWrap.getO()).ifPresent(o -> {
-				setService(o);
+	protected IotService ngsildTenantInit() {
+		Wrap<String> ngsildTenantWrap = new Wrap<String>().var("ngsildTenant");
+		if(ngsildTenant == null) {
+			_ngsildTenant(ngsildTenantWrap);
+			Optional.ofNullable(ngsildTenantWrap.getO()).ifPresent(o -> {
+				setNgsildTenant(o);
 			});
 		}
 		return (IotService)this;
 	}
 
-	public static String staticSearchService(SiteRequest siteRequest_, String o) {
+	public static String staticSearchNgsildTenant(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrService(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrNgsildTenant(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqService(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchService(siteRequest_, IotService.staticSetService(siteRequest_, o)).toString();
+	public static String staticSearchFqNgsildTenant(SiteRequest siteRequest_, String o) {
+		return IotService.staticSearchNgsildTenant(siteRequest_, IotService.staticSetNgsildTenant(siteRequest_, o)).toString();
 	}
 
-	public String sqlService() {
-		return service;
+	public String sqlNgsildTenant() {
+		return ngsildTenant;
 	}
 
-	/////////////////
-	// servicePath //
-	/////////////////
+	////////////////
+	// ngsildPath //
+	////////////////
 
 
-	/**	 The entity servicePath
+	/**	 The entity ngsildPath
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String servicePath;
+	protected String ngsildPath;
 
-	/**	<br> The entity servicePath
+	/**	<br> The entity ngsildPath
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:servicePath">Find the entity servicePath in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:ngsildPath">Find the entity ngsildPath in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _servicePath(Wrap<String> w);
+	protected abstract void _ngsildPath(Wrap<String> w);
 
-	public String getServicePath() {
-		return servicePath;
+	public String getNgsildPath() {
+		return ngsildPath;
 	}
-	public void setServicePath(String o) {
-		this.servicePath = IotService.staticSetServicePath(siteRequest_, o);
+	public void setNgsildPath(String o) {
+		this.ngsildPath = IotService.staticSetNgsildPath(siteRequest_, o);
 	}
-	public static String staticSetServicePath(SiteRequest siteRequest_, String o) {
+	public static String staticSetNgsildPath(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected IotService servicePathInit() {
-		Wrap<String> servicePathWrap = new Wrap<String>().var("servicePath");
-		if(servicePath == null) {
-			_servicePath(servicePathWrap);
-			Optional.ofNullable(servicePathWrap.getO()).ifPresent(o -> {
-				setServicePath(o);
+	protected IotService ngsildPathInit() {
+		Wrap<String> ngsildPathWrap = new Wrap<String>().var("ngsildPath");
+		if(ngsildPath == null) {
+			_ngsildPath(ngsildPathWrap);
+			Optional.ofNullable(ngsildPathWrap.getO()).ifPresent(o -> {
+				setNgsildPath(o);
 			});
 		}
 		return (IotService)this;
 	}
 
-	public static String staticSearchServicePath(SiteRequest siteRequest_, String o) {
+	public static String staticSearchNgsildPath(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrServicePath(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrNgsildPath(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqServicePath(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchServicePath(siteRequest_, IotService.staticSetServicePath(siteRequest_, o)).toString();
+	public static String staticSearchFqNgsildPath(SiteRequest siteRequest_, String o) {
+		return IotService.staticSearchNgsildPath(siteRequest_, IotService.staticSetNgsildPath(siteRequest_, o)).toString();
 	}
 
-	public String sqlServicePath() {
-		return servicePath;
+	public String sqlNgsildPath() {
+		return ngsildPath;
 	}
 
 	////////////
@@ -980,8 +980,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				cbHostInit();
 				resourceInit();
 				attributesInit();
-				serviceInit();
-				servicePathInit();
+				ngsildTenantInit();
+				ngsildPathInit();
 				pageIdInit();
 				resourceUriInit();
 				templateUriInit();
@@ -1051,10 +1051,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return oIotService.resource;
 			case "attributes":
 				return oIotService.attributes;
-			case "service":
-				return oIotService.service;
-			case "servicePath":
-				return oIotService.servicePath;
+			case "ngsildTenant":
+				return oIotService.ngsildTenant;
+			case "ngsildPath":
+				return oIotService.ngsildPath;
 			case "pageId":
 				return oIotService.pageId;
 			case "resourceUri":
@@ -1116,10 +1116,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSetResource(siteRequest_, o);
 		case "attributes":
 			return IotService.staticSetAttributes(siteRequest_, o);
-		case "service":
-			return IotService.staticSetService(siteRequest_, o);
-		case "servicePath":
-			return IotService.staticSetServicePath(siteRequest_, o);
+		case "ngsildTenant":
+			return IotService.staticSetNgsildTenant(siteRequest_, o);
+		case "ngsildPath":
+			return IotService.staticSetNgsildPath(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSetPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1156,10 +1156,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchResource(siteRequest_, (String)o);
 		case "attributes":
 			return IotService.staticSearchAttributes(siteRequest_, (JsonArray)o);
-		case "service":
-			return IotService.staticSearchService(siteRequest_, (String)o);
-		case "servicePath":
-			return IotService.staticSearchServicePath(siteRequest_, (String)o);
+		case "ngsildTenant":
+			return IotService.staticSearchNgsildTenant(siteRequest_, (String)o);
+		case "ngsildPath":
+			return IotService.staticSearchNgsildPath(siteRequest_, (String)o);
 		case "pageId":
 			return IotService.staticSearchPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1196,10 +1196,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchStrResource(siteRequest_, (String)o);
 		case "attributes":
 			return IotService.staticSearchStrAttributes(siteRequest_, (String)o);
-		case "service":
-			return IotService.staticSearchStrService(siteRequest_, (String)o);
-		case "servicePath":
-			return IotService.staticSearchStrServicePath(siteRequest_, (String)o);
+		case "ngsildTenant":
+			return IotService.staticSearchStrNgsildTenant(siteRequest_, (String)o);
+		case "ngsildPath":
+			return IotService.staticSearchStrNgsildPath(siteRequest_, (String)o);
 		case "pageId":
 			return IotService.staticSearchStrPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1236,10 +1236,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchFqResource(siteRequest_, o);
 		case "attributes":
 			return IotService.staticSearchFqAttributes(siteRequest_, o);
-		case "service":
-			return IotService.staticSearchFqService(siteRequest_, o);
-		case "servicePath":
-			return IotService.staticSearchFqServicePath(siteRequest_, o);
+		case "ngsildTenant":
+			return IotService.staticSearchFqNgsildTenant(siteRequest_, o);
+		case "ngsildPath":
+			return IotService.staticSearchFqNgsildPath(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSearchFqPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1310,17 +1310,17 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				}
 				saves.add("attributes");
 				return val;
-			} else if("service".equals(varLower)) {
+			} else if("ngsildtenant".equals(varLower)) {
 				if(val instanceof String) {
-					setService((String)val);
+					setNgsildTenant((String)val);
 				}
-				saves.add("service");
+				saves.add("ngsildTenant");
 				return val;
-			} else if("servicepath".equals(varLower)) {
+			} else if("ngsildpath".equals(varLower)) {
 				if(val instanceof String) {
-					setServicePath((String)val);
+					setNgsildPath((String)val);
 				}
-				saves.add("servicePath");
+				saves.add("ngsildPath");
 				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
@@ -1405,16 +1405,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 					oIotService.setAttributes(attributes);
 			}
 
-			if(saves.contains("service")) {
-				String service = (String)doc.get("service_docvalues_string");
-				if(service != null)
-					oIotService.setService(service);
+			if(saves.contains("ngsildTenant")) {
+				String ngsildTenant = (String)doc.get("ngsildTenant_docvalues_string");
+				if(ngsildTenant != null)
+					oIotService.setNgsildTenant(ngsildTenant);
 			}
 
-			if(saves.contains("servicePath")) {
-				String servicePath = (String)doc.get("servicePath_docvalues_string");
-				if(servicePath != null)
-					oIotService.setServicePath(servicePath);
+			if(saves.contains("ngsildPath")) {
+				String ngsildPath = (String)doc.get("ngsildPath_docvalues_string");
+				if(ngsildPath != null)
+					oIotService.setNgsildPath(ngsildPath);
 			}
 
 			if(saves.contains("pageId")) {
@@ -1473,11 +1473,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		if(attributes != null) {
 			doc.put("attributes_docvalues_string", attributes.toString());
 		}
-		if(service != null) {
-			doc.put("service_docvalues_string", service);
+		if(ngsildTenant != null) {
+			doc.put("ngsildTenant_docvalues_string", ngsildTenant);
 		}
-		if(servicePath != null) {
-			doc.put("servicePath_docvalues_string", servicePath);
+		if(ngsildPath != null) {
+			doc.put("ngsildPath_docvalues_string", ngsildPath);
 		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
@@ -1513,10 +1513,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "resource_docvalues_string";
 			case "attributes":
 				return "attributes_docvalues_string";
-			case "service":
-				return "service_docvalues_string";
-			case "servicePath":
-				return "servicePath_docvalues_string";
+			case "ngsildTenant":
+				return "ngsildTenant_docvalues_string";
+			case "ngsildPath":
+				return "ngsildPath_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1546,10 +1546,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "resource_docvalues_string";
 			case "attributes":
 				return "attributes_docvalues_string";
-			case "service":
-				return "service_docvalues_string";
-			case "servicePath":
-				return "servicePath_docvalues_string";
+			case "ngsildTenant":
+				return "ngsildTenant_docvalues_string";
+			case "ngsildPath":
+				return "ngsildPath_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1579,10 +1579,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "resource";
 			case "attributes_docvalues_string":
 				return "attributes";
-			case "service_docvalues_string":
-				return "service";
-			case "servicePath_docvalues_string":
-				return "servicePath";
+			case "ngsildTenant_docvalues_string":
+				return "ngsildTenant";
+			case "ngsildPath_docvalues_string":
+				return "ngsildPath";
 			case "pageId_docvalues_string":
 				return "pageId";
 			case "resourceUri_docvalues_string":
@@ -1630,8 +1630,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		oIotService.setCbHost(Optional.ofNullable(doc.get("cbHost_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setResource(Optional.ofNullable(doc.get("resource_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setAttributes(Optional.ofNullable(doc.get("attributes_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setService(Optional.ofNullable(doc.get("service_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setServicePath(Optional.ofNullable(doc.get("servicePath_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oIotService.setNgsildTenant(Optional.ofNullable(doc.get("ngsildTenant_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oIotService.setNgsildPath(Optional.ofNullable(doc.get("ngsildPath_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1661,10 +1661,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				apiRequest.addVars("resource");
 			if(!Objects.equals(attributes, original.getAttributes()))
 				apiRequest.addVars("attributes");
-			if(!Objects.equals(service, original.getService()))
-				apiRequest.addVars("service");
-			if(!Objects.equals(servicePath, original.getServicePath()))
-				apiRequest.addVars("servicePath");
+			if(!Objects.equals(ngsildTenant, original.getNgsildTenant()))
+				apiRequest.addVars("ngsildTenant");
+			if(!Objects.equals(ngsildPath, original.getNgsildPath()))
+				apiRequest.addVars("ngsildPath");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
 			if(!Objects.equals(resourceUri, original.getResourceUri()))
@@ -1693,8 +1693,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(cbHost).map(v -> "cbHost: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resource).map(v -> "resource: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(attributes).map(v -> "attributes: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(service).map(v -> "service: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(servicePath).map(v -> "servicePath: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(ngsildTenant).map(v -> "ngsildTenant: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(ngsildPath).map(v -> "ngsildPath: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
@@ -1714,8 +1714,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String VAR_cbHost = "cbHost";
 	public static final String VAR_resource = "resource";
 	public static final String VAR_attributes = "attributes";
-	public static final String VAR_service = "service";
-	public static final String VAR_servicePath = "servicePath";
+	public static final String VAR_ngsildTenant = "ngsildTenant";
+	public static final String VAR_ngsildPath = "ngsildPath";
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_resourceUri = "resourceUri";
 	public static final String VAR_templateUri = "templateUri";
@@ -1740,8 +1740,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		vars.add(VAR_cbHost);
 		vars.add(VAR_resource);
 		vars.add(VAR_attributes);
-		vars.add(VAR_service);
-		vars.add(VAR_servicePath);
+		vars.add(VAR_ngsildTenant);
+		vars.add(VAR_ngsildPath);
 		vars.add(VAR_pageId);
 		vars.add(VAR_resourceUri);
 		vars.add(VAR_templateUri);
@@ -1765,8 +1765,8 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_cbHost = "context broker host";
 	public static final String DISPLAY_NAME_resource = "resource";
 	public static final String DISPLAY_NAME_attributes = "attributes";
-	public static final String DISPLAY_NAME_service = "service";
-	public static final String DISPLAY_NAME_servicePath = "service path";
+	public static final String DISPLAY_NAME_ngsildTenant = "NGSILD-Tenant";
+	public static final String DISPLAY_NAME_ngsildPath = "NGSILD-Path";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1789,10 +1789,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_resource;
 		case VAR_attributes:
 			return DISPLAY_NAME_attributes;
-		case VAR_service:
-			return DISPLAY_NAME_service;
-		case VAR_servicePath:
-			return DISPLAY_NAME_servicePath;
+		case VAR_ngsildTenant:
+			return DISPLAY_NAME_ngsildTenant;
+		case VAR_ngsildPath:
+			return DISPLAY_NAME_ngsildPath;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
 		case VAR_resourceUri:
@@ -1822,10 +1822,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return "The NGSI-LD resource";
 		case VAR_attributes:
 			return "The NGSI-LD attributes";
-		case VAR_service:
-			return "The NGSI-LD service";
-		case VAR_servicePath:
-			return "The NGSI-LD service path";
+		case VAR_ngsildTenant:
+			return "The NGSILD-Tenant or Fiware-Service";
+		case VAR_ngsildPath:
+			return "The NGSILD-Path or Fiware-ServicePath";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:
@@ -1855,9 +1855,9 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_attributes:
 			return "JsonArray";
-		case VAR_service:
+		case VAR_ngsildTenant:
 			return "String";
-		case VAR_servicePath:
+		case VAR_ngsildPath:
 			return "String";
 		case VAR_pageId:
 			return "String";
@@ -1878,9 +1878,9 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 
 	public static Integer htmColumnIotService(String var) {
 		switch(var) {
-		case VAR_service:
+		case VAR_ngsildTenant:
 			return 1;
-		case VAR_servicePath:
+		case VAR_ngsildPath:
 			return 2;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
@@ -1899,9 +1899,9 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return 4;
 		case VAR_attributes:
 			return 4;
-		case VAR_service:
+		case VAR_ngsildTenant:
 			return 5;
-		case VAR_servicePath:
+		case VAR_ngsildPath:
 			return 5;
 		case VAR_pageId:
 			return 4;
@@ -1926,10 +1926,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return 1;
 		case VAR_attributes:
 			return 2;
-		case VAR_service:
+		case VAR_ngsildTenant:
 			return 1;
-		case VAR_servicePath:
-			return 1;
+		case VAR_ngsildPath:
+			return 2;
 		case VAR_pageId:
 			return 1;
 		case VAR_uri:

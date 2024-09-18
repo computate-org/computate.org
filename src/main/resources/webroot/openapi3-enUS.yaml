@@ -9720,9 +9720,9 @@ components:
                     type: string
                   attributes:
                     type: array
-                  service:
+                  ngsildTenant:
                     type: string
-                  servicePath:
+                  ngsildPath:
                     type: string
                   pageId:
                     type: string
@@ -9783,19 +9783,19 @@ components:
               type: array
             removeAllAttributes:
               type: array
-            setService:
+            setNgsildTenant:
               type: string
               nullable: true
-            removeService:
+            removeNgsildTenant:
               type: string
-            removeAllService:
+            removeAllNgsildTenant:
               type: string
-            setServicePath:
+            setNgsildPath:
               type: string
               nullable: true
-            removeServicePath:
+            removeNgsildPath:
               type: string
-            removeAllServicePath:
+            removeAllNgsildPath:
               type: string
             setPageId:
               type: string
@@ -9906,19 +9906,19 @@ components:
               type: array
             removeAllAttributes:
               type: array
-            setService:
+            setNgsildTenant:
               type: string
               nullable: true
-            removeService:
+            removeNgsildTenant:
               type: string
-            removeAllService:
+            removeAllNgsildTenant:
               type: string
-            setServicePath:
+            setNgsildPath:
               type: string
               nullable: true
-            removeServicePath:
+            removeNgsildPath:
               type: string
-            removeAllServicePath:
+            removeAllNgsildPath:
               type: string
             setPageId:
               type: string
@@ -10004,9 +10004,9 @@ components:
               type: string
             attributes:
               type: array
-            service:
+            ngsildTenant:
               type: string
-            servicePath:
+            ngsildPath:
               type: string
             pageId:
               type: string
@@ -10042,9 +10042,9 @@ components:
               type: string
             attributes:
               type: array
-            service:
+            ngsildTenant:
               type: string
-            servicePath:
+            ngsildPath:
               type: string
             pageId:
               type: string
@@ -10080,9 +10080,9 @@ components:
               type: string
             attributes:
               type: array
-            service:
+            ngsildTenant:
               type: string
-            servicePath:
+            ngsildPath:
               type: string
             pageId:
               type: string
@@ -10123,9 +10123,9 @@ components:
                     type: string
                   attributes:
                     type: array
-                  service:
+                  ngsildTenant:
                     type: string
-                  servicePath:
+                  ngsildPath:
                     type: string
                   pageId:
                     type: string
@@ -10161,9 +10161,9 @@ components:
                     type: string
                   attributes:
                     type: array
-                  service:
+                  ngsildTenant:
                     type: string
-                  servicePath:
+                  ngsildPath:
                     type: string
                   pageId:
                     type: string
@@ -10199,9 +10199,9 @@ components:
               type: string
             attributes:
               type: array
-            service:
+            ngsildTenant:
               type: string
-            servicePath:
+            ngsildPath:
               type: string
             pageId:
               type: string
@@ -10252,6 +10252,8 @@ components:
                     type: object
                   alternateName:
                     type: string
+                  location:
+                    type: object
                   areaServedColors:
                     type: array
                     items:
@@ -10266,6 +10268,24 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  owner:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  source:
+                    type: string
+                  seeAlso:
+                    type: object
                   airQualityIndex:
                     type: string
                   airQualityIndexForecast:
@@ -10276,51 +10296,23 @@ components:
                     type: string
                   atmosphericPressure:
                     type: string
-                  dataProvider:
-                    type: string
-                  dateCreated:
-                    type: string
-                  dateModified:
-                    type: string
-                  dateObserved:
-                    type: string
-                  dewPoint:
-                    type: string
-                  diffuseIrradiation:
-                    type: string
-                  directIrradiation:
-                    type: string
+                  pressureTendency:
+                    type: object
                   gustSpeed:
                     type: string
-                  illuminance:
+                  windDirection:
                     type: string
-                  location:
-                    type: object
-                  owner:
-                    type: object
+                  windSpeed:
+                    type: string
                   precipitation:
                     type: string
                   precipitationForecast:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
                     type: string
                   relativeHumidity:
                     type: string
                   relativeHumidityForecast:
                     type: string
-                  seeAlso:
-                    type: object
                   snowHeight:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  source:
-                    type: string
-                  streamGauge:
                     type: string
                   temperature:
                     type: string
@@ -10330,16 +10322,26 @@ components:
                     type: object
                   feelsLikeTemperature:
                     type: string
+                  solarRadiation:
+                    type: string
+                  streamGauge:
+                    type: string
                   uVIndexMax:
                     type: string
                   visibility:
                     type: object
                   weatherType:
                     type: string
-                  windDirection:
+                  dewPoint:
                     type: string
-                  windSpeed:
+                  diffuseIrradiation:
                     type: string
+                  directIrradiation:
+                    type: string
+                  illuminance:
+                    type: string
+                  ngsildData:
+                    type: object
                   entityId:
                     type: string
                   entityShortId:
@@ -10348,8 +10350,6 @@ components:
                     type: string
                   ngsildPath:
                     type: string
-                  ngsildData:
-                    type: object
                   ngsildContext:
                     type: string
                   objectTitle:
@@ -10388,6 +10388,13 @@ components:
               type: string
             removeAllAlternateName:
               type: string
+            setLocation:
+              type: object
+              nullable: true
+            removeLocation:
+              type: object
+            removeAllLocation:
+              type: object
             setAreaServedColors:
               type: array
               nullable: true
@@ -10446,6 +10453,69 @@ components:
               type: object
             removeAllAreaServed:
               type: object
+            setDataProvider:
+              type: string
+              nullable: true
+            removeDataProvider:
+              type: string
+            removeAllDataProvider:
+              type: string
+            setDateCreated:
+              type: string
+              nullable: true
+            removeDateCreated:
+              type: string
+            removeAllDateCreated:
+              type: string
+            setDateModified:
+              type: string
+              nullable: true
+            removeDateModified:
+              type: string
+            removeAllDateModified:
+              type: string
+            setDateObserved:
+              type: string
+              nullable: true
+            removeDateObserved:
+              type: string
+            removeAllDateObserved:
+              type: string
+            setOwner:
+              type: object
+              nullable: true
+            removeOwner:
+              type: object
+            removeAllOwner:
+              type: object
+            setRefDevice:
+              type: object
+              nullable: true
+            removeRefDevice:
+              type: object
+            removeAllRefDevice:
+              type: object
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setSeeAlso:
+              type: object
+              nullable: true
+            removeSeeAlso:
+              type: object
+            removeAllSeeAlso:
+              type: object
             setAirQualityIndex:
               type: string
               nullable: true
@@ -10481,55 +10551,13 @@ components:
               type: string
             removeAllAtmosphericPressure:
               type: string
-            setDataProvider:
-              type: string
+            setPressureTendency:
+              type: object
               nullable: true
-            removeDataProvider:
-              type: string
-            removeAllDataProvider:
-              type: string
-            setDateCreated:
-              type: string
-              nullable: true
-            removeDateCreated:
-              type: string
-            removeAllDateCreated:
-              type: string
-            setDateModified:
-              type: string
-              nullable: true
-            removeDateModified:
-              type: string
-            removeAllDateModified:
-              type: string
-            setDateObserved:
-              type: string
-              nullable: true
-            removeDateObserved:
-              type: string
-            removeAllDateObserved:
-              type: string
-            setDewPoint:
-              type: string
-              nullable: true
-            removeDewPoint:
-              type: string
-            removeAllDewPoint:
-              type: string
-            setDiffuseIrradiation:
-              type: string
-              nullable: true
-            removeDiffuseIrradiation:
-              type: string
-            removeAllDiffuseIrradiation:
-              type: string
-            setDirectIrradiation:
-              type: string
-              nullable: true
-            removeDirectIrradiation:
-              type: string
-            removeAllDirectIrradiation:
-              type: string
+            removePressureTendency:
+              type: object
+            removeAllPressureTendency:
+              type: object
             setGustSpeed:
               type: string
               nullable: true
@@ -10537,27 +10565,20 @@ components:
               type: string
             removeAllGustSpeed:
               type: string
-            setIlluminance:
+            setWindDirection:
               type: string
               nullable: true
-            removeIlluminance:
+            removeWindDirection:
               type: string
-            removeAllIlluminance:
+            removeAllWindDirection:
               type: string
-            setLocation:
-              type: object
+            setWindSpeed:
+              type: string
               nullable: true
-            removeLocation:
-              type: object
-            removeAllLocation:
-              type: object
-            setOwner:
-              type: object
-              nullable: true
-            removeOwner:
-              type: object
-            removeAllOwner:
-              type: object
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
+              type: string
             setPrecipitation:
               type: string
               nullable: true
@@ -10571,27 +10592,6 @@ components:
             removePrecipitationForecast:
               type: string
             removeAllPrecipitationForecast:
-              type: string
-            setPressureTendency:
-              type: object
-              nullable: true
-            removePressureTendency:
-              type: object
-            removeAllPressureTendency:
-              type: object
-            setRefDevice:
-              type: object
-              nullable: true
-            removeRefDevice:
-              type: object
-            removeAllRefDevice:
-              type: object
-            setRefPointOfInterest:
-              type: string
-              nullable: true
-            removeRefPointOfInterest:
-              type: string
-            removeAllRefPointOfInterest:
               type: string
             setRelativeHumidity:
               type: string
@@ -10607,40 +10607,12 @@ components:
               type: string
             removeAllRelativeHumidityForecast:
               type: string
-            setSeeAlso:
-              type: object
-              nullable: true
-            removeSeeAlso:
-              type: object
-            removeAllSeeAlso:
-              type: object
             setSnowHeight:
               type: string
               nullable: true
             removeSnowHeight:
               type: string
             removeAllSnowHeight:
-              type: string
-            setSolarRadiation:
-              type: string
-              nullable: true
-            removeSolarRadiation:
-              type: string
-            removeAllSolarRadiation:
-              type: string
-            setSource:
-              type: string
-              nullable: true
-            removeSource:
-              type: string
-            removeAllSource:
-              type: string
-            setStreamGauge:
-              type: string
-              nullable: true
-            removeStreamGauge:
-              type: string
-            removeAllStreamGauge:
               type: string
             setTemperature:
               type: string
@@ -10670,6 +10642,20 @@ components:
               type: string
             removeAllFeelsLikeTemperature:
               type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
             setUVIndexMax:
               type: string
               nullable: true
@@ -10691,20 +10677,41 @@ components:
               type: string
             removeAllWeatherType:
               type: string
-            setWindDirection:
+            setDewPoint:
               type: string
               nullable: true
-            removeWindDirection:
+            removeDewPoint:
               type: string
-            removeAllWindDirection:
+            removeAllDewPoint:
               type: string
-            setWindSpeed:
+            setDiffuseIrradiation:
               type: string
               nullable: true
-            removeWindSpeed:
+            removeDiffuseIrradiation:
               type: string
-            removeAllWindSpeed:
+            removeAllDiffuseIrradiation:
               type: string
+            setDirectIrradiation:
+              type: string
+              nullable: true
+            removeDirectIrradiation:
+              type: string
+            removeAllDirectIrradiation:
+              type: string
+            setIlluminance:
+              type: string
+              nullable: true
+            removeIlluminance:
+              type: string
+            removeAllIlluminance:
+              type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
             setEntityId:
               type: string
               nullable: true
@@ -10733,13 +10740,6 @@ components:
               type: string
             removeAllNgsildPath:
               type: string
-            setNgsildData:
-              type: object
-              nullable: true
-            removeNgsildData:
-              type: object
-            removeAllNgsildData:
-              type: object
             setNgsildContext:
               type: string
               nullable: true
@@ -10793,6 +10793,13 @@ components:
               type: string
             removeAllAlternateName:
               type: string
+            setLocation:
+              type: object
+              nullable: true
+            removeLocation:
+              type: object
+            removeAllLocation:
+              type: object
             setAreaServedColors:
               type: array
               nullable: true
@@ -10851,6 +10858,69 @@ components:
               type: object
             removeAllAreaServed:
               type: object
+            setDataProvider:
+              type: string
+              nullable: true
+            removeDataProvider:
+              type: string
+            removeAllDataProvider:
+              type: string
+            setDateCreated:
+              type: string
+              nullable: true
+            removeDateCreated:
+              type: string
+            removeAllDateCreated:
+              type: string
+            setDateModified:
+              type: string
+              nullable: true
+            removeDateModified:
+              type: string
+            removeAllDateModified:
+              type: string
+            setDateObserved:
+              type: string
+              nullable: true
+            removeDateObserved:
+              type: string
+            removeAllDateObserved:
+              type: string
+            setOwner:
+              type: object
+              nullable: true
+            removeOwner:
+              type: object
+            removeAllOwner:
+              type: object
+            setRefDevice:
+              type: object
+              nullable: true
+            removeRefDevice:
+              type: object
+            removeAllRefDevice:
+              type: object
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setSeeAlso:
+              type: object
+              nullable: true
+            removeSeeAlso:
+              type: object
+            removeAllSeeAlso:
+              type: object
             setAirQualityIndex:
               type: string
               nullable: true
@@ -10886,55 +10956,13 @@ components:
               type: string
             removeAllAtmosphericPressure:
               type: string
-            setDataProvider:
-              type: string
+            setPressureTendency:
+              type: object
               nullable: true
-            removeDataProvider:
-              type: string
-            removeAllDataProvider:
-              type: string
-            setDateCreated:
-              type: string
-              nullable: true
-            removeDateCreated:
-              type: string
-            removeAllDateCreated:
-              type: string
-            setDateModified:
-              type: string
-              nullable: true
-            removeDateModified:
-              type: string
-            removeAllDateModified:
-              type: string
-            setDateObserved:
-              type: string
-              nullable: true
-            removeDateObserved:
-              type: string
-            removeAllDateObserved:
-              type: string
-            setDewPoint:
-              type: string
-              nullable: true
-            removeDewPoint:
-              type: string
-            removeAllDewPoint:
-              type: string
-            setDiffuseIrradiation:
-              type: string
-              nullable: true
-            removeDiffuseIrradiation:
-              type: string
-            removeAllDiffuseIrradiation:
-              type: string
-            setDirectIrradiation:
-              type: string
-              nullable: true
-            removeDirectIrradiation:
-              type: string
-            removeAllDirectIrradiation:
-              type: string
+            removePressureTendency:
+              type: object
+            removeAllPressureTendency:
+              type: object
             setGustSpeed:
               type: string
               nullable: true
@@ -10942,27 +10970,20 @@ components:
               type: string
             removeAllGustSpeed:
               type: string
-            setIlluminance:
+            setWindDirection:
               type: string
               nullable: true
-            removeIlluminance:
+            removeWindDirection:
               type: string
-            removeAllIlluminance:
+            removeAllWindDirection:
               type: string
-            setLocation:
-              type: object
+            setWindSpeed:
+              type: string
               nullable: true
-            removeLocation:
-              type: object
-            removeAllLocation:
-              type: object
-            setOwner:
-              type: object
-              nullable: true
-            removeOwner:
-              type: object
-            removeAllOwner:
-              type: object
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
+              type: string
             setPrecipitation:
               type: string
               nullable: true
@@ -10976,27 +10997,6 @@ components:
             removePrecipitationForecast:
               type: string
             removeAllPrecipitationForecast:
-              type: string
-            setPressureTendency:
-              type: object
-              nullable: true
-            removePressureTendency:
-              type: object
-            removeAllPressureTendency:
-              type: object
-            setRefDevice:
-              type: object
-              nullable: true
-            removeRefDevice:
-              type: object
-            removeAllRefDevice:
-              type: object
-            setRefPointOfInterest:
-              type: string
-              nullable: true
-            removeRefPointOfInterest:
-              type: string
-            removeAllRefPointOfInterest:
               type: string
             setRelativeHumidity:
               type: string
@@ -11012,40 +11012,12 @@ components:
               type: string
             removeAllRelativeHumidityForecast:
               type: string
-            setSeeAlso:
-              type: object
-              nullable: true
-            removeSeeAlso:
-              type: object
-            removeAllSeeAlso:
-              type: object
             setSnowHeight:
               type: string
               nullable: true
             removeSnowHeight:
               type: string
             removeAllSnowHeight:
-              type: string
-            setSolarRadiation:
-              type: string
-              nullable: true
-            removeSolarRadiation:
-              type: string
-            removeAllSolarRadiation:
-              type: string
-            setSource:
-              type: string
-              nullable: true
-            removeSource:
-              type: string
-            removeAllSource:
-              type: string
-            setStreamGauge:
-              type: string
-              nullable: true
-            removeStreamGauge:
-              type: string
-            removeAllStreamGauge:
               type: string
             setTemperature:
               type: string
@@ -11075,6 +11047,20 @@ components:
               type: string
             removeAllFeelsLikeTemperature:
               type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
             setUVIndexMax:
               type: string
               nullable: true
@@ -11096,20 +11082,41 @@ components:
               type: string
             removeAllWeatherType:
               type: string
-            setWindDirection:
+            setDewPoint:
               type: string
               nullable: true
-            removeWindDirection:
+            removeDewPoint:
               type: string
-            removeAllWindDirection:
+            removeAllDewPoint:
               type: string
-            setWindSpeed:
+            setDiffuseIrradiation:
               type: string
               nullable: true
-            removeWindSpeed:
+            removeDiffuseIrradiation:
               type: string
-            removeAllWindSpeed:
+            removeAllDiffuseIrradiation:
               type: string
+            setDirectIrradiation:
+              type: string
+              nullable: true
+            removeDirectIrradiation:
+              type: string
+            removeAllDirectIrradiation:
+              type: string
+            setIlluminance:
+              type: string
+              nullable: true
+            removeIlluminance:
+              type: string
+            removeAllIlluminance:
+              type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
             setEntityId:
               type: string
               nullable: true
@@ -11138,13 +11145,6 @@ components:
               type: string
             removeAllNgsildPath:
               type: string
-            setNgsildData:
-              type: object
-              nullable: true
-            removeNgsildData:
-              type: object
-            removeAllNgsildData:
-              type: object
             setNgsildContext:
               type: string
               nullable: true
@@ -11178,6 +11178,8 @@ components:
               type: object
             alternateName:
               type: string
+            location:
+              type: object
             areaServedColors:
               type: array
               items:
@@ -11192,6 +11194,24 @@ components:
                 type: string
             areaServed:
               type: object
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            owner:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            source:
+              type: string
+            seeAlso:
+              type: object
             airQualityIndex:
               type: string
             airQualityIndexForecast:
@@ -11202,51 +11222,23 @@ components:
               type: string
             atmosphericPressure:
               type: string
-            dataProvider:
-              type: string
-            dateCreated:
-              type: string
-            dateModified:
-              type: string
-            dateObserved:
-              type: string
-            dewPoint:
-              type: string
-            diffuseIrradiation:
-              type: string
-            directIrradiation:
-              type: string
+            pressureTendency:
+              type: object
             gustSpeed:
               type: string
-            illuminance:
+            windDirection:
               type: string
-            location:
-              type: object
-            owner:
-              type: object
+            windSpeed:
+              type: string
             precipitation:
               type: string
             precipitationForecast:
-              type: string
-            pressureTendency:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
               type: string
             relativeHumidity:
               type: string
             relativeHumidityForecast:
               type: string
-            seeAlso:
-              type: object
             snowHeight:
-              type: string
-            solarRadiation:
-              type: string
-            source:
-              type: string
-            streamGauge:
               type: string
             temperature:
               type: string
@@ -11256,16 +11248,26 @@ components:
               type: object
             feelsLikeTemperature:
               type: string
+            solarRadiation:
+              type: string
+            streamGauge:
+              type: string
             uVIndexMax:
               type: string
             visibility:
               type: object
             weatherType:
               type: string
-            windDirection:
+            dewPoint:
               type: string
-            windSpeed:
+            diffuseIrradiation:
               type: string
+            directIrradiation:
+              type: string
+            illuminance:
+              type: string
+            ngsildData:
+              type: object
             entityId:
               type: string
             entityShortId:
@@ -11274,8 +11276,6 @@ components:
               type: string
             ngsildPath:
               type: string
-            ngsildData:
-              type: object
             ngsildContext:
               type: string
             objectTitle:
@@ -11294,6 +11294,8 @@ components:
               type: object
             alternateName:
               type: string
+            location:
+              type: object
             areaServedColors:
               type: array
               items:
@@ -11308,6 +11310,24 @@ components:
                 type: string
             areaServed:
               type: object
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            owner:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            source:
+              type: string
+            seeAlso:
+              type: object
             airQualityIndex:
               type: string
             airQualityIndexForecast:
@@ -11318,51 +11338,23 @@ components:
               type: string
             atmosphericPressure:
               type: string
-            dataProvider:
-              type: string
-            dateCreated:
-              type: string
-            dateModified:
-              type: string
-            dateObserved:
-              type: string
-            dewPoint:
-              type: string
-            diffuseIrradiation:
-              type: string
-            directIrradiation:
-              type: string
+            pressureTendency:
+              type: object
             gustSpeed:
               type: string
-            illuminance:
+            windDirection:
               type: string
-            location:
-              type: object
-            owner:
-              type: object
+            windSpeed:
+              type: string
             precipitation:
               type: string
             precipitationForecast:
-              type: string
-            pressureTendency:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
               type: string
             relativeHumidity:
               type: string
             relativeHumidityForecast:
               type: string
-            seeAlso:
-              type: object
             snowHeight:
-              type: string
-            solarRadiation:
-              type: string
-            source:
-              type: string
-            streamGauge:
               type: string
             temperature:
               type: string
@@ -11372,16 +11364,26 @@ components:
               type: object
             feelsLikeTemperature:
               type: string
+            solarRadiation:
+              type: string
+            streamGauge:
+              type: string
             uVIndexMax:
               type: string
             visibility:
               type: object
             weatherType:
               type: string
-            windDirection:
+            dewPoint:
               type: string
-            windSpeed:
+            diffuseIrradiation:
               type: string
+            directIrradiation:
+              type: string
+            illuminance:
+              type: string
+            ngsildData:
+              type: object
             entityId:
               type: string
             entityShortId:
@@ -11390,8 +11392,6 @@ components:
               type: string
             ngsildPath:
               type: string
-            ngsildData:
-              type: object
             ngsildContext:
               type: string
             objectTitle:
@@ -11410,6 +11410,8 @@ components:
               type: object
             alternateName:
               type: string
+            location:
+              type: object
             areaServedColors:
               type: array
               items:
@@ -11424,6 +11426,24 @@ components:
                 type: string
             areaServed:
               type: object
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            owner:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            source:
+              type: string
+            seeAlso:
+              type: object
             airQualityIndex:
               type: string
             airQualityIndexForecast:
@@ -11434,51 +11454,23 @@ components:
               type: string
             atmosphericPressure:
               type: string
-            dataProvider:
-              type: string
-            dateCreated:
-              type: string
-            dateModified:
-              type: string
-            dateObserved:
-              type: string
-            dewPoint:
-              type: string
-            diffuseIrradiation:
-              type: string
-            directIrradiation:
-              type: string
+            pressureTendency:
+              type: object
             gustSpeed:
               type: string
-            illuminance:
+            windDirection:
               type: string
-            location:
-              type: object
-            owner:
-              type: object
+            windSpeed:
+              type: string
             precipitation:
               type: string
             precipitationForecast:
-              type: string
-            pressureTendency:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
               type: string
             relativeHumidity:
               type: string
             relativeHumidityForecast:
               type: string
-            seeAlso:
-              type: object
             snowHeight:
-              type: string
-            solarRadiation:
-              type: string
-            source:
-              type: string
-            streamGauge:
               type: string
             temperature:
               type: string
@@ -11488,16 +11480,26 @@ components:
               type: object
             feelsLikeTemperature:
               type: string
+            solarRadiation:
+              type: string
+            streamGauge:
+              type: string
             uVIndexMax:
               type: string
             visibility:
               type: object
             weatherType:
               type: string
-            windDirection:
+            dewPoint:
               type: string
-            windSpeed:
+            diffuseIrradiation:
               type: string
+            directIrradiation:
+              type: string
+            illuminance:
+              type: string
+            ngsildData:
+              type: object
             entityId:
               type: string
             entityShortId:
@@ -11506,8 +11508,6 @@ components:
               type: string
             ngsildPath:
               type: string
-            ngsildData:
-              type: object
             ngsildContext:
               type: string
             objectTitle:
@@ -11531,6 +11531,8 @@ components:
                     type: object
                   alternateName:
                     type: string
+                  location:
+                    type: object
                   areaServedColors:
                     type: array
                     items:
@@ -11545,6 +11547,24 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  owner:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  source:
+                    type: string
+                  seeAlso:
+                    type: object
                   airQualityIndex:
                     type: string
                   airQualityIndexForecast:
@@ -11555,51 +11575,23 @@ components:
                     type: string
                   atmosphericPressure:
                     type: string
-                  dataProvider:
-                    type: string
-                  dateCreated:
-                    type: string
-                  dateModified:
-                    type: string
-                  dateObserved:
-                    type: string
-                  dewPoint:
-                    type: string
-                  diffuseIrradiation:
-                    type: string
-                  directIrradiation:
-                    type: string
+                  pressureTendency:
+                    type: object
                   gustSpeed:
                     type: string
-                  illuminance:
+                  windDirection:
                     type: string
-                  location:
-                    type: object
-                  owner:
-                    type: object
+                  windSpeed:
+                    type: string
                   precipitation:
                     type: string
                   precipitationForecast:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
                     type: string
                   relativeHumidity:
                     type: string
                   relativeHumidityForecast:
                     type: string
-                  seeAlso:
-                    type: object
                   snowHeight:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  source:
-                    type: string
-                  streamGauge:
                     type: string
                   temperature:
                     type: string
@@ -11609,16 +11601,26 @@ components:
                     type: object
                   feelsLikeTemperature:
                     type: string
+                  solarRadiation:
+                    type: string
+                  streamGauge:
+                    type: string
                   uVIndexMax:
                     type: string
                   visibility:
                     type: object
                   weatherType:
                     type: string
-                  windDirection:
+                  dewPoint:
                     type: string
-                  windSpeed:
+                  diffuseIrradiation:
                     type: string
+                  directIrradiation:
+                    type: string
+                  illuminance:
+                    type: string
+                  ngsildData:
+                    type: object
                   entityId:
                     type: string
                   entityShortId:
@@ -11627,8 +11629,6 @@ components:
                     type: string
                   ngsildPath:
                     type: string
-                  ngsildData:
-                    type: object
                   ngsildContext:
                     type: string
                   objectTitle:
@@ -11647,6 +11647,8 @@ components:
                     type: object
                   alternateName:
                     type: string
+                  location:
+                    type: object
                   areaServedColors:
                     type: array
                     items:
@@ -11661,6 +11663,24 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  dataProvider:
+                    type: string
+                  dateCreated:
+                    type: string
+                  dateModified:
+                    type: string
+                  dateObserved:
+                    type: string
+                  owner:
+                    type: object
+                  refDevice:
+                    type: object
+                  refPointOfInterest:
+                    type: string
+                  source:
+                    type: string
+                  seeAlso:
+                    type: object
                   airQualityIndex:
                     type: string
                   airQualityIndexForecast:
@@ -11671,51 +11691,23 @@ components:
                     type: string
                   atmosphericPressure:
                     type: string
-                  dataProvider:
-                    type: string
-                  dateCreated:
-                    type: string
-                  dateModified:
-                    type: string
-                  dateObserved:
-                    type: string
-                  dewPoint:
-                    type: string
-                  diffuseIrradiation:
-                    type: string
-                  directIrradiation:
-                    type: string
+                  pressureTendency:
+                    type: object
                   gustSpeed:
                     type: string
-                  illuminance:
+                  windDirection:
                     type: string
-                  location:
-                    type: object
-                  owner:
-                    type: object
+                  windSpeed:
+                    type: string
                   precipitation:
                     type: string
                   precipitationForecast:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
                     type: string
                   relativeHumidity:
                     type: string
                   relativeHumidityForecast:
                     type: string
-                  seeAlso:
-                    type: object
                   snowHeight:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  source:
-                    type: string
-                  streamGauge:
                     type: string
                   temperature:
                     type: string
@@ -11725,16 +11717,26 @@ components:
                     type: object
                   feelsLikeTemperature:
                     type: string
+                  solarRadiation:
+                    type: string
+                  streamGauge:
+                    type: string
                   uVIndexMax:
                     type: string
                   visibility:
                     type: object
                   weatherType:
                     type: string
-                  windDirection:
+                  dewPoint:
                     type: string
-                  windSpeed:
+                  diffuseIrradiation:
                     type: string
+                  directIrradiation:
+                    type: string
+                  illuminance:
+                    type: string
+                  ngsildData:
+                    type: object
                   entityId:
                     type: string
                   entityShortId:
@@ -11743,8 +11745,6 @@ components:
                     type: string
                   ngsildPath:
                     type: string
-                  ngsildData:
-                    type: object
                   ngsildContext:
                     type: string
                   objectTitle:
@@ -11763,6 +11763,8 @@ components:
               type: object
             alternateName:
               type: string
+            location:
+              type: object
             areaServedColors:
               type: array
               items:
@@ -11777,6 +11779,24 @@ components:
                 type: string
             areaServed:
               type: object
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            owner:
+              type: object
+            refDevice:
+              type: object
+            refPointOfInterest:
+              type: string
+            source:
+              type: string
+            seeAlso:
+              type: object
             airQualityIndex:
               type: string
             airQualityIndexForecast:
@@ -11787,51 +11807,23 @@ components:
               type: string
             atmosphericPressure:
               type: string
-            dataProvider:
-              type: string
-            dateCreated:
-              type: string
-            dateModified:
-              type: string
-            dateObserved:
-              type: string
-            dewPoint:
-              type: string
-            diffuseIrradiation:
-              type: string
-            directIrradiation:
-              type: string
+            pressureTendency:
+              type: object
             gustSpeed:
               type: string
-            illuminance:
+            windDirection:
               type: string
-            location:
-              type: object
-            owner:
-              type: object
+            windSpeed:
+              type: string
             precipitation:
               type: string
             precipitationForecast:
-              type: string
-            pressureTendency:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
               type: string
             relativeHumidity:
               type: string
             relativeHumidityForecast:
               type: string
-            seeAlso:
-              type: object
             snowHeight:
-              type: string
-            solarRadiation:
-              type: string
-            source:
-              type: string
-            streamGauge:
               type: string
             temperature:
               type: string
@@ -11841,16 +11833,26 @@ components:
               type: object
             feelsLikeTemperature:
               type: string
+            solarRadiation:
+              type: string
+            streamGauge:
+              type: string
             uVIndexMax:
               type: string
             visibility:
               type: object
             weatherType:
               type: string
-            windDirection:
+            dewPoint:
               type: string
-            windSpeed:
+            diffuseIrradiation:
               type: string
+            directIrradiation:
+              type: string
+            illuminance:
+              type: string
+            ngsildData:
+              type: object
             entityId:
               type: string
             entityShortId:
@@ -11859,8 +11861,6 @@ components:
               type: string
             ngsildPath:
               type: string
-            ngsildData:
-              type: object
             ngsildContext:
               type: string
             objectTitle:
@@ -11911,6 +11911,8 @@ components:
                   storeUrl:
                     type: string
                   title:
+                    type: string
+                  productNum:
                     type: string
                   objectTitle:
                     type: string
@@ -12007,6 +12009,13 @@ components:
             removeTitle:
               type: string
             removeAllTitle:
+              type: string
+            setProductNum:
+              type: string
+              nullable: true
+            removeProductNum:
+              type: string
+            removeAllProductNum:
               type: string
             setObjectTitle:
               type: string
@@ -12124,6 +12133,13 @@ components:
               type: string
             removeAllTitle:
               type: string
+            setProductNum:
+              type: string
+              nullable: true
+            removeProductNum:
+              type: string
+            removeAllProductNum:
+              type: string
             setObjectTitle:
               type: string
               nullable: true
@@ -12180,6 +12196,8 @@ components:
               type: string
             title:
               type: string
+            productNum:
+              type: string
             objectTitle:
               type: string
             objectId:
@@ -12215,6 +12233,8 @@ components:
             storeUrl:
               type: string
             title:
+              type: string
+            productNum:
               type: string
             objectTitle:
               type: string
@@ -12257,6 +12277,8 @@ components:
                     type: string
                   title:
                     type: string
+                  productNum:
+                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -12293,6 +12315,8 @@ components:
                     type: string
                   title:
                     type: string
+                  productNum:
+                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -12328,6 +12352,8 @@ components:
             storeUrl:
               type: string
             title:
+              type: string
+            productNum:
               type: string
             objectTitle:
               type: string
@@ -12378,6 +12404,8 @@ components:
                   storeUrl:
                     type: string
                   title:
+                    type: string
+                  productNum:
                     type: string
                   objectTitle:
                     type: string

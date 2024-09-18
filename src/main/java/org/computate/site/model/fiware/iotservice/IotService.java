@@ -141,33 +141,33 @@ public class IotService extends IotServiceGen<BaseModel> {
     w.o(attributes);
   }
 
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: service
-   * Description: The NGSI-LD service
-   * HtmRow: 5
-   * HtmCell: 1
-   * HtmColumn: 1
-   * Facet: true
-   **/
-  protected void _service(Wrap<String> w) {
-  }
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Tenant
+	 * Description: The NGSILD-Tenant or Fiware-Service
+	 * HtmRow: 5
+	 * HtmCell: 1
+	 * HtmColumn: 1
+	 * Facet: true
+	 */
+	protected void _ngsildTenant(Wrap<String> w) {
+	}
 
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: service path
-   * Description: The NGSI-LD service path
-   * HtmRow: 5
-   * HtmCell: 1
-   * HtmColumn: 2
-   * Facet: true
-   **/
-  protected void _servicePath(Wrap<String> w) {
-  }
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Path
+	 * Description: The NGSILD-Path or Fiware-ServicePath
+	 * HtmRow: 5
+	 * HtmCell: 2
+	 * HtmColumn: 2
+	 * Facet: true
+	 */
+	protected void _ngsildPath(Wrap<String> w) {
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -180,7 +180,7 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * Description: The ID for this page. 
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(service);
+		toId(ngsildTenant);
 	}
 
 	/**

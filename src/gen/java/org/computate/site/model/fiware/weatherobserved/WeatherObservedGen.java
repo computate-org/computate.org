@@ -36,8 +36,9 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
-import io.vertx.core.json.JsonArray;
-import io.vertx.pgclient.data.Polygon;
+import io.vertx.pgclient.data.Point;
+import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
+import org.computate.vertx.serialize.pgclient.PgClientPointDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
@@ -46,12 +47,11 @@ import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.BeanDescription;
 import java.util.stream.Collectors;
 import io.vertx.core.json.Json;
-import io.vertx.pgclient.data.Point;
+import io.vertx.core.json.JsonArray;
+import io.vertx.pgclient.data.Polygon;
 import org.computate.vertx.serialize.pgclient.PgClientPolygonSerializer;
 import org.computate.vertx.serialize.pgclient.PgClientPolygonDeserializer;
 import java.math.BigDecimal;
-import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
-import org.computate.vertx.serialize.pgclient.PgClientPointDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -464,6 +464,109 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return alternateName;
 	}
 
+	//////////////
+	// location //
+	//////////////
+
+
+	/**	 The entity location
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonDeserialize(using = PgClientPointDeserializer.class)
+	@JsonSerialize(using = PgClientPointSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Point location;
+
+	/**	<br> The entity location
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:location">Find the entity location in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _location(Wrap<Point> w);
+
+	public Point getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point location) {
+		this.location = location;
+	}
+	@JsonIgnore
+	public void setLocation(String o) {
+		this.location = WeatherObserved.staticSetLocation(siteRequest_, o);
+	}
+	public static Point staticSetLocation(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+			try {
+				Point shape = null;
+				if(StringUtils.isNotBlank(o)) {
+					ObjectMapper objectMapper = new ObjectMapper();
+					SimpleModule module = new SimpleModule();
+					module.setDeserializerModifier(new BeanDeserializerModifier() {
+						@Override
+						public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+							if (beanDesc.getBeanClass() == Point.class) {
+								return new PgClientPointDeserializer();
+							}
+							return deserializer;
+						}
+					});
+					objectMapper.registerModule(module);
+					shape = objectMapper.readValue(Json.encode(o), Point.class);
+				}
+				return shape;
+			} catch(Exception ex) {
+				ExceptionUtils.rethrow(ex);
+			}
+		}
+		return null;
+	}
+	public void setLocation(JsonObject o) {
+		this.location = WeatherObserved.staticSetLocation(siteRequest_, o);
+	}
+	public static Point staticSetLocation(SiteRequest siteRequest_, JsonObject o) {
+		if(o != null) {
+			try {
+				Point shape = new Point();
+				JsonArray coordinates = o.getJsonArray("coordinates");
+				shape.setX(coordinates.getDouble(0));
+				shape.setY(coordinates.getDouble(1));
+				return shape;
+			} catch(Exception ex) {
+				ExceptionUtils.rethrow(ex);
+			}
+		}
+		return null;
+	}
+	protected WeatherObserved locationInit() {
+		Wrap<Point> locationWrap = new Wrap<Point>().var("location");
+		if(location == null) {
+			_location(locationWrap);
+			Optional.ofNullable(locationWrap.getO()).ifPresent(o -> {
+				setLocation(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Point staticSearchLocation(SiteRequest siteRequest_, Point o) {
+		return o;
+	}
+
+	public static String staticSearchStrLocation(SiteRequest siteRequest_, Point o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLocation(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchLocation(siteRequest_, WeatherObserved.staticSetLocation(siteRequest_, o)).toString();
+	}
+
+	public Point sqlLocation() {
+		return location;
+	}
+
 	//////////////////////
 	// areaServedColors //
 	//////////////////////
@@ -791,6 +894,534 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 
 	public Polygon sqlAreaServed() {
 		return areaServed;
+	}
+
+	//////////////////
+	// dataProvider //
+	//////////////////
+
+
+	/**	 The entity dataProvider
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String dataProvider;
+
+	/**	<br> The entity dataProvider
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dataProvider">Find the entity dataProvider in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dataProvider(Wrap<String> w);
+
+	public String getDataProvider() {
+		return dataProvider;
+	}
+	public void setDataProvider(String o) {
+		this.dataProvider = WeatherObserved.staticSetDataProvider(siteRequest_, o);
+	}
+	public static String staticSetDataProvider(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved dataProviderInit() {
+		Wrap<String> dataProviderWrap = new Wrap<String>().var("dataProvider");
+		if(dataProvider == null) {
+			_dataProvider(dataProviderWrap);
+			Optional.ofNullable(dataProviderWrap.getO()).ifPresent(o -> {
+				setDataProvider(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchDataProvider(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDataProvider(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDataProvider(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchDataProvider(siteRequest_, WeatherObserved.staticSetDataProvider(siteRequest_, o)).toString();
+	}
+
+	public String sqlDataProvider() {
+		return dataProvider;
+	}
+
+	/////////////////
+	// dateCreated //
+	/////////////////
+
+
+	/**	 The entity dateCreated
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String dateCreated;
+
+	/**	<br> The entity dateCreated
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateCreated">Find the entity dateCreated in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dateCreated(Wrap<String> w);
+
+	public String getDateCreated() {
+		return dateCreated;
+	}
+	public void setDateCreated(String o) {
+		this.dateCreated = WeatherObserved.staticSetDateCreated(siteRequest_, o);
+	}
+	public static String staticSetDateCreated(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved dateCreatedInit() {
+		Wrap<String> dateCreatedWrap = new Wrap<String>().var("dateCreated");
+		if(dateCreated == null) {
+			_dateCreated(dateCreatedWrap);
+			Optional.ofNullable(dateCreatedWrap.getO()).ifPresent(o -> {
+				setDateCreated(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchDateCreated(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDateCreated(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDateCreated(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchDateCreated(siteRequest_, WeatherObserved.staticSetDateCreated(siteRequest_, o)).toString();
+	}
+
+	public String sqlDateCreated() {
+		return dateCreated;
+	}
+
+	//////////////////
+	// dateModified //
+	//////////////////
+
+
+	/**	 The entity dateModified
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String dateModified;
+
+	/**	<br> The entity dateModified
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateModified">Find the entity dateModified in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dateModified(Wrap<String> w);
+
+	public String getDateModified() {
+		return dateModified;
+	}
+	public void setDateModified(String o) {
+		this.dateModified = WeatherObserved.staticSetDateModified(siteRequest_, o);
+	}
+	public static String staticSetDateModified(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved dateModifiedInit() {
+		Wrap<String> dateModifiedWrap = new Wrap<String>().var("dateModified");
+		if(dateModified == null) {
+			_dateModified(dateModifiedWrap);
+			Optional.ofNullable(dateModifiedWrap.getO()).ifPresent(o -> {
+				setDateModified(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchDateModified(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDateModified(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDateModified(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchDateModified(siteRequest_, WeatherObserved.staticSetDateModified(siteRequest_, o)).toString();
+	}
+
+	public String sqlDateModified() {
+		return dateModified;
+	}
+
+	//////////////////
+	// dateObserved //
+	//////////////////
+
+
+	/**	 The entity dateObserved
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String dateObserved;
+
+	/**	<br> The entity dateObserved
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateObserved">Find the entity dateObserved in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _dateObserved(Wrap<String> w);
+
+	public String getDateObserved() {
+		return dateObserved;
+	}
+	public void setDateObserved(String o) {
+		this.dateObserved = WeatherObserved.staticSetDateObserved(siteRequest_, o);
+	}
+	public static String staticSetDateObserved(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved dateObservedInit() {
+		Wrap<String> dateObservedWrap = new Wrap<String>().var("dateObserved");
+		if(dateObserved == null) {
+			_dateObserved(dateObservedWrap);
+			Optional.ofNullable(dateObservedWrap.getO()).ifPresent(o -> {
+				setDateObserved(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchDateObserved(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDateObserved(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDateObserved(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchDateObserved(siteRequest_, WeatherObserved.staticSetDateObserved(siteRequest_, o)).toString();
+	}
+
+	public String sqlDateObserved() {
+		return dateObserved;
+	}
+
+	///////////
+	// owner //
+	///////////
+
+
+	/**	 The entity owner
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject owner;
+
+	/**	<br> The entity owner
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:owner">Find the entity owner in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _owner(Wrap<JsonObject> w);
+
+	public JsonObject getOwner() {
+		return owner;
+	}
+
+	public void setOwner(JsonObject owner) {
+		this.owner = owner;
+	}
+	@JsonIgnore
+	public void setOwner(String o) {
+		this.owner = WeatherObserved.staticSetOwner(siteRequest_, o);
+	}
+	public static JsonObject staticSetOwner(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved ownerInit() {
+		Wrap<JsonObject> ownerWrap = new Wrap<JsonObject>().var("owner");
+		if(owner == null) {
+			_owner(ownerWrap);
+			Optional.ofNullable(ownerWrap.getO()).ifPresent(o -> {
+				setOwner(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchOwner(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrOwner(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqOwner(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchOwner(siteRequest_, WeatherObserved.staticSetOwner(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlOwner() {
+		return owner;
+	}
+
+	///////////////
+	// refDevice //
+	///////////////
+
+
+	/**	 The entity refDevice
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject refDevice;
+
+	/**	<br> The entity refDevice
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:refDevice">Find the entity refDevice in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _refDevice(Wrap<JsonObject> w);
+
+	public JsonObject getRefDevice() {
+		return refDevice;
+	}
+
+	public void setRefDevice(JsonObject refDevice) {
+		this.refDevice = refDevice;
+	}
+	@JsonIgnore
+	public void setRefDevice(String o) {
+		this.refDevice = WeatherObserved.staticSetRefDevice(siteRequest_, o);
+	}
+	public static JsonObject staticSetRefDevice(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved refDeviceInit() {
+		Wrap<JsonObject> refDeviceWrap = new Wrap<JsonObject>().var("refDevice");
+		if(refDevice == null) {
+			_refDevice(refDeviceWrap);
+			Optional.ofNullable(refDeviceWrap.getO()).ifPresent(o -> {
+				setRefDevice(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchRefDevice(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrRefDevice(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRefDevice(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchRefDevice(siteRequest_, WeatherObserved.staticSetRefDevice(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlRefDevice() {
+		return refDevice;
+	}
+
+	////////////////////////
+	// refPointOfInterest //
+	////////////////////////
+
+
+	/**	 The entity refPointOfInterest
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String refPointOfInterest;
+
+	/**	<br> The entity refPointOfInterest
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:refPointOfInterest">Find the entity refPointOfInterest in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _refPointOfInterest(Wrap<String> w);
+
+	public String getRefPointOfInterest() {
+		return refPointOfInterest;
+	}
+	public void setRefPointOfInterest(String o) {
+		this.refPointOfInterest = WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o);
+	}
+	public static String staticSetRefPointOfInterest(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved refPointOfInterestInit() {
+		Wrap<String> refPointOfInterestWrap = new Wrap<String>().var("refPointOfInterest");
+		if(refPointOfInterest == null) {
+			_refPointOfInterest(refPointOfInterestWrap);
+			Optional.ofNullable(refPointOfInterestWrap.getO()).ifPresent(o -> {
+				setRefPointOfInterest(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchRefPointOfInterest(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrRefPointOfInterest(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRefPointOfInterest(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchRefPointOfInterest(siteRequest_, WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o)).toString();
+	}
+
+	public String sqlRefPointOfInterest() {
+		return refPointOfInterest;
+	}
+
+	////////////
+	// source //
+	////////////
+
+
+	/**	 The entity source
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String source;
+
+	/**	<br> The entity source
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:source">Find the entity source in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _source(Wrap<String> w);
+
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String o) {
+		this.source = WeatherObserved.staticSetSource(siteRequest_, o);
+	}
+	public static String staticSetSource(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved sourceInit() {
+		Wrap<String> sourceWrap = new Wrap<String>().var("source");
+		if(source == null) {
+			_source(sourceWrap);
+			Optional.ofNullable(sourceWrap.getO()).ifPresent(o -> {
+				setSource(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchSource(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrSource(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqSource(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchSource(siteRequest_, WeatherObserved.staticSetSource(siteRequest_, o)).toString();
+	}
+
+	public String sqlSource() {
+		return source;
+	}
+
+	/////////////
+	// seeAlso //
+	/////////////
+
+
+	/**	 The entity seeAlso
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject seeAlso;
+
+	/**	<br> The entity seeAlso
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:seeAlso">Find the entity seeAlso in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _seeAlso(Wrap<JsonObject> w);
+
+	public JsonObject getSeeAlso() {
+		return seeAlso;
+	}
+
+	public void setSeeAlso(JsonObject seeAlso) {
+		this.seeAlso = seeAlso;
+	}
+	@JsonIgnore
+	public void setSeeAlso(String o) {
+		this.seeAlso = WeatherObserved.staticSetSeeAlso(siteRequest_, o);
+	}
+	public static JsonObject staticSetSeeAlso(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved seeAlsoInit() {
+		Wrap<JsonObject> seeAlsoWrap = new Wrap<JsonObject>().var("seeAlso");
+		if(seeAlso == null) {
+			_seeAlso(seeAlsoWrap);
+			Optional.ofNullable(seeAlsoWrap.getO()).ifPresent(o -> {
+				setSeeAlso(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchSeeAlso(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrSeeAlso(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqSeeAlso(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchSeeAlso(siteRequest_, WeatherObserved.staticSetSeeAlso(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlSeeAlso() {
+		return seeAlso;
 	}
 
 	/////////////////////
@@ -1136,228 +1767,1330 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return atmosphericPressure;
 	}
 
-	//////////////////
-	// dataProvider //
-	//////////////////
+	//////////////////////
+	// pressureTendency //
+	//////////////////////
 
 
-	/**	 The entity dataProvider
+	/**	 The entity pressureTendency
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String dataProvider;
+	protected JsonObject pressureTendency;
 
-	/**	<br> The entity dataProvider
+	/**	<br> The entity pressureTendency
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dataProvider">Find the entity dataProvider in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:pressureTendency">Find the entity pressureTendency in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _dataProvider(Wrap<String> w);
+	protected abstract void _pressureTendency(Wrap<JsonObject> w);
 
-	public String getDataProvider() {
-		return dataProvider;
+	public JsonObject getPressureTendency() {
+		return pressureTendency;
 	}
-	public void setDataProvider(String o) {
-		this.dataProvider = WeatherObserved.staticSetDataProvider(siteRequest_, o);
+
+	public void setPressureTendency(JsonObject pressureTendency) {
+		this.pressureTendency = pressureTendency;
 	}
-	public static String staticSetDataProvider(SiteRequest siteRequest_, String o) {
-		return o;
+	@JsonIgnore
+	public void setPressureTendency(String o) {
+		this.pressureTendency = WeatherObserved.staticSetPressureTendency(siteRequest_, o);
 	}
-	protected WeatherObserved dataProviderInit() {
-		Wrap<String> dataProviderWrap = new Wrap<String>().var("dataProvider");
-		if(dataProvider == null) {
-			_dataProvider(dataProviderWrap);
-			Optional.ofNullable(dataProviderWrap.getO()).ifPresent(o -> {
-				setDataProvider(o);
+	public static JsonObject staticSetPressureTendency(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved pressureTendencyInit() {
+		Wrap<JsonObject> pressureTendencyWrap = new Wrap<JsonObject>().var("pressureTendency");
+		if(pressureTendency == null) {
+			_pressureTendency(pressureTendencyWrap);
+			Optional.ofNullable(pressureTendencyWrap.getO()).ifPresent(o -> {
+				setPressureTendency(o);
 			});
 		}
 		return (WeatherObserved)this;
 	}
 
-	public static String staticSearchDataProvider(SiteRequest siteRequest_, String o) {
-		return o;
+	public static String staticSearchPressureTendency(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
 	}
 
-	public static String staticSearchStrDataProvider(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrPressureTendency(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDataProvider(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchDataProvider(siteRequest_, WeatherObserved.staticSetDataProvider(siteRequest_, o)).toString();
+	public static String staticSearchFqPressureTendency(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchPressureTendency(siteRequest_, WeatherObserved.staticSetPressureTendency(siteRequest_, o)).toString();
 	}
 
-	public String sqlDataProvider() {
-		return dataProvider;
+	public JsonObject sqlPressureTendency() {
+		return pressureTendency;
+	}
+
+	///////////////
+	// gustSpeed //
+	///////////////
+
+
+	/**	 The entity gustSpeed
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal gustSpeed;
+
+	/**	<br> The entity gustSpeed
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:gustSpeed">Find the entity gustSpeed in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _gustSpeed(Wrap<BigDecimal> w);
+
+	public BigDecimal getGustSpeed() {
+		return gustSpeed;
+	}
+
+	public void setGustSpeed(BigDecimal gustSpeed) {
+		this.gustSpeed = gustSpeed;
+	}
+	@JsonIgnore
+	public void setGustSpeed(String o) {
+		this.gustSpeed = WeatherObserved.staticSetGustSpeed(siteRequest_, o);
+	}
+	public static BigDecimal staticSetGustSpeed(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setGustSpeed(Double o) {
+		setGustSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setGustSpeed(Integer o) {
+		setGustSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setGustSpeed(Number o) {
+		setGustSpeed(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved gustSpeedInit() {
+		Wrap<BigDecimal> gustSpeedWrap = new Wrap<BigDecimal>().var("gustSpeed");
+		if(gustSpeed == null) {
+			_gustSpeed(gustSpeedWrap);
+			Optional.ofNullable(gustSpeedWrap.getO()).ifPresent(o -> {
+				setGustSpeed(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchGustSpeed(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrGustSpeed(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqGustSpeed(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchGustSpeed(siteRequest_, WeatherObserved.staticSetGustSpeed(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlGustSpeed() {
+		return gustSpeed;
+	}
+
+	///////////////////
+	// windDirection //
+	///////////////////
+
+
+	/**	 The entity windDirection
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal windDirection;
+
+	/**	<br> The entity windDirection
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:windDirection">Find the entity windDirection in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _windDirection(Wrap<BigDecimal> w);
+
+	public BigDecimal getWindDirection() {
+		return windDirection;
+	}
+
+	public void setWindDirection(BigDecimal windDirection) {
+		this.windDirection = windDirection;
+	}
+	@JsonIgnore
+	public void setWindDirection(String o) {
+		this.windDirection = WeatherObserved.staticSetWindDirection(siteRequest_, o);
+	}
+	public static BigDecimal staticSetWindDirection(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setWindDirection(Double o) {
+		setWindDirection(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setWindDirection(Integer o) {
+		setWindDirection(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setWindDirection(Number o) {
+		setWindDirection(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved windDirectionInit() {
+		Wrap<BigDecimal> windDirectionWrap = new Wrap<BigDecimal>().var("windDirection");
+		if(windDirection == null) {
+			_windDirection(windDirectionWrap);
+			Optional.ofNullable(windDirectionWrap.getO()).ifPresent(o -> {
+				setWindDirection(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchWindDirection(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrWindDirection(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqWindDirection(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchWindDirection(siteRequest_, WeatherObserved.staticSetWindDirection(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlWindDirection() {
+		return windDirection;
+	}
+
+	///////////////
+	// windSpeed //
+	///////////////
+
+
+	/**	 The entity windSpeed
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal windSpeed;
+
+	/**	<br> The entity windSpeed
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:windSpeed">Find the entity windSpeed in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _windSpeed(Wrap<BigDecimal> w);
+
+	public BigDecimal getWindSpeed() {
+		return windSpeed;
+	}
+
+	public void setWindSpeed(BigDecimal windSpeed) {
+		this.windSpeed = windSpeed;
+	}
+	@JsonIgnore
+	public void setWindSpeed(String o) {
+		this.windSpeed = WeatherObserved.staticSetWindSpeed(siteRequest_, o);
+	}
+	public static BigDecimal staticSetWindSpeed(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setWindSpeed(Double o) {
+		setWindSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setWindSpeed(Integer o) {
+		setWindSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setWindSpeed(Number o) {
+		setWindSpeed(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved windSpeedInit() {
+		Wrap<BigDecimal> windSpeedWrap = new Wrap<BigDecimal>().var("windSpeed");
+		if(windSpeed == null) {
+			_windSpeed(windSpeedWrap);
+			Optional.ofNullable(windSpeedWrap.getO()).ifPresent(o -> {
+				setWindSpeed(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchWindSpeed(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrWindSpeed(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqWindSpeed(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchWindSpeed(siteRequest_, WeatherObserved.staticSetWindSpeed(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlWindSpeed() {
+		return windSpeed;
+	}
+
+	///////////////////
+	// precipitation //
+	///////////////////
+
+
+	/**	 The entity precipitation
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal precipitation;
+
+	/**	<br> The entity precipitation
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:precipitation">Find the entity precipitation in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _precipitation(Wrap<BigDecimal> w);
+
+	public BigDecimal getPrecipitation() {
+		return precipitation;
+	}
+
+	public void setPrecipitation(BigDecimal precipitation) {
+		this.precipitation = precipitation;
+	}
+	@JsonIgnore
+	public void setPrecipitation(String o) {
+		this.precipitation = WeatherObserved.staticSetPrecipitation(siteRequest_, o);
+	}
+	public static BigDecimal staticSetPrecipitation(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setPrecipitation(Double o) {
+		setPrecipitation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrecipitation(Integer o) {
+		setPrecipitation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrecipitation(Number o) {
+		setPrecipitation(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved precipitationInit() {
+		Wrap<BigDecimal> precipitationWrap = new Wrap<BigDecimal>().var("precipitation");
+		if(precipitation == null) {
+			_precipitation(precipitationWrap);
+			Optional.ofNullable(precipitationWrap.getO()).ifPresent(o -> {
+				setPrecipitation(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchPrecipitation(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrPrecipitation(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPrecipitation(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchPrecipitation(siteRequest_, WeatherObserved.staticSetPrecipitation(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlPrecipitation() {
+		return precipitation;
+	}
+
+	///////////////////////////
+	// precipitationForecast //
+	///////////////////////////
+
+
+	/**	 The entity precipitationForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal precipitationForecast;
+
+	/**	<br> The entity precipitationForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:precipitationForecast">Find the entity precipitationForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _precipitationForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getPrecipitationForecast() {
+		return precipitationForecast;
+	}
+
+	public void setPrecipitationForecast(BigDecimal precipitationForecast) {
+		this.precipitationForecast = precipitationForecast;
+	}
+	@JsonIgnore
+	public void setPrecipitationForecast(String o) {
+		this.precipitationForecast = WeatherObserved.staticSetPrecipitationForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetPrecipitationForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setPrecipitationForecast(Double o) {
+		setPrecipitationForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrecipitationForecast(Integer o) {
+		setPrecipitationForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrecipitationForecast(Number o) {
+		setPrecipitationForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved precipitationForecastInit() {
+		Wrap<BigDecimal> precipitationForecastWrap = new Wrap<BigDecimal>().var("precipitationForecast");
+		if(precipitationForecast == null) {
+			_precipitationForecast(precipitationForecastWrap);
+			Optional.ofNullable(precipitationForecastWrap.getO()).ifPresent(o -> {
+				setPrecipitationForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchPrecipitationForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrPrecipitationForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPrecipitationForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchPrecipitationForecast(siteRequest_, WeatherObserved.staticSetPrecipitationForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlPrecipitationForecast() {
+		return precipitationForecast;
+	}
+
+	//////////////////////
+	// relativeHumidity //
+	//////////////////////
+
+
+	/**	 The entity relativeHumidity
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal relativeHumidity;
+
+	/**	<br> The entity relativeHumidity
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:relativeHumidity">Find the entity relativeHumidity in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _relativeHumidity(Wrap<BigDecimal> w);
+
+	public BigDecimal getRelativeHumidity() {
+		return relativeHumidity;
+	}
+
+	public void setRelativeHumidity(BigDecimal relativeHumidity) {
+		this.relativeHumidity = relativeHumidity;
+	}
+	@JsonIgnore
+	public void setRelativeHumidity(String o) {
+		this.relativeHumidity = WeatherObserved.staticSetRelativeHumidity(siteRequest_, o);
+	}
+	public static BigDecimal staticSetRelativeHumidity(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setRelativeHumidity(Double o) {
+		setRelativeHumidity(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setRelativeHumidity(Integer o) {
+		setRelativeHumidity(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setRelativeHumidity(Number o) {
+		setRelativeHumidity(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved relativeHumidityInit() {
+		Wrap<BigDecimal> relativeHumidityWrap = new Wrap<BigDecimal>().var("relativeHumidity");
+		if(relativeHumidity == null) {
+			_relativeHumidity(relativeHumidityWrap);
+			Optional.ofNullable(relativeHumidityWrap.getO()).ifPresent(o -> {
+				setRelativeHumidity(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchRelativeHumidity(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrRelativeHumidity(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRelativeHumidity(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchRelativeHumidity(siteRequest_, WeatherObserved.staticSetRelativeHumidity(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlRelativeHumidity() {
+		return relativeHumidity;
+	}
+
+	//////////////////////////////
+	// relativeHumidityForecast //
+	//////////////////////////////
+
+
+	/**	 The entity relativeHumidityForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal relativeHumidityForecast;
+
+	/**	<br> The entity relativeHumidityForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:relativeHumidityForecast">Find the entity relativeHumidityForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _relativeHumidityForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getRelativeHumidityForecast() {
+		return relativeHumidityForecast;
+	}
+
+	public void setRelativeHumidityForecast(BigDecimal relativeHumidityForecast) {
+		this.relativeHumidityForecast = relativeHumidityForecast;
+	}
+	@JsonIgnore
+	public void setRelativeHumidityForecast(String o) {
+		this.relativeHumidityForecast = WeatherObserved.staticSetRelativeHumidityForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetRelativeHumidityForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setRelativeHumidityForecast(Double o) {
+		setRelativeHumidityForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setRelativeHumidityForecast(Integer o) {
+		setRelativeHumidityForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setRelativeHumidityForecast(Number o) {
+		setRelativeHumidityForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved relativeHumidityForecastInit() {
+		Wrap<BigDecimal> relativeHumidityForecastWrap = new Wrap<BigDecimal>().var("relativeHumidityForecast");
+		if(relativeHumidityForecast == null) {
+			_relativeHumidityForecast(relativeHumidityForecastWrap);
+			Optional.ofNullable(relativeHumidityForecastWrap.getO()).ifPresent(o -> {
+				setRelativeHumidityForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchRelativeHumidityForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrRelativeHumidityForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRelativeHumidityForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchRelativeHumidityForecast(siteRequest_, WeatherObserved.staticSetRelativeHumidityForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlRelativeHumidityForecast() {
+		return relativeHumidityForecast;
+	}
+
+	////////////////
+	// snowHeight //
+	////////////////
+
+
+	/**	 The entity snowHeight
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal snowHeight;
+
+	/**	<br> The entity snowHeight
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:snowHeight">Find the entity snowHeight in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _snowHeight(Wrap<BigDecimal> w);
+
+	public BigDecimal getSnowHeight() {
+		return snowHeight;
+	}
+
+	public void setSnowHeight(BigDecimal snowHeight) {
+		this.snowHeight = snowHeight;
+	}
+	@JsonIgnore
+	public void setSnowHeight(String o) {
+		this.snowHeight = WeatherObserved.staticSetSnowHeight(siteRequest_, o);
+	}
+	public static BigDecimal staticSetSnowHeight(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setSnowHeight(Double o) {
+		setSnowHeight(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setSnowHeight(Integer o) {
+		setSnowHeight(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setSnowHeight(Number o) {
+		setSnowHeight(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved snowHeightInit() {
+		Wrap<BigDecimal> snowHeightWrap = new Wrap<BigDecimal>().var("snowHeight");
+		if(snowHeight == null) {
+			_snowHeight(snowHeightWrap);
+			Optional.ofNullable(snowHeightWrap.getO()).ifPresent(o -> {
+				setSnowHeight(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchSnowHeight(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrSnowHeight(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqSnowHeight(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchSnowHeight(siteRequest_, WeatherObserved.staticSetSnowHeight(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlSnowHeight() {
+		return snowHeight;
+	}
+
+	////////////////////////////
+	// airTemperatureForecast //
+	////////////////////////////
+
+
+	/**	 The entity airTemperatureForecast
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal airTemperatureForecast;
+
+	/**	<br> The entity airTemperatureForecast
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
+
+	public BigDecimal getAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
+		this.airTemperatureForecast = airTemperatureForecast;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(String o) {
+		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
+	}
+	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Double o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Integer o) {
+		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setAirTemperatureForecast(Number o) {
+		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved airTemperatureForecastInit() {
+		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
+		if(airTemperatureForecast == null) {
+			_airTemperatureForecast(airTemperatureForecastWrap);
+			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
+				setAirTemperatureForecast(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlAirTemperatureForecast() {
+		return airTemperatureForecast;
+	}
+
+	///////////////////////
+	// airTemperatureTSA //
+	///////////////////////
+
+
+	/**	 The entity airTemperatureTSA
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject airTemperatureTSA;
+
+	/**	<br> The entity airTemperatureTSA
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
+
+	public JsonObject getAirTemperatureTSA() {
+		return airTemperatureTSA;
+	}
+
+	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
+		this.airTemperatureTSA = airTemperatureTSA;
+	}
+	@JsonIgnore
+	public void setAirTemperatureTSA(String o) {
+		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
+	}
+	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved airTemperatureTSAInit() {
+		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
+		if(airTemperatureTSA == null) {
+			_airTemperatureTSA(airTemperatureTSAWrap);
+			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
+				setAirTemperatureTSA(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlAirTemperatureTSA() {
+		return airTemperatureTSA;
+	}
+
+	//////////////////////////
+	// feelsLikeTemperature //
+	//////////////////////////
+
+
+	/**	 The entity feelsLikeTemperature
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal feelsLikeTemperature;
+
+	/**	<br> The entity feelsLikeTemperature
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:feelsLikeTemperature">Find the entity feelsLikeTemperature in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _feelsLikeTemperature(Wrap<BigDecimal> w);
+
+	public BigDecimal getFeelsLikeTemperature() {
+		return feelsLikeTemperature;
+	}
+
+	public void setFeelsLikeTemperature(BigDecimal feelsLikeTemperature) {
+		this.feelsLikeTemperature = feelsLikeTemperature;
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(String o) {
+		this.feelsLikeTemperature = WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
+	}
+	public static BigDecimal staticSetFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Double o) {
+		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Integer o) {
+		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setFeelsLikeTemperature(Number o) {
+		setFeelsLikeTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved feelsLikeTemperatureInit() {
+		Wrap<BigDecimal> feelsLikeTemperatureWrap = new Wrap<BigDecimal>().var("feelsLikeTemperature");
+		if(feelsLikeTemperature == null) {
+			_feelsLikeTemperature(feelsLikeTemperatureWrap);
+			Optional.ofNullable(feelsLikeTemperatureWrap.getO()).ifPresent(o -> {
+				setFeelsLikeTemperature(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchFeelsLikeTemperature(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrFeelsLikeTemperature(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlFeelsLikeTemperature() {
+		return feelsLikeTemperature;
 	}
 
 	/////////////////
-	// dateCreated //
+	// temperature //
 	/////////////////
 
 
-	/**	 The entity dateCreated
+	/**	 The entity temperature
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected String dateCreated;
+	protected BigDecimal temperature;
 
-	/**	<br> The entity dateCreated
+	/**	<br> The entity temperature
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateCreated">Find the entity dateCreated in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:temperature">Find the entity temperature in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _dateCreated(Wrap<String> w);
+	protected abstract void _temperature(Wrap<BigDecimal> w);
 
-	public String getDateCreated() {
-		return dateCreated;
+	public BigDecimal getTemperature() {
+		return temperature;
 	}
-	public void setDateCreated(String o) {
-		this.dateCreated = WeatherObserved.staticSetDateCreated(siteRequest_, o);
+
+	public void setTemperature(BigDecimal temperature) {
+		this.temperature = temperature;
 	}
-	public static String staticSetDateCreated(SiteRequest siteRequest_, String o) {
-		return o;
+	@JsonIgnore
+	public void setTemperature(String o) {
+		this.temperature = WeatherObserved.staticSetTemperature(siteRequest_, o);
 	}
-	protected WeatherObserved dateCreatedInit() {
-		Wrap<String> dateCreatedWrap = new Wrap<String>().var("dateCreated");
-		if(dateCreated == null) {
-			_dateCreated(dateCreatedWrap);
-			Optional.ofNullable(dateCreatedWrap.getO()).ifPresent(o -> {
-				setDateCreated(o);
+	public static BigDecimal staticSetTemperature(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setTemperature(Double o) {
+		setTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setTemperature(Integer o) {
+		setTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setTemperature(Number o) {
+		setTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved temperatureInit() {
+		Wrap<BigDecimal> temperatureWrap = new Wrap<BigDecimal>().var("temperature");
+		if(temperature == null) {
+			_temperature(temperatureWrap);
+			Optional.ofNullable(temperatureWrap.getO()).ifPresent(o -> {
+				setTemperature(o);
 			});
 		}
 		return (WeatherObserved)this;
 	}
 
-	public static String staticSearchDateCreated(SiteRequest siteRequest_, String o) {
-		return o;
+	public static Double staticSearchTemperature(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
 	}
 
-	public static String staticSearchStrDateCreated(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrTemperature(SiteRequest siteRequest_, Double o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDateCreated(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchDateCreated(siteRequest_, WeatherObserved.staticSetDateCreated(siteRequest_, o)).toString();
+	public static String staticSearchFqTemperature(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchTemperature(siteRequest_, WeatherObserved.staticSetTemperature(siteRequest_, o)).toString();
 	}
 
-	public String sqlDateCreated() {
-		return dateCreated;
+	public BigDecimal sqlTemperature() {
+		return temperature;
 	}
 
-	//////////////////
-	// dateModified //
-	//////////////////
+	////////////////////
+	// solarRadiation //
+	////////////////////
 
 
-	/**	 The entity dateModified
+	/**	 The entity solarRadiation
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected String dateModified;
+	protected BigDecimal solarRadiation;
 
-	/**	<br> The entity dateModified
+	/**	<br> The entity solarRadiation
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateModified">Find the entity dateModified in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:solarRadiation">Find the entity solarRadiation in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _dateModified(Wrap<String> w);
+	protected abstract void _solarRadiation(Wrap<BigDecimal> w);
 
-	public String getDateModified() {
-		return dateModified;
+	public BigDecimal getSolarRadiation() {
+		return solarRadiation;
 	}
-	public void setDateModified(String o) {
-		this.dateModified = WeatherObserved.staticSetDateModified(siteRequest_, o);
+
+	public void setSolarRadiation(BigDecimal solarRadiation) {
+		this.solarRadiation = solarRadiation;
 	}
-	public static String staticSetDateModified(SiteRequest siteRequest_, String o) {
-		return o;
+	@JsonIgnore
+	public void setSolarRadiation(String o) {
+		this.solarRadiation = WeatherObserved.staticSetSolarRadiation(siteRequest_, o);
 	}
-	protected WeatherObserved dateModifiedInit() {
-		Wrap<String> dateModifiedWrap = new Wrap<String>().var("dateModified");
-		if(dateModified == null) {
-			_dateModified(dateModifiedWrap);
-			Optional.ofNullable(dateModifiedWrap.getO()).ifPresent(o -> {
-				setDateModified(o);
+	public static BigDecimal staticSetSolarRadiation(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setSolarRadiation(Double o) {
+		setSolarRadiation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setSolarRadiation(Integer o) {
+		setSolarRadiation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setSolarRadiation(Number o) {
+		setSolarRadiation(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved solarRadiationInit() {
+		Wrap<BigDecimal> solarRadiationWrap = new Wrap<BigDecimal>().var("solarRadiation");
+		if(solarRadiation == null) {
+			_solarRadiation(solarRadiationWrap);
+			Optional.ofNullable(solarRadiationWrap.getO()).ifPresent(o -> {
+				setSolarRadiation(o);
 			});
 		}
 		return (WeatherObserved)this;
 	}
 
-	public static String staticSearchDateModified(SiteRequest siteRequest_, String o) {
-		return o;
+	public static Double staticSearchSolarRadiation(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
 	}
 
-	public static String staticSearchStrDateModified(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrSolarRadiation(SiteRequest siteRequest_, Double o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDateModified(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchDateModified(siteRequest_, WeatherObserved.staticSetDateModified(siteRequest_, o)).toString();
+	public static String staticSearchFqSolarRadiation(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchSolarRadiation(siteRequest_, WeatherObserved.staticSetSolarRadiation(siteRequest_, o)).toString();
 	}
 
-	public String sqlDateModified() {
-		return dateModified;
+	public BigDecimal sqlSolarRadiation() {
+		return solarRadiation;
 	}
 
-	//////////////////
-	// dateObserved //
-	//////////////////
+	/////////////////
+	// streamGauge //
+	/////////////////
 
 
-	/**	 The entity dateObserved
+	/**	 The entity streamGauge
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected String dateObserved;
+	protected BigDecimal streamGauge;
 
-	/**	<br> The entity dateObserved
+	/**	<br> The entity streamGauge
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:dateObserved">Find the entity dateObserved in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:streamGauge">Find the entity streamGauge in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _dateObserved(Wrap<String> w);
+	protected abstract void _streamGauge(Wrap<BigDecimal> w);
 
-	public String getDateObserved() {
-		return dateObserved;
+	public BigDecimal getStreamGauge() {
+		return streamGauge;
 	}
-	public void setDateObserved(String o) {
-		this.dateObserved = WeatherObserved.staticSetDateObserved(siteRequest_, o);
+
+	public void setStreamGauge(BigDecimal streamGauge) {
+		this.streamGauge = streamGauge;
 	}
-	public static String staticSetDateObserved(SiteRequest siteRequest_, String o) {
-		return o;
+	@JsonIgnore
+	public void setStreamGauge(String o) {
+		this.streamGauge = WeatherObserved.staticSetStreamGauge(siteRequest_, o);
 	}
-	protected WeatherObserved dateObservedInit() {
-		Wrap<String> dateObservedWrap = new Wrap<String>().var("dateObserved");
-		if(dateObserved == null) {
-			_dateObserved(dateObservedWrap);
-			Optional.ofNullable(dateObservedWrap.getO()).ifPresent(o -> {
-				setDateObserved(o);
+	public static BigDecimal staticSetStreamGauge(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setStreamGauge(Double o) {
+		setStreamGauge(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setStreamGauge(Integer o) {
+		setStreamGauge(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setStreamGauge(Number o) {
+		setStreamGauge(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved streamGaugeInit() {
+		Wrap<BigDecimal> streamGaugeWrap = new Wrap<BigDecimal>().var("streamGauge");
+		if(streamGauge == null) {
+			_streamGauge(streamGaugeWrap);
+			Optional.ofNullable(streamGaugeWrap.getO()).ifPresent(o -> {
+				setStreamGauge(o);
 			});
 		}
 		return (WeatherObserved)this;
 	}
 
-	public static String staticSearchDateObserved(SiteRequest siteRequest_, String o) {
-		return o;
+	public static Double staticSearchStreamGauge(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
 	}
 
-	public static String staticSearchStrDateObserved(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrStreamGauge(SiteRequest siteRequest_, Double o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDateObserved(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchDateObserved(siteRequest_, WeatherObserved.staticSetDateObserved(siteRequest_, o)).toString();
+	public static String staticSearchFqStreamGauge(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchStreamGauge(siteRequest_, WeatherObserved.staticSetStreamGauge(siteRequest_, o)).toString();
 	}
 
-	public String sqlDateObserved() {
-		return dateObserved;
+	public BigDecimal sqlStreamGauge() {
+		return streamGauge;
+	}
+
+	////////////////
+	// uVIndexMax //
+	////////////////
+
+
+	/**	 The entity uVIndexMax
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal uVIndexMax;
+
+	/**	<br> The entity uVIndexMax
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:uVIndexMax">Find the entity uVIndexMax in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _uVIndexMax(Wrap<BigDecimal> w);
+
+	public BigDecimal getUVIndexMax() {
+		return uVIndexMax;
+	}
+
+	public void setUVIndexMax(BigDecimal uVIndexMax) {
+		this.uVIndexMax = uVIndexMax;
+	}
+	@JsonIgnore
+	public void setUVIndexMax(String o) {
+		this.uVIndexMax = WeatherObserved.staticSetUVIndexMax(siteRequest_, o);
+	}
+	public static BigDecimal staticSetUVIndexMax(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setUVIndexMax(Double o) {
+		setUVIndexMax(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setUVIndexMax(Integer o) {
+		setUVIndexMax(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setUVIndexMax(Number o) {
+		setUVIndexMax(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected WeatherObserved uVIndexMaxInit() {
+		Wrap<BigDecimal> uVIndexMaxWrap = new Wrap<BigDecimal>().var("uVIndexMax");
+		if(uVIndexMax == null) {
+			_uVIndexMax(uVIndexMaxWrap);
+			Optional.ofNullable(uVIndexMaxWrap.getO()).ifPresent(o -> {
+				setUVIndexMax(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static Double staticSearchUVIndexMax(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrUVIndexMax(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUVIndexMax(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchUVIndexMax(siteRequest_, WeatherObserved.staticSetUVIndexMax(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlUVIndexMax() {
+		return uVIndexMax;
+	}
+
+	////////////////
+	// visibility //
+	////////////////
+
+
+	/**	 The entity visibility
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonObject visibility;
+
+	/**	<br> The entity visibility
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:visibility">Find the entity visibility in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _visibility(Wrap<JsonObject> w);
+
+	public JsonObject getVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(JsonObject visibility) {
+		this.visibility = visibility;
+	}
+	@JsonIgnore
+	public void setVisibility(String o) {
+		this.visibility = WeatherObserved.staticSetVisibility(siteRequest_, o);
+	}
+	public static JsonObject staticSetVisibility(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonObject(o);
+		}
+		return null;
+	}
+	protected WeatherObserved visibilityInit() {
+		Wrap<JsonObject> visibilityWrap = new Wrap<JsonObject>().var("visibility");
+		if(visibility == null) {
+			_visibility(visibilityWrap);
+			Optional.ofNullable(visibilityWrap.getO()).ifPresent(o -> {
+				setVisibility(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchVisibility(SiteRequest siteRequest_, JsonObject o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrVisibility(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqVisibility(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchVisibility(siteRequest_, WeatherObserved.staticSetVisibility(siteRequest_, o)).toString();
+	}
+
+	public JsonObject sqlVisibility() {
+		return visibility;
+	}
+
+	/////////////////
+	// weatherType //
+	/////////////////
+
+
+	/**	 The entity weatherType
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String weatherType;
+
+	/**	<br> The entity weatherType
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:weatherType">Find the entity weatherType in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _weatherType(Wrap<String> w);
+
+	public String getWeatherType() {
+		return weatherType;
+	}
+	public void setWeatherType(String o) {
+		this.weatherType = WeatherObserved.staticSetWeatherType(siteRequest_, o);
+	}
+	public static String staticSetWeatherType(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected WeatherObserved weatherTypeInit() {
+		Wrap<String> weatherTypeWrap = new Wrap<String>().var("weatherType");
+		if(weatherType == null) {
+			_weatherType(weatherTypeWrap);
+			Optional.ofNullable(weatherTypeWrap.getO()).ifPresent(o -> {
+				setWeatherType(o);
+			});
+		}
+		return (WeatherObserved)this;
+	}
+
+	public static String staticSearchWeatherType(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrWeatherType(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqWeatherType(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchWeatherType(siteRequest_, WeatherObserved.staticSetWeatherType(siteRequest_, o)).toString();
+	}
+
+	public String sqlWeatherType() {
+		return weatherType;
 	}
 
 	//////////////
@@ -1591,83 +3324,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return directIrradiation;
 	}
 
-	///////////////
-	// gustSpeed //
-	///////////////
-
-
-	/**	 The entity gustSpeed
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal gustSpeed;
-
-	/**	<br> The entity gustSpeed
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:gustSpeed">Find the entity gustSpeed in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _gustSpeed(Wrap<BigDecimal> w);
-
-	public BigDecimal getGustSpeed() {
-		return gustSpeed;
-	}
-
-	public void setGustSpeed(BigDecimal gustSpeed) {
-		this.gustSpeed = gustSpeed;
-	}
-	@JsonIgnore
-	public void setGustSpeed(String o) {
-		this.gustSpeed = WeatherObserved.staticSetGustSpeed(siteRequest_, o);
-	}
-	public static BigDecimal staticSetGustSpeed(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setGustSpeed(Double o) {
-		setGustSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setGustSpeed(Integer o) {
-		setGustSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setGustSpeed(Number o) {
-		setGustSpeed(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved gustSpeedInit() {
-		Wrap<BigDecimal> gustSpeedWrap = new Wrap<BigDecimal>().var("gustSpeed");
-		if(gustSpeed == null) {
-			_gustSpeed(gustSpeedWrap);
-			Optional.ofNullable(gustSpeedWrap.getO()).ifPresent(o -> {
-				setGustSpeed(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchGustSpeed(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrGustSpeed(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqGustSpeed(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchGustSpeed(siteRequest_, WeatherObserved.staticSetGustSpeed(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlGustSpeed() {
-		return gustSpeed;
-	}
-
 	/////////////////
 	// illuminance //
 	/////////////////
@@ -1745,1660 +3401,68 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return illuminance;
 	}
 
-	//////////////
-	// location //
-	//////////////
+	////////////////
+	// ngsildData //
+	////////////////
 
 
-	/**	 The entity location
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = PgClientPointDeserializer.class)
-	@JsonSerialize(using = PgClientPointSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Point location;
-
-	/**	<br> The entity location
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:location">Find the entity location in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _location(Wrap<Point> w);
-
-	public Point getLocation() {
-		return location;
-	}
-
-	public void setLocation(Point location) {
-		this.location = location;
-	}
-	@JsonIgnore
-	public void setLocation(String o) {
-		this.location = WeatherObserved.staticSetLocation(siteRequest_, o);
-	}
-	public static Point staticSetLocation(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-			try {
-				Point shape = null;
-				if(StringUtils.isNotBlank(o)) {
-					ObjectMapper objectMapper = new ObjectMapper();
-					SimpleModule module = new SimpleModule();
-					module.setDeserializerModifier(new BeanDeserializerModifier() {
-						@Override
-						public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
-							if (beanDesc.getBeanClass() == Point.class) {
-								return new PgClientPointDeserializer();
-							}
-							return deserializer;
-						}
-					});
-					objectMapper.registerModule(module);
-					shape = objectMapper.readValue(Json.encode(o), Point.class);
-				}
-				return shape;
-			} catch(Exception ex) {
-				ExceptionUtils.rethrow(ex);
-			}
-		}
-		return null;
-	}
-	public void setLocation(JsonObject o) {
-		this.location = WeatherObserved.staticSetLocation(siteRequest_, o);
-	}
-	public static Point staticSetLocation(SiteRequest siteRequest_, JsonObject o) {
-		if(o != null) {
-			try {
-				Point shape = new Point();
-				JsonArray coordinates = o.getJsonArray("coordinates");
-				shape.setX(coordinates.getDouble(0));
-				shape.setY(coordinates.getDouble(1));
-				return shape;
-			} catch(Exception ex) {
-				ExceptionUtils.rethrow(ex);
-			}
-		}
-		return null;
-	}
-	protected WeatherObserved locationInit() {
-		Wrap<Point> locationWrap = new Wrap<Point>().var("location");
-		if(location == null) {
-			_location(locationWrap);
-			Optional.ofNullable(locationWrap.getO()).ifPresent(o -> {
-				setLocation(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Point staticSearchLocation(SiteRequest siteRequest_, Point o) {
-		return o;
-	}
-
-	public static String staticSearchStrLocation(SiteRequest siteRequest_, Point o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqLocation(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchLocation(siteRequest_, WeatherObserved.staticSetLocation(siteRequest_, o)).toString();
-	}
-
-	public Point sqlLocation() {
-		return location;
-	}
-
-	///////////
-	// owner //
-	///////////
-
-
-	/**	 The entity owner
+	/**	 The entity ngsildData
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected JsonObject owner;
+	protected JsonObject ngsildData;
 
-	/**	<br> The entity owner
+	/**	<br> The entity ngsildData
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:owner">Find the entity owner in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildData">Find the entity ngsildData in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _owner(Wrap<JsonObject> w);
+	protected abstract void _ngsildData(Wrap<JsonObject> w);
 
-	public JsonObject getOwner() {
-		return owner;
+	public JsonObject getNgsildData() {
+		return ngsildData;
 	}
 
-	public void setOwner(JsonObject owner) {
-		this.owner = owner;
+	public void setNgsildData(JsonObject ngsildData) {
+		this.ngsildData = ngsildData;
 	}
 	@JsonIgnore
-	public void setOwner(String o) {
-		this.owner = WeatherObserved.staticSetOwner(siteRequest_, o);
+	public void setNgsildData(String o) {
+		this.ngsildData = WeatherObserved.staticSetNgsildData(siteRequest_, o);
 	}
-	public static JsonObject staticSetOwner(SiteRequest siteRequest_, String o) {
+	public static JsonObject staticSetNgsildData(SiteRequest siteRequest_, String o) {
 		if(o != null) {
 				return new JsonObject(o);
 		}
 		return null;
 	}
-	protected WeatherObserved ownerInit() {
-		Wrap<JsonObject> ownerWrap = new Wrap<JsonObject>().var("owner");
-		if(owner == null) {
-			_owner(ownerWrap);
-			Optional.ofNullable(ownerWrap.getO()).ifPresent(o -> {
-				setOwner(o);
+	protected WeatherObserved ngsildDataInit() {
+		Wrap<JsonObject> ngsildDataWrap = new Wrap<JsonObject>().var("ngsildData");
+		if(ngsildData == null) {
+			_ngsildData(ngsildDataWrap);
+			Optional.ofNullable(ngsildDataWrap.getO()).ifPresent(o -> {
+				setNgsildData(o);
 			});
 		}
 		return (WeatherObserved)this;
 	}
 
-	public static String staticSearchOwner(SiteRequest siteRequest_, JsonObject o) {
+	public static String staticSearchNgsildData(SiteRequest siteRequest_, JsonObject o) {
 		return o.toString();
 	}
 
-	public static String staticSearchStrOwner(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrNgsildData(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqOwner(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchOwner(siteRequest_, WeatherObserved.staticSetOwner(siteRequest_, o)).toString();
+	public static String staticSearchFqNgsildData(SiteRequest siteRequest_, String o) {
+		return WeatherObserved.staticSearchNgsildData(siteRequest_, WeatherObserved.staticSetNgsildData(siteRequest_, o)).toString();
 	}
 
-	public JsonObject sqlOwner() {
-		return owner;
-	}
-
-	///////////////////
-	// precipitation //
-	///////////////////
-
-
-	/**	 The entity precipitation
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal precipitation;
-
-	/**	<br> The entity precipitation
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:precipitation">Find the entity precipitation in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _precipitation(Wrap<BigDecimal> w);
-
-	public BigDecimal getPrecipitation() {
-		return precipitation;
-	}
-
-	public void setPrecipitation(BigDecimal precipitation) {
-		this.precipitation = precipitation;
-	}
-	@JsonIgnore
-	public void setPrecipitation(String o) {
-		this.precipitation = WeatherObserved.staticSetPrecipitation(siteRequest_, o);
-	}
-	public static BigDecimal staticSetPrecipitation(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setPrecipitation(Double o) {
-		setPrecipitation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setPrecipitation(Integer o) {
-		setPrecipitation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setPrecipitation(Number o) {
-		setPrecipitation(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved precipitationInit() {
-		Wrap<BigDecimal> precipitationWrap = new Wrap<BigDecimal>().var("precipitation");
-		if(precipitation == null) {
-			_precipitation(precipitationWrap);
-			Optional.ofNullable(precipitationWrap.getO()).ifPresent(o -> {
-				setPrecipitation(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchPrecipitation(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrPrecipitation(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqPrecipitation(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchPrecipitation(siteRequest_, WeatherObserved.staticSetPrecipitation(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlPrecipitation() {
-		return precipitation;
-	}
-
-	///////////////////////////
-	// precipitationForecast //
-	///////////////////////////
-
-
-	/**	 The entity precipitationForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal precipitationForecast;
-
-	/**	<br> The entity precipitationForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:precipitationForecast">Find the entity precipitationForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _precipitationForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getPrecipitationForecast() {
-		return precipitationForecast;
-	}
-
-	public void setPrecipitationForecast(BigDecimal precipitationForecast) {
-		this.precipitationForecast = precipitationForecast;
-	}
-	@JsonIgnore
-	public void setPrecipitationForecast(String o) {
-		this.precipitationForecast = WeatherObserved.staticSetPrecipitationForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetPrecipitationForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setPrecipitationForecast(Double o) {
-		setPrecipitationForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setPrecipitationForecast(Integer o) {
-		setPrecipitationForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setPrecipitationForecast(Number o) {
-		setPrecipitationForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved precipitationForecastInit() {
-		Wrap<BigDecimal> precipitationForecastWrap = new Wrap<BigDecimal>().var("precipitationForecast");
-		if(precipitationForecast == null) {
-			_precipitationForecast(precipitationForecastWrap);
-			Optional.ofNullable(precipitationForecastWrap.getO()).ifPresent(o -> {
-				setPrecipitationForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchPrecipitationForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrPrecipitationForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqPrecipitationForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchPrecipitationForecast(siteRequest_, WeatherObserved.staticSetPrecipitationForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlPrecipitationForecast() {
-		return precipitationForecast;
-	}
-
-	//////////////////////
-	// pressureTendency //
-	//////////////////////
-
-
-	/**	 The entity pressureTendency
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject pressureTendency;
-
-	/**	<br> The entity pressureTendency
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:pressureTendency">Find the entity pressureTendency in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pressureTendency(Wrap<JsonObject> w);
-
-	public JsonObject getPressureTendency() {
-		return pressureTendency;
-	}
-
-	public void setPressureTendency(JsonObject pressureTendency) {
-		this.pressureTendency = pressureTendency;
-	}
-	@JsonIgnore
-	public void setPressureTendency(String o) {
-		this.pressureTendency = WeatherObserved.staticSetPressureTendency(siteRequest_, o);
-	}
-	public static JsonObject staticSetPressureTendency(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved pressureTendencyInit() {
-		Wrap<JsonObject> pressureTendencyWrap = new Wrap<JsonObject>().var("pressureTendency");
-		if(pressureTendency == null) {
-			_pressureTendency(pressureTendencyWrap);
-			Optional.ofNullable(pressureTendencyWrap.getO()).ifPresent(o -> {
-				setPressureTendency(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchPressureTendency(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrPressureTendency(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqPressureTendency(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchPressureTendency(siteRequest_, WeatherObserved.staticSetPressureTendency(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlPressureTendency() {
-		return pressureTendency;
-	}
-
-	///////////////
-	// refDevice //
-	///////////////
-
-
-	/**	 The entity refDevice
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject refDevice;
-
-	/**	<br> The entity refDevice
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:refDevice">Find the entity refDevice in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _refDevice(Wrap<JsonObject> w);
-
-	public JsonObject getRefDevice() {
-		return refDevice;
-	}
-
-	public void setRefDevice(JsonObject refDevice) {
-		this.refDevice = refDevice;
-	}
-	@JsonIgnore
-	public void setRefDevice(String o) {
-		this.refDevice = WeatherObserved.staticSetRefDevice(siteRequest_, o);
-	}
-	public static JsonObject staticSetRefDevice(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved refDeviceInit() {
-		Wrap<JsonObject> refDeviceWrap = new Wrap<JsonObject>().var("refDevice");
-		if(refDevice == null) {
-			_refDevice(refDeviceWrap);
-			Optional.ofNullable(refDeviceWrap.getO()).ifPresent(o -> {
-				setRefDevice(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchRefDevice(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrRefDevice(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqRefDevice(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchRefDevice(siteRequest_, WeatherObserved.staticSetRefDevice(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlRefDevice() {
-		return refDevice;
-	}
-
-	////////////////////////
-	// refPointOfInterest //
-	////////////////////////
-
-
-	/**	 The entity refPointOfInterest
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String refPointOfInterest;
-
-	/**	<br> The entity refPointOfInterest
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:refPointOfInterest">Find the entity refPointOfInterest in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _refPointOfInterest(Wrap<String> w);
-
-	public String getRefPointOfInterest() {
-		return refPointOfInterest;
-	}
-	public void setRefPointOfInterest(String o) {
-		this.refPointOfInterest = WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o);
-	}
-	public static String staticSetRefPointOfInterest(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved refPointOfInterestInit() {
-		Wrap<String> refPointOfInterestWrap = new Wrap<String>().var("refPointOfInterest");
-		if(refPointOfInterest == null) {
-			_refPointOfInterest(refPointOfInterestWrap);
-			Optional.ofNullable(refPointOfInterestWrap.getO()).ifPresent(o -> {
-				setRefPointOfInterest(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchRefPointOfInterest(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrRefPointOfInterest(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqRefPointOfInterest(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchRefPointOfInterest(siteRequest_, WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o)).toString();
-	}
-
-	public String sqlRefPointOfInterest() {
-		return refPointOfInterest;
-	}
-
-	//////////////////////
-	// relativeHumidity //
-	//////////////////////
-
-
-	/**	 The entity relativeHumidity
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal relativeHumidity;
-
-	/**	<br> The entity relativeHumidity
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:relativeHumidity">Find the entity relativeHumidity in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _relativeHumidity(Wrap<BigDecimal> w);
-
-	public BigDecimal getRelativeHumidity() {
-		return relativeHumidity;
-	}
-
-	public void setRelativeHumidity(BigDecimal relativeHumidity) {
-		this.relativeHumidity = relativeHumidity;
-	}
-	@JsonIgnore
-	public void setRelativeHumidity(String o) {
-		this.relativeHumidity = WeatherObserved.staticSetRelativeHumidity(siteRequest_, o);
-	}
-	public static BigDecimal staticSetRelativeHumidity(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setRelativeHumidity(Double o) {
-		setRelativeHumidity(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setRelativeHumidity(Integer o) {
-		setRelativeHumidity(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setRelativeHumidity(Number o) {
-		setRelativeHumidity(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved relativeHumidityInit() {
-		Wrap<BigDecimal> relativeHumidityWrap = new Wrap<BigDecimal>().var("relativeHumidity");
-		if(relativeHumidity == null) {
-			_relativeHumidity(relativeHumidityWrap);
-			Optional.ofNullable(relativeHumidityWrap.getO()).ifPresent(o -> {
-				setRelativeHumidity(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchRelativeHumidity(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrRelativeHumidity(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqRelativeHumidity(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchRelativeHumidity(siteRequest_, WeatherObserved.staticSetRelativeHumidity(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlRelativeHumidity() {
-		return relativeHumidity;
-	}
-
-	//////////////////////////////
-	// relativeHumidityForecast //
-	//////////////////////////////
-
-
-	/**	 The entity relativeHumidityForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal relativeHumidityForecast;
-
-	/**	<br> The entity relativeHumidityForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:relativeHumidityForecast">Find the entity relativeHumidityForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _relativeHumidityForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getRelativeHumidityForecast() {
-		return relativeHumidityForecast;
-	}
-
-	public void setRelativeHumidityForecast(BigDecimal relativeHumidityForecast) {
-		this.relativeHumidityForecast = relativeHumidityForecast;
-	}
-	@JsonIgnore
-	public void setRelativeHumidityForecast(String o) {
-		this.relativeHumidityForecast = WeatherObserved.staticSetRelativeHumidityForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetRelativeHumidityForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setRelativeHumidityForecast(Double o) {
-		setRelativeHumidityForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setRelativeHumidityForecast(Integer o) {
-		setRelativeHumidityForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setRelativeHumidityForecast(Number o) {
-		setRelativeHumidityForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved relativeHumidityForecastInit() {
-		Wrap<BigDecimal> relativeHumidityForecastWrap = new Wrap<BigDecimal>().var("relativeHumidityForecast");
-		if(relativeHumidityForecast == null) {
-			_relativeHumidityForecast(relativeHumidityForecastWrap);
-			Optional.ofNullable(relativeHumidityForecastWrap.getO()).ifPresent(o -> {
-				setRelativeHumidityForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchRelativeHumidityForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrRelativeHumidityForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqRelativeHumidityForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchRelativeHumidityForecast(siteRequest_, WeatherObserved.staticSetRelativeHumidityForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlRelativeHumidityForecast() {
-		return relativeHumidityForecast;
-	}
-
-	/////////////
-	// seeAlso //
-	/////////////
-
-
-	/**	 The entity seeAlso
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject seeAlso;
-
-	/**	<br> The entity seeAlso
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:seeAlso">Find the entity seeAlso in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _seeAlso(Wrap<JsonObject> w);
-
-	public JsonObject getSeeAlso() {
-		return seeAlso;
-	}
-
-	public void setSeeAlso(JsonObject seeAlso) {
-		this.seeAlso = seeAlso;
-	}
-	@JsonIgnore
-	public void setSeeAlso(String o) {
-		this.seeAlso = WeatherObserved.staticSetSeeAlso(siteRequest_, o);
-	}
-	public static JsonObject staticSetSeeAlso(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved seeAlsoInit() {
-		Wrap<JsonObject> seeAlsoWrap = new Wrap<JsonObject>().var("seeAlso");
-		if(seeAlso == null) {
-			_seeAlso(seeAlsoWrap);
-			Optional.ofNullable(seeAlsoWrap.getO()).ifPresent(o -> {
-				setSeeAlso(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchSeeAlso(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrSeeAlso(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqSeeAlso(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchSeeAlso(siteRequest_, WeatherObserved.staticSetSeeAlso(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlSeeAlso() {
-		return seeAlso;
-	}
-
-	////////////////
-	// snowHeight //
-	////////////////
-
-
-	/**	 The entity snowHeight
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal snowHeight;
-
-	/**	<br> The entity snowHeight
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:snowHeight">Find the entity snowHeight in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _snowHeight(Wrap<BigDecimal> w);
-
-	public BigDecimal getSnowHeight() {
-		return snowHeight;
-	}
-
-	public void setSnowHeight(BigDecimal snowHeight) {
-		this.snowHeight = snowHeight;
-	}
-	@JsonIgnore
-	public void setSnowHeight(String o) {
-		this.snowHeight = WeatherObserved.staticSetSnowHeight(siteRequest_, o);
-	}
-	public static BigDecimal staticSetSnowHeight(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setSnowHeight(Double o) {
-		setSnowHeight(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setSnowHeight(Integer o) {
-		setSnowHeight(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setSnowHeight(Number o) {
-		setSnowHeight(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved snowHeightInit() {
-		Wrap<BigDecimal> snowHeightWrap = new Wrap<BigDecimal>().var("snowHeight");
-		if(snowHeight == null) {
-			_snowHeight(snowHeightWrap);
-			Optional.ofNullable(snowHeightWrap.getO()).ifPresent(o -> {
-				setSnowHeight(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchSnowHeight(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrSnowHeight(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqSnowHeight(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchSnowHeight(siteRequest_, WeatherObserved.staticSetSnowHeight(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlSnowHeight() {
-		return snowHeight;
-	}
-
-	////////////////////
-	// solarRadiation //
-	////////////////////
-
-
-	/**	 The entity solarRadiation
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal solarRadiation;
-
-	/**	<br> The entity solarRadiation
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:solarRadiation">Find the entity solarRadiation in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _solarRadiation(Wrap<BigDecimal> w);
-
-	public BigDecimal getSolarRadiation() {
-		return solarRadiation;
-	}
-
-	public void setSolarRadiation(BigDecimal solarRadiation) {
-		this.solarRadiation = solarRadiation;
-	}
-	@JsonIgnore
-	public void setSolarRadiation(String o) {
-		this.solarRadiation = WeatherObserved.staticSetSolarRadiation(siteRequest_, o);
-	}
-	public static BigDecimal staticSetSolarRadiation(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setSolarRadiation(Double o) {
-		setSolarRadiation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setSolarRadiation(Integer o) {
-		setSolarRadiation(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setSolarRadiation(Number o) {
-		setSolarRadiation(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved solarRadiationInit() {
-		Wrap<BigDecimal> solarRadiationWrap = new Wrap<BigDecimal>().var("solarRadiation");
-		if(solarRadiation == null) {
-			_solarRadiation(solarRadiationWrap);
-			Optional.ofNullable(solarRadiationWrap.getO()).ifPresent(o -> {
-				setSolarRadiation(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchSolarRadiation(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrSolarRadiation(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqSolarRadiation(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchSolarRadiation(siteRequest_, WeatherObserved.staticSetSolarRadiation(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlSolarRadiation() {
-		return solarRadiation;
-	}
-
-	////////////
-	// source //
-	////////////
-
-
-	/**	 The entity source
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String source;
-
-	/**	<br> The entity source
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:source">Find the entity source in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _source(Wrap<String> w);
-
-	public String getSource() {
-		return source;
-	}
-	public void setSource(String o) {
-		this.source = WeatherObserved.staticSetSource(siteRequest_, o);
-	}
-	public static String staticSetSource(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved sourceInit() {
-		Wrap<String> sourceWrap = new Wrap<String>().var("source");
-		if(source == null) {
-			_source(sourceWrap);
-			Optional.ofNullable(sourceWrap.getO()).ifPresent(o -> {
-				setSource(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchSource(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrSource(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqSource(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchSource(siteRequest_, WeatherObserved.staticSetSource(siteRequest_, o)).toString();
-	}
-
-	public String sqlSource() {
-		return source;
-	}
-
-	/////////////////
-	// streamGauge //
-	/////////////////
-
-
-	/**	 The entity streamGauge
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal streamGauge;
-
-	/**	<br> The entity streamGauge
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:streamGauge">Find the entity streamGauge in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _streamGauge(Wrap<BigDecimal> w);
-
-	public BigDecimal getStreamGauge() {
-		return streamGauge;
-	}
-
-	public void setStreamGauge(BigDecimal streamGauge) {
-		this.streamGauge = streamGauge;
-	}
-	@JsonIgnore
-	public void setStreamGauge(String o) {
-		this.streamGauge = WeatherObserved.staticSetStreamGauge(siteRequest_, o);
-	}
-	public static BigDecimal staticSetStreamGauge(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setStreamGauge(Double o) {
-		setStreamGauge(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setStreamGauge(Integer o) {
-		setStreamGauge(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setStreamGauge(Number o) {
-		setStreamGauge(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved streamGaugeInit() {
-		Wrap<BigDecimal> streamGaugeWrap = new Wrap<BigDecimal>().var("streamGauge");
-		if(streamGauge == null) {
-			_streamGauge(streamGaugeWrap);
-			Optional.ofNullable(streamGaugeWrap.getO()).ifPresent(o -> {
-				setStreamGauge(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchStreamGauge(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrStreamGauge(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqStreamGauge(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchStreamGauge(siteRequest_, WeatherObserved.staticSetStreamGauge(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlStreamGauge() {
-		return streamGauge;
-	}
-
-	/////////////////
-	// temperature //
-	/////////////////
-
-
-	/**	 The entity temperature
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal temperature;
-
-	/**	<br> The entity temperature
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:temperature">Find the entity temperature in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _temperature(Wrap<BigDecimal> w);
-
-	public BigDecimal getTemperature() {
-		return temperature;
-	}
-
-	public void setTemperature(BigDecimal temperature) {
-		this.temperature = temperature;
-	}
-	@JsonIgnore
-	public void setTemperature(String o) {
-		this.temperature = WeatherObserved.staticSetTemperature(siteRequest_, o);
-	}
-	public static BigDecimal staticSetTemperature(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setTemperature(Double o) {
-		setTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setTemperature(Integer o) {
-		setTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setTemperature(Number o) {
-		setTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved temperatureInit() {
-		Wrap<BigDecimal> temperatureWrap = new Wrap<BigDecimal>().var("temperature");
-		if(temperature == null) {
-			_temperature(temperatureWrap);
-			Optional.ofNullable(temperatureWrap.getO()).ifPresent(o -> {
-				setTemperature(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchTemperature(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrTemperature(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTemperature(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchTemperature(siteRequest_, WeatherObserved.staticSetTemperature(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlTemperature() {
-		return temperature;
-	}
-
-	////////////////////////////
-	// airTemperatureForecast //
-	////////////////////////////
-
-
-	/**	 The entity airTemperatureForecast
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal airTemperatureForecast;
-
-	/**	<br> The entity airTemperatureForecast
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureForecast">Find the entity airTemperatureForecast in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureForecast(Wrap<BigDecimal> w);
-
-	public BigDecimal getAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	public void setAirTemperatureForecast(BigDecimal airTemperatureForecast) {
-		this.airTemperatureForecast = airTemperatureForecast;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(String o) {
-		this.airTemperatureForecast = WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
-	}
-	public static BigDecimal staticSetAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Double o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Integer o) {
-		setAirTemperatureForecast(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setAirTemperatureForecast(Number o) {
-		setAirTemperatureForecast(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved airTemperatureForecastInit() {
-		Wrap<BigDecimal> airTemperatureForecastWrap = new Wrap<BigDecimal>().var("airTemperatureForecast");
-		if(airTemperatureForecast == null) {
-			_airTemperatureForecast(airTemperatureForecastWrap);
-			Optional.ofNullable(airTemperatureForecastWrap.getO()).ifPresent(o -> {
-				setAirTemperatureForecast(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchAirTemperatureForecast(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrAirTemperatureForecast(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureForecast(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlAirTemperatureForecast() {
-		return airTemperatureForecast;
-	}
-
-	///////////////////////
-	// airTemperatureTSA //
-	///////////////////////
-
-
-	/**	 The entity airTemperatureTSA
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject airTemperatureTSA;
-
-	/**	<br> The entity airTemperatureTSA
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:airTemperatureTSA">Find the entity airTemperatureTSA in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _airTemperatureTSA(Wrap<JsonObject> w);
-
-	public JsonObject getAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
-	public void setAirTemperatureTSA(JsonObject airTemperatureTSA) {
-		this.airTemperatureTSA = airTemperatureTSA;
-	}
-	@JsonIgnore
-	public void setAirTemperatureTSA(String o) {
-		this.airTemperatureTSA = WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
-	}
-	public static JsonObject staticSetAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved airTemperatureTSAInit() {
-		Wrap<JsonObject> airTemperatureTSAWrap = new Wrap<JsonObject>().var("airTemperatureTSA");
-		if(airTemperatureTSA == null) {
-			_airTemperatureTSA(airTemperatureTSAWrap);
-			Optional.ofNullable(airTemperatureTSAWrap.getO()).ifPresent(o -> {
-				setAirTemperatureTSA(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchAirTemperatureTSA(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAirTemperatureTSA(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlAirTemperatureTSA() {
-		return airTemperatureTSA;
-	}
-
-	//////////////////////////
-	// feelsLikeTemperature //
-	//////////////////////////
-
-
-	/**	 The entity feelsLikeTemperature
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal feelsLikeTemperature;
-
-	/**	<br> The entity feelsLikeTemperature
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:feelsLikeTemperature">Find the entity feelsLikeTemperature in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _feelsLikeTemperature(Wrap<BigDecimal> w);
-
-	public BigDecimal getFeelsLikeTemperature() {
-		return feelsLikeTemperature;
-	}
-
-	public void setFeelsLikeTemperature(BigDecimal feelsLikeTemperature) {
-		this.feelsLikeTemperature = feelsLikeTemperature;
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(String o) {
-		this.feelsLikeTemperature = WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
-	}
-	public static BigDecimal staticSetFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Double o) {
-		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Integer o) {
-		setFeelsLikeTemperature(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setFeelsLikeTemperature(Number o) {
-		setFeelsLikeTemperature(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved feelsLikeTemperatureInit() {
-		Wrap<BigDecimal> feelsLikeTemperatureWrap = new Wrap<BigDecimal>().var("feelsLikeTemperature");
-		if(feelsLikeTemperature == null) {
-			_feelsLikeTemperature(feelsLikeTemperatureWrap);
-			Optional.ofNullable(feelsLikeTemperatureWrap.getO()).ifPresent(o -> {
-				setFeelsLikeTemperature(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchFeelsLikeTemperature(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrFeelsLikeTemperature(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqFeelsLikeTemperature(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlFeelsLikeTemperature() {
-		return feelsLikeTemperature;
-	}
-
-	////////////////
-	// uVIndexMax //
-	////////////////
-
-
-	/**	 The entity uVIndexMax
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal uVIndexMax;
-
-	/**	<br> The entity uVIndexMax
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:uVIndexMax">Find the entity uVIndexMax in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uVIndexMax(Wrap<BigDecimal> w);
-
-	public BigDecimal getUVIndexMax() {
-		return uVIndexMax;
-	}
-
-	public void setUVIndexMax(BigDecimal uVIndexMax) {
-		this.uVIndexMax = uVIndexMax;
-	}
-	@JsonIgnore
-	public void setUVIndexMax(String o) {
-		this.uVIndexMax = WeatherObserved.staticSetUVIndexMax(siteRequest_, o);
-	}
-	public static BigDecimal staticSetUVIndexMax(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setUVIndexMax(Double o) {
-		setUVIndexMax(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setUVIndexMax(Integer o) {
-		setUVIndexMax(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setUVIndexMax(Number o) {
-		setUVIndexMax(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved uVIndexMaxInit() {
-		Wrap<BigDecimal> uVIndexMaxWrap = new Wrap<BigDecimal>().var("uVIndexMax");
-		if(uVIndexMax == null) {
-			_uVIndexMax(uVIndexMaxWrap);
-			Optional.ofNullable(uVIndexMaxWrap.getO()).ifPresent(o -> {
-				setUVIndexMax(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchUVIndexMax(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrUVIndexMax(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUVIndexMax(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchUVIndexMax(siteRequest_, WeatherObserved.staticSetUVIndexMax(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlUVIndexMax() {
-		return uVIndexMax;
-	}
-
-	////////////////
-	// visibility //
-	////////////////
-
-
-	/**	 The entity visibility
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject visibility;
-
-	/**	<br> The entity visibility
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:visibility">Find the entity visibility in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _visibility(Wrap<JsonObject> w);
-
-	public JsonObject getVisibility() {
-		return visibility;
-	}
-
-	public void setVisibility(JsonObject visibility) {
-		this.visibility = visibility;
-	}
-	@JsonIgnore
-	public void setVisibility(String o) {
-		this.visibility = WeatherObserved.staticSetVisibility(siteRequest_, o);
-	}
-	public static JsonObject staticSetVisibility(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved visibilityInit() {
-		Wrap<JsonObject> visibilityWrap = new Wrap<JsonObject>().var("visibility");
-		if(visibility == null) {
-			_visibility(visibilityWrap);
-			Optional.ofNullable(visibilityWrap.getO()).ifPresent(o -> {
-				setVisibility(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchVisibility(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrVisibility(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqVisibility(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchVisibility(siteRequest_, WeatherObserved.staticSetVisibility(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlVisibility() {
-		return visibility;
-	}
-
-	/////////////////
-	// weatherType //
-	/////////////////
-
-
-	/**	 The entity weatherType
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String weatherType;
-
-	/**	<br> The entity weatherType
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:weatherType">Find the entity weatherType in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _weatherType(Wrap<String> w);
-
-	public String getWeatherType() {
-		return weatherType;
-	}
-	public void setWeatherType(String o) {
-		this.weatherType = WeatherObserved.staticSetWeatherType(siteRequest_, o);
-	}
-	public static String staticSetWeatherType(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected WeatherObserved weatherTypeInit() {
-		Wrap<String> weatherTypeWrap = new Wrap<String>().var("weatherType");
-		if(weatherType == null) {
-			_weatherType(weatherTypeWrap);
-			Optional.ofNullable(weatherTypeWrap.getO()).ifPresent(o -> {
-				setWeatherType(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchWeatherType(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrWeatherType(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqWeatherType(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchWeatherType(siteRequest_, WeatherObserved.staticSetWeatherType(siteRequest_, o)).toString();
-	}
-
-	public String sqlWeatherType() {
-		return weatherType;
-	}
-
-	///////////////////
-	// windDirection //
-	///////////////////
-
-
-	/**	 The entity windDirection
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal windDirection;
-
-	/**	<br> The entity windDirection
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:windDirection">Find the entity windDirection in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _windDirection(Wrap<BigDecimal> w);
-
-	public BigDecimal getWindDirection() {
-		return windDirection;
-	}
-
-	public void setWindDirection(BigDecimal windDirection) {
-		this.windDirection = windDirection;
-	}
-	@JsonIgnore
-	public void setWindDirection(String o) {
-		this.windDirection = WeatherObserved.staticSetWindDirection(siteRequest_, o);
-	}
-	public static BigDecimal staticSetWindDirection(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setWindDirection(Double o) {
-		setWindDirection(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setWindDirection(Integer o) {
-		setWindDirection(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setWindDirection(Number o) {
-		setWindDirection(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved windDirectionInit() {
-		Wrap<BigDecimal> windDirectionWrap = new Wrap<BigDecimal>().var("windDirection");
-		if(windDirection == null) {
-			_windDirection(windDirectionWrap);
-			Optional.ofNullable(windDirectionWrap.getO()).ifPresent(o -> {
-				setWindDirection(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchWindDirection(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrWindDirection(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqWindDirection(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchWindDirection(siteRequest_, WeatherObserved.staticSetWindDirection(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlWindDirection() {
-		return windDirection;
-	}
-
-	///////////////
-	// windSpeed //
-	///////////////
-
-
-	/**	 The entity windSpeed
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected BigDecimal windSpeed;
-
-	/**	<br> The entity windSpeed
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:windSpeed">Find the entity windSpeed in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _windSpeed(Wrap<BigDecimal> w);
-
-	public BigDecimal getWindSpeed() {
-		return windSpeed;
-	}
-
-	public void setWindSpeed(BigDecimal windSpeed) {
-		this.windSpeed = windSpeed;
-	}
-	@JsonIgnore
-	public void setWindSpeed(String o) {
-		this.windSpeed = WeatherObserved.staticSetWindSpeed(siteRequest_, o);
-	}
-	public static BigDecimal staticSetWindSpeed(SiteRequest siteRequest_, String o) {
-		o = StringUtils.removeAll(o, "[^\\d\\.]");
-		if(NumberUtils.isParsable(o))
-			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
-		return null;
-	}
-	@JsonIgnore
-	public void setWindSpeed(Double o) {
-		setWindSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setWindSpeed(Integer o) {
-		setWindSpeed(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	@JsonIgnore
-	public void setWindSpeed(Number o) {
-		setWindSpeed(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
-	}
-	protected WeatherObserved windSpeedInit() {
-		Wrap<BigDecimal> windSpeedWrap = new Wrap<BigDecimal>().var("windSpeed");
-		if(windSpeed == null) {
-			_windSpeed(windSpeedWrap);
-			Optional.ofNullable(windSpeedWrap.getO()).ifPresent(o -> {
-				setWindSpeed(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static Double staticSearchWindSpeed(SiteRequest siteRequest_, BigDecimal o) {
-		return o == null ? null : o.doubleValue();
-	}
-
-	public static String staticSearchStrWindSpeed(SiteRequest siteRequest_, Double o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqWindSpeed(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchWindSpeed(siteRequest_, WeatherObserved.staticSetWindSpeed(siteRequest_, o)).toString();
-	}
-
-	public BigDecimal sqlWindSpeed() {
-		return windSpeed;
+	public JsonObject sqlNgsildData() {
+		return ngsildData;
 	}
 
 	//////////////
@@ -3621,70 +3685,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return ngsildPath;
 	}
 
-	////////////////
-	// ngsildData //
-	////////////////
-
-
-	/**	 The entity ngsildData
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonObject ngsildData;
-
-	/**	<br> The entity ngsildData
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing:443/solr/computate/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObserved&fq=entiteVar_enUS_indexed_string:ngsildData">Find the entity ngsildData in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _ngsildData(Wrap<JsonObject> w);
-
-	public JsonObject getNgsildData() {
-		return ngsildData;
-	}
-
-	public void setNgsildData(JsonObject ngsildData) {
-		this.ngsildData = ngsildData;
-	}
-	@JsonIgnore
-	public void setNgsildData(String o) {
-		this.ngsildData = WeatherObserved.staticSetNgsildData(siteRequest_, o);
-	}
-	public static JsonObject staticSetNgsildData(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonObject(o);
-		}
-		return null;
-	}
-	protected WeatherObserved ngsildDataInit() {
-		Wrap<JsonObject> ngsildDataWrap = new Wrap<JsonObject>().var("ngsildData");
-		if(ngsildData == null) {
-			_ngsildData(ngsildDataWrap);
-			Optional.ofNullable(ngsildDataWrap.getO()).ifPresent(o -> {
-				setNgsildData(o);
-			});
-		}
-		return (WeatherObserved)this;
-	}
-
-	public static String staticSearchNgsildData(SiteRequest siteRequest_, JsonObject o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrNgsildData(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqNgsildData(SiteRequest siteRequest_, String o) {
-		return WeatherObserved.staticSearchNgsildData(siteRequest_, WeatherObserved.staticSetNgsildData(siteRequest_, o)).toString();
-	}
-
-	public JsonObject sqlNgsildData() {
-		return ngsildData;
-	}
-
 	///////////////////
 	// ngsildContext //
 	///////////////////
@@ -3774,52 +3774,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				descriptionInit();
 				addressInit();
 				alternateNameInit();
+				locationInit();
 				areaServedColorsInit();
 				areaServedTitlesInit();
 				areaServedLinksInit();
 				areaServedInit();
+				dataProviderInit();
+				dateCreatedInit();
+				dateModifiedInit();
+				dateObservedInit();
+				ownerInit();
+				refDeviceInit();
+				refPointOfInterestInit();
+				sourceInit();
+				seeAlsoInit();
 				airQualityIndexInit();
 				airQualityIndexForecastInit();
 				aqiMajorPollutantInit();
 				aqiMajorPollutantForecastInit();
 				atmosphericPressureInit();
-				dataProviderInit();
-				dateCreatedInit();
-				dateModifiedInit();
-				dateObservedInit();
-				dewPointInit();
-				diffuseIrradiationInit();
-				directIrradiationInit();
+				pressureTendencyInit();
 				gustSpeedInit();
-				illuminanceInit();
-				locationInit();
-				ownerInit();
+				windDirectionInit();
+				windSpeedInit();
 				precipitationInit();
 				precipitationForecastInit();
-				pressureTendencyInit();
-				refDeviceInit();
-				refPointOfInterestInit();
 				relativeHumidityInit();
 				relativeHumidityForecastInit();
-				seeAlsoInit();
 				snowHeightInit();
-				solarRadiationInit();
-				sourceInit();
-				streamGaugeInit();
-				temperatureInit();
 				airTemperatureForecastInit();
 				airTemperatureTSAInit();
 				feelsLikeTemperatureInit();
+				temperatureInit();
+				solarRadiationInit();
+				streamGaugeInit();
 				uVIndexMaxInit();
 				visibilityInit();
 				weatherTypeInit();
-				windDirectionInit();
-				windSpeedInit();
+				dewPointInit();
+				diffuseIrradiationInit();
+				directIrradiationInit();
+				illuminanceInit();
+				ngsildDataInit();
 				entityIdInit();
 				entityShortIdInit();
 				ngsildTenantInit();
 				ngsildPathInit();
-				ngsildDataInit();
 				ngsildContextInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -3882,6 +3882,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.address;
 			case "alternateName":
 				return oWeatherObserved.alternateName;
+			case "location":
+				return oWeatherObserved.location;
 			case "areaServedColors":
 				return oWeatherObserved.areaServedColors;
 			case "areaServedTitles":
@@ -3890,6 +3892,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.areaServedLinks;
 			case "areaServed":
 				return oWeatherObserved.areaServed;
+			case "dataProvider":
+				return oWeatherObserved.dataProvider;
+			case "dateCreated":
+				return oWeatherObserved.dateCreated;
+			case "dateModified":
+				return oWeatherObserved.dateModified;
+			case "dateObserved":
+				return oWeatherObserved.dateObserved;
+			case "owner":
+				return oWeatherObserved.owner;
+			case "refDevice":
+				return oWeatherObserved.refDevice;
+			case "refPointOfInterest":
+				return oWeatherObserved.refPointOfInterest;
+			case "source":
+				return oWeatherObserved.source;
+			case "seeAlso":
+				return oWeatherObserved.seeAlso;
 			case "airQualityIndex":
 				return oWeatherObserved.airQualityIndex;
 			case "airQualityIndexForecast":
@@ -3900,70 +3920,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.aqiMajorPollutantForecast;
 			case "atmosphericPressure":
 				return oWeatherObserved.atmosphericPressure;
-			case "dataProvider":
-				return oWeatherObserved.dataProvider;
-			case "dateCreated":
-				return oWeatherObserved.dateCreated;
-			case "dateModified":
-				return oWeatherObserved.dateModified;
-			case "dateObserved":
-				return oWeatherObserved.dateObserved;
-			case "dewPoint":
-				return oWeatherObserved.dewPoint;
-			case "diffuseIrradiation":
-				return oWeatherObserved.diffuseIrradiation;
-			case "directIrradiation":
-				return oWeatherObserved.directIrradiation;
+			case "pressureTendency":
+				return oWeatherObserved.pressureTendency;
 			case "gustSpeed":
 				return oWeatherObserved.gustSpeed;
-			case "illuminance":
-				return oWeatherObserved.illuminance;
-			case "location":
-				return oWeatherObserved.location;
-			case "owner":
-				return oWeatherObserved.owner;
+			case "windDirection":
+				return oWeatherObserved.windDirection;
+			case "windSpeed":
+				return oWeatherObserved.windSpeed;
 			case "precipitation":
 				return oWeatherObserved.precipitation;
 			case "precipitationForecast":
 				return oWeatherObserved.precipitationForecast;
-			case "pressureTendency":
-				return oWeatherObserved.pressureTendency;
-			case "refDevice":
-				return oWeatherObserved.refDevice;
-			case "refPointOfInterest":
-				return oWeatherObserved.refPointOfInterest;
 			case "relativeHumidity":
 				return oWeatherObserved.relativeHumidity;
 			case "relativeHumidityForecast":
 				return oWeatherObserved.relativeHumidityForecast;
-			case "seeAlso":
-				return oWeatherObserved.seeAlso;
 			case "snowHeight":
 				return oWeatherObserved.snowHeight;
-			case "solarRadiation":
-				return oWeatherObserved.solarRadiation;
-			case "source":
-				return oWeatherObserved.source;
-			case "streamGauge":
-				return oWeatherObserved.streamGauge;
-			case "temperature":
-				return oWeatherObserved.temperature;
 			case "airTemperatureForecast":
 				return oWeatherObserved.airTemperatureForecast;
 			case "airTemperatureTSA":
 				return oWeatherObserved.airTemperatureTSA;
 			case "feelsLikeTemperature":
 				return oWeatherObserved.feelsLikeTemperature;
+			case "temperature":
+				return oWeatherObserved.temperature;
+			case "solarRadiation":
+				return oWeatherObserved.solarRadiation;
+			case "streamGauge":
+				return oWeatherObserved.streamGauge;
 			case "uVIndexMax":
 				return oWeatherObserved.uVIndexMax;
 			case "visibility":
 				return oWeatherObserved.visibility;
 			case "weatherType":
 				return oWeatherObserved.weatherType;
-			case "windDirection":
-				return oWeatherObserved.windDirection;
-			case "windSpeed":
-				return oWeatherObserved.windSpeed;
+			case "dewPoint":
+				return oWeatherObserved.dewPoint;
+			case "diffuseIrradiation":
+				return oWeatherObserved.diffuseIrradiation;
+			case "directIrradiation":
+				return oWeatherObserved.directIrradiation;
+			case "illuminance":
+				return oWeatherObserved.illuminance;
+			case "ngsildData":
+				return oWeatherObserved.ngsildData;
 			case "entityId":
 				return oWeatherObserved.entityId;
 			case "entityShortId":
@@ -3972,8 +3974,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return oWeatherObserved.ngsildTenant;
 			case "ngsildPath":
 				return oWeatherObserved.ngsildPath;
-			case "ngsildData":
-				return oWeatherObserved.ngsildData;
 			case "ngsildContext":
 				return oWeatherObserved.ngsildContext;
 			default:
@@ -4023,6 +4023,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetAddress(siteRequest_, o);
 		case "alternateName":
 			return WeatherObserved.staticSetAlternateName(siteRequest_, o);
+		case "location":
+			return WeatherObserved.staticSetLocation(siteRequest_, o);
 		case "areaServedColors":
 			return WeatherObserved.staticSetAreaServedColors(siteRequest_, o);
 		case "areaServedTitles":
@@ -4031,6 +4033,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetAreaServedLinks(siteRequest_, o);
 		case "areaServed":
 			return WeatherObserved.staticSetAreaServed(siteRequest_, o);
+		case "dataProvider":
+			return WeatherObserved.staticSetDataProvider(siteRequest_, o);
+		case "dateCreated":
+			return WeatherObserved.staticSetDateCreated(siteRequest_, o);
+		case "dateModified":
+			return WeatherObserved.staticSetDateModified(siteRequest_, o);
+		case "dateObserved":
+			return WeatherObserved.staticSetDateObserved(siteRequest_, o);
+		case "owner":
+			return WeatherObserved.staticSetOwner(siteRequest_, o);
+		case "refDevice":
+			return WeatherObserved.staticSetRefDevice(siteRequest_, o);
+		case "refPointOfInterest":
+			return WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o);
+		case "source":
+			return WeatherObserved.staticSetSource(siteRequest_, o);
+		case "seeAlso":
+			return WeatherObserved.staticSetSeeAlso(siteRequest_, o);
 		case "airQualityIndex":
 			return WeatherObserved.staticSetAirQualityIndex(siteRequest_, o);
 		case "airQualityIndexForecast":
@@ -4041,70 +4061,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSetAtmosphericPressure(siteRequest_, o);
-		case "dataProvider":
-			return WeatherObserved.staticSetDataProvider(siteRequest_, o);
-		case "dateCreated":
-			return WeatherObserved.staticSetDateCreated(siteRequest_, o);
-		case "dateModified":
-			return WeatherObserved.staticSetDateModified(siteRequest_, o);
-		case "dateObserved":
-			return WeatherObserved.staticSetDateObserved(siteRequest_, o);
-		case "dewPoint":
-			return WeatherObserved.staticSetDewPoint(siteRequest_, o);
-		case "diffuseIrradiation":
-			return WeatherObserved.staticSetDiffuseIrradiation(siteRequest_, o);
-		case "directIrradiation":
-			return WeatherObserved.staticSetDirectIrradiation(siteRequest_, o);
+		case "pressureTendency":
+			return WeatherObserved.staticSetPressureTendency(siteRequest_, o);
 		case "gustSpeed":
 			return WeatherObserved.staticSetGustSpeed(siteRequest_, o);
-		case "illuminance":
-			return WeatherObserved.staticSetIlluminance(siteRequest_, o);
-		case "location":
-			return WeatherObserved.staticSetLocation(siteRequest_, o);
-		case "owner":
-			return WeatherObserved.staticSetOwner(siteRequest_, o);
+		case "windDirection":
+			return WeatherObserved.staticSetWindDirection(siteRequest_, o);
+		case "windSpeed":
+			return WeatherObserved.staticSetWindSpeed(siteRequest_, o);
 		case "precipitation":
 			return WeatherObserved.staticSetPrecipitation(siteRequest_, o);
 		case "precipitationForecast":
 			return WeatherObserved.staticSetPrecipitationForecast(siteRequest_, o);
-		case "pressureTendency":
-			return WeatherObserved.staticSetPressureTendency(siteRequest_, o);
-		case "refDevice":
-			return WeatherObserved.staticSetRefDevice(siteRequest_, o);
-		case "refPointOfInterest":
-			return WeatherObserved.staticSetRefPointOfInterest(siteRequest_, o);
 		case "relativeHumidity":
 			return WeatherObserved.staticSetRelativeHumidity(siteRequest_, o);
 		case "relativeHumidityForecast":
 			return WeatherObserved.staticSetRelativeHumidityForecast(siteRequest_, o);
-		case "seeAlso":
-			return WeatherObserved.staticSetSeeAlso(siteRequest_, o);
 		case "snowHeight":
 			return WeatherObserved.staticSetSnowHeight(siteRequest_, o);
-		case "solarRadiation":
-			return WeatherObserved.staticSetSolarRadiation(siteRequest_, o);
-		case "source":
-			return WeatherObserved.staticSetSource(siteRequest_, o);
-		case "streamGauge":
-			return WeatherObserved.staticSetStreamGauge(siteRequest_, o);
-		case "temperature":
-			return WeatherObserved.staticSetTemperature(siteRequest_, o);
 		case "airTemperatureForecast":
 			return WeatherObserved.staticSetAirTemperatureForecast(siteRequest_, o);
 		case "airTemperatureTSA":
 			return WeatherObserved.staticSetAirTemperatureTSA(siteRequest_, o);
 		case "feelsLikeTemperature":
 			return WeatherObserved.staticSetFeelsLikeTemperature(siteRequest_, o);
+		case "temperature":
+			return WeatherObserved.staticSetTemperature(siteRequest_, o);
+		case "solarRadiation":
+			return WeatherObserved.staticSetSolarRadiation(siteRequest_, o);
+		case "streamGauge":
+			return WeatherObserved.staticSetStreamGauge(siteRequest_, o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSetUVIndexMax(siteRequest_, o);
 		case "visibility":
 			return WeatherObserved.staticSetVisibility(siteRequest_, o);
 		case "weatherType":
 			return WeatherObserved.staticSetWeatherType(siteRequest_, o);
-		case "windDirection":
-			return WeatherObserved.staticSetWindDirection(siteRequest_, o);
-		case "windSpeed":
-			return WeatherObserved.staticSetWindSpeed(siteRequest_, o);
+		case "dewPoint":
+			return WeatherObserved.staticSetDewPoint(siteRequest_, o);
+		case "diffuseIrradiation":
+			return WeatherObserved.staticSetDiffuseIrradiation(siteRequest_, o);
+		case "directIrradiation":
+			return WeatherObserved.staticSetDirectIrradiation(siteRequest_, o);
+		case "illuminance":
+			return WeatherObserved.staticSetIlluminance(siteRequest_, o);
+		case "ngsildData":
+			return WeatherObserved.staticSetNgsildData(siteRequest_, o);
 		case "entityId":
 			return WeatherObserved.staticSetEntityId(siteRequest_, o);
 		case "entityShortId":
@@ -4113,8 +4115,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSetNgsildTenant(siteRequest_, o);
 		case "ngsildPath":
 			return WeatherObserved.staticSetNgsildPath(siteRequest_, o);
-		case "ngsildData":
-			return WeatherObserved.staticSetNgsildData(siteRequest_, o);
 		case "ngsildContext":
 			return WeatherObserved.staticSetNgsildContext(siteRequest_, o);
 			default:
@@ -4139,6 +4139,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchAddress(siteRequest_, (JsonObject)o);
 		case "alternateName":
 			return WeatherObserved.staticSearchAlternateName(siteRequest_, (String)o);
+		case "location":
+			return WeatherObserved.staticSearchLocation(siteRequest_, (Point)o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchAreaServedColors(siteRequest_, (String)o);
 		case "areaServedTitles":
@@ -4147,6 +4149,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchAreaServedLinks(siteRequest_, (String)o);
 		case "areaServed":
 			return WeatherObserved.staticSearchAreaServed(siteRequest_, (Polygon)o);
+		case "dataProvider":
+			return WeatherObserved.staticSearchDataProvider(siteRequest_, (String)o);
+		case "dateCreated":
+			return WeatherObserved.staticSearchDateCreated(siteRequest_, (String)o);
+		case "dateModified":
+			return WeatherObserved.staticSearchDateModified(siteRequest_, (String)o);
+		case "dateObserved":
+			return WeatherObserved.staticSearchDateObserved(siteRequest_, (String)o);
+		case "owner":
+			return WeatherObserved.staticSearchOwner(siteRequest_, (JsonObject)o);
+		case "refDevice":
+			return WeatherObserved.staticSearchRefDevice(siteRequest_, (JsonObject)o);
+		case "refPointOfInterest":
+			return WeatherObserved.staticSearchRefPointOfInterest(siteRequest_, (String)o);
+		case "source":
+			return WeatherObserved.staticSearchSource(siteRequest_, (String)o);
+		case "seeAlso":
+			return WeatherObserved.staticSearchSeeAlso(siteRequest_, (JsonObject)o);
 		case "airQualityIndex":
 			return WeatherObserved.staticSearchAirQualityIndex(siteRequest_, (BigDecimal)o);
 		case "airQualityIndexForecast":
@@ -4157,70 +4177,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchAqiMajorPollutantForecast(siteRequest_, (String)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchAtmosphericPressure(siteRequest_, (BigDecimal)o);
-		case "dataProvider":
-			return WeatherObserved.staticSearchDataProvider(siteRequest_, (String)o);
-		case "dateCreated":
-			return WeatherObserved.staticSearchDateCreated(siteRequest_, (String)o);
-		case "dateModified":
-			return WeatherObserved.staticSearchDateModified(siteRequest_, (String)o);
-		case "dateObserved":
-			return WeatherObserved.staticSearchDateObserved(siteRequest_, (String)o);
-		case "dewPoint":
-			return WeatherObserved.staticSearchDewPoint(siteRequest_, (BigDecimal)o);
-		case "diffuseIrradiation":
-			return WeatherObserved.staticSearchDiffuseIrradiation(siteRequest_, (BigDecimal)o);
-		case "directIrradiation":
-			return WeatherObserved.staticSearchDirectIrradiation(siteRequest_, (BigDecimal)o);
+		case "pressureTendency":
+			return WeatherObserved.staticSearchPressureTendency(siteRequest_, (JsonObject)o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchGustSpeed(siteRequest_, (BigDecimal)o);
-		case "illuminance":
-			return WeatherObserved.staticSearchIlluminance(siteRequest_, (BigDecimal)o);
-		case "location":
-			return WeatherObserved.staticSearchLocation(siteRequest_, (Point)o);
-		case "owner":
-			return WeatherObserved.staticSearchOwner(siteRequest_, (JsonObject)o);
+		case "windDirection":
+			return WeatherObserved.staticSearchWindDirection(siteRequest_, (BigDecimal)o);
+		case "windSpeed":
+			return WeatherObserved.staticSearchWindSpeed(siteRequest_, (BigDecimal)o);
 		case "precipitation":
 			return WeatherObserved.staticSearchPrecipitation(siteRequest_, (BigDecimal)o);
 		case "precipitationForecast":
 			return WeatherObserved.staticSearchPrecipitationForecast(siteRequest_, (BigDecimal)o);
-		case "pressureTendency":
-			return WeatherObserved.staticSearchPressureTendency(siteRequest_, (JsonObject)o);
-		case "refDevice":
-			return WeatherObserved.staticSearchRefDevice(siteRequest_, (JsonObject)o);
-		case "refPointOfInterest":
-			return WeatherObserved.staticSearchRefPointOfInterest(siteRequest_, (String)o);
 		case "relativeHumidity":
 			return WeatherObserved.staticSearchRelativeHumidity(siteRequest_, (BigDecimal)o);
 		case "relativeHumidityForecast":
 			return WeatherObserved.staticSearchRelativeHumidityForecast(siteRequest_, (BigDecimal)o);
-		case "seeAlso":
-			return WeatherObserved.staticSearchSeeAlso(siteRequest_, (JsonObject)o);
 		case "snowHeight":
 			return WeatherObserved.staticSearchSnowHeight(siteRequest_, (BigDecimal)o);
-		case "solarRadiation":
-			return WeatherObserved.staticSearchSolarRadiation(siteRequest_, (BigDecimal)o);
-		case "source":
-			return WeatherObserved.staticSearchSource(siteRequest_, (String)o);
-		case "streamGauge":
-			return WeatherObserved.staticSearchStreamGauge(siteRequest_, (BigDecimal)o);
-		case "temperature":
-			return WeatherObserved.staticSearchTemperature(siteRequest_, (BigDecimal)o);
 		case "airTemperatureForecast":
 			return WeatherObserved.staticSearchAirTemperatureForecast(siteRequest_, (BigDecimal)o);
 		case "airTemperatureTSA":
 			return WeatherObserved.staticSearchAirTemperatureTSA(siteRequest_, (JsonObject)o);
 		case "feelsLikeTemperature":
 			return WeatherObserved.staticSearchFeelsLikeTemperature(siteRequest_, (BigDecimal)o);
+		case "temperature":
+			return WeatherObserved.staticSearchTemperature(siteRequest_, (BigDecimal)o);
+		case "solarRadiation":
+			return WeatherObserved.staticSearchSolarRadiation(siteRequest_, (BigDecimal)o);
+		case "streamGauge":
+			return WeatherObserved.staticSearchStreamGauge(siteRequest_, (BigDecimal)o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchUVIndexMax(siteRequest_, (BigDecimal)o);
 		case "visibility":
 			return WeatherObserved.staticSearchVisibility(siteRequest_, (JsonObject)o);
 		case "weatherType":
 			return WeatherObserved.staticSearchWeatherType(siteRequest_, (String)o);
-		case "windDirection":
-			return WeatherObserved.staticSearchWindDirection(siteRequest_, (BigDecimal)o);
-		case "windSpeed":
-			return WeatherObserved.staticSearchWindSpeed(siteRequest_, (BigDecimal)o);
+		case "dewPoint":
+			return WeatherObserved.staticSearchDewPoint(siteRequest_, (BigDecimal)o);
+		case "diffuseIrradiation":
+			return WeatherObserved.staticSearchDiffuseIrradiation(siteRequest_, (BigDecimal)o);
+		case "directIrradiation":
+			return WeatherObserved.staticSearchDirectIrradiation(siteRequest_, (BigDecimal)o);
+		case "illuminance":
+			return WeatherObserved.staticSearchIlluminance(siteRequest_, (BigDecimal)o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchNgsildData(siteRequest_, (JsonObject)o);
 		case "entityId":
 			return WeatherObserved.staticSearchEntityId(siteRequest_, (String)o);
 		case "entityShortId":
@@ -4229,8 +4231,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchNgsildTenant(siteRequest_, (String)o);
 		case "ngsildPath":
 			return WeatherObserved.staticSearchNgsildPath(siteRequest_, (String)o);
-		case "ngsildData":
-			return WeatherObserved.staticSearchNgsildData(siteRequest_, (JsonObject)o);
 		case "ngsildContext":
 			return WeatherObserved.staticSearchNgsildContext(siteRequest_, (String)o);
 			default:
@@ -4255,6 +4255,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrAddress(siteRequest_, (String)o);
 		case "alternateName":
 			return WeatherObserved.staticSearchStrAlternateName(siteRequest_, (String)o);
+		case "location":
+			return WeatherObserved.staticSearchStrLocation(siteRequest_, (Point)o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchStrAreaServedColors(siteRequest_, (String)o);
 		case "areaServedTitles":
@@ -4263,6 +4265,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrAreaServedLinks(siteRequest_, (String)o);
 		case "areaServed":
 			return WeatherObserved.staticSearchStrAreaServed(siteRequest_, (Polygon)o);
+		case "dataProvider":
+			return WeatherObserved.staticSearchStrDataProvider(siteRequest_, (String)o);
+		case "dateCreated":
+			return WeatherObserved.staticSearchStrDateCreated(siteRequest_, (String)o);
+		case "dateModified":
+			return WeatherObserved.staticSearchStrDateModified(siteRequest_, (String)o);
+		case "dateObserved":
+			return WeatherObserved.staticSearchStrDateObserved(siteRequest_, (String)o);
+		case "owner":
+			return WeatherObserved.staticSearchStrOwner(siteRequest_, (String)o);
+		case "refDevice":
+			return WeatherObserved.staticSearchStrRefDevice(siteRequest_, (String)o);
+		case "refPointOfInterest":
+			return WeatherObserved.staticSearchStrRefPointOfInterest(siteRequest_, (String)o);
+		case "source":
+			return WeatherObserved.staticSearchStrSource(siteRequest_, (String)o);
+		case "seeAlso":
+			return WeatherObserved.staticSearchStrSeeAlso(siteRequest_, (String)o);
 		case "airQualityIndex":
 			return WeatherObserved.staticSearchStrAirQualityIndex(siteRequest_, (Double)o);
 		case "airQualityIndexForecast":
@@ -4273,70 +4293,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrAqiMajorPollutantForecast(siteRequest_, (String)o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchStrAtmosphericPressure(siteRequest_, (Double)o);
-		case "dataProvider":
-			return WeatherObserved.staticSearchStrDataProvider(siteRequest_, (String)o);
-		case "dateCreated":
-			return WeatherObserved.staticSearchStrDateCreated(siteRequest_, (String)o);
-		case "dateModified":
-			return WeatherObserved.staticSearchStrDateModified(siteRequest_, (String)o);
-		case "dateObserved":
-			return WeatherObserved.staticSearchStrDateObserved(siteRequest_, (String)o);
-		case "dewPoint":
-			return WeatherObserved.staticSearchStrDewPoint(siteRequest_, (Double)o);
-		case "diffuseIrradiation":
-			return WeatherObserved.staticSearchStrDiffuseIrradiation(siteRequest_, (Double)o);
-		case "directIrradiation":
-			return WeatherObserved.staticSearchStrDirectIrradiation(siteRequest_, (Double)o);
+		case "pressureTendency":
+			return WeatherObserved.staticSearchStrPressureTendency(siteRequest_, (String)o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchStrGustSpeed(siteRequest_, (Double)o);
-		case "illuminance":
-			return WeatherObserved.staticSearchStrIlluminance(siteRequest_, (Double)o);
-		case "location":
-			return WeatherObserved.staticSearchStrLocation(siteRequest_, (Point)o);
-		case "owner":
-			return WeatherObserved.staticSearchStrOwner(siteRequest_, (String)o);
+		case "windDirection":
+			return WeatherObserved.staticSearchStrWindDirection(siteRequest_, (Double)o);
+		case "windSpeed":
+			return WeatherObserved.staticSearchStrWindSpeed(siteRequest_, (Double)o);
 		case "precipitation":
 			return WeatherObserved.staticSearchStrPrecipitation(siteRequest_, (Double)o);
 		case "precipitationForecast":
 			return WeatherObserved.staticSearchStrPrecipitationForecast(siteRequest_, (Double)o);
-		case "pressureTendency":
-			return WeatherObserved.staticSearchStrPressureTendency(siteRequest_, (String)o);
-		case "refDevice":
-			return WeatherObserved.staticSearchStrRefDevice(siteRequest_, (String)o);
-		case "refPointOfInterest":
-			return WeatherObserved.staticSearchStrRefPointOfInterest(siteRequest_, (String)o);
 		case "relativeHumidity":
 			return WeatherObserved.staticSearchStrRelativeHumidity(siteRequest_, (Double)o);
 		case "relativeHumidityForecast":
 			return WeatherObserved.staticSearchStrRelativeHumidityForecast(siteRequest_, (Double)o);
-		case "seeAlso":
-			return WeatherObserved.staticSearchStrSeeAlso(siteRequest_, (String)o);
 		case "snowHeight":
 			return WeatherObserved.staticSearchStrSnowHeight(siteRequest_, (Double)o);
-		case "solarRadiation":
-			return WeatherObserved.staticSearchStrSolarRadiation(siteRequest_, (Double)o);
-		case "source":
-			return WeatherObserved.staticSearchStrSource(siteRequest_, (String)o);
-		case "streamGauge":
-			return WeatherObserved.staticSearchStrStreamGauge(siteRequest_, (Double)o);
-		case "temperature":
-			return WeatherObserved.staticSearchStrTemperature(siteRequest_, (Double)o);
 		case "airTemperatureForecast":
 			return WeatherObserved.staticSearchStrAirTemperatureForecast(siteRequest_, (Double)o);
 		case "airTemperatureTSA":
 			return WeatherObserved.staticSearchStrAirTemperatureTSA(siteRequest_, (String)o);
 		case "feelsLikeTemperature":
 			return WeatherObserved.staticSearchStrFeelsLikeTemperature(siteRequest_, (Double)o);
+		case "temperature":
+			return WeatherObserved.staticSearchStrTemperature(siteRequest_, (Double)o);
+		case "solarRadiation":
+			return WeatherObserved.staticSearchStrSolarRadiation(siteRequest_, (Double)o);
+		case "streamGauge":
+			return WeatherObserved.staticSearchStrStreamGauge(siteRequest_, (Double)o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchStrUVIndexMax(siteRequest_, (Double)o);
 		case "visibility":
 			return WeatherObserved.staticSearchStrVisibility(siteRequest_, (String)o);
 		case "weatherType":
 			return WeatherObserved.staticSearchStrWeatherType(siteRequest_, (String)o);
-		case "windDirection":
-			return WeatherObserved.staticSearchStrWindDirection(siteRequest_, (Double)o);
-		case "windSpeed":
-			return WeatherObserved.staticSearchStrWindSpeed(siteRequest_, (Double)o);
+		case "dewPoint":
+			return WeatherObserved.staticSearchStrDewPoint(siteRequest_, (Double)o);
+		case "diffuseIrradiation":
+			return WeatherObserved.staticSearchStrDiffuseIrradiation(siteRequest_, (Double)o);
+		case "directIrradiation":
+			return WeatherObserved.staticSearchStrDirectIrradiation(siteRequest_, (Double)o);
+		case "illuminance":
+			return WeatherObserved.staticSearchStrIlluminance(siteRequest_, (Double)o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchStrNgsildData(siteRequest_, (String)o);
 		case "entityId":
 			return WeatherObserved.staticSearchStrEntityId(siteRequest_, (String)o);
 		case "entityShortId":
@@ -4345,8 +4347,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchStrNgsildTenant(siteRequest_, (String)o);
 		case "ngsildPath":
 			return WeatherObserved.staticSearchStrNgsildPath(siteRequest_, (String)o);
-		case "ngsildData":
-			return WeatherObserved.staticSearchStrNgsildData(siteRequest_, (String)o);
 		case "ngsildContext":
 			return WeatherObserved.staticSearchStrNgsildContext(siteRequest_, (String)o);
 			default:
@@ -4371,6 +4371,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqAddress(siteRequest_, o);
 		case "alternateName":
 			return WeatherObserved.staticSearchFqAlternateName(siteRequest_, o);
+		case "location":
+			return WeatherObserved.staticSearchFqLocation(siteRequest_, o);
 		case "areaServedColors":
 			return WeatherObserved.staticSearchFqAreaServedColors(siteRequest_, o);
 		case "areaServedTitles":
@@ -4379,6 +4381,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqAreaServedLinks(siteRequest_, o);
 		case "areaServed":
 			return WeatherObserved.staticSearchFqAreaServed(siteRequest_, o);
+		case "dataProvider":
+			return WeatherObserved.staticSearchFqDataProvider(siteRequest_, o);
+		case "dateCreated":
+			return WeatherObserved.staticSearchFqDateCreated(siteRequest_, o);
+		case "dateModified":
+			return WeatherObserved.staticSearchFqDateModified(siteRequest_, o);
+		case "dateObserved":
+			return WeatherObserved.staticSearchFqDateObserved(siteRequest_, o);
+		case "owner":
+			return WeatherObserved.staticSearchFqOwner(siteRequest_, o);
+		case "refDevice":
+			return WeatherObserved.staticSearchFqRefDevice(siteRequest_, o);
+		case "refPointOfInterest":
+			return WeatherObserved.staticSearchFqRefPointOfInterest(siteRequest_, o);
+		case "source":
+			return WeatherObserved.staticSearchFqSource(siteRequest_, o);
+		case "seeAlso":
+			return WeatherObserved.staticSearchFqSeeAlso(siteRequest_, o);
 		case "airQualityIndex":
 			return WeatherObserved.staticSearchFqAirQualityIndex(siteRequest_, o);
 		case "airQualityIndexForecast":
@@ -4389,70 +4409,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqAqiMajorPollutantForecast(siteRequest_, o);
 		case "atmosphericPressure":
 			return WeatherObserved.staticSearchFqAtmosphericPressure(siteRequest_, o);
-		case "dataProvider":
-			return WeatherObserved.staticSearchFqDataProvider(siteRequest_, o);
-		case "dateCreated":
-			return WeatherObserved.staticSearchFqDateCreated(siteRequest_, o);
-		case "dateModified":
-			return WeatherObserved.staticSearchFqDateModified(siteRequest_, o);
-		case "dateObserved":
-			return WeatherObserved.staticSearchFqDateObserved(siteRequest_, o);
-		case "dewPoint":
-			return WeatherObserved.staticSearchFqDewPoint(siteRequest_, o);
-		case "diffuseIrradiation":
-			return WeatherObserved.staticSearchFqDiffuseIrradiation(siteRequest_, o);
-		case "directIrradiation":
-			return WeatherObserved.staticSearchFqDirectIrradiation(siteRequest_, o);
+		case "pressureTendency":
+			return WeatherObserved.staticSearchFqPressureTendency(siteRequest_, o);
 		case "gustSpeed":
 			return WeatherObserved.staticSearchFqGustSpeed(siteRequest_, o);
-		case "illuminance":
-			return WeatherObserved.staticSearchFqIlluminance(siteRequest_, o);
-		case "location":
-			return WeatherObserved.staticSearchFqLocation(siteRequest_, o);
-		case "owner":
-			return WeatherObserved.staticSearchFqOwner(siteRequest_, o);
+		case "windDirection":
+			return WeatherObserved.staticSearchFqWindDirection(siteRequest_, o);
+		case "windSpeed":
+			return WeatherObserved.staticSearchFqWindSpeed(siteRequest_, o);
 		case "precipitation":
 			return WeatherObserved.staticSearchFqPrecipitation(siteRequest_, o);
 		case "precipitationForecast":
 			return WeatherObserved.staticSearchFqPrecipitationForecast(siteRequest_, o);
-		case "pressureTendency":
-			return WeatherObserved.staticSearchFqPressureTendency(siteRequest_, o);
-		case "refDevice":
-			return WeatherObserved.staticSearchFqRefDevice(siteRequest_, o);
-		case "refPointOfInterest":
-			return WeatherObserved.staticSearchFqRefPointOfInterest(siteRequest_, o);
 		case "relativeHumidity":
 			return WeatherObserved.staticSearchFqRelativeHumidity(siteRequest_, o);
 		case "relativeHumidityForecast":
 			return WeatherObserved.staticSearchFqRelativeHumidityForecast(siteRequest_, o);
-		case "seeAlso":
-			return WeatherObserved.staticSearchFqSeeAlso(siteRequest_, o);
 		case "snowHeight":
 			return WeatherObserved.staticSearchFqSnowHeight(siteRequest_, o);
-		case "solarRadiation":
-			return WeatherObserved.staticSearchFqSolarRadiation(siteRequest_, o);
-		case "source":
-			return WeatherObserved.staticSearchFqSource(siteRequest_, o);
-		case "streamGauge":
-			return WeatherObserved.staticSearchFqStreamGauge(siteRequest_, o);
-		case "temperature":
-			return WeatherObserved.staticSearchFqTemperature(siteRequest_, o);
 		case "airTemperatureForecast":
 			return WeatherObserved.staticSearchFqAirTemperatureForecast(siteRequest_, o);
 		case "airTemperatureTSA":
 			return WeatherObserved.staticSearchFqAirTemperatureTSA(siteRequest_, o);
 		case "feelsLikeTemperature":
 			return WeatherObserved.staticSearchFqFeelsLikeTemperature(siteRequest_, o);
+		case "temperature":
+			return WeatherObserved.staticSearchFqTemperature(siteRequest_, o);
+		case "solarRadiation":
+			return WeatherObserved.staticSearchFqSolarRadiation(siteRequest_, o);
+		case "streamGauge":
+			return WeatherObserved.staticSearchFqStreamGauge(siteRequest_, o);
 		case "uVIndexMax":
 			return WeatherObserved.staticSearchFqUVIndexMax(siteRequest_, o);
 		case "visibility":
 			return WeatherObserved.staticSearchFqVisibility(siteRequest_, o);
 		case "weatherType":
 			return WeatherObserved.staticSearchFqWeatherType(siteRequest_, o);
-		case "windDirection":
-			return WeatherObserved.staticSearchFqWindDirection(siteRequest_, o);
-		case "windSpeed":
-			return WeatherObserved.staticSearchFqWindSpeed(siteRequest_, o);
+		case "dewPoint":
+			return WeatherObserved.staticSearchFqDewPoint(siteRequest_, o);
+		case "diffuseIrradiation":
+			return WeatherObserved.staticSearchFqDiffuseIrradiation(siteRequest_, o);
+		case "directIrradiation":
+			return WeatherObserved.staticSearchFqDirectIrradiation(siteRequest_, o);
+		case "illuminance":
+			return WeatherObserved.staticSearchFqIlluminance(siteRequest_, o);
+		case "ngsildData":
+			return WeatherObserved.staticSearchFqNgsildData(siteRequest_, o);
 		case "entityId":
 			return WeatherObserved.staticSearchFqEntityId(siteRequest_, o);
 		case "entityShortId":
@@ -4461,8 +4463,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return WeatherObserved.staticSearchFqNgsildTenant(siteRequest_, o);
 		case "ngsildPath":
 			return WeatherObserved.staticSearchFqNgsildPath(siteRequest_, o);
-		case "ngsildData":
-			return WeatherObserved.staticSearchFqNgsildData(siteRequest_, o);
 		case "ngsildContext":
 			return WeatherObserved.staticSearchFqNgsildContext(siteRequest_, o);
 			default:
@@ -4517,6 +4517,14 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("alternateName");
 				return val;
+			} else if("location".equals(varLower)) {
+				if(val instanceof String) {
+					setLocation((String)val);
+				} else if(val instanceof Point) {
+					setLocation((Point)val);
+				}
+				saves.add("location");
+				return val;
 			} else if("areaserved".equals(varLower)) {
 				if(val instanceof Polygon) {
 					setAreaServed((Polygon)val);
@@ -4524,6 +4532,66 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setAreaServed(val == null ? null : val.toString());
 				}
 				saves.add("areaServed");
+				return val;
+			} else if("dataprovider".equals(varLower)) {
+				if(val instanceof String) {
+					setDataProvider((String)val);
+				}
+				saves.add("dataProvider");
+				return val;
+			} else if("datecreated".equals(varLower)) {
+				if(val instanceof String) {
+					setDateCreated((String)val);
+				}
+				saves.add("dateCreated");
+				return val;
+			} else if("datemodified".equals(varLower)) {
+				if(val instanceof String) {
+					setDateModified((String)val);
+				}
+				saves.add("dateModified");
+				return val;
+			} else if("dateobserved".equals(varLower)) {
+				if(val instanceof String) {
+					setDateObserved((String)val);
+				}
+				saves.add("dateObserved");
+				return val;
+			} else if("owner".equals(varLower)) {
+				if(val instanceof String) {
+					setOwner((String)val);
+				} else if(val instanceof JsonObject) {
+					setOwner((JsonObject)val);
+				}
+				saves.add("owner");
+				return val;
+			} else if("refdevice".equals(varLower)) {
+				if(val instanceof String) {
+					setRefDevice((String)val);
+				} else if(val instanceof JsonObject) {
+					setRefDevice((JsonObject)val);
+				}
+				saves.add("refDevice");
+				return val;
+			} else if("refpointofinterest".equals(varLower)) {
+				if(val instanceof String) {
+					setRefPointOfInterest((String)val);
+				}
+				saves.add("refPointOfInterest");
+				return val;
+			} else if("source".equals(varLower)) {
+				if(val instanceof String) {
+					setSource((String)val);
+				}
+				saves.add("source");
+				return val;
+			} else if("seealso".equals(varLower)) {
+				if(val instanceof String) {
+					setSeeAlso((String)val);
+				} else if(val instanceof JsonObject) {
+					setSeeAlso((JsonObject)val);
+				}
+				saves.add("seeAlso");
 				return val;
 			} else if("airqualityindex".equals(varLower)) {
 				if(val instanceof String) {
@@ -4561,53 +4629,13 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("atmosphericPressure");
 				return val;
-			} else if("dataprovider".equals(varLower)) {
+			} else if("pressuretendency".equals(varLower)) {
 				if(val instanceof String) {
-					setDataProvider((String)val);
+					setPressureTendency((String)val);
+				} else if(val instanceof JsonObject) {
+					setPressureTendency((JsonObject)val);
 				}
-				saves.add("dataProvider");
-				return val;
-			} else if("datecreated".equals(varLower)) {
-				if(val instanceof String) {
-					setDateCreated((String)val);
-				}
-				saves.add("dateCreated");
-				return val;
-			} else if("datemodified".equals(varLower)) {
-				if(val instanceof String) {
-					setDateModified((String)val);
-				}
-				saves.add("dateModified");
-				return val;
-			} else if("dateobserved".equals(varLower)) {
-				if(val instanceof String) {
-					setDateObserved((String)val);
-				}
-				saves.add("dateObserved");
-				return val;
-			} else if("dewpoint".equals(varLower)) {
-				if(val instanceof String) {
-					setDewPoint((String)val);
-				} else if(val instanceof Number) {
-					setDewPoint(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("dewPoint");
-				return val;
-			} else if("diffuseirradiation".equals(varLower)) {
-				if(val instanceof String) {
-					setDiffuseIrradiation((String)val);
-				} else if(val instanceof Number) {
-					setDiffuseIrradiation(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("diffuseIrradiation");
-				return val;
-			} else if("directirradiation".equals(varLower)) {
-				if(val instanceof String) {
-					setDirectIrradiation((String)val);
-				} else if(val instanceof Number) {
-					setDirectIrradiation(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("directIrradiation");
+				saves.add("pressureTendency");
 				return val;
 			} else if("gustspeed".equals(varLower)) {
 				if(val instanceof String) {
@@ -4617,29 +4645,21 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("gustSpeed");
 				return val;
-			} else if("illuminance".equals(varLower)) {
+			} else if("winddirection".equals(varLower)) {
 				if(val instanceof String) {
-					setIlluminance((String)val);
+					setWindDirection((String)val);
 				} else if(val instanceof Number) {
-					setIlluminance(new BigDecimal(((Number)val).doubleValue()));
+					setWindDirection(new BigDecimal(((Number)val).doubleValue()));
 				}
-				saves.add("illuminance");
+				saves.add("windDirection");
 				return val;
-			} else if("location".equals(varLower)) {
+			} else if("windspeed".equals(varLower)) {
 				if(val instanceof String) {
-					setLocation((String)val);
-				} else if(val instanceof Point) {
-					setLocation((Point)val);
+					setWindSpeed((String)val);
+				} else if(val instanceof Number) {
+					setWindSpeed(new BigDecimal(((Number)val).doubleValue()));
 				}
-				saves.add("location");
-				return val;
-			} else if("owner".equals(varLower)) {
-				if(val instanceof String) {
-					setOwner((String)val);
-				} else if(val instanceof JsonObject) {
-					setOwner((JsonObject)val);
-				}
-				saves.add("owner");
+				saves.add("windSpeed");
 				return val;
 			} else if("precipitation".equals(varLower)) {
 				if(val instanceof String) {
@@ -4657,28 +4677,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("precipitationForecast");
 				return val;
-			} else if("pressuretendency".equals(varLower)) {
-				if(val instanceof String) {
-					setPressureTendency((String)val);
-				} else if(val instanceof JsonObject) {
-					setPressureTendency((JsonObject)val);
-				}
-				saves.add("pressureTendency");
-				return val;
-			} else if("refdevice".equals(varLower)) {
-				if(val instanceof String) {
-					setRefDevice((String)val);
-				} else if(val instanceof JsonObject) {
-					setRefDevice((JsonObject)val);
-				}
-				saves.add("refDevice");
-				return val;
-			} else if("refpointofinterest".equals(varLower)) {
-				if(val instanceof String) {
-					setRefPointOfInterest((String)val);
-				}
-				saves.add("refPointOfInterest");
-				return val;
 			} else if("relativehumidity".equals(varLower)) {
 				if(val instanceof String) {
 					setRelativeHumidity((String)val);
@@ -4695,14 +4693,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("relativeHumidityForecast");
 				return val;
-			} else if("seealso".equals(varLower)) {
-				if(val instanceof String) {
-					setSeeAlso((String)val);
-				} else if(val instanceof JsonObject) {
-					setSeeAlso((JsonObject)val);
-				}
-				saves.add("seeAlso");
-				return val;
 			} else if("snowheight".equals(varLower)) {
 				if(val instanceof String) {
 					setSnowHeight((String)val);
@@ -4710,36 +4700,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setSnowHeight(new BigDecimal(((Number)val).doubleValue()));
 				}
 				saves.add("snowHeight");
-				return val;
-			} else if("solarradiation".equals(varLower)) {
-				if(val instanceof String) {
-					setSolarRadiation((String)val);
-				} else if(val instanceof Number) {
-					setSolarRadiation(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("solarRadiation");
-				return val;
-			} else if("source".equals(varLower)) {
-				if(val instanceof String) {
-					setSource((String)val);
-				}
-				saves.add("source");
-				return val;
-			} else if("streamgauge".equals(varLower)) {
-				if(val instanceof String) {
-					setStreamGauge((String)val);
-				} else if(val instanceof Number) {
-					setStreamGauge(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("streamGauge");
-				return val;
-			} else if("temperature".equals(varLower)) {
-				if(val instanceof String) {
-					setTemperature((String)val);
-				} else if(val instanceof Number) {
-					setTemperature(new BigDecimal(((Number)val).doubleValue()));
-				}
-				saves.add("temperature");
 				return val;
 			} else if("airtemperatureforecast".equals(varLower)) {
 				if(val instanceof String) {
@@ -4765,6 +4725,30 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("feelsLikeTemperature");
 				return val;
+			} else if("temperature".equals(varLower)) {
+				if(val instanceof String) {
+					setTemperature((String)val);
+				} else if(val instanceof Number) {
+					setTemperature(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("temperature");
+				return val;
+			} else if("solarradiation".equals(varLower)) {
+				if(val instanceof String) {
+					setSolarRadiation((String)val);
+				} else if(val instanceof Number) {
+					setSolarRadiation(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("solarRadiation");
+				return val;
+			} else if("streamgauge".equals(varLower)) {
+				if(val instanceof String) {
+					setStreamGauge((String)val);
+				} else if(val instanceof Number) {
+					setStreamGauge(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("streamGauge");
+				return val;
 			} else if("uvindexmax".equals(varLower)) {
 				if(val instanceof String) {
 					setUVIndexMax((String)val);
@@ -4787,21 +4771,45 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				}
 				saves.add("weatherType");
 				return val;
-			} else if("winddirection".equals(varLower)) {
+			} else if("dewpoint".equals(varLower)) {
 				if(val instanceof String) {
-					setWindDirection((String)val);
+					setDewPoint((String)val);
 				} else if(val instanceof Number) {
-					setWindDirection(new BigDecimal(((Number)val).doubleValue()));
+					setDewPoint(new BigDecimal(((Number)val).doubleValue()));
 				}
-				saves.add("windDirection");
+				saves.add("dewPoint");
 				return val;
-			} else if("windspeed".equals(varLower)) {
+			} else if("diffuseirradiation".equals(varLower)) {
 				if(val instanceof String) {
-					setWindSpeed((String)val);
+					setDiffuseIrradiation((String)val);
 				} else if(val instanceof Number) {
-					setWindSpeed(new BigDecimal(((Number)val).doubleValue()));
+					setDiffuseIrradiation(new BigDecimal(((Number)val).doubleValue()));
 				}
-				saves.add("windSpeed");
+				saves.add("diffuseIrradiation");
+				return val;
+			} else if("directirradiation".equals(varLower)) {
+				if(val instanceof String) {
+					setDirectIrradiation((String)val);
+				} else if(val instanceof Number) {
+					setDirectIrradiation(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("directIrradiation");
+				return val;
+			} else if("illuminance".equals(varLower)) {
+				if(val instanceof String) {
+					setIlluminance((String)val);
+				} else if(val instanceof Number) {
+					setIlluminance(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("illuminance");
+				return val;
+			} else if("ngsilddata".equals(varLower)) {
+				if(val instanceof String) {
+					setNgsildData((String)val);
+				} else if(val instanceof JsonObject) {
+					setNgsildData((JsonObject)val);
+				}
+				saves.add("ngsildData");
 				return val;
 			} else if("entityid".equals(varLower)) {
 				if(val instanceof String) {
@@ -4820,14 +4828,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					setNgsildPath((String)val);
 				}
 				saves.add("ngsildPath");
-				return val;
-			} else if("ngsilddata".equals(varLower)) {
-				if(val instanceof String) {
-					setNgsildData((String)val);
-				} else if(val instanceof JsonObject) {
-					setNgsildData((JsonObject)val);
-				}
-				saves.add("ngsildData");
 				return val;
 			} else if("ngsildcontext".equals(varLower)) {
 				if(val instanceof String) {
@@ -4876,6 +4876,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setAlternateName(alternateName);
 			}
 
+			if(saves.contains("location")) {
+				Point location = (Point)doc.get("location_docvalues_location");
+				if(location != null)
+					oWeatherObserved.setLocation(location);
+			}
+
 			if(saves.contains("areaServedColors")) {
 				List<String> areaServedColors = (List<String>)doc.get("areaServedColors_indexedstored_strings");
 				if(areaServedColors != null)
@@ -4898,6 +4904,60 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				Polygon areaServed = (Polygon)doc.get("areaServed_docvalues_location");
 				if(areaServed != null)
 					oWeatherObserved.setAreaServed(areaServed);
+			}
+
+			if(saves.contains("dataProvider")) {
+				String dataProvider = (String)doc.get("dataProvider_docvalues_string");
+				if(dataProvider != null)
+					oWeatherObserved.setDataProvider(dataProvider);
+			}
+
+			if(saves.contains("dateCreated")) {
+				String dateCreated = (String)doc.get("dateCreated_docvalues_string");
+				if(dateCreated != null)
+					oWeatherObserved.setDateCreated(dateCreated);
+			}
+
+			if(saves.contains("dateModified")) {
+				String dateModified = (String)doc.get("dateModified_docvalues_string");
+				if(dateModified != null)
+					oWeatherObserved.setDateModified(dateModified);
+			}
+
+			if(saves.contains("dateObserved")) {
+				String dateObserved = (String)doc.get("dateObserved_docvalues_string");
+				if(dateObserved != null)
+					oWeatherObserved.setDateObserved(dateObserved);
+			}
+
+			if(saves.contains("owner")) {
+				String owner = (String)doc.get("owner_docvalues_string");
+				if(owner != null)
+					oWeatherObserved.setOwner(owner);
+			}
+
+			if(saves.contains("refDevice")) {
+				String refDevice = (String)doc.get("refDevice_docvalues_string");
+				if(refDevice != null)
+					oWeatherObserved.setRefDevice(refDevice);
+			}
+
+			if(saves.contains("refPointOfInterest")) {
+				String refPointOfInterest = (String)doc.get("refPointOfInterest_docvalues_string");
+				if(refPointOfInterest != null)
+					oWeatherObserved.setRefPointOfInterest(refPointOfInterest);
+			}
+
+			if(saves.contains("source")) {
+				String source = (String)doc.get("source_docvalues_string");
+				if(source != null)
+					oWeatherObserved.setSource(source);
+			}
+
+			if(saves.contains("seeAlso")) {
+				String seeAlso = (String)doc.get("seeAlso_docvalues_string");
+				if(seeAlso != null)
+					oWeatherObserved.setSeeAlso(seeAlso);
 			}
 
 			if(saves.contains("airQualityIndex")) {
@@ -4930,46 +4990,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setAtmosphericPressure(atmosphericPressure);
 			}
 
-			if(saves.contains("dataProvider")) {
-				String dataProvider = (String)doc.get("dataProvider_docvalues_string");
-				if(dataProvider != null)
-					oWeatherObserved.setDataProvider(dataProvider);
-			}
-
-			if(saves.contains("dateCreated")) {
-				String dateCreated = (String)doc.get("dateCreated_docvalues_string");
-				if(dateCreated != null)
-					oWeatherObserved.setDateCreated(dateCreated);
-			}
-
-			if(saves.contains("dateModified")) {
-				String dateModified = (String)doc.get("dateModified_docvalues_string");
-				if(dateModified != null)
-					oWeatherObserved.setDateModified(dateModified);
-			}
-
-			if(saves.contains("dateObserved")) {
-				String dateObserved = (String)doc.get("dateObserved_docvalues_string");
-				if(dateObserved != null)
-					oWeatherObserved.setDateObserved(dateObserved);
-			}
-
-			if(saves.contains("dewPoint")) {
-				Double dewPoint = (Double)doc.get("dewPoint_docvalues_double");
-				if(dewPoint != null)
-					oWeatherObserved.setDewPoint(dewPoint);
-			}
-
-			if(saves.contains("diffuseIrradiation")) {
-				Double diffuseIrradiation = (Double)doc.get("diffuseIrradiation_docvalues_double");
-				if(diffuseIrradiation != null)
-					oWeatherObserved.setDiffuseIrradiation(diffuseIrradiation);
-			}
-
-			if(saves.contains("directIrradiation")) {
-				Double directIrradiation = (Double)doc.get("directIrradiation_docvalues_double");
-				if(directIrradiation != null)
-					oWeatherObserved.setDirectIrradiation(directIrradiation);
+			if(saves.contains("pressureTendency")) {
+				String pressureTendency = (String)doc.get("pressureTendency_docvalues_string");
+				if(pressureTendency != null)
+					oWeatherObserved.setPressureTendency(pressureTendency);
 			}
 
 			if(saves.contains("gustSpeed")) {
@@ -4978,22 +5002,16 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setGustSpeed(gustSpeed);
 			}
 
-			if(saves.contains("illuminance")) {
-				Double illuminance = (Double)doc.get("illuminance_docvalues_double");
-				if(illuminance != null)
-					oWeatherObserved.setIlluminance(illuminance);
+			if(saves.contains("windDirection")) {
+				Double windDirection = (Double)doc.get("windDirection_docvalues_double");
+				if(windDirection != null)
+					oWeatherObserved.setWindDirection(windDirection);
 			}
 
-			if(saves.contains("location")) {
-				Point location = (Point)doc.get("location_docvalues_location");
-				if(location != null)
-					oWeatherObserved.setLocation(location);
-			}
-
-			if(saves.contains("owner")) {
-				String owner = (String)doc.get("owner_docvalues_string");
-				if(owner != null)
-					oWeatherObserved.setOwner(owner);
+			if(saves.contains("windSpeed")) {
+				Double windSpeed = (Double)doc.get("windSpeed_docvalues_double");
+				if(windSpeed != null)
+					oWeatherObserved.setWindSpeed(windSpeed);
 			}
 
 			if(saves.contains("precipitation")) {
@@ -5008,24 +5026,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setPrecipitationForecast(precipitationForecast);
 			}
 
-			if(saves.contains("pressureTendency")) {
-				String pressureTendency = (String)doc.get("pressureTendency_docvalues_string");
-				if(pressureTendency != null)
-					oWeatherObserved.setPressureTendency(pressureTendency);
-			}
-
-			if(saves.contains("refDevice")) {
-				String refDevice = (String)doc.get("refDevice_docvalues_string");
-				if(refDevice != null)
-					oWeatherObserved.setRefDevice(refDevice);
-			}
-
-			if(saves.contains("refPointOfInterest")) {
-				String refPointOfInterest = (String)doc.get("refPointOfInterest_docvalues_string");
-				if(refPointOfInterest != null)
-					oWeatherObserved.setRefPointOfInterest(refPointOfInterest);
-			}
-
 			if(saves.contains("relativeHumidity")) {
 				Double relativeHumidity = (Double)doc.get("relativeHumidity_docvalues_double");
 				if(relativeHumidity != null)
@@ -5038,40 +5038,10 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setRelativeHumidityForecast(relativeHumidityForecast);
 			}
 
-			if(saves.contains("seeAlso")) {
-				String seeAlso = (String)doc.get("seeAlso_docvalues_string");
-				if(seeAlso != null)
-					oWeatherObserved.setSeeAlso(seeAlso);
-			}
-
 			if(saves.contains("snowHeight")) {
 				Double snowHeight = (Double)doc.get("snowHeight_docvalues_double");
 				if(snowHeight != null)
 					oWeatherObserved.setSnowHeight(snowHeight);
-			}
-
-			if(saves.contains("solarRadiation")) {
-				Double solarRadiation = (Double)doc.get("solarRadiation_docvalues_double");
-				if(solarRadiation != null)
-					oWeatherObserved.setSolarRadiation(solarRadiation);
-			}
-
-			if(saves.contains("source")) {
-				String source = (String)doc.get("source_docvalues_string");
-				if(source != null)
-					oWeatherObserved.setSource(source);
-			}
-
-			if(saves.contains("streamGauge")) {
-				Double streamGauge = (Double)doc.get("streamGauge_docvalues_double");
-				if(streamGauge != null)
-					oWeatherObserved.setStreamGauge(streamGauge);
-			}
-
-			if(saves.contains("temperature")) {
-				Double temperature = (Double)doc.get("temperature_docvalues_double");
-				if(temperature != null)
-					oWeatherObserved.setTemperature(temperature);
 			}
 
 			if(saves.contains("airTemperatureForecast")) {
@@ -5092,6 +5062,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setFeelsLikeTemperature(feelsLikeTemperature);
 			}
 
+			if(saves.contains("temperature")) {
+				Double temperature = (Double)doc.get("temperature_docvalues_double");
+				if(temperature != null)
+					oWeatherObserved.setTemperature(temperature);
+			}
+
+			if(saves.contains("solarRadiation")) {
+				Double solarRadiation = (Double)doc.get("solarRadiation_docvalues_double");
+				if(solarRadiation != null)
+					oWeatherObserved.setSolarRadiation(solarRadiation);
+			}
+
+			if(saves.contains("streamGauge")) {
+				Double streamGauge = (Double)doc.get("streamGauge_docvalues_double");
+				if(streamGauge != null)
+					oWeatherObserved.setStreamGauge(streamGauge);
+			}
+
 			if(saves.contains("uVIndexMax")) {
 				Double uVIndexMax = (Double)doc.get("uVIndexMax_docvalues_double");
 				if(uVIndexMax != null)
@@ -5110,16 +5098,34 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 					oWeatherObserved.setWeatherType(weatherType);
 			}
 
-			if(saves.contains("windDirection")) {
-				Double windDirection = (Double)doc.get("windDirection_docvalues_double");
-				if(windDirection != null)
-					oWeatherObserved.setWindDirection(windDirection);
+			if(saves.contains("dewPoint")) {
+				Double dewPoint = (Double)doc.get("dewPoint_docvalues_double");
+				if(dewPoint != null)
+					oWeatherObserved.setDewPoint(dewPoint);
 			}
 
-			if(saves.contains("windSpeed")) {
-				Double windSpeed = (Double)doc.get("windSpeed_docvalues_double");
-				if(windSpeed != null)
-					oWeatherObserved.setWindSpeed(windSpeed);
+			if(saves.contains("diffuseIrradiation")) {
+				Double diffuseIrradiation = (Double)doc.get("diffuseIrradiation_docvalues_double");
+				if(diffuseIrradiation != null)
+					oWeatherObserved.setDiffuseIrradiation(diffuseIrradiation);
+			}
+
+			if(saves.contains("directIrradiation")) {
+				Double directIrradiation = (Double)doc.get("directIrradiation_docvalues_double");
+				if(directIrradiation != null)
+					oWeatherObserved.setDirectIrradiation(directIrradiation);
+			}
+
+			if(saves.contains("illuminance")) {
+				Double illuminance = (Double)doc.get("illuminance_docvalues_double");
+				if(illuminance != null)
+					oWeatherObserved.setIlluminance(illuminance);
+			}
+
+			if(saves.contains("ngsildData")) {
+				String ngsildData = (String)doc.get("ngsildData_docvalues_string");
+				if(ngsildData != null)
+					oWeatherObserved.setNgsildData(ngsildData);
 			}
 
 			if(saves.contains("entityId")) {
@@ -5138,12 +5144,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				String ngsildPath = (String)doc.get("ngsildPath_docvalues_string");
 				if(ngsildPath != null)
 					oWeatherObserved.setNgsildPath(ngsildPath);
-			}
-
-			if(saves.contains("ngsildData")) {
-				String ngsildData = (String)doc.get("ngsildData_docvalues_string");
-				if(ngsildData != null)
-					oWeatherObserved.setNgsildData(ngsildData);
 			}
 
 			if(saves.contains("ngsildContext")) {
@@ -5168,6 +5168,9 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		}
 		if(alternateName != null) {
 			doc.put("alternateName_docvalues_string", alternateName);
+		}
+		if(location != null) {
+			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
 		}
 		if(areaServedColors != null) {
 			JsonArray l = new JsonArray();
@@ -5195,6 +5198,33 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			areaServed.getPoints().stream().map(point -> new JsonArray().add(Double.valueOf(point.getX())).add(Double.valueOf(point.getY()))).collect(Collectors.toList()).forEach(pointArray -> pointsArray.add(pointArray));
 			doc.put("areaServed_docvalues_location", new JsonObject().put("type", "LineString").put("coordinates", pointsArray).toString());
 		}
+		if(dataProvider != null) {
+			doc.put("dataProvider_docvalues_string", dataProvider);
+		}
+		if(dateCreated != null) {
+			doc.put("dateCreated_docvalues_string", dateCreated);
+		}
+		if(dateModified != null) {
+			doc.put("dateModified_docvalues_string", dateModified);
+		}
+		if(dateObserved != null) {
+			doc.put("dateObserved_docvalues_string", dateObserved);
+		}
+		if(owner != null) {
+			doc.put("owner_docvalues_string", owner.toString());
+		}
+		if(refDevice != null) {
+			doc.put("refDevice_docvalues_string", refDevice.toString());
+		}
+		if(refPointOfInterest != null) {
+			doc.put("refPointOfInterest_docvalues_string", refPointOfInterest);
+		}
+		if(source != null) {
+			doc.put("source_docvalues_string", source);
+		}
+		if(seeAlso != null) {
+			doc.put("seeAlso_docvalues_string", seeAlso.toString());
+		}
 		if(airQualityIndex != null) {
 			doc.put("airQualityIndex_docvalues_double", airQualityIndex.doubleValue());
 		}
@@ -5210,38 +5240,17 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(atmosphericPressure != null) {
 			doc.put("atmosphericPressure_docvalues_double", atmosphericPressure.doubleValue());
 		}
-		if(dataProvider != null) {
-			doc.put("dataProvider_docvalues_string", dataProvider);
-		}
-		if(dateCreated != null) {
-			doc.put("dateCreated_docvalues_string", dateCreated);
-		}
-		if(dateModified != null) {
-			doc.put("dateModified_docvalues_string", dateModified);
-		}
-		if(dateObserved != null) {
-			doc.put("dateObserved_docvalues_string", dateObserved);
-		}
-		if(dewPoint != null) {
-			doc.put("dewPoint_docvalues_double", dewPoint.doubleValue());
-		}
-		if(diffuseIrradiation != null) {
-			doc.put("diffuseIrradiation_docvalues_double", diffuseIrradiation.doubleValue());
-		}
-		if(directIrradiation != null) {
-			doc.put("directIrradiation_docvalues_double", directIrradiation.doubleValue());
+		if(pressureTendency != null) {
+			doc.put("pressureTendency_docvalues_string", pressureTendency.toString());
 		}
 		if(gustSpeed != null) {
 			doc.put("gustSpeed_docvalues_double", gustSpeed.doubleValue());
 		}
-		if(illuminance != null) {
-			doc.put("illuminance_docvalues_double", illuminance.doubleValue());
+		if(windDirection != null) {
+			doc.put("windDirection_docvalues_double", windDirection.doubleValue());
 		}
-		if(location != null) {
-			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
-		}
-		if(owner != null) {
-			doc.put("owner_docvalues_string", owner.toString());
+		if(windSpeed != null) {
+			doc.put("windSpeed_docvalues_double", windSpeed.doubleValue());
 		}
 		if(precipitation != null) {
 			doc.put("precipitation_docvalues_double", precipitation.doubleValue());
@@ -5249,38 +5258,14 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(precipitationForecast != null) {
 			doc.put("precipitationForecast_docvalues_double", precipitationForecast.doubleValue());
 		}
-		if(pressureTendency != null) {
-			doc.put("pressureTendency_docvalues_string", pressureTendency.toString());
-		}
-		if(refDevice != null) {
-			doc.put("refDevice_docvalues_string", refDevice.toString());
-		}
-		if(refPointOfInterest != null) {
-			doc.put("refPointOfInterest_docvalues_string", refPointOfInterest);
-		}
 		if(relativeHumidity != null) {
 			doc.put("relativeHumidity_docvalues_double", relativeHumidity.doubleValue());
 		}
 		if(relativeHumidityForecast != null) {
 			doc.put("relativeHumidityForecast_docvalues_double", relativeHumidityForecast.doubleValue());
 		}
-		if(seeAlso != null) {
-			doc.put("seeAlso_docvalues_string", seeAlso.toString());
-		}
 		if(snowHeight != null) {
 			doc.put("snowHeight_docvalues_double", snowHeight.doubleValue());
-		}
-		if(solarRadiation != null) {
-			doc.put("solarRadiation_docvalues_double", solarRadiation.doubleValue());
-		}
-		if(source != null) {
-			doc.put("source_docvalues_string", source);
-		}
-		if(streamGauge != null) {
-			doc.put("streamGauge_docvalues_double", streamGauge.doubleValue());
-		}
-		if(temperature != null) {
-			doc.put("temperature_docvalues_double", temperature.doubleValue());
 		}
 		if(airTemperatureForecast != null) {
 			doc.put("airTemperatureForecast_docvalues_double", airTemperatureForecast.doubleValue());
@@ -5291,6 +5276,15 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(feelsLikeTemperature != null) {
 			doc.put("feelsLikeTemperature_docvalues_double", feelsLikeTemperature.doubleValue());
 		}
+		if(temperature != null) {
+			doc.put("temperature_docvalues_double", temperature.doubleValue());
+		}
+		if(solarRadiation != null) {
+			doc.put("solarRadiation_docvalues_double", solarRadiation.doubleValue());
+		}
+		if(streamGauge != null) {
+			doc.put("streamGauge_docvalues_double", streamGauge.doubleValue());
+		}
 		if(uVIndexMax != null) {
 			doc.put("uVIndexMax_docvalues_double", uVIndexMax.doubleValue());
 		}
@@ -5300,11 +5294,20 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		if(weatherType != null) {
 			doc.put("weatherType_docvalues_string", weatherType);
 		}
-		if(windDirection != null) {
-			doc.put("windDirection_docvalues_double", windDirection.doubleValue());
+		if(dewPoint != null) {
+			doc.put("dewPoint_docvalues_double", dewPoint.doubleValue());
 		}
-		if(windSpeed != null) {
-			doc.put("windSpeed_docvalues_double", windSpeed.doubleValue());
+		if(diffuseIrradiation != null) {
+			doc.put("diffuseIrradiation_docvalues_double", diffuseIrradiation.doubleValue());
+		}
+		if(directIrradiation != null) {
+			doc.put("directIrradiation_docvalues_double", directIrradiation.doubleValue());
+		}
+		if(illuminance != null) {
+			doc.put("illuminance_docvalues_double", illuminance.doubleValue());
+		}
+		if(ngsildData != null) {
+			doc.put("ngsildData_docvalues_string", ngsildData.toString());
 		}
 		if(entityId != null) {
 			doc.put("entityId_docvalues_string", entityId);
@@ -5314,9 +5317,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		}
 		if(ngsildPath != null) {
 			doc.put("ngsildPath_docvalues_string", ngsildPath);
-		}
-		if(ngsildData != null) {
-			doc.put("ngsildData_docvalues_string", ngsildData.toString());
 		}
 		if(ngsildContext != null) {
 			doc.put("ngsildContext_docvalues_string", ngsildContext);
@@ -5335,6 +5335,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "address_docvalues_string";
 			case "alternateName":
 				return "alternateName_docvalues_string";
+			case "location":
+				return "location_docvalues_location";
 			case "areaServedColors":
 				return "areaServedColors_indexedstored_strings";
 			case "areaServedTitles":
@@ -5343,6 +5345,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks_indexedstored_strings";
 			case "areaServed":
 				return "areaServed_docvalues_location";
+			case "dataProvider":
+				return "dataProvider_docvalues_string";
+			case "dateCreated":
+				return "dateCreated_docvalues_string";
+			case "dateModified":
+				return "dateModified_docvalues_string";
+			case "dateObserved":
+				return "dateObserved_docvalues_string";
+			case "owner":
+				return "owner_docvalues_string";
+			case "refDevice":
+				return "refDevice_docvalues_string";
+			case "refPointOfInterest":
+				return "refPointOfInterest_docvalues_string";
+			case "source":
+				return "source_docvalues_string";
+			case "seeAlso":
+				return "seeAlso_docvalues_string";
 			case "airQualityIndex":
 				return "airQualityIndex_docvalues_double";
 			case "airQualityIndexForecast":
@@ -5353,78 +5373,58 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutantForecast_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
-			case "dataProvider":
-				return "dataProvider_docvalues_string";
-			case "dateCreated":
-				return "dateCreated_docvalues_string";
-			case "dateModified":
-				return "dateModified_docvalues_string";
-			case "dateObserved":
-				return "dateObserved_docvalues_string";
-			case "dewPoint":
-				return "dewPoint_docvalues_double";
-			case "diffuseIrradiation":
-				return "diffuseIrradiation_docvalues_double";
-			case "directIrradiation":
-				return "directIrradiation_docvalues_double";
+			case "pressureTendency":
+				return "pressureTendency_docvalues_string";
 			case "gustSpeed":
 				return "gustSpeed_docvalues_double";
-			case "illuminance":
-				return "illuminance_docvalues_double";
-			case "location":
-				return "location_docvalues_location";
-			case "owner":
-				return "owner_docvalues_string";
+			case "windDirection":
+				return "windDirection_docvalues_double";
+			case "windSpeed":
+				return "windSpeed_docvalues_double";
 			case "precipitation":
 				return "precipitation_docvalues_double";
 			case "precipitationForecast":
 				return "precipitationForecast_docvalues_double";
-			case "pressureTendency":
-				return "pressureTendency_docvalues_string";
-			case "refDevice":
-				return "refDevice_docvalues_string";
-			case "refPointOfInterest":
-				return "refPointOfInterest_docvalues_string";
 			case "relativeHumidity":
 				return "relativeHumidity_docvalues_double";
 			case "relativeHumidityForecast":
 				return "relativeHumidityForecast_docvalues_double";
-			case "seeAlso":
-				return "seeAlso_docvalues_string";
 			case "snowHeight":
 				return "snowHeight_docvalues_double";
-			case "solarRadiation":
-				return "solarRadiation_docvalues_double";
-			case "source":
-				return "source_docvalues_string";
-			case "streamGauge":
-				return "streamGauge_docvalues_double";
-			case "temperature":
-				return "temperature_docvalues_double";
 			case "airTemperatureForecast":
 				return "airTemperatureForecast_docvalues_double";
 			case "airTemperatureTSA":
 				return "airTemperatureTSA_docvalues_string";
 			case "feelsLikeTemperature":
 				return "feelsLikeTemperature_docvalues_double";
+			case "temperature":
+				return "temperature_docvalues_double";
+			case "solarRadiation":
+				return "solarRadiation_docvalues_double";
+			case "streamGauge":
+				return "streamGauge_docvalues_double";
 			case "uVIndexMax":
 				return "uVIndexMax_docvalues_double";
 			case "visibility":
 				return "visibility_docvalues_string";
 			case "weatherType":
 				return "weatherType_docvalues_string";
-			case "windDirection":
-				return "windDirection_docvalues_double";
-			case "windSpeed":
-				return "windSpeed_docvalues_double";
+			case "dewPoint":
+				return "dewPoint_docvalues_double";
+			case "diffuseIrradiation":
+				return "diffuseIrradiation_docvalues_double";
+			case "directIrradiation":
+				return "directIrradiation_docvalues_double";
+			case "illuminance":
+				return "illuminance_docvalues_double";
+			case "ngsildData":
+				return "ngsildData_docvalues_string";
 			case "entityId":
 				return "entityId_docvalues_string";
 			case "ngsildTenant":
 				return "ngsildTenant_docvalues_string";
 			case "ngsildPath":
 				return "ngsildPath_docvalues_string";
-			case "ngsildData":
-				return "ngsildData_docvalues_string";
 			case "ngsildContext":
 				return "ngsildContext_docvalues_string";
 			default:
@@ -5442,6 +5442,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "address_docvalues_string";
 			case "alternateName":
 				return "alternateName_docvalues_string";
+			case "location":
+				return "location_docvalues_location";
 			case "areaServedColors":
 				return "areaServedColors_indexedstored_strings";
 			case "areaServedTitles":
@@ -5450,6 +5452,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks_indexedstored_strings";
 			case "areaServed":
 				return "areaServed_docvalues_location";
+			case "dataProvider":
+				return "dataProvider_docvalues_string";
+			case "dateCreated":
+				return "dateCreated_docvalues_string";
+			case "dateModified":
+				return "dateModified_docvalues_string";
+			case "dateObserved":
+				return "dateObserved_docvalues_string";
+			case "owner":
+				return "owner_docvalues_string";
+			case "refDevice":
+				return "refDevice_docvalues_string";
+			case "refPointOfInterest":
+				return "refPointOfInterest_docvalues_string";
+			case "source":
+				return "source_docvalues_string";
+			case "seeAlso":
+				return "seeAlso_docvalues_string";
 			case "airQualityIndex":
 				return "airQualityIndex_docvalues_double";
 			case "airQualityIndexForecast":
@@ -5460,78 +5480,58 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutantForecast_docvalues_string";
 			case "atmosphericPressure":
 				return "atmosphericPressure_docvalues_double";
-			case "dataProvider":
-				return "dataProvider_docvalues_string";
-			case "dateCreated":
-				return "dateCreated_docvalues_string";
-			case "dateModified":
-				return "dateModified_docvalues_string";
-			case "dateObserved":
-				return "dateObserved_docvalues_string";
-			case "dewPoint":
-				return "dewPoint_docvalues_double";
-			case "diffuseIrradiation":
-				return "diffuseIrradiation_docvalues_double";
-			case "directIrradiation":
-				return "directIrradiation_docvalues_double";
+			case "pressureTendency":
+				return "pressureTendency_docvalues_string";
 			case "gustSpeed":
 				return "gustSpeed_docvalues_double";
-			case "illuminance":
-				return "illuminance_docvalues_double";
-			case "location":
-				return "location_docvalues_location";
-			case "owner":
-				return "owner_docvalues_string";
+			case "windDirection":
+				return "windDirection_docvalues_double";
+			case "windSpeed":
+				return "windSpeed_docvalues_double";
 			case "precipitation":
 				return "precipitation_docvalues_double";
 			case "precipitationForecast":
 				return "precipitationForecast_docvalues_double";
-			case "pressureTendency":
-				return "pressureTendency_docvalues_string";
-			case "refDevice":
-				return "refDevice_docvalues_string";
-			case "refPointOfInterest":
-				return "refPointOfInterest_docvalues_string";
 			case "relativeHumidity":
 				return "relativeHumidity_docvalues_double";
 			case "relativeHumidityForecast":
 				return "relativeHumidityForecast_docvalues_double";
-			case "seeAlso":
-				return "seeAlso_docvalues_string";
 			case "snowHeight":
 				return "snowHeight_docvalues_double";
-			case "solarRadiation":
-				return "solarRadiation_docvalues_double";
-			case "source":
-				return "source_docvalues_string";
-			case "streamGauge":
-				return "streamGauge_docvalues_double";
-			case "temperature":
-				return "temperature_docvalues_double";
 			case "airTemperatureForecast":
 				return "airTemperatureForecast_docvalues_double";
 			case "airTemperatureTSA":
 				return "airTemperatureTSA_docvalues_string";
 			case "feelsLikeTemperature":
 				return "feelsLikeTemperature_docvalues_double";
+			case "temperature":
+				return "temperature_docvalues_double";
+			case "solarRadiation":
+				return "solarRadiation_docvalues_double";
+			case "streamGauge":
+				return "streamGauge_docvalues_double";
 			case "uVIndexMax":
 				return "uVIndexMax_docvalues_double";
 			case "visibility":
 				return "visibility_docvalues_string";
 			case "weatherType":
 				return "weatherType_docvalues_string";
-			case "windDirection":
-				return "windDirection_docvalues_double";
-			case "windSpeed":
-				return "windSpeed_docvalues_double";
+			case "dewPoint":
+				return "dewPoint_docvalues_double";
+			case "diffuseIrradiation":
+				return "diffuseIrradiation_docvalues_double";
+			case "directIrradiation":
+				return "directIrradiation_docvalues_double";
+			case "illuminance":
+				return "illuminance_docvalues_double";
+			case "ngsildData":
+				return "ngsildData_docvalues_string";
 			case "entityId":
 				return "entityId_docvalues_string";
 			case "ngsildTenant":
 				return "ngsildTenant_docvalues_string";
 			case "ngsildPath":
 				return "ngsildPath_docvalues_string";
-			case "ngsildData":
-				return "ngsildData_docvalues_string";
 			case "ngsildContext":
 				return "ngsildContext_docvalues_string";
 			default:
@@ -5549,6 +5549,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "address";
 			case "alternateName_docvalues_string":
 				return "alternateName";
+			case "location_docvalues_location":
+				return "location";
 			case "areaServedColors_indexedstored_strings":
 				return "areaServedColors";
 			case "areaServedTitles_indexedstored_strings":
@@ -5557,6 +5559,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "areaServedLinks";
 			case "areaServed_docvalues_location":
 				return "areaServed";
+			case "dataProvider_docvalues_string":
+				return "dataProvider";
+			case "dateCreated_docvalues_string":
+				return "dateCreated";
+			case "dateModified_docvalues_string":
+				return "dateModified";
+			case "dateObserved_docvalues_string":
+				return "dateObserved";
+			case "owner_docvalues_string":
+				return "owner";
+			case "refDevice_docvalues_string":
+				return "refDevice";
+			case "refPointOfInterest_docvalues_string":
+				return "refPointOfInterest";
+			case "source_docvalues_string":
+				return "source";
+			case "seeAlso_docvalues_string":
+				return "seeAlso";
 			case "airQualityIndex_docvalues_double":
 				return "airQualityIndex";
 			case "airQualityIndexForecast_docvalues_double":
@@ -5567,78 +5587,58 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				return "aqiMajorPollutantForecast";
 			case "atmosphericPressure_docvalues_double":
 				return "atmosphericPressure";
-			case "dataProvider_docvalues_string":
-				return "dataProvider";
-			case "dateCreated_docvalues_string":
-				return "dateCreated";
-			case "dateModified_docvalues_string":
-				return "dateModified";
-			case "dateObserved_docvalues_string":
-				return "dateObserved";
-			case "dewPoint_docvalues_double":
-				return "dewPoint";
-			case "diffuseIrradiation_docvalues_double":
-				return "diffuseIrradiation";
-			case "directIrradiation_docvalues_double":
-				return "directIrradiation";
+			case "pressureTendency_docvalues_string":
+				return "pressureTendency";
 			case "gustSpeed_docvalues_double":
 				return "gustSpeed";
-			case "illuminance_docvalues_double":
-				return "illuminance";
-			case "location_docvalues_location":
-				return "location";
-			case "owner_docvalues_string":
-				return "owner";
+			case "windDirection_docvalues_double":
+				return "windDirection";
+			case "windSpeed_docvalues_double":
+				return "windSpeed";
 			case "precipitation_docvalues_double":
 				return "precipitation";
 			case "precipitationForecast_docvalues_double":
 				return "precipitationForecast";
-			case "pressureTendency_docvalues_string":
-				return "pressureTendency";
-			case "refDevice_docvalues_string":
-				return "refDevice";
-			case "refPointOfInterest_docvalues_string":
-				return "refPointOfInterest";
 			case "relativeHumidity_docvalues_double":
 				return "relativeHumidity";
 			case "relativeHumidityForecast_docvalues_double":
 				return "relativeHumidityForecast";
-			case "seeAlso_docvalues_string":
-				return "seeAlso";
 			case "snowHeight_docvalues_double":
 				return "snowHeight";
-			case "solarRadiation_docvalues_double":
-				return "solarRadiation";
-			case "source_docvalues_string":
-				return "source";
-			case "streamGauge_docvalues_double":
-				return "streamGauge";
-			case "temperature_docvalues_double":
-				return "temperature";
 			case "airTemperatureForecast_docvalues_double":
 				return "airTemperatureForecast";
 			case "airTemperatureTSA_docvalues_string":
 				return "airTemperatureTSA";
 			case "feelsLikeTemperature_docvalues_double":
 				return "feelsLikeTemperature";
+			case "temperature_docvalues_double":
+				return "temperature";
+			case "solarRadiation_docvalues_double":
+				return "solarRadiation";
+			case "streamGauge_docvalues_double":
+				return "streamGauge";
 			case "uVIndexMax_docvalues_double":
 				return "uVIndexMax";
 			case "visibility_docvalues_string":
 				return "visibility";
 			case "weatherType_docvalues_string":
 				return "weatherType";
-			case "windDirection_docvalues_double":
-				return "windDirection";
-			case "windSpeed_docvalues_double":
-				return "windSpeed";
+			case "dewPoint_docvalues_double":
+				return "dewPoint";
+			case "diffuseIrradiation_docvalues_double":
+				return "diffuseIrradiation";
+			case "directIrradiation_docvalues_double":
+				return "directIrradiation";
+			case "illuminance_docvalues_double":
+				return "illuminance";
+			case "ngsildData_docvalues_string":
+				return "ngsildData";
 			case "entityId_docvalues_string":
 				return "entityId";
 			case "ngsildTenant_docvalues_string":
 				return "ngsildTenant";
 			case "ngsildPath_docvalues_string":
 				return "ngsildPath";
-			case "ngsildData_docvalues_string":
-				return "ngsildData";
 			case "ngsildContext_docvalues_string":
 				return "ngsildContext";
 			default:
@@ -5675,6 +5675,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		oWeatherObserved.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAddress(Optional.ofNullable(doc.get("address_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAlternateName(Optional.ofNullable(doc.get("alternateName_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("areaServedColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oWeatherObserved.addAreaServedColors(WeatherObserved.staticSetAreaServedColors(siteRequest, v.toString()));
 		});
@@ -5685,47 +5686,46 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			oWeatherObserved.addAreaServedLinks(WeatherObserved.staticSetAreaServedLinks(siteRequest, v.toString()));
 		});
 		oWeatherObserved.setAreaServed(Optional.ofNullable(doc.get("areaServed_docvalues_location")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDataProvider(Optional.ofNullable(doc.get("dataProvider_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDateCreated(Optional.ofNullable(doc.get("dateCreated_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDateModified(Optional.ofNullable(doc.get("dateModified_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDateObserved(Optional.ofNullable(doc.get("dateObserved_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setOwner(Optional.ofNullable(doc.get("owner_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setRefDevice(Optional.ofNullable(doc.get("refDevice_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setRefPointOfInterest(Optional.ofNullable(doc.get("refPointOfInterest_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setSource(Optional.ofNullable(doc.get("source_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setSeeAlso(Optional.ofNullable(doc.get("seeAlso_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAirQualityIndex(Optional.ofNullable(doc.get("airQualityIndex_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAirQualityIndexForecast(Optional.ofNullable(doc.get("airQualityIndexForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAqiMajorPollutant(Optional.ofNullable(doc.get("aqiMajorPollutant_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAqiMajorPollutantForecast(Optional.ofNullable(doc.get("aqiMajorPollutantForecast_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAtmosphericPressure(Optional.ofNullable(doc.get("atmosphericPressure_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDataProvider(Optional.ofNullable(doc.get("dataProvider_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDateCreated(Optional.ofNullable(doc.get("dateCreated_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDateModified(Optional.ofNullable(doc.get("dateModified_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDateObserved(Optional.ofNullable(doc.get("dateObserved_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDewPoint(Optional.ofNullable(doc.get("dewPoint_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDiffuseIrradiation(Optional.ofNullable(doc.get("diffuseIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setDirectIrradiation(Optional.ofNullable(doc.get("directIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setPressureTendency(Optional.ofNullable(doc.get("pressureTendency_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setGustSpeed(Optional.ofNullable(doc.get("gustSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setIlluminance(Optional.ofNullable(doc.get("illuminance_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setOwner(Optional.ofNullable(doc.get("owner_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setWindDirection(Optional.ofNullable(doc.get("windDirection_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setWindSpeed(Optional.ofNullable(doc.get("windSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setPrecipitation(Optional.ofNullable(doc.get("precipitation_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setPrecipitationForecast(Optional.ofNullable(doc.get("precipitationForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setPressureTendency(Optional.ofNullable(doc.get("pressureTendency_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setRefDevice(Optional.ofNullable(doc.get("refDevice_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setRefPointOfInterest(Optional.ofNullable(doc.get("refPointOfInterest_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setRelativeHumidity(Optional.ofNullable(doc.get("relativeHumidity_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setRelativeHumidityForecast(Optional.ofNullable(doc.get("relativeHumidityForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setSeeAlso(Optional.ofNullable(doc.get("seeAlso_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setSnowHeight(Optional.ofNullable(doc.get("snowHeight_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setSolarRadiation(Optional.ofNullable(doc.get("solarRadiation_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setSource(Optional.ofNullable(doc.get("source_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setStreamGauge(Optional.ofNullable(doc.get("streamGauge_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setTemperature(Optional.ofNullable(doc.get("temperature_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAirTemperatureForecast(Optional.ofNullable(doc.get("airTemperatureForecast_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setAirTemperatureTSA(Optional.ofNullable(doc.get("airTemperatureTSA_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setFeelsLikeTemperature(Optional.ofNullable(doc.get("feelsLikeTemperature_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setTemperature(Optional.ofNullable(doc.get("temperature_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setSolarRadiation(Optional.ofNullable(doc.get("solarRadiation_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setStreamGauge(Optional.ofNullable(doc.get("streamGauge_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setUVIndexMax(Optional.ofNullable(doc.get("uVIndexMax_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setVisibility(Optional.ofNullable(doc.get("visibility_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setWeatherType(Optional.ofNullable(doc.get("weatherType_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setWindDirection(Optional.ofNullable(doc.get("windDirection_docvalues_double")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setWindSpeed(Optional.ofNullable(doc.get("windSpeed_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDewPoint(Optional.ofNullable(doc.get("dewPoint_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDiffuseIrradiation(Optional.ofNullable(doc.get("diffuseIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setDirectIrradiation(Optional.ofNullable(doc.get("directIrradiation_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setIlluminance(Optional.ofNullable(doc.get("illuminance_docvalues_double")).map(v -> v.toString()).orElse(null));
+		oWeatherObserved.setNgsildData(Optional.ofNullable(doc.get("ngsildData_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setEntityId(Optional.ofNullable(doc.get("entityId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setNgsildTenant(Optional.ofNullable(doc.get("ngsildTenant_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setNgsildPath(Optional.ofNullable(doc.get("ngsildPath_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oWeatherObserved.setNgsildData(Optional.ofNullable(doc.get("ngsildData_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oWeatherObserved.setNgsildContext(Optional.ofNullable(doc.get("ngsildContext_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
@@ -5748,6 +5748,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("address");
 			if(!Objects.equals(alternateName, original.getAlternateName()))
 				apiRequest.addVars("alternateName");
+			if(!Objects.equals(location, original.getLocation()))
+				apiRequest.addVars("location");
 			if(!Objects.equals(areaServedColors, original.getAreaServedColors()))
 				apiRequest.addVars("areaServedColors");
 			if(!Objects.equals(areaServedTitles, original.getAreaServedTitles()))
@@ -5756,6 +5758,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("areaServedLinks");
 			if(!Objects.equals(areaServed, original.getAreaServed()))
 				apiRequest.addVars("areaServed");
+			if(!Objects.equals(dataProvider, original.getDataProvider()))
+				apiRequest.addVars("dataProvider");
+			if(!Objects.equals(dateCreated, original.getDateCreated()))
+				apiRequest.addVars("dateCreated");
+			if(!Objects.equals(dateModified, original.getDateModified()))
+				apiRequest.addVars("dateModified");
+			if(!Objects.equals(dateObserved, original.getDateObserved()))
+				apiRequest.addVars("dateObserved");
+			if(!Objects.equals(owner, original.getOwner()))
+				apiRequest.addVars("owner");
+			if(!Objects.equals(refDevice, original.getRefDevice()))
+				apiRequest.addVars("refDevice");
+			if(!Objects.equals(refPointOfInterest, original.getRefPointOfInterest()))
+				apiRequest.addVars("refPointOfInterest");
+			if(!Objects.equals(source, original.getSource()))
+				apiRequest.addVars("source");
+			if(!Objects.equals(seeAlso, original.getSeeAlso()))
+				apiRequest.addVars("seeAlso");
 			if(!Objects.equals(airQualityIndex, original.getAirQualityIndex()) && airQualityIndex != null && original.getAirQualityIndex() != null && airQualityIndex.compareTo(original.getAirQualityIndex()) != 0)
 				apiRequest.addVars("airQualityIndex");
 			if(!Objects.equals(airQualityIndexForecast, original.getAirQualityIndexForecast()) && airQualityIndexForecast != null && original.getAirQualityIndexForecast() != null && airQualityIndexForecast.compareTo(original.getAirQualityIndexForecast()) != 0)
@@ -5766,78 +5786,58 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 				apiRequest.addVars("aqiMajorPollutantForecast");
 			if(!Objects.equals(atmosphericPressure, original.getAtmosphericPressure()) && atmosphericPressure != null && original.getAtmosphericPressure() != null && atmosphericPressure.compareTo(original.getAtmosphericPressure()) != 0)
 				apiRequest.addVars("atmosphericPressure");
-			if(!Objects.equals(dataProvider, original.getDataProvider()))
-				apiRequest.addVars("dataProvider");
-			if(!Objects.equals(dateCreated, original.getDateCreated()))
-				apiRequest.addVars("dateCreated");
-			if(!Objects.equals(dateModified, original.getDateModified()))
-				apiRequest.addVars("dateModified");
-			if(!Objects.equals(dateObserved, original.getDateObserved()))
-				apiRequest.addVars("dateObserved");
-			if(!Objects.equals(dewPoint, original.getDewPoint()) && dewPoint != null && original.getDewPoint() != null && dewPoint.compareTo(original.getDewPoint()) != 0)
-				apiRequest.addVars("dewPoint");
-			if(!Objects.equals(diffuseIrradiation, original.getDiffuseIrradiation()) && diffuseIrradiation != null && original.getDiffuseIrradiation() != null && diffuseIrradiation.compareTo(original.getDiffuseIrradiation()) != 0)
-				apiRequest.addVars("diffuseIrradiation");
-			if(!Objects.equals(directIrradiation, original.getDirectIrradiation()) && directIrradiation != null && original.getDirectIrradiation() != null && directIrradiation.compareTo(original.getDirectIrradiation()) != 0)
-				apiRequest.addVars("directIrradiation");
+			if(!Objects.equals(pressureTendency, original.getPressureTendency()))
+				apiRequest.addVars("pressureTendency");
 			if(!Objects.equals(gustSpeed, original.getGustSpeed()) && gustSpeed != null && original.getGustSpeed() != null && gustSpeed.compareTo(original.getGustSpeed()) != 0)
 				apiRequest.addVars("gustSpeed");
-			if(!Objects.equals(illuminance, original.getIlluminance()) && illuminance != null && original.getIlluminance() != null && illuminance.compareTo(original.getIlluminance()) != 0)
-				apiRequest.addVars("illuminance");
-			if(!Objects.equals(location, original.getLocation()))
-				apiRequest.addVars("location");
-			if(!Objects.equals(owner, original.getOwner()))
-				apiRequest.addVars("owner");
+			if(!Objects.equals(windDirection, original.getWindDirection()) && windDirection != null && original.getWindDirection() != null && windDirection.compareTo(original.getWindDirection()) != 0)
+				apiRequest.addVars("windDirection");
+			if(!Objects.equals(windSpeed, original.getWindSpeed()) && windSpeed != null && original.getWindSpeed() != null && windSpeed.compareTo(original.getWindSpeed()) != 0)
+				apiRequest.addVars("windSpeed");
 			if(!Objects.equals(precipitation, original.getPrecipitation()) && precipitation != null && original.getPrecipitation() != null && precipitation.compareTo(original.getPrecipitation()) != 0)
 				apiRequest.addVars("precipitation");
 			if(!Objects.equals(precipitationForecast, original.getPrecipitationForecast()) && precipitationForecast != null && original.getPrecipitationForecast() != null && precipitationForecast.compareTo(original.getPrecipitationForecast()) != 0)
 				apiRequest.addVars("precipitationForecast");
-			if(!Objects.equals(pressureTendency, original.getPressureTendency()))
-				apiRequest.addVars("pressureTendency");
-			if(!Objects.equals(refDevice, original.getRefDevice()))
-				apiRequest.addVars("refDevice");
-			if(!Objects.equals(refPointOfInterest, original.getRefPointOfInterest()))
-				apiRequest.addVars("refPointOfInterest");
 			if(!Objects.equals(relativeHumidity, original.getRelativeHumidity()) && relativeHumidity != null && original.getRelativeHumidity() != null && relativeHumidity.compareTo(original.getRelativeHumidity()) != 0)
 				apiRequest.addVars("relativeHumidity");
 			if(!Objects.equals(relativeHumidityForecast, original.getRelativeHumidityForecast()) && relativeHumidityForecast != null && original.getRelativeHumidityForecast() != null && relativeHumidityForecast.compareTo(original.getRelativeHumidityForecast()) != 0)
 				apiRequest.addVars("relativeHumidityForecast");
-			if(!Objects.equals(seeAlso, original.getSeeAlso()))
-				apiRequest.addVars("seeAlso");
 			if(!Objects.equals(snowHeight, original.getSnowHeight()) && snowHeight != null && original.getSnowHeight() != null && snowHeight.compareTo(original.getSnowHeight()) != 0)
 				apiRequest.addVars("snowHeight");
-			if(!Objects.equals(solarRadiation, original.getSolarRadiation()) && solarRadiation != null && original.getSolarRadiation() != null && solarRadiation.compareTo(original.getSolarRadiation()) != 0)
-				apiRequest.addVars("solarRadiation");
-			if(!Objects.equals(source, original.getSource()))
-				apiRequest.addVars("source");
-			if(!Objects.equals(streamGauge, original.getStreamGauge()) && streamGauge != null && original.getStreamGauge() != null && streamGauge.compareTo(original.getStreamGauge()) != 0)
-				apiRequest.addVars("streamGauge");
-			if(!Objects.equals(temperature, original.getTemperature()) && temperature != null && original.getTemperature() != null && temperature.compareTo(original.getTemperature()) != 0)
-				apiRequest.addVars("temperature");
 			if(!Objects.equals(airTemperatureForecast, original.getAirTemperatureForecast()) && airTemperatureForecast != null && original.getAirTemperatureForecast() != null && airTemperatureForecast.compareTo(original.getAirTemperatureForecast()) != 0)
 				apiRequest.addVars("airTemperatureForecast");
 			if(!Objects.equals(airTemperatureTSA, original.getAirTemperatureTSA()))
 				apiRequest.addVars("airTemperatureTSA");
 			if(!Objects.equals(feelsLikeTemperature, original.getFeelsLikeTemperature()) && feelsLikeTemperature != null && original.getFeelsLikeTemperature() != null && feelsLikeTemperature.compareTo(original.getFeelsLikeTemperature()) != 0)
 				apiRequest.addVars("feelsLikeTemperature");
+			if(!Objects.equals(temperature, original.getTemperature()) && temperature != null && original.getTemperature() != null && temperature.compareTo(original.getTemperature()) != 0)
+				apiRequest.addVars("temperature");
+			if(!Objects.equals(solarRadiation, original.getSolarRadiation()) && solarRadiation != null && original.getSolarRadiation() != null && solarRadiation.compareTo(original.getSolarRadiation()) != 0)
+				apiRequest.addVars("solarRadiation");
+			if(!Objects.equals(streamGauge, original.getStreamGauge()) && streamGauge != null && original.getStreamGauge() != null && streamGauge.compareTo(original.getStreamGauge()) != 0)
+				apiRequest.addVars("streamGauge");
 			if(!Objects.equals(uVIndexMax, original.getUVIndexMax()) && uVIndexMax != null && original.getUVIndexMax() != null && uVIndexMax.compareTo(original.getUVIndexMax()) != 0)
 				apiRequest.addVars("uVIndexMax");
 			if(!Objects.equals(visibility, original.getVisibility()))
 				apiRequest.addVars("visibility");
 			if(!Objects.equals(weatherType, original.getWeatherType()))
 				apiRequest.addVars("weatherType");
-			if(!Objects.equals(windDirection, original.getWindDirection()) && windDirection != null && original.getWindDirection() != null && windDirection.compareTo(original.getWindDirection()) != 0)
-				apiRequest.addVars("windDirection");
-			if(!Objects.equals(windSpeed, original.getWindSpeed()) && windSpeed != null && original.getWindSpeed() != null && windSpeed.compareTo(original.getWindSpeed()) != 0)
-				apiRequest.addVars("windSpeed");
+			if(!Objects.equals(dewPoint, original.getDewPoint()) && dewPoint != null && original.getDewPoint() != null && dewPoint.compareTo(original.getDewPoint()) != 0)
+				apiRequest.addVars("dewPoint");
+			if(!Objects.equals(diffuseIrradiation, original.getDiffuseIrradiation()) && diffuseIrradiation != null && original.getDiffuseIrradiation() != null && diffuseIrradiation.compareTo(original.getDiffuseIrradiation()) != 0)
+				apiRequest.addVars("diffuseIrradiation");
+			if(!Objects.equals(directIrradiation, original.getDirectIrradiation()) && directIrradiation != null && original.getDirectIrradiation() != null && directIrradiation.compareTo(original.getDirectIrradiation()) != 0)
+				apiRequest.addVars("directIrradiation");
+			if(!Objects.equals(illuminance, original.getIlluminance()) && illuminance != null && original.getIlluminance() != null && illuminance.compareTo(original.getIlluminance()) != 0)
+				apiRequest.addVars("illuminance");
+			if(!Objects.equals(ngsildData, original.getNgsildData()))
+				apiRequest.addVars("ngsildData");
 			if(!Objects.equals(entityId, original.getEntityId()))
 				apiRequest.addVars("entityId");
 			if(!Objects.equals(ngsildTenant, original.getNgsildTenant()))
 				apiRequest.addVars("ngsildTenant");
 			if(!Objects.equals(ngsildPath, original.getNgsildPath()))
 				apiRequest.addVars("ngsildPath");
-			if(!Objects.equals(ngsildData, original.getNgsildData()))
-				apiRequest.addVars("ngsildData");
 			if(!Objects.equals(ngsildContext, original.getNgsildContext()))
 				apiRequest.addVars("ngsildContext");
 			super.apiRequestBaseModel();
@@ -5855,51 +5855,51 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(address).map(v -> "address: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(alternateName).map(v -> "alternateName: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServedColors).map(v -> "areaServedColors: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServedTitles).map(v -> "areaServedTitles: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServedLinks).map(v -> "areaServedLinks: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(areaServed).map(v -> "areaServed: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(dataProvider).map(v -> "dataProvider: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(dateCreated).map(v -> "dateCreated: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(dateModified).map(v -> "dateModified: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(dateObserved).map(v -> "dateObserved: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(owner).map(v -> "owner: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(refDevice).map(v -> "refDevice: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(refPointOfInterest).map(v -> "refPointOfInterest: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(source).map(v -> "source: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(seeAlso).map(v -> "seeAlso: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(airQualityIndex).map(v -> "airQualityIndex: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(airQualityIndexForecast).map(v -> "airQualityIndexForecast: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(aqiMajorPollutant).map(v -> "aqiMajorPollutant: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(aqiMajorPollutantForecast).map(v -> "aqiMajorPollutantForecast: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(atmosphericPressure).map(v -> "atmosphericPressure: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(dataProvider).map(v -> "dataProvider: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(dateCreated).map(v -> "dateCreated: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(dateModified).map(v -> "dateModified: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(dateObserved).map(v -> "dateObserved: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(dewPoint).map(v -> "dewPoint: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(diffuseIrradiation).map(v -> "diffuseIrradiation: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(directIrradiation).map(v -> "directIrradiation: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(pressureTendency).map(v -> "pressureTendency: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(gustSpeed).map(v -> "gustSpeed: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(illuminance).map(v -> "illuminance: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(owner).map(v -> "owner: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(windDirection).map(v -> "windDirection: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(windSpeed).map(v -> "windSpeed: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(precipitation).map(v -> "precipitation: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(precipitationForecast).map(v -> "precipitationForecast: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(pressureTendency).map(v -> "pressureTendency: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(refDevice).map(v -> "refDevice: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(refPointOfInterest).map(v -> "refPointOfInterest: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(relativeHumidity).map(v -> "relativeHumidity: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(relativeHumidityForecast).map(v -> "relativeHumidityForecast: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(seeAlso).map(v -> "seeAlso: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(snowHeight).map(v -> "snowHeight: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(solarRadiation).map(v -> "solarRadiation: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(source).map(v -> "source: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(streamGauge).map(v -> "streamGauge: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(temperature).map(v -> "temperature: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(airTemperatureForecast).map(v -> "airTemperatureForecast: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(airTemperatureTSA).map(v -> "airTemperatureTSA: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(feelsLikeTemperature).map(v -> "feelsLikeTemperature: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(temperature).map(v -> "temperature: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(solarRadiation).map(v -> "solarRadiation: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(streamGauge).map(v -> "streamGauge: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(uVIndexMax).map(v -> "uVIndexMax: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(visibility).map(v -> "visibility: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(weatherType).map(v -> "weatherType: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(windDirection).map(v -> "windDirection: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(windSpeed).map(v -> "windSpeed: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(dewPoint).map(v -> "dewPoint: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(diffuseIrradiation).map(v -> "diffuseIrradiation: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(directIrradiation).map(v -> "directIrradiation: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(illuminance).map(v -> "illuminance: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(ngsildData).map(v -> "ngsildData: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(entityId).map(v -> "entityId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(ngsildTenant).map(v -> "ngsildTenant: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(ngsildPath).map(v -> "ngsildPath: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(ngsildData).map(v -> "ngsildData: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(ngsildContext).map(v -> "ngsildContext: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
@@ -5913,52 +5913,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String VAR_description = "description";
 	public static final String VAR_address = "address";
 	public static final String VAR_alternateName = "alternateName";
+	public static final String VAR_location = "location";
 	public static final String VAR_areaServedColors = "areaServedColors";
 	public static final String VAR_areaServedTitles = "areaServedTitles";
 	public static final String VAR_areaServedLinks = "areaServedLinks";
 	public static final String VAR_areaServed = "areaServed";
+	public static final String VAR_dataProvider = "dataProvider";
+	public static final String VAR_dateCreated = "dateCreated";
+	public static final String VAR_dateModified = "dateModified";
+	public static final String VAR_dateObserved = "dateObserved";
+	public static final String VAR_owner = "owner";
+	public static final String VAR_refDevice = "refDevice";
+	public static final String VAR_refPointOfInterest = "refPointOfInterest";
+	public static final String VAR_source = "source";
+	public static final String VAR_seeAlso = "seeAlso";
 	public static final String VAR_airQualityIndex = "airQualityIndex";
 	public static final String VAR_airQualityIndexForecast = "airQualityIndexForecast";
 	public static final String VAR_aqiMajorPollutant = "aqiMajorPollutant";
 	public static final String VAR_aqiMajorPollutantForecast = "aqiMajorPollutantForecast";
 	public static final String VAR_atmosphericPressure = "atmosphericPressure";
-	public static final String VAR_dataProvider = "dataProvider";
-	public static final String VAR_dateCreated = "dateCreated";
-	public static final String VAR_dateModified = "dateModified";
-	public static final String VAR_dateObserved = "dateObserved";
-	public static final String VAR_dewPoint = "dewPoint";
-	public static final String VAR_diffuseIrradiation = "diffuseIrradiation";
-	public static final String VAR_directIrradiation = "directIrradiation";
+	public static final String VAR_pressureTendency = "pressureTendency";
 	public static final String VAR_gustSpeed = "gustSpeed";
-	public static final String VAR_illuminance = "illuminance";
-	public static final String VAR_location = "location";
-	public static final String VAR_owner = "owner";
+	public static final String VAR_windDirection = "windDirection";
+	public static final String VAR_windSpeed = "windSpeed";
 	public static final String VAR_precipitation = "precipitation";
 	public static final String VAR_precipitationForecast = "precipitationForecast";
-	public static final String VAR_pressureTendency = "pressureTendency";
-	public static final String VAR_refDevice = "refDevice";
-	public static final String VAR_refPointOfInterest = "refPointOfInterest";
 	public static final String VAR_relativeHumidity = "relativeHumidity";
 	public static final String VAR_relativeHumidityForecast = "relativeHumidityForecast";
-	public static final String VAR_seeAlso = "seeAlso";
 	public static final String VAR_snowHeight = "snowHeight";
-	public static final String VAR_solarRadiation = "solarRadiation";
-	public static final String VAR_source = "source";
-	public static final String VAR_streamGauge = "streamGauge";
-	public static final String VAR_temperature = "temperature";
 	public static final String VAR_airTemperatureForecast = "airTemperatureForecast";
 	public static final String VAR_airTemperatureTSA = "airTemperatureTSA";
 	public static final String VAR_feelsLikeTemperature = "feelsLikeTemperature";
+	public static final String VAR_temperature = "temperature";
+	public static final String VAR_solarRadiation = "solarRadiation";
+	public static final String VAR_streamGauge = "streamGauge";
 	public static final String VAR_uVIndexMax = "uVIndexMax";
 	public static final String VAR_visibility = "visibility";
 	public static final String VAR_weatherType = "weatherType";
-	public static final String VAR_windDirection = "windDirection";
-	public static final String VAR_windSpeed = "windSpeed";
+	public static final String VAR_dewPoint = "dewPoint";
+	public static final String VAR_diffuseIrradiation = "diffuseIrradiation";
+	public static final String VAR_directIrradiation = "directIrradiation";
+	public static final String VAR_illuminance = "illuminance";
+	public static final String VAR_ngsildData = "ngsildData";
 	public static final String VAR_entityId = "entityId";
 	public static final String VAR_entityShortId = "entityShortId";
 	public static final String VAR_ngsildTenant = "ngsildTenant";
 	public static final String VAR_ngsildPath = "ngsildPath";
-	public static final String VAR_ngsildData = "ngsildData";
 	public static final String VAR_ngsildContext = "ngsildContext";
 
 	public static List<String> varsQForClass() {
@@ -5977,48 +5977,48 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_description);
 		vars.add(VAR_address);
 		vars.add(VAR_alternateName);
+		vars.add(VAR_location);
 		vars.add(VAR_areaServed);
+		vars.add(VAR_dataProvider);
+		vars.add(VAR_dateCreated);
+		vars.add(VAR_dateModified);
+		vars.add(VAR_dateObserved);
+		vars.add(VAR_owner);
+		vars.add(VAR_refDevice);
+		vars.add(VAR_refPointOfInterest);
+		vars.add(VAR_source);
+		vars.add(VAR_seeAlso);
 		vars.add(VAR_airQualityIndex);
 		vars.add(VAR_airQualityIndexForecast);
 		vars.add(VAR_aqiMajorPollutant);
 		vars.add(VAR_aqiMajorPollutantForecast);
 		vars.add(VAR_atmosphericPressure);
-		vars.add(VAR_dataProvider);
-		vars.add(VAR_dateCreated);
-		vars.add(VAR_dateModified);
-		vars.add(VAR_dateObserved);
-		vars.add(VAR_dewPoint);
-		vars.add(VAR_diffuseIrradiation);
-		vars.add(VAR_directIrradiation);
+		vars.add(VAR_pressureTendency);
 		vars.add(VAR_gustSpeed);
-		vars.add(VAR_illuminance);
-		vars.add(VAR_location);
-		vars.add(VAR_owner);
+		vars.add(VAR_windDirection);
+		vars.add(VAR_windSpeed);
 		vars.add(VAR_precipitation);
 		vars.add(VAR_precipitationForecast);
-		vars.add(VAR_pressureTendency);
-		vars.add(VAR_refDevice);
-		vars.add(VAR_refPointOfInterest);
 		vars.add(VAR_relativeHumidity);
 		vars.add(VAR_relativeHumidityForecast);
-		vars.add(VAR_seeAlso);
 		vars.add(VAR_snowHeight);
-		vars.add(VAR_solarRadiation);
-		vars.add(VAR_source);
-		vars.add(VAR_streamGauge);
-		vars.add(VAR_temperature);
 		vars.add(VAR_airTemperatureForecast);
 		vars.add(VAR_airTemperatureTSA);
 		vars.add(VAR_feelsLikeTemperature);
+		vars.add(VAR_temperature);
+		vars.add(VAR_solarRadiation);
+		vars.add(VAR_streamGauge);
 		vars.add(VAR_uVIndexMax);
 		vars.add(VAR_visibility);
 		vars.add(VAR_weatherType);
-		vars.add(VAR_windDirection);
-		vars.add(VAR_windSpeed);
+		vars.add(VAR_dewPoint);
+		vars.add(VAR_diffuseIrradiation);
+		vars.add(VAR_directIrradiation);
+		vars.add(VAR_illuminance);
+		vars.add(VAR_ngsildData);
 		vars.add(VAR_entityId);
 		vars.add(VAR_ngsildTenant);
 		vars.add(VAR_ngsildPath);
-		vars.add(VAR_ngsildData);
 		vars.add(VAR_ngsildContext);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
@@ -6029,34 +6029,34 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	}
 	public static List<String> varsRangeWeatherObserved(List<String> vars) {
 		vars.add(VAR_address);
+		vars.add(VAR_location);
+		vars.add(VAR_owner);
+		vars.add(VAR_refDevice);
+		vars.add(VAR_seeAlso);
 		vars.add(VAR_airQualityIndex);
 		vars.add(VAR_airQualityIndexForecast);
 		vars.add(VAR_atmosphericPressure);
-		vars.add(VAR_dewPoint);
-		vars.add(VAR_diffuseIrradiation);
-		vars.add(VAR_directIrradiation);
+		vars.add(VAR_pressureTendency);
 		vars.add(VAR_gustSpeed);
-		vars.add(VAR_illuminance);
-		vars.add(VAR_location);
-		vars.add(VAR_owner);
+		vars.add(VAR_windDirection);
+		vars.add(VAR_windSpeed);
 		vars.add(VAR_precipitation);
 		vars.add(VAR_precipitationForecast);
-		vars.add(VAR_pressureTendency);
-		vars.add(VAR_refDevice);
 		vars.add(VAR_relativeHumidity);
 		vars.add(VAR_relativeHumidityForecast);
-		vars.add(VAR_seeAlso);
 		vars.add(VAR_snowHeight);
-		vars.add(VAR_solarRadiation);
-		vars.add(VAR_streamGauge);
-		vars.add(VAR_temperature);
 		vars.add(VAR_airTemperatureForecast);
 		vars.add(VAR_airTemperatureTSA);
 		vars.add(VAR_feelsLikeTemperature);
+		vars.add(VAR_temperature);
+		vars.add(VAR_solarRadiation);
+		vars.add(VAR_streamGauge);
 		vars.add(VAR_uVIndexMax);
 		vars.add(VAR_visibility);
-		vars.add(VAR_windDirection);
-		vars.add(VAR_windSpeed);
+		vars.add(VAR_dewPoint);
+		vars.add(VAR_diffuseIrradiation);
+		vars.add(VAR_directIrradiation);
+		vars.add(VAR_illuminance);
 		vars.add(VAR_ngsildData);
 		BaseModel.varsRangeBaseModel(vars);
 		return vars;
@@ -6066,52 +6066,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_description = "description";
 	public static final String DISPLAY_NAME_address = "address";
 	public static final String DISPLAY_NAME_alternateName = "alternate name";
+	public static final String DISPLAY_NAME_location = "location";
 	public static final String DISPLAY_NAME_areaServedColors = "area served colors";
 	public static final String DISPLAY_NAME_areaServedTitles = "area served titles";
 	public static final String DISPLAY_NAME_areaServedLinks = "area served links";
 	public static final String DISPLAY_NAME_areaServed = "area served";
+	public static final String DISPLAY_NAME_dataProvider = "data provider";
+	public static final String DISPLAY_NAME_dateCreated = "date created";
+	public static final String DISPLAY_NAME_dateModified = "date modified";
+	public static final String DISPLAY_NAME_dateObserved = "date observed";
+	public static final String DISPLAY_NAME_owner = "owner";
+	public static final String DISPLAY_NAME_refDevice = "ref device";
+	public static final String DISPLAY_NAME_refPointOfInterest = "ref point of interest";
+	public static final String DISPLAY_NAME_source = "source";
+	public static final String DISPLAY_NAME_seeAlso = "see also";
 	public static final String DISPLAY_NAME_airQualityIndex = "air quality index";
 	public static final String DISPLAY_NAME_airQualityIndexForecast = "air quality index forecast";
 	public static final String DISPLAY_NAME_aqiMajorPollutant = "aqi major pollutant";
 	public static final String DISPLAY_NAME_aqiMajorPollutantForecast = "aqi major pollutant forecast";
 	public static final String DISPLAY_NAME_atmosphericPressure = "atmospheric pressure";
-	public static final String DISPLAY_NAME_dataProvider = "data provider";
-	public static final String DISPLAY_NAME_dateCreated = "date created";
-	public static final String DISPLAY_NAME_dateModified = "date modified";
-	public static final String DISPLAY_NAME_dateObserved = "date observed";
-	public static final String DISPLAY_NAME_dewPoint = "dew point";
-	public static final String DISPLAY_NAME_diffuseIrradiation = "diffuse irradiation";
-	public static final String DISPLAY_NAME_directIrradiation = "direct irradiation";
+	public static final String DISPLAY_NAME_pressureTendency = "pressure tendency";
 	public static final String DISPLAY_NAME_gustSpeed = "gust speed";
-	public static final String DISPLAY_NAME_illuminance = "illuminance";
-	public static final String DISPLAY_NAME_location = "location";
-	public static final String DISPLAY_NAME_owner = "owner";
+	public static final String DISPLAY_NAME_windDirection = "wind direction";
+	public static final String DISPLAY_NAME_windSpeed = "wind speed";
 	public static final String DISPLAY_NAME_precipitation = "precipitation";
 	public static final String DISPLAY_NAME_precipitationForecast = "precipitation forecast";
-	public static final String DISPLAY_NAME_pressureTendency = "pressure tendency";
-	public static final String DISPLAY_NAME_refDevice = "ref device";
-	public static final String DISPLAY_NAME_refPointOfInterest = "ref point of interest";
 	public static final String DISPLAY_NAME_relativeHumidity = "relative humidity";
 	public static final String DISPLAY_NAME_relativeHumidityForecast = "relative humidity forecast";
-	public static final String DISPLAY_NAME_seeAlso = "see also";
 	public static final String DISPLAY_NAME_snowHeight = "snow height";
-	public static final String DISPLAY_NAME_solarRadiation = "solar radiation";
-	public static final String DISPLAY_NAME_source = "source";
-	public static final String DISPLAY_NAME_streamGauge = "stream gauge";
-	public static final String DISPLAY_NAME_temperature = "temperature";
 	public static final String DISPLAY_NAME_airTemperatureForecast = "air temperature forecast";
 	public static final String DISPLAY_NAME_airTemperatureTSA = "air temperature tsa";
 	public static final String DISPLAY_NAME_feelsLikeTemperature = "feels like temperature";
+	public static final String DISPLAY_NAME_temperature = "temperature";
+	public static final String DISPLAY_NAME_solarRadiation = "solar radiation";
+	public static final String DISPLAY_NAME_streamGauge = "stream gauge";
 	public static final String DISPLAY_NAME_uVIndexMax = "u v index max";
 	public static final String DISPLAY_NAME_visibility = "visibility";
 	public static final String DISPLAY_NAME_weatherType = "weather type";
-	public static final String DISPLAY_NAME_windDirection = "wind direction";
-	public static final String DISPLAY_NAME_windSpeed = "wind speed";
+	public static final String DISPLAY_NAME_dewPoint = "dew point";
+	public static final String DISPLAY_NAME_diffuseIrradiation = "diffuse irradiation";
+	public static final String DISPLAY_NAME_directIrradiation = "direct irradiation";
+	public static final String DISPLAY_NAME_illuminance = "illuminance";
+	public static final String DISPLAY_NAME_ngsildData = "NGSILD data";
 	public static final String DISPLAY_NAME_entityId = "entity ID";
 	public static final String DISPLAY_NAME_entityShortId = "short entity ID";
 	public static final String DISPLAY_NAME_ngsildTenant = "NGSILD-Tenant";
 	public static final String DISPLAY_NAME_ngsildPath = "NGSILD-Path";
-	public static final String DISPLAY_NAME_ngsildData = "NGSILD data";
 	public static final String DISPLAY_NAME_ngsildContext = "NGSILD context";
 
 	public static String displayNameForClass(String var) {
@@ -6127,6 +6127,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_address;
 		case VAR_alternateName:
 			return DISPLAY_NAME_alternateName;
+		case VAR_location:
+			return DISPLAY_NAME_location;
 		case VAR_areaServedColors:
 			return DISPLAY_NAME_areaServedColors;
 		case VAR_areaServedTitles:
@@ -6135,6 +6137,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_areaServedLinks;
 		case VAR_areaServed:
 			return DISPLAY_NAME_areaServed;
+		case VAR_dataProvider:
+			return DISPLAY_NAME_dataProvider;
+		case VAR_dateCreated:
+			return DISPLAY_NAME_dateCreated;
+		case VAR_dateModified:
+			return DISPLAY_NAME_dateModified;
+		case VAR_dateObserved:
+			return DISPLAY_NAME_dateObserved;
+		case VAR_owner:
+			return DISPLAY_NAME_owner;
+		case VAR_refDevice:
+			return DISPLAY_NAME_refDevice;
+		case VAR_refPointOfInterest:
+			return DISPLAY_NAME_refPointOfInterest;
+		case VAR_source:
+			return DISPLAY_NAME_source;
+		case VAR_seeAlso:
+			return DISPLAY_NAME_seeAlso;
 		case VAR_airQualityIndex:
 			return DISPLAY_NAME_airQualityIndex;
 		case VAR_airQualityIndexForecast:
@@ -6145,70 +6165,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_aqiMajorPollutantForecast;
 		case VAR_atmosphericPressure:
 			return DISPLAY_NAME_atmosphericPressure;
-		case VAR_dataProvider:
-			return DISPLAY_NAME_dataProvider;
-		case VAR_dateCreated:
-			return DISPLAY_NAME_dateCreated;
-		case VAR_dateModified:
-			return DISPLAY_NAME_dateModified;
-		case VAR_dateObserved:
-			return DISPLAY_NAME_dateObserved;
-		case VAR_dewPoint:
-			return DISPLAY_NAME_dewPoint;
-		case VAR_diffuseIrradiation:
-			return DISPLAY_NAME_diffuseIrradiation;
-		case VAR_directIrradiation:
-			return DISPLAY_NAME_directIrradiation;
+		case VAR_pressureTendency:
+			return DISPLAY_NAME_pressureTendency;
 		case VAR_gustSpeed:
 			return DISPLAY_NAME_gustSpeed;
-		case VAR_illuminance:
-			return DISPLAY_NAME_illuminance;
-		case VAR_location:
-			return DISPLAY_NAME_location;
-		case VAR_owner:
-			return DISPLAY_NAME_owner;
+		case VAR_windDirection:
+			return DISPLAY_NAME_windDirection;
+		case VAR_windSpeed:
+			return DISPLAY_NAME_windSpeed;
 		case VAR_precipitation:
 			return DISPLAY_NAME_precipitation;
 		case VAR_precipitationForecast:
 			return DISPLAY_NAME_precipitationForecast;
-		case VAR_pressureTendency:
-			return DISPLAY_NAME_pressureTendency;
-		case VAR_refDevice:
-			return DISPLAY_NAME_refDevice;
-		case VAR_refPointOfInterest:
-			return DISPLAY_NAME_refPointOfInterest;
 		case VAR_relativeHumidity:
 			return DISPLAY_NAME_relativeHumidity;
 		case VAR_relativeHumidityForecast:
 			return DISPLAY_NAME_relativeHumidityForecast;
-		case VAR_seeAlso:
-			return DISPLAY_NAME_seeAlso;
 		case VAR_snowHeight:
 			return DISPLAY_NAME_snowHeight;
-		case VAR_solarRadiation:
-			return DISPLAY_NAME_solarRadiation;
-		case VAR_source:
-			return DISPLAY_NAME_source;
-		case VAR_streamGauge:
-			return DISPLAY_NAME_streamGauge;
-		case VAR_temperature:
-			return DISPLAY_NAME_temperature;
 		case VAR_airTemperatureForecast:
 			return DISPLAY_NAME_airTemperatureForecast;
 		case VAR_airTemperatureTSA:
 			return DISPLAY_NAME_airTemperatureTSA;
 		case VAR_feelsLikeTemperature:
 			return DISPLAY_NAME_feelsLikeTemperature;
+		case VAR_temperature:
+			return DISPLAY_NAME_temperature;
+		case VAR_solarRadiation:
+			return DISPLAY_NAME_solarRadiation;
+		case VAR_streamGauge:
+			return DISPLAY_NAME_streamGauge;
 		case VAR_uVIndexMax:
 			return DISPLAY_NAME_uVIndexMax;
 		case VAR_visibility:
 			return DISPLAY_NAME_visibility;
 		case VAR_weatherType:
 			return DISPLAY_NAME_weatherType;
-		case VAR_windDirection:
-			return DISPLAY_NAME_windDirection;
-		case VAR_windSpeed:
-			return DISPLAY_NAME_windSpeed;
+		case VAR_dewPoint:
+			return DISPLAY_NAME_dewPoint;
+		case VAR_diffuseIrradiation:
+			return DISPLAY_NAME_diffuseIrradiation;
+		case VAR_directIrradiation:
+			return DISPLAY_NAME_directIrradiation;
+		case VAR_illuminance:
+			return DISPLAY_NAME_illuminance;
+		case VAR_ngsildData:
+			return DISPLAY_NAME_ngsildData;
 		case VAR_entityId:
 			return DISPLAY_NAME_entityId;
 		case VAR_entityShortId:
@@ -6217,8 +6219,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_ngsildTenant;
 		case VAR_ngsildPath:
 			return DISPLAY_NAME_ngsildPath;
-		case VAR_ngsildData:
-			return DISPLAY_NAME_ngsildData;
 		case VAR_ngsildContext:
 			return DISPLAY_NAME_ngsildContext;
 		default:
@@ -6236,6 +6236,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The mailing address";
 		case VAR_alternateName:
 			return "An alternative name for this item";
+		case VAR_location:
+			return "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon";
 		case VAR_areaServedColors:
 			return "The colors of each areaServed Paths. ";
 		case VAR_areaServedTitles:
@@ -6244,6 +6246,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The links of each areaServed Paths. ";
 		case VAR_areaServed:
 			return "The geographic area where a service or offered item is provided";
+		case VAR_dataProvider:
+			return "A sequence of characters identifying the provider of the harmonised data entity";
+		case VAR_dateCreated:
+			return "Entity creation timestamp. This will usually be allocated by the storage platform";
+		case VAR_dateModified:
+			return "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform";
+		case VAR_dateObserved:
+			return "Date of the observed entity defined by the user";
+		case VAR_owner:
+			return "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)";
+		case VAR_refDevice:
+			return "A reference to the device(s) which captured this observation";
+		case VAR_refPointOfInterest:
+			return "Point of interest related to the item";
+		case VAR_source:
+			return "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object";
+		case VAR_seeAlso:
+			return "list of uri pointing to additional resources about the item";
 		case VAR_airQualityIndex:
 			return "Air quality index is a number used to report the quality of the air on any given day";
 		case VAR_airQualityIndexForecast:
@@ -6254,70 +6274,52 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Forecasted major air pollutant in the Air Quality Index (AQI) over a certain duration in future";
 		case VAR_atmosphericPressure:
 			return "The atmospheric pressure observed measured in Hecto Pascals";
-		case VAR_dataProvider:
-			return "A sequence of characters identifying the provider of the harmonised data entity";
-		case VAR_dateCreated:
-			return "Entity creation timestamp. This will usually be allocated by the storage platform";
-		case VAR_dateModified:
-			return "Timestamp of the last modification of the entity. This will usually be allocated by the storage platform";
-		case VAR_dateObserved:
-			return "Date of the observed entity defined by the user";
-		case VAR_dewPoint:
-			return "The dew point encoded as a number. Observed temperature to which air must be cooled to become saturated with water vapor";
-		case VAR_diffuseIrradiation:
-			return "Diffuse irradiance is the part of the solar irradiance that is scattered by the atmosphere";
-		case VAR_directIrradiation:
-			return "Direct irradiance is the part of the solar irradiance that directly reaches a surface";
+		case VAR_pressureTendency:
+			return "Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be expressed in quantitative terms or qualitative terms";
 		case VAR_gustSpeed:
 			return "A sudden burst of high-speed wind over the observed average wind speed lasting only for a few seconds";
-		case VAR_illuminance:
-			return "(https://en.wikipedia.org/wiki/Illuminance) observed measured in lux (lx) or lumens per square metre (cd\u00B7sr\u00B7m\u22122)";
-		case VAR_location:
-			return "Geojson reference to the item. It can be Point, LineString, Polygon, MultiPoint, MultiLineString or MultiPolygon";
-		case VAR_owner:
-			return "A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)";
+		case VAR_windDirection:
+			return "Direction of the wind bet";
+		case VAR_windSpeed:
+			return "Intensity of the wind";
 		case VAR_precipitation:
 			return "Amount of water rain registered. ";
 		case VAR_precipitationForecast:
 			return "Forecasted rainfall over a certain duration in future";
-		case VAR_pressureTendency:
-			return "Enum:'falling, raising, steady'. Is the pressure rising or falling? It can be expressed in quantitative terms or qualitative terms";
-		case VAR_refDevice:
-			return "A reference to the device(s) which captured this observation";
-		case VAR_refPointOfInterest:
-			return "Point of interest related to the item";
 		case VAR_relativeHumidity:
 			return "Humidity in the Air. Observed instantaneous relative humidity (water vapour in air)";
 		case VAR_relativeHumidityForecast:
 			return "Forecasted relative humidity (water vapour in air) over a certain duration in future";
-		case VAR_seeAlso:
-			return "list of uri pointing to additional resources about the item";
 		case VAR_snowHeight:
 			return "The snow height observed by generic snow depth measurement sensors, expressed in centimeters";
-		case VAR_solarRadiation:
-			return "The solar radiation observed measured in Watts per square";
-		case VAR_source:
-			return "A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object";
-		case VAR_streamGauge:
-			return "The water level surface elevation observed by Hydrometric measurement sensors, namely a [Stream Gauge](https://en.wikipedia.org/wiki/Stream_gauge) expressed in centimeters";
-		case VAR_temperature:
-			return "Temperature of the item";
 		case VAR_airTemperatureForecast:
 			return "Forecasted value of air temperature over a certain duration in future";
 		case VAR_airTemperatureTSA:
 			return "Air temperature time series aggregation";
 		case VAR_feelsLikeTemperature:
 			return "Temperature appreciation of the item";
+		case VAR_temperature:
+			return "Temperature of the item";
+		case VAR_solarRadiation:
+			return "The solar radiation observed measured in Watts per square";
+		case VAR_streamGauge:
+			return "The water level surface elevation observed by Hydrometric measurement sensors, namely a [Stream Gauge](https://en.wikipedia.org/wiki/Stream_gauge) expressed in centimeters";
 		case VAR_uVIndexMax:
 			return "The maximum UV index for the period, based on the World Health Organization's UV Index measure. [http://www.who.int/uv/intersunprogramme/activities/uv_index/en/](http://www.who.int/uv/intersunprogramme/activities/uv_index/en/) the values between 1 and 11 are the valid range for the index. The value 0 is for describing that no signal is detected so no value is stored";
 		case VAR_visibility:
 			return "Categories of visibility";
 		case VAR_weatherType:
 			return "Text description of the weather";
-		case VAR_windDirection:
-			return "Direction of the wind bet";
-		case VAR_windSpeed:
-			return "Intensity of the wind";
+		case VAR_dewPoint:
+			return "The dew point encoded as a number. Observed temperature to which air must be cooled to become saturated with water vapor";
+		case VAR_diffuseIrradiation:
+			return "Diffuse irradiance is the part of the solar irradiance that is scattered by the atmosphere";
+		case VAR_directIrradiation:
+			return "Direct irradiance is the part of the solar irradiance that directly reaches a surface";
+		case VAR_illuminance:
+			return "(https://en.wikipedia.org/wiki/Illuminance) observed measured in lux (lx) or lumens per square metre (cd\u00B7sr\u00B7m\u22122)";
+		case VAR_ngsildData:
+			return "The NGSILD data with @context from the context broker";
 		case VAR_entityId:
 			return "A unique ID for this Smart Data Model";
 		case VAR_entityShortId:
@@ -6326,8 +6328,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "The NGSILD-Tenant or Fiware-Service";
 		case VAR_ngsildPath:
 			return "The NGSILD-Path or Fiware-ServicePath";
-		case VAR_ngsildData:
-			return "The NGSILD data with @context from the context broker";
 		case VAR_ngsildContext:
 			return "The NGSILD context URL for @context data. ";
 			default:
@@ -6345,6 +6345,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "JsonObject";
 		case VAR_alternateName:
 			return "String";
+		case VAR_location:
+			return "Point";
 		case VAR_areaServedColors:
 			return "List";
 		case VAR_areaServedTitles:
@@ -6353,6 +6355,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "List";
 		case VAR_areaServed:
 			return "Polygon";
+		case VAR_dataProvider:
+			return "String";
+		case VAR_dateCreated:
+			return "String";
+		case VAR_dateModified:
+			return "String";
+		case VAR_dateObserved:
+			return "String";
+		case VAR_owner:
+			return "JsonObject";
+		case VAR_refDevice:
+			return "JsonObject";
+		case VAR_refPointOfInterest:
+			return "String";
+		case VAR_source:
+			return "String";
+		case VAR_seeAlso:
+			return "JsonObject";
 		case VAR_airQualityIndex:
 			return "BigDecimal";
 		case VAR_airQualityIndexForecast:
@@ -6363,53 +6383,23 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_atmosphericPressure:
 			return "BigDecimal";
-		case VAR_dataProvider:
-			return "String";
-		case VAR_dateCreated:
-			return "String";
-		case VAR_dateModified:
-			return "String";
-		case VAR_dateObserved:
-			return "String";
-		case VAR_dewPoint:
-			return "BigDecimal";
-		case VAR_diffuseIrradiation:
-			return "BigDecimal";
-		case VAR_directIrradiation:
-			return "BigDecimal";
+		case VAR_pressureTendency:
+			return "JsonObject";
 		case VAR_gustSpeed:
 			return "BigDecimal";
-		case VAR_illuminance:
+		case VAR_windDirection:
 			return "BigDecimal";
-		case VAR_location:
-			return "Point";
-		case VAR_owner:
-			return "JsonObject";
+		case VAR_windSpeed:
+			return "BigDecimal";
 		case VAR_precipitation:
 			return "BigDecimal";
 		case VAR_precipitationForecast:
 			return "BigDecimal";
-		case VAR_pressureTendency:
-			return "JsonObject";
-		case VAR_refDevice:
-			return "JsonObject";
-		case VAR_refPointOfInterest:
-			return "String";
 		case VAR_relativeHumidity:
 			return "BigDecimal";
 		case VAR_relativeHumidityForecast:
 			return "BigDecimal";
-		case VAR_seeAlso:
-			return "JsonObject";
 		case VAR_snowHeight:
-			return "BigDecimal";
-		case VAR_solarRadiation:
-			return "BigDecimal";
-		case VAR_source:
-			return "String";
-		case VAR_streamGauge:
-			return "BigDecimal";
-		case VAR_temperature:
 			return "BigDecimal";
 		case VAR_airTemperatureForecast:
 			return "BigDecimal";
@@ -6417,16 +6407,28 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "JsonObject";
 		case VAR_feelsLikeTemperature:
 			return "BigDecimal";
+		case VAR_temperature:
+			return "BigDecimal";
+		case VAR_solarRadiation:
+			return "BigDecimal";
+		case VAR_streamGauge:
+			return "BigDecimal";
 		case VAR_uVIndexMax:
 			return "BigDecimal";
 		case VAR_visibility:
 			return "JsonObject";
 		case VAR_weatherType:
 			return "String";
-		case VAR_windDirection:
+		case VAR_dewPoint:
 			return "BigDecimal";
-		case VAR_windSpeed:
+		case VAR_diffuseIrradiation:
 			return "BigDecimal";
+		case VAR_directIrradiation:
+			return "BigDecimal";
+		case VAR_illuminance:
+			return "BigDecimal";
+		case VAR_ngsildData:
+			return "JsonObject";
 		case VAR_entityId:
 			return "String";
 		case VAR_entityShortId:
@@ -6435,8 +6437,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_ngsildPath:
 			return "String";
-		case VAR_ngsildData:
-			return "JsonObject";
 		case VAR_ngsildContext:
 			return "String";
 			default:
@@ -6454,6 +6454,8 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Property";
 		case VAR_alternateName:
 			return "Property";
+		case VAR_location:
+			return "GeoProperty";
 		case VAR_areaServedColors:
 			return "Property";
 		case VAR_areaServedTitles:
@@ -6462,6 +6464,24 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Property";
 		case VAR_areaServed:
 			return "GeoProperty";
+		case VAR_dataProvider:
+			return "Property";
+		case VAR_dateCreated:
+			return "Property";
+		case VAR_dateModified:
+			return "Property";
+		case VAR_dateObserved:
+			return "Property";
+		case VAR_owner:
+			return "Property";
+		case VAR_refDevice:
+			return "Property";
+		case VAR_refPointOfInterest:
+			return "Property";
+		case VAR_source:
+			return "Property";
+		case VAR_seeAlso:
+			return "Property";
 		case VAR_airQualityIndex:
 			return "Property";
 		case VAR_airQualityIndexForecast:
@@ -6472,53 +6492,23 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Property";
 		case VAR_atmosphericPressure:
 			return "Property";
-		case VAR_dataProvider:
-			return "Property";
-		case VAR_dateCreated:
-			return "Property";
-		case VAR_dateModified:
-			return "Property";
-		case VAR_dateObserved:
-			return "Property";
-		case VAR_dewPoint:
-			return "Property";
-		case VAR_diffuseIrradiation:
-			return "Property";
-		case VAR_directIrradiation:
+		case VAR_pressureTendency:
 			return "Property";
 		case VAR_gustSpeed:
 			return "Property";
-		case VAR_illuminance:
+		case VAR_windDirection:
 			return "Property";
-		case VAR_location:
-			return "GeoProperty";
-		case VAR_owner:
+		case VAR_windSpeed:
 			return "Property";
 		case VAR_precipitation:
 			return "Property";
 		case VAR_precipitationForecast:
 			return "Property";
-		case VAR_pressureTendency:
-			return "Property";
-		case VAR_refDevice:
-			return "Property";
-		case VAR_refPointOfInterest:
-			return "Property";
 		case VAR_relativeHumidity:
 			return "Property";
 		case VAR_relativeHumidityForecast:
 			return "Property";
-		case VAR_seeAlso:
-			return "Property";
 		case VAR_snowHeight:
-			return "Property";
-		case VAR_solarRadiation:
-			return "Property";
-		case VAR_source:
-			return "Property";
-		case VAR_streamGauge:
-			return "Property";
-		case VAR_temperature:
 			return "Property";
 		case VAR_airTemperatureForecast:
 			return "Property";
@@ -6526,15 +6516,27 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return "Property";
 		case VAR_feelsLikeTemperature:
 			return "Property";
+		case VAR_temperature:
+			return "Property";
+		case VAR_solarRadiation:
+			return "Property";
+		case VAR_streamGauge:
+			return "Property";
 		case VAR_uVIndexMax:
 			return "Property";
 		case VAR_visibility:
 			return "Property";
 		case VAR_weatherType:
 			return "Property";
-		case VAR_windDirection:
+		case VAR_dewPoint:
 			return "Property";
-		case VAR_windSpeed:
+		case VAR_diffuseIrradiation:
+			return "Property";
+		case VAR_directIrradiation:
+			return "Property";
+		case VAR_illuminance:
+			return "Property";
+		case VAR_ngsildData:
 			return "Property";
 		case VAR_entityId:
 			return "Property";
@@ -6543,8 +6545,6 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_ngsildTenant:
 			return "Property";
 		case VAR_ngsildPath:
-			return "Property";
-		case VAR_ngsildData:
 			return "Property";
 		case VAR_ngsildContext:
 			return "Property";
@@ -6572,10 +6572,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_address:
 			return 3;
-		case VAR_alternateName:
+		case VAR_location:
 			return 3;
 		case VAR_areaServed:
-			return 5;
+			return 3;
+		case VAR_seeAlso:
+			return 13;
 		case VAR_airQualityIndex:
 			return 4;
 		case VAR_airQualityIndexForecast:
@@ -6585,81 +6587,61 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		case VAR_aqiMajorPollutantForecast:
 			return 4;
 		case VAR_atmosphericPressure:
-			return 6;
-		case VAR_dataProvider:
-			return 6;
-		case VAR_dateCreated:
-			return 6;
-		case VAR_dateModified:
 			return 7;
-		case VAR_dateObserved:
-			return 7;
-		case VAR_dewPoint:
-			return 8;
-		case VAR_diffuseIrradiation:
-			return 8;
-		case VAR_directIrradiation:
-			return 8;
-		case VAR_gustSpeed:
-			return 9;
-		case VAR_illuminance:
-			return 9;
-		case VAR_location:
-			return 10;
-		case VAR_owner:
-			return 10;
-		case VAR_precipitation:
-			return 11;
-		case VAR_precipitationForecast:
-			return 11;
 		case VAR_pressureTendency:
-			return 11;
-		case VAR_refDevice:
-			return 12;
-		case VAR_refPointOfInterest:
-			return 12;
-		case VAR_relativeHumidity:
-			return 12;
-		case VAR_relativeHumidityForecast:
-			return 13;
-		case VAR_seeAlso:
-			return 13;
-		case VAR_snowHeight:
-			return 13;
-		case VAR_solarRadiation:
-			return 14;
-		case VAR_source:
-			return 14;
-		case VAR_streamGauge:
-			return 14;
-		case VAR_temperature:
-			return 15;
-		case VAR_airTemperatureForecast:
-			return 5;
-		case VAR_airTemperatureTSA:
-			return 5;
-		case VAR_feelsLikeTemperature:
-			return 9;
-		case VAR_uVIndexMax:
-			return 15;
-		case VAR_visibility:
-			return 15;
-		case VAR_weatherType:
-			return 16;
+			return 7;
+		case VAR_gustSpeed:
+			return 8;
 		case VAR_windDirection:
-			return 16;
+			return 8;
 		case VAR_windSpeed:
-			return 16;
-		case VAR_entityId:
-			return 3;
-		case VAR_ngsildTenant:
-			return 5;
-		case VAR_ngsildPath:
-			return 5;
+			return 8;
+		case VAR_precipitation:
+			return 9;
+		case VAR_precipitationForecast:
+			return 9;
+		case VAR_relativeHumidity:
+			return 9;
+		case VAR_relativeHumidityForecast:
+			return 9;
+		case VAR_snowHeight:
+			return 9;
+		case VAR_airTemperatureForecast:
+			return 10;
+		case VAR_airTemperatureTSA:
+			return 10;
+		case VAR_feelsLikeTemperature:
+			return 10;
+		case VAR_temperature:
+			return 10;
+		case VAR_solarRadiation:
+			return 11;
+		case VAR_streamGauge:
+			return 11;
+		case VAR_uVIndexMax:
+			return 11;
+		case VAR_visibility:
+			return 11;
+		case VAR_weatherType:
+			return 11;
+		case VAR_dewPoint:
+			return 11;
+		case VAR_diffuseIrradiation:
+			return 11;
+		case VAR_directIrradiation:
+			return 11;
+		case VAR_illuminance:
+			return 11;
 		case VAR_ngsildData:
-			return 5;
+			return 12;
+		case VAR_entityId:
+			return 12;
+		case VAR_ngsildTenant:
+			return 12;
+		case VAR_ngsildPath:
+			return 12;
 		case VAR_ngsildContext:
-			return 5;
+			return 12;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -6673,10 +6655,12 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 2;
 		case VAR_address:
 			return 3;
-		case VAR_alternateName:
-			return 2;
+		case VAR_location:
+			return 4;
 		case VAR_areaServed:
-			return 3;
+			return 4;
+		case VAR_seeAlso:
+			return 2;
 		case VAR_airQualityIndex:
 			return 1;
 		case VAR_airQualityIndexForecast:
@@ -6687,80 +6671,60 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 			return 4;
 		case VAR_atmosphericPressure:
 			return 1;
-		case VAR_dataProvider:
-			return 2;
-		case VAR_dateCreated:
-			return 3;
-		case VAR_dateModified:
-			return 1;
-		case VAR_dateObserved:
-			return 2;
-		case VAR_dewPoint:
-			return 1;
-		case VAR_diffuseIrradiation:
-			return 2;
-		case VAR_directIrradiation:
-			return 3;
-		case VAR_gustSpeed:
-			return 2;
-		case VAR_illuminance:
-			return 3;
-		case VAR_location:
-			return 1;
-		case VAR_owner:
-			return 3;
-		case VAR_precipitation:
-			return 1;
-		case VAR_precipitationForecast:
-			return 2;
 		case VAR_pressureTendency:
-			return 3;
-		case VAR_refDevice:
-			return 1;
-		case VAR_refPointOfInterest:
 			return 2;
-		case VAR_relativeHumidity:
-			return 3;
-		case VAR_relativeHumidityForecast:
-			return 1;
-		case VAR_seeAlso:
-			return 2;
-		case VAR_snowHeight:
-			return 3;
-		case VAR_solarRadiation:
-			return 1;
-		case VAR_source:
-			return 2;
-		case VAR_streamGauge:
-			return 3;
-		case VAR_temperature:
-			return 1;
-		case VAR_airTemperatureForecast:
-			return 1;
-		case VAR_airTemperatureTSA:
-			return 2;
-		case VAR_feelsLikeTemperature:
-			return 1;
-		case VAR_uVIndexMax:
-			return 2;
-		case VAR_visibility:
-			return 3;
-		case VAR_weatherType:
+		case VAR_gustSpeed:
 			return 1;
 		case VAR_windDirection:
 			return 2;
 		case VAR_windSpeed:
 			return 3;
-		case VAR_entityId:
-			return 4;
-		case VAR_ngsildTenant:
+		case VAR_precipitation:
 			return 1;
-		case VAR_ngsildPath:
+		case VAR_precipitationForecast:
 			return 2;
-		case VAR_ngsildData:
+		case VAR_relativeHumidity:
 			return 3;
-		case VAR_ngsildContext:
+		case VAR_relativeHumidityForecast:
 			return 4;
+		case VAR_snowHeight:
+			return 5;
+		case VAR_airTemperatureForecast:
+			return 1;
+		case VAR_airTemperatureTSA:
+			return 2;
+		case VAR_feelsLikeTemperature:
+			return 3;
+		case VAR_temperature:
+			return 4;
+		case VAR_solarRadiation:
+			return 1;
+		case VAR_streamGauge:
+			return 2;
+		case VAR_uVIndexMax:
+			return 3;
+		case VAR_visibility:
+			return 4;
+		case VAR_weatherType:
+			return 5;
+		case VAR_dewPoint:
+			return 6;
+		case VAR_diffuseIrradiation:
+			return 7;
+		case VAR_directIrradiation:
+			return 8;
+		case VAR_illuminance:
+			return 9;
+		case VAR_ngsildData:
+			return 1;
+		case VAR_entityId:
+			return 2;
+		case VAR_ngsildTenant:
+			return 3;
+		case VAR_ngsildPath:
+			return 4;
+		case VAR_ngsildContext:
+			return 5;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

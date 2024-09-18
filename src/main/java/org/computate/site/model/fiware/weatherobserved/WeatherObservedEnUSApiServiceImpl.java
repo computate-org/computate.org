@@ -319,25 +319,29 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		try {
 			String entityName = weatherObserved.getName();
 
-			webClient.delete(
-					config.getInteger(ComputateConfigKeys.IOTAGENT_NORTH_PORT)
-					, config.getString(ComputateConfigKeys.IOTAGENT_HOST_NAME)
-					, String.format("/iot/devices/%s", urlEncode(entityName))
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
-					.putHeader("Content-Type", "application/json")
-					.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
-					.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
-					.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
-					.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
-					.putHeader("Cache-Control", "no-cache")
-					.send()
-					.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND)).onSuccess(b -> {
+			if(entityName == null) {
 				promise.complete();
-			}).onFailure(ex -> {
-				LOG.error(String.format("postIotServiceFuture failed. "), ex);
-				promise.fail(ex);
-			});
+			} else {
+				webClient.delete(
+						config.getInteger(ComputateConfigKeys.IOTAGENT_NORTH_PORT)
+						, config.getString(ComputateConfigKeys.IOTAGENT_HOST_NAME)
+						, String.format("/iot/devices/%s", urlEncode(entityName))
+						)
+						.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
+						.putHeader("Content-Type", "application/json")
+						.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
+						.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
+						.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
+						.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
+						.putHeader("Cache-Control", "no-cache")
+						.send()
+						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND.or(HttpResponseExpectation.SC_BAD_REQUEST))).onSuccess(b -> {
+					promise.complete();
+				}).onFailure(ex -> {
+					LOG.error(String.format("postIotServiceFuture failed. "), ex);
+					promise.fail(ex);
+				});
+			}
 		} catch(Throwable ex) {
 			LOG.error(String.format("postIotServiceFuture failed. "), ex);
 			promise.fail(ex);
