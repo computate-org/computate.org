@@ -928,7 +928,7 @@
                   <div class="">
                     <label for="fqIotService_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     <div class="display-flex ">
-                      <sl-button id="buttonFacetIotService_{{ key }}" onclick="facetFieldChange('IotService', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-button id="buttonFacetIotService_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqIotService_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('IotService', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -1027,7 +1027,7 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotIotService_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('IotService', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotIotService_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
               </div>
               {% endfor %}
               {%- endblock htmBodyPivotIotServicePage %}
@@ -1125,12 +1125,8 @@
           {%- endblock htmBodySidebarIotServicePage %}
         </div>
 
-        {%- block htmBodyGraphLocationIotServicePage %}
-        <div id="htmBodyGraphLocationIotServicePage" class="htmBodyGraphLocation "></div>
-        {%- endblock htmBodyGraphLocationIotServicePage %}
-
         {%- block htmBodyGraphIotServicePage %}
-        <div id="htmBodyGraphBaseModelPage" class="htmBodyGraph "></div>
+        <div id="htmBodyGraphIotServicePage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphIotServicePage %}
         <div class="pageContent ">
           <div id="site-calendar-box">

@@ -692,7 +692,7 @@
                   <div class="">
                     <label for="fqCompanyResearch_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     <div class="display-flex ">
-                      <sl-button id="buttonFacetCompanyResearch_{{ key }}" onclick="facetFieldChange('CompanyResearch', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-button id="buttonFacetCompanyResearch_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqCompanyResearch_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyResearch', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -791,7 +791,7 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyResearch_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyResearch', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyResearch_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
               </div>
               {% endfor %}
               {%- endblock htmBodyPivotCompanyResearchPage %}
@@ -889,12 +889,8 @@
           {%- endblock htmBodySidebarCompanyResearchPage %}
         </div>
 
-        {%- block htmBodyGraphLocationCompanyResearchPage %}
-        <div id="htmBodyGraphLocationCompanyResearchPage" class="htmBodyGraphLocation "></div>
-        {%- endblock htmBodyGraphLocationCompanyResearchPage %}
-
         {%- block htmBodyGraphCompanyResearchPage %}
-        <div id="htmBodyGraphBaseResultPage" class="htmBodyGraph "></div>
+        <div id="htmBodyGraphCompanyResearchPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphCompanyResearchPage %}
         <div class="pageContent ">
           <div id="site-calendar-box">

@@ -720,6 +720,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlUserKey());
 						break;
+					case "setOwner":
+							o2.setOwner(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_owner + "=$" + num);
+							num++;
+							bParams.add(o2.sqlOwner());
+						break;
 					case "setName":
 							o2.setName(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -799,14 +807,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
 							num++;
 							bParams.add(o2.sqlDateObserved());
-						break;
-					case "setOwner":
-							o2.setOwner(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-							num++;
-							bParams.add(o2.sqlOwner());
 						break;
 					case "setRefDevice":
 							o2.setRefDevice(jsonObject.getJsonObject(entityVar));
@@ -1459,6 +1459,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlUserKey());
 						break;
+					case WeatherObserved.VAR_owner:
+						o2.setOwner(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_owner + "=$" + num);
+						num++;
+						bParams.add(o2.sqlOwner());
+						break;
 					case WeatherObserved.VAR_name:
 						o2.setName(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1548,15 +1557,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
 						num++;
 						bParams.add(o2.sqlDateObserved());
-						break;
-					case WeatherObserved.VAR_owner:
-						o2.setOwner(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-						num++;
-						bParams.add(o2.sqlOwner());
 						break;
 					case WeatherObserved.VAR_refDevice:
 						o2.setRefDevice(jsonObject.getJsonObject(entityVar));

@@ -1982,7 +1982,7 @@
                   <div class="">
                     <label for="fqWeatherObserved_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     <div class="display-flex ">
-                      <sl-button id="buttonFacetWeatherObserved_{{ key }}" onclick="facetFieldChange('WeatherObserved', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-button id="buttonFacetWeatherObserved_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqWeatherObserved_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('WeatherObserved', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -2081,7 +2081,7 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('WeatherObserved', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotWeatherObserved_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
               </div>
               {% endfor %}
               {%- endblock htmBodyPivotWeatherObservedPage %}
@@ -2184,7 +2184,7 @@
         {%- endblock htmBodyGraphLocationWeatherObservedPage %}
 
         {%- block htmBodyGraphWeatherObservedPage %}
-        <div id="htmBodyGraphBaseModelPage" class="htmBodyGraph "></div>
+        <div id="htmBodyGraphWeatherObservedPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphWeatherObservedPage %}
         <div class="pageContent ">
           <div id="site-calendar-box">

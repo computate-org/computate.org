@@ -239,7 +239,7 @@
                   <div class="">
                     <label for="fqBaseModel_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     <div class="display-flex ">
-                      <sl-button id="buttonFacetBaseModel_{{ key }}" onclick="facetFieldChange('BaseModel', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-button id="buttonFacetBaseModel_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqBaseModel_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('BaseModel', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -338,7 +338,7 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('BaseModel', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotBaseModel_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
               </div>
               {% endfor %}
               {%- endblock htmBodyPivotBaseModelPage %}
@@ -436,12 +436,8 @@
           {%- endblock htmBodySidebarBaseModelPage %}
         </div>
 
-        {%- block htmBodyGraphLocationBaseModelPage %}
-        <div id="htmBodyGraphLocationBaseModelPage" class="htmBodyGraphLocation "></div>
-        {%- endblock htmBodyGraphLocationBaseModelPage %}
-
         {%- block htmBodyGraphBaseModelPage %}
-        <div id="htmBodyGraphPageLayout" class="htmBodyGraph "></div>
+        <div id="htmBodyGraphBaseModelPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphBaseModelPage %}
         <div class="pageContent ">
           <div id="site-calendar-box">

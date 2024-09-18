@@ -692,7 +692,7 @@
                   <div class="">
                     <label for="fqCompanyProduct_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
                     <div class="display-flex ">
-                      <sl-button id="buttonFacetCompanyProduct_{{ key }}" onclick="facetFieldChange('CompanyProduct', this); " title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-button id="buttonFacetCompanyProduct_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqCompanyProduct_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyProduct', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -791,7 +791,7 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %} onclick="facetPivotChange('CompanyProduct', value); ">{{ value.displayName }}</sl-checkbox>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyProduct_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
               </div>
               {% endfor %}
               {%- endblock htmBodyPivotCompanyProductPage %}
@@ -889,12 +889,8 @@
           {%- endblock htmBodySidebarCompanyProductPage %}
         </div>
 
-        {%- block htmBodyGraphLocationCompanyProductPage %}
-        <div id="htmBodyGraphLocationCompanyProductPage" class="htmBodyGraphLocation "></div>
-        {%- endblock htmBodyGraphLocationCompanyProductPage %}
-
         {%- block htmBodyGraphCompanyProductPage %}
-        <div id="htmBodyGraphBaseResultPage" class="htmBodyGraph "></div>
+        <div id="htmBodyGraphCompanyProductPage" class="htmBodyGraph "></div>
         {%- endblock htmBodyGraphCompanyProductPage %}
         <div class="pageContent ">
           <div id="site-calendar-box">

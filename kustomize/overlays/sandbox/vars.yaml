@@ -365,7 +365,7 @@ ENABLE_FIWARE: false
 # FIWARE Smart Data Model source code directory. 
 SMART_DATA_MODELS_SRC: "{{ (PARENT_SRC + '/smart-data-models') | realpath }}"
 # Map default latitude,longitude. 
-DEFAULT_MAP_LOCATION: "55.63379,13.49261"
+DEFAULT_MAP_LOCATION: "40.82609656742042,14.186226986785329"
 # Map default zoom level. 
 DEFAULT_MAP_ZOOM: "17"
 
