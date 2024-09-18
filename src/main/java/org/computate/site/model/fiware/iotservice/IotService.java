@@ -241,7 +241,7 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * UrlVar: pageUrlId
 	 */
 	protected void _title(Wrap<String> w) {
-		w.o(service);
+		w.o(ngsildTenant);
 	}
 
 	@Override
