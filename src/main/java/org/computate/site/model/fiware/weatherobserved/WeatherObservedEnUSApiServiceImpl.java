@@ -335,7 +335,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 						.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
 						.putHeader("Cache-Control", "no-cache")
 						.send()
-						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND.or(HttpResponseExpectation.SC_BAD_REQUEST))).onSuccess(b -> {
+						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND.or(HttpResponseExpectation.SC_BAD_REQUEST.or(HttpResponseExpectation.SC_INTERNAL_SERVER_ERROR)))).onSuccess(b -> {
 					promise.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("postIotServiceFuture failed. "), ex);
