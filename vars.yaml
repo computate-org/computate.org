@@ -548,7 +548,12 @@ EMAIL_HOST: smtp.fastmail.com
 EMAIL_PORT: 465
 EMAIL_SSL: true
 EMAIL_AUTH_METHOD: PLAIN
-EMAIL_USERNAME: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['username'] | b64decode }}"
-EMAIL_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
+EMAIL_USERNAME: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['EMAIL_USERNAME'] | b64decode }}"
+EMAIL_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='email-smtp', namespace=SITE_NAMESPACE)[0].data['EMAIL_PASSWORD'] | b64decode }}"
 EMAIL_FROM: support@computate.org
 EMAIL_ADMIN: support@computate.org
+
+#############
+# Downloads #
+#############
+DOWNLOAD_PATH: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}-downloads"
