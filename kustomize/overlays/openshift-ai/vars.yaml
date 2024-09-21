@@ -6,7 +6,7 @@
 # The name of this application. 
 SITE_NAME: computate.org
 # The source code directory for the project. 
-SITE_SRC: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}"
+SITE_SRC: "{{ lookup('env', 'HOME') }}/{{ SITE_NAME }}"
 # The parent source directory. 
 PARENT_SRC: "{{ (SITE_SRC + '/..') | realpath }}"
 # The vars.yaml filename to load when running in development. 
@@ -42,7 +42,7 @@ SSL_VERIFY: false
 # The namespace in OpenShift where the site will run. 
 SITE_NAMESPACE: "{{ lookup('env', 'SITE_NAMESPACE') }}"
 # The host name of the site. 
-SITE_HOST_NAME: "{{ query('kubernetes.core.k8s', kind='Route', resource_name='keycloak', namespace=SITE_NAMESPACE)[0].spec.host | replace('keycloak.', 'site.') }}"
+SITE_HOST_NAME: "{{ query('kubernetes.core.k8s', kind='Route', resource_name='keycloak', namespace=SITE_NAMESPACE, api_version='route.openshift.io/v1')[0].spec.host | replace('keycloak.', 'site.') }}"
 # The base URL of the site. 
 SITE_BASE_URL: "https://{{ SITE_HOST_NAME }}"
 # The public facing URL for the site. 
@@ -53,7 +53,7 @@ SITE_PUBLIC_URL: "https://www.{{ DOMAIN_NAME }}"
 #####################################
 
 # The Auth host name. 
-AUTH_HOST_NAME: "{{ query('kubernetes.core.k8s', kind='Route', resource_name='keycloak', namespace=SITE_NAMESPACE)[0].spec.host }}"
+AUTH_HOST_NAME: "{{ query('kubernetes.core.k8s', kind='Route', resource_name='keycloak', namespace=SITE_NAMESPACE, api_version='route.openshift.io/v1')[0].spec.host }}"
 # The Auth port. 
 AUTH_PORT: 443
 # Whether the Auth server uses SSL. 
@@ -186,8 +186,6 @@ SITE_LICENSE_URL: https://www.gnu.org/licenses/gpl-3.0.en.html
 # OpenShift defaults #
 ######################
 
-# The wildcard domain suffix where OpenShift Routes are available by default. 
-OPENSHIFT_APPS_DOMAIN: "apps-crc.testing"
 # The kustomize deployment path to deploy the site. 
 OVERLAY_SITE_PATH: "{{ SITE_SRC }}/kustomize/overlays/openshift-ai/{{ SITE_NAME }}"
 
@@ -225,8 +223,6 @@ TEMPLATE_PATH: "{{ SITE_SRC }}/src/main/resources/templates"
 # The path to the site page templates. 
 DYNAMIC_PAGE_PATHS:
   - "en-us/article"
-# An optional FontAwesome Pro Kit for additional FontAwesome icons. 
-FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
 # Site default theme, light or dark. 
 SITE_THEME: dark
 
@@ -265,6 +261,8 @@ SITE_POWERED_BY_IMAGE_URI: /svg/google-gke.svg
 # Zookeeper defaults #
 ######################
 
+# The namespace in OpenShift where Zookeeper will run. 
+ZOOKEEPER_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # The default hostname for the Zookeeper cluster manager. 
 ZOOKEEPER_HOST_NAME: "zookeeper"
 # The default port that Zookeeper runs to manage the cluster. 
@@ -279,8 +277,8 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Solr defaults #
 #################
 
-# Name of the solr deployment in OpenShift. 
-#SOLR_NAME: solr
+# The namespace in OpenShift where Solr will run. 
+SOLR_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL: false
 # The host name to connect to Solr in OpenShift. 
@@ -346,6 +344,8 @@ DEFAULT_MAP_ZOOM: "17"
 # Context Broker #
 ##################
 
+# The Context Broker namespace. 
+CONTEXT_BROKER_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # Whether to use SSL when connecting to the Context Broker. 
 CONTEXT_BROKER_SSL: false
 # The host name to connect to the Context Broker in OpenShift. 
@@ -359,6 +359,8 @@ CONTEXT_BROKER_DELAY_MILLIS: 0
 # iotagent-json #
 #################
 
+# The IoT Agent JSON namespace. 
+IOTAGENT_JSON_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # Whether to use SSL when connecting to the IoT Agent JSON. 
 IOTAGENT_SSL: false
 # The host name to connect to the IoT Agent JSON in OpenShift. 
@@ -376,6 +378,8 @@ IOTAGENT_TRANSPORT: AMQP
 
 # Enable RabbitMQ message integration. 
 ENABLE_RABBITMQ: true
+# The namespace in OpenShift where the AMQP message broker will run. 
+RABBITMQ_NAMESPACE: "{{ SITE_NAMESPACE }}"
 # The AMQP port. 
 RABBITMQ_PORT: 5672
 # The AMQP host name. 
