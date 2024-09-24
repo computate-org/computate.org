@@ -1485,7 +1485,12 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistSitePage failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistSitePage failed. "), ex);
 					promise.fail(ex);

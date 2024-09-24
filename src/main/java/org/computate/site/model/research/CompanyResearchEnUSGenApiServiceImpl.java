@@ -1484,7 +1484,12 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyResearch failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyResearch failed. "), ex);
 					promise.fail(ex);

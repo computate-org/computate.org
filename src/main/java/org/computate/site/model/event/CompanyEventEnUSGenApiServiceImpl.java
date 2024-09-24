@@ -1484,7 +1484,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyEvent failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyEvent failed. "), ex);
 					promise.fail(ex);

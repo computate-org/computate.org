@@ -1603,7 +1603,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyProduct failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyProduct failed. "), ex);
 					promise.fail(ex);

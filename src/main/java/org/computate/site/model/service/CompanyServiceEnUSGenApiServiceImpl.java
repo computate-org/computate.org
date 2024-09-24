@@ -1484,7 +1484,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyService failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyService failed. "), ex);
 					promise.fail(ex);

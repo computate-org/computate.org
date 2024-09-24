@@ -760,14 +760,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlLocation());
 						break;
-					case "setAreaServed":
-							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAreaServed());
-						break;
 					case "setDataProvider":
 							o2.setDataProvider(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -1007,6 +999,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUVIndexMax());
+						break;
+					case "setAreaServed":
+							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAreaServed());
 						break;
 					case "setVisibility":
 							o2.setVisibility(jsonObject.getJsonObject(entityVar));
@@ -1504,15 +1504,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlLocation());
 						break;
-					case WeatherObserved.VAR_areaServed:
-						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAreaServed());
-						break;
 					case WeatherObserved.VAR_dataProvider:
 						o2.setDataProvider(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1782,6 +1773,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUVIndexMax());
+						break;
+					case WeatherObserved.VAR_areaServed:
+						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAreaServed());
 						break;
 					case WeatherObserved.VAR_visibility:
 						o2.setVisibility(jsonObject.getJsonObject(entityVar));

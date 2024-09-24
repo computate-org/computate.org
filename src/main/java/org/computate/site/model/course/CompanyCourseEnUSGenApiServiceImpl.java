@@ -1484,7 +1484,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 						}
 					});
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyCourse failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyCourse failed. "), ex);
 					promise.fail(ex);
