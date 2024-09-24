@@ -1611,12 +1611,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_templateUri, CompanyCourse.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyCourse.VAR_templateUri)));
 			page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, ctx.getString(CompanyCourse.VAR_emailTemplate)));
 			page.persistForClass(CompanyCourse.VAR_uri, CompanyCourse.staticSetUri(siteRequest2, ctx.getString(CompanyCourse.VAR_uri)));
+			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
 			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, ctx.getString(CompanyCourse.VAR_downloadUri)));
 			page.persistForClass(CompanyCourse.VAR_userUri, CompanyCourse.staticSetUserUri(siteRequest2, ctx.getString(CompanyCourse.VAR_userUri)));
 			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_storeUrl)));
 			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, ctx.getString(CompanyCourse.VAR_title)));
 			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, ctx.getString(CompanyCourse.VAR_courseNum)));
-			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {
