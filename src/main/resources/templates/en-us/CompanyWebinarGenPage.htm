@@ -834,11 +834,11 @@
                   <div>
                     <div class="pageSearchVal " id="pageSearchVal-fqCompanyWebinar_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyWebinar_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
-                    <ol class="pageFacetField pageFacetFieldCompanyWebinar_{{ key }} " id="pageFacetFieldCompanyWebinar_{{ key }}">
+                    <div class="pageFacetField pageFacetFieldCompanyWebinar_{{ key }} " id="pageFacetFieldCompanyWebinar_{{ key }}">
 {% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
-                      <li class="cursor-pointer " data-class="CompanyWebinar" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('CompanyWebinar', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
-{% endfor %}
-                    </ol>
+                      <sl-tooltip content="{{ facetFieldValue | e }} webinar total with {{ value.facetField.var | e }} &quot;{{ facetFieldKey | e }}&quot;">                        <div class="cursor-pointer " data-class="CompanyWebinar" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('CompanyWebinar', facetFieldValue); ">{{ facetFieldValue }}: {{ facetFieldKey }}</div>
+                      </sl-tooltip>{% endfor %}
+                    </div>
                   </div>
                 {% endfor %}
               </div>

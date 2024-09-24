@@ -10,6 +10,7 @@ import org.computate.vertx.api.BaseApiServiceImpl;
 import io.vertx.ext.web.client.WebClient;
 import java.util.Objects;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.pgclient.PgPool;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
@@ -57,7 +58,6 @@ import com.google.common.io.Resources;
 import java.nio.charset.StandardCharsets;
 import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
-import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
@@ -680,6 +680,46 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
+					case "setInheritPk":
+							o2.setInheritPk(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+							num++;
+							bParams.add(o2.sqlInheritPk());
+						break;
+					case "setCreated":
+							o2.setCreated(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCreated());
+						break;
+					case "setArchived":
+							o2.setArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlArchived());
+						break;
+					case "setSessionId":
+							o2.setSessionId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSessionId());
+						break;
+					case "setUserKey":
+							o2.setUserKey(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserKey());
+						break;
 					case "setName":
 							o2.setName(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -767,46 +807,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							bSql.append(CompanyWebinar.VAR_url + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUrl());
-						break;
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
-					case "setCreated":
-							o2.setCreated(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_created + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCreated());
-						break;
-					case "setArchived":
-							o2.setArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlArchived());
-						break;
-					case "setSessionId":
-							o2.setSessionId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSessionId());
-						break;
-					case "setUserKey":
-							o2.setUserKey(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUserKey());
 						break;
 				}
 			}
@@ -1126,6 +1126,51 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
+					case CompanyWebinar.VAR_inheritPk:
+						o2.setInheritPk(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
+						num++;
+						bParams.add(o2.sqlInheritPk());
+						break;
+					case CompanyWebinar.VAR_created:
+						o2.setCreated(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_created + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCreated());
+						break;
+					case CompanyWebinar.VAR_archived:
+						o2.setArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlArchived());
+						break;
+					case CompanyWebinar.VAR_sessionId:
+						o2.setSessionId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSessionId());
+						break;
+					case CompanyWebinar.VAR_userKey:
+						o2.setUserKey(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserKey());
+						break;
 					case CompanyWebinar.VAR_name:
 						o2.setName(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1224,51 +1269,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_url + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUrl());
-						break;
-					case CompanyWebinar.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
-					case CompanyWebinar.VAR_created:
-						o2.setCreated(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_created + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCreated());
-						break;
-					case CompanyWebinar.VAR_archived:
-						o2.setArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_archived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlArchived());
-						break;
-					case CompanyWebinar.VAR_sessionId:
-						o2.setSessionId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_sessionId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSessionId());
-						break;
-					case CompanyWebinar.VAR_userKey:
-						o2.setUserKey(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_userKey + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUserKey());
 						break;
 					}
 				}
@@ -2154,7 +2154,12 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							}
 						}
 					}
-					promise.complete();
+					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("persistCompanyWebinar failed. "), ex);
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("persistCompanyWebinar failed. "), ex);
 					promise.fail(ex);
@@ -2191,34 +2196,29 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
-				JsonObject json = new JsonObject();
-				JsonObject add = new JsonObject();
-				json.put("add", add);
-				JsonObject doc = new JsonObject();
-				add.put("doc", doc);
-				o.indexCompanyWebinar(doc);
-				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
-				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
-				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
-				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
-				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
-				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
-				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
-				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
-					if(softCommit == null && commitWithin == null)
-						softCommit = true;
-					else if(softCommit == null)
-						softCommit = false;
-				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
-				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
-					promise.complete(o);
-				}).onFailure(ex -> {
-					LOG.error(String.format("indexCompanyWebinar failed. "), new RuntimeException(ex));
-					promise.fail(ex);
-				});
+			JsonObject json = new JsonObject();
+			JsonObject add = new JsonObject();
+			json.put("add", add);
+			JsonObject doc = new JsonObject();
+			add.put("doc", doc);
+			o.indexCompanyWebinar(doc);
+			String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+			String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+			String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+			Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+			String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+			Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+			Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+			Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+				if(softCommit == null && commitWithin == null)
+					softCommit = true;
+				else if(softCommit == null)
+					softCommit = false;
+			String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+			webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+				promise.complete(o);
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexCompanyWebinar failed. "), ex);
+				LOG.error(String.format("indexCompanyWebinar failed. "), new RuntimeException(ex));
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
@@ -2343,6 +2343,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_resourceUri, resourceUri);
 			page.persistForClass(CompanyWebinar.VAR_templateUri, templateUri);
 
+			page.persistForClass(CompanyWebinar.VAR_inheritPk, CompanyWebinar.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebinar.VAR_inheritPk)));
+			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, ctx.getString(CompanyWebinar.VAR_created)));
+			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
+			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
+			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
 			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, ctx.getString(CompanyWebinar.VAR_name)));
 			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, ctx.getString(CompanyWebinar.VAR_description)));
 			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, ctx.getString(CompanyWebinar.VAR_pageId)));
@@ -2354,11 +2359,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlEmea, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlEmea)));
 			page.persistForClass(CompanyWebinar.VAR_uri, CompanyWebinar.staticSetUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_uri)));
 			page.persistForClass(CompanyWebinar.VAR_url, CompanyWebinar.staticSetUrl(siteRequest2, ctx.getString(CompanyWebinar.VAR_url)));
-			page.persistForClass(CompanyWebinar.VAR_inheritPk, CompanyWebinar.staticSetInheritPk(siteRequest2, ctx.getString(CompanyWebinar.VAR_inheritPk)));
-			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, ctx.getString(CompanyWebinar.VAR_created)));
-			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
-			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
-			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

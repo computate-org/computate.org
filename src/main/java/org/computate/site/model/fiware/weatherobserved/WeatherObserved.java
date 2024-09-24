@@ -20,7 +20,6 @@ import io.vertx.pgclient.data.Polygon;
  * SmartDataModel: WeatherObserved - Weather - SmartCities
  * Fiware: true
  *
- * Model: true
  * Api: true
  * Page: true
  * SuperPage: BaseModelPage
@@ -47,6 +46,7 @@ import io.vertx.pgclient.data.Polygon;
  * Color: 2017-shaded-spruce
  * Icon: <i class="fa-regular fa-cloud-bolt-sun"></i>
  * Rows: 100
+ * Model: true
  **/
 public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 

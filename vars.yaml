@@ -410,6 +410,8 @@ CONTEXT_BROKER_HOST_NAME: "scorpiobroker.apps-crc.testing"
 CONTEXT_BROKER_PORT: 443
 # The delay between messages and requerying entity @context. 
 CONTEXT_BROKER_DELAY_MILLIS: 0
+# The Context Broker namespace. 
+CONTEXT_BROKER_CONTEXT: "https://raw.githubusercontent.com/{{ GITHUB_ORG }}/{{ SITE_STATIC_NAME }}/main/fiware/context.jsonld"
 
 #################
 # iotagent-json #
@@ -557,3 +559,8 @@ EMAIL_ADMIN: support@computate.org
 # Downloads #
 #############
 DOWNLOAD_PATH: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}-downloads"
+
+##########
+# Square #
+##########
+SQUARE_ACCESS_TOKEN: UNKNOWN

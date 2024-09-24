@@ -1,11 +1,16 @@
 package org.computate.site.model.fiware.weatherobserved;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
+import org.computate.search.serialize.ComputateZonedDateTimeSerializer;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
+import org.joda.time.DateTime;
 
 import com.hubspot.jinjava.Jinjava;
 
@@ -30,11 +35,6 @@ import io.vertx.rabbitmq.RabbitMQClient;
  **/
 public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApiServiceImpl {
 
-	private Vertx vertx;
-	public void setVertx(Vertx vertx) {
-		this.vertx = vertx;
-	}
-
 	public WeatherObservedEnUSApiServiceImpl(Vertx vertx, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
 		super(vertx, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 	}
@@ -43,20 +43,8 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 	public Future<Void> persistWeatherObserved(WeatherObserved weatherObserved, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		super.persistWeatherObserved(weatherObserved, patch).onSuccess(a -> {
-			iotagentCreateDevice(weatherObserved, patch).onSuccess(b -> {
-				// vertx.setTimer(config.getInteger(ComputateConfigKeys.CONTEXT_BROKER_DELAY_MILLIS, 1000), delay -> {
-					iotagentSendMessage(weatherObserved, patch).onSuccess(c -> {
-					// iotagentCreateSubscription(weatherObserved, patch).onSuccess(c -> {
-						promise.complete();
-					// }).onFailure(ex -> {
-					// 	LOG.error(String.format("patchIotServiceFuture failed. "), ex);
-					// 	promise.fail(ex);
-					// });
-					}).onFailure(ex -> {
-						LOG.error(String.format("patchIotServiceFuture failed. "), ex);
-						promise.fail(ex);
-					});
-				// });
+			cbUpsertEntity(weatherObserved, patch).onSuccess(b -> {
+				promise.complete();
 			}).onFailure(ex -> {
 				LOG.error(String.format("patchIotServiceFuture failed. "), ex);
 				promise.fail(ex);
@@ -68,72 +56,67 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		return promise.future();
 	}
 
-	public Future<Void> iotagentCreateDevice(WeatherObserved weatherObserved, Boolean patch) {
+	public Future<Void> cbUpsertEntity(WeatherObserved weatherObserved, Boolean patch) {
 		Promise<Void> promise = Promise.promise();
 		try {
-			String entityName = weatherObserved.getName();
-			JsonObject serviceBody = new JsonObject();
-			JsonArray attributes = new JsonArray();
+			ZonedDateTime observedAt = ZonedDateTime.now(ZoneId.of("UTC"));
+			String observedAtStr = observedAt.format(ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
+			JsonArray entityArray = new JsonArray();
+			JsonObject entityBody = new JsonObject();
+			entityBody.put("@context", config.getString(ComputateConfigKeys.CONTEXT_BROKER_CONTEXT));
+			entityBody.put("id", weatherObserved.getEntityId());
+			entityBody.put("type", WeatherObserved.CLASS_SIMPLE_NAME);
+
+			entityBody.put("NGSILD-Tenant"
+					, new JsonObject()
+					.put("type", "Property")
+					.put("value", weatherObserved.getNgsildTenant())
+					.put("observedAt", observedAtStr)
+					);
+			entityBody.put("NGSILD-Path"
+					, new JsonObject()
+					.put("type", "Property")
+					.put("value", weatherObserved.getNgsildPath())
+					.put("observedAt", observedAtStr)
+					);
+
 			List<String> vars = WeatherObserved.varsFqForClass();
 			for (String var : vars) {
 				String ngsiType = WeatherObserved.ngsiType(var);
 				if (ngsiType != null) {
-					attributes.add(new JsonObject()
-							.put("object_id", var)
-							.put("name", Optional.ofNullable(WeatherObserved.displayNameWeatherObserved(var)).orElse(var))
-							.put("type", ngsiType));
+					Object value = weatherObserved.obtainForClass(var);
+					if(value != null) {
+						entityBody.put(WeatherObserved.displayNameForClass(var)
+								, new JsonObject()
+								.put("type", "Property")
+								.put("value", value)
+								.put("observedAt", observedAtStr)
+								);
+					}
 				}
 			}
-
-			serviceBody.put("attributes", attributes);
-			if(patch) {
-				webClient.put(
-						config.getInteger(ComputateConfigKeys.IOTAGENT_NORTH_PORT)
-						, config.getString(ComputateConfigKeys.IOTAGENT_HOST_NAME)
-						, String.format("/iot/devices/%s", urlEncode(entityName))
-						)
-						.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
-						.putHeader("Content-Type", "application/json")
-						.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
-						.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
-						.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
-						.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
-						.putHeader("Cache-Control", "no-cache")
-						.sendJsonObject(serviceBody)
-						.expecting(HttpResponseExpectation.SC_NO_CONTENT).onSuccess(b -> {
-					promise.complete();
-				}).onFailure(ex -> {
-					LOG.error(String.format("postIotServiceFuture failed. "), ex);
-					promise.fail(ex);
-				});
-			} else {
-				JsonObject body = new JsonObject().put("devices", new JsonArray().add(serviceBody));
-				serviceBody.put("device_id", entityName);
-				serviceBody.put("entity_name", entityName);
-				serviceBody.put("entity_type", WeatherObserved.CLASS_SIMPLE_NAME);
-				serviceBody.put("transport", config.getString(ComputateConfigKeys.IOTAGENT_TRANSPORT));
-				webClient.post(
-						config.getInteger(ComputateConfigKeys.IOTAGENT_NORTH_PORT)
-						, config.getString(ComputateConfigKeys.IOTAGENT_HOST_NAME)
-						, "/iot/devices"
-						)
-						.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
-						.putHeader("Content-Type", "application/json")
-						.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
-						.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
-						.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
-						.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
-						.putHeader("Cache-Control", "no-cache")
-						.sendJsonObject(body)
-						.expecting(HttpResponseExpectation.SC_CREATED).onSuccess(b -> {
-					promise.complete();
-				}).onFailure(ex -> {
-					LOG.error(String.format("postIotServiceFuture failed. "), ex);
-					promise.fail(ex);
-				});
-			}
+			entityArray.add(entityBody);
+			LOG.info(entityArray.encodePrettily());
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.CONTEXT_BROKER_PORT)
+					, config.getString(ComputateConfigKeys.CONTEXT_BROKER_HOST_NAME)
+					, "/ngsi-ld/v1/entityOperations/upsert/"
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.CONTEXT_BROKER_SSL))
+					.putHeader("Content-Type", "application/ld+json")
+					.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
+					.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
+					.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
+					.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
+					.sendJson(entityArray)
+					.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_CREATED)).onSuccess(b -> {
+				promise.complete();
+			}).onFailure(ex -> {
+				LOG.error(String.format("cbUpsertEntity failed. "), ex);
+				promise.fail(ex);
+			});
 		} catch(Throwable ex) {
-			LOG.error(String.format("postIotServiceFuture failed. "), ex);
+			LOG.error(String.format("cbUpsertEntity failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -223,35 +206,6 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		return promise.future();
 	}
 
-	public Future<Void> iotagentSendMessage(WeatherObserved weatherObserved, Boolean patch) {
-		Promise<Void> promise = Promise.promise();
-		try {
-			String entityName = weatherObserved.getName();
-			String entityType = WeatherObserved.CLASS_SIMPLE_NAME;
-
-			String exchange = "amq.topic";
-			String routingKey = String.format(".%s.%s.attrs", entityType, entityName);
-			JsonObject attributes = new JsonObject();
-			List<String> vars = WeatherObserved.varsFqForClass();
-			for (String var : vars) {
-				String ngsiType = WeatherObserved.ngsiType(var);
-				if (ngsiType != null && !"type".equals(var) && !"id".equals(var)) {
-					attributes.put(var, weatherObserved.obtainForClass(var));
-				}
-			}
-			rabbitmqClient.basicPublish(exchange, routingKey, attributes.toBuffer()).onSuccess(a -> {
-				promise.complete();
-			}).onFailure(ex -> {
-				LOG.error(String.format("postIotServiceFuture failed. "), ex);
-				promise.fail(ex);
-			});
-		} catch(Throwable ex) {
-			LOG.error(String.format("postIotServiceFuture failed. "), ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
 	public Future<JsonObject> ngsildGetEntity(WeatherObserved weatherObserved) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
@@ -295,13 +249,8 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 	public Future<Void> sqlDELETEWeatherObserved(WeatherObserved o) {
 		Promise<Void> promise = Promise.promise();
 		super.sqlDELETEWeatherObserved(o).onSuccess(a -> {
-			iotagentDeleteDevice(o).onSuccess(b -> {
-				// iotagentDeleteSubscription(o).onSuccess(c -> {
-					promise.complete();
-				// }).onFailure(ex -> {
-				// 	LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
-				// 	promise.fail(ex);
-				// });
+			cbDeleteEntity(o).onSuccess(b -> {
+				promise.complete();
 			}).onFailure(ex -> {
 				LOG.error(String.format("sqlDELETEWeatherObserved failed. "), ex);
 				promise.fail(ex);
@@ -313,36 +262,29 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 		return promise.future();
 	}
 
-	public Future<Void> iotagentDeleteDevice(WeatherObserved weatherObserved) {
+	public Future<Void> cbDeleteEntity(WeatherObserved weatherObserved) {
 		Promise<Void> promise = Promise.promise();
 		try {
-			String entityName = weatherObserved.getName();
-
-			if(entityName == null) {
+			webClient.delete(
+					config.getInteger(ComputateConfigKeys.CONTEXT_BROKER_PORT)
+					, config.getString(ComputateConfigKeys.CONTEXT_BROKER_HOST_NAME)
+					, String.format("/ngsi-ld/v1/entities/%s", urlEncode(weatherObserved.getEntityId()))
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.CONTEXT_BROKER_SSL))
+					.putHeader("Content-Type", "application/ld+json")
+					.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
+					.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
+					.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
+					.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
+					.send()
+					.expecting(HttpResponseExpectation.SC_NO_CONTENT).onSuccess(b -> {
 				promise.complete();
-			} else {
-				webClient.delete(
-						config.getInteger(ComputateConfigKeys.IOTAGENT_NORTH_PORT)
-						, config.getString(ComputateConfigKeys.IOTAGENT_HOST_NAME)
-						, String.format("/iot/devices/%s", urlEncode(entityName))
-						)
-						.ssl(config.getBoolean(ComputateConfigKeys.IOTAGENT_SSL))
-						.putHeader("Content-Type", "application/json")
-						.putHeader("Fiware-Service", weatherObserved.getNgsildTenant())
-						.putHeader("Fiware-ServicePath", weatherObserved.getNgsildPath())
-						.putHeader("NGSILD-Tenant", weatherObserved.getNgsildTenant())
-						.putHeader("NGSILD-Path", weatherObserved.getNgsildPath())
-						.putHeader("Cache-Control", "no-cache")
-						.send()
-						.expecting(HttpResponseExpectation.SC_NO_CONTENT.or(HttpResponseExpectation.SC_NOT_FOUND.or(HttpResponseExpectation.SC_BAD_REQUEST.or(HttpResponseExpectation.SC_INTERNAL_SERVER_ERROR)))).onSuccess(b -> {
-					promise.complete();
-				}).onFailure(ex -> {
-					LOG.error(String.format("postIotServiceFuture failed. "), ex);
-					promise.fail(ex);
-				});
-			}
+			}).onFailure(ex -> {
+				LOG.error(String.format("cbDeleteEntity failed. "), ex);
+				promise.fail(ex);
+			});
 		} catch(Throwable ex) {
-			LOG.error(String.format("postIotServiceFuture failed. "), ex);
+			LOG.error(String.format("cbDeleteEntity failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

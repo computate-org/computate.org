@@ -10,6 +10,7 @@ import org.computate.vertx.api.BaseApiServiceImpl;
 import io.vertx.ext.web.client.WebClient;
 import java.util.Objects;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.Vertx;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.pgclient.PgPool;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
@@ -57,7 +58,6 @@ import com.google.common.io.Resources;
 import java.nio.charset.StandardCharsets;
 import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
-import io.vertx.core.Vertx;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
@@ -1510,34 +1510,29 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
-				JsonObject json = new JsonObject();
-				JsonObject add = new JsonObject();
-				json.put("add", add);
-				JsonObject doc = new JsonObject();
-				add.put("doc", doc);
-				o.indexCompanyCourse(doc);
-				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
-				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
-				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
-				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
-				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
-				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
-				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
-				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
-					if(softCommit == null && commitWithin == null)
-						softCommit = true;
-					else if(softCommit == null)
-						softCommit = false;
-				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
-				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
-					promise.complete(o);
-				}).onFailure(ex -> {
-					LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
-					promise.fail(ex);
-				});
+			JsonObject json = new JsonObject();
+			JsonObject add = new JsonObject();
+			json.put("add", add);
+			JsonObject doc = new JsonObject();
+			add.put("doc", doc);
+			o.indexCompanyCourse(doc);
+			String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+			String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+			String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+			Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+			String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+			Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+			Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+			Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+				if(softCommit == null && commitWithin == null)
+					softCommit = true;
+				else if(softCommit == null)
+					softCommit = false;
+			String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+			webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+				promise.complete(o);
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexCompanyCourse failed. "), ex);
+				LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {
@@ -1616,12 +1611,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_templateUri, CompanyCourse.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyCourse.VAR_templateUri)));
 			page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, ctx.getString(CompanyCourse.VAR_emailTemplate)));
 			page.persistForClass(CompanyCourse.VAR_uri, CompanyCourse.staticSetUri(siteRequest2, ctx.getString(CompanyCourse.VAR_uri)));
-			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
 			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, ctx.getString(CompanyCourse.VAR_downloadUri)));
 			page.persistForClass(CompanyCourse.VAR_userUri, CompanyCourse.staticSetUserUri(siteRequest2, ctx.getString(CompanyCourse.VAR_userUri)));
 			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_storeUrl)));
 			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, ctx.getString(CompanyCourse.VAR_title)));
 			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, ctx.getString(CompanyCourse.VAR_courseNum)));
+			page.persistForClass(CompanyCourse.VAR_url, CompanyCourse.staticSetUrl(siteRequest2, ctx.getString(CompanyCourse.VAR_url)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

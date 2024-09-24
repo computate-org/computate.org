@@ -1156,38 +1156,37 @@ public class MainVerticle extends AbstractVerticle {
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
 			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiSitePage.configureUi(router, SitePage.class, SiteRequest.class, "/en-us/article");
+			apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
 			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyResearch.configureUi(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
+			apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
 
 			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyEvent.configureUi(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
+			apiCompanyEvent.configureUiResult(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
 
 			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyCourse.configureUi(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
-			apiCompanyCourse.configureUserUi(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/course", "/en-us/user/course");
+			apiCompanyCourse.configureUiResult(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
+			apiCompanyCourse.configureUserUiResult(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/course", "/en-us/user/course");
 
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyProduct.configureUi(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
-			apiCompanyProduct.configureUserUi(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/product");
+			apiCompanyProduct.configureUiResult(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
+			apiCompanyProduct.configureUserUiResult(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/product");
 
 			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyService.configureUi(router, CompanyService.class, SiteRequest.class, "/en-us/service");
+			apiCompanyService.configureUiResult(router, CompanyService.class, SiteRequest.class, "/en-us/service");
 
 			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = CompanyWebinarEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyWebinar.configureUi(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
-			apiCompanyWebinar.configureUserUi(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/webinar", "/en-us/user/webinar");
+			apiCompanyWebinar.configureUiModel(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
+			apiCompanyWebinar.configureUserUiModel(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/webinar", "/en-us/user/webinar");
 
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyWebsite.configureUi(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
+			apiCompanyWebsite.configureUiResult(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = WeatherObservedEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiWeatherObserved.setVertx(vertx);
+			WeatherObservedEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 
 			IotServiceEnUSApiServiceImpl apiIotService = IotServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiIotService.configureUi(router, IotService.class, SiteRequest.class, "/en-us/iot-service");
-			apiIotService.configureUserUi(router, IotService.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/iot-service", "/en-us/user/iot-service");
+			apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/iot-service");
+			apiIotService.configureUserUiModel(router, IotService.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/iot-service", "/en-us/user/iot-service");
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");
@@ -1272,7 +1271,7 @@ public class MainVerticle extends AbstractVerticle {
 										List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
 										SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
 
-										SearchList<BaseResult> searchList = new SearchList<BaseResult>();
+										SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
 										searchList.setStore(true);
 										searchList.q("*:*");
 										searchList.setSiteRequest_(siteRequest);
@@ -1280,7 +1279,7 @@ public class MainVerticle extends AbstractVerticle {
 										searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
 										searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 											if(searchList.size() > 0) {
-												BaseResult result = searchList.first();
+												ComputateBaseResult result = searchList.first();
 												String uri = (String)result.obtainForClass("uri");
 												String groupName = uri;
 												String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
@@ -1513,14 +1512,14 @@ public class MainVerticle extends AbstractVerticle {
 											array.add(val);
 										}
 									}
-									SearchList<BaseResult> l = new SearchList<>();
+									SearchList<ComputateBaseResult> l = new SearchList<>();
 									l.q("*:*");
-									l.setC(BaseResult.class);
+									l.setC(ComputateBaseResult.class);
 									l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
 									l.setStore(true);
 									handler.response().headers().add("Content-Type", "text/html");
 									l.promiseDeepForClass(siteRequest).onSuccess(a -> {
-										BaseResult result = l.first();
+										ComputateBaseResult result = l.first();
 										try {
 											String downloadPath = String.format("%s%s.zip", config().getString(ConfigKeys.DOWNLOAD_PATH), uri);
 											vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
@@ -1574,13 +1573,12 @@ public class MainVerticle extends AbstractVerticle {
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});
+
 			router.get("/websites").handler(ctx -> {
 				ctx.response().putHeader("location", "/en-us/article/websites");
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});
-
-			router.route("/static/*").handler(staticHandler);
 
 			LOG.info("The UI was configured properly.");
 			promise.complete();
