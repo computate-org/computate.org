@@ -760,6 +760,14 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlLocation());
 						break;
+					case "setAreaServed":
+							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAreaServed());
+						break;
 					case "setDataProvider":
 							o2.setDataProvider(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -999,14 +1007,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUVIndexMax());
-						break;
-					case "setAreaServed":
-							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAreaServed());
 						break;
 					case "setVisibility":
 							o2.setVisibility(jsonObject.getJsonObject(entityVar));
@@ -1504,6 +1504,15 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlLocation());
 						break;
+					case WeatherObserved.VAR_areaServed:
+						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAreaServed());
+						break;
 					case WeatherObserved.VAR_dataProvider:
 						o2.setDataProvider(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1773,15 +1782,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_uVIndexMax + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUVIndexMax());
-						break;
-					case WeatherObserved.VAR_areaServed:
-						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAreaServed());
 						break;
 					case WeatherObserved.VAR_visibility:
 						o2.setVisibility(jsonObject.getJsonObject(entityVar));
@@ -3150,12 +3150,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 						}
 					}
-					o.promiseDeepForClass(siteRequest).onSuccess(a -> {
-						promise.complete();
-					}).onFailure(ex -> {
-						LOG.error(String.format("persistWeatherObserved failed. "), ex);
-						promise.fail(ex);
-					});
+					promise.complete();
 				} catch(Exception ex) {
 					LOG.error(String.format("persistWeatherObserved failed. "), ex);
 					promise.fail(ex);
@@ -3192,29 +3187,34 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			JsonObject json = new JsonObject();
-			JsonObject add = new JsonObject();
-			json.put("add", add);
-			JsonObject doc = new JsonObject();
-			add.put("doc", doc);
-			o.indexWeatherObserved(doc);
-			String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
-			String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
-			String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
-			Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
-			String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
-			Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
-			Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
-			Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
-				if(softCommit == null && commitWithin == null)
-					softCommit = true;
-				else if(softCommit == null)
-					softCommit = false;
-			String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
-			webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
-				promise.complete(o);
+			o.promiseDeepForClass(siteRequest).onSuccess(a -> {
+				JsonObject json = new JsonObject();
+				JsonObject add = new JsonObject();
+				json.put("add", add);
+				JsonObject doc = new JsonObject();
+				add.put("doc", doc);
+				o.indexWeatherObserved(doc);
+				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
+				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
+				String solrHostName = siteRequest.getConfig().getString(ConfigKeys.SOLR_HOST_NAME);
+				Integer solrPort = siteRequest.getConfig().getInteger(ConfigKeys.SOLR_PORT);
+				String solrCollection = siteRequest.getConfig().getString(ConfigKeys.SOLR_COLLECTION);
+				Boolean solrSsl = siteRequest.getConfig().getBoolean(ConfigKeys.SOLR_SSL);
+				Boolean softCommit = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getBoolean("softCommit")).orElse(null);
+				Integer commitWithin = Optional.ofNullable(siteRequest.getServiceRequest().getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getInteger("commitWithin")).orElse(null);
+					if(softCommit == null && commitWithin == null)
+						softCommit = true;
+					else if(softCommit == null)
+						softCommit = false;
+				String solrRequestUri = String.format("/solr/%s/update%s%s%s", solrCollection, "?overwrite=true&wt=json", softCommit ? "&softCommit=true" : "", commitWithin != null ? ("&commitWithin=" + commitWithin) : "");
+				webClient.post(solrPort, solrHostName, solrRequestUri).ssl(solrSsl).authentication(new UsernamePasswordCredentials(solrUsername, solrPassword)).putHeader("Content-Type", "application/json").expect(ResponsePredicate.SC_OK).sendBuffer(json.toBuffer()).onSuccess(b -> {
+					promise.complete(o);
+				}).onFailure(ex -> {
+					LOG.error(String.format("indexWeatherObserved failed. "), new RuntimeException(ex));
+					promise.fail(ex);
+				});
 			}).onFailure(ex -> {
-				LOG.error(String.format("indexWeatherObserved failed. "), new RuntimeException(ex));
+				LOG.error(String.format("indexWeatherObserved failed. "), ex);
 				promise.fail(ex);
 			});
 		} catch(Exception ex) {

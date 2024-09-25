@@ -1987,15 +1987,13 @@
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if value.val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-buttonFacetWeatherObserved_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
-                    <div class="pageFacetField pageFacetFieldWeatherObserved_{{ key }} " id="pageFacetFieldWeatherObserved_{{ key }}">
+                    <ol class="pageFacetField pageFacetFieldWeatherObserved_{{ key }} " id="pageFacetFieldWeatherObserved_{{ key }}">
 {% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
-                      <sl-tooltip content="{{ facetFieldValue | e }} weather observed device total with {{ value.facetField.var | e }} &quot;{{ facetFieldKey | e }}&quot;">
-                        <div class="cursor-pointer " data-class="WeatherObserved" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('WeatherObserved', this); ">{{ facetFieldValue }}: {{ facetFieldKey }}</div>
-                      </sl-tooltip>
+                      <li class="cursor-pointer " data-class="WeatherObserved" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('WeatherObserved', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
 {% endfor %}
-                    </div>
+                    </ol>
                   </div>
                 {% endfor %}
               </div>
