@@ -11,7 +11,7 @@ metadata:
     kubernetes.io/tls-acme: 'true'
     acme.openshift.io/secret-name: "computateorg-certificate"
 spec:
-  host: "site.apps.sandbox-m2.ll9k.p1.openshiftapps.com"
+  host: "$SITE_HOST_NAME"
   port:
     targetPort: http
   to:
