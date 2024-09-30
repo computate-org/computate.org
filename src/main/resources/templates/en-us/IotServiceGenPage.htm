@@ -259,64 +259,12 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div stuff="IoT service details-IoT service details">
-
-              {%- if "PATCH" in scopes %}
                 {{ htmResourceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -339,6 +287,69 @@
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="page-details">
+              <div slot="summary">
+                <span>page details</span>
+              </div>
+              <div>
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="page details-page details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -446,64 +457,12 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div stuff="IoT service details-IoT service details">
-
-              {%- if "PATCH" in scopes %}
                 {{ htmResourceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -526,6 +485,69 @@
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="page-details">
+              <div slot="summary">
+                <span>page details</span>
+              </div>
+              <div>
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="page details-page details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -672,64 +694,12 @@
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div stuff="IoT service details-IoT service details">
-
-              {%- if "PATCH" in scopes %}
                 {{ htmResourceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmResourceIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -752,6 +722,69 @@
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmNgsildPathIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmCbHostIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="IoT service details-IoT service details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmAttributesIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="page-details">
+              <div slot="summary">
+                <span>page details</span>
+              </div>
+              <div>
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div stuff="page details-page details">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlIotServicePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1521,120 +1554,6 @@ The NGSI-LD API Key"
                             {{ inputApiKeyIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputUriIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_uri">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="URI"
-                      label="URI"
-                      help-text="
-The relative URI for this page. "
-                      id="{{classApiMethodMethod}}_uri"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_uri setUri classIotService inputIotService{{pk}}Uri "
-                      name="setUri"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_uri setUri classIotService inputIotService{{pk}}Uri "
-                      name="setUri"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_uri valueUri classIotService inputIotService{{pk}}Uri "
-                      name="uri"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.uri | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmUriIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputUriIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputUrlIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_url">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="URL"
-                      label="URL"
-                      help-text="
-The URL for this page. "
-                      id="{{classApiMethodMethod}}_url"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_url setUrl classIotService inputIotService{{pk}}Url "
-                      name="setUrl"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_url setUrl classIotService inputIotService{{pk}}Url "
-                      name="setUrl"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_url valueUrl classIotService inputIotService{{pk}}Url "
-                      name="url"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.url | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmUrlIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputUrlIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputCbHostIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_cbHost">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="context broker host"
-                      label="context broker host"
-                      help-text="
-The NGSI-LD Context Broker host"
-                      id="{{classApiMethodMethod}}_cbHost"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pk}}CbHost "
-                      name="setCbHost"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pk}}CbHost "
-                      name="setCbHost"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_cbHost valueCbHost classIotService inputIotService{{pk}}CbHost "
-                      name="cbHost"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.cbHost | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmCbHostIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputCbHostIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputResourceIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_resource">
@@ -1671,82 +1590,6 @@ The NGSI-LD resource"
 
 {%- macro htmResourceIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputResourceIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputPageIdIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_pageId">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="Page ID"
-                      label="Page ID"
-                      help-text="
-The ID for this page. "
-                      id="{{classApiMethodMethod}}_pageId"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pk}}PageId "
-                      name="setPageId"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pk}}PageId "
-                      name="setPageId"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classIotService inputIotService{{pk}}PageId "
-                      name="pageId"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{iotService_.pageId | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmPageIdIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputPageIdIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputAttributesIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_attributes">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="attributes"
-                      label="attributes"
-                      help-text="
-The NGSI-LD attributes"
-                      id="{{classApiMethodMethod}}_attributes"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pk}}Attributes "
-                      name="setAttributes"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pk}}Attributes "
-                      name="setAttributes"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_attributes valueAttributes classIotService inputIotService{{pk}}Attributes "
-                      name="attributes"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonArrayString(iotService_.attributes) | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmAttributesIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputAttributesIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputNgsildTenantIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -1823,4 +1666,194 @@ The NGSILD-Path or Fiware-ServicePath"
 
 {%- macro htmNgsildPathIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputNgsildPathIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputCbHostIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_cbHost">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="context broker host"
+                      label="context broker host"
+                      help-text="
+The NGSI-LD Context Broker host"
+                      id="{{classApiMethodMethod}}_cbHost"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pk}}CbHost "
+                      name="setCbHost"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pk}}CbHost "
+                      name="setCbHost"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_cbHost valueCbHost classIotService inputIotService{{pk}}CbHost "
+                      name="cbHost"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{iotService_.cbHost | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmCbHostIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputCbHostIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputAttributesIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_attributes">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="attributes"
+                      label="attributes"
+                      help-text="
+The NGSI-LD attributes"
+                      id="{{classApiMethodMethod}}_attributes"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pk}}Attributes "
+                      name="setAttributes"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pk}}Attributes "
+                      name="setAttributes"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_attributes valueAttributes classIotService inputIotService{{pk}}Attributes "
+                      name="attributes"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{ toJsonArrayString(iotService_.attributes) | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmAttributesIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputAttributesIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputPageIdIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_pageId">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pk}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pk}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classIotService inputIotService{{pk}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{iotService_.pageId | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPageIdIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputPageIdIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputUriIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_uri">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URI"
+                      label="URI"
+                      help-text="
+The relative URI for this page. "
+                      id="{{classApiMethodMethod}}_uri"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classIotService inputIotService{{pk}}Uri "
+                      name="setUri"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classIotService inputIotService{{pk}}Uri "
+                      name="setUri"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri classIotService inputIotService{{pk}}Uri "
+                      name="uri"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{iotService_.uri | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmUriIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputUriIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputUrlIotServicePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_url">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="URL"
+                      label="URL"
+                      help-text="
+The URL for this page. "
+                      id="{{classApiMethodMethod}}_url"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classIotService inputIotService{{pk}}Url "
+                      name="setUrl"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classIotService inputIotService{{pk}}Url "
+                      name="setUrl"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl classIotService inputIotService{{pk}}Url "
+                      name="url"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{iotService_.url | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmUrlIotServicePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputUrlIotServicePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}

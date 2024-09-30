@@ -1683,6 +1683,29 @@ paths:
           in: cookie
           schema:
             type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
       responses:
         '200':
           description: >+
@@ -2495,6 +2518,29 @@ paths:
           in: cookie
           schema:
             type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
       responses:
         '200':
           description: >+
@@ -9714,16 +9760,16 @@ components:
                     type: string
                   apiKey:
                     type: string
-                  cbHost:
-                    type: string
                   resource:
                     type: string
-                  attributes:
-                    type: array
                   ngsildTenant:
                     type: string
                   ngsildPath:
                     type: string
+                  cbHost:
+                    type: string
+                  attributes:
+                    type: array
                   pageId:
                     type: string
                   resourceUri:
@@ -9762,13 +9808,6 @@ components:
               type: string
             removeAllApiKey:
               type: string
-            setCbHost:
-              type: string
-              nullable: true
-            removeCbHost:
-              type: string
-            removeAllCbHost:
-              type: string
             setResource:
               type: string
               nullable: true
@@ -9776,13 +9815,6 @@ components:
               type: string
             removeAllResource:
               type: string
-            setAttributes:
-              type: array
-              nullable: true
-            removeAttributes:
-              type: array
-            removeAllAttributes:
-              type: array
             setNgsildTenant:
               type: string
               nullable: true
@@ -9797,6 +9829,20 @@ components:
               type: string
             removeAllNgsildPath:
               type: string
+            setCbHost:
+              type: string
+              nullable: true
+            removeCbHost:
+              type: string
+            removeAllCbHost:
+              type: string
+            setAttributes:
+              type: array
+              nullable: true
+            removeAttributes:
+              type: array
+            removeAllAttributes:
+              type: array
             setPageId:
               type: string
               nullable: true
@@ -9885,13 +9931,6 @@ components:
               type: string
             removeAllApiKey:
               type: string
-            setCbHost:
-              type: string
-              nullable: true
-            removeCbHost:
-              type: string
-            removeAllCbHost:
-              type: string
             setResource:
               type: string
               nullable: true
@@ -9899,13 +9938,6 @@ components:
               type: string
             removeAllResource:
               type: string
-            setAttributes:
-              type: array
-              nullable: true
-            removeAttributes:
-              type: array
-            removeAllAttributes:
-              type: array
             setNgsildTenant:
               type: string
               nullable: true
@@ -9920,6 +9952,20 @@ components:
               type: string
             removeAllNgsildPath:
               type: string
+            setCbHost:
+              type: string
+              nullable: true
+            removeCbHost:
+              type: string
+            removeAllCbHost:
+              type: string
+            setAttributes:
+              type: array
+              nullable: true
+            removeAttributes:
+              type: array
+            removeAllAttributes:
+              type: array
             setPageId:
               type: string
               nullable: true
@@ -9998,16 +10044,16 @@ components:
               type: string
             apiKey:
               type: string
-            cbHost:
-              type: string
             resource:
               type: string
-            attributes:
-              type: array
             ngsildTenant:
               type: string
             ngsildPath:
               type: string
+            cbHost:
+              type: string
+            attributes:
+              type: array
             pageId:
               type: string
             resourceUri:
@@ -10036,16 +10082,16 @@ components:
               type: string
             apiKey:
               type: string
-            cbHost:
-              type: string
             resource:
               type: string
-            attributes:
-              type: array
             ngsildTenant:
               type: string
             ngsildPath:
               type: string
+            cbHost:
+              type: string
+            attributes:
+              type: array
             pageId:
               type: string
             resourceUri:
@@ -10074,16 +10120,16 @@ components:
               type: string
             apiKey:
               type: string
-            cbHost:
-              type: string
             resource:
               type: string
-            attributes:
-              type: array
             ngsildTenant:
               type: string
             ngsildPath:
               type: string
+            cbHost:
+              type: string
+            attributes:
+              type: array
             pageId:
               type: string
             resourceUri:
@@ -10117,16 +10163,16 @@ components:
                     type: string
                   apiKey:
                     type: string
-                  cbHost:
-                    type: string
                   resource:
                     type: string
-                  attributes:
-                    type: array
                   ngsildTenant:
                     type: string
                   ngsildPath:
                     type: string
+                  cbHost:
+                    type: string
+                  attributes:
+                    type: array
                   pageId:
                     type: string
                   resourceUri:
@@ -10155,16 +10201,16 @@ components:
                     type: string
                   apiKey:
                     type: string
-                  cbHost:
-                    type: string
                   resource:
                     type: string
-                  attributes:
-                    type: array
                   ngsildTenant:
                     type: string
                   ngsildPath:
                     type: string
+                  cbHost:
+                    type: string
+                  attributes:
+                    type: array
                   pageId:
                     type: string
                   resourceUri:
@@ -10193,16 +10239,16 @@ components:
               type: string
             apiKey:
               type: string
-            cbHost:
-              type: string
             resource:
               type: string
-            attributes:
-              type: array
             ngsildTenant:
               type: string
             ngsildPath:
               type: string
+            cbHost:
+              type: string
+            attributes:
+              type: array
             pageId:
               type: string
             resourceUri:
@@ -10314,13 +10360,13 @@ components:
                     type: string
                   snowHeight:
                     type: string
-                  temperature:
-                    type: string
                   airTemperatureForecast:
                     type: string
                   airTemperatureTSA:
                     type: object
                   feelsLikeTemperature:
+                    type: string
+                  temperature:
                     type: string
                   solarRadiation:
                     type: string
@@ -10340,15 +10386,15 @@ components:
                     type: string
                   illuminance:
                     type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
                   ngsildData:
                     type: object
                   entityId:
                     type: string
                   entityShortId:
-                    type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
                     type: string
                   ngsildContext:
                     type: string
@@ -10614,13 +10660,6 @@ components:
               type: string
             removeAllSnowHeight:
               type: string
-            setTemperature:
-              type: string
-              nullable: true
-            removeTemperature:
-              type: string
-            removeAllTemperature:
-              type: string
             setAirTemperatureForecast:
               type: string
               nullable: true
@@ -10641,6 +10680,13 @@ components:
             removeFeelsLikeTemperature:
               type: string
             removeAllFeelsLikeTemperature:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
               type: string
             setSolarRadiation:
               type: string
@@ -10705,6 +10751,20 @@ components:
               type: string
             removeAllIlluminance:
               type: string
+            setNgsildTenant:
+              type: string
+              nullable: true
+            removeNgsildTenant:
+              type: string
+            removeAllNgsildTenant:
+              type: string
+            setNgsildPath:
+              type: string
+              nullable: true
+            removeNgsildPath:
+              type: string
+            removeAllNgsildPath:
+              type: string
             setNgsildData:
               type: object
               nullable: true
@@ -10725,20 +10785,6 @@ components:
             removeEntityShortId:
               type: string
             removeAllEntityShortId:
-              type: string
-            setNgsildTenant:
-              type: string
-              nullable: true
-            removeNgsildTenant:
-              type: string
-            removeAllNgsildTenant:
-              type: string
-            setNgsildPath:
-              type: string
-              nullable: true
-            removeNgsildPath:
-              type: string
-            removeAllNgsildPath:
               type: string
             setNgsildContext:
               type: string
@@ -11019,13 +11065,6 @@ components:
               type: string
             removeAllSnowHeight:
               type: string
-            setTemperature:
-              type: string
-              nullable: true
-            removeTemperature:
-              type: string
-            removeAllTemperature:
-              type: string
             setAirTemperatureForecast:
               type: string
               nullable: true
@@ -11046,6 +11085,13 @@ components:
             removeFeelsLikeTemperature:
               type: string
             removeAllFeelsLikeTemperature:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
               type: string
             setSolarRadiation:
               type: string
@@ -11110,6 +11156,20 @@ components:
               type: string
             removeAllIlluminance:
               type: string
+            setNgsildTenant:
+              type: string
+              nullable: true
+            removeNgsildTenant:
+              type: string
+            removeAllNgsildTenant:
+              type: string
+            setNgsildPath:
+              type: string
+              nullable: true
+            removeNgsildPath:
+              type: string
+            removeAllNgsildPath:
+              type: string
             setNgsildData:
               type: object
               nullable: true
@@ -11130,20 +11190,6 @@ components:
             removeEntityShortId:
               type: string
             removeAllEntityShortId:
-              type: string
-            setNgsildTenant:
-              type: string
-              nullable: true
-            removeNgsildTenant:
-              type: string
-            removeAllNgsildTenant:
-              type: string
-            setNgsildPath:
-              type: string
-              nullable: true
-            removeNgsildPath:
-              type: string
-            removeAllNgsildPath:
               type: string
             setNgsildContext:
               type: string
@@ -11240,13 +11286,13 @@ components:
               type: string
             snowHeight:
               type: string
-            temperature:
-              type: string
             airTemperatureForecast:
               type: string
             airTemperatureTSA:
               type: object
             feelsLikeTemperature:
+              type: string
+            temperature:
               type: string
             solarRadiation:
               type: string
@@ -11266,15 +11312,15 @@ components:
               type: string
             illuminance:
               type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
             ngsildData:
               type: object
             entityId:
               type: string
             entityShortId:
-              type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
               type: string
             ngsildContext:
               type: string
@@ -11356,13 +11402,13 @@ components:
               type: string
             snowHeight:
               type: string
-            temperature:
-              type: string
             airTemperatureForecast:
               type: string
             airTemperatureTSA:
               type: object
             feelsLikeTemperature:
+              type: string
+            temperature:
               type: string
             solarRadiation:
               type: string
@@ -11382,15 +11428,15 @@ components:
               type: string
             illuminance:
               type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
             ngsildData:
               type: object
             entityId:
               type: string
             entityShortId:
-              type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
               type: string
             ngsildContext:
               type: string
@@ -11472,13 +11518,13 @@ components:
               type: string
             snowHeight:
               type: string
-            temperature:
-              type: string
             airTemperatureForecast:
               type: string
             airTemperatureTSA:
               type: object
             feelsLikeTemperature:
+              type: string
+            temperature:
               type: string
             solarRadiation:
               type: string
@@ -11498,15 +11544,15 @@ components:
               type: string
             illuminance:
               type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
             ngsildData:
               type: object
             entityId:
               type: string
             entityShortId:
-              type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
               type: string
             ngsildContext:
               type: string
@@ -11593,13 +11639,13 @@ components:
                     type: string
                   snowHeight:
                     type: string
-                  temperature:
-                    type: string
                   airTemperatureForecast:
                     type: string
                   airTemperatureTSA:
                     type: object
                   feelsLikeTemperature:
+                    type: string
+                  temperature:
                     type: string
                   solarRadiation:
                     type: string
@@ -11619,15 +11665,15 @@ components:
                     type: string
                   illuminance:
                     type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
                   ngsildData:
                     type: object
                   entityId:
                     type: string
                   entityShortId:
-                    type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
                     type: string
                   ngsildContext:
                     type: string
@@ -11709,13 +11755,13 @@ components:
                     type: string
                   snowHeight:
                     type: string
-                  temperature:
-                    type: string
                   airTemperatureForecast:
                     type: string
                   airTemperatureTSA:
                     type: object
                   feelsLikeTemperature:
+                    type: string
+                  temperature:
                     type: string
                   solarRadiation:
                     type: string
@@ -11735,15 +11781,15 @@ components:
                     type: string
                   illuminance:
                     type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
                   ngsildData:
                     type: object
                   entityId:
                     type: string
                   entityShortId:
-                    type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
                     type: string
                   ngsildContext:
                     type: string
@@ -11825,13 +11871,13 @@ components:
               type: string
             snowHeight:
               type: string
-            temperature:
-              type: string
             airTemperatureForecast:
               type: string
             airTemperatureTSA:
               type: object
             feelsLikeTemperature:
+              type: string
+            temperature:
               type: string
             solarRadiation:
               type: string
@@ -11851,15 +11897,15 @@ components:
               type: string
             illuminance:
               type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
             ngsildData:
               type: object
             entityId:
               type: string
             entityShortId:
-              type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
               type: string
             ngsildContext:
               type: string
@@ -11911,8 +11957,6 @@ components:
                   storeUrl:
                     type: string
                   title:
-                    type: string
-                  productNum:
                     type: string
                   objectTitle:
                     type: string
@@ -12009,13 +12053,6 @@ components:
             removeTitle:
               type: string
             removeAllTitle:
-              type: string
-            setProductNum:
-              type: string
-              nullable: true
-            removeProductNum:
-              type: string
-            removeAllProductNum:
               type: string
             setObjectTitle:
               type: string
@@ -12133,13 +12170,6 @@ components:
               type: string
             removeAllTitle:
               type: string
-            setProductNum:
-              type: string
-              nullable: true
-            removeProductNum:
-              type: string
-            removeAllProductNum:
-              type: string
             setObjectTitle:
               type: string
               nullable: true
@@ -12196,8 +12226,6 @@ components:
               type: string
             title:
               type: string
-            productNum:
-              type: string
             objectTitle:
               type: string
             objectId:
@@ -12233,8 +12261,6 @@ components:
             storeUrl:
               type: string
             title:
-              type: string
-            productNum:
               type: string
             objectTitle:
               type: string
@@ -12277,8 +12303,6 @@ components:
                     type: string
                   title:
                     type: string
-                  productNum:
-                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -12315,8 +12339,6 @@ components:
                     type: string
                   title:
                     type: string
-                  productNum:
-                    type: string
                   objectTitle:
                     type: string
                   objectId:
@@ -12352,8 +12374,6 @@ components:
             storeUrl:
               type: string
             title:
-              type: string
-            productNum:
               type: string
             objectTitle:
               type: string
@@ -12404,8 +12424,6 @@ components:
                   storeUrl:
                     type: string
                   title:
-                    type: string
-                  productNum:
                     type: string
                   objectTitle:
                     type: string

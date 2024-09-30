@@ -108,8 +108,8 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>By adding a class comment "{@inheritDoc}", the IotService class will inherit the helpful inherited class comments from the super class IotServiceGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 10</h2>
- * <p>This class contains a comment <b>"Order: 10"</b>, which means this class will be sorted by the given number 10 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 9</h2>
+ * <p>This class contains a comment <b>"Order: 9"</b>, which means this class will be sorted by the given number 9 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -322,62 +322,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		return apiKey;
 	}
 
-	////////////
-	// cbHost //
-	////////////
-
-
-	/**	 The entity cbHost
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String cbHost;
-
-	/**	<br> The entity cbHost
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:cbHost">Find the entity cbHost in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _cbHost(Wrap<String> w);
-
-	public String getCbHost() {
-		return cbHost;
-	}
-	public void setCbHost(String o) {
-		this.cbHost = IotService.staticSetCbHost(siteRequest_, o);
-	}
-	public static String staticSetCbHost(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService cbHostInit() {
-		Wrap<String> cbHostWrap = new Wrap<String>().var("cbHost");
-		if(cbHost == null) {
-			_cbHost(cbHostWrap);
-			Optional.ofNullable(cbHostWrap.getO()).ifPresent(o -> {
-				setCbHost(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchCbHost(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrCbHost(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqCbHost(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchCbHost(siteRequest_, IotService.staticSetCbHost(siteRequest_, o)).toString();
-	}
-
-	public String sqlCbHost() {
-		return cbHost;
-	}
-
 	//////////////
 	// resource //
 	//////////////
@@ -432,70 +376,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 
 	public String sqlResource() {
 		return resource;
-	}
-
-	////////////////
-	// attributes //
-	////////////////
-
-
-	/**	 The entity attributes
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected JsonArray attributes;
-
-	/**	<br> The entity attributes
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:attributes">Find the entity attributes in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _attributes(Wrap<JsonArray> w);
-
-	public JsonArray getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(JsonArray attributes) {
-		this.attributes = attributes;
-	}
-	@JsonIgnore
-	public void setAttributes(String o) {
-		this.attributes = IotService.staticSetAttributes(siteRequest_, o);
-	}
-	public static JsonArray staticSetAttributes(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonArray(o);
-		}
-		return null;
-	}
-	protected IotService attributesInit() {
-		Wrap<JsonArray> attributesWrap = new Wrap<JsonArray>().var("attributes");
-		if(attributes == null) {
-			_attributes(attributesWrap);
-			Optional.ofNullable(attributesWrap.getO()).ifPresent(o -> {
-				setAttributes(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchAttributes(SiteRequest siteRequest_, JsonArray o) {
-		return o.toString();
-	}
-
-	public static String staticSearchStrAttributes(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqAttributes(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchAttributes(siteRequest_, IotService.staticSetAttributes(siteRequest_, o)).toString();
-	}
-
-	public JsonArray sqlAttributes() {
-		return attributes;
 	}
 
 	//////////////////
@@ -608,6 +488,126 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 
 	public String sqlNgsildPath() {
 		return ngsildPath;
+	}
+
+	////////////
+	// cbHost //
+	////////////
+
+
+	/**	 The entity cbHost
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String cbHost;
+
+	/**	<br> The entity cbHost
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:cbHost">Find the entity cbHost in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _cbHost(Wrap<String> w);
+
+	public String getCbHost() {
+		return cbHost;
+	}
+	public void setCbHost(String o) {
+		this.cbHost = IotService.staticSetCbHost(siteRequest_, o);
+	}
+	public static String staticSetCbHost(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected IotService cbHostInit() {
+		Wrap<String> cbHostWrap = new Wrap<String>().var("cbHost");
+		if(cbHost == null) {
+			_cbHost(cbHostWrap);
+			Optional.ofNullable(cbHostWrap.getO()).ifPresent(o -> {
+				setCbHost(o);
+			});
+		}
+		return (IotService)this;
+	}
+
+	public static String staticSearchCbHost(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrCbHost(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqCbHost(SiteRequest siteRequest_, String o) {
+		return IotService.staticSearchCbHost(siteRequest_, IotService.staticSetCbHost(siteRequest_, o)).toString();
+	}
+
+	public String sqlCbHost() {
+		return cbHost;
+	}
+
+	////////////////
+	// attributes //
+	////////////////
+
+
+	/**	 The entity attributes
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected JsonArray attributes;
+
+	/**	<br> The entity attributes
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:attributes">Find the entity attributes in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _attributes(Wrap<JsonArray> w);
+
+	public JsonArray getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(JsonArray attributes) {
+		this.attributes = attributes;
+	}
+	@JsonIgnore
+	public void setAttributes(String o) {
+		this.attributes = IotService.staticSetAttributes(siteRequest_, o);
+	}
+	public static JsonArray staticSetAttributes(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonArray(o);
+		}
+		return null;
+	}
+	protected IotService attributesInit() {
+		Wrap<JsonArray> attributesWrap = new Wrap<JsonArray>().var("attributes");
+		if(attributes == null) {
+			_attributes(attributesWrap);
+			Optional.ofNullable(attributesWrap.getO()).ifPresent(o -> {
+				setAttributes(o);
+			});
+		}
+		return (IotService)this;
+	}
+
+	public static String staticSearchAttributes(SiteRequest siteRequest_, JsonArray o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrAttributes(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqAttributes(SiteRequest siteRequest_, String o) {
+		return IotService.staticSearchAttributes(siteRequest_, IotService.staticSetAttributes(siteRequest_, o)).toString();
+	}
+
+	public JsonArray sqlAttributes() {
+		return attributes;
 	}
 
 	////////////
@@ -977,11 +977,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			try {
 				entityTypeInit();
 				apiKeyInit();
-				cbHostInit();
 				resourceInit();
-				attributesInit();
 				ngsildTenantInit();
 				ngsildPathInit();
+				cbHostInit();
+				attributesInit();
 				pageIdInit();
 				resourceUriInit();
 				templateUriInit();
@@ -1045,16 +1045,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return oIotService.entityType;
 			case "apiKey":
 				return oIotService.apiKey;
-			case "cbHost":
-				return oIotService.cbHost;
 			case "resource":
 				return oIotService.resource;
-			case "attributes":
-				return oIotService.attributes;
 			case "ngsildTenant":
 				return oIotService.ngsildTenant;
 			case "ngsildPath":
 				return oIotService.ngsildPath;
+			case "cbHost":
+				return oIotService.cbHost;
+			case "attributes":
+				return oIotService.attributes;
 			case "pageId":
 				return oIotService.pageId;
 			case "resourceUri":
@@ -1110,16 +1110,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSetEntityType(siteRequest_, o);
 		case "apiKey":
 			return IotService.staticSetApiKey(siteRequest_, o);
-		case "cbHost":
-			return IotService.staticSetCbHost(siteRequest_, o);
 		case "resource":
 			return IotService.staticSetResource(siteRequest_, o);
-		case "attributes":
-			return IotService.staticSetAttributes(siteRequest_, o);
 		case "ngsildTenant":
 			return IotService.staticSetNgsildTenant(siteRequest_, o);
 		case "ngsildPath":
 			return IotService.staticSetNgsildPath(siteRequest_, o);
+		case "cbHost":
+			return IotService.staticSetCbHost(siteRequest_, o);
+		case "attributes":
+			return IotService.staticSetAttributes(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSetPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1150,16 +1150,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchEntityType(siteRequest_, (String)o);
 		case "apiKey":
 			return IotService.staticSearchApiKey(siteRequest_, (String)o);
-		case "cbHost":
-			return IotService.staticSearchCbHost(siteRequest_, (String)o);
 		case "resource":
 			return IotService.staticSearchResource(siteRequest_, (String)o);
-		case "attributes":
-			return IotService.staticSearchAttributes(siteRequest_, (JsonArray)o);
 		case "ngsildTenant":
 			return IotService.staticSearchNgsildTenant(siteRequest_, (String)o);
 		case "ngsildPath":
 			return IotService.staticSearchNgsildPath(siteRequest_, (String)o);
+		case "cbHost":
+			return IotService.staticSearchCbHost(siteRequest_, (String)o);
+		case "attributes":
+			return IotService.staticSearchAttributes(siteRequest_, (JsonArray)o);
 		case "pageId":
 			return IotService.staticSearchPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1190,16 +1190,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchStrEntityType(siteRequest_, (String)o);
 		case "apiKey":
 			return IotService.staticSearchStrApiKey(siteRequest_, (String)o);
-		case "cbHost":
-			return IotService.staticSearchStrCbHost(siteRequest_, (String)o);
 		case "resource":
 			return IotService.staticSearchStrResource(siteRequest_, (String)o);
-		case "attributes":
-			return IotService.staticSearchStrAttributes(siteRequest_, (String)o);
 		case "ngsildTenant":
 			return IotService.staticSearchStrNgsildTenant(siteRequest_, (String)o);
 		case "ngsildPath":
 			return IotService.staticSearchStrNgsildPath(siteRequest_, (String)o);
+		case "cbHost":
+			return IotService.staticSearchStrCbHost(siteRequest_, (String)o);
+		case "attributes":
+			return IotService.staticSearchStrAttributes(siteRequest_, (String)o);
 		case "pageId":
 			return IotService.staticSearchStrPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1230,16 +1230,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchFqEntityType(siteRequest_, o);
 		case "apiKey":
 			return IotService.staticSearchFqApiKey(siteRequest_, o);
-		case "cbHost":
-			return IotService.staticSearchFqCbHost(siteRequest_, o);
 		case "resource":
 			return IotService.staticSearchFqResource(siteRequest_, o);
-		case "attributes":
-			return IotService.staticSearchFqAttributes(siteRequest_, o);
 		case "ngsildTenant":
 			return IotService.staticSearchFqNgsildTenant(siteRequest_, o);
 		case "ngsildPath":
 			return IotService.staticSearchFqNgsildPath(siteRequest_, o);
+		case "cbHost":
+			return IotService.staticSearchFqCbHost(siteRequest_, o);
+		case "attributes":
+			return IotService.staticSearchFqAttributes(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSearchFqPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1290,25 +1290,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				}
 				saves.add("apiKey");
 				return val;
-			} else if("cbhost".equals(varLower)) {
-				if(val instanceof String) {
-					setCbHost((String)val);
-				}
-				saves.add("cbHost");
-				return val;
 			} else if("resource".equals(varLower)) {
 				if(val instanceof String) {
 					setResource((String)val);
 				}
 				saves.add("resource");
-				return val;
-			} else if("attributes".equals(varLower)) {
-				if(val instanceof String) {
-					setAttributes((String)val);
-				} else if(val instanceof JsonArray) {
-					setAttributes((JsonArray)val);
-				}
-				saves.add("attributes");
 				return val;
 			} else if("ngsildtenant".equals(varLower)) {
 				if(val instanceof String) {
@@ -1321,6 +1307,20 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 					setNgsildPath((String)val);
 				}
 				saves.add("ngsildPath");
+				return val;
+			} else if("cbhost".equals(varLower)) {
+				if(val instanceof String) {
+					setCbHost((String)val);
+				}
+				saves.add("cbHost");
+				return val;
+			} else if("attributes".equals(varLower)) {
+				if(val instanceof String) {
+					setAttributes((String)val);
+				} else if(val instanceof JsonArray) {
+					setAttributes((JsonArray)val);
+				}
+				saves.add("attributes");
 				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
@@ -1387,22 +1387,10 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 					oIotService.setApiKey(apiKey);
 			}
 
-			if(saves.contains("cbHost")) {
-				String cbHost = (String)doc.get("cbHost_docvalues_string");
-				if(cbHost != null)
-					oIotService.setCbHost(cbHost);
-			}
-
 			if(saves.contains("resource")) {
 				String resource = (String)doc.get("resource_docvalues_string");
 				if(resource != null)
 					oIotService.setResource(resource);
-			}
-
-			if(saves.contains("attributes")) {
-				String attributes = (String)doc.get("attributes_docvalues_string");
-				if(attributes != null)
-					oIotService.setAttributes(attributes);
 			}
 
 			if(saves.contains("ngsildTenant")) {
@@ -1415,6 +1403,18 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				String ngsildPath = (String)doc.get("ngsildPath_docvalues_string");
 				if(ngsildPath != null)
 					oIotService.setNgsildPath(ngsildPath);
+			}
+
+			if(saves.contains("cbHost")) {
+				String cbHost = (String)doc.get("cbHost_docvalues_string");
+				if(cbHost != null)
+					oIotService.setCbHost(cbHost);
+			}
+
+			if(saves.contains("attributes")) {
+				String attributes = (String)doc.get("attributes_docvalues_string");
+				if(attributes != null)
+					oIotService.setAttributes(attributes);
 			}
 
 			if(saves.contains("pageId")) {
@@ -1464,20 +1464,20 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		if(apiKey != null) {
 			doc.put("apiKey_docvalues_string", apiKey);
 		}
-		if(cbHost != null) {
-			doc.put("cbHost_docvalues_string", cbHost);
-		}
 		if(resource != null) {
 			doc.put("resource_docvalues_string", resource);
-		}
-		if(attributes != null) {
-			doc.put("attributes_docvalues_string", attributes.toString());
 		}
 		if(ngsildTenant != null) {
 			doc.put("ngsildTenant_docvalues_string", ngsildTenant);
 		}
 		if(ngsildPath != null) {
 			doc.put("ngsildPath_docvalues_string", ngsildPath);
+		}
+		if(cbHost != null) {
+			doc.put("cbHost_docvalues_string", cbHost);
+		}
+		if(attributes != null) {
+			doc.put("attributes_docvalues_string", attributes.toString());
 		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
@@ -1507,16 +1507,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "entityType_docvalues_string";
 			case "apiKey":
 				return "apiKey_docvalues_string";
-			case "cbHost":
-				return "cbHost_docvalues_string";
 			case "resource":
 				return "resource_docvalues_string";
-			case "attributes":
-				return "attributes_docvalues_string";
 			case "ngsildTenant":
 				return "ngsildTenant_docvalues_string";
 			case "ngsildPath":
 				return "ngsildPath_docvalues_string";
+			case "cbHost":
+				return "cbHost_docvalues_string";
+			case "attributes":
+				return "attributes_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1540,16 +1540,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "entityType_docvalues_string";
 			case "apiKey":
 				return "apiKey_docvalues_string";
-			case "cbHost":
-				return "cbHost_docvalues_string";
 			case "resource":
 				return "resource_docvalues_string";
-			case "attributes":
-				return "attributes_docvalues_string";
 			case "ngsildTenant":
 				return "ngsildTenant_docvalues_string";
 			case "ngsildPath":
 				return "ngsildPath_docvalues_string";
+			case "cbHost":
+				return "cbHost_docvalues_string";
+			case "attributes":
+				return "attributes_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1573,16 +1573,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "entityType";
 			case "apiKey_docvalues_string":
 				return "apiKey";
-			case "cbHost_docvalues_string":
-				return "cbHost";
 			case "resource_docvalues_string":
 				return "resource";
-			case "attributes_docvalues_string":
-				return "attributes";
 			case "ngsildTenant_docvalues_string":
 				return "ngsildTenant";
 			case "ngsildPath_docvalues_string":
 				return "ngsildPath";
+			case "cbHost_docvalues_string":
+				return "cbHost";
+			case "attributes_docvalues_string":
+				return "attributes";
 			case "pageId_docvalues_string":
 				return "pageId";
 			case "resourceUri_docvalues_string":
@@ -1627,11 +1627,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 
 		oIotService.setEntityType(Optional.ofNullable(doc.get("entityType_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setApiKey(Optional.ofNullable(doc.get("apiKey_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setCbHost(Optional.ofNullable(doc.get("cbHost_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setResource(Optional.ofNullable(doc.get("resource_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setAttributes(Optional.ofNullable(doc.get("attributes_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setNgsildTenant(Optional.ofNullable(doc.get("ngsildTenant_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setNgsildPath(Optional.ofNullable(doc.get("ngsildPath_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oIotService.setCbHost(Optional.ofNullable(doc.get("cbHost_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oIotService.setAttributes(Optional.ofNullable(doc.get("attributes_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1655,16 +1655,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				apiRequest.addVars("entityType");
 			if(!Objects.equals(apiKey, original.getApiKey()))
 				apiRequest.addVars("apiKey");
-			if(!Objects.equals(cbHost, original.getCbHost()))
-				apiRequest.addVars("cbHost");
 			if(!Objects.equals(resource, original.getResource()))
 				apiRequest.addVars("resource");
-			if(!Objects.equals(attributes, original.getAttributes()))
-				apiRequest.addVars("attributes");
 			if(!Objects.equals(ngsildTenant, original.getNgsildTenant()))
 				apiRequest.addVars("ngsildTenant");
 			if(!Objects.equals(ngsildPath, original.getNgsildPath()))
 				apiRequest.addVars("ngsildPath");
+			if(!Objects.equals(cbHost, original.getCbHost()))
+				apiRequest.addVars("cbHost");
+			if(!Objects.equals(attributes, original.getAttributes()))
+				apiRequest.addVars("attributes");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
 			if(!Objects.equals(resourceUri, original.getResourceUri()))
@@ -1690,11 +1690,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(entityType).map(v -> "entityType: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(apiKey).map(v -> "apiKey: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(cbHost).map(v -> "cbHost: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resource).map(v -> "resource: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(attributes).map(v -> "attributes: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(ngsildTenant).map(v -> "ngsildTenant: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(ngsildPath).map(v -> "ngsildPath: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(cbHost).map(v -> "cbHost: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(attributes).map(v -> "attributes: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
@@ -1711,11 +1711,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	}
 	public static final String VAR_entityType = "entityType";
 	public static final String VAR_apiKey = "apiKey";
-	public static final String VAR_cbHost = "cbHost";
 	public static final String VAR_resource = "resource";
-	public static final String VAR_attributes = "attributes";
 	public static final String VAR_ngsildTenant = "ngsildTenant";
 	public static final String VAR_ngsildPath = "ngsildPath";
+	public static final String VAR_cbHost = "cbHost";
+	public static final String VAR_attributes = "attributes";
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_resourceUri = "resourceUri";
 	public static final String VAR_templateUri = "templateUri";
@@ -1737,11 +1737,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static List<String> varsFqIotService(List<String> vars) {
 		vars.add(VAR_entityType);
 		vars.add(VAR_apiKey);
-		vars.add(VAR_cbHost);
 		vars.add(VAR_resource);
-		vars.add(VAR_attributes);
 		vars.add(VAR_ngsildTenant);
 		vars.add(VAR_ngsildPath);
+		vars.add(VAR_cbHost);
+		vars.add(VAR_attributes);
 		vars.add(VAR_pageId);
 		vars.add(VAR_resourceUri);
 		vars.add(VAR_templateUri);
@@ -1762,11 +1762,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 
 	public static final String DISPLAY_NAME_entityType = "entity type";
 	public static final String DISPLAY_NAME_apiKey = "API key";
-	public static final String DISPLAY_NAME_cbHost = "context broker host";
 	public static final String DISPLAY_NAME_resource = "resource";
-	public static final String DISPLAY_NAME_attributes = "attributes";
 	public static final String DISPLAY_NAME_ngsildTenant = "NGSILD-Tenant";
 	public static final String DISPLAY_NAME_ngsildPath = "NGSILD-Path";
+	public static final String DISPLAY_NAME_cbHost = "context broker host";
+	public static final String DISPLAY_NAME_attributes = "attributes";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1783,16 +1783,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_entityType;
 		case VAR_apiKey:
 			return DISPLAY_NAME_apiKey;
-		case VAR_cbHost:
-			return DISPLAY_NAME_cbHost;
 		case VAR_resource:
 			return DISPLAY_NAME_resource;
-		case VAR_attributes:
-			return DISPLAY_NAME_attributes;
 		case VAR_ngsildTenant:
 			return DISPLAY_NAME_ngsildTenant;
 		case VAR_ngsildPath:
 			return DISPLAY_NAME_ngsildPath;
+		case VAR_cbHost:
+			return DISPLAY_NAME_cbHost;
+		case VAR_attributes:
+			return DISPLAY_NAME_attributes;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
 		case VAR_resourceUri:
@@ -1816,16 +1816,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return "The NGSI-LD entity type";
 		case VAR_apiKey:
 			return "The NGSI-LD API Key";
-		case VAR_cbHost:
-			return "The NGSI-LD Context Broker host";
 		case VAR_resource:
 			return "The NGSI-LD resource";
-		case VAR_attributes:
-			return "The NGSI-LD attributes";
 		case VAR_ngsildTenant:
 			return "The NGSILD-Tenant or Fiware-Service";
 		case VAR_ngsildPath:
 			return "The NGSILD-Path or Fiware-ServicePath";
+		case VAR_cbHost:
+			return "The NGSI-LD Context Broker host";
+		case VAR_attributes:
+			return "The NGSI-LD attributes";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:
@@ -1849,16 +1849,16 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_apiKey:
 			return "String";
-		case VAR_cbHost:
-			return "String";
 		case VAR_resource:
 			return "String";
-		case VAR_attributes:
-			return "JsonArray";
 		case VAR_ngsildTenant:
 			return "String";
 		case VAR_ngsildPath:
 			return "String";
+		case VAR_cbHost:
+			return "String";
+		case VAR_attributes:
+			return "JsonArray";
 		case VAR_pageId:
 			return "String";
 		case VAR_resourceUri:
@@ -1893,22 +1893,22 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_apiKey:
 			return 3;
-		case VAR_cbHost:
-			return 3;
 		case VAR_resource:
-			return 4;
-		case VAR_attributes:
-			return 4;
+			return 3;
 		case VAR_ngsildTenant:
-			return 5;
-		case VAR_ngsildPath:
-			return 5;
-		case VAR_pageId:
 			return 4;
+		case VAR_ngsildPath:
+			return 4;
+		case VAR_cbHost:
+			return 5;
+		case VAR_attributes:
+			return 6;
+		case VAR_pageId:
+			return 7;
 		case VAR_uri:
-			return 3;
+			return 7;
 		case VAR_url:
-			return 3;
+			return 8;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -1920,22 +1920,22 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return 1;
 		case VAR_apiKey:
 			return 2;
-		case VAR_cbHost:
-			return 3;
 		case VAR_resource:
-			return 1;
-		case VAR_attributes:
-			return 2;
+			return 3;
 		case VAR_ngsildTenant:
 			return 1;
 		case VAR_ngsildPath:
 			return 2;
+		case VAR_cbHost:
+			return 1;
+		case VAR_attributes:
+			return 1;
 		case VAR_pageId:
 			return 1;
 		case VAR_uri:
 			return 2;
 		case VAR_url:
-			return 2;
+			return 1;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

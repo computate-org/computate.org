@@ -24,7 +24,7 @@ import io.vertx.pgclient.data.Polygon;
  * Page: true
  * SuperPage: BaseModelPage
  * Indexed: true
- * Order: 9
+ * Order: 10
  * Description: For keeping track of temperature, humidity, and other weather related details. 
  * ApiTag: weather observed
  * ApiUri: /api/weather-observed
@@ -624,16 +624,42 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 **/
 	protected void _illuminance(Wrap<BigDecimal> w) {}
 
+
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * DisplayName: NGSILD data
-	 * Description: The NGSILD data with @context from the context broker
+	 * DisplayName: NGSILD-Tenant
+	 * Description: The NGSILD-Tenant or Fiware-Service
 	 * HtmRowTitle: NGSI-LD details
 	 * HtmRow: 12
 	 * HtmCell: 1
 	 * Facet: true
+	 */
+	protected void _ngsildTenant(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Path
+	 * Description: The NGSILD-Path or Fiware-ServicePath
+	 * HtmRow: 12
+	 * HtmCell: 2
+	 * Facet: true
+	 */
+	protected void _ngsildPath(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Description: The NGSILD data with @context from the context broker
+	 * HtmRowTitle: NGSI-LD data
+	 * HtmRow: 13
+	 * HtmCell: 1
 	 * Multiline: true
 	 */
 	protected void _ngsildData(Wrap<JsonObject> w) {
@@ -645,7 +671,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * Persist: true
 	 * DisplayName: entity ID
 	 * Description: A unique ID for this Smart Data Model
-	 * HtmRow: 12
+	 * HtmRow: 13
 	 * HtmCell: 2
 	 * Facet: true
 	 */
@@ -665,41 +691,14 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 		}
 	}
 
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: NGSILD-Tenant
-	 * Description: The NGSILD-Tenant or Fiware-Service
-	 * HtmRow: 12
-	 * HtmCell: 3
-	 * Facet: true
-	 */
-	protected void _ngsildTenant(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: NGSILD-Path
-	 * Description: The NGSILD-Path or Fiware-ServicePath
-	 * HtmRow: 12
-	 * HtmCell: 4
-	 * Facet: true
-	 */
-	protected void _ngsildPath(Wrap<String> w) {
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
 	 * DisplayName: NGSILD context
 	 * Description: The NGSILD context URL for @context data. 
-	 * HtmRow: 12
-	 * HtmCell: 5
+	 * HtmRow: 13
+	 * HtmCell: 3
 	 * Facet: true
 	 */
 	protected void _ngsildContext(Wrap<String> w) {

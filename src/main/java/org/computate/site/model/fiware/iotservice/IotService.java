@@ -21,13 +21,11 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Order: 10
+ * Order: 9
  * Model: true
  * 
  * Api: true
  * Page: true
- * PageTemplates: /en-us/iot-service
- * UserPageTemplates: /en-us/user/iot-service
  * SuperPage: BaseModelPage
  * Indexed: true
  * Description: A service within a service path in the NGSI-LD standard
@@ -60,8 +58,8 @@ public class IotService extends IotServiceGen<BaseModel> {
    * Persist: true
    * DisplayName: entity type
    * Description: The NGSI-LD entity type
-   * HtmRow: 3
 	 * HtmRowTitle: IoT service details
+   * HtmRow: 3
    * HtmCell: 1
    * Facet: true
    **/
@@ -86,10 +84,52 @@ public class IotService extends IotServiceGen<BaseModel> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: context broker host
-   * Description: The NGSI-LD Context Broker host
+   * DisplayName: resource
+   * Description: The NGSI-LD resource
    * HtmRow: 3
    * HtmCell: 3
+   * Facet: true
+   **/
+  protected void _resource(Wrap<String> w) {
+    w.o("/iot/json");
+  }
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Tenant
+	 * Description: The NGSILD-Tenant or Fiware-Service
+	 * HtmRow: 4
+	 * HtmCell: 1
+	 * HtmColumn: 1
+	 * Facet: true
+	 */
+	protected void _ngsildTenant(Wrap<String> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: NGSILD-Path
+	 * Description: The NGSILD-Path or Fiware-ServicePath
+	 * HtmRow: 4
+	 * HtmCell: 2
+	 * HtmColumn: 2
+	 * Facet: true
+	 */
+	protected void _ngsildPath(Wrap<String> w) {
+	}
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: context broker host
+   * Description: The NGSI-LD Context Broker host
+   * HtmRow: 5
+   * HtmCell: 1
    * Facet: true
    **/
   protected void _cbHost(Wrap<String> w) {
@@ -104,24 +144,10 @@ public class IotService extends IotServiceGen<BaseModel> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: resource
-   * Description: The NGSI-LD resource
-   * HtmRow: 4
-   * HtmCell: 1
-   * Facet: true
-   **/
-  protected void _resource(Wrap<String> w) {
-    w.o("/iot/json");
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
    * DisplayName: attributes
    * Description: The NGSI-LD attributes
-   * HtmRow: 4
-   * HtmCell: 2
+   * HtmRow: 6
+   * HtmCell: 1
    * Facet: true
    **/
   protected void _attributes(Wrap<JsonArray> w) {
@@ -145,42 +171,15 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * DisplayName: NGSILD-Tenant
-	 * Description: The NGSILD-Tenant or Fiware-Service
-	 * HtmRow: 5
-	 * HtmCell: 1
-	 * HtmColumn: 1
-	 * Facet: true
-	 */
-	protected void _ngsildTenant(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: NGSILD-Path
-	 * Description: The NGSILD-Path or Fiware-ServicePath
-	 * HtmRow: 5
-	 * HtmCell: 2
-	 * HtmColumn: 2
-	 * Facet: true
-	 */
-	protected void _ngsildPath(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 4
+	 * HtmRowTitle: page details
+	 * HtmRow: 7
 	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(ngsildTenant);
+		w.o(toId(String.format("%s-%s-%s", entityType, ngsildTenant, ngsildPath)));
 	}
 
 	/**
@@ -209,7 +208,7 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
+	 * HtmRow: 7
 	 * HtmCell: 2
 	 * Facet: true
 	 * DisplayName: URI
@@ -222,8 +221,8 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
+	 * HtmRow: 8
+	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: URL
 	 * Description: The URL for this page. 
@@ -241,7 +240,7 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * UrlVar: pageUrlId
 	 */
 	protected void _title(Wrap<String> w) {
-		w.o(ngsildTenant);
+		w.o(String.format("%s entities in %s tenant and %s path", entityType, ngsildTenant, ngsildPath));
 	}
 
 	@Override

@@ -681,26 +681,6 @@
               <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmNgsildTenantWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -719,18 +699,23 @@
                   {{ htmNgsildPathWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="ngsi-ld-data">
+              <div slot="summary">
+                <span>NGSI-LD data</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-              </div>
-              <div stuff="NGSI-LD details-NGSI-LD details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -739,6 +724,26 @@
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1195,26 +1200,6 @@
               <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmNgsildTenantWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -1233,18 +1218,23 @@
                   {{ htmNgsildPathWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="ngsi-ld-data">
+              <div slot="summary">
+                <span>NGSI-LD data</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-              </div>
-              <div stuff="NGSI-LD details-NGSI-LD details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1253,6 +1243,26 @@
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1748,26 +1758,6 @@
               <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
                 {{ htmNgsildTenantWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
@@ -1786,18 +1776,23 @@
                   {{ htmNgsildPathWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details class="HtmRow" id="ngsi-ld-data">
+              <div slot="summary">
+                <span>NGSI-LD data</span>
+              </div>
+              <div>
 
               {%- if "PATCH" in scopes %}
-                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
-                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNgsildDataWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-              </div>
-              <div stuff="NGSI-LD details-NGSI-LD details">
 
               {%- if "PATCH" in scopes %}
                 {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -1806,6 +1801,26 @@
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
                 {%- else %}
                   {{ htmSeeAlsoWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmEntityIdWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                {%- else %}
+                  {{ htmNgsildContextWeatherObservedPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1987,13 +2002,15 @@
                     </div>
                   </div>
                   <div>
-                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqWeatherObserved_{{ key }}">{% if value.val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
                     <div class="pageSearchVal " id="pageSearchVal-buttonFacetWeatherObserved_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
-                    <ol class="pageFacetField pageFacetFieldWeatherObserved_{{ key }} " id="pageFacetFieldWeatherObserved_{{ key }}">
+                    <div class="pageFacetField pageFacetFieldWeatherObserved_{{ key }} " id="pageFacetFieldWeatherObserved_{{ key }}">
 {% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
-                      <li class="cursor-pointer " data-class="WeatherObserved" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('WeatherObserved', facetFieldValue); ">{{ facetFieldKey }}: {{ facetFieldValue }}</li>
+                      <sl-tooltip content="{{ facetFieldValue | e }} weather observed device total with {{ value.facetField.var | e }} &quot;{{ facetFieldKey | e }}&quot;">
+                        <div class="cursor-pointer " data-class="WeatherObserved" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('WeatherObserved', this); ">{{ facetFieldValue }}: {{ facetFieldKey }}</div>
+                      </sl-tooltip>
 {% endfor %}
-                    </ol>
+                    </div>
                   </div>
                 {% endfor %}
               </div>
@@ -3717,82 +3734,6 @@ Direct irradiance is the part of the solar irradiance that directly reaches a su
                             {{ inputIlluminanceWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_ngsildData">
-  {%- endif %}
-                  <sl-textarea resize="auto"
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="NGSILD data"
-                      label="NGSILD data"
-                      help-text="
-The NGSILD data with @context from the context broker"
-                      id="{{classApiMethodMethod}}_ngsildData"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_ngsildData setNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
-                      name="setNgsildData"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_ngsildData setNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
-                      name="setNgsildData"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_ngsildData valueNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
-                      name="ngsildData"
-    {%- endif %}
-  {%- endif %}
-{%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(weatherObserved_.ngsildData) | e }}"
-{%- endif %}
-                      >
-</sl-textarea>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputNgsildDataWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
-{%- macro inputEntityIdWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_entityId">
-  {%- endif %}
-                  <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="entity ID"
-                      label="entity ID"
-                      help-text="
-A unique ID for this Smart Data Model"
-                      id="{{classApiMethodMethod}}_entityId"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_entityId setEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
-                      name="setEntityId"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_entityId setEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
-                      name="setEntityId"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_entityId valueEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
-                      name="entityId"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.entityId | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmEntityIdWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputEntityIdWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
-{%- endmacro %}
-
 {%- macro inputNgsildTenantWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form id="PageForm_ngsildTenant">
@@ -3869,42 +3810,40 @@ The NGSILD-Path or Fiware-ServicePath"
                             {{ inputNgsildPathWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
-{%- macro inputNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_ngsildContext">
+                <form id="PageForm_ngsildData">
   {%- endif %}
-                  <sl-input
+                  <sl-textarea resize="auto"
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="NGSILD context"
-                      label="NGSILD context"
                       help-text="
-The NGSILD context URL for @context data. "
-                      id="{{classApiMethodMethod}}_ngsildContext"
+The NGSILD data with @context from the context broker"
+                      id="{{classApiMethodMethod}}_ngsildData"
   {%- if "Page" == classApiMethodMethod %}
                       data-pk="{{ pk }}"
-                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
-                      name="setNgsildContext"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildData setNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
+                      name="setNgsildData"
   {%- else %}
     {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
-                      name="setNgsildContext"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildData setNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
+                      name="setNgsildData"
     {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_ngsildContext valueNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
-                      name="ngsildContext"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildData valueNgsildData classWeatherObserved inputWeatherObserved{{pk}}NgsildData "
+                      name="ngsildData"
     {%- endif %}
   {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{weatherObserved_.ngsildContext | e }}"
-  {%- endif %}
-                      ></sl-input>
-
+{%- if "Page" == classApiMethodMethod %}
+                      value="{{ toJsonObjectString(weatherObserved_.ngsildData) | e }}"
+{%- endif %}
+                      >
+</sl-textarea>
   {%- if 'Page' == classApiMethodMethod %}
                 </form>
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputNgsildContextWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmNgsildDataWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildDataWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
 
 {%- macro inputSeeAlsoWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
@@ -3943,4 +3882,80 @@ list of uri pointing to additional resources about the item"
 
 {%- macro htmSeeAlsoWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
                             {{ inputSeeAlsoWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputEntityIdWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_entityId">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="entity ID"
+                      label="entity ID"
+                      help-text="
+A unique ID for this Smart Data Model"
+                      id="{{classApiMethodMethod}}_entityId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_entityId setEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
+                      name="setEntityId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_entityId setEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
+                      name="setEntityId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_entityId valueEntityId classWeatherObserved inputWeatherObserved{{pk}}EntityId "
+                      name="entityId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.entityId | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmEntityIdWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputEntityIdWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- endmacro %}
+
+{%- macro inputNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form id="PageForm_ngsildContext">
+  {%- endif %}
+                  <sl-input
+                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="NGSILD context"
+                      label="NGSILD context"
+                      help-text="
+The NGSILD context URL for @context data. "
+                      id="{{classApiMethodMethod}}_ngsildContext"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pk="{{ pk }}"
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="setNgsildContext"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext setNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="setNgsildContext"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildContext valueNgsildContext classWeatherObserved inputWeatherObserved{{pk}}NgsildContext "
+                      name="ngsildContext"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{weatherObserved_.ngsildContext | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNgsildContextWeatherObservedPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
+                            {{ inputNgsildContextWeatherObservedPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
 {%- endmacro %}
