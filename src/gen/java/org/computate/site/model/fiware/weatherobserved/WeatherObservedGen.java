@@ -6017,6 +6017,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_illuminance);
 		vars.add(VAR_ngsildTenant);
 		vars.add(VAR_ngsildPath);
+		vars.add(VAR_ngsildData);
 		vars.add(VAR_entityId);
 		vars.add(VAR_ngsildContext);
 		BaseModel.varsFqBaseModel(vars);
@@ -6056,6 +6057,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		vars.add(VAR_diffuseIrradiation);
 		vars.add(VAR_directIrradiation);
 		vars.add(VAR_illuminance);
+		vars.add(VAR_ngsildData);
 		BaseModel.varsRangeBaseModel(vars);
 		return vars;
 	}

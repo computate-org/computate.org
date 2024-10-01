@@ -88,10 +88,11 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 			List<String> vars = WeatherObserved.varsFqForClass();
 			for (String var : vars) {
 				String ngsiType = WeatherObserved.ngsiType(var);
-				if (ngsiType != null) {
+				String displayName = Optional.ofNullable(WeatherObserved.displayNameWeatherObserved(var)).orElse(var);
+				if (ngsiType != null && displayName != null && !var.equals("ngsildData")) {
 					Object value = weatherObserved.obtainForClass(var);
 					if(value != null) {
-						entityBody.put(WeatherObserved.displayNameForClass(var)
+						entityBody.put(displayName
 								, new JsonObject()
 								.put("type", "Property")
 								.put("value", value)
@@ -221,7 +222,7 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 			for (String var : vars) {
 				String ngsiType = WeatherObserved.ngsiType(var);
 				String displayName = Optional.ofNullable(WeatherObserved.displayNameWeatherObserved(var)).orElse(var);
-				if (ngsiType != null && displayName != null) {
+				if (ngsiType != null && displayName != null && !var.equals("ngsildData")) {
 					attributes.add(new JsonObject()
 							.put("object_id", var)
 							.put("name", displayName)
@@ -295,8 +296,12 @@ public class WeatherObservedEnUSApiServiceImpl extends WeatherObservedEnUSGenApi
 			List<String> vars = WeatherObserved.varsFqForClass();
 			for (String var : vars) {
 				String ngsiType = WeatherObserved.ngsiType(var);
-				if (ngsiType != null && !"type".equals(var) && !"id".equals(var)) {
-					attributes.put(var, weatherObserved.obtainForClass(var));
+				String displayName = Optional.ofNullable(WeatherObserved.displayNameWeatherObserved(var)).orElse(var);
+				Object val = weatherObserved.obtainForClass(var);
+				if (ngsiType != null && displayName != null && !var.equals("ngsildData")
+						&& val != null
+						&& !"type".equals(var) && !"id".equals(var)) {
+					attributes.put(var, val);
 				}
 			}
 			rabbitmqClient.basicPublish(exchange, routingKey, attributes.toBuffer()).onSuccess(a -> {

@@ -660,6 +660,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * HtmRowTitle: NGSI-LD data
 	 * HtmRow: 13
 	 * HtmCell: 1
+	 * Facet: true
 	 * Multiline: true
 	 */
 	protected void _ngsildData(Wrap<JsonObject> w) {
