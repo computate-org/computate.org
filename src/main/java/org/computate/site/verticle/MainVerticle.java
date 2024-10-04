@@ -1281,7 +1281,9 @@ public class MainVerticle extends AbstractVerticle {
 											if(searchList.size() > 0) {
 												ComputateBaseResult result = searchList.first();
 												String uri = (String)result.obtainForClass("uri");
-												String groupName = uri;
+												ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
+												ZonedDateTime now = ZonedDateTime.now(zoneId);
+												String groupName = String.format("%s-%s", now.getYear(), uri);
 												String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
 												String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
 												Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
@@ -1371,7 +1373,6 @@ public class MainVerticle extends AbstractVerticle {
 																					body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
 																					body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
 
-																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
 																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
 																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
 																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
@@ -1512,14 +1513,14 @@ public class MainVerticle extends AbstractVerticle {
 											array.add(val);
 										}
 									}
-									SearchList<ComputateBaseResult> l = new SearchList<>();
+									SearchList<BaseResult> l = new SearchList<>();
 									l.q("*:*");
-									l.setC(ComputateBaseResult.class);
+									l.setC(BaseResult.class);
 									l.fq(String.format("%s_docvalues_string:%s", "uri", SearchTool.escapeQueryChars(uri)));
 									l.setStore(true);
 									handler.response().headers().add("Content-Type", "text/html");
 									l.promiseDeepForClass(siteRequest).onSuccess(a -> {
-										ComputateBaseResult result = l.first();
+										BaseResult result = l.first();
 										try {
 											String downloadPath = String.format("%s%s.zip", config().getString(ConfigKeys.DOWNLOAD_PATH), uri);
 											vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {

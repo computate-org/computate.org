@@ -29,37 +29,51 @@
           <sl-carousel class="aspect-ratio" autoplay loop navigation pagination autoplay-interval="5000">
             <sl-carousel-item>
               <sl-tooltip placement="left" content="Boston University researchers in Smart Cities meeting together in Boston with Red Hat and FIWARE. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/smartvillage/meet-our-team.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/smartvillage/meet-our-team.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
               <sl-tooltip placement="left" content="Hackathon with UNICEF at the Red Hat Tech Exchange 2018 in Orlando Florida, discovering the solution for the Multi-hop Mobility Challenge. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/social-innovation/unicef-hackathon-2018.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/social-innovation/unicef-hackathon-2018.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
               <sl-tooltip placement="left" content="The Smarta Byar Smart Village FIWARE iHub receiving an official certificate at the FIWARE Summit in Vienna, Austria in 2023. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-ihub-certificate.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-ihub-certificate.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
               <sl-tooltip placement="left" content="Hackathon for the ChRIS Project open compute medical imaging with Shaw University students in 2023. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2023.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2023.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
-              <sl-tooltip placement="left" content="Remote hackathon with the Southern Coaliation for Social Justice on Martin Luther King Jr. Day 2021 to kick off the development of the Open Data Policing website. ">
-                <img src="{{ STATIC_BASE_URL }}/png/social-innovation/mlk-day-hackathon-2021.png">
+              <sl-tooltip placement="left" content="Remote hackathon with the Southern Coalition for Social Justice on Martin Luther King Jr. Day 2021 to kick off the development of the Open Data Policing website. ">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/png/social-innovation/mlk-day-hackathon-2021.png">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
               <sl-tooltip placement="left" content="Global outreach panel discussion at the FIWARE Summit in Vienna, Austria in 2023. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-summit-2023-vienna-panel.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/fiware/fiware-summit-2023-vienna-panel.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
             <sl-carousel-item>
               <sl-tooltip placement="left" content="FIWARE Cloud-to-Edge Hackathon with students from Shaw University, St. Augustine’s University, and North Carolina Central University in 2024. ">
-                <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2024.jpg">
+                <a href="{{ SITE_BASE_URL }}/en-us/article/hackathons">
+                  <img src="{{ STATIC_BASE_URL }}/jpg/shaw-university/shaw-hackathon-2024.jpg">
+                </a>
               </sl-tooltip>
             </sl-carousel-item>
           </sl-carousel>
@@ -131,25 +145,34 @@
         </div>
 
         <div class="orange-blue-background border-radius-x-large margin-block-end-1rem ">
-          <div class="intro-content">
-            <div class="wa-crown">
-              <i class="fa-kit fa-fiware fa-5x "></i>
+          <div class="flex-container ">
+            <div class="flex-item-left ">
+              <div class="padding-2x-large ">
+                <div class="wa-crown">
+                  <i class="fa-kit fa-fiware fa-5x "></i>
+                </div>
+                <h2 class="brand-font">
+                  Latest available course: Free course for configuring IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a free Red Hat OpenShift Developer Sandbox
+                </h2>
+                <h1 class="brand-font">
+                  with the Cloud sandbox powered by FIWARE course
+                </h1>
+              </div>
             </div>
-            <h2 class="brand-font">
-              Latest available course: Configure IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a free Red Hat OpenShift Developer Sandbox
-            </h2>
-            <h1 class="brand-font">
-              with the Cloud sandbox powered by FIWARE course
-            </h1>
+            <div class="flex-item-right ">
+              <img src="{{ STATIC_BASE_URL }}/jpg/fiware/2024-summit/technical-training.jpg"/>
+            </div>
+          </div>
+          <div class="intro-content">
             <div class="intro-details">
               <div>
-                This course will become available for the 
+                This course was presented at the 
                 <a href="https://www.eventbrite.de/e/fiware-tech-training-naples-tickets-920143322447">FIWARE Summit Technical Training</a>
-                in Naples, Italy September 18 2024 · 9:30am – September 19 · 5:30pm CEST 
+                in Naples, Italy September 18 2024
               </div>
               <sl-button id="order-button" class="gradient-button orange-blue-background" variant="neutral" href="{{ SITE_BASE_URL }}/en-us/course/cloud-sandbox-powered-by-fiware">
                 <i class="fa-solid fa-person-running-fast"></i>
-                Learn more
+                Get started
               </sl-button>
             </div>
           </div>
@@ -164,7 +187,7 @@
               Latest available product: Learn how to deploy open source smart device microservices to the cloud
             </h2>
             <h1 class="brand-font">
-              with the Computate Smart Cloud Builder
+              with the Computate Smart Cloud Deployer
             </h1>
             <div class="intro-details">
               <div>

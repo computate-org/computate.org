@@ -1497,6 +1497,10 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 
 	public static Integer htmColumnSiteUser(String var) {
 		switch(var) {
+		case VAR_userName:
+			return 2;
+		case VAR_userFullName:
+			return 1;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}

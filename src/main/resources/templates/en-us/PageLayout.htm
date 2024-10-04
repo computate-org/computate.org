@@ -119,13 +119,13 @@
 {% block htmBodyPageLayout %}
 {% block htmBodyStartPageLayout %}
       <aside id="site-aside-left" class="hide-mobile ">
-        <a id="img-keys-a" href="/">
-          <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
-        </a>
-        <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop">
+        <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop margin-block-end-1rem round-button ">
           <i slot="prefix" class="fas fa-xmark"></i>
         </sl-button>
-        <div class="round-first-and-last-row-x-large">
+        <a id="img-keys-a" href="/" class="margin-block-end-1rem ">
+          <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
+        </a>
+        <div class="round-first-and-last-row-x-large margin-block-end-1rem ">
 {% if userName is defined %}
           <sl-details>
             <div slot="summary">

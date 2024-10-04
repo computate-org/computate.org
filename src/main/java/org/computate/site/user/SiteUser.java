@@ -66,6 +66,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DocValues: true
 	 * Persist: true
 	 * Description: The user's username
+	 * HtmColumn: 2
 	 */
 	protected void _userName(Wrap<String> c) {
 	}
@@ -102,6 +103,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DocValues: true
 	 * Persist: true
 	 * Description: The user's full name
+	 * HtmColumn: 1
 	 */
 	protected void _userFullName(Wrap<String> c) {
 	}

@@ -325,15 +325,21 @@
               <label for="input_createdAt">Amount paid: </label>
             </td>
             <td class="">
+              {% if orderId == 'FREE' %}
+              <input id="input_createdAt" disabled class="w3-input w3-border" type="text" value="FREE">
+              {% else %}
               <input id="input_createdAt" disabled class="w3-input w3-border" type="text" value="{{ netAmountDue }}">
+              {% endif %}
             </td>
           </tr>
         </table>
+        {% if orderId != 'FREE' %}
         <p class="w3-center">
           <a href="https://store.computate.org/store/status/{{ orderId }}" class="w3-button site-button w3-round-medium">
             View more order details
           </a>
         </p>
+        {% endif %}
       </div>
     </div>
   </body>

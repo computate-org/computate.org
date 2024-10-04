@@ -498,8 +498,19 @@
             <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
               {% for item in listSiteUser%}
               <a href="{{ item.pageUrlPk }}">
+                <div>                  <i class="fa-duotone fa-solid fa-user-gear"></i>
+{{ item.userFullName }}</div>
+                <div>{{ item.userName }}</div>
               </a>
               {% endfor %}
+                      {% if getColumnUserFullName is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
+                      {% if getColumnUserName is defined %}
+                        <div>
+                        </div>
+                      {% endif %}
             </div>
             {%- endmacro htmBodyAllSiteUserPage() %}
 {%- macro htmSearchButtonsSiteUserPage() %}
