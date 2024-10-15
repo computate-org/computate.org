@@ -167,7 +167,7 @@
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -209,7 +209,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -226,7 +226,7 @@
               <div slot="summary">
                 <span>webinar details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -268,7 +268,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="webinar details-webinar details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
@@ -332,7 +332,7 @@
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -374,7 +374,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -391,7 +391,7 @@
               <div slot="summary">
                 <span>webinar details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -433,7 +433,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="webinar details-webinar details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
@@ -520,7 +520,7 @@
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPkCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -562,7 +562,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="primary key, ID, created, modified, archive details-primary key, ID, created, modified, archive details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmArchivedCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -579,7 +579,7 @@
               <div slot="summary">
                 <span>webinar details</span>
               </div>
-              <div>
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmNameCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -621,7 +621,7 @@
                 {%- endif %}
               {%- endif %}
               </div>
-              <div stuff="webinar details-webinar details">
+              <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
                 {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
@@ -728,7 +728,7 @@
                   </sl-button>
                 </sl-tooltip>
               </sl-button-group>
-              <div>{{ pagination.startNum }} –— {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
+            <div>{{ pagination.startNum }} – {{ pagination.endNum }} of {{ pagination.foundNum }}</div>
             </div>
 {%- endmacro htmPaginationButtonsCompanyWebinarPage() %}
 {%- macro htmFormsCompanyWebinarPage() %}
@@ -1149,7 +1149,7 @@
 
 {%- macro inputPkCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_pk">
+                <form class="subgrid-2col " id="PageForm_pk">
   {%- endif %}
                   <sl-input
                       readonly
@@ -1187,7 +1187,7 @@ The primary key of this object in the database"
 
 {%- macro inputObjectIdCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_objectId">
+                <form class="subgrid-2col " id="PageForm_objectId">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1225,7 +1225,7 @@ A URL friendly unique ID for this object"
 
 {%- macro inputCreatedCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_created">
+                <form class="subgrid-2col " id="PageForm_created">
   {%- endif %}
                   <sl-input
                       type="text"
@@ -1254,7 +1254,7 @@ A URL friendly unique ID for this object"
 
 {%- macro inputModifiedCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_modified">
+                <form class="subgrid-2col " id="PageForm_modified">
   {%- endif %}
                   <sl-input
                       type="text"
@@ -1283,7 +1283,7 @@ A URL friendly unique ID for this object"
 
 {%- macro inputArchivedCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_archived">
+                <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
                   <sl-button
@@ -1294,7 +1294,7 @@ A URL friendly unique ID for this object"
                       class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pk}}Archived "
                       name="setArchived"
                       data-pk="{{ pk }}"
-                      data-val="{{ companyWebinar_.archived }}"
+                      data-val="{{ companyWebinar_.archived | e }}"
                       >archive</sl-button>
   {%- else %}
   {%- if 'Page' == classApiMethodMethod %}
@@ -1346,7 +1346,7 @@ A URL friendly unique ID for this object"
 
 {%- macro inputNameCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_name">
+                <form class="subgrid-2col " id="PageForm_name">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1384,7 +1384,7 @@ The name of this webinar"
 
 {%- macro inputDescriptionCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_description">
+                <form class="subgrid-2col " id="PageForm_description">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1422,7 +1422,7 @@ A description of this webinar"
 
 {%- macro inputUriCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_uri">
+                <form class="subgrid-2col " id="PageForm_uri">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1460,7 +1460,7 @@ The relative URI for this page. "
 
 {%- macro inputUrlCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_url">
+                <form class="subgrid-2col " id="PageForm_url">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1498,7 +1498,7 @@ The URL for this page. "
 
 {%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_pageId">
+                <form class="subgrid-2col " id="PageForm_pageId">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1536,7 +1536,7 @@ The ID for this page. "
 
 {%- macro inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_webinarUrlAmericas">
+                <form class="subgrid-2col " id="PageForm_webinarUrlAmericas">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1574,7 +1574,7 @@ The actual link to the Webinar in Americas"
 
 {%- macro inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_webinarUrlApac">
+                <form class="subgrid-2col " id="PageForm_webinarUrlApac">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
@@ -1612,7 +1612,7 @@ The actual link to the Webinar in APAC"
 
 {%- macro inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
-                <form id="PageForm_webinarUrlEmea">
+                <form class="subgrid-2col " id="PageForm_webinarUrlEmea">
   {%- endif %}
                   <sl-input
                       {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}

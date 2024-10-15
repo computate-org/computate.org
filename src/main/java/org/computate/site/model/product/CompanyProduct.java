@@ -10,7 +10,7 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 6
+ * Order: 5
  * 
  * Api: true
  * Page: true
@@ -54,6 +54,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * DisplayName: product name
    * Description: The product name. 
    * HtmRow: 3
+	 * HtmRowTitleOpen: product details
    * HtmCell: 1
    * HtmColumn: 1
    * Facet: true
@@ -79,8 +80,6 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 4
-	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
@@ -127,7 +126,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * HtmRow: 3
-	 * HtmCell: 2
+	 * HtmCell: 3
 	 * Facet: true
 	 * DisplayName: URI
 	 * Description: The relative URI for this page. 
@@ -139,11 +138,13 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
+	 * HtmRow: 4
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmCell: 1
 	 * Facet: true
-	 * DisplayName: URL
-	 * Description: The URL for this page. 
+	 * DisplayName: product page
+	 * Description: Visit this product's landing page. 
+	 * Link: true
 	 */
 	protected void _url(Wrap<String> w) {
 		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));

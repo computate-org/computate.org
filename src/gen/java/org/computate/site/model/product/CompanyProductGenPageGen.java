@@ -148,7 +148,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity searchListCompanyProduct_
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyProduct_">Find the entity searchListCompanyProduct_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyProduct_">Find the entity searchListCompanyProduct_ in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -189,7 +189,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity listCompanyProduct
 	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:listCompanyProduct">Find the entity listCompanyProduct in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:listCompanyProduct">Find the entity listCompanyProduct in Solr</a>
 	 * <br>
 	 * @param l is the entity already constructed. 
 	 **/
@@ -244,7 +244,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity companyProductCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProductCount">Find the entity companyProductCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProductCount">Find the entity companyProductCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -303,7 +303,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity companyProduct_
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProduct_">Find the entity companyProduct_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProduct_">Find the entity companyProduct_ in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -344,7 +344,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity id
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -396,7 +396,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity pageUriCompanyProduct
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyProduct">Find the entity pageUriCompanyProduct in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyProduct">Find the entity pageUriCompanyProduct in Solr</a>
 	 * <br>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/

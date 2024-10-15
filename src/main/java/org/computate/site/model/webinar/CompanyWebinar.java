@@ -18,7 +18,7 @@ import io.vertx.pgclient.data.Point;
 import io.vertx.pgclient.data.Polygon;
 
 /**
- * Order: 8
+ * Order: 7
  * Model: true
  * 
  * Api: true

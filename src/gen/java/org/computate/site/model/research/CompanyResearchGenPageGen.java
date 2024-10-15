@@ -148,7 +148,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity searchListCompanyResearch_
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyResearch_">Find the entity searchListCompanyResearch_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyResearch_">Find the entity searchListCompanyResearch_ in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -189,7 +189,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity listCompanyResearch
 	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:listCompanyResearch">Find the entity listCompanyResearch in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:listCompanyResearch">Find the entity listCompanyResearch in Solr</a>
 	 * <br>
 	 * @param l is the entity already constructed. 
 	 **/
@@ -244,7 +244,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity companyResearchCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:companyResearchCount">Find the entity companyResearchCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:companyResearchCount">Find the entity companyResearchCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -303,7 +303,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity companyResearch_
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:companyResearch_">Find the entity companyResearch_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:companyResearch_">Find the entity companyResearch_ in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -344,7 +344,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity id
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
@@ -396,7 +396,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends BaseResultPage {
 
 	/**	<br> The entity pageUriCompanyResearch
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyResearch">Find the entity pageUriCompanyResearch in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearchGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyResearch">Find the entity pageUriCompanyResearch in Solr</a>
 	 * <br>
 	 * @param c is for wrapping a value to assign to this entity during initialization. 
 	 **/

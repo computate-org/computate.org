@@ -9,7 +9,7 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 4
+ * Order: 6
  * 
  * Api: true
  * Page: true

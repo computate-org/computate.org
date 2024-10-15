@@ -21,7 +21,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Order: 9
+ * Order: 11
  * Model: true
  * 
  * Api: true

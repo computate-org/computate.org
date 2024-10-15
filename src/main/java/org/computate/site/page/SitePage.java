@@ -34,8 +34,7 @@ import io.vertx.core.Promise;
  * PageTemplates: /en-us/article
  * SuperPage: BaseResultPage
  * Indexed: true
- * SqlOrder: 2
- * Order: 2
+ * Order: 4
  * 
  * ApiTag: Page
  * ApiUri: /api/page

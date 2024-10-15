@@ -176,33 +176,38 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
+import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
+import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
+import org.computate.site.model.about.CompanyAbout;
+import org.computate.site.model.casestudy.CaseStudyEnUSGenApiService;
+import org.computate.site.model.casestudy.CaseStudyEnUSApiServiceImpl;
+import org.computate.site.model.casestudy.CaseStudy;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
-import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
-import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
-import org.computate.site.model.research.CompanyResearch;
-import org.computate.site.model.event.CompanyEventEnUSGenApiService;
-import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
-import org.computate.site.model.event.CompanyEvent;
 import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
 import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.site.model.course.CompanyCourse;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
-import org.computate.site.model.service.CompanyServiceEnUSGenApiService;
-import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
-import org.computate.site.model.service.CompanyService;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
+import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEvent;
 import org.computate.site.model.webinar.CompanyWebinarEnUSGenApiService;
 import org.computate.site.model.webinar.CompanyWebinarEnUSApiServiceImpl;
 import org.computate.site.model.webinar.CompanyWebinar;
+import org.computate.site.model.service.CompanyServiceEnUSGenApiService;
+import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
+import org.computate.site.model.service.CompanyService;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
+import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
 import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
-import org.computate.site.model.fiware.iotservice.IotService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
 
@@ -1149,20 +1154,20 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebinar","CompanyWebsite","IotService","WeatherObserved");
-			List<String> publicResources = Arrays.asList("SitePage","CompanyResearch","CompanyEvent","CompanyCourse","CompanyProduct","CompanyService","CompanyWebsite");
+			List<String> authResources = Arrays.asList("CompanyAbout","CaseStudy","SitePage","CompanyCourse","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","IotService","WeatherObserved");
+			List<String> publicResources = Arrays.asList("CompanyAbout","CaseStudy","SitePage","CompanyCourse","CompanyProduct","CompanyEvent","CompanyService","CompanyResearch","CompanyWebsite");
 			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
+			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = CompanyAboutEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiCompanyAbout.configureUiResult(router, CompanyAbout.class, SiteRequest.class, "/en-us/about");
+
+			CaseStudyEnUSApiServiceImpl apiCaseStudy = CaseStudyEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiCaseStudy.configureUiResult(router, CaseStudy.class, SiteRequest.class, "/en-us/case-study");
+
 			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/article");
-
-			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
-
-			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyEvent.configureUiResult(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
 
 			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCompanyCourse.configureUiResult(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
@@ -1172,19 +1177,23 @@ public class MainVerticle extends AbstractVerticle {
 			apiCompanyProduct.configureUiResult(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
 			apiCompanyProduct.configureUserUiResult(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/product", "/en-us/user/product");
 
-			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiCompanyService.configureUiResult(router, CompanyService.class, SiteRequest.class, "/en-us/service");
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = CompanyEventEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiCompanyEvent.configureUiResult(router, CompanyEvent.class, SiteRequest.class, "/en-us/event");
 
 			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = CompanyWebinarEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCompanyWebinar.configureUiModel(router, CompanyWebinar.class, SiteRequest.class, "/en-us/webinar");
 			apiCompanyWebinar.configureUserUiModel(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/webinar", "/en-us/user/webinar");
 
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = CompanyServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiCompanyService.configureUiResult(router, CompanyService.class, SiteRequest.class, "/en-us/service");
+
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = CompanyResearchEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/research");
+
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = CompanyWebsiteEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCompanyWebsite.configureUiResult(router, CompanyWebsite.class, SiteRequest.class, "/en-us/website");
 
-			IotServiceEnUSApiServiceImpl apiIotService = IotServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/iot-service");
-			apiIotService.configureUserUiModel(router, IotService.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/iot-service", "/en-us/user/iot-service");
+			IotServiceEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 
 			WeatherObservedEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 
@@ -1281,9 +1290,7 @@ public class MainVerticle extends AbstractVerticle {
 											if(searchList.size() > 0) {
 												ComputateBaseResult result = searchList.first();
 												String uri = (String)result.obtainForClass("uri");
-												ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
-												ZonedDateTime now = ZonedDateTime.now(zoneId);
-												String groupName = String.format("%s-%s", now.getYear(), uri);
+												String groupName = uri;
 												String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
 												String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
 												Integer authPort = config().getInteger(ConfigKeys.AUTH_PORT);
@@ -1373,6 +1380,7 @@ public class MainVerticle extends AbstractVerticle {
 																					body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
 																					body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
 
+																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
 																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
 																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
 																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);

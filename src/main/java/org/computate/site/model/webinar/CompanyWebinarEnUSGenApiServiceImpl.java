@@ -720,22 +720,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							num++;
 							bParams.add(o2.sqlUserKey());
 						break;
-					case "setDescription":
-							o2.setDescription(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_description + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDescription());
-						break;
-					case "setTemplateUri":
-							o2.setTemplateUri(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
-							num++;
-							bParams.add(o2.sqlTemplateUri());
-						break;
 					case "setName":
 							o2.setName(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -743,6 +727,14 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							bSql.append(CompanyWebinar.VAR_name + "=$" + num);
 							num++;
 							bParams.add(o2.sqlName());
+						break;
+					case "setDescription":
+							o2.setDescription(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_description + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDescription());
 						break;
 					case "setPageId":
 							o2.setPageId(jsonObject.getString(entityVar));
@@ -759,6 +751,14 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							bSql.append(CompanyWebinar.VAR_resourceUri + "=$" + num);
 							num++;
 							bParams.add(o2.sqlResourceUri());
+						break;
+					case "setTemplateUri":
+							o2.setTemplateUri(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
+							num++;
+							bParams.add(o2.sqlTemplateUri());
 						break;
 					case "setUserUri":
 							o2.setUserUri(jsonObject.getString(entityVar));
@@ -1171,24 +1171,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						num++;
 						bParams.add(o2.sqlUserKey());
 						break;
-					case CompanyWebinar.VAR_description:
-						o2.setDescription(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_description + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDescription());
-						break;
-					case CompanyWebinar.VAR_templateUri:
-						o2.setTemplateUri(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
-						num++;
-						bParams.add(o2.sqlTemplateUri());
-						break;
 					case CompanyWebinar.VAR_name:
 						o2.setName(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1197,6 +1179,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_name + "=$" + num);
 						num++;
 						bParams.add(o2.sqlName());
+						break;
+					case CompanyWebinar.VAR_description:
+						o2.setDescription(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_description + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDescription());
 						break;
 					case CompanyWebinar.VAR_pageId:
 						o2.setPageId(jsonObject.getString(entityVar));
@@ -1215,6 +1206,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_resourceUri + "=$" + num);
 						num++;
 						bParams.add(o2.sqlResourceUri());
+						break;
+					case CompanyWebinar.VAR_templateUri:
+						o2.setTemplateUri(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_templateUri + "=$" + num);
+						num++;
+						bParams.add(o2.sqlTemplateUri());
 						break;
 					case CompanyWebinar.VAR_userUri:
 						o2.setUserUri(jsonObject.getString(entityVar));
@@ -2348,11 +2348,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, ctx.getString(CompanyWebinar.VAR_archived)));
 			page.persistForClass(CompanyWebinar.VAR_sessionId, CompanyWebinar.staticSetSessionId(siteRequest2, ctx.getString(CompanyWebinar.VAR_sessionId)));
 			page.persistForClass(CompanyWebinar.VAR_userKey, CompanyWebinar.staticSetUserKey(siteRequest2, ctx.getString(CompanyWebinar.VAR_userKey)));
-			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, ctx.getString(CompanyWebinar.VAR_description)));
-			page.persistForClass(CompanyWebinar.VAR_templateUri, CompanyWebinar.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_templateUri)));
 			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, ctx.getString(CompanyWebinar.VAR_name)));
+			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, ctx.getString(CompanyWebinar.VAR_description)));
 			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, ctx.getString(CompanyWebinar.VAR_pageId)));
 			page.persistForClass(CompanyWebinar.VAR_resourceUri, CompanyWebinar.staticSetResourceUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_resourceUri)));
+			page.persistForClass(CompanyWebinar.VAR_templateUri, CompanyWebinar.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_templateUri)));
 			page.persistForClass(CompanyWebinar.VAR_userUri, CompanyWebinar.staticSetUserUri(siteRequest2, ctx.getString(CompanyWebinar.VAR_userUri)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlAmericas, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlAmericas)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlApac, CompanyWebinar.staticSetWebinarUrlApac(siteRequest2, ctx.getString(CompanyWebinar.VAR_webinarUrlApac)));

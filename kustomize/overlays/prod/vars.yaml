@@ -36,9 +36,9 @@ SITE_REPO_HTTPS: "{{ SITE_REPO | replace('git@github.com:', 'https://github.com/
 # The port of the site. 
 SITE_PORT: 10200
 # The host name of the site. 
-SITE_HOST_NAME: "localhost"
+SITE_HOST_NAME: "www.computate.org"
 # The base URL of the site. 
-SITE_BASE_URL: "http://{{ SITE_HOST_NAME }}:{{ SITE_PORT }}"
+SITE_BASE_URL: "http://{{ SITE_HOST_NAME }}"
 # The public facing URL for the site. 
 SITE_PUBLIC_URL: "https://www.{{ DOMAIN_NAME }}"
 # The port of the Zookeeper cluster manager. 
