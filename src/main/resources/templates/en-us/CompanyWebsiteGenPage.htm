@@ -170,98 +170,98 @@
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div class="grid-with-subgrid-2col ">
-
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -290,98 +290,98 @@
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div class="grid-with-subgrid-2col ">
-
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -433,98 +433,98 @@
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmCreatedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmModifiedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
               {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-              </div>
-              <div class="grid-with-subgrid-2col ">
-
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmObjectIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmArchivedCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
               {%- if "PATCH" in scopes %}
-                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+                {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
                 {%- if "GET" in scopes %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
-                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
+                  {{ htmNameCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyWebsitePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -1012,7 +1012,7 @@
         </div>
 {%- endblock htmSuggestedCompanyWebsitePage %}
 
-{%- macro inputCreatedCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputCreatedCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_created">
   {%- endif %}
@@ -1037,11 +1037,11 @@
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmCreatedCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputCreatedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmCreatedCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputModifiedCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputModifiedCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_modified">
   {%- endif %}
@@ -1066,16 +1066,16 @@
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmModifiedCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputModifiedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmModifiedCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputObjectIdCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_objectId">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="ID"
                       label="ID"
                       help-text="
@@ -1104,11 +1104,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmObjectIdCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputObjectIdCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmObjectIdCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputObjectIdCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputArchivedCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputArchivedCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
@@ -1132,7 +1132,7 @@ A URL friendly unique ID for this object"
                   <sl-select
                       id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archived"
                       label="archived"
                       help-text="For archiving this record"
@@ -1167,16 +1167,16 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmArchivedCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputArchivedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmArchivedCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputNameCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputNameCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_name">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="service name"
                       label="service name"
                       help-text="
@@ -1205,16 +1205,16 @@ The service name. "
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmNameCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputNameCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmNameCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNameCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputDescriptionCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputDescriptionCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_description">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="service description"
                       label="service description"
                       help-text="
@@ -1243,16 +1243,16 @@ The service description. "
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmDescriptionCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputDescriptionCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmDescriptionCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDescriptionCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputUriCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputUriCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_uri">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="URI"
                       label="URI"
                       help-text="
@@ -1281,16 +1281,16 @@ The relative URI for this page. "
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmUriCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputUriCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmUriCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputUriCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputUrlCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputUrlCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_url">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="URL"
                       label="URL"
                       help-text="
@@ -1319,16 +1319,16 @@ The URL for this page. "
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmUrlCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputUrlCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmUrlCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputUrlCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputPageIdCompanyWebsitePage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputPageIdCompanyWebsitePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_pageId">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="Page ID"
                       label="Page ID"
                       help-text="
@@ -1357,6 +1357,6 @@ The ID for this page. "
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmPageIdCompanyWebsitePage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputPageIdCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmPageIdCompanyWebsitePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPageIdCompanyWebsitePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}

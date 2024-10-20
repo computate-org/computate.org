@@ -32,8 +32,14 @@ import io.vertx.pgclient.data.Point;
  *   SearchPage:
  *     Page: CompanyCoursePage
  *     ApiUri: /course
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
- * Role: SiteAdmin
  * PublicRead: true
  * 
  * AName: a course

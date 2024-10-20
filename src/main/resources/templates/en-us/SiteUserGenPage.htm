@@ -169,56 +169,36 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmPkSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmCreatedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmModifiedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -228,24 +208,16 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='PATCH', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -272,56 +244,36 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmPkSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmCreatedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmModifiedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -331,24 +283,16 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='POST', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -398,56 +342,36 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmPkSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmPkSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmPkSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmObjectIdSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmCreatedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmCreatedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmCreatedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmModifiedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmModifiedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmModifiedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmArchivedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -457,24 +381,16 @@
               </div>
               <div class="grid-with-subgrid-2col ">
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeArchivedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
 
-              {%- if "PATCH" in scopes %}
-                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=true, roleForReadBool=true) }}
+              {%- if userKey in siteUser_.userKeys %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
               {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=true) }}
-                {%- else %}
-                  {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='Page', roleForWriteBool=false, roleForReadBool=false) }}
-                {%- endif %}
+                {{ htmSeeDeletedSiteUserPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
               {%- endif %}
               </div>
             </sl-details>
@@ -961,7 +877,7 @@
         </div>
 {%- endblock htmSuggestedSiteUserPage %}
 
-{%- macro inputPkSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputPkSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_pk">
   {%- endif %}
@@ -995,16 +911,16 @@ The primary key of this object in the database"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmPkSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputPkSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmPkSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPkSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputObjectIdSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputObjectIdSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_objectId">
   {%- endif %}
                   <sl-input
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="ID"
                       label="ID"
                       help-text="
@@ -1033,11 +949,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmObjectIdSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputObjectIdSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmObjectIdSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputObjectIdSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputCreatedSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputCreatedSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_created">
   {%- endif %}
@@ -1062,11 +978,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmCreatedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputCreatedSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmCreatedSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputModifiedSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputModifiedSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_modified">
   {%- endif %}
@@ -1091,11 +1007,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmModifiedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputModifiedSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmModifiedSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputArchivedSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputArchivedSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
@@ -1119,7 +1035,7 @@ A URL friendly unique ID for this object"
                   <sl-select
                       id="{{classApiMethodMethod}}_archived"
   {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="archive"
                       label="archive"
                       help-text="For archiving this record"
@@ -1154,11 +1070,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmArchivedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputArchivedSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmArchivedSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputSeeArchivedSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputSeeArchivedSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_seeArchived">
   {%- endif %}
@@ -1170,7 +1086,7 @@ A URL friendly unique ID for this object"
                   <sl-select
                       id="{{classApiMethodMethod}}_seeArchived"
   {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="see archived"
                       label="see archived"
                       help-text="A user field allowing a user to see archived records"
@@ -1204,11 +1120,11 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmSeeArchivedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputSeeArchivedSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmSeeArchivedSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputSeeArchivedSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 
-{%- macro inputSeeDeletedSiteUserPage(classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) %}
+{%- macro inputSeeDeletedSiteUserPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_seeDeleted">
   {%- endif %}
@@ -1220,7 +1136,7 @@ A URL friendly unique ID for this object"
                   <sl-select
                       id="{{classApiMethodMethod}}_seeDeleted"
   {%- endif %}
-                      {% if roleForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
                       placeholder="see deleted"
                       label="see deleted"
                       help-text="A user field allowing a user to see deleted records"
@@ -1254,6 +1170,6 @@ A URL friendly unique ID for this object"
   {%- endif %}
 {%- endmacro %}
 
-{%- macro htmSeeDeletedSiteUserPage(classApiMethodMethod, roleForWriteBool=false, roleForReadBool=false) %}
-                            {{ inputSeeDeletedSiteUserPage(classApiMethodMethod=classApiMethodMethod, roleForWrite=roleForWrite, roleForRead=roleForRead) }}
+{%- macro htmSeeDeletedSiteUserPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputSeeDeletedSiteUserPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}

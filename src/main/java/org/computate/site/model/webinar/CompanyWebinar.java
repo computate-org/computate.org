@@ -41,9 +41,15 @@ import io.vertx.pgclient.data.Polygon;
  *   SearchPage:
  *     Page: CompanyWebinarPage
  *     ApiUri: /webinar
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
  * SearchPagePublicRead: true
- * Role: SiteAdmin
  * 
  * AName: a webinar
  * PluralName: webinars

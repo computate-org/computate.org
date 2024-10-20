@@ -31,8 +31,14 @@ import io.vertx.pgclient.data.Point;
  *     Page: CompanyEventPage
  *     ApiUri: /event
  *     PublicRead: true
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
- * Role: SiteAdmin
  * PublicRead: true
  * 
  * AName: an event

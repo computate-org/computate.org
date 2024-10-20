@@ -43,8 +43,13 @@ import io.vertx.core.json.JsonObject;
  *   SearchPage:
  *     Page: IotServicePage
  *     ApiUri: /iot-service
- * 
- * Role: SiteAdmin
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
  * AName: an IoT service
  * PluralName: IoT services

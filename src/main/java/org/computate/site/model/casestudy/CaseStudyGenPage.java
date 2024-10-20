@@ -509,7 +509,7 @@ public class CaseStudyGenPage extends CaseStudyGenPageGen<BaseResultPage> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-solid fa-address-card\"></i>");
+      c.o("<i class=\"fa-solid fa-file-invoice\"></i>");
   }
 
   protected void _pageUriCaseStudy(Wrap<String> c) {

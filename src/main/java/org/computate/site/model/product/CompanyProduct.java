@@ -3,6 +3,7 @@ package org.computate.site.model.product;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
 
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,9 +37,15 @@ import io.vertx.pgclient.data.Point;
  *     ApiUri: /download/product
  *     ApiMediaType200: application/zip
  *     Role: User
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
  * PublicRead: true
- * Role: SiteAdmin
  * 
  * AName: a product
  * PluralName: products
@@ -74,6 +81,19 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * Facet: true
    */
   protected void _description(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: price
+   * Description: The price of the product per developer. 
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   */
+  protected void _price(Wrap<BigDecimal> w) {
   }
 
 	/**

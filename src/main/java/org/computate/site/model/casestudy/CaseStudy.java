@@ -27,13 +27,19 @@ import io.vertx.pgclient.data.Point;
  *   SearchPage:
  *     Page: CaseStudyPage
  *     ApiUri: /case-study
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
- * Role: SiteAdmin
  * PublicRead: true
  * 
  * AName: a case study
  * PluralName: case studies
- * Icon: <i class="fa-solid fa-address-card"></i>
+ * Icon: <i class="fa-solid fa-file-invoice"></i>
  */
 public class CaseStudy extends CaseStudyGen<BaseResult> {
 

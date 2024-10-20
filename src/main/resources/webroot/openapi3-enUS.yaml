@@ -540,9 +540,6 @@ paths:
     patch:
       operationId: patchCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -596,9 +593,6 @@ paths:
     post:
       operationId: postCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -621,9 +615,6 @@ paths:
     put:
       operationId: putimportCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -883,9 +874,6 @@ paths:
     patch:
       operationId: patchCaseStudy
       x-vertx-event-bus: computate.org-enUS-CaseStudy
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -939,9 +927,6 @@ paths:
     post:
       operationId: postCaseStudy
       x-vertx-event-bus: computate.org-enUS-CaseStudy
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -964,9 +949,6 @@ paths:
     put:
       operationId: putimportCaseStudy
       x-vertx-event-bus: computate.org-enUS-CaseStudy
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1584,9 +1566,6 @@ paths:
     patch:
       operationId: patchCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1640,9 +1619,6 @@ paths:
     post:
       operationId: postCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1665,9 +1641,6 @@ paths:
     put:
       operationId: putimportCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2285,9 +2258,6 @@ paths:
     patch:
       operationId: patchCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2341,9 +2311,6 @@ paths:
     post:
       operationId: postCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2366,9 +2333,6 @@ paths:
     put:
       operationId: putimportCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4631,9 +4595,6 @@ paths:
     patch:
       operationId: patchCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4687,9 +4648,6 @@ paths:
     post:
       operationId: postCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4712,9 +4670,6 @@ paths:
     put:
       operationId: putimportCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -5508,9 +5463,6 @@ paths:
     patch:
       operationId: patchCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -5564,9 +5516,6 @@ paths:
     post:
       operationId: postCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -5589,9 +5538,6 @@ paths:
     put:
       operationId: putimportCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6209,9 +6155,6 @@ paths:
     patch:
       operationId: patchCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6265,9 +6208,6 @@ paths:
     post:
       operationId: postCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6290,9 +6230,6 @@ paths:
     put:
       operationId: putimportCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6735,9 +6672,6 @@ paths:
     get:
       operationId: searchCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6913,9 +6847,6 @@ paths:
     patch:
       operationId: patchCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6969,9 +6900,6 @@ paths:
     post:
       operationId: postCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6994,9 +6922,6 @@ paths:
     put:
       operationId: putimportCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7051,9 +6976,6 @@ paths:
     get:
       operationId: getCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7084,9 +7006,6 @@ paths:
     get:
       operationId: searchpageCompanyWebinarId
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7620,9 +7539,6 @@ paths:
     patch:
       operationId: patchCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7676,9 +7592,6 @@ paths:
     post:
       operationId: postCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7701,9 +7614,6 @@ paths:
     put:
       operationId: putimportCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -8321,9 +8231,6 @@ paths:
     patch:
       operationId: patchSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -8377,9 +8284,6 @@ paths:
     post:
       operationId: postSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -8402,9 +8306,6 @@ paths:
     put:
       operationId: putimportSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -10528,6 +10429,8 @@ components:
                 properties:
                   name:
                     type: string
+                  authorName:
+                    type: string
                   description:
                     type: string
                   pageId:
@@ -10560,6 +10463,13 @@ components:
             removeName:
               type: string
             removeAllName:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
               type: string
             setDescription:
               type: string
@@ -10649,6 +10559,13 @@ components:
               type: string
             removeAllName:
               type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
             setDescription:
               type: string
               nullable: true
@@ -10732,6 +10649,8 @@ components:
           properties:
             name:
               type: string
+            authorName:
+              type: string
             description:
               type: string
             pageId:
@@ -10759,6 +10678,8 @@ components:
         - type: object
           properties:
             name:
+              type: string
+            authorName:
               type: string
             description:
               type: string
@@ -10793,6 +10714,8 @@ components:
                 properties:
                   name:
                     type: string
+                  authorName:
+                    type: string
                   description:
                     type: string
                   pageId:
@@ -10821,6 +10744,8 @@ components:
           properties:
                   name:
                     type: string
+                  authorName:
+                    type: string
                   description:
                     type: string
                   pageId:
@@ -10848,6 +10773,8 @@ components:
         - type: object
           properties:
             name:
+              type: string
+            authorName:
               type: string
             description:
               type: string
@@ -14162,6 +14089,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -14209,6 +14138,13 @@ components:
             removeDescription:
               type: string
             removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
               type: string
             setPageId:
               type: string
@@ -14333,6 +14269,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -14446,6 +14389,8 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
             resourceUri:
@@ -14483,6 +14428,8 @@ components:
             name:
               type: string
             description:
+              type: string
+            price:
               type: string
             pageId:
               type: string
@@ -14527,6 +14474,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -14565,6 +14514,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
                   resourceUri:
@@ -14602,6 +14553,8 @@ components:
             name:
               type: string
             description:
+              type: string
+            price:
               type: string
             pageId:
               type: string
@@ -14654,6 +14607,8 @@ components:
                   name:
                     type: string
                   description:
+                    type: string
+                  price:
                     type: string
                   pageId:
                     type: string

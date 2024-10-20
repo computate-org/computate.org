@@ -14,8 +14,7 @@ import org.computate.site.request.SiteRequest;
  * Page: true
  * SuperPage: BaseModelPage
  * Indexed: true
- * SqlOrder: 1
- * Order: 3
+ * Order: 1
  * 
  * ApiTag: User
  * ApiUri: /api/user
@@ -29,16 +28,17 @@ import org.computate.site.request.SiteRequest;
  *     Page: SiteUserPage
  *     PageSuper: BaseModelPage
  *     ApiUri: /user
+ * AuthDefaultClient:
+ *   GET:
+ *   PATCH:
  * 
  * Keyword: classSimpleNameSiteUser
- * Role: SiteAdmin
  * Filter: userId
  * 
  * AName: a site user
  * Icon: <i class="fa-duotone fa-solid fa-user-gear"></i>
  * 
- * RoleUser: true
- * Role: SiteAdmin
+ * AuthUser: true
  * Description: A user record for each site user
  */
 public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUser {

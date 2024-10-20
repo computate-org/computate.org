@@ -1,4 +1,23 @@
 
+CREATE TABLE IF NOT EXISTS CompanyWebinar();
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS description text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pageId text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS resourceUri text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS templateUri text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS userUri text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlAmericas text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlApac text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlEmea text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS uri text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS url text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS inheritPk text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS created timestamp with time zone;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS archived boolean;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS sessionId text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS userKey bigint;
+
 CREATE TABLE IF NOT EXISTS WeatherObserved();
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS name text;
 ALTER TABLE WeatherObserved ADD COLUMN IF NOT EXISTS description text;
@@ -74,25 +93,6 @@ ALTER TABLE IotService ADD COLUMN IF NOT EXISTS created timestamp with time zone
 ALTER TABLE IotService ADD COLUMN IF NOT EXISTS archived boolean;
 ALTER TABLE IotService ADD COLUMN IF NOT EXISTS sessionId text;
 ALTER TABLE IotService ADD COLUMN IF NOT EXISTS userKey bigint;
-
-CREATE TABLE IF NOT EXISTS CompanyWebinar();
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS name text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS description text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pageId text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS resourceUri text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS templateUri text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS userUri text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlAmericas text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlApac text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlEmea text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS uri text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS url text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pk bigserial primary key;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS inheritPk text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS created timestamp with time zone;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS archived boolean;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS sessionId text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS userKey bigint;
 
 CREATE TABLE IF NOT EXISTS SiteUser();
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userId text;

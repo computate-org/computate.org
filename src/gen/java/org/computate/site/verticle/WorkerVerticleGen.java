@@ -50,7 +50,7 @@ import io.vertx.core.json.JsonArray;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.verticle.WorkerVerticle">Find the class WorkerVerticle in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.verticle.WorkerVerticle">Find the class WorkerVerticle in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -106,6 +106,9 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 
 	public static final String configureKafkaSuccess1 = "The Kafka producer was initialized successfully. ";
 	public static final String configureKafkaSuccess = configureKafkaSuccess1;
+
+	public static final String authorizeDataFail1 = " Adding Keycloak authorization resources, policies, and permissions failed. ";
+	public static final String authorizeDataFail = authorizeDataFail1;
 
 	public static final String importDataSkip1 = "The data import is disabled. ";
 	public static final String importDataSkip = importDataSkip1;
@@ -250,7 +253,7 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 		return sb.toString();
 	}
 
-	public static final String[] WorkerVerticleVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureSharedWorkerExecutorFail1, configureSharedWorkerExecutorComplete1, configureKafkaSuccess1, importDataSkip1 };
+	public static final String[] WorkerVerticleVals = new String[] { configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureSharedWorkerExecutorFail1, configureSharedWorkerExecutorComplete1, configureKafkaSuccess1, authorizeDataFail1, importDataSkip1 };
 
 	public static final String CLASS_SIMPLE_NAME = "WorkerVerticle";
 

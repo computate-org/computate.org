@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.math.BigDecimal;
 import java.lang.Integer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
@@ -59,7 +60,7 @@ import io.vertx.core.json.JsonObject;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct">Find the class CompanyProduct in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct">Find the class CompanyProduct in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -144,12 +145,6 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>Role.enUS: SiteAdmin</h2>
- * <p>
- * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this CompanyProduct API. 
- * It's possible to reconfigure the roles required to access the CompanyProduct API by configuring an environment variable like this: 
- * </p>
- * <pre>AUTH_ROLE_REQUIRED_CompanyProduct: ["SiteAdmin"]</pre>
  * <h2>AName.enUS: a product</h2>
  * <p>This class contains a comment <b>"AName.enUS: a product"</b>, which identifies the language context to describe a CompanyProduct as "a product". 
  * </p>
@@ -317,6 +312,83 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 	public String sqlDescription() {
 		return description;
+	}
+
+	///////////
+	// price //
+	///////////
+
+
+	/**	 The entity price
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal price;
+
+	/**	<br> The entity price
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:price">Find the entity price in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _price(Wrap<BigDecimal> w);
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	@JsonIgnore
+	public void setPrice(String o) {
+		this.price = CompanyProduct.staticSetPrice(siteRequest_, o);
+	}
+	public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setPrice(Double o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Integer o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Number o) {
+		setPrice(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected CompanyProduct priceInit() {
+		Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
+		if(price == null) {
+			_price(priceWrap);
+			Optional.ofNullable(priceWrap.getO()).ifPresent(o -> {
+				setPrice(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static Double staticSearchPrice(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrPrice(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPrice(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchPrice(siteRequest_, CompanyProduct.staticSetPrice(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlPrice() {
+		return price;
 	}
 
 	////////////
@@ -974,6 +1046,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			try {
 				nameInit();
 				descriptionInit();
+				priceInit();
 				pageIdInit();
 				resourceUriInit();
 				templateUriInit();
@@ -1042,6 +1115,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return oCompanyProduct.name;
 			case "description":
 				return oCompanyProduct.description;
+			case "price":
+				return oCompanyProduct.price;
 			case "pageId":
 				return oCompanyProduct.pageId;
 			case "resourceUri":
@@ -1107,6 +1182,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSetName(siteRequest_, o);
 		case "description":
 			return CompanyProduct.staticSetDescription(siteRequest_, o);
+		case "price":
+			return CompanyProduct.staticSetPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyProduct.staticSetPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1147,6 +1224,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchName(siteRequest_, (String)o);
 		case "description":
 			return CompanyProduct.staticSearchDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyProduct.staticSearchPrice(siteRequest_, (BigDecimal)o);
 		case "pageId":
 			return CompanyProduct.staticSearchPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1187,6 +1266,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStrName(siteRequest_, (String)o);
 		case "description":
 			return CompanyProduct.staticSearchStrDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyProduct.staticSearchStrPrice(siteRequest_, (Double)o);
 		case "pageId":
 			return CompanyProduct.staticSearchStrPageId(siteRequest_, (String)o);
 		case "resourceUri":
@@ -1227,6 +1308,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchFqName(siteRequest_, o);
 		case "description":
 			return CompanyProduct.staticSearchFqDescription(siteRequest_, o);
+		case "price":
+			return CompanyProduct.staticSearchFqPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyProduct.staticSearchFqPageId(siteRequest_, o);
 		case "resourceUri":
@@ -1286,6 +1369,14 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					setDescription((String)val);
 				}
 				saves.add("description");
+				return val;
+			} else if("price".equals(varLower)) {
+				if(val instanceof String) {
+					setPrice((String)val);
+				} else if(val instanceof Number) {
+					setPrice(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("price");
 				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
@@ -1384,6 +1475,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					oCompanyProduct.setDescription(description);
 			}
 
+			if(saves.contains("price")) {
+				Double price = (Double)doc.get("price_docvalues_double");
+				if(price != null)
+					oCompanyProduct.setPrice(price);
+			}
+
 			if(saves.contains("pageId")) {
 				String pageId = (String)doc.get("pageId_docvalues_string");
 				if(pageId != null)
@@ -1461,6 +1558,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(description != null) {
 			doc.put("description_docvalues_string", description);
 		}
+		if(price != null) {
+			doc.put("price_docvalues_double", price.doubleValue());
+		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
@@ -1504,6 +1604,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1537,6 +1639,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
 			case "resourceUri":
@@ -1570,6 +1674,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "name";
 			case "description_docvalues_string":
 				return "description";
+			case "price_docvalues_double":
+				return "price";
 			case "pageId_docvalues_string":
 				return "pageId";
 			case "resourceUri_docvalues_string":
@@ -1624,6 +1730,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 		oCompanyProduct.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1652,6 +1759,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				apiRequest.addVars("name");
 			if(!Objects.equals(description, original.getDescription()))
 				apiRequest.addVars("description");
+			if(!Objects.equals(price, original.getPrice()) && price != null && original.getPrice() != null && price.compareTo(original.getPrice()) != 0)
+				apiRequest.addVars("price");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
 			if(!Objects.equals(resourceUri, original.getResourceUri()))
@@ -1687,6 +1796,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
@@ -1708,6 +1818,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	}
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
+	public static final String VAR_price = "price";
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_resourceUri = "resourceUri";
 	public static final String VAR_templateUri = "templateUri";
@@ -1734,6 +1845,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static List<String> varsFqCompanyProduct(List<String> vars) {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
+		vars.add(VAR_price);
 		vars.add(VAR_pageId);
 		vars.add(VAR_resourceUri);
 		vars.add(VAR_templateUri);
@@ -1752,6 +1864,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return CompanyProduct.varsRangeCompanyProduct(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyProduct(List<String> vars) {
+		vars.add(VAR_price);
 		vars.add(VAR_productNum);
 		BaseResult.varsRangeBaseResult(vars);
 		return vars;
@@ -1759,6 +1872,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 	public static final String DISPLAY_NAME_name = "product name";
 	public static final String DISPLAY_NAME_description = "product description";
+	public static final String DISPLAY_NAME_price = "price";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
@@ -1780,6 +1894,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_name;
 		case VAR_description:
 			return DISPLAY_NAME_description;
+		case VAR_price:
+			return DISPLAY_NAME_price;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
 		case VAR_resourceUri:
@@ -1813,6 +1929,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "The product name. ";
 		case VAR_description:
 			return "The product description. ";
+		case VAR_price:
+			return "The price of the product per developer. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 		case VAR_resourceUri:
@@ -1846,6 +1964,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_description:
 			return "String";
+		case VAR_price:
+			return "BigDecimal";
 		case VAR_pageId:
 			return "String";
 		case VAR_resourceUri:
@@ -1890,6 +2010,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_description:
 			return 3;
+		case VAR_price:
+			return 3;
 		case VAR_uri:
 			return 3;
 		case VAR_url:
@@ -1905,6 +2027,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return 1;
 		case VAR_description:
 			return 2;
+		case VAR_price:
+			return 3;
 		case VAR_uri:
 			return 3;
 		case VAR_url:

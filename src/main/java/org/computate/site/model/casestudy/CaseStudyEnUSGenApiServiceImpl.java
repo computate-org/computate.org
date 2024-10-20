@@ -1601,6 +1601,13 @@ public class CaseStudyEnUSGenApiServiceImpl extends BaseApiServiceImpl implement
 			page.persistForClass(CaseStudy.VAR_resourceUri, resourceUri);
 			page.persistForClass(CaseStudy.VAR_templateUri, templateUri);
 
+			page.persistForClass(CaseStudy.VAR_inheritPk, CaseStudy.staticSetInheritPk(siteRequest2, ctx.getString(CaseStudy.VAR_inheritPk)));
+			page.persistForClass(CaseStudy.VAR_created, CaseStudy.staticSetCreated(siteRequest2, ctx.getString(CaseStudy.VAR_created)));
+			page.persistForClass(CaseStudy.VAR_archived, CaseStudy.staticSetArchived(siteRequest2, ctx.getString(CaseStudy.VAR_archived)));
+			page.persistForClass(CaseStudy.VAR_sessionId, CaseStudy.staticSetSessionId(siteRequest2, ctx.getString(CaseStudy.VAR_sessionId)));
+			page.persistForClass(CaseStudy.VAR_userKey, CaseStudy.staticSetUserKey(siteRequest2, ctx.getString(CaseStudy.VAR_userKey)));
+			page.persistForClass(CaseStudy.VAR_objectId, CaseStudy.staticSetObjectId(siteRequest2, ctx.getString(CaseStudy.VAR_objectId)));
+			page.persistForClass(CaseStudy.VAR_id, CaseStudy.staticSetId(siteRequest2, ctx.getString(CaseStudy.VAR_id)));
 			page.persistForClass(CaseStudy.VAR_name, CaseStudy.staticSetName(siteRequest2, ctx.getString(CaseStudy.VAR_name)));
 			page.persistForClass(CaseStudy.VAR_authorName, CaseStudy.staticSetAuthorName(siteRequest2, ctx.getString(CaseStudy.VAR_authorName)));
 			page.persistForClass(CaseStudy.VAR_description, CaseStudy.staticSetDescription(siteRequest2, ctx.getString(CaseStudy.VAR_description)));
@@ -1610,13 +1617,6 @@ public class CaseStudyEnUSGenApiServiceImpl extends BaseApiServiceImpl implement
 			page.persistForClass(CaseStudy.VAR_uri, CaseStudy.staticSetUri(siteRequest2, ctx.getString(CaseStudy.VAR_uri)));
 			page.persistForClass(CaseStudy.VAR_url, CaseStudy.staticSetUrl(siteRequest2, ctx.getString(CaseStudy.VAR_url)));
 			page.persistForClass(CaseStudy.VAR_title, CaseStudy.staticSetTitle(siteRequest2, ctx.getString(CaseStudy.VAR_title)));
-			page.persistForClass(CaseStudy.VAR_inheritPk, CaseStudy.staticSetInheritPk(siteRequest2, ctx.getString(CaseStudy.VAR_inheritPk)));
-			page.persistForClass(CaseStudy.VAR_created, CaseStudy.staticSetCreated(siteRequest2, ctx.getString(CaseStudy.VAR_created)));
-			page.persistForClass(CaseStudy.VAR_archived, CaseStudy.staticSetArchived(siteRequest2, ctx.getString(CaseStudy.VAR_archived)));
-			page.persistForClass(CaseStudy.VAR_sessionId, CaseStudy.staticSetSessionId(siteRequest2, ctx.getString(CaseStudy.VAR_sessionId)));
-			page.persistForClass(CaseStudy.VAR_userKey, CaseStudy.staticSetUserKey(siteRequest2, ctx.getString(CaseStudy.VAR_userKey)));
-			page.persistForClass(CaseStudy.VAR_objectId, CaseStudy.staticSetObjectId(siteRequest2, ctx.getString(CaseStudy.VAR_objectId)));
-			page.persistForClass(CaseStudy.VAR_id, CaseStudy.staticSetId(siteRequest2, ctx.getString(CaseStudy.VAR_id)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

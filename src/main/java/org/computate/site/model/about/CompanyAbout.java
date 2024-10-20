@@ -27,8 +27,14 @@ import io.vertx.pgclient.data.Point;
  *   SearchPage:
  *     Page: CompanyAboutPage
  *     ApiUri: /about
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
- * Role: SiteAdmin
  * PublicRead: true
  * 
  * AName: an about page

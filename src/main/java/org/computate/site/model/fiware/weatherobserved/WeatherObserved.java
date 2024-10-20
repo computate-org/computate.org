@@ -39,8 +39,13 @@ import io.vertx.pgclient.data.Polygon;
  *   SearchPage:
  *     Page: WeatherObservedPage
  *     ApiUri: /weather-observed
- *
- * Role: SiteAdmin
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  *
  * AName: a weather observed device
  * Color: 2017-shaded-spruce

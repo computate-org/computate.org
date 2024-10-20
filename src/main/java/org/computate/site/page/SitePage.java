@@ -49,6 +49,13 @@ import io.vertx.core.Promise;
  *     Page: SitePagePage
  *     PageSuper: BaseResultPage
  *     ApiUri: /page
+ * AuthGroup:
+ *   SuperAdmin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     SuperAdmin:
  * 
  * AName: an article
  * Icon: <i class="fa-duotone fa-solid fa-newspaper"></i>
@@ -57,7 +64,6 @@ import io.vertx.core.Promise;
  * Sort.desc: lessonNum
  * 
  * PublicRead: true
- * Role: SiteAdmin
  * Description: Read the latest articles to learn more
  */
 public class SitePage extends SitePageGen<BaseResult> {

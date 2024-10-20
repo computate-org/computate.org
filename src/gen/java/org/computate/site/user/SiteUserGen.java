@@ -52,6 +52,8 @@ import org.computate.search.response.solr.SolrResponse;
  * </li><li>You can add a class comment "Rows: 100" if you wish the SiteUser API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </li><li>You can add a class comment "SqlOrder: " followed by an Integer to sort this class compared when generating the SQL code to create and drop tables. 
+ * The Order comment allows you do define which order the SQL code is generated. 
  * </li>
  * <h3>About the SiteUser class and it's generated class SiteUserGen&lt;BaseModel&gt;: </h3>extends SiteUserGen
  * <p>
@@ -59,7 +61,7 @@ import org.computate.search.response.solr.SolrResponse;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUser">Find the class SiteUser in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUser">Find the class SiteUser in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -102,11 +104,8 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>By adding a class comment "{@inheritDoc}", the SiteUser class will inherit the helpful inherited class comments from the super class SiteUserGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 3</h2>
- * <p>This class contains a comment <b>"Order: 3"</b>, which means this class will be sorted by the given number 3 ascending when code that relates to multiple classes at the same time is generated. 
- * </p>
- * <h2>SqlOrder: 1</h2>
- * <p>This class contains a comment <b>"SqlOrder: 1"</b>, which means this class will be sorted by the given number 1 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>Order: 1</h2>
+ * <p>This class contains a comment <b>"Order: 1"</b>, which means this class will be sorted by the given number 1 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -144,18 +143,6 @@ import org.computate.search.response.solr.SolrResponse;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>Role.enUS: SiteAdmin</h2>
- * <p>
- * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this SiteUser API. 
- * It's possible to reconfigure the roles required to access the SiteUser API by configuring an environment variable like this: 
- * </p>
- * <pre>AUTH_ROLE_REQUIRED_SiteUser: ["SiteAdmin"]</pre>
- * <h2>Role.enUS: SiteAdmin</h2>
- * <p>
- * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this SiteUser API. 
- * It's possible to reconfigure the roles required to access the SiteUser API by configuring an environment variable like this: 
- * </p>
- * <pre>AUTH_ROLE_REQUIRED_SiteUser: ["SiteAdmin"]</pre>
  * <h2>AName.enUS: a site user</h2>
  * <p>This class contains a comment <b>"AName.enUS: a site user"</b>, which identifies the language context to describe a SiteUser as "a site user". 
  * </p>

@@ -158,6 +158,11 @@
 
 		<dependency>
 			<groupId>org.computate</groupId>
+			<artifactId>computate-search</artifactId>
+			<version>${computate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.computate</groupId>
 			<artifactId>computate-vertx</artifactId>
 			<version>${computate.version}</version>
 		</dependency>

@@ -173,7 +173,7 @@ import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
 import org.computate.site.user.SiteUserEnUSGenApiService;
-import org.computate.site.user.SiteUserEnUSGenApiServiceImpl;
+import org.computate.site.user.SiteUserEnUSApiServiceImpl;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
@@ -182,12 +182,12 @@ import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.casestudy.CaseStudyEnUSGenApiService;
 import org.computate.site.model.casestudy.CaseStudyEnUSApiServiceImpl;
 import org.computate.site.model.casestudy.CaseStudy;
-import org.computate.site.page.SitePageEnUSGenApiService;
-import org.computate.site.page.SitePageEnUSApiServiceImpl;
-import org.computate.site.page.SitePage;
 import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
 import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
 import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.page.SitePageEnUSApiServiceImpl;
+import org.computate.site.page.SitePage;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
@@ -1154,9 +1154,9 @@ public class MainVerticle extends AbstractVerticle {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("CompanyAbout","CaseStudy","SitePage","CompanyCourse","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","IotService","WeatherObserved");
-			List<String> publicResources = Arrays.asList("CompanyAbout","CaseStudy","SitePage","CompanyCourse","CompanyProduct","CompanyEvent","CompanyService","CompanyResearch","CompanyWebsite");
-			SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			List<String> authResources = Arrays.asList("CompanyAbout","CaseStudy","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","IotService","WeatherObserved");
+			List<String> publicResources = Arrays.asList("CompanyAbout","CaseStudy","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyService","CompanyResearch","CompanyWebsite");
+			SiteUserEnUSApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
@@ -1166,12 +1166,12 @@ public class MainVerticle extends AbstractVerticle {
 			CaseStudyEnUSApiServiceImpl apiCaseStudy = CaseStudyEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCaseStudy.configureUiResult(router, CaseStudy.class, SiteRequest.class, "/en-us/case-study");
 
-			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-			apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/article");
-
 			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = CompanyCourseEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCompanyCourse.configureUiResult(router, CompanyCourse.class, SiteRequest.class, "/en-us/course");
 			apiCompanyCourse.configureUserUiResult(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/course", "/en-us/user/course");
+
+			SitePageEnUSApiServiceImpl apiSitePage = SitePageEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+			apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/article");
 
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = CompanyProductEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 			apiCompanyProduct.configureUiResult(router, CompanyProduct.class, SiteRequest.class, "/en-us/product");
@@ -1275,7 +1275,7 @@ public class MainVerticle extends AbstractVerticle {
 								if("OPEN".equals(state)) {
 									if(githubUsername != null) {
 
-										SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+										SiteUserEnUSApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 										ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
 										List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
 										SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
@@ -1474,7 +1474,7 @@ public class MainVerticle extends AbstractVerticle {
 
 			router.getWithRegex("\\/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
 				String originalUri = handler.pathParam("uri");
-				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+				SiteUserEnUSApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 				ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
 				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 					try {
@@ -1567,7 +1567,7 @@ public class MainVerticle extends AbstractVerticle {
 			});
 
 			router.post("/ngsi-ld/subscription").handler(ctx -> {
-				SiteUserEnUSGenApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
+				SiteUserEnUSApiServiceImpl apiSiteUser = SiteUserEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 				apiSiteUser.listPUTImportSmartDataModel(ctx).onSuccess(a -> {
 					ctx.response().setStatusCode(200);
 					ctx.end();

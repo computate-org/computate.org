@@ -58,7 +58,7 @@ import io.vertx.core.json.JsonObject;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.casestudy.CaseStudy">Find the class CaseStudy in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.casestudy.CaseStudy">Find the class CaseStudy in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -140,12 +140,6 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>Role.enUS: SiteAdmin</h2>
- * <p>
- * This class contains a comment <b>"Role.enUS: SiteAdmin"</b>, which identifies the default role name "SiteAdmin" of the OAuth2/OpenID Connect user role required to access this CaseStudy API. 
- * It's possible to reconfigure the roles required to access the CaseStudy API by configuring an environment variable like this: 
- * </p>
- * <pre>AUTH_ROLE_REQUIRED_CaseStudy: ["SiteAdmin"]</pre>
  * <h2>AName.enUS: a case study</h2>
  * <p>This class contains a comment <b>"AName.enUS: a case study"</b>, which identifies the language context to describe a CaseStudy as "a case study". 
  * </p>
@@ -199,7 +193,7 @@ public abstract class CaseStudyGen<DEV> extends BaseResult {
 	public static final String SearchPage_enUS_Uri = "/case-study";
 	public static final String SearchPage_enUS_ImageUri = "/png/case-study-999.png";
 
-	public static final String CaseStudy_Icon = "<i class=\"fa-solid fa-address-card\"></i>";
+	public static final String CaseStudy_Icon = "<i class=\"fa-solid fa-file-invoice\"></i>";
 
 	//////////
 	// name //
