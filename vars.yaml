@@ -284,7 +284,7 @@ ENABLE_DATABASE: true
 # The namespace of the database in OpenShift. 
 DATABASE_NAMESPACE: postgres
 # The database secret containing the user password to connect to the database. 
-DATABASE_SECRET: postgres-pguser-smartvillage
+DATABASE_SECRET: "postgres-pguser-{{ SITE_SHORT_NAME }}"
 # The PostgreSQL database host name. 
 DATABASE_HOST: "postgres.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The PostgreSQL database port. 
