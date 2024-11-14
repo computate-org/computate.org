@@ -91,11 +91,20 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: course"</b>, which groups all of the OpenAPIs for CompanyCourse objects under the tag "course". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/course</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/course"</b>, which defines the base API URI for CompanyCourse objects as "/api/course" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiMethode: UserPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: courses"</b>, which groups all of the OpenAPIs for CompanyCourse objects under the tag "courses". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/course</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/course"</b>, which defines the base API URI for CompanyCourse objects as "/en-us/api/course" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -115,9 +124,9 @@ import io.vertx.core.json.JsonObject;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.course.CompanyCoursePage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.course.CompanyCoursePage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.course.CompanyCoursePage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -176,24 +185,30 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String CompanyCourse_Title_enUS = "courses";
 	public static final String CompanyCourse_ThePluralName_enUS = "the courses";
 	public static final String CompanyCourse_NoNameFound_enUS = "no course found";
-	public static final String CompanyCourse_ApiUri_enUS = "/api/course";
-	public static final String CompanyCourse_ApiUriSearchPage_enUS = "/course";
+	public static final String CompanyCourse_ApiUri_enUS = "/en-us/api/course";
+	public static final String CompanyCourse_ApiUriSearchPage_enUS = "/en-us/search/course";
 	public static final String CompanyCourse_OfName_enUS = "of course";
 	public static final String CompanyCourse_ANameAdjective_enUS = "a course";
 	public static final String CompanyCourse_NameAdjectiveSingular_enUS = "course";
 	public static final String CompanyCourse_NameAdjectivePlural_enUS = "courses";
-	public static final String Search_enUS_Uri = "/api/course";
-	public static final String Search_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String GET_enUS_Uri = "/api/course/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/course/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/course";
-	public static final String PATCH_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String POST_enUS_Uri = "/api/course";
-	public static final String POST_enUS_ImageUri = "/png/api/course-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/course-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/course-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/course";
-	public static final String SearchPage_enUS_ImageUri = "/png/course-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/course";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/course-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/course/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/course/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/course";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/course-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/course";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/course-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/course-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/course-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/course";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/course-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/course/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/course/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/shop/course/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/course/{objectId}-999.png";
+	public static final String UserPage_enUS_Uri = "/en-us/use/course/{objectId}";
+	public static final String UserPage_enUS_ImageUri = "/png/en-us/use/course/{objectId}-999.png";
 
 	public static final String CompanyCourse_Icon = "<i class=\"fa-regular fa-notebook\"></i>";
 

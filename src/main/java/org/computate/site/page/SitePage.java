@@ -29,42 +29,38 @@ import io.vertx.core.Promise;
 
 
 /**
- * Api: true
- * Page: true
- * PageTemplates: /en-us/article
- * SuperPage: BaseResultPage
- * Indexed: true
  * Order: 4
+ * Description: Read the latest articles to learn more
+ * AName: an article
+ * Icon: <i class="fa-duotone fa-solid fa-newspaper"></i>
+ * Sort.desc: courseNum
+ * Sort.desc: lessonNum
  * 
- * ApiTag: Page
- * ApiUri: /api/page
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/article
+ * EditPageUri: /en-us/edit/article/{objectId}
+ * DisplayPageUri: /en-us/view/article/{objectId}
+ * ApiUri: /en-us/api/article
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: SitePagePage
- *     PageSuper: BaseResultPage
- *     ApiUri: /page
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * AName: an article
- * Icon: <i class="fa-duotone fa-solid fa-newspaper"></i>
- * 
- * Sort.desc: courseNum
- * Sort.desc: lessonNum
- * 
- * PublicRead: true
- * Description: Read the latest articles to learn more
  */
 public class SitePage extends SitePageGen<BaseResult> {
 

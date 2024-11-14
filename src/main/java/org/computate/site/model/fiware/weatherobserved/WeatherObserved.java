@@ -17,18 +17,19 @@ import io.vertx.pgclient.data.Point;
 import io.vertx.pgclient.data.Polygon;
 
 /**
- * SmartDataModel: WeatherObserved - Weather - SmartCities
- * Fiware: true
- *
- * Api: true
- * Page: true
- * SuperPage: BaseModelPage
- * Indexed: true
  * Order: 12
  * Description: For keeping track of temperature, humidity, and other weather related details. 
- * ApiTag: weather observed
- * ApiUri: /api/weather-observed
- *
+ * AName: a weather observed device
+ * Color: 2017-shaded-spruce
+ * Icon: <i class="fa-regular fa-cloud-bolt-sun"></i>
+ * Rows: 100
+ * 
+ * SmartDataModel: WeatherObserved - Weather - SmartCities
+ * Fiware: true
+ * 
+ * SearchPageUri: /en-us/search/weather-observed
+ * EditPageUri: /en-us/edit/weather-observed/{objectId}
+ * ApiUri: /en-us/api/weather-observed
  * ApiMethod:
  *   Search:
  *   GET:
@@ -36,22 +37,20 @@ import io.vertx.pgclient.data.Polygon;
  *   POST:
  *   DELETE:
  *   PUTImport:
- *   SearchPage:
- *     Page: WeatherObservedPage
- *     ApiUri: /weather-observed
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- *
- * AName: a weather observed device
- * Color: 2017-shaded-spruce
- * Icon: <i class="fa-regular fa-cloud-bolt-sun"></i>
- * Rows: 100
- * Model: true
  **/
 public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 

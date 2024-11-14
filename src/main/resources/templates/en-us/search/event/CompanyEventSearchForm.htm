@@ -1,0 +1,504 @@
+
+{%- macro htmButton_patchCompanyEvent() %}<sl-button id="htmButton_patchCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+
+{%- macro htmFormButton_patchCompanyEvent() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_patchCompanyEvent"
+                >Modify event</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_patchCompanyEvent() %}
+        <sl-dialog id="patchCompanyEventDialog" label="Modify event">
+          <form id="htmForm_patchCompanyEvent" class="round-first-and-last-row-x-large ">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+          </form>
+          {{ htmFormButton_patchCompanyEvent() }}
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_postCompanyEvent() %}<sl-button id="htmButton_postCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+
+{%- macro htmFormButton_postCompanyEvent() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_postCompanyEvent"
+                >Create an event</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_postCompanyEvent() %}
+        <sl-dialog id="postCompanyEventDialog" label="Create an event">
+          <form id="htmForm_postCompanyEvent" class="round-first-and-last-row-x-large ">
+            <div class="">You can override any default values below: </div>
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+          </form>
+          {{ htmFormButton_postCompanyEvent() }}
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_deleteCompanyEvent() %}<sl-button id="htmButton_deleteCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+
+{%- macro htmFormButton_deleteCompanyEvent() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_deleteCompanyEvent"
+                >Delete event</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_deleteCompanyEvent() %}
+        <sl-dialog id="deleteCompanyEventDialog" label="Delete event">
+          <form id="htmForm_deleteCompanyEvent" class="round-first-and-last-row-x-large ">
+          </form>
+          {{ htmFormButton_deleteCompanyEvent() }}
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_putimportCompanyEvent() %}<sl-button id="htmButton_putimportCompanyEvent" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+
+{%- macro htmFormButton_putimportCompanyEvent() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_putimportCompanyEvent"
+                >Import events</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_putimportCompanyEvent() %}
+        <sl-dialog id="putimportCompanyEventDialog" label="Import events">
+          <form id="htmForm_putimportCompanyEvent" class="round-first-and-last-row-x-large ">
+            <div>
+              <sl-textarea
+                  class="PUTImport_searchList "
+                  style="height: 300px; "
+                  placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
+                  >
+              </sl-textarea>
+            </div>
+          </form>
+          {{ htmFormButton_putimportCompanyEvent() }}
+        </sl-dialog>
+{%- endmacro %}
+
+{%- macro htmButton_searchpageCompanyEvent() %}{%- endmacro %}
+
+{%- macro htmFormButton_searchpageCompanyEvent() %}
+            <sl-button slot="footer" type="submit" variant="primary"
+                id="htmFormButton_searchpageCompanyEvent"
+                >Search events</sl-button>
+{%- endmacro %}
+
+{%- macro htmForm_searchpageCompanyEvent() %}
+        <div id="searchpageCompanyEventDialog" label="Search events">
+          <div id="htmForm_searchpageCompanyEvent" class="round-first-and-last-row-x-large ">
+            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+              <div slot="summary">
+                <span>primary key, ID, created, modified, archive details</span>
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmCreatedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmModifiedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmObjectIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmArchivedCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmNameCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmNameCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmLocationCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDescriptionCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUriCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUriCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmUrlCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmUrlCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmPageIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmPageIdCompanyEventPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
+            </sl-details>
+          </div>
+        </div>
+{%- endmacro %}
+{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
+    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyEventGenPage"
+                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyEventGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyEventGenPage')); }); return false; ">
+                <i slot="prefix" class="fas fa-sync-alt "></i>
+                refresh
+              </sl-button>
+    {% endif %}
+    {% if resultCount > 0 %}
+              <sl-button id="refreshAllCompanyEventGenPage{{id}}"
+                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyEventGenPage{{id}}')); }); "
+                  >
+                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                Refresh all 
+              </sl-button>
+    {% endif %}
+  {% endif %}
+{% endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {%- if resultCount > 0 %}
+    {{ htmButton_patchCompanyEvent() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if id is defined %}
+      {{ htmButton_postCompanyEvent() }}
+    {%- else %}
+      {{ htmButton_postCompanyEvent() }}
+    {%- endif %}
+  {%- else %}
+    {{ htmButton_postCompanyEvent() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if id is defined %}
+      {{ htmButton_deleteCompanyEvent() }}
+    {%- else %}
+    {%- endif %}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {{ htmButton_putimportCompanyEvent() }}
+{%- endif %}
+
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {%- if resultCount > 0 %}
+    {{ htmForm_patchCompanyEvent() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if id is defined %}
+      {{ htmForm_postCompanyEvent() }}
+    {%- else %}
+      {{ htmForm_postCompanyEvent() }}
+    {%- endif %}
+  {%- else %}
+    {{ htmForm_postCompanyEvent() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if id is defined %}
+      {{ htmForm_deleteCompanyEvent() }}
+    {%- else %}
+    {%- endif %}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {{ htmForm_putimportCompanyEvent() }}
+{%- endif %}

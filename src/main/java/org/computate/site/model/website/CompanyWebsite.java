@@ -7,40 +7,37 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 10
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/website
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: See the live websites built with computate
+ * AName: a website
+ * PluralName: websites
+ * Icon: <i class="fa-regular fa-globe-pointer"></i>
+ * Sort.desc: websiteNum
  * 
- * ApiTag: website
- * ApiUri: /api/website
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/website
+ * EditPageUri: /en-us/edit/website/{objectId}
+ * DisplayPageUri: /en-us/view/website/{objectId}
+ * ApiUri: /en-us/api/website
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyWebsitePage
- *     ApiUri: /website
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: a website
- * PluralName: websites
- * Icon: <i class="fa-regular fa-globe-pointer"></i>
- * Sort.desc: websiteNum
  */
 public class CompanyWebsite extends CompanyWebsiteGen<BaseResult> {
 

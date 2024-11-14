@@ -13,6 +13,7 @@
     <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site.css"/>
 {% endblock htmStylesPageLayout %}
 
@@ -25,23 +26,6 @@
 {% if FONTAWESOME_KIT is defined %}
     {{ FONTAWESOME_KIT }}
 {% endif %}
-    <script>
-
-      function addGlow($input) {
-        $input.classList.add('glowSuccess');
-        $input.classList.remove('glowError');
-      }
-
-      function removeGlow($input) {
-        $input.classList.remove('glowSuccess');
-        $input.classList.remove('glowError');
-      }
-
-      function addError($input) {
-        $input.classList.remove('glowSuccess');
-        $input.classList.add('glowError');
-      }
-    </script>
     <script type="module">
       import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js';
     
@@ -105,6 +89,7 @@
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
 {% endblock htmScriptsPageLayout %}
 {% block htmScriptPageLayout %}
 {% endblock htmScriptPageLayout %}
@@ -122,7 +107,7 @@
         <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop margin-block-end-1rem ">
           <i slot="prefix" class="fas fa-xmark"></i>
         </sl-button>
-        <a id="img-keys-a" href="/">
+        <a href="/">
           <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
         </a>
         <div class="round-first-and-last-row-x-large margin-block-end-1rem">
@@ -135,7 +120,7 @@
             <div>{{ userFullName }}</div>
             <div>{{ userEmail }}</div>
             <div>
-              <sl-tooltip placement="right" content="see or change your user profile">
+              <sl-tooltip content="see or change your user profile">
                 <sl-button href="/user" label="see or change your user profile">
                   <i slot="prefix" class="fad fa-house-user"></i>
                   <span>my user page</span>
@@ -157,15 +142,15 @@
         </div>
         <div class="round-first-and-last-row-x-large">
           <sl-tooltip placement="right" content="Learn about our team, company, culture, and values. ">
-            <sl-button href="{{ SITE_BASE_URL }}/about">
+            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/about">
               <i class="fa-solid fa-address-card"></i>
               about
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="right" content="See computate use cases for real organizations. ">
-            <sl-button href="{{ SITE_BASE_URL }}/case-study">
+            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/use-case">
               <i class="fa-solid fa-file-invoice"></i>
-              case studies
+              use cases
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
@@ -181,7 +166,7 @@
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-            <sl-button href="{{ SITE_BASE_URL }}/product">
+            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/product">
               <i class="fa-regular fa-conveyor-belt"></i>
               products
             </sl-button>
@@ -193,7 +178,7 @@
             </sl-button>
           </sl-tooltip>
           <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
-            <sl-button href="{{ SITE_BASE_URL }}/webinar">
+            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/webinar">
               <i class="fa-regular fa-video"></i>
               webinars
             </sl-button>
@@ -246,7 +231,7 @@
         </header>
 {% endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}
-        <div class="pageContent w3-content ">
+        <div class="pageContent ">
           put stuff here
         </div>
 {% endblock htmBodyMiddlePageLayout %}
@@ -275,7 +260,7 @@
         <sl-button size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
           <div>
             <div>
-              <img src="{{ STATIC_BASE_URL }}{{ SITE_POWERED_BY_IMAGE_URI }}"/>
+              <i class="fa-kit fa-openshift fa-5x "></i>
             </div>
             <div>
               Powered by {{ SITE_POWERED_BY_NAME }}

@@ -29,10 +29,6 @@ import com.hubspot.jinjava.Jinjava;
  **/
 public class IotServiceEnUSApiServiceImpl extends IotServiceEnUSGenApiServiceImpl {
 
-	public IotServiceEnUSApiServiceImpl(Vertx vertx, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
-		super(vertx, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-	}
-
 	@Override
 	public Future<Void> persistIotService(IotService iotService, Boolean patch) {
 		Promise<Void> promise = Promise.promise();

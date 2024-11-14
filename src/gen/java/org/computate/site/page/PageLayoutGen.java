@@ -70,7 +70,7 @@ import io.vertx.core.Future;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout">Find the class PageLayout in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout">Find the class PageLayout in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -1785,6 +1785,80 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String staticSearchFqDefaultFieldListVars(SiteRequest siteRequest_, String o) {
 		return PageLayout.staticSearchDefaultFieldListVars(siteRequest_, PageLayout.staticSetDefaultFieldListVars(siteRequest_, o)).toString();
+	}
+
+	/////////////////////
+	// defaultSortVars //
+	/////////////////////
+
+
+	/**	 The entity defaultSortVars
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> defaultSortVars = new ArrayList<String>();
+
+	/**	<br> The entity defaultSortVars
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:defaultSortVars">Find the entity defaultSortVars in Solr</a>
+	 * <br>
+	 * @param l is the entity already constructed. 
+	 **/
+	protected abstract void _defaultSortVars(List<String> l);
+
+	public List<String> getDefaultSortVars() {
+		return defaultSortVars;
+	}
+
+	public void setDefaultSortVars(List<String> defaultSortVars) {
+		this.defaultSortVars = defaultSortVars;
+	}
+	public void setDefaultSortVars(String o) {
+		String l = PageLayout.staticSetDefaultSortVars(siteRequest_, o);
+		if(l != null)
+			addDefaultSortVars(l);
+	}
+	public static String staticSetDefaultSortVars(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public PageLayout addDefaultSortVars(String...objects) {
+		for(String o : objects) {
+			addDefaultSortVars(o);
+		}
+		return (PageLayout)this;
+	}
+	public PageLayout addDefaultSortVars(String o) {
+		if(o != null)
+			this.defaultSortVars.add(o);
+		return (PageLayout)this;
+	}
+	@JsonIgnore
+	public void setDefaultSortVars(JsonArray objects) {
+		defaultSortVars.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addDefaultSortVars(o);
+		}
+	}
+	protected PageLayout defaultSortVarsInit() {
+		_defaultSortVars(defaultSortVars);
+		return (PageLayout)this;
+	}
+
+	public static String staticSearchDefaultSortVars(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrDefaultSortVars(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqDefaultSortVars(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchDefaultSortVars(siteRequest_, PageLayout.staticSetDefaultSortVars(siteRequest_, o)).toString();
 	}
 
 	//////////////////////
@@ -3888,6 +3962,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				facetCountsInit();
 				paginationInit();
 				defaultFieldListVarsInit();
+				defaultSortVarsInit();
 				defaultStatsVarsInit();
 				defaultPivotVarsInit();
 				varsQInit();
@@ -4052,6 +4127,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.pagination;
 			case "defaultFieldListVars":
 				return oPageLayout.defaultFieldListVars;
+			case "defaultSortVars":
+				return oPageLayout.defaultSortVars;
 			case "defaultStatsVars":
 				return oPageLayout.defaultStatsVars;
 			case "defaultPivotVars":
@@ -4211,6 +4288,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetPagination(siteRequest_, o);
 		case "defaultFieldListVars":
 			return PageLayout.staticSetDefaultFieldListVars(siteRequest_, o);
+		case "defaultSortVars":
+			return PageLayout.staticSetDefaultSortVars(siteRequest_, o);
 		case "defaultStatsVars":
 			return PageLayout.staticSetDefaultStatsVars(siteRequest_, o);
 		case "defaultPivotVars":
@@ -4339,6 +4418,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchPagination(siteRequest_, (JsonObject)o);
 		case "defaultFieldListVars":
 			return PageLayout.staticSearchDefaultFieldListVars(siteRequest_, (String)o);
+		case "defaultSortVars":
+			return PageLayout.staticSearchDefaultSortVars(siteRequest_, (String)o);
 		case "defaultStatsVars":
 			return PageLayout.staticSearchDefaultStatsVars(siteRequest_, (String)o);
 		case "defaultPivotVars":
@@ -4467,6 +4548,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrPagination(siteRequest_, (String)o);
 		case "defaultFieldListVars":
 			return PageLayout.staticSearchStrDefaultFieldListVars(siteRequest_, (String)o);
+		case "defaultSortVars":
+			return PageLayout.staticSearchStrDefaultSortVars(siteRequest_, (String)o);
 		case "defaultStatsVars":
 			return PageLayout.staticSearchStrDefaultStatsVars(siteRequest_, (String)o);
 		case "defaultPivotVars":
@@ -4595,6 +4678,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqPagination(siteRequest_, o);
 		case "defaultFieldListVars":
 			return PageLayout.staticSearchFqDefaultFieldListVars(siteRequest_, o);
+		case "defaultSortVars":
+			return PageLayout.staticSearchFqDefaultSortVars(siteRequest_, o);
 		case "defaultStatsVars":
 			return PageLayout.staticSearchFqDefaultStatsVars(siteRequest_, o);
 		case "defaultPivotVars":
@@ -4705,6 +4790,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_facetCounts = "facetCounts";
 	public static final String VAR_pagination = "pagination";
 	public static final String VAR_defaultFieldListVars = "defaultFieldListVars";
+	public static final String VAR_defaultSortVars = "defaultSortVars";
 	public static final String VAR_defaultStatsVars = "defaultStatsVars";
 	public static final String VAR_defaultPivotVars = "defaultPivotVars";
 	public static final String VAR_varsQ = "varsQ";
@@ -4772,6 +4858,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_facetCounts = "";
 	public static final String DISPLAY_NAME_pagination = "";
 	public static final String DISPLAY_NAME_defaultFieldListVars = "";
+	public static final String DISPLAY_NAME_defaultSortVars = "";
 	public static final String DISPLAY_NAME_defaultStatsVars = "";
 	public static final String DISPLAY_NAME_defaultPivotVars = "";
 	public static final String DISPLAY_NAME_varsQ = "";
@@ -4875,6 +4962,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_pagination;
 		case VAR_defaultFieldListVars:
 			return DISPLAY_NAME_defaultFieldListVars;
+		case VAR_defaultSortVars:
+			return DISPLAY_NAME_defaultSortVars;
 		case VAR_defaultStatsVars:
 			return DISPLAY_NAME_defaultStatsVars;
 		case VAR_defaultPivotVars:

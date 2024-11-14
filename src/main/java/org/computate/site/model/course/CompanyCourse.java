@@ -11,40 +11,37 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 4
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/course
- * UserPageTemplates: /en-us/user/course
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: Take an exciting hands-on course on your own computer with computate
+ * AName: a course
+ * Icon: <i class="fa-regular fa-notebook"></i>
+ * Sort.asc: courseNum
  * 
- * ApiTag: course
- * ApiUri: /api/course
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/course
+ * EditPageUri: /en-us/edit/course/{objectId}
+ * DisplayPageUri: /en-us/shop/course/{objectId}
+ * UserPageUri: /en-us/use/course/{objectId}
+ * ApiUri: /en-us/api/course
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyCoursePage
- *     ApiUri: /course
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: a course
- * Icon: <i class="fa-regular fa-notebook"></i>
- * Sort.asc: courseNum
  */
 public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 

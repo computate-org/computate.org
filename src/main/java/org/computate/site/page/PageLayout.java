@@ -33,6 +33,7 @@ import io.vertx.ext.web.api.service.ServiceRequest;
 /**
  * Keyword: classSimpleNamePageLayout
  * Description: Defines variables to be used when rendering Handlebars template pages
+ * PageTemplate: en-us/PageLayout.htm
  * Promise: true
  **/
 public class PageLayout extends PageLayoutGen<Object> {
@@ -241,6 +242,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _defaultFieldListVars(List<String> l) {
+	}
+
+	protected void _defaultSortVars(List<String> l) {
 	}
 
 	protected void _defaultStatsVars(List<String> l) {

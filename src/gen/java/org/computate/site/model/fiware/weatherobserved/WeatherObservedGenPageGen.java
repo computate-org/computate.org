@@ -1,7 +1,7 @@
 package org.computate.site.model.fiware.weatherobserved;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these WeatherObservedGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class WeatherObservedGenPageGen into the class WeatherObservedGenPage. 
  * </li>
- * <h3>About the WeatherObservedGenPage class and it's generated class WeatherObservedGenPageGen&lt;BaseModelPage&gt;: </h3>extends WeatherObservedGenPageGen
+ * <h3>About the WeatherObservedGenPage class and it's generated class WeatherObservedGenPageGen&lt;PageLayout&gt;: </h3>extends WeatherObservedGenPageGen
  * <p>
  * This Java class extends a generated Java class WeatherObservedGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends WeatherObservedGenPageGen<BaseModelPage>
- * <p>This <code>class WeatherObservedGenPage extends WeatherObservedGenPageGen&lt;BaseModelPage&gt;</code>, which means it extends a newly generated WeatherObservedGenPageGen. 
- * The generated <code>class WeatherObservedGenPageGen extends BaseModelPage</code> which means that WeatherObservedGenPage extends WeatherObservedGenPageGen which extends BaseModelPage. 
+ * extends WeatherObservedGenPageGen<PageLayout>
+ * <p>This <code>class WeatherObservedGenPage extends WeatherObservedGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated WeatherObservedGenPageGen. 
+ * The generated <code>class WeatherObservedGenPageGen extends PageLayout</code> which means that WeatherObservedGenPage extends WeatherObservedGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
+public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObservedGenPage.class);
 
 	////////////////////////////////
@@ -229,102 +229,102 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		return WeatherObservedGenPage.staticSearchListWeatherObserved(siteRequest_, WeatherObservedGenPage.staticSetListWeatherObserved(siteRequest_, o)).toString();
 	}
 
-	//////////////////////////
-	// weatherObservedCount //
-	//////////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity weatherObservedCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer weatherObservedCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity weatherObservedCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:weatherObservedCount">Find the entity weatherObservedCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _weatherObservedCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getWeatherObservedCount() {
-		return weatherObservedCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setWeatherObservedCount(Integer weatherObservedCount) {
-		this.weatherObservedCount = weatherObservedCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setWeatherObservedCount(String o) {
-		this.weatherObservedCount = WeatherObservedGenPage.staticSetWeatherObservedCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = WeatherObservedGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetWeatherObservedCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected WeatherObservedGenPage weatherObservedCountInit() {
-		Wrap<Integer> weatherObservedCountWrap = new Wrap<Integer>().var("weatherObservedCount");
-		if(weatherObservedCount == null) {
-			_weatherObservedCount(weatherObservedCountWrap);
-			Optional.ofNullable(weatherObservedCountWrap.getO()).ifPresent(o -> {
-				setWeatherObservedCount(o);
+	protected WeatherObservedGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (WeatherObservedGenPage)this;
 	}
 
-	public static Integer staticSearchWeatherObservedCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrWeatherObservedCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqWeatherObservedCount(SiteRequest siteRequest_, String o) {
-		return WeatherObservedGenPage.staticSearchWeatherObservedCount(siteRequest_, WeatherObservedGenPage.staticSetWeatherObservedCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return WeatherObservedGenPage.staticSearchResultCount(siteRequest_, WeatherObservedGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	//////////////////////
-	// weatherObserved_ //
-	//////////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity weatherObserved_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected WeatherObserved weatherObserved_;
+	protected WeatherObserved result;
 
-	/**	<br> The entity weatherObserved_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:weatherObserved_">Find the entity weatherObserved_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _weatherObserved_(Wrap<WeatherObserved> w);
+	protected abstract void _result(Wrap<WeatherObserved> w);
 
-	public WeatherObserved getWeatherObserved_() {
-		return weatherObserved_;
+	public WeatherObserved getResult() {
+		return result;
 	}
 
-	public void setWeatherObserved_(WeatherObserved weatherObserved_) {
-		this.weatherObserved_ = weatherObserved_;
+	public void setResult(WeatherObserved result) {
+		this.result = result;
 	}
-	public static WeatherObserved staticSetWeatherObserved_(SiteRequest siteRequest_, String o) {
+	public static WeatherObserved staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected WeatherObservedGenPage weatherObserved_Init() {
-		Wrap<WeatherObserved> weatherObserved_Wrap = new Wrap<WeatherObserved>().var("weatherObserved_");
-		if(weatherObserved_ == null) {
-			_weatherObserved_(weatherObserved_Wrap);
-			Optional.ofNullable(weatherObserved_Wrap.getO()).ifPresent(o -> {
-				setWeatherObserved_(o);
+	protected WeatherObservedGenPage resultInit() {
+		Wrap<WeatherObserved> resultWrap = new Wrap<WeatherObserved>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (WeatherObservedGenPage)this;
@@ -508,7 +508,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseWeatherObservedGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -525,8 +525,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 			try {
 				searchListWeatherObserved_Init();
 				listWeatherObservedInit();
-				weatherObservedCountInit();
-				weatherObserved_Init();
+				resultCountInit();
+				resultInit();
 				pkInit();
 				idInit();
 				pageUriWeatherObservedInit();
@@ -552,7 +552,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 	/////////////////
 
 	public void siteRequestWeatherObservedGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -587,10 +587,10 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 				return oWeatherObservedGenPage.searchListWeatherObserved_;
 			case "listWeatherObserved":
 				return oWeatherObservedGenPage.listWeatherObserved;
-			case "weatherObservedCount":
-				return oWeatherObservedGenPage.weatherObservedCount;
-			case "weatherObserved_":
-				return oWeatherObservedGenPage.weatherObserved_;
+			case "resultCount":
+				return oWeatherObservedGenPage.resultCount;
+			case "result":
+				return oWeatherObservedGenPage.result;
 			case "pk":
 				return oWeatherObservedGenPage.pk;
 			case "id":
@@ -598,7 +598,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 			case "pageUriWeatherObserved":
 				return oWeatherObservedGenPage.pageUriWeatherObserved;
 			default:
-				return super.obtainBaseModelPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -623,7 +623,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		WeatherObservedGenPage oWeatherObservedGenPage = (WeatherObservedGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -638,8 +638,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listWeatherObserved":
 			return WeatherObservedGenPage.staticSetListWeatherObserved(siteRequest_, o);
-		case "weatherObservedCount":
-			return WeatherObservedGenPage.staticSetWeatherObservedCount(siteRequest_, o);
+		case "resultCount":
+			return WeatherObservedGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return WeatherObservedGenPage.staticSetPk(siteRequest_, o);
 		case "id":
@@ -647,7 +647,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSetPageUriWeatherObserved(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSetBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -662,8 +662,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listWeatherObserved":
 			return WeatherObservedGenPage.staticSearchListWeatherObserved(siteRequest_, (JsonArray)o);
-		case "weatherObservedCount":
-			return WeatherObservedGenPage.staticSearchWeatherObservedCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return WeatherObservedGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
@@ -671,7 +671,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchPageUriWeatherObserved(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -686,8 +686,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listWeatherObserved":
 			return WeatherObservedGenPage.staticSearchStrListWeatherObserved(siteRequest_, (String)o);
-		case "weatherObservedCount":
-			return WeatherObservedGenPage.staticSearchStrWeatherObservedCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return WeatherObservedGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
@@ -695,7 +695,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchStrPageUriWeatherObserved(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -710,8 +710,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listWeatherObserved":
 			return WeatherObservedGenPage.staticSearchFqListWeatherObserved(siteRequest_, o);
-		case "weatherObservedCount":
-			return WeatherObservedGenPage.staticSearchFqWeatherObservedCount(siteRequest_, o);
+		case "resultCount":
+			return WeatherObservedGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
@@ -719,7 +719,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchFqPageUriWeatherObserved(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -736,16 +736,16 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 	public static final String CLASS_SIMPLE_NAME = "WeatherObservedGenPage";
 	public static final String VAR_searchListWeatherObserved_ = "searchListWeatherObserved_";
 	public static final String VAR_listWeatherObserved = "listWeatherObserved";
-	public static final String VAR_weatherObservedCount = "weatherObservedCount";
-	public static final String VAR_weatherObserved_ = "weatherObserved_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriWeatherObserved = "pageUriWeatherObserved";
 
 	public static final String DISPLAY_NAME_searchListWeatherObserved_ = "";
 	public static final String DISPLAY_NAME_listWeatherObserved = "";
-	public static final String DISPLAY_NAME_weatherObservedCount = "";
-	public static final String DISPLAY_NAME_weatherObserved_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriWeatherObserved = "";
@@ -759,10 +759,10 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 			return DISPLAY_NAME_searchListWeatherObserved_;
 		case VAR_listWeatherObserved:
 			return DISPLAY_NAME_listWeatherObserved;
-		case VAR_weatherObservedCount:
-			return DISPLAY_NAME_weatherObservedCount;
-		case VAR_weatherObserved_:
-			return DISPLAY_NAME_weatherObserved_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
 		case VAR_id:
@@ -770,7 +770,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends BaseModelPage {
 		case VAR_pageUriWeatherObserved:
 			return DISPLAY_NAME_pageUriWeatherObserved;
 		default:
-			return BaseModelPage.displayNameBaseModelPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

@@ -1,7 +1,10 @@
 package org.computate.site.model.course;
 
+import org.computate.site.model.course.CompanyCourse;
+import java.lang.String;
+import java.math.BigDecimal;
+import java.lang.Integer;
 import org.computate.site.page.PageLayout;
-import org.computate.site.result.BaseResultPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -30,7 +33,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Arrays;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.util.Objects;
@@ -47,7 +49,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage> {
+public class CompanyCourseGenPage extends CompanyCourseGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +391,16 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListCompanyCourse_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = CompanyCourse.searchVarCompanyCourse(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListCompanyCourse_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,18 +458,21 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
     Optional.ofNullable(searchListCompanyCourse_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyCourseCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListCompanyCourse_ == null ? 0 : searchListCompanyCourse_.size());
   }
 
-  protected void _companyCourse_(Wrap<CompanyCourse> w) {
-    if(companyCourseCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<CompanyCourse> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyCourse_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyCourse_ != null)
-      w.o(companyCourse_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -472,11 +487,11 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyCourse_ != null && companyCourse_.getObjectTitle() != null)
-      c.o(companyCourse_.getObjectTitle());
-    else if(companyCourse_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("courses");
-    else if(searchListCompanyCourse_ == null || companyCourseCount == 0)
+    else if(searchListCompanyCourse_ == null || resultCount == 0)
       c.o("no course found");
     else
       c.o("courses");
@@ -484,12 +499,12 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/course");
+    c.o("/en-us/search/course");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/course");
+    c.o("/en-us/api/course");
   }
 
   @Override
@@ -504,7 +519,7 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/course-999.png");
+      c.o("/png/en-us/search/course-999.png");
   }
 
   @Override
@@ -513,6 +528,6 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<BaseResultPage
   }
 
   protected void _pageUriCompanyCourse(Wrap<String> c) {
-      c.o("/course");
+      c.o("/en-us/search/course");
   }
 }

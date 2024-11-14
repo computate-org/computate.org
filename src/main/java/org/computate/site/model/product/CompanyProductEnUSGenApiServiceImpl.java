@@ -112,10 +112,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyProductEnUSGenApiServiceImpl.class);
 
-	public CompanyProductEnUSGenApiServiceImpl(Vertx vertx, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
-		super(vertx, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-	}
-
 	// Search //
 
 	@Override
@@ -158,7 +154,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 		});
 	}
-
 
 	public Future<ServiceResponse> response200SearchCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -277,7 +272,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 		});
 	}
-
 
 	public Future<ServiceResponse> response200GETCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -403,7 +397,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 		});
 	}
-
 
 	public Future<Void> listPATCHCompanyProduct(ApiRequest apiRequest, SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<Void> promise = Promise.promise();
@@ -640,7 +633,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-
 	@Override
 	public void postCompanyProductFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
@@ -716,6 +708,235 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	// DELETE //
+
+	@Override
+	public void deleteCompanyProduct(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		LOG.debug(String.format("deleteCompanyProduct started. "));
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
+							try {
+								ApiRequest apiRequest = new ApiRequest();
+								apiRequest.setRows(listCompanyProduct.getRequest().getRows());
+								apiRequest.setNumFound(listCompanyProduct.getResponse().getResponse().getNumFound());
+								apiRequest.setNumPATCH(0L);
+								apiRequest.initDeepApiRequest(siteRequest);
+								siteRequest.setApiRequest_(apiRequest);
+								if(apiRequest.getNumFound() == 1L)
+									apiRequest.setOriginal(listCompanyProduct.first());
+								eventBus.publish("websocketCompanyProduct", JsonObject.mapFrom(apiRequest).toString());
+
+								listDELETECompanyProduct(apiRequest, listCompanyProduct).onSuccess(e -> {
+									response200DELETECompanyProduct(siteRequest).onSuccess(response -> {
+										LOG.debug(String.format("deleteCompanyProduct succeeded. "));
+										eventHandler.handle(Future.succeededFuture(response));
+									}).onFailure(ex -> {
+										LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+										error(siteRequest, eventHandler, ex);
+									});
+								}).onFailure(ex -> {
+									LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+									error(siteRequest, eventHandler, ex);
+								});
+							} catch(Exception ex) {
+								LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							}
+						}).onFailure(ex -> {
+							LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("deleteCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public Future<Void> listDELETECompanyProduct(ApiRequest apiRequest, SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<Void> promise = Promise.promise();
+		List<Future> futures = new ArrayList<>();
+		SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+		listCompanyProduct.getList().forEach(o -> {
+			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			o.setSiteRequest_(siteRequest2);
+			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			futures.add(Future.future(promise1 -> {
+				deleteCompanyProductFuture(o).onSuccess(a -> {
+					promise1.complete();
+				}).onFailure(ex -> {
+					LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
+					promise1.fail(ex);
+				});
+			}));
+		});
+		CompositeFuture.all(futures).onSuccess( a -> {
+			listCompanyProduct.next().onSuccess(next -> {
+				if(next) {
+					listDELETECompanyProduct(apiRequest, listCompanyProduct).onSuccess(b -> {
+						promise.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
+						promise.fail(ex);
+					});
+				} else {
+					promise.complete();
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
+				promise.fail(ex);
+			});
+		}).onFailure(ex -> {
+			LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
+			promise.fail(ex);
+		});
+		return promise.future();
+	}
+
+	@Override
+	public void deleteCompanyProductFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			try {
+				siteRequest.setJsonObject(body);
+				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
+					try {
+						CompanyProduct o = listCompanyProduct.first();
+						if(o != null && listCompanyProduct.getResponse().getResponse().getNumFound() == 1) {
+							ApiRequest apiRequest = new ApiRequest();
+							apiRequest.setRows(1L);
+							apiRequest.setNumFound(1L);
+							apiRequest.setNumPATCH(0L);
+							apiRequest.initDeepApiRequest(siteRequest);
+							siteRequest.setApiRequest_(apiRequest);
+							if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
+								siteRequest.getRequestVars().put( "refresh", "false" );
+							}
+							if(apiRequest.getNumFound() == 1L)
+								apiRequest.setOriginal(o);
+							deleteCompanyProductFuture(o).onSuccess(o2 -> {
+								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+							}).onFailure(ex -> {
+								eventHandler.handle(Future.failedFuture(ex));
+							});
+						} else {
+							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+						}
+					} catch(Exception ex) {
+						LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+						error(siteRequest, eventHandler, ex);
+					}
+				}).onFailure(ex -> {
+					LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+					error(siteRequest, eventHandler, ex);
+				});
+			} catch(Exception ex) {
+				LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		}).onFailure(ex -> {
+			LOG.error(String.format("deleteCompanyProduct failed. "), ex);
+			error(null, eventHandler, ex);
+		});
+	}
+
+	public Future<CompanyProduct> deleteCompanyProductFuture(CompanyProduct o) {
+		SiteRequest siteRequest = o.getSiteRequest_();
+		Promise<CompanyProduct> promise = Promise.promise();
+
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			unindexCompanyProduct(o).onSuccess(e -> {
+				promise.complete(o);
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("deleteCompanyProductFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	public Future<ServiceResponse> response200DELETECompanyProduct(SiteRequest siteRequest) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			JsonObject json = new JsonObject();
+			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+		} catch(Exception ex) {
+			LOG.error(String.format("response200DELETECompanyProduct failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();
@@ -830,7 +1051,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 		});
 	}
-
 
 	public Future<Void> listPUTImportCompanyProduct(ApiRequest apiRequest, SiteRequest siteRequest) {
 		Promise<Void> promise = Promise.promise();
@@ -1021,133 +1241,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		return promise.future();
 	}
 
-	// SearchPage //
-
-	@Override
-	public void searchpageCompanyProductId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
-							response200SearchPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
-								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageCompanyProduct succeeded. "));
-							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-								error(siteRequest, eventHandler, ex);
-							});
-						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-							error(siteRequest, eventHandler, ex);
-						});
-		}).onFailure(ex -> {
-			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-				try {
-					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageCompanyProduct failed. ", ex2));
-					error(null, eventHandler, ex2);
-				}
-			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(401, "UNAUTHORIZED",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "SSO Resource Permission check returned DENY")
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-							)
-					));
-			} else {
-				LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-				error(null, eventHandler, ex);
-			}
-		});
-	}
-
-	@Override
-	public void searchpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
-							response200SearchPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
-								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageCompanyProduct succeeded. "));
-							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-								error(siteRequest, eventHandler, ex);
-							});
-						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-							error(siteRequest, eventHandler, ex);
-						});
-		}).onFailure(ex -> {
-			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-				try {
-					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageCompanyProduct failed. ", ex2));
-					error(null, eventHandler, ex2);
-				}
-			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(401, "UNAUTHORIZED",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "SSO Resource Permission check returned DENY")
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-							)
-					));
-			} else {
-				LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
-				error(null, eventHandler, ex);
-			}
-		});
-	}
-
-
-	public void searchpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct) {
-	}
-
-	public String templateSearchPageCompanyProduct() {
-		return "en-us/CompanyProductPage.htm";
-	}
-	public Future<ServiceResponse> response200SearchPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
-		Promise<ServiceResponse> promise = Promise.promise();
-		try {
-			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateSearchPageCompanyProduct();
-			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-			CompanyProductPage page = new CompanyProductPage();
-			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-			siteRequest.setRequestHeaders(requestHeaders);
-
-			page.setSearchListCompanyProduct_(listCompanyProduct);
-			page.setSiteRequest_(siteRequest);
-			page.setServiceRequest(siteRequest.getServiceRequest());
-			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
-				try {
-					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
-					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-				} catch(Exception ex) {
-					LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
-					promise.fail(ex);
-				}
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		} catch(Exception ex) {
-			LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
 	// SearchDownload //
 
 	@Override
@@ -1190,7 +1283,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 		});
 	}
-
 
 	public Future<ServiceResponse> response200SearchDownloadCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1262,6 +1354,588 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					JsonArray pivotArray2 = new JsonArray();
 					pivotJson.put("pivot", pivotArray2);
 					responsePivotSearchDownloadCompanyProduct(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
+	// SearchPage //
+
+	@Override
+	public void searchpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+							response200SearchPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("searchpageCompanyProduct succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("searchpageCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public void searchpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct) {
+	}
+
+	public String templateSearchPageCompanyProduct(ServiceRequest serviceRequest) {
+		return "en-us/search/product/CompanyProductSearch.htm";
+	}
+	public Future<ServiceResponse> response200SearchPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateSearchPageCompanyProduct(siteRequest.getServiceRequest());
+			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+			CompanyProductPage page = new CompanyProductPage();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			page.setSearchListCompanyProduct_(listCompanyProduct);
+			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
+			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotSearchPageCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotSearchPageCompanyProduct(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
+	// EditPage //
+
+	@Override
+	public void editpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PATCH"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+							response200EditPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("editpageCompanyProduct succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("editpageCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("editpageCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("editpageCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("editpageCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("editpageCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public void editpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct) {
+	}
+
+	public String templateEditPageCompanyProduct(ServiceRequest serviceRequest) {
+		return "en-us/edit/product/CompanyProductEdit.htm";
+	}
+	public Future<ServiceResponse> response200EditPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateEditPageCompanyProduct(siteRequest.getServiceRequest());
+			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+			CompanyProductPage page = new CompanyProductPage();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			page.setSearchListCompanyProduct_(listCompanyProduct);
+			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
+			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200EditPageCompanyProduct failed. "), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("response200EditPageCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotEditPageCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotEditPageCompanyProduct(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
+	// DisplayPage //
+
+	@Override
+	public void displaypageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+							response200DisplayPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("displaypageCompanyProduct succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("displaypageCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public void displaypageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct) {
+	}
+
+	public String templateDisplayPageCompanyProduct(ServiceRequest serviceRequest) {
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
+	}
+	public Future<ServiceResponse> response200DisplayPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateDisplayPageCompanyProduct(siteRequest.getServiceRequest());
+			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+			CompanyProductPage page = new CompanyProductPage();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			page.setSearchListCompanyProduct_(listCompanyProduct);
+			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
+			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200DisplayPageCompanyProduct failed. "), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("response200DisplayPageCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotDisplayPageCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotDisplayPageCompanyProduct(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
+	// UserPage //
+
+	@Override
+	public void userpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PATCH"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+							response200UserPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("userpageCompanyProduct succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("userpageCompanyProduct failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("userpageCompanyProduct failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("userpageCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("userpageCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("userpageCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public void userpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct) {
+	}
+
+	public String templateUserPageCompanyProduct(ServiceRequest serviceRequest) {
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
+	}
+	public Future<ServiceResponse> response200UserPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateUserPageCompanyProduct(siteRequest.getServiceRequest());
+			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+			CompanyProductPage page = new CompanyProductPage();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			page.setSearchListCompanyProduct_(listCompanyProduct);
+			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
+			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200UserPageCompanyProduct failed. "), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("response200UserPageCompanyProduct failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotUserPageCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotUserPageCompanyProduct(pivotFields2, pivotArray2);
 				}
 			}
 		}
@@ -1379,12 +2053,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
-			}
+			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
+			searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
 				Object paramValuesObject = serviceRequest.getParams().getJsonObject("query").getValue(paramName);
@@ -1708,43 +2378,43 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, JsonObject ctx, String resourceUri, String templateUri, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
 			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
 			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			String uri = ctx.getString(CompanyProduct.VAR_uri);
-			String url = String.format("%s%s", siteBaseUrl, uri);
 			CompanyProduct page = new CompanyProduct();
 			page.setSiteRequest_((SiteRequest)siteRequest);
 			page.persistForClass(CompanyProduct.VAR_resourceUri, resourceUri);
 			page.persistForClass(CompanyProduct.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyProduct.VAR_inheritPk, CompanyProduct.staticSetInheritPk(siteRequest2, ctx.getString(CompanyProduct.VAR_inheritPk)));
-			page.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, ctx.getString(CompanyProduct.VAR_created)));
-			page.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, ctx.getString(CompanyProduct.VAR_archived)));
-			page.persistForClass(CompanyProduct.VAR_sessionId, CompanyProduct.staticSetSessionId(siteRequest2, ctx.getString(CompanyProduct.VAR_sessionId)));
-			page.persistForClass(CompanyProduct.VAR_userKey, CompanyProduct.staticSetUserKey(siteRequest2, ctx.getString(CompanyProduct.VAR_userKey)));
-			page.persistForClass(CompanyProduct.VAR_objectId, CompanyProduct.staticSetObjectId(siteRequest2, ctx.getString(CompanyProduct.VAR_objectId)));
-			page.persistForClass(CompanyProduct.VAR_id, CompanyProduct.staticSetId(siteRequest2, ctx.getString(CompanyProduct.VAR_id)));
-			page.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, ctx.getString(CompanyProduct.VAR_name)));
-			page.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, ctx.getString(CompanyProduct.VAR_description)));
-			page.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, ctx.getString(CompanyProduct.VAR_price)));
-			page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, ctx.getString(CompanyProduct.VAR_pageId)));
-			page.persistForClass(CompanyProduct.VAR_resourceUri, CompanyProduct.staticSetResourceUri(siteRequest2, ctx.getString(CompanyProduct.VAR_resourceUri)));
-			page.persistForClass(CompanyProduct.VAR_templateUri, CompanyProduct.staticSetTemplateUri(siteRequest2, ctx.getString(CompanyProduct.VAR_templateUri)));
-			page.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, ctx.getString(CompanyProduct.VAR_emailTemplate)));
-			page.persistForClass(CompanyProduct.VAR_uri, CompanyProduct.staticSetUri(siteRequest2, ctx.getString(CompanyProduct.VAR_uri)));
-			page.persistForClass(CompanyProduct.VAR_url, CompanyProduct.staticSetUrl(siteRequest2, ctx.getString(CompanyProduct.VAR_url)));
-			page.persistForClass(CompanyProduct.VAR_downloadUri, CompanyProduct.staticSetDownloadUri(siteRequest2, ctx.getString(CompanyProduct.VAR_downloadUri)));
-			page.persistForClass(CompanyProduct.VAR_userUri, CompanyProduct.staticSetUserUri(siteRequest2, ctx.getString(CompanyProduct.VAR_userUri)));
-			page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, ctx.getString(CompanyProduct.VAR_storeUrl)));
-			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, ctx.getString(CompanyProduct.VAR_title)));
-			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, ctx.getString(CompanyProduct.VAR_productNum)));
+			page.persistForClass(CompanyProduct.VAR_inheritPk, CompanyProduct.staticSetInheritPk(siteRequest2, (String)result.get(CompanyProduct.VAR_inheritPk)));
+			page.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created)));
+			page.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
+			page.persistForClass(CompanyProduct.VAR_sessionId, CompanyProduct.staticSetSessionId(siteRequest2, (String)result.get(CompanyProduct.VAR_sessionId)));
+			page.persistForClass(CompanyProduct.VAR_userKey, CompanyProduct.staticSetUserKey(siteRequest2, (String)result.get(CompanyProduct.VAR_userKey)));
+			page.persistForClass(CompanyProduct.VAR_objectId, CompanyProduct.staticSetObjectId(siteRequest2, (String)result.get(CompanyProduct.VAR_objectId)));
+			page.persistForClass(CompanyProduct.VAR_id, CompanyProduct.staticSetId(siteRequest2, (String)result.get(CompanyProduct.VAR_id)));
+			page.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
+			page.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
+			page.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
+			page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
+			page.persistForClass(CompanyProduct.VAR_resourceUri, CompanyProduct.staticSetResourceUri(siteRequest2, (String)result.get(CompanyProduct.VAR_resourceUri)));
+			page.persistForClass(CompanyProduct.VAR_templateUri, CompanyProduct.staticSetTemplateUri(siteRequest2, (String)result.get(CompanyProduct.VAR_templateUri)));
+			page.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
+			page.persistForClass(CompanyProduct.VAR_uri, CompanyProduct.staticSetUri(siteRequest2, (String)result.get(CompanyProduct.VAR_uri)));
+			page.persistForClass(CompanyProduct.VAR_url, CompanyProduct.staticSetUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_url)));
+			page.persistForClass(CompanyProduct.VAR_downloadUri, CompanyProduct.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUri)));
+			page.persistForClass(CompanyProduct.VAR_userUri, CompanyProduct.staticSetUserUri(siteRequest2, (String)result.get(CompanyProduct.VAR_userUri)));
+			page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
+			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_title)));
+			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {
-					JsonObject data = JsonObject.mapFrom(page);
+					String uri = page.getUri();
+					JsonObject data = JsonObject.mapFrom(result);
 					data.put(CompanyProduct.VAR_id, uri);
 					promise.complete(data);
 				} catch(Exception ex) {

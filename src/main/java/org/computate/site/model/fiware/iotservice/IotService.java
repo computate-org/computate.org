@@ -22,17 +22,15 @@ import io.vertx.core.json.JsonObject;
 
 /**
  * Order: 11
- * Model: true
- * 
- * Api: true
- * Page: true
- * SuperPage: BaseModelPage
- * Indexed: true
  * Description: A service within a service path in the NGSI-LD standard
+ * AName: an IoT service
+ * PluralName: IoT services
+ * Icon: <i class="fa-solid fa-tower-cell"></i>
  * 
- * ApiTag: IoT service
- * ApiUri: /api/iot-service
- * 
+ * SearchPageUri: /en-us/search/iot-service
+ * EditPageUri: /en-us/edit/iot-service/{objectId}
+ * DisplayPageUri: /en-us/shop/iot-service/{objectId}
+ * ApiUri: /en-us/api/iot-service
  * ApiMethod:
  *   Search:
  *   GET:
@@ -40,20 +38,20 @@ import io.vertx.core.json.JsonObject;
  *   POST:
  *   DELETE:
  *   PUTImport:
- *   SearchPage:
- *     Page: IotServicePage
- *     ApiUri: /iot-service
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * AName: an IoT service
- * PluralName: IoT services
- * Icon: <i class="fa-solid fa-tower-cell"></i>
  */
 public class IotService extends IotServiceGen<BaseModel> {
 

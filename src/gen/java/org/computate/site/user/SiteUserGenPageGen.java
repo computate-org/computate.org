@@ -1,7 +1,7 @@
 package org.computate.site.user;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these SiteUserGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class SiteUserGenPageGen into the class SiteUserGenPage. 
  * </li>
- * <h3>About the SiteUserGenPage class and it's generated class SiteUserGenPageGen&lt;BaseModelPage&gt;: </h3>extends SiteUserGenPageGen
+ * <h3>About the SiteUserGenPage class and it's generated class SiteUserGenPageGen&lt;PageLayout&gt;: </h3>extends SiteUserGenPageGen
  * <p>
  * This Java class extends a generated Java class SiteUserGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends SiteUserGenPageGen<BaseModelPage>
- * <p>This <code>class SiteUserGenPage extends SiteUserGenPageGen&lt;BaseModelPage&gt;</code>, which means it extends a newly generated SiteUserGenPageGen. 
- * The generated <code>class SiteUserGenPageGen extends BaseModelPage</code> which means that SiteUserGenPage extends SiteUserGenPageGen which extends BaseModelPage. 
+ * extends SiteUserGenPageGen<PageLayout>
+ * <p>This <code>class SiteUserGenPage extends SiteUserGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated SiteUserGenPageGen. 
+ * The generated <code>class SiteUserGenPageGen extends PageLayout</code> which means that SiteUserGenPage extends SiteUserGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
+public abstract class SiteUserGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(SiteUserGenPage.class);
 
 	/////////////////////////
@@ -229,102 +229,102 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		return SiteUserGenPage.staticSearchListSiteUser(siteRequest_, SiteUserGenPage.staticSetListSiteUser(siteRequest_, o)).toString();
 	}
 
-	///////////////////
-	// siteUserCount //
-	///////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity siteUserCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer siteUserCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity siteUserCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUserGenPage&fq=entiteVar_enUS_indexed_string:siteUserCount">Find the entity siteUserCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUserGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _siteUserCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getSiteUserCount() {
-		return siteUserCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setSiteUserCount(Integer siteUserCount) {
-		this.siteUserCount = siteUserCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setSiteUserCount(String o) {
-		this.siteUserCount = SiteUserGenPage.staticSetSiteUserCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = SiteUserGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetSiteUserCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected SiteUserGenPage siteUserCountInit() {
-		Wrap<Integer> siteUserCountWrap = new Wrap<Integer>().var("siteUserCount");
-		if(siteUserCount == null) {
-			_siteUserCount(siteUserCountWrap);
-			Optional.ofNullable(siteUserCountWrap.getO()).ifPresent(o -> {
-				setSiteUserCount(o);
+	protected SiteUserGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (SiteUserGenPage)this;
 	}
 
-	public static Integer staticSearchSiteUserCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrSiteUserCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqSiteUserCount(SiteRequest siteRequest_, String o) {
-		return SiteUserGenPage.staticSearchSiteUserCount(siteRequest_, SiteUserGenPage.staticSetSiteUserCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return SiteUserGenPage.staticSearchResultCount(siteRequest_, SiteUserGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	///////////////
-	// siteUser_ //
-	///////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity siteUser_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected SiteUser siteUser_;
+	protected SiteUser result;
 
-	/**	<br> The entity siteUser_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUserGenPage&fq=entiteVar_enUS_indexed_string:siteUser_">Find the entity siteUser_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUserGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _siteUser_(Wrap<SiteUser> w);
+	protected abstract void _result(Wrap<SiteUser> w);
 
-	public SiteUser getSiteUser_() {
-		return siteUser_;
+	public SiteUser getResult() {
+		return result;
 	}
 
-	public void setSiteUser_(SiteUser siteUser_) {
-		this.siteUser_ = siteUser_;
+	public void setResult(SiteUser result) {
+		this.result = result;
 	}
-	public static SiteUser staticSetSiteUser_(SiteRequest siteRequest_, String o) {
+	public static SiteUser staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected SiteUserGenPage siteUser_Init() {
-		Wrap<SiteUser> siteUser_Wrap = new Wrap<SiteUser>().var("siteUser_");
-		if(siteUser_ == null) {
-			_siteUser_(siteUser_Wrap);
-			Optional.ofNullable(siteUser_Wrap.getO()).ifPresent(o -> {
-				setSiteUser_(o);
+	protected SiteUserGenPage resultInit() {
+		Wrap<SiteUser> resultWrap = new Wrap<SiteUser>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (SiteUserGenPage)this;
@@ -508,7 +508,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseSiteUserGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -525,8 +525,8 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 			try {
 				searchListSiteUser_Init();
 				listSiteUserInit();
-				siteUserCountInit();
-				siteUser_Init();
+				resultCountInit();
+				resultInit();
 				pkInit();
 				idInit();
 				pageUriSiteUserInit();
@@ -552,7 +552,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 	/////////////////
 
 	public void siteRequestSiteUserGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -587,10 +587,10 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 				return oSiteUserGenPage.searchListSiteUser_;
 			case "listSiteUser":
 				return oSiteUserGenPage.listSiteUser;
-			case "siteUserCount":
-				return oSiteUserGenPage.siteUserCount;
-			case "siteUser_":
-				return oSiteUserGenPage.siteUser_;
+			case "resultCount":
+				return oSiteUserGenPage.resultCount;
+			case "result":
+				return oSiteUserGenPage.result;
 			case "pk":
 				return oSiteUserGenPage.pk;
 			case "id":
@@ -598,7 +598,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 			case "pageUriSiteUser":
 				return oSiteUserGenPage.pageUriSiteUser;
 			default:
-				return super.obtainBaseModelPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -623,7 +623,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		SiteUserGenPage oSiteUserGenPage = (SiteUserGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -638,8 +638,8 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listSiteUser":
 			return SiteUserGenPage.staticSetListSiteUser(siteRequest_, o);
-		case "siteUserCount":
-			return SiteUserGenPage.staticSetSiteUserCount(siteRequest_, o);
+		case "resultCount":
+			return SiteUserGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return SiteUserGenPage.staticSetPk(siteRequest_, o);
 		case "id":
@@ -647,7 +647,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriSiteUser":
 			return SiteUserGenPage.staticSetPageUriSiteUser(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSetBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -662,8 +662,8 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listSiteUser":
 			return SiteUserGenPage.staticSearchListSiteUser(siteRequest_, (JsonArray)o);
-		case "siteUserCount":
-			return SiteUserGenPage.staticSearchSiteUserCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return SiteUserGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return SiteUserGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
@@ -671,7 +671,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriSiteUser":
 			return SiteUserGenPage.staticSearchPageUriSiteUser(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -686,8 +686,8 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listSiteUser":
 			return SiteUserGenPage.staticSearchStrListSiteUser(siteRequest_, (String)o);
-		case "siteUserCount":
-			return SiteUserGenPage.staticSearchStrSiteUserCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return SiteUserGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return SiteUserGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
@@ -695,7 +695,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriSiteUser":
 			return SiteUserGenPage.staticSearchStrPageUriSiteUser(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -710,8 +710,8 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listSiteUser":
 			return SiteUserGenPage.staticSearchFqListSiteUser(siteRequest_, o);
-		case "siteUserCount":
-			return SiteUserGenPage.staticSearchFqSiteUserCount(siteRequest_, o);
+		case "resultCount":
+			return SiteUserGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return SiteUserGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
@@ -719,7 +719,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriSiteUser":
 			return SiteUserGenPage.staticSearchFqPageUriSiteUser(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -736,16 +736,16 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 	public static final String CLASS_SIMPLE_NAME = "SiteUserGenPage";
 	public static final String VAR_searchListSiteUser_ = "searchListSiteUser_";
 	public static final String VAR_listSiteUser = "listSiteUser";
-	public static final String VAR_siteUserCount = "siteUserCount";
-	public static final String VAR_siteUser_ = "siteUser_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriSiteUser = "pageUriSiteUser";
 
 	public static final String DISPLAY_NAME_searchListSiteUser_ = "";
 	public static final String DISPLAY_NAME_listSiteUser = "";
-	public static final String DISPLAY_NAME_siteUserCount = "";
-	public static final String DISPLAY_NAME_siteUser_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriSiteUser = "";
@@ -759,10 +759,10 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 			return DISPLAY_NAME_searchListSiteUser_;
 		case VAR_listSiteUser:
 			return DISPLAY_NAME_listSiteUser;
-		case VAR_siteUserCount:
-			return DISPLAY_NAME_siteUserCount;
-		case VAR_siteUser_:
-			return DISPLAY_NAME_siteUser_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
 		case VAR_id:
@@ -770,7 +770,7 @@ public abstract class SiteUserGenPageGen<DEV> extends BaseModelPage {
 		case VAR_pageUriSiteUser:
 			return DISPLAY_NAME_pageUriSiteUser;
 		default:
-			return BaseModelPage.displayNameBaseModelPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

@@ -1,7 +1,10 @@
 package org.computate.site.model.event;
 
+import org.computate.site.model.event.CompanyEvent;
+import java.lang.String;
+import io.vertx.pgclient.data.Point;
+import java.util.List;
 import org.computate.site.page.PageLayout;
-import org.computate.site.result.BaseResultPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -25,7 +28,6 @@ import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -47,7 +49,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> {
+public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +391,16 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListCompanyEvent_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = CompanyEvent.searchVarCompanyEvent(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListCompanyEvent_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,18 +458,21 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
     Optional.ofNullable(searchListCompanyEvent_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyEventCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListCompanyEvent_ == null ? 0 : searchListCompanyEvent_.size());
   }
 
-  protected void _companyEvent_(Wrap<CompanyEvent> w) {
-    if(companyEventCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<CompanyEvent> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyEvent_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyEvent_ != null)
-      w.o(companyEvent_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -472,11 +487,11 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyEvent_ != null && companyEvent_.getObjectTitle() != null)
-      c.o(companyEvent_.getObjectTitle());
-    else if(companyEvent_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("events");
-    else if(searchListCompanyEvent_ == null || companyEventCount == 0)
+    else if(searchListCompanyEvent_ == null || resultCount == 0)
       c.o("no event found");
     else
       c.o("events");
@@ -484,12 +499,12 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/event");
+    c.o("/en-us/search/event");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/event");
+    c.o("/en-us/api/event");
   }
 
   @Override
@@ -504,7 +519,7 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/event-999.png");
+      c.o("/png/en-us/search/event-999.png");
   }
 
   @Override
@@ -513,6 +528,6 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<BaseResultPage> 
   }
 
   protected void _pageUriCompanyEvent(Wrap<String> c) {
-      c.o("/event");
+      c.o("/en-us/search/event");
   }
 }

@@ -105,11 +105,14 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: weather observed"</b>, which groups all of the OpenAPIs for WeatherObserved objects under the tag "weather observed". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/weather-observed</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/weather-observed"</b>, which defines the base API URI for WeatherObserved objects as "/api/weather-observed" in the OpenAPI spec. 
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: weather observed devices"</b>, which groups all of the OpenAPIs for WeatherObserved objects under the tag "weather observed devices". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/weather-observed</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/weather-observed"</b>, which defines the base API URI for WeatherObserved objects as "/en-us/api/weather-observed" in the OpenAPI spec. 
  * </p>
  * <h2>Color: 2017-shaded-spruce</h2>
  * <p>This class contains a comment <b>"Color: 2017-shaded-spruce"</b>, which styles the WeatherObserved page "2017-shaded-spruce". 
@@ -140,9 +143,9 @@ import org.computate.search.response.solr.SolrResponse;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.fiware.weatherobserved.WeatherObservedPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.model.fiware.weatherobserved.WeatherObservedPage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.fiware.weatherobserved.WeatherObservedPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -201,26 +204,28 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String WeatherObserved_Title_enUS = "weather observed devices";
 	public static final String WeatherObserved_ThePluralName_enUS = "the weather observed devices";
 	public static final String WeatherObserved_NoNameFound_enUS = "no weather observed device found";
-	public static final String WeatherObserved_ApiUri_enUS = "/api/weather-observed";
-	public static final String WeatherObserved_ApiUriSearchPage_enUS = "/weather-observed";
+	public static final String WeatherObserved_ApiUri_enUS = "/en-us/api/weather-observed";
+	public static final String WeatherObserved_ApiUriSearchPage_enUS = "/en-us/search/weather-observed";
 	public static final String WeatherObserved_OfName_enUS = "of weather observed device";
 	public static final String WeatherObserved_ANameAdjective_enUS = "a weather observed device";
 	public static final String WeatherObserved_NameAdjectiveSingular_enUS = "weather observed device";
 	public static final String WeatherObserved_NameAdjectivePlural_enUS = "weather observed devices";
-	public static final String Search_enUS_Uri = "/api/weather-observed";
-	public static final String Search_enUS_ImageUri = "/png/api/weather-observed-999.png";
-	public static final String GET_enUS_Uri = "/api/weather-observed/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/weather-observed/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/weather-observed";
-	public static final String PATCH_enUS_ImageUri = "/png/api/weather-observed-999.png";
-	public static final String POST_enUS_Uri = "/api/weather-observed";
-	public static final String POST_enUS_ImageUri = "/png/api/weather-observed-999.png";
-	public static final String DELETE_enUS_Uri = "/api/weather-observed";
-	public static final String DELETE_enUS_ImageUri = "/png/api/weather-observed-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/weather-observed-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/weather-observed-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/weather-observed";
-	public static final String SearchPage_enUS_ImageUri = "/png/weather-observed-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/weather-observed";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/weather-observed/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/weather-observed/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/weather-observed";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/weather-observed";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
+	public static final String DELETE_enUS_Uri = "/en-us/api/weather-observed/{objectId}";
+	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/weather-observed/{objectId}-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/weather-observed-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/weather-observed-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/weather-observed";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/weather-observed-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/weather-observed/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/weather-observed/{objectId}-999.png";
 
 	public static final String WeatherObserved_Color = "2017-shaded-spruce";
 	public static final String WeatherObserved_Icon = "<i class=\"fa-regular fa-cloud-bolt-sun\"></i>";

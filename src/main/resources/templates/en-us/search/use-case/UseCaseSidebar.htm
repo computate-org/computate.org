@@ -1,0 +1,286 @@
+        <div class="htmBodySidebarUseCasePage ">
+{%- block htmBodySidebarUseCasePage %}
+          <sl-drawer placement="end" id="siteSidebarToggleSearch">
+            <div>
+              <i class="fad fa-magnifying-glass "></i>
+              Search
+            </div>
+            <div>
+              {%- block htmBodySearchUseCasePage %}
+              <div>
+                {% for key, value in varsQ.items() %}
+                <div>
+                  <div>
+                    <label for="qUseCase_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qUseCase_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                    <div id="qUseCaseDiv_{{ key }}" class="pageSearchVal "></div>
+                  </div>
+                </div>
+                {% endfor %}
+                <div>
+                  <div>
+                    <label for="qUseCase_Start">start<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qUseCase_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qUseCaseDiv_start" class="pageSearchVal ">start={{ start }}</div>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <label for="qUseCase_Rows">rows<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qUseCase_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qUseCaseDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
+                  </div>
+                </div>
+              </div>
+              {%- endblock htmBodySearchUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFilters">
+            <div>
+              <span>
+              <i class="fad fa-filters "></i> Filters</span>
+            </div>
+            <div>
+              {%- block htmBodyFiltersUseCasePage %}
+              <div>
+                {% for key, value in varsFq.items() %}
+                  <div class="">
+                    <label for="fqUseCase_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetUseCase_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqUseCase_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('UseCase', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqUseCase_{{ key }}">{% if value.val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetUseCase_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
+                    <div class="pageFacetField pageFacetFieldUseCase_{{ key }} " id="pageFacetFieldUseCase_{{ key }}">
+                      {% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <sl-tooltip content="{{ facetFieldValue | e }} use case total with {{ value.facetField.var | e }} &quot;{{ facetFieldKey | e }}&quot;">
+                        <div class="cursor-pointer " data-class="UseCase" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('UseCase', this); ">{{ facetFieldValue }}: {{ facetFieldKey }}</div>
+                      </sl-tooltip>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              {%- endblock htmBodyFiltersUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleSort">
+            <div>
+              <i class="fad fa-solid fa-arrow-down-a-z "></i>
+              Sort
+            </div>
+            <div>
+              {%- block htmBodySortUseCasePage %}
+              <div style="display: none; " id="pageSearchVal-SortUseCaseHidden">
+                {% for item in defaultSortVars %}
+                  <div class="pageSearchVal-SortUseCaseHidden " id="pageSearchVal-SortUseCaseHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-SortUseCase">
+                {% if defaultSortVars is defined and defaultSortVars.length > 0 %}
+                  <div class="pageSearchVal pageSearchVal-SortUseCase " id="pageSearchVal-SortUseCase_1">facet.pivot={!range=r1}{% for item in defaultSortVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFacetTri" class="pageFacetTri " id="pageFacetTriUseCase_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
+              </div>
+              {% endfor %}
+              {%- endblock htmBodySortUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleRange">
+            <div>
+              <span>
+              <i class="fad fa-calendar-range "></i> Range</span>
+            </div>
+            <div>
+              {%- block htmBodyRangeUseCasePage %}
+              <table>
+                <tr>
+                  <td colspan="2">
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-UseCase">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-UseCase">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-UseCase">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeVar-UseCase">{% if defaultRangeVar is defined %}facet.range={!tag=r1}{{ defaultRangeVar | urlencode() }}{% endif %}</div>
+                  </td>
+                </tr>
+              </table>
+              <table>
+                <tr class="">
+                  <td class="">
+                    <span>Range Gap</span>
+                  </td>
+                  <td class="">
+                    <sl-select name="facet.range.gap" id="pageFacetRangeGap-UseCase" onchange="facetRangeGapChange('UseCase', this); ">
+                      <sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
+                      <sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
+                      <sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
+                      <sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
+                      <sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
+                      <sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
+                      <sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
+                    </sl-select>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range Start</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-UseCase" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('UseCase', this); "></sl-input></span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range End</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-UseCase" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('UseCase', this); "></sl-input></span>
+                  </td>
+                </tr>
+              </table>
+              <sl-radio-group id="pageFacetRangeUseCase">                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeUseCase_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %}>{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
+              {%- endblock htmBodyRangeUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarTogglePivot">
+            <div>
+              <span>
+              <i class="fad fa-table-pivot "></i> Pivot</span>
+            </div>
+            <div>
+              {%- block htmBodyPivotUseCasePage %}
+              <div style="display: none; " id="pageSearchVal-PivotUseCaseHidden">
+                {% for item in defaultPivotVars %}
+                  <div class="pageSearchVal-PivotUseCaseHidden " id="pageSearchVal-PivotUseCaseHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-PivotUseCase">
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
+                  <div class="pageSearchVal pageSearchVal-PivotUseCase " id="pageSearchVal-PivotUseCase_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotUseCase_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
+              </div>
+              {% endfor %}
+              {%- endblock htmBodyPivotUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFieldList">
+            <div>
+              <span>
+              <i class="fad fa-list-ul "></i> Field List</span>
+            </div>
+            <div>
+{%- block htmBodyFieldListUseCasePage %}
+              <div style="display: none; " id="pageSearchVal-FieldListUseCaseHidden">
+                {% for item in defaultFieldListVars %}
+                  <div class="pageSearchVal-FieldListUseCaseHidden " id="pageSearchVal-FieldListUseCaseHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
+              <div id="pageSearchVal-FieldListUseCase">
+                {% if defaultFieldListVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-FieldListUseCase " id="pageSearchVal-FieldListUseCase_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% endif %}
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListUseCase_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('UseCase', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
+                {% endfor %}
+{%- endblock htmBodyFieldListUseCasePage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleStats">
+            <div>
+              <i class="fad fa-chart-candlestick "></i>
+              Stats
+            </div>
+            <div>
+{%- block htmBodyStatsUseCasePage %}
+              <div style="display: none; " id="pageSearchVal-StatsUseCaseHidden">
+                {% for item in defaultStatsVars %}
+                  <div class="pageSearchVal-StatsUseCaseHidden " id="pageSearchVal-StatsUseCaseHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-StatsUseCase">
+                {% if defaultStatsVars is defined %}
+                  {% for item in defaultStatsVars %}
+                    <div class="pageSearchVal pageSearchVal-StatsUseCase_{{ item }} " id="pageSearchVal-StatsUseCase_{{ item }}">stats.field={{ item }}                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <table>
+                {% for key, value in varsFq.items() %}
+                  {% if enableStats is defined %}
+                    <tr class="">
+                      <td class="">
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsUseCase_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('UseCase', value); ">{{ value.displayName }}</sl-checkbox></span>
+                      </td>
+                      <td>
+                        <div>
+                          <label for="pageStatsUseCase_{{ key }}">{{ value.displayName }}</label>
+                        </div>
+                        <div class="pageStatsField pageStatsFieldUseCase_{{ key }} " id="pageStatsFieldUseCase_{{ key }}">
+                          {% if value.stats is defined %}
+                            {% for item in value.stats %}
+                              {% if item.key == 'name' %}{% else %}
+                                <div data-class="UseCase" data-var="{{ item.var }}" data-val="{{ item.key }}">{{ item.key }}: {{ item }}</div>
+                              {% endif %}
+                            {% endfor %}
+                            {% if value.stats.max is defined %}
+                              <div>
+                                <span> step </span>
+                                <sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
+                                <span> min </span>
+                                <sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
+                                <span> max </span>
+                                <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
+                                <span> speed in seconds </span>
+                                <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
+                              </div>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+{%- endblock htmBodyStatsUseCasePage %}
+            </div>
+          </sl-drawer>
+{%- endblock htmBodySidebarUseCasePage %}
+        </div>
+
+{%- block htmBodyGraphUseCasePage %}
+        <div id="htmBodyGraphUseCasePage" class="htmBodyGraph "></div>
+{%- endblock htmBodyGraphUseCasePage %}

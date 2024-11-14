@@ -85,20 +85,32 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: POST</h2>
  * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
  * </p>
+ * <h2>ApiMethode: DELETE</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETE"</b>, which creates an API "DELETE". 
+ * </p>
  * <h2>ApiMethode: PUTImport</h2>
  * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
- * </p>
- * <h2>ApiMethode: SearchPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
  * <h2>ApiMethode: SearchDownload</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchDownload"</b>, which creates an API "SearchDownload". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: product"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "product". 
+ * <h2>ApiMethode: SearchPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/product</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/product"</b>, which defines the base API URI for CompanyProduct objects as "/api/product" in the OpenAPI spec. 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
+ * </p>
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiMethode: UserPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: products"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "products". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/product</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/product"</b>, which defines the base API URI for CompanyProduct objects as "/en-us/api/product" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -118,9 +130,9 @@ import io.vertx.core.json.JsonObject;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.product.CompanyProductPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.product.CompanyProductPage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.product.CompanyProductPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -179,26 +191,46 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String CompanyProduct_Title_enUS = "products";
 	public static final String CompanyProduct_ThePluralName_enUS = "the products";
 	public static final String CompanyProduct_NoNameFound_enUS = "no product found";
-	public static final String CompanyProduct_ApiUri_enUS = "/api/product";
-	public static final String CompanyProduct_ApiUriSearchPage_enUS = "/product";
+	public static final String CompanyProduct_ApiUri_enUS = "/en-us/api/product";
+	public static final String CompanyProduct_ApiUriSearchPage_enUS = "/en-us/search/product";
+	public static final String CompanyProduct_ApiUriEditPage_enUS = "/en-us/edit/product/{pageId}";
 	public static final String CompanyProduct_OfName_enUS = "of product";
 	public static final String CompanyProduct_ANameAdjective_enUS = "a product";
 	public static final String CompanyProduct_NameAdjectiveSingular_enUS = "product";
 	public static final String CompanyProduct_NameAdjectivePlural_enUS = "products";
-	public static final String Search_enUS_Uri = "/api/product";
-	public static final String Search_enUS_ImageUri = "/png/api/product-999.png";
-	public static final String GET_enUS_Uri = "/api/product/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/product/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/product";
-	public static final String PATCH_enUS_ImageUri = "/png/api/product-999.png";
-	public static final String POST_enUS_Uri = "/api/product";
-	public static final String POST_enUS_ImageUri = "/png/api/product-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/product-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/product-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/product";
-	public static final String SearchPage_enUS_ImageUri = "/png/product-999.png";
-	public static final String SearchDownload_enUS_Uri = "/download/product";
-	public static final String SearchDownload_enUS_ImageUri = "/png/download/product-999.png";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/product";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/product";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/product";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/product/{objectId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/product/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/product/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/product";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/product";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/product";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/product";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/product";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/product";
+	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/product/{objectId}";
+	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/product/%s";
+	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/product/%s";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/product-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/product-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/product-import";
+	public static final String SearchDownload_enUS_OpenApiUri = "/download/product";
+	public static final String SearchDownload_enUS_StringFormatUri = "/download/product";
+	public static final String SearchDownload_enUS_StringFormatUrl = "%s/download/product";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/product";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/product";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/product";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/product/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/product/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/product/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/product/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
+	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/product/{pageId}";
+	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/product/%s";
+	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/product/%s";
 
 	public static final String CompanyProduct_Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
 
@@ -727,6 +759,110 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return url;
 	}
 
+	//////////////
+	// viewPage //
+	//////////////
+
+
+	/**	 The entity viewPage
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String viewPage;
+
+	/**	<br> The entity viewPage
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:viewPage">Find the entity viewPage in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _viewPage(Wrap<String> w);
+
+	public String getViewPage() {
+		return viewPage;
+	}
+	public void setViewPage(String o) {
+		this.viewPage = CompanyProduct.staticSetViewPage(siteRequest_, o);
+	}
+	public static String staticSetViewPage(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct viewPageInit() {
+		Wrap<String> viewPageWrap = new Wrap<String>().var("viewPage");
+		if(viewPage == null) {
+			_viewPage(viewPageWrap);
+			Optional.ofNullable(viewPageWrap.getO()).ifPresent(o -> {
+				setViewPage(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchViewPage(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrViewPage(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqViewPage(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchViewPage(siteRequest_, CompanyProduct.staticSetViewPage(siteRequest_, o)).toString();
+	}
+
+	//////////////
+	// editPage //
+	//////////////
+
+
+	/**	 The entity editPage
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String editPage;
+
+	/**	<br> The entity editPage
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:editPage">Find the entity editPage in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _editPage(Wrap<String> w);
+
+	public String getEditPage() {
+		return editPage;
+	}
+	public void setEditPage(String o) {
+		this.editPage = CompanyProduct.staticSetEditPage(siteRequest_, o);
+	}
+	public static String staticSetEditPage(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyProduct editPageInit() {
+		Wrap<String> editPageWrap = new Wrap<String>().var("editPage");
+		if(editPage == null) {
+			_editPage(editPageWrap);
+			Optional.ofNullable(editPageWrap.getO()).ifPresent(o -> {
+				setEditPage(o);
+			});
+		}
+		return (CompanyProduct)this;
+	}
+
+	public static String staticSearchEditPage(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrEditPage(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqEditPage(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchEditPage(siteRequest_, CompanyProduct.staticSetEditPage(siteRequest_, o)).toString();
+	}
+
 	/////////////////
 	// downloadUri //
 	/////////////////
@@ -1053,6 +1189,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				emailTemplateInit();
 				uriInit();
 				urlInit();
+				viewPageInit();
+				editPageInit();
 				downloadUriInit();
 				userUriInit();
 				storeUrlInit();
@@ -1129,6 +1267,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return oCompanyProduct.uri;
 			case "url":
 				return oCompanyProduct.url;
+			case "viewPage":
+				return oCompanyProduct.viewPage;
+			case "editPage":
+				return oCompanyProduct.editPage;
 			case "downloadUri":
 				return oCompanyProduct.downloadUri;
 			case "userUri":
@@ -1196,6 +1338,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSetUri(siteRequest_, o);
 		case "url":
 			return CompanyProduct.staticSetUrl(siteRequest_, o);
+		case "viewPage":
+			return CompanyProduct.staticSetViewPage(siteRequest_, o);
+		case "editPage":
+			return CompanyProduct.staticSetEditPage(siteRequest_, o);
 		case "downloadUri":
 			return CompanyProduct.staticSetDownloadUri(siteRequest_, o);
 		case "userUri":
@@ -1238,6 +1384,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyProduct.staticSearchUrl(siteRequest_, (String)o);
+		case "viewPage":
+			return CompanyProduct.staticSearchViewPage(siteRequest_, (String)o);
+		case "editPage":
+			return CompanyProduct.staticSearchEditPage(siteRequest_, (String)o);
 		case "downloadUri":
 			return CompanyProduct.staticSearchDownloadUri(siteRequest_, (String)o);
 		case "userUri":
@@ -1280,6 +1430,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStrUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyProduct.staticSearchStrUrl(siteRequest_, (String)o);
+		case "viewPage":
+			return CompanyProduct.staticSearchStrViewPage(siteRequest_, (String)o);
+		case "editPage":
+			return CompanyProduct.staticSearchStrEditPage(siteRequest_, (String)o);
 		case "downloadUri":
 			return CompanyProduct.staticSearchStrDownloadUri(siteRequest_, (String)o);
 		case "userUri":
@@ -1322,6 +1476,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchFqUri(siteRequest_, o);
 		case "url":
 			return CompanyProduct.staticSearchFqUrl(siteRequest_, o);
+		case "viewPage":
+			return CompanyProduct.staticSearchFqViewPage(siteRequest_, o);
+		case "editPage":
+			return CompanyProduct.staticSearchFqEditPage(siteRequest_, o);
 		case "downloadUri":
 			return CompanyProduct.staticSearchFqDownloadUri(siteRequest_, o);
 		case "userUri":
@@ -1517,6 +1675,18 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					oCompanyProduct.setUrl(url);
 			}
 
+			if(saves.contains("viewPage")) {
+				String viewPage = (String)doc.get("viewPage_docvalues_string");
+				if(viewPage != null)
+					oCompanyProduct.setViewPage(viewPage);
+			}
+
+			if(saves.contains("editPage")) {
+				String editPage = (String)doc.get("editPage_docvalues_string");
+				if(editPage != null)
+					oCompanyProduct.setEditPage(editPage);
+			}
+
 			if(saves.contains("downloadUri")) {
 				String downloadUri = (String)doc.get("downloadUri_docvalues_string");
 				if(downloadUri != null)
@@ -1579,6 +1749,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(url != null) {
 			doc.put("url_docvalues_string", url);
 		}
+		if(viewPage != null) {
+			doc.put("viewPage_docvalues_string", viewPage);
+		}
+		if(editPage != null) {
+			doc.put("editPage_docvalues_string", editPage);
+		}
 		if(downloadUri != null) {
 			doc.put("downloadUri_docvalues_string", downloadUri);
 		}
@@ -1618,6 +1794,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "viewPage":
+				return "viewPage_docvalues_string";
+			case "editPage":
+				return "editPage_docvalues_string";
 			case "downloadUri":
 				return "downloadUri_docvalues_string";
 			case "userUri":
@@ -1653,6 +1833,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "viewPage":
+				return "viewPage_docvalues_string";
+			case "editPage":
+				return "editPage_docvalues_string";
 			case "downloadUri":
 				return "downloadUri_docvalues_string";
 			case "userUri":
@@ -1688,6 +1872,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "uri";
 			case "url_docvalues_string":
 				return "url";
+			case "viewPage_docvalues_string":
+				return "viewPage";
+			case "editPage_docvalues_string":
+				return "editPage";
 			case "downloadUri_docvalues_string":
 				return "downloadUri";
 			case "userUri_docvalues_string":
@@ -1737,6 +1925,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		oCompanyProduct.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setViewPage(Optional.ofNullable(doc.get("viewPage_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setEditPage(Optional.ofNullable(doc.get("editPage_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setUserUri(Optional.ofNullable(doc.get("userUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1773,6 +1963,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				apiRequest.addVars("uri");
 			if(!Objects.equals(url, original.getUrl()))
 				apiRequest.addVars("url");
+			if(!Objects.equals(viewPage, original.getViewPage()))
+				apiRequest.addVars("viewPage");
+			if(!Objects.equals(editPage, original.getEditPage()))
+				apiRequest.addVars("editPage");
 			if(!Objects.equals(downloadUri, original.getDownloadUri()))
 				apiRequest.addVars("downloadUri");
 			if(!Objects.equals(userUri, original.getUserUri()))
@@ -1803,6 +1997,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(viewPage).map(v -> "viewPage: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(editPage).map(v -> "editPage: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(userUri).map(v -> "userUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
@@ -1825,6 +2021,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String VAR_emailTemplate = "emailTemplate";
 	public static final String VAR_uri = "uri";
 	public static final String VAR_url = "url";
+	public static final String VAR_viewPage = "viewPage";
+	public static final String VAR_editPage = "editPage";
 	public static final String VAR_downloadUri = "downloadUri";
 	public static final String VAR_userUri = "userUri";
 	public static final String VAR_storeUrl = "storeUrl";
@@ -1852,6 +2050,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		vars.add(VAR_emailTemplate);
 		vars.add(VAR_uri);
 		vars.add(VAR_url);
+		vars.add(VAR_viewPage);
+		vars.add(VAR_editPage);
 		vars.add(VAR_downloadUri);
 		vars.add(VAR_userUri);
 		vars.add(VAR_storeUrl);
@@ -1879,6 +2079,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_emailTemplate = "email template";
 	public static final String DISPLAY_NAME_uri = "URI";
 	public static final String DISPLAY_NAME_url = "product page";
+	public static final String DISPLAY_NAME_viewPage = "view";
+	public static final String DISPLAY_NAME_editPage = "";
 	public static final String DISPLAY_NAME_downloadUri = "download URI";
 	public static final String DISPLAY_NAME_userUri = "user URI";
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
@@ -1908,6 +2110,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_uri;
 		case VAR_url:
 			return DISPLAY_NAME_url;
+		case VAR_viewPage:
+			return DISPLAY_NAME_viewPage;
+		case VAR_editPage:
+			return DISPLAY_NAME_editPage;
 		case VAR_downloadUri:
 			return DISPLAY_NAME_downloadUri;
 		case VAR_userUri:
@@ -1943,6 +2149,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "The relative URI for this page. ";
 		case VAR_url:
 			return "Visit this product's landing page. ";
+		case VAR_viewPage:
+			return "View the project. ";
+		case VAR_editPage:
+			return "Edit the project. ";
 		case VAR_downloadUri:
 			return "The download relative URI for this page. ";
 		case VAR_userUri:
@@ -1978,6 +2188,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_url:
 			return "String";
+		case VAR_viewPage:
+			return "String";
+		case VAR_editPage:
+			return "String";
 		case VAR_downloadUri:
 			return "String";
 		case VAR_userUri:
@@ -1996,9 +2210,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static Integer htmColumnCompanyProduct(String var) {
 		switch(var) {
 		case VAR_name:
-			return 1;
+			return 0;
 		case VAR_description:
-			return 2;
+			return 1;
+		case VAR_editPage:
+			return 3;
 			default:
 				return BaseResult.htmColumnBaseResult(var);
 		}
@@ -2016,6 +2232,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_url:
 			return 4;
+		case VAR_viewPage:
+			return 4;
+		case VAR_editPage:
+			return 5;
 			default:
 				return BaseResult.htmRowBaseResult(var);
 		}
@@ -2033,6 +2253,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_url:
 			return 1;
+		case VAR_viewPage:
+			return 2;
+		case VAR_editPage:
+			return 3;
 			default:
 				return BaseResult.htmCellBaseResult(var);
 		}

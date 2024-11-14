@@ -31,12 +31,6 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @WebApiServiceGen
 @ProxyGen
 public interface CompanyWebsiteEnUSGenApiService {
-	static CompanyWebsiteEnUSApiServiceImpl registerService(Vertx vertx, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
-		CompanyWebsiteEnUSApiServiceImpl api =  new CompanyWebsiteEnUSApiServiceImpl(vertx, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-		new ServiceBinder(vertx).setAddress(CompanyWebsite.getClassApiAddress()).register(CompanyWebsiteEnUSGenApiService.class, api);
-		return api;
-	}
-
 	public void searchCompanyWebsite(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void getCompanyWebsite(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void patchCompanyWebsite(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
@@ -45,6 +39,7 @@ public interface CompanyWebsiteEnUSGenApiService {
 	public void postCompanyWebsiteFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void putimportCompanyWebsite(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void putimportCompanyWebsiteFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
-	public void searchpageCompanyWebsiteId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void searchpageCompanyWebsite(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void editpageCompanyWebsite(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void displaypageCompanyWebsite(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 }

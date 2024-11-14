@@ -1,0 +1,366 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="site:pageId" content="ai-telemetry-webinar"/>
+    <meta name="site:uri" content="/en-us/webinar/{{ pageId }}"/>
+    <meta name="site:joinUri" content="/en-us/join/webinar/{{ pageId }}"/>
+    <meta name="site:name" content="AI Telemetry Community Webinar"/>
+    <meta name="site:title" content="{{ name }}"/>
+    <meta name="site:description" content="Learn how to Computate as we build the AI Telemetry open source project with the Red Hat Research team built with the Computate platform! "/>
+    <meta name="site:courseNum" content="1"/>
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+
+@media (max-width:800px) {
+  .intro-content > h1 {
+    font-size: var(--sl-font-size-large);
+  }
+  sl-carousel {
+    --aspect-ratio: 16/8;
+  }
+}
+@media (min-width:801px) {
+  sl-carousel {
+    --aspect-ratio: 16/8;
+  }
+}
+{% endblock htmStylePageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+
+        <div class="blue-teal-background background border-radius-x-large ">
+          <div class="intro-content">
+            <div class="wa-crown">
+              <h1 class="brand-font">
+                <i class="fa-duotone fa-solid fa-video fa-2x "></i>
+                {{ name }}
+              </h1>
+            </div>
+            <h2 class="brand-font">
+              Come learn how to Computate as we build a brand new, public open source, custom data-driven platform 
+              for AI/ML GPU Telemetry with 
+              <i class="fa-brands fa-redhat fa-2xl fa-red" style="color: red; "></i>
+              Red Hat Research in the New England Research Cloud! 
+            </h2>
+            <h3 class="brand-font">
+              Watch the ai-telemetry project use the Computate Smart Cloud Deployer to deploy all the required microservices to the cloud, 
+              then do live development adding new features to the ai-telemetry project in OpenShift AI VSCode Java Workbench. 
+            </h3>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/Z3hgoWvlvQY?si=k0yj-0xHMWR8oubQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <h3 class="brand-font">
+              The {{ name }} series will occur live weekdays from Sep 2, 2024 — Feb 28, 2025. 
+            </h3>
+            <div id="webinar-calendar" class="zoom-details ">
+
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-americas fa-xl"></i>
+                <div>
+                  {% if userName is defined %}
+                  {% if scope is defined and scope == "GET" %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="{{ CompanyWebinar.webinarUrlAmericas }}" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    Open Zoom
+                  </sl-button>
+                  {% else %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="#how-to-get-access" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    See below how to get access
+                  </sl-button>
+                  {% endif %}
+                  {% else %}
+                  <sl-button id="order-button" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                    <i class="fa-duotone fa-right-to-bracket"></i>
+                    Log in with GitHub
+                  </sl-button>
+                  {% endif %}
+                </div>
+                <div>
+                  <div>
+                    Mondays: Americas
+                  </div>
+                  <div class="font-size-x-small">
+                    Monday 12:00 PM US Eastern
+                  </div>
+                </div>
+              </div>
+
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-europe fa-xl"></i>
+                <div>
+                  {% if userName is defined %}
+                  {% if scope is defined and scope == "GET" %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="{{ CompanyWebinar.webinarUrlEmea }}" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    Open Zoom
+                  </sl-button>
+                  {% else %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="#how-to-get-access" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    See below how to get access
+                  </sl-button>
+                  {% endif %}
+                  {% else %}
+                  <sl-button id="order-button" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                    <i class="fa-duotone fa-right-to-bracket"></i>
+                    Log in with GitHub
+                  </sl-button>
+                  {% endif %}
+                </div>
+                <div>
+                  <div>
+                    Tuesdays: Europe, Middle East, Africa
+                  </div>
+                  <div class="font-size-x-small">
+                    Tuesday 16:00 Central European Time, Tuesday 10:00 AM US Eastern
+                  </div>
+                </div>
+              </div>
+
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-asia fa-xl"></i>
+                <div>
+                  {% if userName is defined %}
+                  {% if scope is defined and scope == "GET" %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="{{ CompanyWebinar.webinarUrlApac }}" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    Open Zoom
+                  </sl-button>
+                  {% else %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="#how-to-get-access" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    See below how to get access
+                  </sl-button>
+                  {% endif %}
+                  {% else %}
+                  <sl-button id="order-button" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                    <i class="fa-duotone fa-right-to-bracket"></i>
+                    Log in with GitHub
+                  </sl-button>
+                  {% endif %}
+                </div>
+                <div>
+                  <div>
+                    Wednesdays: Asia Pacific
+                  </div>
+                  <div class="font-size-x-small">
+                    Wednesday 09:00 Indian Time, Tuesday 11:30 PM US Eastern
+                  </div>
+                </div>
+              </div>
+
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-europe fa-xl"></i>
+                <div>
+                  {% if userName is defined %}
+                  {% if scope is defined and scope == "GET" %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="{{ CompanyWebinar.webinarUrlEmea }}" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    Open Zoom
+                  </sl-button>
+                  {% else %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="#how-to-get-access" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    See below how to get access
+                  </sl-button>
+                  {% endif %}
+                  {% else %}
+                  <sl-button id="order-button" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                    <i class="fa-duotone fa-right-to-bracket"></i>
+                    Log in with GitHub
+                  </sl-button>
+                  {% endif %}
+                </div>
+                <div>
+                  <div>
+                    Thursdays: Europe, Middle East, Africa
+                  </div>
+                  <div class="font-size-x-small">
+                    Thursday 16:00 Central European Time, Thursday 10:00 AM US Eastern
+                  </div>
+                </div>
+              </div>
+
+              <div class="zoom-link font-size-large">
+                <i class="fa-duotone fa-solid fa-earth-asia fa-xl"></i>
+                <div>
+                  {% if userName is defined %}
+                  {% if scope is defined and scope == "GET" %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="{{ CompanyWebinar.webinarUrlApac }}" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    Open Zoom
+                  </sl-button>
+                  {% else %}
+                  <sl-button id="webinar-button" class="gradient-button blue-teal-background" href="#how-to-get-access" variant="neutral">
+                    <i class="fa-duotone fa-solid fa-video"></i>
+                    See below how to get access
+                  </sl-button>
+                  {% endif %}
+                  {% else %}
+                  <sl-button id="order-button" class="gradient-button blue-teal-background" href="{{ SITE_BASE_URL }}{{ userUri }}" variant="neutral">
+                    <i class="fa-duotone fa-right-to-bracket"></i>
+                    Log in with GitHub
+                  </sl-button>
+                  {% endif %}
+                </div>
+                <div>
+                  <div>
+                    Fridays: Asia Pacific
+                  </div>
+                  <div class="font-size-x-small">
+                    Friday 09:00 Indian Time, Thursday 11:30 PM US Eastern
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="how-to-get-access" class="red-pink-background background border-radius-x-large">
+          <div class="intro-content">
+            <h2 class="brand-font">
+              <i class="fa-brands fa-redhat fa-2xl"></i> Red Hatters — if you are a Red Hat associate and want to join the conversation, send me a Red Hat Slack message @computate and I'll get you connected. 
+            </h2>
+          </div>
+        </div>
+        <div id="how-to-get-access" class="blue-purple-background background border-radius-x-large">
+          <div class="intro-content">
+            <h2 class="brand-font">
+              <i class="fa-solid fa-cloud fa-2xl"></i> Mass Open Cloud — if you are a university researcher and part of the Red Hat Collaboratory, send me an MOC Slack message @computate and I'll get you connected. 
+            </h2>
+          </div>
+        </div>
+
+        <div class="pink-purple-background background border-radius-x-large">
+          <div class="intro-content">
+            <h2 class="brand-font">
+              <i class="fa-solid fa-computer-classic fa-2xl"></i> Computaters — if you are an open source developer who has purchased one of my products, you also have access to the webinar! 
+              Just click the link above to log in and get the Zoom link to the webinar. 
+            </h2>
+          </div>
+        </div>
+
+        <div>
+          <sl-carousel class="aspect-ratio" autoplay loop navigation pagination>
+            <sl-carousel-item>
+              <sl-tooltip placement="bottom" content="AI Telemetry Overview">
+                <a href="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-overview.png">
+                  <img src="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-overview.png"/>
+                </a>
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="bottom" content="AI Telemetry GPU Dashboard">
+                <a href="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-gpu-dashboard.png">
+                  <img src="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-gpu-dashboard.png"/>
+                </a>
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="bottom" content="AI Telemetry Operators">
+                <a href="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-operators.png">
+                  <img src="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-operators.png"/>
+                </a>
+              </sl-tooltip>
+            </sl-carousel-item>
+            <sl-carousel-item>
+              <sl-tooltip placement="bottom" content="AI Telemetry OpenAPI">
+                <a href="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-openapi.png">
+                  <img src="{{ STATIC_BASE_URL }}/webinar/ai-telemetry-webinar/ai-telemetry-openapi.png"/>
+                </a>
+              </sl-tooltip>
+            </sl-carousel-item>
+          </sl-carousel>
+        </div>
+
+        <div class="summary-wrapper">
+          <div class="summary">
+            <h2 class="brand-font anchor-heading" id="whats-web-awesome">
+              What is the {{ name }}?
+            </h2>
+            <p>
+              Develop a platform for reporting on AI/ML cluster and GPU device usage data and performing telemetry on AI/ML workloads through a secure dashboard and API.
+            </p>
+
+            <div class="summary-grid">
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-microchip"></i>
+                  <h3>
+                    GPU Utilization
+                  </h3>
+                </div>
+                <p>
+                  We wish to help researchers and managers of GPU devices in the New England Research Cloud (NERC) shared computing environment understand how the valueable and limited GPU resources are being utilized. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-shield-check"></i>
+                  <h3>
+                    Access Control
+                  </h3>
+                </div>
+                <p>
+                  We will provide access to researchers and managers through Keycloak and various identity providers like GitHub and University SSO to access the AI Cluster data and research project GPU allocation telemetry through a modern open source platform that will be built for the MOC and usable by other organizations wishing to collect the same telemetry. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-server"></i>
+                  <h3>
+                    Where it's built
+                  </h3>
+                </div>
+                <p>
+                  The New England Research Cloud is a perfect environment for AI/ML related research. 
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-keyboard"></i>
+                  <h3>
+                    Development Team
+                  </h3>
+                </div>
+                <p>
+                  Other Red Hat associates outside of Red Hat Research have also been invited to participate in building the platform through the Red Hat Internal Gig Program.
+                </p>
+              </div>
+
+              <div>
+                <div class="icon-heading">
+                  <i class="fa-solid fa-code"></i>
+                  <h3>
+                    Where's the code?
+                  </h3>
+                </div>
+                <p>
+                  The AI Telemetry project is a public open source project on GitHub. 
+                  Read the docs and fork the source code, it's all available here: 
+                  <br/><a href="https://github.com/OCP-on-NERC/ai-telemetry">https://github.com/OCP-on-NERC/ai-telemetry</a>
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="blue-teal-background background border-radius-x-large ">
+          <div class="intro-content">
+            <h3>
+              You can add our {{ name }} calendar to your calender with the ICS calendar link below. 
+            </h3>
+            <div>
+              <a class="word-break-all " href="https://user.fm/calendar/v1-1f13180574907ff09a03a3f56d315984/RH%20Research%20AI%20Telemetry%20Webinars.ics">
+                https://user.fm/calendar/v1-1f13180574907ff09a03a3f56d315984/RH%20Research%20AI%20Telemetry%20Webinars.ics
+              </a>
+            </div>
+          </div>
+        </div>
+{% endblock %}

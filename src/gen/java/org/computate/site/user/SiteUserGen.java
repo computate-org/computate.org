@@ -83,17 +83,17 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: POST</h2>
  * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
  * </p>
- * <h2>ApiMethode: PUTImport</h2>
- * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
- * </p>
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: User"</b>, which groups all of the OpenAPIs for SiteUser objects under the tag "User". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/user</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/user"</b>, which defines the base API URI for SiteUser objects as "/api/user" in the OpenAPI spec. 
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: site users"</b>, which groups all of the OpenAPIs for SiteUser objects under the tag "site users". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/user</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/user"</b>, which defines the base API URI for SiteUser objects as "/en-us/api/user" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -116,9 +116,9 @@ import org.computate.search.response.solr.SolrResponse;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.user.SiteUserPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.user.SiteUserPage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.user.SiteUserPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -177,22 +177,22 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String SiteUser_Title_enUS = "site users";
 	public static final String SiteUser_ThePluralName_enUS = "the site users";
 	public static final String SiteUser_NoNameFound_enUS = "no site user found";
-	public static final String SiteUser_ApiUri_enUS = "/api/user";
-	public static final String SiteUser_ApiUriSearchPage_enUS = "/user";
+	public static final String SiteUser_ApiUri_enUS = "/en-us/api/user";
+	public static final String SiteUser_ApiUriSearchPage_enUS = "/en-us/search/user";
 	public static final String SiteUser_OfName_enUS = "of site user";
 	public static final String SiteUser_ANameAdjective_enUS = "a site user";
 	public static final String SiteUser_NameAdjectiveSingular_enUS = "site user";
 	public static final String SiteUser_NameAdjectivePlural_enUS = "site users";
-	public static final String Search_enUS_Uri = "/api/user";
-	public static final String Search_enUS_ImageUri = "/png/api/user-999.png";
-	public static final String PATCH_enUS_Uri = "/api/user";
-	public static final String PATCH_enUS_ImageUri = "/png/api/user-999.png";
-	public static final String POST_enUS_Uri = "/api/user";
-	public static final String POST_enUS_ImageUri = "/png/api/user-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/user-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/user-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/user";
-	public static final String SearchPage_enUS_ImageUri = "/png/user-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/user";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/user-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/user";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/user-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/user";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/user-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/user";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/user-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/user/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/user/{objectId}-999.png";
 
 	public static final String SiteUser_Icon = "<i class=\"fa-duotone fa-solid fa-user-gear\"></i>";
 

@@ -1,7 +1,8 @@
 package org.computate.site.model.about;
 
+import org.computate.site.model.about.CompanyAbout;
+import java.lang.String;
 import org.computate.site.page.PageLayout;
-import org.computate.site.result.BaseResultPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -47,7 +48,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> {
+public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +390,16 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListCompanyAbout_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = CompanyAbout.searchVarCompanyAbout(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListCompanyAbout_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,18 +457,21 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
     Optional.ofNullable(searchListCompanyAbout_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyAboutCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListCompanyAbout_ == null ? 0 : searchListCompanyAbout_.size());
   }
 
-  protected void _companyAbout_(Wrap<CompanyAbout> w) {
-    if(companyAboutCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<CompanyAbout> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyAbout_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyAbout_ != null)
-      w.o(companyAbout_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -472,11 +486,11 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyAbout_ != null && companyAbout_.getObjectTitle() != null)
-      c.o(companyAbout_.getObjectTitle());
-    else if(companyAbout_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("about");
-    else if(searchListCompanyAbout_ == null || companyAboutCount == 0)
+    else if(searchListCompanyAbout_ == null || resultCount == 0)
       c.o("no about page found");
     else
       c.o("about");
@@ -484,12 +498,12 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/about");
+    c.o("/en-us/search/about");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/about");
+    c.o("/en-us/api/about");
   }
 
   @Override
@@ -504,7 +518,7 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/about-999.png");
+      c.o("/png/en-us/search/about-999.png");
   }
 
   @Override
@@ -513,6 +527,6 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<BaseResultPage> 
   }
 
   protected void _pageUriCompanyAbout(Wrap<String> c) {
-      c.o("/about");
+      c.o("/en-us/search/about");
   }
 }

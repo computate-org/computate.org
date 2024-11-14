@@ -90,11 +90,17 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: website"</b>, which groups all of the OpenAPIs for CompanyWebsite objects under the tag "website". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/website</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/website"</b>, which defines the base API URI for CompanyWebsite objects as "/api/website" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: websites"</b>, which groups all of the OpenAPIs for CompanyWebsite objects under the tag "websites". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/website</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/website"</b>, which defines the base API URI for CompanyWebsite objects as "/en-us/api/website" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -114,9 +120,9 @@ import io.vertx.core.json.JsonObject;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.website.CompanyWebsitePage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.website.CompanyWebsitePage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.website.CompanyWebsitePage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -175,24 +181,28 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String CompanyWebsite_Title_enUS = "websites";
 	public static final String CompanyWebsite_ThePluralName_enUS = "the websites";
 	public static final String CompanyWebsite_NoNameFound_enUS = "no website found";
-	public static final String CompanyWebsite_ApiUri_enUS = "/api/website";
-	public static final String CompanyWebsite_ApiUriSearchPage_enUS = "/website";
+	public static final String CompanyWebsite_ApiUri_enUS = "/en-us/api/website";
+	public static final String CompanyWebsite_ApiUriSearchPage_enUS = "/en-us/search/website";
 	public static final String CompanyWebsite_OfName_enUS = "of website";
 	public static final String CompanyWebsite_ANameAdjective_enUS = "a website";
 	public static final String CompanyWebsite_NameAdjectiveSingular_enUS = "website";
 	public static final String CompanyWebsite_NameAdjectivePlural_enUS = "websites";
-	public static final String Search_enUS_Uri = "/api/website";
-	public static final String Search_enUS_ImageUri = "/png/api/website-999.png";
-	public static final String GET_enUS_Uri = "/api/website/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/website/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/website";
-	public static final String PATCH_enUS_ImageUri = "/png/api/website-999.png";
-	public static final String POST_enUS_Uri = "/api/website";
-	public static final String POST_enUS_ImageUri = "/png/api/website-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/website-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/website-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/website";
-	public static final String SearchPage_enUS_ImageUri = "/png/website-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/website";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/website-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/website/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/website/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/website";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/website-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/website";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/website-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/website-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/website-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/website";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/website-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/website/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/website/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/view/website/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/view/website/{objectId}-999.png";
 
 	public static final String CompanyWebsite_Icon = "<i class=\"fa-regular fa-globe-pointer\"></i>";
 

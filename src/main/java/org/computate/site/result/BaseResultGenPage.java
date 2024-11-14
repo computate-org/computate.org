@@ -392,6 +392,16 @@ public class BaseResultGenPage extends BaseResultGenPageGen<PageLayout> {
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListBaseResult_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = BaseResult.searchVarBaseResult(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListBaseResult_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -449,18 +459,21 @@ public class BaseResultGenPage extends BaseResultGenPageGen<PageLayout> {
     Optional.ofNullable(searchListBaseResult_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _baseResultCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListBaseResult_ == null ? 0 : searchListBaseResult_.size());
   }
 
-  protected void _baseResult_(Wrap<BaseResult> w) {
-    if(baseResultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<BaseResult> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListBaseResult_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(baseResult_ != null)
-      w.o(baseResult_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -475,11 +488,11 @@ public class BaseResultGenPage extends BaseResultGenPageGen<PageLayout> {
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(baseResult_ != null && baseResult_.getObjectTitle() != null)
-      c.o(baseResult_.getObjectTitle());
-    else if(baseResult_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("");
-    else if(searchListBaseResult_ == null || baseResultCount == 0)
+    else if(searchListBaseResult_ == null || resultCount == 0)
       c.o("");
   }
 

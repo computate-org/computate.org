@@ -1,0 +1,77 @@
+{% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {% if "PATCH" in scopes %}
+            <sl-divider></sl-divider>
+            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
+    {% if resultCount == 1 %}              <sl-button id="refreshThisIotServiceGenPage"
+                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisIotServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisIotServiceGenPage')); }); return false; ">
+                <i slot="prefix" class="fas fa-sync-alt "></i>
+                refresh
+              </sl-button>
+    {% endif %}
+    {% if resultCount > 0 %}
+              <sl-button id="refreshAllIotServiceGenPage{{id}}"
+                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllIotServiceGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllIotServiceGenPage{{id}}')); }); "
+                  >
+                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                Refresh all 
+              </sl-button>
+    {% endif %}
+  {% endif %}
+{% endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {%- if resultCount > 0 %}
+    {{ htmButton_patchIotService() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if pk is defined %}
+      {{ htmButton_postIotService() }}
+    {%- else %}
+      {{ htmButton_postIotService() }}
+    {%- endif %}
+  {%- else %}
+    {{ htmButton_postIotService() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if pk is defined %}
+      {{ htmButton_deleteIotService() }}
+    {%- else %}
+    {%- endif %}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {{ htmButton_putimportIotService() }}
+{%- endif %}
+
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {%- if resultCount > 0 %}
+    {{ htmForm_patchIotService() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if pk is defined %}
+      {{ htmForm_postIotService() }}
+    {%- else %}
+      {{ htmForm_postIotService() }}
+    {%- endif %}
+  {%- else %}
+    {{ htmForm_postIotService() }}
+  {%- endif %}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount == 1 %}
+    {%- if pk is defined %}
+      {{ htmForm_deleteIotService() }}
+    {%- else %}
+    {%- endif %}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+{%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
+  {{ htmForm_putimportIotService() }}
+{%- endif %}

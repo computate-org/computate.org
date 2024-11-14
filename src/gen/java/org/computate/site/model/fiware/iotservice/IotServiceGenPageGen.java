@@ -1,7 +1,7 @@
 package org.computate.site.model.fiware.iotservice;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these IotServiceGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class IotServiceGenPageGen into the class IotServiceGenPage. 
  * </li>
- * <h3>About the IotServiceGenPage class and it's generated class IotServiceGenPageGen&lt;BaseModelPage&gt;: </h3>extends IotServiceGenPageGen
+ * <h3>About the IotServiceGenPage class and it's generated class IotServiceGenPageGen&lt;PageLayout&gt;: </h3>extends IotServiceGenPageGen
  * <p>
  * This Java class extends a generated Java class IotServiceGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends IotServiceGenPageGen<BaseModelPage>
- * <p>This <code>class IotServiceGenPage extends IotServiceGenPageGen&lt;BaseModelPage&gt;</code>, which means it extends a newly generated IotServiceGenPageGen. 
- * The generated <code>class IotServiceGenPageGen extends BaseModelPage</code> which means that IotServiceGenPage extends IotServiceGenPageGen which extends BaseModelPage. 
+ * extends IotServiceGenPageGen<PageLayout>
+ * <p>This <code>class IotServiceGenPage extends IotServiceGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated IotServiceGenPageGen. 
+ * The generated <code>class IotServiceGenPageGen extends PageLayout</code> which means that IotServiceGenPage extends IotServiceGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
+public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(IotServiceGenPage.class);
 
 	///////////////////////////
@@ -229,102 +229,102 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		return IotServiceGenPage.staticSearchListIotService(siteRequest_, IotServiceGenPage.staticSetListIotService(siteRequest_, o)).toString();
 	}
 
-	/////////////////////
-	// iotServiceCount //
-	/////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity iotServiceCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer iotServiceCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity iotServiceCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:iotServiceCount">Find the entity iotServiceCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _iotServiceCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getIotServiceCount() {
-		return iotServiceCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setIotServiceCount(Integer iotServiceCount) {
-		this.iotServiceCount = iotServiceCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setIotServiceCount(String o) {
-		this.iotServiceCount = IotServiceGenPage.staticSetIotServiceCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = IotServiceGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetIotServiceCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected IotServiceGenPage iotServiceCountInit() {
-		Wrap<Integer> iotServiceCountWrap = new Wrap<Integer>().var("iotServiceCount");
-		if(iotServiceCount == null) {
-			_iotServiceCount(iotServiceCountWrap);
-			Optional.ofNullable(iotServiceCountWrap.getO()).ifPresent(o -> {
-				setIotServiceCount(o);
+	protected IotServiceGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (IotServiceGenPage)this;
 	}
 
-	public static Integer staticSearchIotServiceCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrIotServiceCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqIotServiceCount(SiteRequest siteRequest_, String o) {
-		return IotServiceGenPage.staticSearchIotServiceCount(siteRequest_, IotServiceGenPage.staticSetIotServiceCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return IotServiceGenPage.staticSearchResultCount(siteRequest_, IotServiceGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	/////////////////
-	// iotService_ //
-	/////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity iotService_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected IotService iotService_;
+	protected IotService result;
 
-	/**	<br> The entity iotService_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:iotService_">Find the entity iotService_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _iotService_(Wrap<IotService> w);
+	protected abstract void _result(Wrap<IotService> w);
 
-	public IotService getIotService_() {
-		return iotService_;
+	public IotService getResult() {
+		return result;
 	}
 
-	public void setIotService_(IotService iotService_) {
-		this.iotService_ = iotService_;
+	public void setResult(IotService result) {
+		this.result = result;
 	}
-	public static IotService staticSetIotService_(SiteRequest siteRequest_, String o) {
+	public static IotService staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected IotServiceGenPage iotService_Init() {
-		Wrap<IotService> iotService_Wrap = new Wrap<IotService>().var("iotService_");
-		if(iotService_ == null) {
-			_iotService_(iotService_Wrap);
-			Optional.ofNullable(iotService_Wrap.getO()).ifPresent(o -> {
-				setIotService_(o);
+	protected IotServiceGenPage resultInit() {
+		Wrap<IotService> resultWrap = new Wrap<IotService>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (IotServiceGenPage)this;
@@ -508,7 +508,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseIotServiceGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -525,8 +525,8 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 			try {
 				searchListIotService_Init();
 				listIotServiceInit();
-				iotServiceCountInit();
-				iotService_Init();
+				resultCountInit();
+				resultInit();
 				pkInit();
 				idInit();
 				pageUriIotServiceInit();
@@ -552,7 +552,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 	/////////////////
 
 	public void siteRequestIotServiceGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -587,10 +587,10 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 				return oIotServiceGenPage.searchListIotService_;
 			case "listIotService":
 				return oIotServiceGenPage.listIotService;
-			case "iotServiceCount":
-				return oIotServiceGenPage.iotServiceCount;
-			case "iotService_":
-				return oIotServiceGenPage.iotService_;
+			case "resultCount":
+				return oIotServiceGenPage.resultCount;
+			case "result":
+				return oIotServiceGenPage.result;
 			case "pk":
 				return oIotServiceGenPage.pk;
 			case "id":
@@ -598,7 +598,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 			case "pageUriIotService":
 				return oIotServiceGenPage.pageUriIotService;
 			default:
-				return super.obtainBaseModelPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -623,7 +623,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		IotServiceGenPage oIotServiceGenPage = (IotServiceGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -638,8 +638,8 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listIotService":
 			return IotServiceGenPage.staticSetListIotService(siteRequest_, o);
-		case "iotServiceCount":
-			return IotServiceGenPage.staticSetIotServiceCount(siteRequest_, o);
+		case "resultCount":
+			return IotServiceGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return IotServiceGenPage.staticSetPk(siteRequest_, o);
 		case "id":
@@ -647,7 +647,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSetPageUriIotService(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSetBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -662,8 +662,8 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listIotService":
 			return IotServiceGenPage.staticSearchListIotService(siteRequest_, (JsonArray)o);
-		case "iotServiceCount":
-			return IotServiceGenPage.staticSearchIotServiceCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return IotServiceGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return IotServiceGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
@@ -671,7 +671,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchPageUriIotService(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -686,8 +686,8 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listIotService":
 			return IotServiceGenPage.staticSearchStrListIotService(siteRequest_, (String)o);
-		case "iotServiceCount":
-			return IotServiceGenPage.staticSearchStrIotServiceCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return IotServiceGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return IotServiceGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
@@ -695,7 +695,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchStrPageUriIotService(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -710,8 +710,8 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listIotService":
 			return IotServiceGenPage.staticSearchFqListIotService(siteRequest_, o);
-		case "iotServiceCount":
-			return IotServiceGenPage.staticSearchFqIotServiceCount(siteRequest_, o);
+		case "resultCount":
+			return IotServiceGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return IotServiceGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
@@ -719,7 +719,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchFqPageUriIotService(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -736,16 +736,16 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 	public static final String CLASS_SIMPLE_NAME = "IotServiceGenPage";
 	public static final String VAR_searchListIotService_ = "searchListIotService_";
 	public static final String VAR_listIotService = "listIotService";
-	public static final String VAR_iotServiceCount = "iotServiceCount";
-	public static final String VAR_iotService_ = "iotService_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriIotService = "pageUriIotService";
 
 	public static final String DISPLAY_NAME_searchListIotService_ = "";
 	public static final String DISPLAY_NAME_listIotService = "";
-	public static final String DISPLAY_NAME_iotServiceCount = "";
-	public static final String DISPLAY_NAME_iotService_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriIotService = "";
@@ -759,10 +759,10 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 			return DISPLAY_NAME_searchListIotService_;
 		case VAR_listIotService:
 			return DISPLAY_NAME_listIotService;
-		case VAR_iotServiceCount:
-			return DISPLAY_NAME_iotServiceCount;
-		case VAR_iotService_:
-			return DISPLAY_NAME_iotService_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
 		case VAR_id:
@@ -770,7 +770,7 @@ public abstract class IotServiceGenPageGen<DEV> extends BaseModelPage {
 		case VAR_pageUriIotService:
 			return DISPLAY_NAME_pageUriIotService;
 		default:
-			return BaseModelPage.displayNameBaseModelPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

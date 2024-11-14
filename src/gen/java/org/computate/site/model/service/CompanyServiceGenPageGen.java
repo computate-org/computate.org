@@ -1,7 +1,7 @@
 package org.computate.site.model.service;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.result.BaseResultPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyServiceGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyServiceGenPageGen into the class CompanyServiceGenPage. 
  * </li>
- * <h3>About the CompanyServiceGenPage class and it's generated class CompanyServiceGenPageGen&lt;BaseResultPage&gt;: </h3>extends CompanyServiceGenPageGen
+ * <h3>About the CompanyServiceGenPage class and it's generated class CompanyServiceGenPageGen&lt;PageLayout&gt;: </h3>extends CompanyServiceGenPageGen
  * <p>
  * This Java class extends a generated Java class CompanyServiceGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyServiceGenPageGen<BaseResultPage>
- * <p>This <code>class CompanyServiceGenPage extends CompanyServiceGenPageGen&lt;BaseResultPage&gt;</code>, which means it extends a newly generated CompanyServiceGenPageGen. 
- * The generated <code>class CompanyServiceGenPageGen extends BaseResultPage</code> which means that CompanyServiceGenPage extends CompanyServiceGenPageGen which extends BaseResultPage. 
+ * extends CompanyServiceGenPageGen<PageLayout>
+ * <p>This <code>class CompanyServiceGenPage extends CompanyServiceGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated CompanyServiceGenPageGen. 
+ * The generated <code>class CompanyServiceGenPageGen extends PageLayout</code> which means that CompanyServiceGenPage extends CompanyServiceGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
+public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyServiceGenPage.class);
 
 	///////////////////////////////
@@ -229,102 +229,102 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		return CompanyServiceGenPage.staticSearchListCompanyService(siteRequest_, CompanyServiceGenPage.staticSetListCompanyService(siteRequest_, o)).toString();
 	}
 
-	/////////////////////////
-	// companyServiceCount //
-	/////////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity companyServiceCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer companyServiceCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity companyServiceCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:companyServiceCount">Find the entity companyServiceCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyServiceCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getCompanyServiceCount() {
-		return companyServiceCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setCompanyServiceCount(Integer companyServiceCount) {
-		this.companyServiceCount = companyServiceCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setCompanyServiceCount(String o) {
-		this.companyServiceCount = CompanyServiceGenPage.staticSetCompanyServiceCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = CompanyServiceGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetCompanyServiceCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected CompanyServiceGenPage companyServiceCountInit() {
-		Wrap<Integer> companyServiceCountWrap = new Wrap<Integer>().var("companyServiceCount");
-		if(companyServiceCount == null) {
-			_companyServiceCount(companyServiceCountWrap);
-			Optional.ofNullable(companyServiceCountWrap.getO()).ifPresent(o -> {
-				setCompanyServiceCount(o);
+	protected CompanyServiceGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (CompanyServiceGenPage)this;
 	}
 
-	public static Integer staticSearchCompanyServiceCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrCompanyServiceCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqCompanyServiceCount(SiteRequest siteRequest_, String o) {
-		return CompanyServiceGenPage.staticSearchCompanyServiceCount(siteRequest_, CompanyServiceGenPage.staticSetCompanyServiceCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return CompanyServiceGenPage.staticSearchResultCount(siteRequest_, CompanyServiceGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	/////////////////////
-	// companyService_ //
-	/////////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity companyService_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected CompanyService companyService_;
+	protected CompanyService result;
 
-	/**	<br> The entity companyService_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:companyService_">Find the entity companyService_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyService_(Wrap<CompanyService> w);
+	protected abstract void _result(Wrap<CompanyService> w);
 
-	public CompanyService getCompanyService_() {
-		return companyService_;
+	public CompanyService getResult() {
+		return result;
 	}
 
-	public void setCompanyService_(CompanyService companyService_) {
-		this.companyService_ = companyService_;
+	public void setResult(CompanyService result) {
+		this.result = result;
 	}
-	public static CompanyService staticSetCompanyService_(SiteRequest siteRequest_, String o) {
+	public static CompanyService staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected CompanyServiceGenPage companyService_Init() {
-		Wrap<CompanyService> companyService_Wrap = new Wrap<CompanyService>().var("companyService_");
-		if(companyService_ == null) {
-			_companyService_(companyService_Wrap);
-			Optional.ofNullable(companyService_Wrap.getO()).ifPresent(o -> {
-				setCompanyService_(o);
+	protected CompanyServiceGenPage resultInit() {
+		Wrap<CompanyService> resultWrap = new Wrap<CompanyService>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (CompanyServiceGenPage)this;
@@ -448,7 +448,7 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyServiceGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseResultPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -465,8 +465,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 			try {
 				searchListCompanyService_Init();
 				listCompanyServiceInit();
-				companyServiceCountInit();
-				companyService_Init();
+				resultCountInit();
+				resultInit();
 				idInit();
 				pageUriCompanyServiceInit();
 				promise2.complete();
@@ -491,7 +491,7 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 	/////////////////
 
 	public void siteRequestCompanyServiceGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseResultPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -526,16 +526,16 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 				return oCompanyServiceGenPage.searchListCompanyService_;
 			case "listCompanyService":
 				return oCompanyServiceGenPage.listCompanyService;
-			case "companyServiceCount":
-				return oCompanyServiceGenPage.companyServiceCount;
-			case "companyService_":
-				return oCompanyServiceGenPage.companyService_;
+			case "resultCount":
+				return oCompanyServiceGenPage.resultCount;
+			case "result":
+				return oCompanyServiceGenPage.result;
 			case "id":
 				return oCompanyServiceGenPage.id;
 			case "pageUriCompanyService":
 				return oCompanyServiceGenPage.pageUriCompanyService;
 			default:
-				return super.obtainBaseResultPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -560,7 +560,7 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		CompanyServiceGenPage oCompanyServiceGenPage = (CompanyServiceGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseResultPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -575,14 +575,14 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyService":
 			return CompanyServiceGenPage.staticSetListCompanyService(siteRequest_, o);
-		case "companyServiceCount":
-			return CompanyServiceGenPage.staticSetCompanyServiceCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyServiceGenPage.staticSetResultCount(siteRequest_, o);
 		case "id":
 			return CompanyServiceGenPage.staticSetId(siteRequest_, o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSetPageUriCompanyService(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSetBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -597,14 +597,14 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyService":
 			return CompanyServiceGenPage.staticSearchListCompanyService(siteRequest_, (JsonArray)o);
-		case "companyServiceCount":
-			return CompanyServiceGenPage.staticSearchCompanyServiceCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyServiceGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyServiceGenPage.staticSearchId(siteRequest_, (String)o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchPageUriCompanyService(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -619,14 +619,14 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyService":
 			return CompanyServiceGenPage.staticSearchStrListCompanyService(siteRequest_, (String)o);
-		case "companyServiceCount":
-			return CompanyServiceGenPage.staticSearchStrCompanyServiceCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyServiceGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyServiceGenPage.staticSearchStrId(siteRequest_, (String)o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchStrPageUriCompanyService(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchStrBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -641,14 +641,14 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyService":
 			return CompanyServiceGenPage.staticSearchFqListCompanyService(siteRequest_, o);
-		case "companyServiceCount":
-			return CompanyServiceGenPage.staticSearchFqCompanyServiceCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyServiceGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "id":
 			return CompanyServiceGenPage.staticSearchFqId(siteRequest_, o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchFqPageUriCompanyService(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSearchFqBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -665,15 +665,15 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyServiceGenPage";
 	public static final String VAR_searchListCompanyService_ = "searchListCompanyService_";
 	public static final String VAR_listCompanyService = "listCompanyService";
-	public static final String VAR_companyServiceCount = "companyServiceCount";
-	public static final String VAR_companyService_ = "companyService_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriCompanyService = "pageUriCompanyService";
 
 	public static final String DISPLAY_NAME_searchListCompanyService_ = "";
 	public static final String DISPLAY_NAME_listCompanyService = "";
-	public static final String DISPLAY_NAME_companyServiceCount = "";
-	public static final String DISPLAY_NAME_companyService_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriCompanyService = "";
 
@@ -686,16 +686,16 @@ public abstract class CompanyServiceGenPageGen<DEV> extends BaseResultPage {
 			return DISPLAY_NAME_searchListCompanyService_;
 		case VAR_listCompanyService:
 			return DISPLAY_NAME_listCompanyService;
-		case VAR_companyServiceCount:
-			return DISPLAY_NAME_companyServiceCount;
-		case VAR_companyService_:
-			return DISPLAY_NAME_companyService_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		case VAR_pageUriCompanyService:
 			return DISPLAY_NAME_pageUriCompanyService;
 		default:
-			return BaseResultPage.displayNameBaseResultPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

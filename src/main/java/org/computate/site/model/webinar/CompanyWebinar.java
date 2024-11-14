@@ -19,41 +19,37 @@ import io.vertx.pgclient.data.Polygon;
 
 /**
  * Order: 7
- * Model: true
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/webinar
- * UserPageTemplates: /en-us/user/webinar
- * SuperPage: BaseModelPage
- * Indexed: true
  * Description: Join the Computate community for regular weekly webinars
+ * AName: a webinar
+ * PluralName: webinars
+ * Icon: <i class="fa-regular fa-video"></i>
  * 
- * ApiTag: webinar
- * ApiUri: /api/webinar
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/webinar
+ * EditPageUri: /en-us/edit/webinar/{objectId}
+ * DisplayPageUri: /en-us/view/webinar/{objectId}
+ * UserPageUri: /en-us/join/webinar/{objectId}
+ * ApiUri: /en-us/api/webinar
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyWebinarPage
- *     ApiUri: /webinar
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * SearchPagePublicRead: true
- * 
- * AName: a webinar
- * PluralName: webinars
- * Icon: <i class="fa-regular fa-video"></i>
  */
 public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 
@@ -125,10 +121,10 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: user URI
-	 * Description: The user relative URI for this page. 
+	 * DisplayName: join URI
+	 * Description: The join relative URI for this page. 
 	 */
-	protected void _userUri(Wrap<String> w) {
+	protected void _joinUri(Wrap<String> w) {
 	}
 
   /**
@@ -192,6 +188,19 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 */
 	protected void _url(Wrap<String> w) {
 		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Link: true
+	 * HtmColumn: 0
+	 * DisplayName: Join the webinar
+	 * Icon: <i class="fa-solid fa-video"></i>
+	 * Description: Access the webinar links. 
+	 */
+	protected void _joinUrl(Wrap<String> w) {
+		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), joinUri));
 	}
 
 	@Override

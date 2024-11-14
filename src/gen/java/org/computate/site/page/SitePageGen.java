@@ -91,11 +91,17 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Page"</b>, which groups all of the OpenAPIs for SitePage objects under the tag "Page". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/page</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/page"</b>, which defines the base API URI for SitePage objects as "/api/page" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: articles"</b>, which groups all of the OpenAPIs for SitePage objects under the tag "articles". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/article</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/article"</b>, which defines the base API URI for SitePage objects as "/en-us/api/article" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -115,9 +121,9 @@ import io.vertx.core.json.JsonObject;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.page.SitePagePage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.page.SitePagePage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.page.SitePagePage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -176,24 +182,28 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String SitePage_Title_enUS = "articles";
 	public static final String SitePage_ThePluralName_enUS = "the articles";
 	public static final String SitePage_NoNameFound_enUS = "no article found";
-	public static final String SitePage_ApiUri_enUS = "/api/page";
-	public static final String SitePage_ApiUriSearchPage_enUS = "/page";
+	public static final String SitePage_ApiUri_enUS = "/en-us/api/article";
+	public static final String SitePage_ApiUriSearchPage_enUS = "/en-us/search/article";
 	public static final String SitePage_OfName_enUS = "of article";
 	public static final String SitePage_ANameAdjective_enUS = "an article";
 	public static final String SitePage_NameAdjectiveSingular_enUS = "article";
 	public static final String SitePage_NameAdjectivePlural_enUS = "articles";
-	public static final String Search_enUS_Uri = "/api/page";
-	public static final String Search_enUS_ImageUri = "/png/api/page-999.png";
-	public static final String GET_enUS_Uri = "/api/page/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/page/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/page";
-	public static final String PATCH_enUS_ImageUri = "/png/api/page-999.png";
-	public static final String POST_enUS_Uri = "/api/page";
-	public static final String POST_enUS_ImageUri = "/png/api/page-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/page-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/page-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/page";
-	public static final String SearchPage_enUS_ImageUri = "/png/page-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/article";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/article-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/article/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/article/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/article";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/article-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/article";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/article-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/article-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/article-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/article";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/article-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/article/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/article/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/view/article/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/view/article/{objectId}-999.png";
 
 	public static final String SitePage_Icon = "<i class=\"fa-duotone fa-solid fa-newspaper\"></i>";
 

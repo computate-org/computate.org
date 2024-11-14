@@ -1,0 +1,272 @@
+{% extends "en-us/PageLayout.htm" %}
+
+{%- block htmTitlePageLayout %}
+{%- block htmTitleCompanyWebsitePage %}
+    <title>{% if resultCount == 0 %}no website found{% else %}websites{% endif %}</title>
+{%- endblock htmTitleCompanyWebsitePage %}
+{%- endblock htmTitlePageLayout %}
+
+{%- block htmStylesPageLayout %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ staticBaseUrl }}/css/website/CompanyWebsite.css"/>
+{%- block htmStylesCompanyWebsitePage %}
+{%- endblock htmStylesCompanyWebsitePage %}
+{%- endblock htmStylesPageLayout %}
+
+{%- block htmStylePageLayout %}
+{{ super() }}
+{%- block htmStyleCompanyWebsitePage %}
+{%- endblock htmStyleCompanyWebsitePage %}
+{%- endblock htmStylePageLayout %}
+
+{%- block htmScriptsPageLayout %}
+{{ super() }}
+{%- block htmScriptsCompanyWebsitePage %}
+    <script src="{{staticBaseUrl}}/js/website/CompanyWebsite.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/website/CompanyWebsiteSearch.js"></script>
+{%- endblock htmScriptsCompanyWebsitePage %}
+{%- endblock htmScriptsPageLayout %}
+
+{%- block htmScriptPageLayout %}
+{%- block htmScriptCompanyWebsitePage %}
+    <script>
+
+      function jsWebsocketCompanyWebsite(id, vars, $response) {
+{%- block jsWebsocketCompanyWebsitePage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyWebsite(e, feature) {
+{%- block jsTooltipCompanyWebsitePage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyWebsite(feature, layer) {
+        return `{%- block htmTooltipCompanyWebsitePage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyWebsitePage %}`;
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        var id = {% if id is defined %}{{ id }}{% else %}null{% endif %};
+
+        if(id == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          var o = document.querySelector('.pageForm .result')?.value;
+          if(o)
+            window.result = JSON.parse(o);
+        {% if id is defined %}
+        {% endif %}
+        }
+        var l = document.querySelector('.pageForm .listCompanyWebsite')?.value;
+        if(l)
+          window.listCompanyWebsite = JSON.parse(l);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphCompanyWebsite();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyWebsite_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyWebsite', event.target, document.querySelector('#qCompanyWebsiteDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyWebsite_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyWebsite', event.target, document.querySelector('#qCompanyWebsiteDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyWebsite_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyWebsite', event.target, document.querySelector('#qCompanyWebsiteDiv_start'));
+        });
+
+
+        var submitForm_patchCompanyWebsite = document.querySelector('#htmForm_patchCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchCompanyWebsite')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyWebsite(null, document.querySelector('#htmForm_patchCompanyWebsite'), document.querySelector('#htmFormButton_patchCompanyWebsite'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyWebsite = document.querySelector('#htmForm_postCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyWebsite')?.addEventListener('click', event => {
+          event.preventDefault();
+          postCompanyWebsite(document.querySelector('#htmForm_postCompanyWebsite'), document.querySelector('#htmFormButton_postCompanyWebsite'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
+        });
+
+        var submitForm_putimportCompanyWebsite = document.querySelector('#htmForm_putimportCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyWebsite')?.addEventListener('click', event => {
+          event.preventDefault();
+          putimportCompanyWebsite(document.querySelector('#htmForm_putimportCompanyWebsite'), document.querySelector('#htmFormButton_putimportCompanyWebsite'));
+          return false;
+        });
+
+        var submitForm_searchpageCompanyWebsite = document.querySelector('#htmForm_searchpageCompanyWebsite')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyWebsite')?.addEventListener('click', event => {
+          event.preventDefault();
+          searchpageCompanyWebsite();
+          return false;
+        });
+      });
+    </script>
+{%- endblock htmScriptCompanyWebsitePage %}
+{%- endblock htmScriptPageLayout %}
+
+{%- block websocketPageLayout %}
+{%- block websocketCompanyWebsitePage %}
+        window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
+        websocketCompanyWebsite(websocketCompanyWebsiteInner);
+{%- endblock websocketCompanyWebsitePage %}
+{%- endblock websocketPageLayout %}
+
+{%- block htmUrlCompanyWebsitePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyWebsitePage %}
+
+{%- block htmBodyStartPageLayout %}
+{{ super() }}
+{%- block htmBodyStartCompanyWebsitePage %}
+{%- endblock htmBodyStartCompanyWebsitePage %}
+{%- endblock htmBodyStartPageLayout %}
+
+{%- block htmBodyMiddlePageLayout %}
+{%- block htmBodyMiddleCompanyWebsitePage %}
+{%- include website/CompanyWebsiteSidebar.htm %}
+{%- include website/CompanyWebsiteSuggestedSearch.htm %}
+{% if resultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all websites">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all websites
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-globe-pointer"></i>
+          <span>websites</span>
+        </h1>
+{% include website/CompanyWebsiteSearchButtons.htm %}
+{% include website/CompanyWebsiteSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no website found</span>
+          </span>
+        </h2>
+{% else %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+          <div>
+            <sl-tooltip content="back to all websites">
+              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+                <i class="fa-solid fa-angle-left"></i>
+                all websites
+              </sl-button>
+            </sl-tooltip>
+          </div>
+          <h1>
+            <a href="{{pageUri}}">
+              <i class="fa-regular fa-globe-pointer"></i>
+              <span>websites</span>
+            </a>
+          </h1>
+{% include website/CompanyWebsiteSearchButtons.htm %}
+{% include website/CompanyWebsiteSearchForm.htm %}
+{% include website/CompanyWebsitePaginationButtons.htm %}
+          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+            <div>
+              <sl-dropdown id="htmDropdown_name">
+                <sl-button slot="trigger" caret>service name</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by service name ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by service name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown id="htmDropdown_description">
+                <sl-button slot="trigger" caret>service description</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by service description ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by service description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+            </div>
+            {% for item in listCompanyWebsite%}
+            <div>
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa-regular fa-globe-pointer"></i>
+              {{ item.name }}
+              </a>
+              <a href="{{ item.pageUrlPk }}">
+              {{ item.description }}
+              </a>
+            </div>
+            {% endfor %}
+              {% if getColumnName is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnDescription is defined %}
+                <div>
+                </div>
+              {% endif %}
+          </div>
+{% endif %}
+{%- endblock htmBodyMiddleCompanyWebsitePage %}
+{%- endblock htmBodyMiddlePageLayout %}
+
+{%- block htmBodyEndPageLayout %}
+  {{ super() }}
+{%- block htmBodyEndCompanyWebsitePage %}
+{%- endblock htmBodyEndCompanyWebsitePage %}
+{%- endblock htmBodyEndPageLayout %}

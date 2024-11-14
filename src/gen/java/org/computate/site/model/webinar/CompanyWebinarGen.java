@@ -90,11 +90,20 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: webinar"</b>, which groups all of the OpenAPIs for CompanyWebinar objects under the tag "webinar". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/webinar</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/webinar"</b>, which defines the base API URI for CompanyWebinar objects as "/api/webinar" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiMethode: UserPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: webinars"</b>, which groups all of the OpenAPIs for CompanyWebinar objects under the tag "webinars". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/webinar</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/webinar"</b>, which defines the base API URI for CompanyWebinar objects as "/en-us/api/webinar" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -117,9 +126,9 @@ import org.computate.search.response.solr.SolrResponse;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.webinar.CompanyWebinarPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.model.webinar.CompanyWebinarPage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.webinar.CompanyWebinarPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -178,24 +187,30 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String CompanyWebinar_Title_enUS = "webinars";
 	public static final String CompanyWebinar_ThePluralName_enUS = "the webinars";
 	public static final String CompanyWebinar_NoNameFound_enUS = "no webinar found";
-	public static final String CompanyWebinar_ApiUri_enUS = "/api/webinar";
-	public static final String CompanyWebinar_ApiUriSearchPage_enUS = "/webinar";
+	public static final String CompanyWebinar_ApiUri_enUS = "/en-us/api/webinar";
+	public static final String CompanyWebinar_ApiUriSearchPage_enUS = "/en-us/search/webinar";
 	public static final String CompanyWebinar_OfName_enUS = "of webinar";
 	public static final String CompanyWebinar_ANameAdjective_enUS = "a webinar";
 	public static final String CompanyWebinar_NameAdjectiveSingular_enUS = "webinar";
 	public static final String CompanyWebinar_NameAdjectivePlural_enUS = "webinars";
-	public static final String Search_enUS_Uri = "/api/webinar";
-	public static final String Search_enUS_ImageUri = "/png/api/webinar-999.png";
-	public static final String GET_enUS_Uri = "/api/webinar/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/webinar/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/webinar";
-	public static final String PATCH_enUS_ImageUri = "/png/api/webinar-999.png";
-	public static final String POST_enUS_Uri = "/api/webinar";
-	public static final String POST_enUS_ImageUri = "/png/api/webinar-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/webinar-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/webinar-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/webinar";
-	public static final String SearchPage_enUS_ImageUri = "/png/webinar-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/webinar";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/webinar-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/webinar/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/webinar/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/webinar";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/webinar-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/webinar";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/webinar-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/webinar-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/webinar-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/webinar";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/webinar-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/webinar/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/webinar/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/view/webinar/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/view/webinar/{objectId}-999.png";
+	public static final String UserPage_enUS_Uri = "/en-us/join/webinar/{objectId}";
+	public static final String UserPage_enUS_ImageUri = "/png/en-us/join/webinar/{objectId}-999.png";
 
 	public static final String CompanyWebinar_Icon = "<i class=\"fa-regular fa-video\"></i>";
 
@@ -480,59 +495,59 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	}
 
 	/////////////
-	// userUri //
+	// joinUri //
 	/////////////
 
 
-	/**	 The entity userUri
+	/**	 The entity joinUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String userUri;
+	protected String joinUri;
 
-	/**	<br> The entity userUri
+	/**	<br> The entity joinUri
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:userUri">Find the entity userUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUri">Find the entity joinUri in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _userUri(Wrap<String> w);
+	protected abstract void _joinUri(Wrap<String> w);
 
-	public String getUserUri() {
-		return userUri;
+	public String getJoinUri() {
+		return joinUri;
 	}
-	public void setUserUri(String o) {
-		this.userUri = CompanyWebinar.staticSetUserUri(siteRequest_, o);
+	public void setJoinUri(String o) {
+		this.joinUri = CompanyWebinar.staticSetJoinUri(siteRequest_, o);
 	}
-	public static String staticSetUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetJoinUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyWebinar userUriInit() {
-		Wrap<String> userUriWrap = new Wrap<String>().var("userUri");
-		if(userUri == null) {
-			_userUri(userUriWrap);
-			Optional.ofNullable(userUriWrap.getO()).ifPresent(o -> {
-				setUserUri(o);
+	protected CompanyWebinar joinUriInit() {
+		Wrap<String> joinUriWrap = new Wrap<String>().var("joinUri");
+		if(joinUri == null) {
+			_joinUri(joinUriWrap);
+			Optional.ofNullable(joinUriWrap.getO()).ifPresent(o -> {
+				setJoinUri(o);
 			});
 		}
 		return (CompanyWebinar)this;
 	}
 
-	public static String staticSearchUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchJoinUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrJoinUri(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqUserUri(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchUserUri(siteRequest_, CompanyWebinar.staticSetUserUri(siteRequest_, o)).toString();
+	public static String staticSearchFqJoinUri(SiteRequest siteRequest_, String o) {
+		return CompanyWebinar.staticSearchJoinUri(siteRequest_, CompanyWebinar.staticSetJoinUri(siteRequest_, o)).toString();
 	}
 
-	public String sqlUserUri() {
-		return userUri;
+	public String sqlJoinUri() {
+		return joinUri;
 	}
 
 	////////////////////////
@@ -815,6 +830,58 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		return url;
 	}
 
+	/////////////
+	// joinUrl //
+	/////////////
+
+
+	/**	 The entity joinUrl
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String joinUrl;
+
+	/**	<br> The entity joinUrl
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUrl">Find the entity joinUrl in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _joinUrl(Wrap<String> w);
+
+	public String getJoinUrl() {
+		return joinUrl;
+	}
+	public void setJoinUrl(String o) {
+		this.joinUrl = CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
+	}
+	public static String staticSetJoinUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyWebinar joinUrlInit() {
+		Wrap<String> joinUrlWrap = new Wrap<String>().var("joinUrl");
+		if(joinUrl == null) {
+			_joinUrl(joinUrlWrap);
+			Optional.ofNullable(joinUrlWrap.getO()).ifPresent(o -> {
+				setJoinUrl(o);
+			});
+		}
+		return (CompanyWebinar)this;
+	}
+
+	public static String staticSearchJoinUrl(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrJoinUrl(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqJoinUrl(SiteRequest siteRequest_, String o) {
+		return CompanyWebinar.staticSearchJoinUrl(siteRequest_, CompanyWebinar.staticSetJoinUrl(siteRequest_, o)).toString();
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -849,12 +916,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				pageIdInit();
 				resourceUriInit();
 				templateUriInit();
-				userUriInit();
+				joinUriInit();
 				webinarUrlAmericasInit();
 				webinarUrlApacInit();
 				webinarUrlEmeaInit();
 				uriInit();
 				urlInit();
+				joinUrlInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -918,8 +986,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return oCompanyWebinar.resourceUri;
 			case "templateUri":
 				return oCompanyWebinar.templateUri;
-			case "userUri":
-				return oCompanyWebinar.userUri;
+			case "joinUri":
+				return oCompanyWebinar.joinUri;
 			case "webinarUrlAmericas":
 				return oCompanyWebinar.webinarUrlAmericas;
 			case "webinarUrlApac":
@@ -930,6 +998,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return oCompanyWebinar.uri;
 			case "url":
 				return oCompanyWebinar.url;
+			case "joinUrl":
+				return oCompanyWebinar.joinUrl;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -979,8 +1049,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSetResourceUri(siteRequest_, o);
 		case "templateUri":
 			return CompanyWebinar.staticSetTemplateUri(siteRequest_, o);
-		case "userUri":
-			return CompanyWebinar.staticSetUserUri(siteRequest_, o);
+		case "joinUri":
+			return CompanyWebinar.staticSetJoinUri(siteRequest_, o);
 		case "webinarUrlAmericas":
 			return CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o);
 		case "webinarUrlApac":
@@ -991,6 +1061,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSetUri(siteRequest_, o);
 		case "url":
 			return CompanyWebinar.staticSetUrl(siteRequest_, o);
+		case "joinUrl":
+			return CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
 			default:
 				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1015,8 +1087,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchResourceUri(siteRequest_, (String)o);
 		case "templateUri":
 			return CompanyWebinar.staticSearchTemplateUri(siteRequest_, (String)o);
-		case "userUri":
-			return CompanyWebinar.staticSearchUserUri(siteRequest_, (String)o);
+		case "joinUri":
+			return CompanyWebinar.staticSearchJoinUri(siteRequest_, (String)o);
 		case "webinarUrlAmericas":
 			return CompanyWebinar.staticSearchWebinarUrlAmericas(siteRequest_, (String)o);
 		case "webinarUrlApac":
@@ -1027,6 +1099,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyWebinar.staticSearchUrl(siteRequest_, (String)o);
+		case "joinUrl":
+			return CompanyWebinar.staticSearchJoinUrl(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1051,8 +1125,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchStrResourceUri(siteRequest_, (String)o);
 		case "templateUri":
 			return CompanyWebinar.staticSearchStrTemplateUri(siteRequest_, (String)o);
-		case "userUri":
-			return CompanyWebinar.staticSearchStrUserUri(siteRequest_, (String)o);
+		case "joinUri":
+			return CompanyWebinar.staticSearchStrJoinUri(siteRequest_, (String)o);
 		case "webinarUrlAmericas":
 			return CompanyWebinar.staticSearchStrWebinarUrlAmericas(siteRequest_, (String)o);
 		case "webinarUrlApac":
@@ -1063,6 +1137,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchStrUri(siteRequest_, (String)o);
 		case "url":
 			return CompanyWebinar.staticSearchStrUrl(siteRequest_, (String)o);
+		case "joinUrl":
+			return CompanyWebinar.staticSearchStrJoinUrl(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1087,8 +1163,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchFqResourceUri(siteRequest_, o);
 		case "templateUri":
 			return CompanyWebinar.staticSearchFqTemplateUri(siteRequest_, o);
-		case "userUri":
-			return CompanyWebinar.staticSearchFqUserUri(siteRequest_, o);
+		case "joinUri":
+			return CompanyWebinar.staticSearchFqJoinUri(siteRequest_, o);
 		case "webinarUrlAmericas":
 			return CompanyWebinar.staticSearchFqWebinarUrlAmericas(siteRequest_, o);
 		case "webinarUrlApac":
@@ -1099,6 +1175,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchFqUri(siteRequest_, o);
 		case "url":
 			return CompanyWebinar.staticSearchFqUrl(siteRequest_, o);
+		case "joinUrl":
+			return CompanyWebinar.staticSearchFqJoinUrl(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1155,11 +1233,11 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				}
 				saves.add("templateUri");
 				return val;
-			} else if("useruri".equals(varLower)) {
+			} else if("joinuri".equals(varLower)) {
 				if(val instanceof String) {
-					setUserUri((String)val);
+					setJoinUri((String)val);
 				}
-				saves.add("userUri");
+				saves.add("joinUri");
 				return val;
 			} else if("webinarurlamericas".equals(varLower)) {
 				if(val instanceof String) {
@@ -1238,10 +1316,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 					oCompanyWebinar.setTemplateUri(templateUri);
 			}
 
-			if(saves.contains("userUri")) {
-				String userUri = (String)doc.get("userUri_docvalues_string");
-				if(userUri != null)
-					oCompanyWebinar.setUserUri(userUri);
+			if(saves.contains("joinUri")) {
+				String joinUri = (String)doc.get("joinUri_docvalues_string");
+				if(joinUri != null)
+					oCompanyWebinar.setJoinUri(joinUri);
 			}
 
 			if(saves.contains("webinarUrlAmericas")) {
@@ -1273,6 +1351,12 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				if(url != null)
 					oCompanyWebinar.setUrl(url);
 			}
+
+			if(saves.contains("joinUrl")) {
+				String joinUrl = (String)doc.get("joinUrl_docvalues_string");
+				if(joinUrl != null)
+					oCompanyWebinar.setJoinUrl(joinUrl);
+			}
 		}
 
 		super.populateBaseModel(doc);
@@ -1294,8 +1378,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		if(templateUri != null) {
 			doc.put("templateUri_docvalues_string", templateUri);
 		}
-		if(userUri != null) {
-			doc.put("userUri_docvalues_string", userUri);
+		if(joinUri != null) {
+			doc.put("joinUri_docvalues_string", joinUri);
 		}
 		if(webinarUrlAmericas != null) {
 			doc.put("webinarUrlAmericas_docvalues_string", webinarUrlAmericas);
@@ -1311,6 +1395,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		}
 		if(url != null) {
 			doc.put("url_docvalues_string", url);
+		}
+		if(joinUrl != null) {
+			doc.put("joinUrl_docvalues_string", joinUrl);
 		}
 		super.indexBaseModel(doc);
 
@@ -1328,8 +1415,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "resourceUri_docvalues_string";
 			case "templateUri":
 				return "templateUri_docvalues_string";
-			case "userUri":
-				return "userUri_docvalues_string";
+			case "joinUri":
+				return "joinUri_docvalues_string";
 			case "webinarUrlAmericas":
 				return "webinarUrlAmericas_docvalues_string";
 			case "webinarUrlApac":
@@ -1340,6 +1427,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "joinUrl":
+				return "joinUrl_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -1357,8 +1446,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "resourceUri_docvalues_string";
 			case "templateUri":
 				return "templateUri_docvalues_string";
-			case "userUri":
-				return "userUri_docvalues_string";
+			case "joinUri":
+				return "joinUri_docvalues_string";
 			case "webinarUrlAmericas":
 				return "webinarUrlAmericas_docvalues_string";
 			case "webinarUrlApac":
@@ -1369,6 +1458,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "uri_docvalues_string";
 			case "url":
 				return "url_docvalues_string";
+			case "joinUrl":
+				return "joinUrl_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -1386,8 +1477,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "resourceUri";
 			case "templateUri_docvalues_string":
 				return "templateUri";
-			case "userUri_docvalues_string":
-				return "userUri";
+			case "joinUri_docvalues_string":
+				return "joinUri";
 			case "webinarUrlAmericas_docvalues_string":
 				return "webinarUrlAmericas";
 			case "webinarUrlApac_docvalues_string":
@@ -1398,6 +1489,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "uri";
 			case "url_docvalues_string":
 				return "url";
+			case "joinUrl_docvalues_string":
+				return "joinUrl";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -1433,12 +1526,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		oCompanyWebinar.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setUserUri(Optional.ofNullable(doc.get("userUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyWebinar.setJoinUri(Optional.ofNullable(doc.get("joinUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setWebinarUrlAmericas(Optional.ofNullable(doc.get("webinarUrlAmericas_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setWebinarUrlApac(Optional.ofNullable(doc.get("webinarUrlApac_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setWebinarUrlEmea(Optional.ofNullable(doc.get("webinarUrlEmea_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyWebinar.setJoinUrl(Optional.ofNullable(doc.get("joinUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -1462,8 +1556,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				apiRequest.addVars("resourceUri");
 			if(!Objects.equals(templateUri, original.getTemplateUri()))
 				apiRequest.addVars("templateUri");
-			if(!Objects.equals(userUri, original.getUserUri()))
-				apiRequest.addVars("userUri");
+			if(!Objects.equals(joinUri, original.getJoinUri()))
+				apiRequest.addVars("joinUri");
 			if(!Objects.equals(webinarUrlAmericas, original.getWebinarUrlAmericas()))
 				apiRequest.addVars("webinarUrlAmericas");
 			if(!Objects.equals(webinarUrlApac, original.getWebinarUrlApac()))
@@ -1474,6 +1568,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				apiRequest.addVars("uri");
 			if(!Objects.equals(url, original.getUrl()))
 				apiRequest.addVars("url");
+			if(!Objects.equals(joinUrl, original.getJoinUrl()))
+				apiRequest.addVars("joinUrl");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -1490,12 +1586,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(userUri).map(v -> "userUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(joinUri).map(v -> "joinUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(webinarUrlAmericas).map(v -> "webinarUrlAmericas: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(webinarUrlApac).map(v -> "webinarUrlApac: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(webinarUrlEmea).map(v -> "webinarUrlEmea: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(joinUrl).map(v -> "joinUrl: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1509,12 +1606,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_resourceUri = "resourceUri";
 	public static final String VAR_templateUri = "templateUri";
-	public static final String VAR_userUri = "userUri";
+	public static final String VAR_joinUri = "joinUri";
 	public static final String VAR_webinarUrlAmericas = "webinarUrlAmericas";
 	public static final String VAR_webinarUrlApac = "webinarUrlApac";
 	public static final String VAR_webinarUrlEmea = "webinarUrlEmea";
 	public static final String VAR_uri = "uri";
 	public static final String VAR_url = "url";
+	public static final String VAR_joinUrl = "joinUrl";
 
 	public static List<String> varsQForClass() {
 		return CompanyWebinar.varsQCompanyWebinar(new ArrayList<String>());
@@ -1533,7 +1631,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		vars.add(VAR_pageId);
 		vars.add(VAR_resourceUri);
 		vars.add(VAR_templateUri);
-		vars.add(VAR_userUri);
+		vars.add(VAR_joinUri);
 		vars.add(VAR_webinarUrlAmericas);
 		vars.add(VAR_webinarUrlApac);
 		vars.add(VAR_webinarUrlEmea);
@@ -1556,12 +1654,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_resourceUri = "resource URI";
 	public static final String DISPLAY_NAME_templateUri = "template URI";
-	public static final String DISPLAY_NAME_userUri = "user URI";
+	public static final String DISPLAY_NAME_joinUri = "join URI";
 	public static final String DISPLAY_NAME_webinarUrlAmericas = "Webinar URL Americas";
 	public static final String DISPLAY_NAME_webinarUrlApac = "Webinar URL APAC";
 	public static final String DISPLAY_NAME_webinarUrlEmea = "Webinar URL EMEA";
 	public static final String DISPLAY_NAME_uri = "URI";
 	public static final String DISPLAY_NAME_url = "URL";
+	public static final String DISPLAY_NAME_joinUrl = "Join the webinar";
 
 	public static String displayNameForClass(String var) {
 		return CompanyWebinar.displayNameCompanyWebinar(var);
@@ -1578,8 +1677,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_resourceUri;
 		case VAR_templateUri:
 			return DISPLAY_NAME_templateUri;
-		case VAR_userUri:
-			return DISPLAY_NAME_userUri;
+		case VAR_joinUri:
+			return DISPLAY_NAME_joinUri;
 		case VAR_webinarUrlAmericas:
 			return DISPLAY_NAME_webinarUrlAmericas;
 		case VAR_webinarUrlApac:
@@ -1590,6 +1689,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_uri;
 		case VAR_url:
 			return DISPLAY_NAME_url;
+		case VAR_joinUrl:
+			return DISPLAY_NAME_joinUrl;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
@@ -1607,8 +1708,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return "The resource relative URI for this page. ";
 		case VAR_templateUri:
 			return "The template relative URI for this page. ";
-		case VAR_userUri:
-			return "The user relative URI for this page. ";
+		case VAR_joinUri:
+			return "The join relative URI for this page. ";
 		case VAR_webinarUrlAmericas:
 			return "The actual link to the Webinar in Americas";
 		case VAR_webinarUrlApac:
@@ -1619,6 +1720,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return "The relative URI for this page. ";
 		case VAR_url:
 			return "The URL for this page. ";
+		case VAR_joinUrl:
+			return "Access the webinar links. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -1636,7 +1739,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_templateUri:
 			return "String";
-		case VAR_userUri:
+		case VAR_joinUri:
 			return "String";
 		case VAR_webinarUrlAmericas:
 			return "String";
@@ -1647,6 +1750,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		case VAR_uri:
 			return "String";
 		case VAR_url:
+			return "String";
+		case VAR_joinUrl:
 			return "String";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
@@ -1659,6 +1764,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return 1;
 		case VAR_description:
 			return 2;
+		case VAR_joinUrl:
+			return 0;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}

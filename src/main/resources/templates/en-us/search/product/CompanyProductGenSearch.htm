@@ -1,0 +1,296 @@
+{% extends "en-us/PageLayout.htm" %}
+
+{%- block htmTitlePageLayout %}
+{%- block htmTitleCompanyProductPage %}
+    <title>{% if resultCount == 0 %}no product found{% else %}products{% endif %}</title>
+{%- endblock htmTitleCompanyProductPage %}
+{%- endblock htmTitlePageLayout %}
+
+{%- block htmStylesPageLayout %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ staticBaseUrl }}/css/en-us/search/product/CompanyProduct.css"/>
+{%- block htmStylesCompanyProductPage %}
+{%- endblock htmStylesCompanyProductPage %}
+{%- endblock htmStylesPageLayout %}
+
+{%- block htmStylePageLayout %}
+{{ super() }}
+{%- block htmStyleCompanyProductPage %}
+{%- endblock htmStyleCompanyProductPage %}
+{%- endblock htmStylePageLayout %}
+
+{%- block htmScriptsPageLayout %}
+{{ super() }}
+{%- block htmScriptsCompanyProductPage %}
+    <script src="{{staticBaseUrl}}/js/en-us/search/product/CompanyProduct.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/en-us/search/product/CompanyProductSearch.js"></script>
+{%- endblock htmScriptsCompanyProductPage %}
+{%- endblock htmScriptsPageLayout %}
+
+{%- block htmScriptPageLayout %}
+{%- block htmScriptCompanyProductPage %}
+    <script>
+
+      function jsWebsocketCompanyProduct(id, vars, $response) {
+{%- block jsWebsocketCompanyProductPage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyProduct(e, feature) {
+{%- block jsTooltipCompanyProductPage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyProduct(feature, layer) {
+        return `{%- block htmTooltipCompanyProductPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyProductPage %}`;
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        var id = {% if id is defined %}{{ id }}{% else %}null{% endif %};
+
+        if(id == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          var o = document.querySelector('.pageForm .result')?.value;
+          if(o)
+            window.result = JSON.parse(o);
+        {% if id is defined %}
+        {% endif %}
+        }
+        var l = document.querySelector('.pageForm .listCompanyProduct')?.value;
+        if(l)
+          window.listCompanyProduct = JSON.parse(l);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphCompanyProduct();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyProduct_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyProduct_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyProduct_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_start'));
+        });
+
+
+        var submitForm_patchCompanyProduct = document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'), document.querySelector('#htmFormButton_patchCompanyProduct'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyProduct = document.querySelector('#htmForm_postCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          postCompanyProduct(document.querySelector('#htmForm_postCompanyProduct'), document.querySelector('#htmFormButton_postCompanyProduct'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
+        });
+
+        var submitForm_deleteCompanyProduct = document.querySelector('#htmForm_deleteCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deleteCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          deleteCompanyProduct(null, document.querySelector('#htmForm_deleteCompanyProduct'), document.querySelector('#htmFormButton_deleteCompanyProduct'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_putimportCompanyProduct = document.querySelector('#htmForm_putimportCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          putimportCompanyProduct(document.querySelector('#htmForm_putimportCompanyProduct'), document.querySelector('#htmFormButton_putimportCompanyProduct'));
+          return false;
+        });
+
+        var submitForm_searchpageCompanyProduct = document.querySelector('#htmForm_searchpageCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          searchpageCompanyProduct();
+          return false;
+        });
+      });
+    </script>
+{%- endblock htmScriptCompanyProductPage %}
+{%- endblock htmScriptPageLayout %}
+
+{%- block websocketPageLayout %}
+{%- block websocketCompanyProductPage %}
+        window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
+        websocketCompanyProduct(websocketCompanyProductInner);
+{%- endblock websocketCompanyProductPage %}
+{%- endblock websocketPageLayout %}
+
+{%- block htmUrlCompanyProductPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyProductPage %}
+
+{%- block htmBodyStartPageLayout %}
+{{ super() }}
+{%- block htmBodyStartCompanyProductPage %}
+{%- endblock htmBodyStartCompanyProductPage %}
+{%- endblock htmBodyStartPageLayout %}
+
+{%- block htmBodyMiddlePageLayout %}
+{%- block htmBodyMiddleCompanyProductPage %}
+{%- include en-us/search/product/CompanyProductSidebar.htm %}
+{%- include en-us/search/product/CompanyProductSuggestedSearch.htm %}
+{% if resultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          <span>products</span>
+        </h1>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no product found</span>
+          </span>
+        </h2>
+{% else %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+          <div>
+            <sl-tooltip content="back to all products">
+              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+                <i class="fa-solid fa-angle-left"></i>
+                all products
+              </sl-button>
+            </sl-tooltip>
+          </div>
+          <h1>
+            <a href="{{pageUri}}">
+              <i class="fa-regular fa-conveyor-belt"></i>
+              <span>products</span>
+            </a>
+          </h1>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+{% include en-us/search/product/CompanyProductPaginationButtons.htm %}
+          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+            <div>
+              <sl-dropdown id="htmDropdown_name">
+                <sl-button slot="trigger" caret>product name</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by product name ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by product name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown id="htmDropdown_description">
+                <sl-button slot="trigger" caret>product description</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by product description ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by product description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <div></div>
+            </div>
+            {% for item in listCompanyProduct%}
+            <div>
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa-regular fa-conveyor-belt"></i>
+              {{ item.name }}
+              </a>
+              <a href="{{ item.pageUrlPk }}">
+              {{ item.description }}
+              </a>
+              <sl-button
+                  id="{{classApiMethodMethod}}_editPage"
+                  help-text="Edit the project. "
+                  class="button-on-left {{classApiMethodMethod}}_editPage classCompanyProduct inputCompanyProduct{{id}}EditPage "
+                  name="setEditPage"
+                  href="{{ item.editPage | e }}"
+                  >
+                <i class="fa-solid fa-pen-to-square"></i>
+              </sl-button>
+            </div>
+            {% endfor %}
+              {% if getColumnName is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnDescription is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnEditPage is defined %}
+                <div>
+                </div>
+              {% endif %}
+          </div>
+{% endif %}
+{%- endblock htmBodyMiddleCompanyProductPage %}
+{%- endblock htmBodyMiddlePageLayout %}
+
+{%- block htmBodyEndPageLayout %}
+  {{ super() }}
+{%- block htmBodyEndCompanyProductPage %}
+{%- endblock htmBodyEndCompanyProductPage %}
+{%- endblock htmBodyEndPageLayout %}

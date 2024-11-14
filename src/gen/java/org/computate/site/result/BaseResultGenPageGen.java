@@ -71,7 +71,7 @@ import io.vertx.core.Future;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage">Find the class BaseResultGenPage in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage">Find the class BaseResultGenPage in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -229,102 +229,102 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 		return BaseResultGenPage.staticSearchListBaseResult(siteRequest_, BaseResultGenPage.staticSetListBaseResult(siteRequest_, o)).toString();
 	}
 
-	/////////////////////
-	// baseResultCount //
-	/////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity baseResultCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer baseResultCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity baseResultCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage&fq=entiteVar_enUS_indexed_string:baseResultCount">Find the entity baseResultCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _baseResultCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getBaseResultCount() {
-		return baseResultCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setBaseResultCount(Integer baseResultCount) {
-		this.baseResultCount = baseResultCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setBaseResultCount(String o) {
-		this.baseResultCount = BaseResultGenPage.staticSetBaseResultCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = BaseResultGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetBaseResultCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected BaseResultGenPage baseResultCountInit() {
-		Wrap<Integer> baseResultCountWrap = new Wrap<Integer>().var("baseResultCount");
-		if(baseResultCount == null) {
-			_baseResultCount(baseResultCountWrap);
-			Optional.ofNullable(baseResultCountWrap.getO()).ifPresent(o -> {
-				setBaseResultCount(o);
+	protected BaseResultGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (BaseResultGenPage)this;
 	}
 
-	public static Integer staticSearchBaseResultCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrBaseResultCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqBaseResultCount(SiteRequest siteRequest_, String o) {
-		return BaseResultGenPage.staticSearchBaseResultCount(siteRequest_, BaseResultGenPage.staticSetBaseResultCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return BaseResultGenPage.staticSearchResultCount(siteRequest_, BaseResultGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	/////////////////
-	// baseResult_ //
-	/////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity baseResult_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected BaseResult baseResult_;
+	protected BaseResult result;
 
-	/**	<br> The entity baseResult_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage&fq=entiteVar_enUS_indexed_string:baseResult_">Find the entity baseResult_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.result.BaseResultGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _baseResult_(Wrap<BaseResult> w);
+	protected abstract void _result(Wrap<BaseResult> w);
 
-	public BaseResult getBaseResult_() {
-		return baseResult_;
+	public BaseResult getResult() {
+		return result;
 	}
 
-	public void setBaseResult_(BaseResult baseResult_) {
-		this.baseResult_ = baseResult_;
+	public void setResult(BaseResult result) {
+		this.result = result;
 	}
-	public static BaseResult staticSetBaseResult_(SiteRequest siteRequest_, String o) {
+	public static BaseResult staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected BaseResultGenPage baseResult_Init() {
-		Wrap<BaseResult> baseResult_Wrap = new Wrap<BaseResult>().var("baseResult_");
-		if(baseResult_ == null) {
-			_baseResult_(baseResult_Wrap);
-			Optional.ofNullable(baseResult_Wrap.getO()).ifPresent(o -> {
-				setBaseResult_(o);
+	protected BaseResultGenPage resultInit() {
+		Wrap<BaseResult> resultWrap = new Wrap<BaseResult>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (BaseResultGenPage)this;
@@ -413,8 +413,8 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 			try {
 				searchListBaseResult_Init();
 				listBaseResultInit();
-				baseResultCountInit();
-				baseResult_Init();
+				resultCountInit();
+				resultInit();
 				idInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -473,10 +473,10 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 				return oBaseResultGenPage.searchListBaseResult_;
 			case "listBaseResult":
 				return oBaseResultGenPage.listBaseResult;
-			case "baseResultCount":
-				return oBaseResultGenPage.baseResultCount;
-			case "baseResult_":
-				return oBaseResultGenPage.baseResult_;
+			case "resultCount":
+				return oBaseResultGenPage.resultCount;
+			case "result":
+				return oBaseResultGenPage.result;
 			case "id":
 				return oBaseResultGenPage.id;
 			default:
@@ -520,8 +520,8 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseResult":
 			return BaseResultGenPage.staticSetListBaseResult(siteRequest_, o);
-		case "baseResultCount":
-			return BaseResultGenPage.staticSetBaseResultCount(siteRequest_, o);
+		case "resultCount":
+			return BaseResultGenPage.staticSetResultCount(siteRequest_, o);
 		case "id":
 			return BaseResultGenPage.staticSetId(siteRequest_, o);
 			default:
@@ -540,8 +540,8 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseResult":
 			return BaseResultGenPage.staticSearchListBaseResult(siteRequest_, (JsonArray)o);
-		case "baseResultCount":
-			return BaseResultGenPage.staticSearchBaseResultCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return BaseResultGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return BaseResultGenPage.staticSearchId(siteRequest_, (String)o);
 			default:
@@ -560,8 +560,8 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseResult":
 			return BaseResultGenPage.staticSearchStrListBaseResult(siteRequest_, (String)o);
-		case "baseResultCount":
-			return BaseResultGenPage.staticSearchStrBaseResultCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return BaseResultGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return BaseResultGenPage.staticSearchStrId(siteRequest_, (String)o);
 			default:
@@ -580,8 +580,8 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseResult":
 			return BaseResultGenPage.staticSearchFqListBaseResult(siteRequest_, o);
-		case "baseResultCount":
-			return BaseResultGenPage.staticSearchFqBaseResultCount(siteRequest_, o);
+		case "resultCount":
+			return BaseResultGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "id":
 			return BaseResultGenPage.staticSearchFqId(siteRequest_, o);
 			default:
@@ -602,14 +602,14 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 	public static final String CLASS_SIMPLE_NAME = "BaseResultGenPage";
 	public static final String VAR_searchListBaseResult_ = "searchListBaseResult_";
 	public static final String VAR_listBaseResult = "listBaseResult";
-	public static final String VAR_baseResultCount = "baseResultCount";
-	public static final String VAR_baseResult_ = "baseResult_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_id = "id";
 
 	public static final String DISPLAY_NAME_searchListBaseResult_ = "";
 	public static final String DISPLAY_NAME_listBaseResult = "";
-	public static final String DISPLAY_NAME_baseResultCount = "";
-	public static final String DISPLAY_NAME_baseResult_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_id = "";
 
 	public static String displayNameForClass(String var) {
@@ -621,10 +621,10 @@ public abstract class BaseResultGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_searchListBaseResult_;
 		case VAR_listBaseResult:
 			return DISPLAY_NAME_listBaseResult;
-		case VAR_baseResultCount:
-			return DISPLAY_NAME_baseResultCount;
-		case VAR_baseResult_:
-			return DISPLAY_NAME_baseResult_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		default:

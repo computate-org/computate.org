@@ -10,39 +10,37 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 6
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/event
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: See the upcoming computate in-person and online events
+ * AName: an event
+ * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>
  * 
- * ApiTag:  Computate Event
- * ApiUri: /api/event
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/event
+ * EditPageUri: /en-us/edit/event/{objectId}
+ * DisplayPageUri: /en-us/shop/event/{objectId}
+ * UserPageUri: /en-us/use/event/{objectId}
+ * ApiUri: /en-us/api/event
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
+ *   DELETE:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyEventPage
- *     ApiUri: /event
- *     PublicRead: true
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: an event
- * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>
  */
 public class CompanyEvent extends CompanyEventGen<BaseResult> {
 

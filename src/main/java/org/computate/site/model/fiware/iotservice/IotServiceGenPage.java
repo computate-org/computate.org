@@ -1,7 +1,9 @@
 package org.computate.site.model.fiware.iotservice;
 
+import org.computate.site.model.fiware.iotservice.IotService;
+import java.lang.String;
+import io.vertx.core.json.JsonArray;
 import org.computate.site.page.PageLayout;
-import org.computate.site.model.BaseModelPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -20,7 +22,6 @@ import java.time.Instant;
 import java.util.Locale;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.service.ServiceRequest;
-import io.vertx.core.json.JsonArray;
 import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +48,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
+public class IotServiceGenPage extends IotServiceGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +390,16 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListIotService_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = IotService.searchVarIotService(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListIotService_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,23 +457,26 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
     Optional.ofNullable(searchListIotService_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _iotServiceCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListIotService_ == null ? 0 : searchListIotService_.size());
   }
 
-  protected void _iotService_(Wrap<IotService> w) {
-    if(iotServiceCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<IotService> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListIotService_.get(0));
   }
 
   protected void _pk(Wrap<Long> w) {
-    if(iotService_ != null)
-      w.o(iotService_.getPk());
+    if(result != null)
+      w.o(result.getPk());
   }
 
   protected void _id(Wrap<String> w) {
-    if(iotService_ != null)
-      w.o(iotService_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -477,11 +491,11 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(iotService_ != null && iotService_.getObjectTitle() != null)
-      c.o(iotService_.getObjectTitle());
-    else if(iotService_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("IoT services");
-    else if(searchListIotService_ == null || iotServiceCount == 0)
+    else if(searchListIotService_ == null || resultCount == 0)
       c.o("no IoT service found");
     else
       c.o("IoT services");
@@ -489,12 +503,12 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/iot-service");
+    c.o("/en-us/search/iot-service");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/iot-service");
+    c.o("/en-us/api/iot-service");
   }
 
   @Override
@@ -509,7 +523,7 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/iot-service-999.png");
+      c.o("/png/en-us/search/iot-service-999.png");
   }
 
   @Override
@@ -518,6 +532,6 @@ public class IotServiceGenPage extends IotServiceGenPageGen<BaseModelPage> {
   }
 
   protected void _pageUriIotService(Wrap<String> c) {
-      c.o("/iot-service");
+      c.o("/en-us/search/iot-service");
   }
 }

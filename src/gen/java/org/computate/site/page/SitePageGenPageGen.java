@@ -1,7 +1,7 @@
 package org.computate.site.page;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.result.BaseResultPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these SitePageGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class SitePageGenPageGen into the class SitePageGenPage. 
  * </li>
- * <h3>About the SitePageGenPage class and it's generated class SitePageGenPageGen&lt;BaseResultPage&gt;: </h3>extends SitePageGenPageGen
+ * <h3>About the SitePageGenPage class and it's generated class SitePageGenPageGen&lt;PageLayout&gt;: </h3>extends SitePageGenPageGen
  * <p>
  * This Java class extends a generated Java class SitePageGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends SitePageGenPageGen<BaseResultPage>
- * <p>This <code>class SitePageGenPage extends SitePageGenPageGen&lt;BaseResultPage&gt;</code>, which means it extends a newly generated SitePageGenPageGen. 
- * The generated <code>class SitePageGenPageGen extends BaseResultPage</code> which means that SitePageGenPage extends SitePageGenPageGen which extends BaseResultPage. 
+ * extends SitePageGenPageGen<PageLayout>
+ * <p>This <code>class SitePageGenPage extends SitePageGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated SitePageGenPageGen. 
+ * The generated <code>class SitePageGenPageGen extends PageLayout</code> which means that SitePageGenPage extends SitePageGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
+public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(SitePageGenPage.class);
 
 	/////////////////////////
@@ -229,102 +229,102 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		return SitePageGenPage.staticSearchListSitePage(siteRequest_, SitePageGenPage.staticSetListSitePage(siteRequest_, o)).toString();
 	}
 
-	///////////////////
-	// sitePageCount //
-	///////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity sitePageCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer sitePageCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity sitePageCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePageGenPage&fq=entiteVar_enUS_indexed_string:sitePageCount">Find the entity sitePageCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePageGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _sitePageCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getSitePageCount() {
-		return sitePageCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setSitePageCount(Integer sitePageCount) {
-		this.sitePageCount = sitePageCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setSitePageCount(String o) {
-		this.sitePageCount = SitePageGenPage.staticSetSitePageCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = SitePageGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetSitePageCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected SitePageGenPage sitePageCountInit() {
-		Wrap<Integer> sitePageCountWrap = new Wrap<Integer>().var("sitePageCount");
-		if(sitePageCount == null) {
-			_sitePageCount(sitePageCountWrap);
-			Optional.ofNullable(sitePageCountWrap.getO()).ifPresent(o -> {
-				setSitePageCount(o);
+	protected SitePageGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (SitePageGenPage)this;
 	}
 
-	public static Integer staticSearchSitePageCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrSitePageCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqSitePageCount(SiteRequest siteRequest_, String o) {
-		return SitePageGenPage.staticSearchSitePageCount(siteRequest_, SitePageGenPage.staticSetSitePageCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return SitePageGenPage.staticSearchResultCount(siteRequest_, SitePageGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	///////////////
-	// sitePage_ //
-	///////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity sitePage_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected SitePage sitePage_;
+	protected SitePage result;
 
-	/**	<br> The entity sitePage_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePageGenPage&fq=entiteVar_enUS_indexed_string:sitePage_">Find the entity sitePage_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePageGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _sitePage_(Wrap<SitePage> w);
+	protected abstract void _result(Wrap<SitePage> w);
 
-	public SitePage getSitePage_() {
-		return sitePage_;
+	public SitePage getResult() {
+		return result;
 	}
 
-	public void setSitePage_(SitePage sitePage_) {
-		this.sitePage_ = sitePage_;
+	public void setResult(SitePage result) {
+		this.result = result;
 	}
-	public static SitePage staticSetSitePage_(SiteRequest siteRequest_, String o) {
+	public static SitePage staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected SitePageGenPage sitePage_Init() {
-		Wrap<SitePage> sitePage_Wrap = new Wrap<SitePage>().var("sitePage_");
-		if(sitePage_ == null) {
-			_sitePage_(sitePage_Wrap);
-			Optional.ofNullable(sitePage_Wrap.getO()).ifPresent(o -> {
-				setSitePage_(o);
+	protected SitePageGenPage resultInit() {
+		Wrap<SitePage> resultWrap = new Wrap<SitePage>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (SitePageGenPage)this;
@@ -448,7 +448,7 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseSitePageGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseResultPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -465,8 +465,8 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 			try {
 				searchListSitePage_Init();
 				listSitePageInit();
-				sitePageCountInit();
-				sitePage_Init();
+				resultCountInit();
+				resultInit();
 				idInit();
 				pageUriSitePageInit();
 				promise2.complete();
@@ -491,7 +491,7 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 	/////////////////
 
 	public void siteRequestSitePageGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseResultPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -526,16 +526,16 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 				return oSitePageGenPage.searchListSitePage_;
 			case "listSitePage":
 				return oSitePageGenPage.listSitePage;
-			case "sitePageCount":
-				return oSitePageGenPage.sitePageCount;
-			case "sitePage_":
-				return oSitePageGenPage.sitePage_;
+			case "resultCount":
+				return oSitePageGenPage.resultCount;
+			case "result":
+				return oSitePageGenPage.result;
 			case "id":
 				return oSitePageGenPage.id;
 			case "pageUriSitePage":
 				return oSitePageGenPage.pageUriSitePage;
 			default:
-				return super.obtainBaseResultPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -560,7 +560,7 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		SitePageGenPage oSitePageGenPage = (SitePageGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseResultPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -575,14 +575,14 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listSitePage":
 			return SitePageGenPage.staticSetListSitePage(siteRequest_, o);
-		case "sitePageCount":
-			return SitePageGenPage.staticSetSitePageCount(siteRequest_, o);
+		case "resultCount":
+			return SitePageGenPage.staticSetResultCount(siteRequest_, o);
 		case "id":
 			return SitePageGenPage.staticSetId(siteRequest_, o);
 		case "pageUriSitePage":
 			return SitePageGenPage.staticSetPageUriSitePage(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSetBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -597,14 +597,14 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listSitePage":
 			return SitePageGenPage.staticSearchListSitePage(siteRequest_, (JsonArray)o);
-		case "sitePageCount":
-			return SitePageGenPage.staticSearchSitePageCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return SitePageGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return SitePageGenPage.staticSearchId(siteRequest_, (String)o);
 		case "pageUriSitePage":
 			return SitePageGenPage.staticSearchPageUriSitePage(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -619,14 +619,14 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listSitePage":
 			return SitePageGenPage.staticSearchStrListSitePage(siteRequest_, (String)o);
-		case "sitePageCount":
-			return SitePageGenPage.staticSearchStrSitePageCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return SitePageGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return SitePageGenPage.staticSearchStrId(siteRequest_, (String)o);
 		case "pageUriSitePage":
 			return SitePageGenPage.staticSearchStrPageUriSitePage(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchStrBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -641,14 +641,14 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listSitePage":
 			return SitePageGenPage.staticSearchFqListSitePage(siteRequest_, o);
-		case "sitePageCount":
-			return SitePageGenPage.staticSearchFqSitePageCount(siteRequest_, o);
+		case "resultCount":
+			return SitePageGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "id":
 			return SitePageGenPage.staticSearchFqId(siteRequest_, o);
 		case "pageUriSitePage":
 			return SitePageGenPage.staticSearchFqPageUriSitePage(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSearchFqBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -665,15 +665,15 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 	public static final String CLASS_SIMPLE_NAME = "SitePageGenPage";
 	public static final String VAR_searchListSitePage_ = "searchListSitePage_";
 	public static final String VAR_listSitePage = "listSitePage";
-	public static final String VAR_sitePageCount = "sitePageCount";
-	public static final String VAR_sitePage_ = "sitePage_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriSitePage = "pageUriSitePage";
 
 	public static final String DISPLAY_NAME_searchListSitePage_ = "";
 	public static final String DISPLAY_NAME_listSitePage = "";
-	public static final String DISPLAY_NAME_sitePageCount = "";
-	public static final String DISPLAY_NAME_sitePage_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriSitePage = "";
 
@@ -686,16 +686,16 @@ public abstract class SitePageGenPageGen<DEV> extends BaseResultPage {
 			return DISPLAY_NAME_searchListSitePage_;
 		case VAR_listSitePage:
 			return DISPLAY_NAME_listSitePage;
-		case VAR_sitePageCount:
-			return DISPLAY_NAME_sitePageCount;
-		case VAR_sitePage_:
-			return DISPLAY_NAME_sitePage_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		case VAR_pageUriSitePage:
 			return DISPLAY_NAME_pageUriSitePage;
 		default:
-			return BaseResultPage.displayNameBaseResultPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

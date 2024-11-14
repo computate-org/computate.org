@@ -1,7 +1,7 @@
 package org.computate.site.model.product;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.result.BaseResultPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyProductGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyProductGenPageGen into the class CompanyProductGenPage. 
  * </li>
- * <h3>About the CompanyProductGenPage class and it's generated class CompanyProductGenPageGen&lt;BaseResultPage&gt;: </h3>extends CompanyProductGenPageGen
+ * <h3>About the CompanyProductGenPage class and it's generated class CompanyProductGenPageGen&lt;PageLayout&gt;: </h3>extends CompanyProductGenPageGen
  * <p>
  * This Java class extends a generated Java class CompanyProductGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyProductGenPageGen<BaseResultPage>
- * <p>This <code>class CompanyProductGenPage extends CompanyProductGenPageGen&lt;BaseResultPage&gt;</code>, which means it extends a newly generated CompanyProductGenPageGen. 
- * The generated <code>class CompanyProductGenPageGen extends BaseResultPage</code> which means that CompanyProductGenPage extends CompanyProductGenPageGen which extends BaseResultPage. 
+ * extends CompanyProductGenPageGen<PageLayout>
+ * <p>This <code>class CompanyProductGenPage extends CompanyProductGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated CompanyProductGenPageGen. 
+ * The generated <code>class CompanyProductGenPageGen extends PageLayout</code> which means that CompanyProductGenPage extends CompanyProductGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
+public abstract class CompanyProductGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyProductGenPage.class);
 
 	///////////////////////////////
@@ -229,102 +229,102 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o)).toString();
 	}
 
-	/////////////////////////
-	// companyProductCount //
-	/////////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity companyProductCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer companyProductCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity companyProductCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProductCount">Find the entity companyProductCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyProductCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getCompanyProductCount() {
-		return companyProductCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setCompanyProductCount(Integer companyProductCount) {
-		this.companyProductCount = companyProductCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setCompanyProductCount(String o) {
-		this.companyProductCount = CompanyProductGenPage.staticSetCompanyProductCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = CompanyProductGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetCompanyProductCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected CompanyProductGenPage companyProductCountInit() {
-		Wrap<Integer> companyProductCountWrap = new Wrap<Integer>().var("companyProductCount");
-		if(companyProductCount == null) {
-			_companyProductCount(companyProductCountWrap);
-			Optional.ofNullable(companyProductCountWrap.getO()).ifPresent(o -> {
-				setCompanyProductCount(o);
+	protected CompanyProductGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (CompanyProductGenPage)this;
 	}
 
-	public static Integer staticSearchCompanyProductCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrCompanyProductCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqCompanyProductCount(SiteRequest siteRequest_, String o) {
-		return CompanyProductGenPage.staticSearchCompanyProductCount(siteRequest_, CompanyProductGenPage.staticSetCompanyProductCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return CompanyProductGenPage.staticSearchResultCount(siteRequest_, CompanyProductGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	/////////////////////
-	// companyProduct_ //
-	/////////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity companyProduct_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected CompanyProduct companyProduct_;
+	protected CompanyProduct result;
 
-	/**	<br> The entity companyProduct_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:companyProduct_">Find the entity companyProduct_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyProduct_(Wrap<CompanyProduct> w);
+	protected abstract void _result(Wrap<CompanyProduct> w);
 
-	public CompanyProduct getCompanyProduct_() {
-		return companyProduct_;
+	public CompanyProduct getResult() {
+		return result;
 	}
 
-	public void setCompanyProduct_(CompanyProduct companyProduct_) {
-		this.companyProduct_ = companyProduct_;
+	public void setResult(CompanyProduct result) {
+		this.result = result;
 	}
-	public static CompanyProduct staticSetCompanyProduct_(SiteRequest siteRequest_, String o) {
+	public static CompanyProduct staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected CompanyProductGenPage companyProduct_Init() {
-		Wrap<CompanyProduct> companyProduct_Wrap = new Wrap<CompanyProduct>().var("companyProduct_");
-		if(companyProduct_ == null) {
-			_companyProduct_(companyProduct_Wrap);
-			Optional.ofNullable(companyProduct_Wrap.getO()).ifPresent(o -> {
-				setCompanyProduct_(o);
+	protected CompanyProductGenPage resultInit() {
+		Wrap<CompanyProduct> resultWrap = new Wrap<CompanyProduct>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (CompanyProductGenPage)this;
@@ -448,7 +448,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyProductGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseResultPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -465,8 +465,8 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 			try {
 				searchListCompanyProduct_Init();
 				listCompanyProductInit();
-				companyProductCountInit();
-				companyProduct_Init();
+				resultCountInit();
+				resultInit();
 				idInit();
 				pageUriCompanyProductInit();
 				promise2.complete();
@@ -491,7 +491,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 	/////////////////
 
 	public void siteRequestCompanyProductGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseResultPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -526,16 +526,16 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 				return oCompanyProductGenPage.searchListCompanyProduct_;
 			case "listCompanyProduct":
 				return oCompanyProductGenPage.listCompanyProduct;
-			case "companyProductCount":
-				return oCompanyProductGenPage.companyProductCount;
-			case "companyProduct_":
-				return oCompanyProductGenPage.companyProduct_;
+			case "resultCount":
+				return oCompanyProductGenPage.resultCount;
+			case "result":
+				return oCompanyProductGenPage.result;
 			case "id":
 				return oCompanyProductGenPage.id;
 			case "pageUriCompanyProduct":
 				return oCompanyProductGenPage.pageUriCompanyProduct;
 			default:
-				return super.obtainBaseResultPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -560,7 +560,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		CompanyProductGenPage oCompanyProductGenPage = (CompanyProductGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseResultPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -575,14 +575,14 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyProduct":
 			return CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o);
-		case "companyProductCount":
-			return CompanyProductGenPage.staticSetCompanyProductCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyProductGenPage.staticSetResultCount(siteRequest_, o);
 		case "id":
 			return CompanyProductGenPage.staticSetId(siteRequest_, o);
 		case "pageUriCompanyProduct":
 			return CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSetBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -597,14 +597,14 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyProduct":
 			return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, (JsonArray)o);
-		case "companyProductCount":
-			return CompanyProductGenPage.staticSearchCompanyProductCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyProductGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyProductGenPage.staticSearchId(siteRequest_, (String)o);
 		case "pageUriCompanyProduct":
 			return CompanyProductGenPage.staticSearchPageUriCompanyProduct(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -619,14 +619,14 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyProduct":
 			return CompanyProductGenPage.staticSearchStrListCompanyProduct(siteRequest_, (String)o);
-		case "companyProductCount":
-			return CompanyProductGenPage.staticSearchStrCompanyProductCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyProductGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyProductGenPage.staticSearchStrId(siteRequest_, (String)o);
 		case "pageUriCompanyProduct":
 			return CompanyProductGenPage.staticSearchStrPageUriCompanyProduct(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchStrBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -641,14 +641,14 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyProduct":
 			return CompanyProductGenPage.staticSearchFqListCompanyProduct(siteRequest_, o);
-		case "companyProductCount":
-			return CompanyProductGenPage.staticSearchFqCompanyProductCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyProductGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "id":
 			return CompanyProductGenPage.staticSearchFqId(siteRequest_, o);
 		case "pageUriCompanyProduct":
 			return CompanyProductGenPage.staticSearchFqPageUriCompanyProduct(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSearchFqBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -665,15 +665,15 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyProductGenPage";
 	public static final String VAR_searchListCompanyProduct_ = "searchListCompanyProduct_";
 	public static final String VAR_listCompanyProduct = "listCompanyProduct";
-	public static final String VAR_companyProductCount = "companyProductCount";
-	public static final String VAR_companyProduct_ = "companyProduct_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriCompanyProduct = "pageUriCompanyProduct";
 
 	public static final String DISPLAY_NAME_searchListCompanyProduct_ = "";
 	public static final String DISPLAY_NAME_listCompanyProduct = "";
-	public static final String DISPLAY_NAME_companyProductCount = "";
-	public static final String DISPLAY_NAME_companyProduct_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriCompanyProduct = "";
 
@@ -686,16 +686,16 @@ public abstract class CompanyProductGenPageGen<DEV> extends BaseResultPage {
 			return DISPLAY_NAME_searchListCompanyProduct_;
 		case VAR_listCompanyProduct:
 			return DISPLAY_NAME_listCompanyProduct;
-		case VAR_companyProductCount:
-			return DISPLAY_NAME_companyProductCount;
-		case VAR_companyProduct_:
-			return DISPLAY_NAME_companyProduct_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		case VAR_pageUriCompanyProduct:
 			return DISPLAY_NAME_pageUriCompanyProduct;
 		default:
-			return BaseResultPage.displayNameBaseResultPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

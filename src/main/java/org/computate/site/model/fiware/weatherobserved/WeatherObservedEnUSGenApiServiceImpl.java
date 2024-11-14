@@ -112,10 +112,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObservedEnUSGenApiServiceImpl.class);
 
-	public WeatherObservedEnUSGenApiServiceImpl(Vertx vertx, JsonObject config, WorkerExecutor workerExecutor, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, PgPool pgPool, KafkaProducer<String, String> kafkaProducer, MqttClient mqttClient, AmqpSender amqpSender, RabbitMQClient rabbitmqClient, WebClient webClient, OAuth2Auth oauth2AuthenticationProvider, AuthorizationProvider authorizationProvider, Jinjava jinjava) {
-		super(vertx, config, workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
-	}
-
 	// Search //
 
 	@Override
@@ -211,7 +207,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}
 		});
 	}
-
 
 	public Future<ServiceResponse> response200SearchWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -379,7 +374,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-
 	public Future<ServiceResponse> response200GETWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
@@ -505,7 +499,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}
 		});
 	}
-
 
 	public Future<Void> listPATCHWeatherObserved(ApiRequest apiRequest, SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<Void> promise = Promise.promise();
@@ -1261,7 +1254,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}
 		});
 	}
-
 
 	@Override
 	public void postWeatherObservedFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
@@ -2045,7 +2037,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-
 	public Future<Void> listDELETEWeatherObserved(ApiRequest apiRequest, SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
@@ -2373,7 +2364,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-
 	public Future<Void> listPUTImportWeatherObserved(ApiRequest apiRequest, SiteRequest siteRequest) {
 		Promise<Void> promise = Promise.promise();
 		List<Future> futures = new ArrayList<>();
@@ -2566,100 +2556,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	// SearchPage //
 
 	@Override
-	public void searchpageWeatherObservedId(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.expect(ResponsePredicate.status(200))
-					.sendForm(MultiMap.caseInsensitiveMultiMap()
-							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
-							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
-							.add("response_mode", "permissions")
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
-							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
-			).onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
-				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("GET")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
-							response200SearchPageWeatherObserved(listWeatherObserved).onSuccess(response -> {
-								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("searchpageWeatherObserved succeeded. "));
-							}).onFailure(ex -> {
-								LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
-								error(siteRequest, eventHandler, ex);
-							});
-						}).onFailure(ex -> {
-							LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
-							error(siteRequest, eventHandler, ex);
-						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
-		}).onFailure(ex -> {
-			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-				try {
-					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-				} catch(Exception ex2) {
-					LOG.error(String.format("searchpageWeatherObserved failed. ", ex2));
-					error(null, eventHandler, ex2);
-				}
-			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(401, "UNAUTHORIZED",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "SSO Resource Permission check returned DENY")
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-							)
-					));
-			} else {
-				LOG.error(String.format("searchpageWeatherObserved failed. "), ex);
-				error(null, eventHandler, ex);
-			}
-		});
-	}
-
-	@Override
 	public void searchpageWeatherObserved(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
 			webClient.post(
@@ -2753,18 +2649,17 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-
 	public void searchpageWeatherObservedPageInit(WeatherObservedPage page, SearchList<WeatherObserved> listWeatherObserved) {
 	}
 
-	public String templateSearchPageWeatherObserved() {
-		return "en-us/WeatherObservedPage.htm";
+	public String templateSearchPageWeatherObserved(ServiceRequest serviceRequest) {
+		return "en-us/search/weather-observed/WeatherObservedSearch.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateSearchPageWeatherObserved();
+			String pageTemplateUri = templateSearchPageWeatherObserved(siteRequest.getServiceRequest());
 			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
 			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
 			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
@@ -2796,6 +2691,214 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			promise.fail(ex);
 		}
 		return promise.future();
+	}
+	public void responsePivotSearchPageWeatherObserved(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotSearchPageWeatherObserved(pivotFields2, pivotArray2);
+				}
+			}
+		}
+	}
+
+	// EditPage //
+
+	@Override
+	public void editpageWeatherObserved(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture").onSuccess(siteRequest -> {
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
+					.expect(ResponsePredicate.status(200))
+					.sendForm(MultiMap.caseInsensitiveMultiMap()
+							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
+							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
+							.add("response_mode", "permissions")
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", WeatherObserved.CLASS_SIMPLE_NAME, "PATCH"))
+			).onFailure(ex -> {
+				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(403, "FORBIDDEN",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "403")
+								.put("errorMessage", msg)
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+					)
+				));
+			}).onSuccess(authorizationDecision -> {
+				try {
+					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						searchWeatherObservedList(siteRequest, false, true, false).onSuccess(listWeatherObserved -> {
+							response200EditPageWeatherObserved(listWeatherObserved).onSuccess(response -> {
+								eventHandler.handle(Future.succeededFuture(response));
+								LOG.debug(String.format("editpageWeatherObserved succeeded. "));
+							}).onFailure(ex -> {
+								LOG.error(String.format("editpageWeatherObserved failed. "), ex);
+								error(siteRequest, eventHandler, ex);
+							});
+						}).onFailure(ex -> {
+							LOG.error(String.format("editpageWeatherObserved failed. "), ex);
+							error(siteRequest, eventHandler, ex);
+						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("editpageWeatherObserved failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("editpageWeatherObserved failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("editpageWeatherObserved failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
+	}
+
+	public void editpageWeatherObservedPageInit(WeatherObservedPage page, SearchList<WeatherObserved> listWeatherObserved) {
+	}
+
+	public String templateEditPageWeatherObserved(ServiceRequest serviceRequest) {
+		return "en-us/edit/weather-observed/WeatherObservedEdit.htm";
+	}
+	public Future<ServiceResponse> response200EditPageWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
+		Promise<ServiceResponse> promise = Promise.promise();
+		try {
+			SiteRequest siteRequest = listWeatherObserved.getSiteRequest_(SiteRequest.class);
+			String pageTemplateUri = templateEditPageWeatherObserved(siteRequest.getServiceRequest());
+			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+			WeatherObservedPage page = new WeatherObservedPage();
+			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+			siteRequest.setRequestHeaders(requestHeaders);
+
+			if(listWeatherObserved.size() == 1)
+				siteRequest.setRequestPk(listWeatherObserved.get(0).getPk());
+			page.setSearchListWeatherObserved_(listWeatherObserved);
+			page.setSiteRequest_(siteRequest);
+			page.setServiceRequest(siteRequest.getServiceRequest());
+			page.promiseDeepWeatherObservedPage(siteRequest).onSuccess(a -> {
+				try {
+					JsonObject ctx = ComputateConfigKeys.getPageContext(config);
+					ctx.mergeIn(JsonObject.mapFrom(page));
+					String renderedTemplate = jinjava.render(template, ctx.getMap());
+					Buffer buffer = Buffer.buffer(renderedTemplate);
+					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+				} catch(Exception ex) {
+					LOG.error(String.format("response200EditPageWeatherObserved failed. "), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("response200EditPageWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+	public void responsePivotEditPageWeatherObserved(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
+		if(pivots != null) {
+			for(SolrResponse.Pivot pivotField : pivots) {
+				String entityIndexed = pivotField.getField();
+				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
+				JsonObject pivotJson = new JsonObject();
+				pivotArray.add(pivotJson);
+				pivotJson.put("field", entityVar);
+				pivotJson.put("value", pivotField.getValue());
+				pivotJson.put("count", pivotField.getCount());
+				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
+				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
+				if(pivotRanges != null) {
+					JsonObject rangeJson = new JsonObject();
+					pivotJson.put("ranges", rangeJson);
+					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
+						JsonObject rangeFacetJson = new JsonObject();
+						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
+						rangeJson.put(rangeFacetVar, rangeFacetJson);
+						JsonObject rangeFacetCountsObject = new JsonObject();
+						rangeFacetJson.put("counts", rangeFacetCountsObject);
+						rangeFacet.getCounts().forEach((value, count) -> {
+							rangeFacetCountsObject.put(value, count);
+						});
+					}
+				}
+				if(pivotFields2 != null) {
+					JsonArray pivotArray2 = new JsonArray();
+					pivotJson.put("pivot", pivotArray2);
+					responsePivotEditPageWeatherObserved(pivotFields2, pivotArray2);
+				}
+			}
+		}
 	}
 
 	// General //

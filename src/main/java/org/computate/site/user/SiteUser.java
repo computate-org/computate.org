@@ -9,37 +9,25 @@ import org.computate.site.model.BaseModel;
 import org.computate.site.request.SiteRequest;
 
 /**
- * Model: true
- * Api: true
- * Page: true
- * SuperPage: BaseModelPage
- * Indexed: true
  * Order: 1
+ * Description: A user record for each site user
+ * AName: a site user
+ * Icon: <i class="fa-duotone fa-solid fa-user-gear"></i>
  * 
- * ApiTag: User
- * ApiUri: /api/user
- * 
- * ApiMethod:
- *   Search:
- *   PATCH:
- *   POST:
- *   PUTImport:
- *   SearchPage:
- *     Page: SiteUserPage
- *     PageSuper: BaseModelPage
- *     ApiUri: /user
+ * Keyword: classSimpleNameSiteUser
+ * Filter: userId
+ * AuthUser: true
  * AuthDefaultClient:
  *   GET:
  *   PATCH:
  * 
- * Keyword: classSimpleNameSiteUser
- * Filter: userId
- * 
- * AName: a site user
- * Icon: <i class="fa-duotone fa-solid fa-user-gear"></i>
- * 
- * AuthUser: true
- * Description: A user record for each site user
+ * SearchPageUri: /en-us/search/user
+ * EditPageUri: /en-us/edit/user/{objectId}
+ * ApiUri: /en-us/api/user
+ * ApiMethod:
+ *   Search:
+ *   PATCH:
+ *   POST:
  */
 public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUser {
 

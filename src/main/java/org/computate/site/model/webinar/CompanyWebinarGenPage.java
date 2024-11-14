@@ -1,7 +1,8 @@
 package org.computate.site.model.webinar;
 
+import org.computate.site.model.webinar.CompanyWebinar;
+import java.lang.String;
 import org.computate.site.page.PageLayout;
-import org.computate.site.model.BaseModelPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -47,7 +48,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPage> {
+public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +390,16 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListCompanyWebinar_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = CompanyWebinar.searchVarCompanyWebinar(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListCompanyWebinar_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,23 +457,26 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
     Optional.ofNullable(searchListCompanyWebinar_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyWebinarCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListCompanyWebinar_ == null ? 0 : searchListCompanyWebinar_.size());
   }
 
-  protected void _companyWebinar_(Wrap<CompanyWebinar> w) {
-    if(companyWebinarCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<CompanyWebinar> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyWebinar_.get(0));
   }
 
   protected void _pk(Wrap<Long> w) {
-    if(companyWebinar_ != null)
-      w.o(companyWebinar_.getPk());
+    if(result != null)
+      w.o(result.getPk());
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyWebinar_ != null)
-      w.o(companyWebinar_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -477,11 +491,11 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyWebinar_ != null && companyWebinar_.getObjectTitle() != null)
-      c.o(companyWebinar_.getObjectTitle());
-    else if(companyWebinar_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("webinars");
-    else if(searchListCompanyWebinar_ == null || companyWebinarCount == 0)
+    else if(searchListCompanyWebinar_ == null || resultCount == 0)
       c.o("no webinar found");
     else
       c.o("webinars");
@@ -489,12 +503,12 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/webinar");
+    c.o("/en-us/search/webinar");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/webinar");
+    c.o("/en-us/api/webinar");
   }
 
   @Override
@@ -509,7 +523,7 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/webinar-999.png");
+      c.o("/png/en-us/search/webinar-999.png");
   }
 
   @Override
@@ -518,6 +532,6 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<BaseModelPag
   }
 
   protected void _pageUriCompanyWebinar(Wrap<String> c) {
-      c.o("/webinar");
+      c.o("/en-us/search/webinar");
   }
 }

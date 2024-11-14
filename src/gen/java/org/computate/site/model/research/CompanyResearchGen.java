@@ -89,11 +89,17 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
+ * </p>
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: research"</b>, which groups all of the OpenAPIs for CompanyResearch objects under the tag "research". 
  * </p>
- * <h2>ApiUri.enUS: /api/research</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/research"</b>, which defines the base API URI for CompanyResearch objects as "/api/research" in the OpenAPI spec. 
+ * <h2>ApiUri.enUS: /en-us/api/research</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/research"</b>, which defines the base API URI for CompanyResearch objects as "/en-us/api/research" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -113,9 +119,9 @@ import io.vertx.core.json.JsonObject;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.research.CompanyResearchPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.research.CompanyResearchPage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.research.CompanyResearchPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -174,24 +180,28 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String CompanyResearch_Title_enUS = "research";
 	public static final String CompanyResearch_ThePluralName_enUS = "the research";
 	public static final String CompanyResearch_NoNameFound_enUS = "no research found";
-	public static final String CompanyResearch_ApiUri_enUS = "/api/research";
-	public static final String CompanyResearch_ApiUriSearchPage_enUS = "/research";
+	public static final String CompanyResearch_ApiUri_enUS = "/en-us/api/research";
+	public static final String CompanyResearch_ApiUriSearchPage_enUS = "/en-us/search/research";
 	public static final String CompanyResearch_OfName_enUS = "of research";
 	public static final String CompanyResearch_ANameAdjective_enUS = "a research";
 	public static final String CompanyResearch_NameAdjectiveSingular_enUS = "research";
 	public static final String CompanyResearch_NameAdjectivePlural_enUS = "research";
-	public static final String Search_enUS_Uri = "/api/research";
-	public static final String Search_enUS_ImageUri = "/png/api/research-999.png";
-	public static final String GET_enUS_Uri = "/api/research/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/research/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/research";
-	public static final String PATCH_enUS_ImageUri = "/png/api/research-999.png";
-	public static final String POST_enUS_Uri = "/api/research";
-	public static final String POST_enUS_ImageUri = "/png/api/research-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/research-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/research-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/research";
-	public static final String SearchPage_enUS_ImageUri = "/png/research-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/research";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/research-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/research/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/research/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/research";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/research-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/research";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/research-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/research-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/research-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/research";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/research-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/research/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/research/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/shop/research/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/research/{objectId}-999.png";
 
 	public static final String CompanyResearch_Icon = "<i class=\"fa-duotone fa-solid fa-school\"></i>";
 

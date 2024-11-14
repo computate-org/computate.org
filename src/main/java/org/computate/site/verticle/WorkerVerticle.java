@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 
+import org.yaml.snakeyaml.Yaml;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -38,28 +39,40 @@ import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
-import org.computate.site.model.casestudy.CaseStudy;
-import org.computate.site.model.casestudy.CaseStudyEnUSApiServiceImpl;
+import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
+import org.computate.site.model.usecase.UseCase;
+import org.computate.site.model.usecase.UseCaseEnUSApiServiceImpl;
+import org.computate.site.model.usecase.UseCaseEnUSGenApiService;
 import org.computate.site.model.course.CompanyCourse;
 import org.computate.site.model.course.CompanyCourseEnUSApiServiceImpl;
+import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
+import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
+import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.event.CompanyEvent;
 import org.computate.site.model.event.CompanyEventEnUSApiServiceImpl;
+import org.computate.site.model.event.CompanyEventEnUSGenApiService;
 import org.computate.site.model.webinar.CompanyWebinar;
 import org.computate.site.model.webinar.CompanyWebinarEnUSApiServiceImpl;
+import org.computate.site.model.webinar.CompanyWebinarEnUSGenApiService;
 import org.computate.site.model.service.CompanyService;
 import org.computate.site.model.service.CompanyServiceEnUSApiServiceImpl;
+import org.computate.site.model.service.CompanyServiceEnUSGenApiService;
 import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.research.CompanyResearchEnUSApiServiceImpl;
+import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
+import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.fiware.iotservice.IotService;
 import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
+import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -67,6 +80,7 @@ import org.computate.vertx.handlebars.AuthHelpers;
 import org.computate.vertx.handlebars.DateHelpers;
 import org.computate.vertx.handlebars.SiteHelpers;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
+import org.computate.vertx.api.BaseApiServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -145,6 +159,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		this.oauth2AuthHandler = oauth2AuthHandler;
 	}
 
+	private JsonObject i18n;
+
 	/**
 	 * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
 	 **/
@@ -176,17 +192,19 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		commitWithin = config().getInteger(ConfigKeys.SOLR_WORKER_COMMIT_WITHIN_MILLIS);
 
 		try {
-			configureData().onSuccess(a -> 
-				configureJinjava().onSuccess(b -> 
-					configureWebClient().onSuccess(c -> 
-						configureSharedWorkerExecutor().onSuccess(d -> 
-							configureKafka().onSuccess(e -> 
-								configureMqtt().onSuccess(f -> 
-									configureAmqp().onSuccess(g -> 
-										configureRabbitmq().onSuccess(h -> 
-											authorizeData().onSuccess(i -> 
-												importData().onSuccess(j -> 
-													startPromise.complete()
+			configureI18n().onSuccess(a -> 
+				configureData().onSuccess(b -> 
+					configureJinjava().onSuccess(c -> 
+						configureWebClient().onSuccess(d -> 
+							configureSharedWorkerExecutor().onSuccess(e -> 
+								configureKafka().onSuccess(f -> 
+									configureMqtt().onSuccess(g -> 
+										configureAmqp().onSuccess(h -> 
+											configureRabbitmq().onSuccess(i -> 
+												authorizeData().onSuccess(j -> 
+													importData().onSuccess(k -> 
+														startPromise.complete()
+													).onFailure(ex -> startPromise.fail(ex))
 												).onFailure(ex -> startPromise.fail(ex))
 											).onFailure(ex -> startPromise.fail(ex))
 										).onFailure(ex -> startPromise.fail(ex))
@@ -200,6 +218,50 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		} catch (Exception ex) {
 			LOG.error("Couldn't start verticle. ", ex);
 		}
+	}
+
+	/**
+	 * Configure internationalization. 
+	 * Val.FileError.enUS: Failed to load internationalization data from file: %s
+	 * Val.Error.enUS: Failed to load internationalization data. 
+	 * Val.Complete.enUS: Loading internationalization data is complete. 
+	 * Val.Loaded.enUS: Loaded internationalization data: %s
+	 **/
+	public Future<JsonObject> configureI18n() {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			List<Future<String>> futures = new ArrayList<>();
+			JsonArray i18nPaths = Optional.ofNullable(config().getValue(ConfigKeys.I18N_PATHS))
+					.map(v -> v instanceof JsonArray ? (JsonArray)v : new JsonArray(v.toString()))
+					.orElse(new JsonArray())
+					;
+			i18n = new JsonObject();
+			i18nPaths.stream().map(o -> (String)o).forEach(i18nPath -> {
+				futures.add(Future.future(promise1 -> {
+					vertx.fileSystem().readFile(i18nPath).onSuccess(buffer -> {
+						Yaml yaml = new Yaml();
+						Map<String, Object> map = yaml.load(buffer.toString());
+						i18n.mergeIn(new JsonObject(map));
+						LOG.info(String.format(configureI18nLoaded, i18nPath));
+						promise1.complete();
+					}).onFailure(ex -> {
+						LOG.error(String.format(configureI18nFileError, i18nPath), ex);
+						promise1.fail(ex);
+					});
+				}));
+			});
+			Future.all(futures).onSuccess(b -> {
+				LOG.info(configureI18nComplete);
+				promise.complete(i18n);
+			}).onFailure(ex -> {
+				LOG.error(configureI18nError, ex);
+				promise.fail(ex);
+			});
+		} catch (Throwable ex) {
+			LOG.error(configureI18nError, ex);
+			promise.fail(ex);
+		}
+		return promise.future();
 	}
 
 	/**
@@ -240,11 +302,11 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 
 	/**	
 	 * 
-	 * Val.ConnectionError.enUS:Could not open the database client connection. 
-	 * Val.ConnectionSuccess.enUS:The database client connection was successful. 
+	 * Val.ConnectionError.enUS: Could not open the database client connection. 
+	 * Val.ConnectionSuccess.enUS: The database client connection was successful. 
 	 * 
-	 * Val.InitError.enUS:Could not initialize the database tables. 
-	 * Val.InitSuccess.enUS:The database tables were created successfully. 
+	 * Val.InitError.enUS: Could not initialize the database tables. 
+	 * Val.InitSuccess.enUS: The database tables were created successfully. 
 	 * 
 	 *	Configure shared database connections across the cluster for massive scaling of the application. 
 	 *	Return a promise that configures a shared database client connection. 
@@ -283,8 +345,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	}
 
 	/**	
-	 * Val.Fail.enUS:Could not configure the shared worker executor. 
-	 * Val.Complete.enUS:The shared worker executor "{}" was configured successfully. 
+	 * Val.Fail.enUS: Could not configure the shared worker executor. 
+	 * Val.Complete.enUS: The shared worker executor "{}" was configured successfully. 
 	 * 
 	 *	Configure a shared worker executor for running blocking tasks in the background. 
 	 *	Return a promise that configures the shared worker executor. 
@@ -306,7 +368,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	}
 
 	/**
-	 * Val.Success.enUS:The Kafka producer was initialized successfully. 
+	 * Val.Success.enUS: The Kafka producer was initialized successfully. 
 	 **/
 	public Future<KafkaProducer<String, String>> configureKafka() {
 		Promise<KafkaProducer<String, String>> promise = Promise.promise();
@@ -468,6 +530,22 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		return promise.future();
 	}
 
+	public <API_IMPL extends BaseApiServiceInterface> void initializeApiService(API_IMPL service) {
+		service.setVertx(vertx);
+		service.setEventBus(vertx.eventBus());
+		service.setConfig(config());
+		service.setWorkerExecutor(workerExecutor);
+		service.setOauth2AuthHandler(oauth2AuthHandler);
+		service.setPgPool(pgPool);
+		service.setKafkaProducer(kafkaProducer);
+		service.setMqttClient(mqttClient);
+		service.setAmqpClient(amqpClient);
+		service.setRabbitmqClient(rabbitmqClient);
+		service.setWebClient(webClient);
+		service.setJinjava(jinjava);
+		service.setI18n(i18n);
+	}
+
 	/**
 	 * Description: Add Keycloak authorization resources, policies, and permissions for a data model. 
 	 * Val.Fail.enUS: Adding Keycloak authorization resources, policies, and permissions failed. 
@@ -479,44 +557,69 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			siteRequest.setConfig(config());
 			siteRequest.setWebClient(webClient);
 			siteRequest.initDeepSiteRequest(siteRequest);
-			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CaseStudyEnUSApiServiceImpl apiCaseStudy = new CaseStudyEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
+			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
+			initializeApiService(apiSiteUser);
+			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
+			initializeApiService(apiCompanyAbout);
+			UseCaseEnUSApiServiceImpl apiUseCase = new UseCaseEnUSApiServiceImpl();
+			initializeApiService(apiUseCase);
+			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl();
+			initializeApiService(apiCompanyCourse);
+			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
+			initializeApiService(apiSitePage);
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
+			initializeApiService(apiCompanyProduct);
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl();
+			initializeApiService(apiCompanyEvent);
+			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl();
+			initializeApiService(apiCompanyWebinar);
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl();
+			initializeApiService(apiCompanyService);
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl();
+			initializeApiService(apiCompanyResearch);
+			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
+			initializeApiService(apiCompanyWebsite);
+			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
+			initializeApiService(apiIotService);
+			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
+			initializeApiService(apiWeatherObserved);
 			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
 				apiSiteUser.authorizeClientData(authToken, SiteUser.CLASS_SIMPLE_NAME, config().getString(ComputateConfigKeys.AUTH_CLIENT), new String[] { "GET", "PATCH" }).onSuccess(q1 -> {
-					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 							.onSuccess(q2 -> {
-						apiCaseStudy.authorizeGroupData(authToken, CaseStudy.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+						apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+								.compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 								.onSuccess(q3 -> {
-							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+									.compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 									.onSuccess(q4 -> {
-								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+										.compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 										.onSuccess(q5 -> {
-									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+											.compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 											.onSuccess(q6 -> {
-										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+												.compose(q7 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 												.onSuccess(q7 -> {
-											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+													.compose(q8 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 													.onSuccess(q8 -> {
-												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+														.compose(q9 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 														.onSuccess(q9 -> {
-													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+															.compose(q10 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 															.onSuccess(q10 -> {
-														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																.onSuccess(q11 -> {
-															apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+															apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+																	.compose(q12 -> apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																	.onSuccess(q12 -> {
-																apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" })
+																apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+																		.compose(q13 -> apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																		.onSuccess(q13 -> {
 																	LOG.info("authorize data complete");
 																	promise.complete();
@@ -543,7 +646,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 
 	/**
 	 * Description: Import initial data
-	 * Val.Skip.enUS:The data import is disabled. 
+	 * Val.Skip.enUS: The data import is disabled. 
 	 **/
 	private Future<Void> importData() {
 		Promise<Void> promise = Promise.promise();
@@ -553,38 +656,54 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			siteRequest.setWebClient(webClient);
 			siteRequest.initDeepSiteRequest(siteRequest);
 			String templatePath = config().getString(ComputateConfigKeys.TEMPLATE_PATH);
-			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CaseStudyEnUSApiServiceImpl apiCaseStudy = new CaseStudyEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, null, null, jinjava);
-			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/about"), vertx, siteRequest, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout).onSuccess(q1 -> {
-				apiCaseStudy.importTimer(Paths.get(templatePath, "/en-us/case-study"), vertx, siteRequest, CaseStudy.CLASS_SIMPLE_NAME, CaseStudy.CLASS_API_ADDRESS_CaseStudy).onSuccess(q2 -> {
-					apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/course"), vertx, siteRequest, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse).onSuccess(q3 -> {
-						apiSitePage.importTimer(Paths.get(templatePath, "/en-us/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q4 -> {
-							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q5 -> {
-								apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q6 -> {
-									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar).onSuccess(q7 -> {
-										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
-											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
-												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
-													LOG.info("data import complete");
-													promise.complete();
-												}).onFailure(ex -> promise.fail(ex));
-											}).onFailure(ex -> promise.fail(ex));
-										}).onFailure(ex -> promise.fail(ex));
-									}).onFailure(ex -> promise.fail(ex));
-								}).onFailure(ex -> promise.fail(ex));
+
+			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
+			initializeApiService(apiCompanyAbout);
+			UseCaseEnUSApiServiceImpl apiUseCase = new UseCaseEnUSApiServiceImpl();
+			initializeApiService(apiUseCase);
+			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl();
+			initializeApiService(apiCompanyCourse);
+			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
+			initializeApiService(apiSitePage);
+			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
+			initializeApiService(apiCompanyProduct);
+			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl();
+			initializeApiService(apiCompanyEvent);
+			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl();
+			initializeApiService(apiCompanyWebinar);
+			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl();
+			initializeApiService(apiCompanyService);
+			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl();
+			initializeApiService(apiCompanyResearch);
+			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
+			initializeApiService(apiCompanyWebsite);
+			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
+			initializeApiService(apiIotService);
+
+			// apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout).onSuccess(q1 -> {
+			// 	apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase).onSuccess(q2 -> {
+			// 		apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse).onSuccess(q3 -> {
+			// 			apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q4 -> {
+							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q5 -> {
+								// apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q6 -> {
+								// 	apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar).onSuccess(q7 -> {
+								// 		apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
+								// 			apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/shop/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
+								// 				apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
+								// 					apiIotService.importTimer(Paths.get(templatePath, "/en-us/shop/iot-service"), vertx, siteRequest, IotService.CLASS_SIMPLE_NAME, IotService.CLASS_API_ADDRESS_IotService).onSuccess(q11 -> {
+														LOG.info("data import complete");
+														promise.complete();
+								// 					}).onFailure(ex -> promise.fail(ex));
+								// 				}).onFailure(ex -> promise.fail(ex));
+								// 			}).onFailure(ex -> promise.fail(ex));
+								// 		}).onFailure(ex -> promise.fail(ex));
+								// 	}).onFailure(ex -> promise.fail(ex));
+								// }).onFailure(ex -> promise.fail(ex));
 							}).onFailure(ex -> promise.fail(ex));
-						}).onFailure(ex -> promise.fail(ex));
-					}).onFailure(ex -> promise.fail(ex));
-				}).onFailure(ex -> promise.fail(ex));
-			}).onFailure(ex -> promise.fail(ex));
+			// 			}).onFailure(ex -> promise.fail(ex));
+			// 		}).onFailure(ex -> promise.fail(ex));
+			// 	}).onFailure(ex -> promise.fail(ex));
+			// }).onFailure(ex -> promise.fail(ex));
 		}
 		else {
 			LOG.info(importDataSkip);

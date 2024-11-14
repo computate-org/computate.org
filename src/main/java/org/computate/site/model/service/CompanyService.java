@@ -7,39 +7,36 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 8
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/service
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: See the services provided by computate that will help you build your own data-driven platforms
+ * AName: a service
+ * PluralName: services
+ * Icon: <i class="fa-regular fa-conveyor-belt"></i>
  * 
- * ApiTag: service
- * ApiUri: /api/service
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/service
+ * EditPageUri: /en-us/edit/service/{objectId}
+ * DisplayPageUri: /en-us/shop/service/{objectId}
+ * ApiUri: /en-us/api/service
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyServicePage
- *     ApiUri: /service
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: a service
- * PluralName: services
- * Icon: <i class="fa-regular fa-conveyor-belt"></i>
  */
 public class CompanyService extends CompanyServiceGen<BaseResult> {
 

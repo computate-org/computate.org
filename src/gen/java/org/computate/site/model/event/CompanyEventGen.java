@@ -94,17 +94,29 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: POST</h2>
  * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
  * </p>
+ * <h2>ApiMethode: DELETE</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETE"</b>, which creates an API "DELETE". 
+ * </p>
  * <h2>ApiMethode: PUTImport</h2>
  * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
  * </p>
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Computate Event"</b>, which groups all of the OpenAPIs for CompanyEvent objects under the tag "Computate Event". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/event</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/event"</b>, which defines the base API URI for CompanyEvent objects as "/api/event" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiMethode: UserPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: events"</b>, which groups all of the OpenAPIs for CompanyEvent objects under the tag "events". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/event</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/event"</b>, which defines the base API URI for CompanyEvent objects as "/en-us/api/event" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -124,9 +136,9 @@ import org.computate.search.response.solr.SolrResponse;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.event.CompanyEventPage. 
  * </p>
- * <h2>SuperPage.enUS: BaseResultPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseResultPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseResultPage". 
- * This means that the newly created class org.computate.site.model.event.CompanyEventPage extends org.computate.site.result.BaseResultPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.event.CompanyEventPage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -185,24 +197,32 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static final String CompanyEvent_Title_enUS = "events";
 	public static final String CompanyEvent_ThePluralName_enUS = "the events";
 	public static final String CompanyEvent_NoNameFound_enUS = "no event found";
-	public static final String CompanyEvent_ApiUri_enUS = "/api/event";
-	public static final String CompanyEvent_ApiUriSearchPage_enUS = "/event";
+	public static final String CompanyEvent_ApiUri_enUS = "/en-us/api/event";
+	public static final String CompanyEvent_ApiUriSearchPage_enUS = "/en-us/search/event";
 	public static final String CompanyEvent_OfName_enUS = "of event";
 	public static final String CompanyEvent_ANameAdjective_enUS = "an event";
 	public static final String CompanyEvent_NameAdjectiveSingular_enUS = "event";
 	public static final String CompanyEvent_NameAdjectivePlural_enUS = "events";
-	public static final String Search_enUS_Uri = "/api/event";
-	public static final String Search_enUS_ImageUri = "/png/api/event-999.png";
-	public static final String GET_enUS_Uri = "/api/event/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/event/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/event";
-	public static final String PATCH_enUS_ImageUri = "/png/api/event-999.png";
-	public static final String POST_enUS_Uri = "/api/event";
-	public static final String POST_enUS_ImageUri = "/png/api/event-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/event-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/event-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/event";
-	public static final String SearchPage_enUS_ImageUri = "/png/event-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/event";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/event-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/event/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/event/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/event";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/event-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/event";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/event-999.png";
+	public static final String DELETE_enUS_Uri = "/en-us/api/event/{objectId}";
+	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/event/{objectId}-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/event-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/event-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/event";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/event-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/event/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/event/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/shop/event/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/event/{objectId}-999.png";
+	public static final String UserPage_enUS_Uri = "/en-us/use/event/{objectId}";
+	public static final String UserPage_enUS_ImageUri = "/png/en-us/use/event/{objectId}-999.png";
 
 	public static final String CompanyEvent_Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
 

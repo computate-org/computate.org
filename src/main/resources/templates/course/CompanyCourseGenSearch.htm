@@ -1,0 +1,272 @@
+{% extends "en-us/PageLayout.htm" %}
+
+{%- block htmTitlePageLayout %}
+{%- block htmTitleCompanyCoursePage %}
+    <title>{% if resultCount == 0 %}no course found{% else %}courses{% endif %}</title>
+{%- endblock htmTitleCompanyCoursePage %}
+{%- endblock htmTitlePageLayout %}
+
+{%- block htmStylesPageLayout %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ staticBaseUrl }}/css/course/CompanyCourse.css"/>
+{%- block htmStylesCompanyCoursePage %}
+{%- endblock htmStylesCompanyCoursePage %}
+{%- endblock htmStylesPageLayout %}
+
+{%- block htmStylePageLayout %}
+{{ super() }}
+{%- block htmStyleCompanyCoursePage %}
+{%- endblock htmStyleCompanyCoursePage %}
+{%- endblock htmStylePageLayout %}
+
+{%- block htmScriptsPageLayout %}
+{{ super() }}
+{%- block htmScriptsCompanyCoursePage %}
+    <script src="{{staticBaseUrl}}/js/course/CompanyCourse.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/course/CompanyCourseSearch.js"></script>
+{%- endblock htmScriptsCompanyCoursePage %}
+{%- endblock htmScriptsPageLayout %}
+
+{%- block htmScriptPageLayout %}
+{%- block htmScriptCompanyCoursePage %}
+    <script>
+
+      function jsWebsocketCompanyCourse(id, vars, $response) {
+{%- block jsWebsocketCompanyCoursePage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyCourse(e, feature) {
+{%- block jsTooltipCompanyCoursePage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyCourse(feature, layer) {
+        return `{%- block htmTooltipCompanyCoursePage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyCoursePage %}`;
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        var id = {% if id is defined %}{{ id }}{% else %}null{% endif %};
+
+        if(id == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          var o = document.querySelector('.pageForm .result')?.value;
+          if(o)
+            window.result = JSON.parse(o);
+        {% if id is defined %}
+        {% endif %}
+        }
+        var l = document.querySelector('.pageForm .listCompanyCourse')?.value;
+        if(l)
+          window.listCompanyCourse = JSON.parse(l);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphCompanyCourse();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyCourse_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyCourse_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyCourse_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_start'));
+        });
+
+
+        var submitForm_patchCompanyCourse = document.querySelector('#htmForm_patchCompanyCourse')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchCompanyCourse')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyCourse(null, document.querySelector('#htmForm_patchCompanyCourse'), document.querySelector('#htmFormButton_patchCompanyCourse'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyCourse = document.querySelector('#htmForm_postCompanyCourse')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyCourse')?.addEventListener('click', event => {
+          event.preventDefault();
+          postCompanyCourse(document.querySelector('#htmForm_postCompanyCourse'), document.querySelector('#htmFormButton_postCompanyCourse'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
+        });
+
+        var submitForm_putimportCompanyCourse = document.querySelector('#htmForm_putimportCompanyCourse')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyCourse')?.addEventListener('click', event => {
+          event.preventDefault();
+          putimportCompanyCourse(document.querySelector('#htmForm_putimportCompanyCourse'), document.querySelector('#htmFormButton_putimportCompanyCourse'));
+          return false;
+        });
+
+        var submitForm_searchpageCompanyCourse = document.querySelector('#htmForm_searchpageCompanyCourse')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyCourse')?.addEventListener('click', event => {
+          event.preventDefault();
+          searchpageCompanyCourse();
+          return false;
+        });
+      });
+    </script>
+{%- endblock htmScriptCompanyCoursePage %}
+{%- endblock htmScriptPageLayout %}
+
+{%- block websocketPageLayout %}
+{%- block websocketCompanyCoursePage %}
+        window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
+        websocketCompanyCourse(websocketCompanyCourseInner);
+{%- endblock websocketCompanyCoursePage %}
+{%- endblock websocketPageLayout %}
+
+{%- block htmUrlCompanyCoursePage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyCoursePage %}
+
+{%- block htmBodyStartPageLayout %}
+{{ super() }}
+{%- block htmBodyStartCompanyCoursePage %}
+{%- endblock htmBodyStartCompanyCoursePage %}
+{%- endblock htmBodyStartPageLayout %}
+
+{%- block htmBodyMiddlePageLayout %}
+{%- block htmBodyMiddleCompanyCoursePage %}
+{%- include course/CompanyCourseSidebar.htm %}
+{%- include course/CompanyCourseSuggestedSearch.htm %}
+{% if resultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all courses">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all courses
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-notebook"></i>
+          <span>courses</span>
+        </h1>
+{% include course/CompanyCourseSearchButtons.htm %}
+{% include course/CompanyCourseSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no course found</span>
+          </span>
+        </h2>
+{% else %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+          <div>
+            <sl-tooltip content="back to all courses">
+              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+                <i class="fa-solid fa-angle-left"></i>
+                all courses
+              </sl-button>
+            </sl-tooltip>
+          </div>
+          <h1>
+            <a href="{{pageUri}}">
+              <i class="fa-regular fa-notebook"></i>
+              <span>courses</span>
+            </a>
+          </h1>
+{% include course/CompanyCourseSearchButtons.htm %}
+{% include course/CompanyCourseSearchForm.htm %}
+{% include course/CompanyCoursePaginationButtons.htm %}
+          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+            <div>
+              <sl-dropdown id="htmDropdown_name">
+                <sl-button slot="trigger" caret>course name</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by course name ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by course name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown id="htmDropdown_description">
+                <sl-button slot="trigger" caret>course description</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by course description ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by course description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+            </div>
+            {% for item in listCompanyCourse%}
+            <div>
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa-regular fa-notebook"></i>
+              {{ item.name }}
+              </a>
+              <a href="{{ item.pageUrlPk }}">
+              {{ item.description }}
+              </a>
+            </div>
+            {% endfor %}
+              {% if getColumnName is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnDescription is defined %}
+                <div>
+                </div>
+              {% endif %}
+          </div>
+{% endif %}
+{%- endblock htmBodyMiddleCompanyCoursePage %}
+{%- endblock htmBodyMiddlePageLayout %}
+
+{%- block htmBodyEndPageLayout %}
+  {{ super() }}
+{%- block htmBodyEndCompanyCoursePage %}
+{%- endblock htmBodyEndCompanyCoursePage %}
+{%- endblock htmBodyEndPageLayout %}

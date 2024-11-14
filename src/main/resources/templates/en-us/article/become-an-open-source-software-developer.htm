@@ -1,0 +1,31 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="site:pageId" content="become-an-open-source-software-developer" />
+    <meta name="site:uri" content="/en-us/article/{{ pageId }}" />
+    <meta name="site:title" content="Become an open source software developer" />
+{% endblock htmMetaPageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+        <div class="intro-content ">
+          <sl-card>
+            <div>
+              <h1 class="icon-heading ">
+                The path to computer enlightenment
+              </h1>
+              <div class="font-style-italic">
+                Created Mon Sep 30 2024
+              </div>
+              <p>
+                <div class="font-weight-bold">
+                  By Christopher Tate </div>
+                <div class="font-weight-bold font-style-italic icon-heading ">
+                  <i class="fa-brands fa-redhat w3-text-red"></i>
+                  <span class="font-weight-bold">Red Hat Principal Software Engineer</span>
+                </div>
+              </p>
+            </div>
+          </sl-card>
+        </div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="site:pageId" content="path-to-computer-enlightenment" />
+    <meta name="site:uri" content="/en-us/article/{{ pageId }}" />
+    <meta name="site:title" content="The path to computer enlightenment" />
+{% endblock htmMetaPageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+        <div class="intro-content ">
+          <sl-card>
+            <div>
+              <h1 class="icon-heading ">
+                The path to computer enlightenment
+              </h1>
+              <div class="font-style-italic">
+                Created Mon Sep 30 2024
+              </div>
+              <p>
+                <div class="font-weight-bold">
+                  By Christopher Tate </div>
+                <div class="font-weight-bold font-style-italic icon-heading ">
+                  <i class="fa-brands fa-redhat w3-text-red"></i>
+                  <span class="font-weight-bold">Red Hat Principal Software Engineer</span>
+                </div>
+              </p>
+            </div>
+            <p>
+              Welcome to computate.org, a place to learn how to use that computer. 
+              I've been using a computer since I was a toddler back in 1985. 
+              If you don't believe  me, here is a photo of me. 
+            </p>
+            <sl-card>
+              <img slot="prefix" src="{{ STATIC_BASE_URL }}/jpg/chris-growing-up.jpg"/>
+            </sl-card>
+            <p>
+              My dad was a <i class="fa-solid fa-database"></i> database programmer, and he taught me about databases growing up. 
+              I built a <i class="fa-brands fa-microsoft"></i> Microsoft Access database of the Christmas and birthday gifts I wanted. 
+              It was a very effective way to share what I wanted. 
+              That was back before I had access to the Internet. 
+              It was before I knew how to build a website. 
+            </p>
+            <p>
+              My cousin knew how to build a <i class="fa-solid fa-browser"></i> website. 
+              He lived far away from me growing up, but we both loved computers. 
+              I wanted to learn how to build a website like him, but it was many years later before I did. 
+            </p>
+            <p>
+              My cousin and me grew up and went to the same <i class="fa-solid fa-building-columns"></i> University. 
+              We both studied Computer Science at University in 2005. 
+              We were learning assembly language, C++, Java, and C# in our classes. 
+              He also taught me about computer networking, routers, and IP addresses. 
+            </p>
+            <p>
+              I figured out how to run a website for my sister and her hunting consulting company. 
+              The website was completely written in <i class="fa-solid fa-file-xml"></i> XML. 
+              The website used XSLT to transform XML into XHTML. 
+              The website also could create new XML files, thus creating my very first data-driven website. 
+              The website wasn't secure, but it did work for the company thanks to some ugly secrets. 
+            </p>
+            <p>
+              I was able to run the website with Apache. 
+              The website ran at our shared university apartment with 5 other roomates including my cousin. 
+              We had a static IP address, and I configured our <i class="fa-solid fa-router"></i> router to forward http traffic on port 80 to Apache running on my laptop. 
+            </p>
+            <p>
+              He also convinced me that I should switch to <i class="fa-brands fa-linux"></i> Linux. 
+              I was running Microsoft Windows. 
+              I decided to buy USB drive, a Zip Disk, download Ubuntu, and format the hard drive on my laptop. 
+              I installed the latest Ubuntu Linux image at the time. 
+            </p>
+            <ol>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/become-an-open-source-software-developer">
+                  <i class="fa-brands fa-github"></i>
+                  Become an open source software developer
+                </a>
+              </li>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/choose-your-operating-system">
+                  <i class="fa-brands fa-redhat"></i>
+                  Choose your operating system
+                </a>
+              </li>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/switch-to-linux">
+                  <i class="fa-brands fa-linux"></i>
+                  Switch to Linux
+                </a>
+              </li>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/run-openshift-local-cloud-environment">
+                  <i class="fa-kit fa-openshift"></i>
+                  Run OpenShift Local cloud environment
+                </a>
+              </li>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/deploy-smart-cloud-microservices">
+                  <i class="fa-regular fa-grid-dividers"></i>
+                  Deploy smart cloud microservices
+                </a>
+              </li>
+              <li>
+                <a href="{{ SITE_BASE_URL }}/en-us/article/build-your-own-data-driven-website">
+                  <i class="fa-kit fa-vertx"></i>
+                  Build-your-own-data-driven-website
+                </a>
+              </li>
+            </ol>
+          </sl-card>
+        </div>
+{% endblock %}

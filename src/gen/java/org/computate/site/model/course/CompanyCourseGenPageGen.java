@@ -1,7 +1,7 @@
 package org.computate.site.model.course;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.result.BaseResultPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyCourseGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyCourseGenPageGen into the class CompanyCourseGenPage. 
  * </li>
- * <h3>About the CompanyCourseGenPage class and it's generated class CompanyCourseGenPageGen&lt;BaseResultPage&gt;: </h3>extends CompanyCourseGenPageGen
+ * <h3>About the CompanyCourseGenPage class and it's generated class CompanyCourseGenPageGen&lt;PageLayout&gt;: </h3>extends CompanyCourseGenPageGen
  * <p>
  * This Java class extends a generated Java class CompanyCourseGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyCourseGenPageGen<BaseResultPage>
- * <p>This <code>class CompanyCourseGenPage extends CompanyCourseGenPageGen&lt;BaseResultPage&gt;</code>, which means it extends a newly generated CompanyCourseGenPageGen. 
- * The generated <code>class CompanyCourseGenPageGen extends BaseResultPage</code> which means that CompanyCourseGenPage extends CompanyCourseGenPageGen which extends BaseResultPage. 
+ * extends CompanyCourseGenPageGen<PageLayout>
+ * <p>This <code>class CompanyCourseGenPage extends CompanyCourseGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated CompanyCourseGenPageGen. 
+ * The generated <code>class CompanyCourseGenPageGen extends PageLayout</code> which means that CompanyCourseGenPage extends CompanyCourseGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
+public abstract class CompanyCourseGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourseGenPage.class);
 
 	//////////////////////////////
@@ -229,102 +229,102 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		return CompanyCourseGenPage.staticSearchListCompanyCourse(siteRequest_, CompanyCourseGenPage.staticSetListCompanyCourse(siteRequest_, o)).toString();
 	}
 
-	////////////////////////
-	// companyCourseCount //
-	////////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity companyCourseCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer companyCourseCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity companyCourseCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourseGenPage&fq=entiteVar_enUS_indexed_string:companyCourseCount">Find the entity companyCourseCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourseGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyCourseCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getCompanyCourseCount() {
-		return companyCourseCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setCompanyCourseCount(Integer companyCourseCount) {
-		this.companyCourseCount = companyCourseCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setCompanyCourseCount(String o) {
-		this.companyCourseCount = CompanyCourseGenPage.staticSetCompanyCourseCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = CompanyCourseGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetCompanyCourseCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected CompanyCourseGenPage companyCourseCountInit() {
-		Wrap<Integer> companyCourseCountWrap = new Wrap<Integer>().var("companyCourseCount");
-		if(companyCourseCount == null) {
-			_companyCourseCount(companyCourseCountWrap);
-			Optional.ofNullable(companyCourseCountWrap.getO()).ifPresent(o -> {
-				setCompanyCourseCount(o);
+	protected CompanyCourseGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (CompanyCourseGenPage)this;
 	}
 
-	public static Integer staticSearchCompanyCourseCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrCompanyCourseCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqCompanyCourseCount(SiteRequest siteRequest_, String o) {
-		return CompanyCourseGenPage.staticSearchCompanyCourseCount(siteRequest_, CompanyCourseGenPage.staticSetCompanyCourseCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return CompanyCourseGenPage.staticSearchResultCount(siteRequest_, CompanyCourseGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	////////////////////
-	// companyCourse_ //
-	////////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity companyCourse_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected CompanyCourse companyCourse_;
+	protected CompanyCourse result;
 
-	/**	<br> The entity companyCourse_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourseGenPage&fq=entiteVar_enUS_indexed_string:companyCourse_">Find the entity companyCourse_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourseGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyCourse_(Wrap<CompanyCourse> w);
+	protected abstract void _result(Wrap<CompanyCourse> w);
 
-	public CompanyCourse getCompanyCourse_() {
-		return companyCourse_;
+	public CompanyCourse getResult() {
+		return result;
 	}
 
-	public void setCompanyCourse_(CompanyCourse companyCourse_) {
-		this.companyCourse_ = companyCourse_;
+	public void setResult(CompanyCourse result) {
+		this.result = result;
 	}
-	public static CompanyCourse staticSetCompanyCourse_(SiteRequest siteRequest_, String o) {
+	public static CompanyCourse staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected CompanyCourseGenPage companyCourse_Init() {
-		Wrap<CompanyCourse> companyCourse_Wrap = new Wrap<CompanyCourse>().var("companyCourse_");
-		if(companyCourse_ == null) {
-			_companyCourse_(companyCourse_Wrap);
-			Optional.ofNullable(companyCourse_Wrap.getO()).ifPresent(o -> {
-				setCompanyCourse_(o);
+	protected CompanyCourseGenPage resultInit() {
+		Wrap<CompanyCourse> resultWrap = new Wrap<CompanyCourse>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (CompanyCourseGenPage)this;
@@ -448,7 +448,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyCourseGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseResultPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -465,8 +465,8 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 			try {
 				searchListCompanyCourse_Init();
 				listCompanyCourseInit();
-				companyCourseCountInit();
-				companyCourse_Init();
+				resultCountInit();
+				resultInit();
 				idInit();
 				pageUriCompanyCourseInit();
 				promise2.complete();
@@ -491,7 +491,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 	/////////////////
 
 	public void siteRequestCompanyCourseGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseResultPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -526,16 +526,16 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 				return oCompanyCourseGenPage.searchListCompanyCourse_;
 			case "listCompanyCourse":
 				return oCompanyCourseGenPage.listCompanyCourse;
-			case "companyCourseCount":
-				return oCompanyCourseGenPage.companyCourseCount;
-			case "companyCourse_":
-				return oCompanyCourseGenPage.companyCourse_;
+			case "resultCount":
+				return oCompanyCourseGenPage.resultCount;
+			case "result":
+				return oCompanyCourseGenPage.result;
 			case "id":
 				return oCompanyCourseGenPage.id;
 			case "pageUriCompanyCourse":
 				return oCompanyCourseGenPage.pageUriCompanyCourse;
 			default:
-				return super.obtainBaseResultPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -560,7 +560,7 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		CompanyCourseGenPage oCompanyCourseGenPage = (CompanyCourseGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseResultPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -575,14 +575,14 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyCourse":
 			return CompanyCourseGenPage.staticSetListCompanyCourse(siteRequest_, o);
-		case "companyCourseCount":
-			return CompanyCourseGenPage.staticSetCompanyCourseCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyCourseGenPage.staticSetResultCount(siteRequest_, o);
 		case "id":
 			return CompanyCourseGenPage.staticSetId(siteRequest_, o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSetPageUriCompanyCourse(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSetBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -597,14 +597,14 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyCourse":
 			return CompanyCourseGenPage.staticSearchListCompanyCourse(siteRequest_, (JsonArray)o);
-		case "companyCourseCount":
-			return CompanyCourseGenPage.staticSearchCompanyCourseCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyCourseGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchId(siteRequest_, (String)o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchPageUriCompanyCourse(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -619,14 +619,14 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyCourse":
 			return CompanyCourseGenPage.staticSearchStrListCompanyCourse(siteRequest_, (String)o);
-		case "companyCourseCount":
-			return CompanyCourseGenPage.staticSearchStrCompanyCourseCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyCourseGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchStrId(siteRequest_, (String)o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchStrPageUriCompanyCourse(siteRequest_, (String)o);
 			default:
-				return BaseResultPage.staticSearchStrBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -641,14 +641,14 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 		switch(entityVar) {
 		case "listCompanyCourse":
 			return CompanyCourseGenPage.staticSearchFqListCompanyCourse(siteRequest_, o);
-		case "companyCourseCount":
-			return CompanyCourseGenPage.staticSearchFqCompanyCourseCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyCourseGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "id":
 			return CompanyCourseGenPage.staticSearchFqId(siteRequest_, o);
 		case "pageUriCompanyCourse":
 			return CompanyCourseGenPage.staticSearchFqPageUriCompanyCourse(siteRequest_, o);
 			default:
-				return BaseResultPage.staticSearchFqBaseResultPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -665,15 +665,15 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyCourseGenPage";
 	public static final String VAR_searchListCompanyCourse_ = "searchListCompanyCourse_";
 	public static final String VAR_listCompanyCourse = "listCompanyCourse";
-	public static final String VAR_companyCourseCount = "companyCourseCount";
-	public static final String VAR_companyCourse_ = "companyCourse_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriCompanyCourse = "pageUriCompanyCourse";
 
 	public static final String DISPLAY_NAME_searchListCompanyCourse_ = "";
 	public static final String DISPLAY_NAME_listCompanyCourse = "";
-	public static final String DISPLAY_NAME_companyCourseCount = "";
-	public static final String DISPLAY_NAME_companyCourse_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriCompanyCourse = "";
 
@@ -686,16 +686,16 @@ public abstract class CompanyCourseGenPageGen<DEV> extends BaseResultPage {
 			return DISPLAY_NAME_searchListCompanyCourse_;
 		case VAR_listCompanyCourse:
 			return DISPLAY_NAME_listCompanyCourse;
-		case VAR_companyCourseCount:
-			return DISPLAY_NAME_companyCourseCount;
-		case VAR_companyCourse_:
-			return DISPLAY_NAME_companyCourse_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_id:
 			return DISPLAY_NAME_id;
 		case VAR_pageUriCompanyCourse:
 			return DISPLAY_NAME_pageUriCompanyCourse;
 		default:
-			return BaseResultPage.displayNameBaseResultPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

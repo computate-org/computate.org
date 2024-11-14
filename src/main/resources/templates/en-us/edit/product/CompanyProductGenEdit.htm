@@ -1,0 +1,747 @@
+{% extends "en-us/PageLayout.htm" %}
+{%- block htmTitlePageLayout %}
+{%- block htmTitleCompanyProductPage %}
+    <title>{{ result.objectTitle }}</title>
+{%- endblock htmTitleCompanyProductPage %}
+{%- endblock htmTitlePageLayout %}
+
+{%- block htmStylesPageLayout %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ staticBaseUrl }}/css/en-us/search/product/CompanyProduct.css"/>
+{%- block htmStylesCompanyProductPage %}
+{%- endblock htmStylesCompanyProductPage %}
+{%- endblock htmStylesPageLayout %}
+
+{%- block htmStylePageLayout %}
+{{ super() }}
+{%- block htmStyleCompanyProductPage %}
+{%- endblock htmStyleCompanyProductPage %}
+{%- endblock htmStylePageLayout %}
+
+{%- block htmScriptsPageLayout %}
+{{ super() }}
+{%- block htmScriptsCompanyProductPage %}
+    <script src="{{staticBaseUrl}}/js/en-us/search/product/CompanyProduct.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/en-us/search/product/CompanyProductSearch.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/en-us/search/product/CompanyProductEdit.js"></script>
+{%- endblock htmScriptsCompanyProductPage %}
+{%- endblock htmScriptsPageLayout %}
+
+{%- block htmScriptPageLayout %}
+{%- block htmScriptCompanyProductPage %}
+    <script>
+
+      function jsWebsocketCompanyProduct(id, vars, $response) {
+{%- block jsWebsocketCompanyProductPage %}{%- endblock %}
+      }
+
+      function jsTooltipCompanyProduct(e, feature) {
+{%- block jsTooltipCompanyProductPage %}{%- endblock %}
+      }
+
+      function htmTooltipCompanyProduct(feature, layer) {
+        return `{%- block htmTooltipCompanyProductPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipCompanyProductPage %}`;
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        var id = {% if id is defined %}{{ id }}{% else %}null{% endif %};
+
+        if(id == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          var o = document.querySelector('.pageForm .result')?.value;
+          if(o)
+            window.result = JSON.parse(o);
+        {% if id is defined %}
+        {% endif %}
+        }
+        var l = document.querySelector('.pageForm .listCompanyProduct')?.value;
+        if(l)
+          window.listCompanyProduct = JSON.parse(l);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphCompanyProduct();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qCompanyProduct_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qCompanyProduct_rows')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_rows'));
+        });
+
+        document.querySelector('#qCompanyProduct_start')?.addEventListener('sl-change', event => {
+          paramChange('CompanyProduct', event.target, document.querySelector('#qCompanyProductDiv_start'));
+        });
+
+
+        var submitForm_patchCompanyProduct = document.querySelector('#htmForm_patchCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchCompanyProduct(null, document.querySelector('#htmForm_patchCompanyProduct'), document.querySelector('#htmFormButton_patchCompanyProduct'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_postCompanyProduct = document.querySelector('#htmForm_postCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          postCompanyProduct(document.querySelector('#htmForm_postCompanyProduct'), document.querySelector('#htmFormButton_postCompanyProduct'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
+        });
+
+        var submitForm_deleteCompanyProduct = document.querySelector('#htmForm_deleteCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deleteCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          deleteCompanyProduct(null, document.querySelector('#htmForm_deleteCompanyProduct'), document.querySelector('#htmFormButton_deleteCompanyProduct'), event.target.getAttribute('data-id'));
+          return false;
+        });
+
+        var submitForm_putimportCompanyProduct = document.querySelector('#htmForm_putimportCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          putimportCompanyProduct(document.querySelector('#htmForm_putimportCompanyProduct'), document.querySelector('#htmFormButton_putimportCompanyProduct'));
+          return false;
+        });
+
+        var submitForm_searchpageCompanyProduct = document.querySelector('#htmForm_searchpageCompanyProduct')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageCompanyProduct')?.addEventListener('click', event => {
+          event.preventDefault();
+          searchpageCompanyProduct();
+          return false;
+        });
+      });
+    </script>
+{%- endblock htmScriptCompanyProductPage %}
+{%- endblock htmScriptPageLayout %}
+
+{%- block websocketPageLayout %}
+{%- block websocketCompanyProductPage %}
+        window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
+        websocketCompanyProduct(websocketCompanyProductInner);
+{%- endblock websocketCompanyProductPage %}
+{%- endblock websocketPageLayout %}
+
+{%- block htmUrlCompanyProductPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlCompanyProductPage %}
+
+{%- block htmBodyStartPageLayout %}
+    {{ super() }}
+{%- block htmBodyStartCompanyProductPage %}
+{%- endblock htmBodyStartCompanyProductPage %}
+{%- endblock htmBodyStartPageLayout %}
+
+{%- block htmBodyMiddlePageLayout %}
+{%- block htmBodyMiddleCompanyProductPage %}
+{%- include en-us/search/product/CompanyProductSidebar.htm %}
+{%- include en-us/search/product/CompanyProductSuggestedSearch.htm %}
+{% if resultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          <span>products</span>
+        </h1>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no product found</span>
+          </span>
+        </h2>
+{% else %}
+  {% if resultCount == 1 %}
+    {% if id is defined %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+        <h1>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          {{result.objectTitle}}
+        </h1>
+    {% else %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          <span>products</span>
+        </h1>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no product found</span>
+          </span>
+        </h2>
+    {% endif %}
+  {% else %}
+        <div>
+          <sl-tooltip content="back to all products">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-conveyor-belt"></i>
+          <span>products</span>
+        </h1>
+{% include en-us/search/product/CompanyProductSearchButtons.htm %}
+{% include en-us/search/product/CompanyProductSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no product found</span>
+          </span>
+        </h2>
+  {% endif %}
+{% endif %}
+{%- block htmFormCompanyProductPage %}
+        <form action="/en-us/api/product" id="CompanyProductForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+{% if id is defined %}
+          <input name="id" class="valueId" type="hidden" value="{{id}}"/>
+          {% endif %}
+          <input name="focusId" type="hidden"/>
+          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+          <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result_) }}' type="hidden"/>
+          <input name="listCompanyProduct" id="listCompanyProduct" class="listCompanyProduct"  value='{{ toJsonArrayStringInApostrophes(listCompanyProduct) }}' type="hidden"/>
+        </form>
+  {% if id is defined %}
+        {{ htmButton_searchpageCompanyProduct() }}
+        {{ htmForm_searchpageCompanyProduct() }}
+  {% endif %}
+{%- endblock htmFormCompanyProductPage %}
+{%- endblock htmBodyMiddleCompanyProductPage %}
+{%- endblock htmBodyMiddlePageLayout %}
+
+{%- block htmBodyEndPageLayout %}
+      {{ super() }}
+{%- block htmBodyEndCompanyProductPage %}
+{%- endblock htmBodyEndCompanyProductPage %}
+{%- endblock htmBodyEndPageLayout %}
+{%- macro inputCreatedCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_created">
+  {%- endif %}
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="created"
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyProduct inputCompanyProduct{{id}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-id="{{ id }}"
+                      >
+                  </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmCreatedCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputModifiedCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_modified">
+  {%- endif %}
+                  <sl-input
+                      type="text"
+                      readonly
+                      placeholder="modified"
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyProduct inputCompanyProduct{{id}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-id="{{ id }}"
+                      >
+                  </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmModifiedCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputObjectIdCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_objectId">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] ID"
+                      label="ID"
+                      help-text="
+A URL friendly unique ID for this object"
+                      id="{{classApiMethodMethod}}_objectId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="setObjectId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_objectId setObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="setObjectId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_objectId valueObjectId classCompanyProduct inputCompanyProduct{{id}}ObjectId "
+                      name="objectId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.objectId | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmObjectIdCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputObjectIdCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputArchivedCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
+                      data-id="{{ id }}"
+                      data-val="{{ result.archived | e }}"
+                      >archived</sl-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <sl-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyProduct inputCompanyProduct{{id}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if result.archived == true %}
+                      checked
+    {%- endif %}
+                      data-id="{{ id }}"
+                      >archived</sl-checkbox>
+  {%- else %}
+                      >
+                    <sl-option value="" selected="selected"></sl-option>
+                    <sl-option value="true">true</sl-option>
+                    <sl-option value="false">false</sl-option>
+                  </sl-select>
+  {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmArchivedCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNameCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_name">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] product name"
+                      label="product name"
+                      help-text="
+The product name. "
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyProduct inputCompanyProduct{{id}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.name | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNameCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNameCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDescriptionCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_description">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] product description"
+                      label="product description"
+                      help-text="
+The product description. "
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyProduct inputCompanyProduct{{id}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.description | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDescriptionCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputPriceCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_price">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[BigDecimal] price"
+                      label="price"
+                      help-text="
+The price of the product per developer. "
+                      id="{{classApiMethodMethod}}_price"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyProduct inputCompanyProduct{{id}}Price "
+                      name="setPrice"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyProduct inputCompanyProduct{{id}}Price "
+                      name="setPrice"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_price valuePrice classCompanyProduct inputCompanyProduct{{id}}Price "
+                      name="price"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.price | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPriceCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPriceCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputUriCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_uri">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] URI"
+                      label="URI"
+                      help-text="
+The relative URI for this page. "
+                      id="{{classApiMethodMethod}}_uri"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="setUri"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_uri setUri classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="setUri"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_uri valueUri classCompanyProduct inputCompanyProduct{{id}}Uri "
+                      name="uri"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.uri | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmUriCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputUriCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputUrlCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_url">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_url"
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="Visit this product's landing page. "
+                      class="button-on-left {{classApiMethodMethod}}_url classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="setUrl"
+                      href="{{ result.url | e }}"
+                      >
+                    product page
+                  </sl-button>
+                  <div class="button-description-on-right ">Visit this product's landing page. </div>
+  {%- else %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="
+Visit this product's landing page. "
+                      id="{{classApiMethodMethod}}_url"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="setUrl"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_url setUrl classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="setUrl"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_url valueUrl classCompanyProduct inputCompanyProduct{{id}}Url "
+                      name="url"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.url | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmUrlCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputUrlCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputViewPageCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_viewPage">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_viewPage"
+                      placeholder="[String] view"
+                      label="view"
+                      help-text="View the project. "
+                      class="button-on-left {{classApiMethodMethod}}_viewPage classCompanyProduct inputCompanyProduct{{id}}ViewPage "
+                      name="setViewPage"
+                      href="{{ result.viewPage | e }}"
+                      >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    view
+                  </sl-button>
+                  <div class="button-description-on-right ">View the project. </div>
+  {%- else %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] view"
+                      label="view"
+                      help-text="
+View the project. "
+                      id="{{classApiMethodMethod}}_viewPage"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_viewPage setViewPage classCompanyProduct inputCompanyProduct{{id}}ViewPage "
+                      name="setViewPage"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_viewPage setViewPage classCompanyProduct inputCompanyProduct{{id}}ViewPage "
+                      name="setViewPage"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_viewPage valueViewPage classCompanyProduct inputCompanyProduct{{id}}ViewPage "
+                      name="viewPage"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.viewPage | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmViewPageCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputViewPageCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputEditPageCompanyProductPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_editPage">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <sl-button
+                      id="{{classApiMethodMethod}}_editPage"
+                      help-text="Edit the project. "
+                      class="button-on-left {{classApiMethodMethod}}_editPage classCompanyProduct inputCompanyProduct{{id}}EditPage "
+                      name="setEditPage"
+                      href="{{ result.editPage | e }}"
+                      >
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </sl-button>
+                  <div class="button-description-on-right ">Edit the project. </div>
+  {%- else %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      help-text="
+Edit the project. "
+                      id="{{classApiMethodMethod}}_editPage"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-id="{{ id }}"
+                      class="label-on-left {{classApiMethodMethod}}_editPage setEditPage classCompanyProduct inputCompanyProduct{{id}}EditPage "
+                      name="setEditPage"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_editPage setEditPage classCompanyProduct inputCompanyProduct{{id}}EditPage "
+                      name="setEditPage"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_editPage valueEditPage classCompanyProduct inputCompanyProduct{{id}}EditPage "
+                      name="editPage"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.editPage | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmEditPageCompanyProductPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputEditPageCompanyProductPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}

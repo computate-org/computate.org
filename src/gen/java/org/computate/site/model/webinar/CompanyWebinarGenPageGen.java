@@ -1,7 +1,7 @@
 package org.computate.site.model.webinar;
 
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.BaseModelPage;
+import org.computate.site.page.PageLayout;
 import org.computate.site.model.BaseModel;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
@@ -65,7 +65,7 @@ import io.vertx.core.Future;
  * <li>You can add a class comment <b>"Api: true"</b> if you wish to GET, POST, PATCH or PUT these CompanyWebinarGenPage objects in a RESTful API. 
  * </li><li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class CompanyWebinarGenPageGen into the class CompanyWebinarGenPage. 
  * </li>
- * <h3>About the CompanyWebinarGenPage class and it's generated class CompanyWebinarGenPageGen&lt;BaseModelPage&gt;: </h3>extends CompanyWebinarGenPageGen
+ * <h3>About the CompanyWebinarGenPage class and it's generated class CompanyWebinarGenPageGen&lt;PageLayout&gt;: </h3>extends CompanyWebinarGenPageGen
  * <p>
  * This Java class extends a generated Java class CompanyWebinarGenPageGen built by the <a href="https://github.com/computate-org/computate">https://github.com/computate-org/computate</a> project. 
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
@@ -76,9 +76,9 @@ import io.vertx.core.Future;
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
  * </p>
- * extends CompanyWebinarGenPageGen<BaseModelPage>
- * <p>This <code>class CompanyWebinarGenPage extends CompanyWebinarGenPageGen&lt;BaseModelPage&gt;</code>, which means it extends a newly generated CompanyWebinarGenPageGen. 
- * The generated <code>class CompanyWebinarGenPageGen extends BaseModelPage</code> which means that CompanyWebinarGenPage extends CompanyWebinarGenPageGen which extends BaseModelPage. 
+ * extends CompanyWebinarGenPageGen<PageLayout>
+ * <p>This <code>class CompanyWebinarGenPage extends CompanyWebinarGenPageGen&lt;PageLayout&gt;</code>, which means it extends a newly generated CompanyWebinarGenPageGen. 
+ * The generated <code>class CompanyWebinarGenPageGen extends PageLayout</code> which means that CompanyWebinarGenPage extends CompanyWebinarGenPageGen which extends PageLayout. 
  * This generated inheritance is a powerful feature that allows a lot of boiler plate code to be created for you automatically while still preserving inheritance through the power of Java Generic classes. 
  * </p>
  * <h2>Api: true</h2>
@@ -131,7 +131,7 @@ import io.vertx.core.Future;
  * </p>
  * Generated: true
  **/
-public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
+public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarGenPage.class);
 
 	///////////////////////////////
@@ -229,102 +229,102 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o)).toString();
 	}
 
-	/////////////////////////
-	// companyWebinarCount //
-	/////////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity companyWebinarCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer companyWebinarCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity companyWebinarCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:companyWebinarCount">Find the entity companyWebinarCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyWebinarCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getCompanyWebinarCount() {
-		return companyWebinarCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setCompanyWebinarCount(Integer companyWebinarCount) {
-		this.companyWebinarCount = companyWebinarCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setCompanyWebinarCount(String o) {
-		this.companyWebinarCount = CompanyWebinarGenPage.staticSetCompanyWebinarCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetCompanyWebinarCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected CompanyWebinarGenPage companyWebinarCountInit() {
-		Wrap<Integer> companyWebinarCountWrap = new Wrap<Integer>().var("companyWebinarCount");
-		if(companyWebinarCount == null) {
-			_companyWebinarCount(companyWebinarCountWrap);
-			Optional.ofNullable(companyWebinarCountWrap.getO()).ifPresent(o -> {
-				setCompanyWebinarCount(o);
+	protected CompanyWebinarGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (CompanyWebinarGenPage)this;
 	}
 
-	public static Integer staticSearchCompanyWebinarCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrCompanyWebinarCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqCompanyWebinarCount(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchCompanyWebinarCount(siteRequest_, CompanyWebinarGenPage.staticSetCompanyWebinarCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	/////////////////////
-	// companyWebinar_ //
-	/////////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity companyWebinar_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected CompanyWebinar companyWebinar_;
+	protected CompanyWebinar result;
 
-	/**	<br> The entity companyWebinar_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:companyWebinar_">Find the entity companyWebinar_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _companyWebinar_(Wrap<CompanyWebinar> w);
+	protected abstract void _result(Wrap<CompanyWebinar> w);
 
-	public CompanyWebinar getCompanyWebinar_() {
-		return companyWebinar_;
+	public CompanyWebinar getResult() {
+		return result;
 	}
 
-	public void setCompanyWebinar_(CompanyWebinar companyWebinar_) {
-		this.companyWebinar_ = companyWebinar_;
+	public void setResult(CompanyWebinar result) {
+		this.result = result;
 	}
-	public static CompanyWebinar staticSetCompanyWebinar_(SiteRequest siteRequest_, String o) {
+	public static CompanyWebinar staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected CompanyWebinarGenPage companyWebinar_Init() {
-		Wrap<CompanyWebinar> companyWebinar_Wrap = new Wrap<CompanyWebinar>().var("companyWebinar_");
-		if(companyWebinar_ == null) {
-			_companyWebinar_(companyWebinar_Wrap);
-			Optional.ofNullable(companyWebinar_Wrap.getO()).ifPresent(o -> {
-				setCompanyWebinar_(o);
+	protected CompanyWebinarGenPage resultInit() {
+		Wrap<CompanyWebinar> resultWrap = new Wrap<CompanyWebinar>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (CompanyWebinarGenPage)this;
@@ -508,7 +508,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyWebinarGenPage(promise2);
 		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModelPage(siteRequest_).onSuccess(b -> {
+			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
 				promise.complete();
 			}).onFailure(ex -> {
 				promise.fail(ex);
@@ -525,8 +525,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 			try {
 				searchListCompanyWebinar_Init();
 				listCompanyWebinarInit();
-				companyWebinarCountInit();
-				companyWebinar_Init();
+				resultCountInit();
+				resultInit();
 				pkInit();
 				idInit();
 				pageUriCompanyWebinarInit();
@@ -552,7 +552,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 	/////////////////
 
 	public void siteRequestCompanyWebinarGenPage(SiteRequest siteRequest_) {
-			super.siteRequestBaseModelPage(siteRequest_);
+			super.siteRequestPageLayout(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -587,10 +587,10 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 				return oCompanyWebinarGenPage.searchListCompanyWebinar_;
 			case "listCompanyWebinar":
 				return oCompanyWebinarGenPage.listCompanyWebinar;
-			case "companyWebinarCount":
-				return oCompanyWebinarGenPage.companyWebinarCount;
-			case "companyWebinar_":
-				return oCompanyWebinarGenPage.companyWebinar_;
+			case "resultCount":
+				return oCompanyWebinarGenPage.resultCount;
+			case "result":
+				return oCompanyWebinarGenPage.result;
 			case "pk":
 				return oCompanyWebinarGenPage.pk;
 			case "id":
@@ -598,7 +598,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 			case "pageUriCompanyWebinar":
 				return oCompanyWebinarGenPage.pageUriCompanyWebinar;
 			default:
-				return super.obtainBaseModelPage(var);
+				return super.obtainPageLayout(var);
 		}
 	}
 
@@ -623,7 +623,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		CompanyWebinarGenPage oCompanyWebinarGenPage = (CompanyWebinarGenPage)this;
 		switch(var) {
 			default:
-				return super.relateBaseModelPage(var, val);
+				return super.relatePageLayout(var, val);
 		}
 	}
 
@@ -638,8 +638,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listCompanyWebinar":
 			return CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o);
-		case "companyWebinarCount":
-			return CompanyWebinarGenPage.staticSetCompanyWebinarCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSetPk(siteRequest_, o);
 		case "id":
@@ -647,7 +647,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSetBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -662,8 +662,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, (JsonArray)o);
-		case "companyWebinarCount":
-			return CompanyWebinarGenPage.staticSearchCompanyWebinarCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
@@ -671,7 +671,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -686,8 +686,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchStrListCompanyWebinar(siteRequest_, (String)o);
-		case "companyWebinarCount":
-			return CompanyWebinarGenPage.staticSearchStrCompanyWebinarCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return CompanyWebinarGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
@@ -695,7 +695,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchStrPageUriCompanyWebinar(siteRequest_, (String)o);
 			default:
-				return BaseModelPage.staticSearchStrBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -710,8 +710,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		switch(entityVar) {
 		case "listCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchFqListCompanyWebinar(siteRequest_, o);
-		case "companyWebinarCount":
-			return CompanyWebinarGenPage.staticSearchFqCompanyWebinarCount(siteRequest_, o);
+		case "resultCount":
+			return CompanyWebinarGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
@@ -719,7 +719,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchFqPageUriCompanyWebinar(siteRequest_, o);
 			default:
-				return BaseModelPage.staticSearchFqBaseModelPage(entityVar,  siteRequest_, o);
+				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
 		}
 	}
 
@@ -736,16 +736,16 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarGenPage";
 	public static final String VAR_searchListCompanyWebinar_ = "searchListCompanyWebinar_";
 	public static final String VAR_listCompanyWebinar = "listCompanyWebinar";
-	public static final String VAR_companyWebinarCount = "companyWebinarCount";
-	public static final String VAR_companyWebinar_ = "companyWebinar_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 	public static final String VAR_pageUriCompanyWebinar = "pageUriCompanyWebinar";
 
 	public static final String DISPLAY_NAME_searchListCompanyWebinar_ = "";
 	public static final String DISPLAY_NAME_listCompanyWebinar = "";
-	public static final String DISPLAY_NAME_companyWebinarCount = "";
-	public static final String DISPLAY_NAME_companyWebinar_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 	public static final String DISPLAY_NAME_pageUriCompanyWebinar = "";
@@ -759,10 +759,10 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 			return DISPLAY_NAME_searchListCompanyWebinar_;
 		case VAR_listCompanyWebinar:
 			return DISPLAY_NAME_listCompanyWebinar;
-		case VAR_companyWebinarCount:
-			return DISPLAY_NAME_companyWebinarCount;
-		case VAR_companyWebinar_:
-			return DISPLAY_NAME_companyWebinar_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
 		case VAR_id:
@@ -770,7 +770,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends BaseModelPage {
 		case VAR_pageUriCompanyWebinar:
 			return DISPLAY_NAME_pageUriCompanyWebinar;
 		default:
-			return BaseModelPage.displayNameBaseModelPage(var);
+			return PageLayout.displayNamePageLayout(var);
 		}
 	}
 }

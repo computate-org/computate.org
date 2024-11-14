@@ -1,0 +1,355 @@
+{% extends "en-us/PageLayout.htm" %}
+
+{%- block htmTitlePageLayout %}
+{%- block htmTitleWeatherObservedPage %}
+    <title>{% if resultCount == 0 %}no weather observed device found{% else %}weather observed devices{% endif %}</title>
+{%- endblock htmTitleWeatherObservedPage %}
+{%- endblock htmTitlePageLayout %}
+
+{%- block htmStylesPageLayout %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ staticBaseUrl }}/css/weather-observed/WeatherObserved.css"/>
+{%- block htmStylesWeatherObservedPage %}
+{%- endblock htmStylesWeatherObservedPage %}
+{%- endblock htmStylesPageLayout %}
+
+{%- block htmStylePageLayout %}
+{{ super() }}
+{%- block htmStyleWeatherObservedPage %}
+{%- endblock htmStyleWeatherObservedPage %}
+{%- endblock htmStylePageLayout %}
+
+{%- block htmScriptsPageLayout %}
+{{ super() }}
+{%- block htmScriptsWeatherObservedPage %}
+    <script src="{{staticBaseUrl}}/js/weather-observed/WeatherObserved.js"></script>
+    <script type="module" src="{{staticBaseUrl}}/js/weather-observed/WeatherObservedSearch.js"></script>
+{%- endblock htmScriptsWeatherObservedPage %}
+{%- endblock htmScriptsPageLayout %}
+
+{%- block htmScriptPageLayout %}
+{%- block htmScriptWeatherObservedPage %}
+    <script>
+
+      function jsWebsocketWeatherObserved(pk, vars, $response) {
+{%- block jsWebsocketWeatherObservedPage %}{%- endblock %}
+      }
+
+      function jsTooltipWeatherObserved(e, feature) {
+{%- block jsTooltipWeatherObservedPage %}{%- endblock %}
+      }
+
+      function htmTooltipWeatherObserved(feature, layer) {
+        return `{%- block htmTooltipWeatherObservedPage %}
+<h3><i class="{{ classIconCssClasses }}  "></i><a href="${quoteattr(feature.properties.pageUrlPk)}">${feature.properties.objectTitle}</a></h3>
+{%- endblock htmTooltipWeatherObservedPage %}`;
+      }
+
+      function jsLegendWeatherObserved(map) {
+{%- block jsLegendWeatherObservedPage %}
+        var div = L.DomUtil.create('div', 'info legend');
+        var htm = '';
+        window.listWeatherObserved.forEach((result, index) => {
+          if(result.areaServed) {
+            var shapes = [];
+            if(Array.isArray(result.areaServed))
+              shapes = shapes.concat(result.areaServed);
+            else
+              shapes.push(result.areaServed);
+            shapes.forEach(function(shape, index) {
+              htm += htmLegendWeatherObserved(map, shape, result, index, shapes.length);
+            });
+          }
+        });
+        div.innerHTML = htm;
+        return div;
+{%- endblock jsLegendWeatherObservedPage %}
+      }
+
+      function htmLegendWeatherObserved(map, shape, result, index, count) {
+        var color = result.areaServedColors[index];
+        var title = result.areaServedTitles[index];
+        var url = result.areaServedLinks[index];
+        var htm = '';
+        htm += `<div class="cursor-pointer " style="max-width: 400px; ">
+`;
+        htm += `{%- block htmLegendWeatherObservedPage %}
+    <div title="${quoteattr(title)}">
+    <div style="width: 20px; ">
+      <i class="fa-light fa-circle" style="color: ${color}; "></i>
+    </div>
+    <div class="text-overflow-ellipsis ">
+      <span class="" data-id="${result.id}" onclick="window.mapLayers[this.getAttribute('data-id')].openPopup(); return false;" href="">${title}</span>
+    </div>
+    </div>
+{%- endblock htmLegendWeatherObservedPage %}`;
+        htm += `
+</div>
+`;
+        return htm;
+      }
+
+      function jsStyleWeatherObserved(feature) {
+{%- block jsStyleWeatherObservedPage %}
+        if(feature.geometry.type == 'Point') {
+          return {
+            radius: 8
+            , fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 1
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        } else if(feature.geometry.type == 'LineString') {
+          return {
+            color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 5
+            , opacity: 0.7
+          };
+        } else {
+          return {
+             fillColor: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , color: (feature.properties.areaServedColors && feature.properties.areaServedColors[feature.index] ? feature.properties.areaServedColors[feature.index] : (feature.properties.color ? feature.properties.color : '#000'))
+            , weight: 3
+            , opacity: 0.7
+            , fillOpacity: 0.7
+          };
+        }
+{%- endblock jsStyleWeatherObservedPage %}
+      }
+    </script>
+    <script type="module">
+{% if DEFAULT_MAP_LOCATION is defined %}
+      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+{% endif %}
+{% if DEFAULT_MAP_ZOOM is defined %}
+      window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
+{% endif %}
+      window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
+      Promise.all([
+        customElements.whenDefined('sl-button')
+        , customElements.whenDefined('sl-input')
+      ]).then(() => {
+
+        var pk = {% if pk is defined %}{{ pk }}{% else %}null{% endif %};
+
+        if(pk == null) {
+          document.querySelector('#grid-toggle-details')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-list', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-details');
+          });
+          document.querySelector('#grid-toggle-list')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-card');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-list');
+          });
+          document.querySelector('#grid-toggle-card')?.addEventListener('click', () => {
+            document.querySelector('#site-results-grid').classList.remove('grid-mode-details', 'grid-mode-list');
+            document.querySelector('#site-results-grid').classList.add('grid-mode-card');
+          });
+        } else {
+          var o = document.querySelector('.pageForm .result')?.value;
+          if(o)
+            window.result = JSON.parse(o);
+        {% if pk is defined %}
+        {% endif %}
+        }
+        var l = document.querySelector('.pageForm .listWeatherObserved')?.value;
+        if(l)
+          window.listWeatherObserved = JSON.parse(l);
+        window.varsFq = JSON.parse('{{ toJsonObjectStringInApostrophes(varsFq) }}');
+        window.varsRange = JSON.parse('{{ toJsonObjectStringInApostrophes(varsRange) }}');
+        window.defaultRangeVar = '{{ defaultRangeVar }}';
+        pageGraphWeatherObserved();
+        {% for key, value in varsQ.items() %}
+
+        document.querySelector('#qWeatherObserved_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+          qChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_{{ key }}'));
+        });
+        {% endfor %}
+
+        document.querySelector('#qWeatherObserved_rows')?.addEventListener('sl-change', event => {
+          paramChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_rows'));
+        });
+
+        document.querySelector('#qWeatherObserved_start')?.addEventListener('sl-change', event => {
+          paramChange('WeatherObserved', event.target, document.querySelector('#qWeatherObservedDiv_start'));
+        });
+
+
+        var submitForm_patchWeatherObserved = document.querySelector('#htmForm_patchWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_patchWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          patchWeatherObserved(null, document.querySelector('#htmForm_patchWeatherObserved'), document.querySelector('#htmFormButton_patchWeatherObserved'), event.target.getAttribute('data-pk'));
+          return false;
+        });
+
+        var submitForm_postWeatherObserved = document.querySelector('#htmForm_postWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_postWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          postWeatherObserved(document.querySelector('#htmForm_postWeatherObserved'), document.querySelector('#htmFormButton_postWeatherObserved'), (response, target) => { response.json().then((json) => { window.location.href = json.pageUrlPk; }); });
+          return false;
+        });
+
+        var submitForm_deleteWeatherObserved = document.querySelector('#htmForm_deleteWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deleteWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          deleteWeatherObserved(null, document.querySelector('#htmForm_deleteWeatherObserved'), document.querySelector('#htmFormButton_deleteWeatherObserved'), event.target.getAttribute('data-pk'));
+          return false;
+        });
+
+        var submitForm_putimportWeatherObserved = document.querySelector('#htmForm_putimportWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_putimportWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          putimportWeatherObserved(document.querySelector('#htmForm_putimportWeatherObserved'), document.querySelector('#htmFormButton_putimportWeatherObserved'));
+          return false;
+        });
+
+        var submitForm_searchpageWeatherObserved = document.querySelector('#htmForm_searchpageWeatherObserved')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_searchpageWeatherObserved')?.addEventListener('click', event => {
+          event.preventDefault();
+          searchpageWeatherObserved();
+          return false;
+        });
+      });
+    </script>
+{%- endblock htmScriptWeatherObservedPage %}
+{%- endblock htmScriptPageLayout %}
+
+{%- block websocketPageLayout %}
+{%- block websocketWeatherObservedPage %}
+        window.eventBus = new EventBus('/eventbus');
+        window.eventBus.enableReconnect(true);
+        websocketWeatherObserved(websocketWeatherObservedInner);
+{%- endblock websocketWeatherObservedPage %}
+{%- endblock websocketPageLayout %}
+
+{%- block htmUrlWeatherObservedPage %}{{pageUri}}?q={{query.q}}&amp;rows={% if rows is defined %}{{rows}}{% else %}{{pagination.rows}}{% endif %}&amp;rows={% if start is defined %}{{start}}{% else %}{{pagination.start}}{% endif %}{% for item query.fq %}{% if fq == item %}{% else %}&fq={{fq}}:{{val}}{% endif %}{% endfor %}{% for item in query.sort %}{% if sort == item %}{% else %}&sort={{var}} {{order}}{% endif %}{% endfor %}{%- endblock htmUrlWeatherObservedPage %}
+
+{%- block htmBodyStartPageLayout %}
+{{ super() }}
+{%- block htmBodyStartWeatherObservedPage %}
+{%- endblock htmBodyStartWeatherObservedPage %}
+{%- endblock htmBodyStartPageLayout %}
+
+{%- block htmBodyMiddlePageLayout %}
+{%- block htmBodyMiddleWeatherObservedPage %}
+{%- include weather-observed/WeatherObservedSidebar.htm %}
+{%- include weather-observed/WeatherObservedSuggestedSearch.htm %}
+{% if resultCount == 0 %}
+        <div>
+          <sl-tooltip content="back to all weather observed devices">
+            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all weather observed devices
+            </sl-button>
+          </sl-tooltip>
+        </div>
+        <h1>
+          <i class="fa-regular fa-cloud-bolt-sun"></i>
+          <span>weather observed devices</span>
+        </h1>
+{% include weather-observed/WeatherObservedSearchButtons.htm %}
+{% include weather-observed/WeatherObservedSearchForm.htm %}
+        <h2>
+          <span>
+  {% if classIconCssClasses is defined %}
+            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
+  {% endif %}
+            <span class="">no weather observed device found</span>
+          </span>
+        </h2>
+{% else %}
+        <div class="pageContent ">
+          <div id="site-calendar-box">
+            <div id="site-calendar"><!-- // --></div>
+          </div>
+          <div>
+            <sl-tooltip content="back to all weather observed devices">
+              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+                <i class="fa-solid fa-angle-left"></i>
+                all weather observed devices
+              </sl-button>
+            </sl-tooltip>
+          </div>
+          <h1>
+            <a href="{{pageUri}}">
+              <i class="fa-regular fa-cloud-bolt-sun"></i>
+              <span>weather observed devices</span>
+            </a>
+          </h1>
+{% include weather-observed/WeatherObservedSearchButtons.htm %}
+{% include weather-observed/WeatherObservedSearchForm.htm %}
+{% include weather-observed/WeatherObservedPaginationButtons.htm %}
+          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+            <div>
+              <sl-dropdown id="htmDropdown_name">
+                <sl-button slot="trigger" caret>name</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by name ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by name descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+              <sl-dropdown id="htmDropdown_description">
+                <sl-button slot="trigger" caret>description</sl-button>
+                <sl-menu>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by description ascending
+                  </sl-menu-item>
+                  <sl-menu-item type="checkbox" data-action="sort">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by description descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+            </div>
+            {% for item in listWeatherObserved%}
+            <div>
+              <a href="{{ item.pageUrlPk }}">
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
+              {{ item.name }}
+              </a>
+              <a href="{{ item.pageUrlPk }}">
+              {{ item.description }}
+              </a>
+            </div>
+            {% endfor %}
+              {% if getColumnName is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnDescription is defined %}
+                <div>
+                </div>
+              {% endif %}
+          </div>
+{% endif %}
+{%- endblock htmBodyMiddleWeatherObservedPage %}
+{%- endblock htmBodyMiddlePageLayout %}
+
+{%- block htmBodyEndPageLayout %}
+  {{ super() }}
+{%- block htmBodyEndWeatherObservedPage %}
+{%- endblock htmBodyEndWeatherObservedPage %}
+{%- endblock htmBodyEndPageLayout %}

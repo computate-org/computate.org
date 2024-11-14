@@ -283,6 +283,16 @@ public class BaseModelGenPage extends BaseModelGenPageGen<PageLayout> {
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListBaseModel_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = BaseModel.searchVarBaseModel(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListBaseModel_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -340,23 +350,26 @@ public class BaseModelGenPage extends BaseModelGenPageGen<PageLayout> {
     Optional.ofNullable(searchListBaseModel_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _baseModelCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListBaseModel_ == null ? 0 : searchListBaseModel_.size());
   }
 
-  protected void _baseModel_(Wrap<BaseModel> w) {
-    if(baseModelCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<BaseModel> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListBaseModel_.get(0));
   }
 
   protected void _pk(Wrap<Long> w) {
-    if(baseModel_ != null)
-      w.o(baseModel_.getPk());
+    if(result != null)
+      w.o(result.getPk());
   }
 
   protected void _id(Wrap<String> w) {
-    if(baseModel_ != null)
-      w.o(baseModel_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -371,11 +384,11 @@ public class BaseModelGenPage extends BaseModelGenPageGen<PageLayout> {
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(baseModel_ != null && baseModel_.getObjectTitle() != null)
-      c.o(baseModel_.getObjectTitle());
-    else if(baseModel_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("");
-    else if(searchListBaseModel_ == null || baseModelCount == 0)
+    else if(searchListBaseModel_ == null || resultCount == 0)
       c.o("");
   }
 

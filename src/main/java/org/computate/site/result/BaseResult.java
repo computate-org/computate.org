@@ -18,9 +18,8 @@ import org.computate.vertx.result.base.ComputateBaseResult;
 import io.vertx.core.Promise;
 
 /**
- * Indexed: true
  * Page: true
- * SuperPage: PageLayout
+ * Indexed: true
  * Keyword: classSimpleNameBaseResult
  * Description: A reusable base class for all non-model search classes
  * Order: 2
@@ -133,7 +132,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: userKey
 	 * DocValues: true
 	 * Persist: true
 	 * Modify: false
@@ -172,7 +170,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * {@inheritDoc}
 	 * Persist: true
 	 * DocValues: true
-	 * VarId: true
 	 * UrlVar: pageUrlId
 	 * HtmRow: 1
 	 * HtmCell: 4

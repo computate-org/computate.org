@@ -1,7 +1,13 @@
 package org.computate.site.model.fiware.weatherobserved;
 
+import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
+import java.lang.String;
+import io.vertx.core.json.JsonObject;
+import io.vertx.pgclient.data.Point;
+import java.util.List;
+import io.vertx.pgclient.data.Polygon;
+import java.math.BigDecimal;
 import org.computate.site.page.PageLayout;
-import org.computate.site.model.BaseModelPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -18,19 +24,16 @@ import java.time.temporal.ChronoUnit;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Locale;
-import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.core.json.JsonArray;
 import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Arrays;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.util.Objects;
@@ -47,7 +50,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelPage> {
+public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +392,16 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListWeatherObserved_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = WeatherObserved.searchVarWeatherObserved(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListWeatherObserved_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,23 +459,26 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
     Optional.ofNullable(searchListWeatherObserved_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _weatherObservedCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListWeatherObserved_ == null ? 0 : searchListWeatherObserved_.size());
   }
 
-  protected void _weatherObserved_(Wrap<WeatherObserved> w) {
-    if(weatherObservedCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<WeatherObserved> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListWeatherObserved_.get(0));
   }
 
   protected void _pk(Wrap<Long> w) {
-    if(weatherObserved_ != null)
-      w.o(weatherObserved_.getPk());
+    if(result != null)
+      w.o(result.getPk());
   }
 
   protected void _id(Wrap<String> w) {
-    if(weatherObserved_ != null)
-      w.o(weatherObserved_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -477,11 +493,11 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(weatherObserved_ != null && weatherObserved_.getObjectTitle() != null)
-      c.o(weatherObserved_.getObjectTitle());
-    else if(weatherObserved_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("weather observed devices");
-    else if(searchListWeatherObserved_ == null || weatherObservedCount == 0)
+    else if(searchListWeatherObserved_ == null || resultCount == 0)
       c.o("no weather observed device found");
     else
       c.o("weather observed devices");
@@ -489,12 +505,12 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/weather-observed");
+    c.o("/en-us/search/weather-observed");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/weather-observed");
+    c.o("/en-us/api/weather-observed");
   }
 
   @Override
@@ -509,7 +525,7 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/weather-observed-999.png");
+      c.o("/png/en-us/search/weather-observed-999.png");
   }
 
   @Override
@@ -518,6 +534,6 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<BaseModelP
   }
 
   protected void _pageUriWeatherObserved(Wrap<String> c) {
-      c.o("/weather-observed");
+      c.o("/en-us/search/weather-observed");
   }
 }

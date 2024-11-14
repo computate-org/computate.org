@@ -7,39 +7,36 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 9
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/research
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: Read about the computate project related research going on at Red Hat research
+ * AName: a research
+ * PluralName: research
+ * Icon: <i class="fa-duotone fa-solid fa-school"></i>
  * 
- * ApiTag: research
- * ApiUri: /api/research
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/research
+ * EditPageUri: /en-us/edit/research/{objectId}
+ * DisplayPageUri: /en-us/shop/research/{objectId}
+ * ApiUri: /en-us/api/research
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyResearchPage
- *     ApiUri: /research
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: a research
- * PluralName: research
- * Icon: <i class="fa-duotone fa-solid fa-school"></i>
  */
 public class CompanyResearch extends CompanyResearchGen<BaseResult> {
 

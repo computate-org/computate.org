@@ -16,10 +16,9 @@ import org.computate.site.request.SiteRequest;
 import org.computate.vertx.model.base.ComputateBaseModel;
 
 /**
+ * Page: true
  * Indexed: true
  * Model: true
- * Page: true
- * SuperPage: PageLayout
  * Keyword: classSimpleNameBaseModel
  * Description: A reusable base class for all database model classes
  * Order: 1
@@ -146,7 +145,6 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 
 	/**
 	 * {@inheritDoc}
-	 * Var.enUS: userKey
 	 * DocValues: true
 	 * Persist: true
 	 * Modify: false

@@ -1,7 +1,8 @@
 package org.computate.site.model.research;
 
+import org.computate.site.model.research.CompanyResearch;
+import java.lang.String;
 import org.computate.site.page.PageLayout;
-import org.computate.site.result.BaseResultPage;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import java.io.IOException;
@@ -47,7 +48,7 @@ import java.time.ZoneId;
  * Translate: false
  * Generated: true
  **/
-public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResultPage> {
+public class CompanyResearchGenPage extends CompanyResearchGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
@@ -389,6 +390,16 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
   }
 
   @Override
+  protected void _defaultSortVars(List<String> l) {
+    Optional.ofNullable(searchListCompanyResearch_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+      String varSortParts[] = varSortStr.split(" ");
+      String varSort = CompanyResearch.searchVarCompanyResearch(varSortParts[0]);
+      String varSortDirection = varSortParts[1];
+      l.add(String.format("%s %s", varSort, varSortDirection));
+    });
+  }
+
+  @Override
   protected void _defaultFieldListVars(List<String> l) {
     Optional.ofNullable(searchListCompanyResearch_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
@@ -446,18 +457,21 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
     Optional.ofNullable(searchListCompanyResearch_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
-  protected void _companyResearchCount(Wrap<Integer> w) {
+  protected void _resultCount(Wrap<Integer> w) {
     w.o(searchListCompanyResearch_ == null ? 0 : searchListCompanyResearch_.size());
   }
 
-  protected void _companyResearch_(Wrap<CompanyResearch> w) {
-    if(companyResearchCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+  /**
+   * Initialized: false
+  **/
+  protected void _result(Wrap<CompanyResearch> w) {
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
       w.o(searchListCompanyResearch_.get(0));
   }
 
   protected void _id(Wrap<String> w) {
-    if(companyResearch_ != null)
-      w.o(companyResearch_.getId());
+    if(result != null)
+      w.o(result.getId());
   }
 
   @Override
@@ -472,11 +486,11 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(companyResearch_ != null && companyResearch_.getObjectTitle() != null)
-      c.o(companyResearch_.getObjectTitle());
-    else if(companyResearch_ != null)
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
+    else if(result != null)
       c.o("research");
-    else if(searchListCompanyResearch_ == null || companyResearchCount == 0)
+    else if(searchListCompanyResearch_ == null || resultCount == 0)
       c.o("no research found");
     else
       c.o("research");
@@ -484,12 +498,12 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/research");
+    c.o("/en-us/search/research");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/api/research");
+    c.o("/en-us/api/research");
   }
 
   @Override
@@ -504,7 +518,7 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/research-999.png");
+      c.o("/png/en-us/search/research-999.png");
   }
 
   @Override
@@ -513,6 +527,6 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<BaseResult
   }
 
   protected void _pageUriCompanyResearch(Wrap<String> c) {
-      c.o("/research");
+      c.o("/en-us/search/research");
   }
 }

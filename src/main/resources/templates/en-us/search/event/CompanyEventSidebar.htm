@@ -1,0 +1,290 @@
+        <div class="htmBodySidebarCompanyEventPage ">
+{%- block htmBodySidebarCompanyEventPage %}
+          <sl-drawer placement="end" id="siteSidebarToggleSearch">
+            <div>
+              <i class="fad fa-magnifying-glass "></i>
+              Search
+            </div>
+            <div>
+              {%- block htmBodySearchCompanyEventPage %}
+              <div>
+                {% for key, value in varsQ.items() %}
+                <div>
+                  <div>
+                    <label for="qCompanyEvent_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qCompanyEvent_{{ key }}" placeholder="{{ displayName }}" data-var="{{ key }}" autocomplete="off="></sl-input>
+                    <div id="qCompanyEventDiv_{{ key }}" class="pageSearchVal "></div>
+                  </div>
+                </div>
+                {% endfor %}
+                <div>
+                  <div>
+                    <label for="qCompanyEvent_Start">start<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qCompanyEvent_start" placeholder="{{ displayName }}" class="" data-var="start" autocomplete="off=" value="{{ start }}"></sl-input>
+                    <div id="qCompanyEventDiv_start" class="pageSearchVal ">start={{ start }}</div>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <label for="qCompanyEvent_Rows">rows<sup> (Long)</sup></label>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <sl-input id="qCompanyEvent_rows" placeholder="{{ displayName }}" class="" data-var="rows" autocomplete="off" value="{{ rows }}"></sl-input>
+                    <div id="qCompanyEventDiv_rows" class="pageSearchVal ">rows={{ rows }}</div>
+                  </div>
+                </div>
+              </div>
+              {%- endblock htmBodySearchCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFilters">
+            <div>
+              <span>
+              <i class="fad fa-filters "></i> Filters</span>
+            </div>
+            <div>
+              {%- block htmBodyFiltersCompanyEventPage %}
+              <div>
+                {% for key, value in varsFq.items() %}
+                  <div class="">
+                    <label for="fqCompanyEvent_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
+                    <div class="display-flex ">
+                      <sl-button id="buttonFacetCompanyEvent_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                      <sl-input id="fqCompanyEvent_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyEvent', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="pageSearchVal " id="pageSearchVal-fqCompanyEvent_{{ key }}">{% if value.val is defined %}fq={{ value.var }}:{{ value.val | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-buttonFacetCompanyEvent_{{ key }}">{% if value.facetField.var is defined %}facet.field={{ value.facetField.var }}{% endif %}</div>
+                    <div class="pageFacetField pageFacetFieldCompanyEvent_{{ key }} " id="pageFacetFieldCompanyEvent_{{ key }}">
+                      {% for facetFieldKey, facetFieldValue in value.facetField.counts.items() %}
+                      <sl-tooltip content="{{ facetFieldValue | e }} event total with {{ value.facetField.var | e }} &quot;{{ facetFieldKey | e }}&quot;">
+                        <div class="cursor-pointer " data-class="CompanyEvent" data-var="{{ value.facetField.var }}" data-val="{{ facetFieldKey }}" onclick="fqReplace('CompanyEvent', this); ">{{ facetFieldValue }}: {{ facetFieldKey }}</div>
+                      </sl-tooltip>
+                      {% endfor %}
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              {%- endblock htmBodyFiltersCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleSort">
+            <div>
+              <i class="fad fa-solid fa-arrow-down-a-z "></i>
+              Sort
+            </div>
+            <div>
+              {%- block htmBodySortCompanyEventPage %}
+              <div style="display: none; " id="pageSearchVal-SortCompanyEventHidden">
+                {% for item in defaultSortVars %}
+                  <div class="pageSearchVal-SortCompanyEventHidden " id="pageSearchVal-SortCompanyEventHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-SortCompanyEvent">
+                {% if defaultSortVars is defined and defaultSortVars.length > 0 %}
+                  <div class="pageSearchVal pageSearchVal-SortCompanyEvent " id="pageSearchVal-SortCompanyEvent_1">facet.pivot={!range=r1}{% for item in defaultSortVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFacetTri" class="pageFacetTri " id="pageFacetTriCompanyEvent_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
+              </div>
+              {% endfor %}
+              {%- endblock htmBodySortCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleRange">
+            <div>
+              <span>
+              <i class="fad fa-calendar-range "></i> Range</span>
+            </div>
+            <div>
+              {%- block htmBodyRangeCompanyEventPage %}
+              <table>
+                <tr>
+                  <td colspan="2">
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeGap-CompanyEvent">{% if rangeGap is defined %}facet.range.gap={{ rangeGap | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeStart-CompanyEvent">{% if rangeStart is defined %}facet.range.start={{ rangeStart | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeEnd-CompanyEvent">{% if rangeEnd is defined %}facet.range.end={{ rangeEnd | urlencode() }}{% endif %}</div>
+                    <div class="pageSearchVal " id="pageSearchVal-pageFacetRangeVar-CompanyEvent">{% if defaultRangeVar is defined %}facet.range={!tag=r1}{{ defaultRangeVar | urlencode() }}{% endif %}</div>
+                  </td>
+                </tr>
+              </table>
+              <table>
+                <tr class="">
+                  <td class="">
+                    <span>Range Gap</span>
+                  </td>
+                  <td class="">
+                    <sl-select name="facet.range.gap" id="pageFacetRangeGap-CompanyEvent" onchange="facetRangeGapChange('CompanyEvent', this); ">
+                      <sl-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</sl-option>
+                      <sl-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</sl-option>
+                      <sl-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</sl-option>
+                      <sl-option value="+1DAY"{% if defaultRangeGap == '+1DAY' %} selected="selected"{% else %}{% if defaultRangeGap is defined %}{% else %} selected="selected"{% endif %}{% endif %}>Day</sl-option>
+                      <sl-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</sl-option>
+                      <sl-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</sl-option>
+                      <sl-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</sl-option>
+                    </sl-select>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range Start</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeStart" id="pageFacetRangeStart-CompanyEvent" value="{{ formatZonedDateTime(defaultRangeStart, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeStartChange('CompanyEvent', this); "></sl-input></span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span>Range End</span>
+                  </td>
+                </tr>
+                <tr class="">
+                  <td class="" colspan="2">
+                    <span><sl-input type="datetime-local" name="facetRangeEnd" id="pageFacetRangeEnd-CompanyEvent" value="{{ formatZonedDateTime(defaultRangeEnd, "yyyy-MM-dd'T'HH:mm", defaultLocaleId, defaultZoneId) }}" onclick="facetRangeEndChange('CompanyEvent', this); "></sl-input></span>
+                  </td>
+                </tr>
+              </table>
+              <sl-radio-group id="pageFacetRangeCompanyEvent">                {% for key, value in varsRange.items() %}
+                <sl-radio name="pageFacetRange" class="pageFacetRange " id="pageFacetRangeCompanyEvent_{{ key }}" value="{{ value.var }}"{% if defaultRangeVar == var %} checked="checked"{% endif %}>{{ value.displayName }}</sl-radio>
+                {% endfor %}
+              </sl-radio-group>
+              {%- endblock htmBodyRangeCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarTogglePivot">
+            <div>
+              <span>
+              <i class="fad fa-table-pivot "></i> Pivot</span>
+            </div>
+            <div>
+              {%- block htmBodyPivotCompanyEventPage %}
+              <div style="display: none; " id="pageSearchVal-PivotCompanyEventHidden">
+                {% for item in defaultPivotVars %}
+                  <div class="pageSearchVal-PivotCompanyEventHidden " id="pageSearchVal-PivotCompanyEventHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-PivotCompanyEvent">
+                {% if defaultPivotVars is defined and defaultPivotVars.length > 0 %}
+                  <div class="pageSearchVal pageSearchVal-PivotCompanyEvent " id="pageSearchVal-PivotCompanyEvent_1">facet.pivot={!range=r1}{% for item in defaultPivotVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFacetPivot" class="pageFacetPivot " id="pageFacetPivotCompanyEvent_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
+              </div>
+              {% endfor %}
+              {%- endblock htmBodyPivotCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleFieldList">
+            <div>
+              <span>
+              <i class="fad fa-list-ul "></i> Field List</span>
+            </div>
+            <div>
+{%- block htmBodyFieldListCompanyEventPage %}
+              <div style="display: none; " id="pageSearchVal-FieldListCompanyEventHidden">
+                {% for item in defaultFieldListVars %}
+                  <div class="pageSearchVal-FieldListCompanyEventHidden " id="pageSearchVal-FieldListCompanyEventHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              {% if defaultFieldListVars is defined and defaultFieldListVars.length > 0 %}
+              <div id="pageSearchVal-FieldListCompanyEvent">
+                {% if defaultFieldListVars is defined %}
+                  <div class="pageSearchVal pageSearchVal-FieldListCompanyEvent " id="pageSearchVal-FieldListCompanyEvent_1">fl={% for item in defaultFieldListVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
+                {% endif %}
+              </div>
+              {% endif %}
+              {% for key, value in varsFq.items() %}
+              <div>
+                <sl-checkbox name="pageFieldList" class="pageFieldList " id="pageFieldListCompanyEvent_{{ key }}" value="{{ value.var }}"{% if fieldList is defined %} checked="checked"{% endif %} onclick="facetFieldListChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox>
+              </div>
+                {% endfor %}
+{%- endblock htmBodyFieldListCompanyEventPage %}
+            </div>
+          </sl-drawer>
+          <sl-drawer placement="end" id="siteSidebarToggleStats">
+            <div>
+              <i class="fad fa-chart-candlestick "></i>
+              Stats
+            </div>
+            <div>
+{%- block htmBodyStatsCompanyEventPage %}
+              <div style="display: none; " id="pageSearchVal-StatsCompanyEventHidden">
+                {% for item in defaultStatsVars %}
+                  <div class="pageSearchVal-StatsCompanyEventHidden " id="pageSearchVal-StatsCompanyEventHidden_{{ item }}">{{ item }}</div>
+                {% endfor %}
+              </div>
+              <div id="pageSearchVal-StatsCompanyEvent">
+                {% if defaultStatsVars is defined %}
+                  {% for item in defaultStatsVars %}
+                    <div class="pageSearchVal pageSearchVal-StatsCompanyEvent_{{ item }} " id="pageSearchVal-StatsCompanyEvent_{{ item }}">stats.field={{ item }}                    </div>
+                  {% endfor %}
+                {% endif %}
+              </div>
+              <table>
+                {% for key, value in varsFq.items() %}
+                  {% if enableStats is defined %}
+                    <tr class="">
+                      <td class="">
+                        <span><sl-checkbox name="pageStats" class="pageStats " id="pageStatsCompanyEvent_{{ key }}" value="{{ value.var }}"{% if value.stats is defined %} checked="checked"{% endif %} onclick="facetStatsChange('CompanyEvent', value); ">{{ value.displayName }}</sl-checkbox></span>
+                      </td>
+                      <td>
+                        <div>
+                          <label for="pageStatsCompanyEvent_{{ key }}">{{ value.displayName }}</label>
+                        </div>
+                        <div class="pageStatsField pageStatsFieldCompanyEvent_{{ key }} " id="pageStatsFieldCompanyEvent_{{ key }}">
+                          {% if value.stats is defined %}
+                            {% for item in value.stats %}
+                              {% if item.key == 'name' %}{% else %}
+                                <div data-class="CompanyEvent" data-var="{{ item.var }}" data-val="{{ item.key }}">{{ item.key }}: {{ item }}</div>
+                              {% endif %}
+                            {% endfor %}
+                            {% if value.stats.max is defined %}
+                              <div>
+                                <span> step </span>
+                                <sl-input id="animateStatsStep" placeholder="step" value="1" style="width: 4em; "></sl-input>
+                                <span> min </span>
+                                <sl-input id="animateStatsMin" placeholder="min" value="{{ value.stats.min }}" style="width: 4em; "></sl-input>
+                                <span> max </span>
+                                <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
+                                <span> speed in seconds </span>
+                                <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
+                                <sl-button onclick="animateStats(); ">animate</sl-button>
+                              </div>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
+              </table>
+{%- endblock htmBodyStatsCompanyEventPage %}
+            </div>
+          </sl-drawer>
+{%- endblock htmBodySidebarCompanyEventPage %}
+        </div>
+
+{%- block htmBodyGraphLocationCompanyEventPage %}
+        <div id="htmBodyGraphLocationCompanyEventPage" class="htmBodyGraphLocation "></div>
+{%- endblock htmBodyGraphLocationCompanyEventPage %}
+
+{%- block htmBodyGraphCompanyEventPage %}
+        <div id="htmBodyGraphCompanyEventPage" class="htmBodyGraph "></div>
+{%- endblock htmBodyGraphCompanyEventPage %}

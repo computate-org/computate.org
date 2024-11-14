@@ -93,11 +93,17 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
- * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: IoT service"</b>, which groups all of the OpenAPIs for IotService objects under the tag "IoT service". 
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiUri.enUS: /api/iot-service</h2>
- * <p>This class contains a comment <b>"ApiUri: /api/iot-service"</b>, which defines the base API URI for IotService objects as "/api/iot-service" in the OpenAPI spec. 
+ * <h2>ApiMethode: DisplayPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiTag.enUS: true</h2>
+ * <p>This class contains a comment <b>"ApiTag: IoT services"</b>, which groups all of the OpenAPIs for IotService objects under the tag "IoT services". 
+ * </p>
+ * <h2>ApiUri.enUS: /en-us/api/iot-service</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/iot-service"</b>, which defines the base API URI for IotService objects as "/en-us/api/iot-service" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -120,9 +126,9 @@ import org.computate.search.response.solr.SolrResponse;
  * Java Vert.x backend API code, Handlebars HTML template frontend code, and JavaScript code will all generated and can be extended. 
  * This creates a new Java class org.computate.site.model.fiware.iotservice.IotServicePage. 
  * </p>
- * <h2>SuperPage.enUS: BaseModelPage</h2>
- * <p>This class contains a comment <b>"SuperPage.enUS: BaseModelPage"</b>, which identifies the Java super class of the page code by it's class simple name "BaseModelPage". 
- * This means that the newly created class org.computate.site.model.fiware.iotservice.IotServicePage extends org.computate.site.model.BaseModelPage. 
+ * <h2>SuperPage.enUS: PageLayout</h2>
+ * <p>This class contains a comment <b>"SuperPage.enUS: PageLayout"</b>, which identifies the Java super class of the page code by it's class simple name "PageLayout". 
+ * This means that the newly created class org.computate.site.model.fiware.iotservice.IotServicePage extends org.computate.site.page.PageLayout. 
  * </p>
  * <h2>Promise: true</h2>
  * <p>
@@ -181,26 +187,30 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String IotService_Title_enUS = "IoT services";
 	public static final String IotService_ThePluralName_enUS = "the IoT services";
 	public static final String IotService_NoNameFound_enUS = "no IoT service found";
-	public static final String IotService_ApiUri_enUS = "/api/iot-service";
-	public static final String IotService_ApiUriSearchPage_enUS = "/iot-service";
+	public static final String IotService_ApiUri_enUS = "/en-us/api/iot-service";
+	public static final String IotService_ApiUriSearchPage_enUS = "/en-us/search/iot-service";
 	public static final String IotService_OfName_enUS = "of IoT service";
 	public static final String IotService_ANameAdjective_enUS = "an IoT service";
 	public static final String IotService_NameAdjectiveSingular_enUS = "IoT service";
 	public static final String IotService_NameAdjectivePlural_enUS = "IoT services";
-	public static final String Search_enUS_Uri = "/api/iot-service";
-	public static final String Search_enUS_ImageUri = "/png/api/iot-service-999.png";
-	public static final String GET_enUS_Uri = "/api/iot-service/{id}";
-	public static final String GET_enUS_ImageUri = "/png/api/iot-service/{id}-999.png";
-	public static final String PATCH_enUS_Uri = "/api/iot-service";
-	public static final String PATCH_enUS_ImageUri = "/png/api/iot-service-999.png";
-	public static final String POST_enUS_Uri = "/api/iot-service";
-	public static final String POST_enUS_ImageUri = "/png/api/iot-service-999.png";
-	public static final String DELETE_enUS_Uri = "/api/iot-service";
-	public static final String DELETE_enUS_ImageUri = "/png/api/iot-service-999.png";
-	public static final String PUTImport_enUS_Uri = "/api/iot-service-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/api/iot-service-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/iot-service";
-	public static final String SearchPage_enUS_ImageUri = "/png/iot-service-999.png";
+	public static final String Search_enUS_Uri = "/en-us/api/iot-service";
+	public static final String Search_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
+	public static final String GET_enUS_Uri = "/en-us/api/iot-service/{objectId}";
+	public static final String GET_enUS_ImageUri = "/png/en-us/api/iot-service/{objectId}-999.png";
+	public static final String PATCH_enUS_Uri = "/en-us/api/iot-service";
+	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
+	public static final String POST_enUS_Uri = "/en-us/api/iot-service";
+	public static final String POST_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
+	public static final String DELETE_enUS_Uri = "/en-us/api/iot-service/{objectId}";
+	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/iot-service/{objectId}-999.png";
+	public static final String PUTImport_enUS_Uri = "/en-us/api/iot-service-import";
+	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/iot-service-import-999.png";
+	public static final String SearchPage_enUS_Uri = "/en-us/search/iot-service";
+	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/iot-service-999.png";
+	public static final String EditPage_enUS_Uri = "/en-us/edit/iot-service/{objectId}";
+	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/iot-service/{objectId}-999.png";
+	public static final String DisplayPage_enUS_Uri = "/en-us/shop/iot-service/{objectId}";
+	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/iot-service/{objectId}-999.png";
 
 	public static final String IotService_Icon = "<i class=\"fa-solid fa-tower-cell\"></i>";
 

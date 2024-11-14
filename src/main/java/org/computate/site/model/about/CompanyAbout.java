@@ -7,39 +7,37 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 2
- * 
- * Api: true
- * Page: true
- * PageTemplates: /en-us/about
- * SuperPage: BaseResultPage
- * Indexed: true
  * Description: Learn about our team, company, culture, and values. 
+ * AName: an about page
+ * PluralName: about
+ * Icon: <i class="fa-solid fa-address-card"></i>
  * 
- * ApiTag: about
- * ApiUri: /api/about
- * 
+ * PublicRead: true
+ * SearchPageUri: /en-us/search/about
+ * EditPageUri: /en-us/edit/about/{objectId}
+ * DisplayPageUri: /en-us/learn/about/{objectId}
+ * ApiUri: /en-us/api/about
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
+ *   DELETE:
  *   PUTImport:
- *   SearchPage:
- *     Page: CompanyAboutPage
- *     ApiUri: /about
+ * 
  * AuthGroup:
+ *   Admin:
+ *     POST:
+ *     PATCH:
+ *     GET:
+ *     DELETE:
+ *     Admin:
  *   SuperAdmin:
  *     POST:
  *     PATCH:
  *     GET:
  *     DELETE:
  *     SuperAdmin:
- * 
- * PublicRead: true
- * 
- * AName: an about page
- * PluralName: about
- * Icon: <i class="fa-solid fa-address-card"></i>
  */
 public class CompanyAbout extends CompanyAboutGen<BaseResult> {
 

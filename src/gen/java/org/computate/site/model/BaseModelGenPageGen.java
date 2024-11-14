@@ -58,7 +58,7 @@ import io.vertx.core.Future;
  * Whenever this Java class is modified or touched, the watch service installed as described in the README, indexes all the information about this Java class in a local Apache Solr Search Engine. 
  * If you are running the service, you can see the indexed data about this Java Class here: 
  * </p>
- * <p><a href="https://solr.apps-crc.testing/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage">Find the class BaseModelGenPage in Solr. </a></p>
+ * <p><a href="https://solr.apps-crc.testing/solr/computate/select?q=*:*&fq=partEstClasse_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage">Find the class BaseModelGenPage in Solr. </a></p>
  * <p>
  * The extended class ending with "Gen" did not exist at first, but was automatically created by the same watch service based on the data retrieved from the local Apache Server search engine. 
  * The extended class contains many generated fields, getters, setters, initialization code, and helper methods to help build a website and API fast, reactive, and scalable. 
@@ -216,102 +216,102 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 		return BaseModelGenPage.staticSearchListBaseModel(siteRequest_, BaseModelGenPage.staticSetListBaseModel(siteRequest_, o)).toString();
 	}
 
-	////////////////////
-	// baseModelCount //
-	////////////////////
+	/////////////////
+	// resultCount //
+	/////////////////
 
 
-	/**	 The entity baseModelCount
+	/**	 The entity resultCount
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonSerialize(using = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
-	protected Integer baseModelCount;
+	protected Integer resultCount;
 
-	/**	<br> The entity baseModelCount
+	/**	<br> The entity resultCount
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage&fq=entiteVar_enUS_indexed_string:baseModelCount">Find the entity baseModelCount in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _baseModelCount(Wrap<Integer> w);
+	protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getBaseModelCount() {
-		return baseModelCount;
+	public Integer getResultCount() {
+		return resultCount;
 	}
 
-	public void setBaseModelCount(Integer baseModelCount) {
-		this.baseModelCount = baseModelCount;
+	public void setResultCount(Integer resultCount) {
+		this.resultCount = resultCount;
 	}
 	@JsonIgnore
-	public void setBaseModelCount(String o) {
-		this.baseModelCount = BaseModelGenPage.staticSetBaseModelCount(siteRequest_, o);
+	public void setResultCount(String o) {
+		this.resultCount = BaseModelGenPage.staticSetResultCount(siteRequest_, o);
 	}
-	public static Integer staticSetBaseModelCount(SiteRequest siteRequest_, String o) {
+	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
 		if(NumberUtils.isParsable(o))
 			return Integer.parseInt(o);
 		return null;
 	}
-	protected BaseModelGenPage baseModelCountInit() {
-		Wrap<Integer> baseModelCountWrap = new Wrap<Integer>().var("baseModelCount");
-		if(baseModelCount == null) {
-			_baseModelCount(baseModelCountWrap);
-			Optional.ofNullable(baseModelCountWrap.getO()).ifPresent(o -> {
-				setBaseModelCount(o);
+	protected BaseModelGenPage resultCountInit() {
+		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+		if(resultCount == null) {
+			_resultCount(resultCountWrap);
+			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+				setResultCount(o);
 			});
 		}
 		return (BaseModelGenPage)this;
 	}
 
-	public static Integer staticSearchBaseModelCount(SiteRequest siteRequest_, Integer o) {
+	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
 		return o;
 	}
 
-	public static String staticSearchStrBaseModelCount(SiteRequest siteRequest_, Integer o) {
+	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqBaseModelCount(SiteRequest siteRequest_, String o) {
-		return BaseModelGenPage.staticSearchBaseModelCount(siteRequest_, BaseModelGenPage.staticSetBaseModelCount(siteRequest_, o)).toString();
+	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+		return BaseModelGenPage.staticSearchResultCount(siteRequest_, BaseModelGenPage.staticSetResultCount(siteRequest_, o)).toString();
 	}
 
-	////////////////
-	// baseModel_ //
-	////////////////
+	////////////
+	// result //
+	////////////
 
 
-	/**	 The entity baseModel_
+	/**	 The entity result
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected BaseModel baseModel_;
+	protected BaseModel result;
 
-	/**	<br> The entity baseModel_
+	/**	<br> The entity result
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage&fq=entiteVar_enUS_indexed_string:baseModel_">Find the entity baseModel_ in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.BaseModelGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _baseModel_(Wrap<BaseModel> w);
+	protected abstract void _result(Wrap<BaseModel> w);
 
-	public BaseModel getBaseModel_() {
-		return baseModel_;
+	public BaseModel getResult() {
+		return result;
 	}
 
-	public void setBaseModel_(BaseModel baseModel_) {
-		this.baseModel_ = baseModel_;
+	public void setResult(BaseModel result) {
+		this.result = result;
 	}
-	public static BaseModel staticSetBaseModel_(SiteRequest siteRequest_, String o) {
+	public static BaseModel staticSetResult(SiteRequest siteRequest_, String o) {
 		return null;
 	}
-	protected BaseModelGenPage baseModel_Init() {
-		Wrap<BaseModel> baseModel_Wrap = new Wrap<BaseModel>().var("baseModel_");
-		if(baseModel_ == null) {
-			_baseModel_(baseModel_Wrap);
-			Optional.ofNullable(baseModel_Wrap.getO()).ifPresent(o -> {
-				setBaseModel_(o);
+	protected BaseModelGenPage resultInit() {
+		Wrap<BaseModel> resultWrap = new Wrap<BaseModel>().var("result");
+		if(result == null) {
+			_result(resultWrap);
+			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+				setResult(o);
 			});
 		}
 		return (BaseModelGenPage)this;
@@ -460,8 +460,8 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 			try {
 				searchListBaseModel_Init();
 				listBaseModelInit();
-				baseModelCountInit();
-				baseModel_Init();
+				resultCountInit();
+				resultInit();
 				pkInit();
 				idInit();
 				promise2.complete();
@@ -521,10 +521,10 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 				return oBaseModelGenPage.searchListBaseModel_;
 			case "listBaseModel":
 				return oBaseModelGenPage.listBaseModel;
-			case "baseModelCount":
-				return oBaseModelGenPage.baseModelCount;
-			case "baseModel_":
-				return oBaseModelGenPage.baseModel_;
+			case "resultCount":
+				return oBaseModelGenPage.resultCount;
+			case "result":
+				return oBaseModelGenPage.result;
 			case "pk":
 				return oBaseModelGenPage.pk;
 			case "id":
@@ -570,8 +570,8 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseModel":
 			return BaseModelGenPage.staticSetListBaseModel(siteRequest_, o);
-		case "baseModelCount":
-			return BaseModelGenPage.staticSetBaseModelCount(siteRequest_, o);
+		case "resultCount":
+			return BaseModelGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return BaseModelGenPage.staticSetPk(siteRequest_, o);
 		case "id":
@@ -592,8 +592,8 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseModel":
 			return BaseModelGenPage.staticSearchListBaseModel(siteRequest_, (JsonArray)o);
-		case "baseModelCount":
-			return BaseModelGenPage.staticSearchBaseModelCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return BaseModelGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return BaseModelGenPage.staticSearchPk(siteRequest_, (Long)o);
 		case "id":
@@ -614,8 +614,8 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseModel":
 			return BaseModelGenPage.staticSearchStrListBaseModel(siteRequest_, (String)o);
-		case "baseModelCount":
-			return BaseModelGenPage.staticSearchStrBaseModelCount(siteRequest_, (Integer)o);
+		case "resultCount":
+			return BaseModelGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return BaseModelGenPage.staticSearchStrPk(siteRequest_, (Long)o);
 		case "id":
@@ -636,8 +636,8 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 		switch(entityVar) {
 		case "listBaseModel":
 			return BaseModelGenPage.staticSearchFqListBaseModel(siteRequest_, o);
-		case "baseModelCount":
-			return BaseModelGenPage.staticSearchFqBaseModelCount(siteRequest_, o);
+		case "resultCount":
+			return BaseModelGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return BaseModelGenPage.staticSearchFqPk(siteRequest_, o);
 		case "id":
@@ -660,15 +660,15 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 	public static final String CLASS_SIMPLE_NAME = "BaseModelGenPage";
 	public static final String VAR_searchListBaseModel_ = "searchListBaseModel_";
 	public static final String VAR_listBaseModel = "listBaseModel";
-	public static final String VAR_baseModelCount = "baseModelCount";
-	public static final String VAR_baseModel_ = "baseModel_";
+	public static final String VAR_resultCount = "resultCount";
+	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
 	public static final String VAR_id = "id";
 
 	public static final String DISPLAY_NAME_searchListBaseModel_ = "";
 	public static final String DISPLAY_NAME_listBaseModel = "";
-	public static final String DISPLAY_NAME_baseModelCount = "";
-	public static final String DISPLAY_NAME_baseModel_ = "";
+	public static final String DISPLAY_NAME_resultCount = "";
+	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
 	public static final String DISPLAY_NAME_id = "";
 
@@ -681,10 +681,10 @@ public abstract class BaseModelGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_searchListBaseModel_;
 		case VAR_listBaseModel:
 			return DISPLAY_NAME_listBaseModel;
-		case VAR_baseModelCount:
-			return DISPLAY_NAME_baseModelCount;
-		case VAR_baseModel_:
-			return DISPLAY_NAME_baseModel_;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
 		case VAR_id:
