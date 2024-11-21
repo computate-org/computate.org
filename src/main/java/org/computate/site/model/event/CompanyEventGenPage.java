@@ -2,6 +2,7 @@ package org.computate.site.model.event;
 
 import org.computate.site.model.event.CompanyEvent;
 import java.lang.String;
+import java.math.BigDecimal;
 import io.vertx.pgclient.data.Point;
 import java.util.List;
 import org.computate.site.page.PageLayout;
@@ -32,7 +33,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Arrays;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.util.Objects;
@@ -466,13 +466,13 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
    * Initialized: false
   **/
   protected void _result(Wrap<CompanyEvent> w) {
-    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
       w.o(searchListCompanyEvent_.get(0));
   }
 
-  protected void _id(Wrap<String> w) {
+  protected void _solrId(Wrap<String> w) {
     if(result != null)
-      w.o(result.getId());
+      w.o(result.getSolrId());
   }
 
   @Override
@@ -487,8 +487,8 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getObjectTitle() != null)
-      c.o(result.getObjectTitle());
+    if(result != null && result.getTitle() != null)
+      c.o(result.getTitle());
     else if(result != null)
       c.o("events");
     else if(searchListCompanyEvent_ == null || resultCount == 0)

@@ -26,9 +26,9 @@ import io.vertx.pgclient.data.Polygon;
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/webinar
- * EditPageUri: /en-us/edit/webinar/{objectId}
- * DisplayPageUri: /en-us/view/webinar/{objectId}
- * UserPageUri: /en-us/join/webinar/{objectId}
+ * EditPageUri: /en-us/edit/webinar/{pageId}
+ * DisplayPageUri: /en-us/view/webinar/{pageId}
+ * UserPageUri: /en-us/join/webinar/{pageId}
  * ApiUri: /en-us/api/webinar
  * ApiMethod:
  *   Search:
@@ -64,6 +64,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * HtmColumn: 1
    * HtmRowTitle: webinar details
    * Facet: true
+	 * VarName: true
    **/
   protected void _name(Wrap<String> w) {}
 
@@ -77,6 +78,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * HtmCell: 2
    * Facet: true
    * HtmColumn: 2
+	 * VarDescription: true
    **/
   protected void _description(Wrap<String> w) {}
 
@@ -84,36 +86,16 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 4
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
 	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
+	 * VarId: true
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(name);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: resource URI
-	 * Description: The resource relative URI for this page. 
-	 */
-	protected void _resourceUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: template URI
-	 * Description: The template relative URI for this page. 
-	 */
-	protected void _templateUri(Wrap<String> w) {
+		w.o(toId(name));
 	}
 
 	/**
@@ -166,33 +148,6 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: URI
-	 * Description: The relative URI for this page. 
-	 */
-	protected void _uri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: URL
-	 * Description: The URL for this page. 
-	 */
-	protected void _url(Wrap<String> w) {
-		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
 	 * Link: true
 	 * HtmColumn: 0
 	 * DisplayName: Join the webinar
@@ -201,32 +156,5 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 */
 	protected void _joinUrl(Wrap<String> w) {
 		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), joinUri));
-	}
-
-	@Override
-	protected void _pageUrlPk(Wrap<String> w) {
-		w.o(url);
-	}
-
-	@Override
-	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
-	}
-
-  @Override
-  protected void _objectTitle(Wrap<String> w) {
-    StringBuilder b = new StringBuilder();
-    b.append(Optional.ofNullable(name).map(s -> String.format("%s — %s", CompanyWebinar_NameAdjectiveSingular_enUS, s)).orElse(pageId));
-    w.o(b.toString().trim());
-  }
-
-  @Override
-  protected void _objectId(Wrap<String> w) {
-    w.o(pageId);
-  }
-
-	@Override
-	protected void _id(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
 	}
 }

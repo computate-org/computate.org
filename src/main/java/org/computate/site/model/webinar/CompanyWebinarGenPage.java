@@ -465,7 +465,7 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
    * Initialized: false
   **/
   protected void _result(Wrap<CompanyWebinar> w) {
-    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
       w.o(searchListCompanyWebinar_.get(0));
   }
 
@@ -474,9 +474,9 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
       w.o(result.getPk());
   }
 
-  protected void _id(Wrap<String> w) {
+  protected void _solrId(Wrap<String> w) {
     if(result != null)
-      w.o(result.getId());
+      w.o(result.getSolrId());
   }
 
   @Override
@@ -491,8 +491,8 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getObjectTitle() != null)
-      c.o(result.getObjectTitle());
+    if(result != null && result.getTitle() != null)
+      c.o(result.getTitle());
     else if(result != null)
       c.o("webinars");
     else if(searchListCompanyWebinar_ == null || resultCount == 0)

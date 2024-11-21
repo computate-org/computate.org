@@ -167,44 +167,53 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebsite.class);
 
-	public static final String CompanyWebsite_Description_enUS = "See the live websites built with computate";
-	public static final String CompanyWebsite_AName_enUS = "a website";
-	public static final String CompanyWebsite_This_enUS = "this ";
-	public static final String CompanyWebsite_ThisName_enUS = "this website";
-	public static final String CompanyWebsite_A_enUS = "a ";
-	public static final String CompanyWebsite_TheName_enUS = "the website";
-	public static final String CompanyWebsite_SingularName_enUS = "website";
-	public static final String CompanyWebsite_PluralName_enUS = "websites";
-	public static final String CompanyWebsite_NameActual_enUS = "current website";
-	public static final String CompanyWebsite_AllName_enUS = "all websites";
-	public static final String CompanyWebsite_SearchAllNameBy_enUS = "search websites by ";
-	public static final String CompanyWebsite_Title_enUS = "websites";
-	public static final String CompanyWebsite_ThePluralName_enUS = "the websites";
-	public static final String CompanyWebsite_NoNameFound_enUS = "no website found";
-	public static final String CompanyWebsite_ApiUri_enUS = "/en-us/api/website";
-	public static final String CompanyWebsite_ApiUriSearchPage_enUS = "/en-us/search/website";
-	public static final String CompanyWebsite_OfName_enUS = "of website";
-	public static final String CompanyWebsite_ANameAdjective_enUS = "a website";
-	public static final String CompanyWebsite_NameAdjectiveSingular_enUS = "website";
-	public static final String CompanyWebsite_NameAdjectivePlural_enUS = "websites";
-	public static final String Search_enUS_Uri = "/en-us/api/website";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/website-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/website/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/website/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/website";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/website-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/website";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/website-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/website-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/website-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/website";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/website-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/website/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/website/{objectId}-999.png";
-	public static final String DisplayPage_enUS_Uri = "/en-us/view/website/{objectId}";
-	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/view/website/{objectId}-999.png";
+	public static final String Description_enUS = "See the live websites built with computate";
+	public static final String AName_enUS = "a website";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this website";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "the website";
+	public static final String SingularName_enUS = "website";
+	public static final String PluralName_enUS = "websites";
+	public static final String NameActual_enUS = "current website";
+	public static final String AllName_enUS = "all websites";
+	public static final String SearchAllNameBy_enUS = "search websites by ";
+	public static final String Title_enUS = "websites";
+	public static final String ThePluralName_enUS = "the websites";
+	public static final String NoNameFound_enUS = "no website found";
+	public static final String ApiUri_enUS = "/en-us/api/website";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/website";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/website/{pageId}";
+	public static final String OfName_enUS = "of website";
+	public static final String ANameAdjective_enUS = "a website";
+	public static final String NameAdjectiveSingular_enUS = "website";
+	public static final String NameAdjectivePlural_enUS = "websites";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/website";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/website";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/website";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/website/{pageId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/website/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/website/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/website";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/website";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/website";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/website";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/website";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/website";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/website-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/website-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/website-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/website";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/website";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/website";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/website/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/website/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/website/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/website/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/website/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/website/%s";
 
-	public static final String CompanyWebsite_Icon = "<i class=\"fa-regular fa-globe-pointer\"></i>";
+	public static final String Icon = "<i class=\"fa-regular fa-globe-pointer\"></i>";
 
 	//////////
 	// name //
@@ -374,286 +383,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		return pageId;
 	}
 
-	/////////////////
-	// resourceUri //
-	/////////////////
-
-
-	/**	 The entity resourceUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String resourceUri;
-
-	/**	<br> The entity resourceUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resourceUri(Wrap<String> w);
-
-	public String getResourceUri() {
-		return resourceUri;
-	}
-	public void setResourceUri(String o) {
-		this.resourceUri = CompanyWebsite.staticSetResourceUri(siteRequest_, o);
-	}
-	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite resourceUriInit() {
-		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
-		if(resourceUri == null) {
-			_resourceUri(resourceUriWrap);
-			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
-				setResourceUri(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchResourceUri(siteRequest_, CompanyWebsite.staticSetResourceUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlResourceUri() {
-		return resourceUri;
-	}
-
-	/////////////////
-	// templateUri //
-	/////////////////
-
-
-	/**	 The entity templateUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String templateUri;
-
-	/**	<br> The entity templateUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _templateUri(Wrap<String> w);
-
-	public String getTemplateUri() {
-		return templateUri;
-	}
-	public void setTemplateUri(String o) {
-		this.templateUri = CompanyWebsite.staticSetTemplateUri(siteRequest_, o);
-	}
-	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite templateUriInit() {
-		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
-		if(templateUri == null) {
-			_templateUri(templateUriWrap);
-			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
-				setTemplateUri(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchTemplateUri(siteRequest_, CompanyWebsite.staticSetTemplateUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlTemplateUri() {
-		return templateUri;
-	}
-
-	/////////
-	// uri //
-	/////////
-
-
-	/**	 The entity uri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String uri;
-
-	/**	<br> The entity uri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uri(Wrap<String> w);
-
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String o) {
-		this.uri = CompanyWebsite.staticSetUri(siteRequest_, o);
-	}
-	public static String staticSetUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite uriInit() {
-		Wrap<String> uriWrap = new Wrap<String>().var("uri");
-		if(uri == null) {
-			_uri(uriWrap);
-			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
-				setUri(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchUri(siteRequest_, CompanyWebsite.staticSetUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUri() {
-		return uri;
-	}
-
-	/////////
-	// url //
-	/////////
-
-
-	/**	 The entity url
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String url;
-
-	/**	<br> The entity url
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _url(Wrap<String> w);
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String o) {
-		this.url = CompanyWebsite.staticSetUrl(siteRequest_, o);
-	}
-	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite urlInit() {
-		Wrap<String> urlWrap = new Wrap<String>().var("url");
-		if(url == null) {
-			_url(urlWrap);
-			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
-				setUrl(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchUrl(siteRequest_, CompanyWebsite.staticSetUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlUrl() {
-		return url;
-	}
-
-	///////////
-	// title //
-	///////////
-
-
-	/**	 The entity title
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String title;
-
-	/**	<br> The entity title
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _title(Wrap<String> w);
-
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String o) {
-		this.title = CompanyWebsite.staticSetTitle(siteRequest_, o);
-	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchTitle(siteRequest_, CompanyWebsite.staticSetTitle(siteRequest_, o)).toString();
-	}
-
-	public String sqlTitle() {
-		return title;
-	}
-
 	////////////////
 	// websiteNum //
 	////////////////
@@ -722,18 +451,18 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyWebsite(SiteRequest siteRequest_) {
+	public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyWebsite();
 	}
 
-	public Future<Void> promiseDeepCompanyWebsite() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite() {
+		Promise<CompanyWebsiteGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyWebsite(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -750,11 +479,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				nameInit();
 				descriptionInit();
 				pageIdInit();
-				resourceUriInit();
-				templateUriInit();
-				uriInit();
-				urlInit();
-				titleInit();
 				websiteNumInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -769,7 +493,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyWebsiteGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyWebsite(siteRequest_);
 	}
 
@@ -815,16 +539,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				return oCompanyWebsite.description;
 			case "pageId":
 				return oCompanyWebsite.pageId;
-			case "resourceUri":
-				return oCompanyWebsite.resourceUri;
-			case "templateUri":
-				return oCompanyWebsite.templateUri;
-			case "uri":
-				return oCompanyWebsite.uri;
-			case "url":
-				return oCompanyWebsite.url;
-			case "title":
-				return oCompanyWebsite.title;
 			case "websiteNum":
 				return oCompanyWebsite.websiteNum;
 			default:
@@ -872,16 +586,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return CompanyWebsite.staticSetDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyWebsite.staticSetPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyWebsite.staticSetResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyWebsite.staticSetTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyWebsite.staticSetUri(siteRequest_, o);
-		case "url":
-			return CompanyWebsite.staticSetUrl(siteRequest_, o);
-		case "title":
-			return CompanyWebsite.staticSetTitle(siteRequest_, o);
 		case "websiteNum":
 			return CompanyWebsite.staticSetWebsiteNum(siteRequest_, o);
 			default:
@@ -904,16 +608,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return CompanyWebsite.staticSearchDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyWebsite.staticSearchPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyWebsite.staticSearchResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyWebsite.staticSearchTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyWebsite.staticSearchUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyWebsite.staticSearchUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyWebsite.staticSearchTitle(siteRequest_, (String)o);
 		case "websiteNum":
 			return CompanyWebsite.staticSearchWebsiteNum(siteRequest_, (Integer)o);
 			default:
@@ -936,16 +630,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return CompanyWebsite.staticSearchStrDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyWebsite.staticSearchStrPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyWebsite.staticSearchStrResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyWebsite.staticSearchStrTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyWebsite.staticSearchStrUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyWebsite.staticSearchStrUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyWebsite.staticSearchStrTitle(siteRequest_, (String)o);
 		case "websiteNum":
 			return CompanyWebsite.staticSearchStrWebsiteNum(siteRequest_, (Integer)o);
 			default:
@@ -968,16 +652,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return CompanyWebsite.staticSearchFqDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyWebsite.staticSearchFqPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyWebsite.staticSearchFqResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyWebsite.staticSearchFqTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyWebsite.staticSearchFqUri(siteRequest_, o);
-		case "url":
-			return CompanyWebsite.staticSearchFqUrl(siteRequest_, o);
-		case "title":
-			return CompanyWebsite.staticSearchFqTitle(siteRequest_, o);
 		case "websiteNum":
 			return CompanyWebsite.staticSearchFqWebsiteNum(siteRequest_, o);
 			default:
@@ -1024,36 +698,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				}
 				saves.add("pageId");
 				return val;
-			} else if("resourceuri".equals(varLower)) {
-				if(val instanceof String) {
-					setResourceUri((String)val);
-				}
-				saves.add("resourceUri");
-				return val;
-			} else if("templateuri".equals(varLower)) {
-				if(val instanceof String) {
-					setTemplateUri((String)val);
-				}
-				saves.add("templateUri");
-				return val;
-			} else if("uri".equals(varLower)) {
-				if(val instanceof String) {
-					setUri((String)val);
-				}
-				saves.add("uri");
-				return val;
-			} else if("url".equals(varLower)) {
-				if(val instanceof String) {
-					setUrl((String)val);
-				}
-				saves.add("url");
-				return val;
-			} else if("title".equals(varLower)) {
-				if(val instanceof String) {
-					setTitle((String)val);
-				}
-				saves.add("title");
-				return val;
 			} else if("websitenum".equals(varLower)) {
 				if(val instanceof Integer) {
 					setWebsiteNum((Integer)val);
@@ -1097,36 +741,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 					oCompanyWebsite.setPageId(pageId);
 			}
 
-			if(saves.contains("resourceUri")) {
-				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
-				if(resourceUri != null)
-					oCompanyWebsite.setResourceUri(resourceUri);
-			}
-
-			if(saves.contains("templateUri")) {
-				String templateUri = (String)doc.get("templateUri_docvalues_string");
-				if(templateUri != null)
-					oCompanyWebsite.setTemplateUri(templateUri);
-			}
-
-			if(saves.contains("uri")) {
-				String uri = (String)doc.get("uri_docvalues_string");
-				if(uri != null)
-					oCompanyWebsite.setUri(uri);
-			}
-
-			if(saves.contains("url")) {
-				String url = (String)doc.get("url_docvalues_string");
-				if(url != null)
-					oCompanyWebsite.setUrl(url);
-			}
-
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oCompanyWebsite.setTitle(title);
-			}
-
 			if(saves.contains("websiteNum")) {
 				Integer websiteNum = (Integer)doc.get("websiteNum_docvalues_int");
 				if(websiteNum != null)
@@ -1147,21 +761,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
-		if(resourceUri != null) {
-			doc.put("resourceUri_docvalues_string", resourceUri);
-		}
-		if(templateUri != null) {
-			doc.put("templateUri_docvalues_string", templateUri);
-		}
-		if(uri != null) {
-			doc.put("uri_docvalues_string", uri);
-		}
-		if(url != null) {
-			doc.put("url_docvalues_string", url);
-		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
-		}
 		if(websiteNum != null) {
 			doc.put("websiteNum_docvalues_int", websiteNum);
 		}
@@ -1177,16 +776,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			case "websiteNum":
 				return "websiteNum_docvalues_int";
 			default:
@@ -1202,16 +791,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			case "websiteNum":
 				return "websiteNum_docvalues_int";
 			default:
@@ -1227,16 +806,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				return "description";
 			case "pageId_docvalues_string":
 				return "pageId";
-			case "resourceUri_docvalues_string":
-				return "resourceUri";
-			case "templateUri_docvalues_string":
-				return "templateUri";
-			case "uri_docvalues_string":
-				return "uri";
-			case "url_docvalues_string":
-				return "url";
-			case "title_docvalues_string":
-				return "title";
 			case "websiteNum_docvalues_int":
 				return "websiteNum";
 			default:
@@ -1272,11 +841,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		oCompanyWebsite.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebsite.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebsite.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebsite.setWebsiteNum(Optional.ofNullable(doc.get("websiteNum_docvalues_int")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
@@ -1297,16 +861,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 				apiRequest.addVars("description");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
-			if(!Objects.equals(resourceUri, original.getResourceUri()))
-				apiRequest.addVars("resourceUri");
-			if(!Objects.equals(templateUri, original.getTemplateUri()))
-				apiRequest.addVars("templateUri");
-			if(!Objects.equals(uri, original.getUri()))
-				apiRequest.addVars("uri");
-			if(!Objects.equals(url, original.getUrl()))
-				apiRequest.addVars("url");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
 			if(!Objects.equals(websiteNum, original.getWebsiteNum()))
 				apiRequest.addVars("websiteNum");
 			super.apiRequestBaseResult();
@@ -1323,11 +877,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(websiteNum).map(v -> "websiteNum: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
@@ -1340,11 +889,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
 	public static final String VAR_pageId = "pageId";
-	public static final String VAR_resourceUri = "resourceUri";
-	public static final String VAR_templateUri = "templateUri";
-	public static final String VAR_uri = "uri";
-	public static final String VAR_url = "url";
-	public static final String VAR_title = "title";
 	public static final String VAR_websiteNum = "websiteNum";
 
 	public static List<String> varsQForClass() {
@@ -1362,10 +906,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
 		vars.add(VAR_pageId);
-		vars.add(VAR_resourceUri);
-		vars.add(VAR_templateUri);
-		vars.add(VAR_uri);
-		vars.add(VAR_url);
 		vars.add(VAR_websiteNum);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
@@ -1383,12 +923,42 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_name = "service name";
 	public static final String DISPLAY_NAME_description = "service description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_resourceUri = "resource URI";
-	public static final String DISPLAY_NAME_templateUri = "template URI";
-	public static final String DISPLAY_NAME_uri = "URI";
-	public static final String DISPLAY_NAME_url = "URL";
-	public static final String DISPLAY_NAME_title = "title";
 	public static final String DISPLAY_NAME_websiteNum = "Website Number";
+
+	@Override
+	public String idForClass() {
+		return pageId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return name;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return CompanyWebsite.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return description;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/website/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return "%s/en-us/view/website/%s";
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyWebsite.displayNameCompanyWebsite(var);
@@ -1401,16 +971,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_description;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
-		case VAR_resourceUri:
-			return DISPLAY_NAME_resourceUri;
-		case VAR_templateUri:
-			return DISPLAY_NAME_templateUri;
-		case VAR_uri:
-			return DISPLAY_NAME_uri;
-		case VAR_url:
-			return DISPLAY_NAME_url;
-		case VAR_title:
-			return DISPLAY_NAME_title;
 		case VAR_websiteNum:
 			return DISPLAY_NAME_websiteNum;
 		default:
@@ -1426,16 +986,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return "The service description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
-		case VAR_resourceUri:
-			return "The resource relative URI for this page. ";
-		case VAR_templateUri:
-			return "The template relative URI for this page. ";
-		case VAR_uri:
-			return "The relative URI for this page. ";
-		case VAR_url:
-			return "The URL for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
 		case VAR_websiteNum:
 			return "The website number for sorting. ";
 			default:
@@ -1450,16 +1000,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		case VAR_description:
 			return "String";
 		case VAR_pageId:
-			return "String";
-		case VAR_resourceUri:
-			return "String";
-		case VAR_templateUri:
-			return "String";
-		case VAR_uri:
-			return "String";
-		case VAR_url:
-			return "String";
-		case VAR_title:
 			return "String";
 		case VAR_websiteNum:
 			return "Integer";
@@ -1486,11 +1026,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		case VAR_description:
 			return 3;
 		case VAR_pageId:
-			return 4;
-		case VAR_uri:
-			return 3;
-		case VAR_url:
-			return 3;
+			return 99;
 			default:
 				return BaseResult.htmRowBaseResult(var);
 		}
@@ -1504,10 +1040,6 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 			return 2;
 		case VAR_pageId:
 			return 1;
-		case VAR_uri:
-			return 2;
-		case VAR_url:
-			return 2;
 			default:
 				return BaseResult.htmCellBaseResult(var);
 		}

@@ -166,44 +166,53 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyResearch.class);
 
-	public static final String CompanyResearch_Description_enUS = "Read about the computate project related research going on at Red Hat research";
-	public static final String CompanyResearch_AName_enUS = "a research";
-	public static final String CompanyResearch_This_enUS = "this ";
-	public static final String CompanyResearch_ThisName_enUS = "this research";
-	public static final String CompanyResearch_A_enUS = "a ";
-	public static final String CompanyResearch_TheName_enUS = "the research";
-	public static final String CompanyResearch_SingularName_enUS = "research";
-	public static final String CompanyResearch_PluralName_enUS = "research";
-	public static final String CompanyResearch_NameActual_enUS = "current research";
-	public static final String CompanyResearch_AllName_enUS = "all research";
-	public static final String CompanyResearch_SearchAllNameBy_enUS = "search research by ";
-	public static final String CompanyResearch_Title_enUS = "research";
-	public static final String CompanyResearch_ThePluralName_enUS = "the research";
-	public static final String CompanyResearch_NoNameFound_enUS = "no research found";
-	public static final String CompanyResearch_ApiUri_enUS = "/en-us/api/research";
-	public static final String CompanyResearch_ApiUriSearchPage_enUS = "/en-us/search/research";
-	public static final String CompanyResearch_OfName_enUS = "of research";
-	public static final String CompanyResearch_ANameAdjective_enUS = "a research";
-	public static final String CompanyResearch_NameAdjectiveSingular_enUS = "research";
-	public static final String CompanyResearch_NameAdjectivePlural_enUS = "research";
-	public static final String Search_enUS_Uri = "/en-us/api/research";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/research-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/research/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/research/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/research";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/research-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/research";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/research-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/research-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/research-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/research";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/research-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/research/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/research/{objectId}-999.png";
-	public static final String DisplayPage_enUS_Uri = "/en-us/shop/research/{objectId}";
-	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/research/{objectId}-999.png";
+	public static final String Description_enUS = "Read about the computate project related research going on at Red Hat research";
+	public static final String AName_enUS = "a research";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this research";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "the research";
+	public static final String SingularName_enUS = "research";
+	public static final String PluralName_enUS = "research";
+	public static final String NameActual_enUS = "current research";
+	public static final String AllName_enUS = "all research";
+	public static final String SearchAllNameBy_enUS = "search research by ";
+	public static final String Title_enUS = "research";
+	public static final String ThePluralName_enUS = "the research";
+	public static final String NoNameFound_enUS = "no research found";
+	public static final String ApiUri_enUS = "/en-us/api/research";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/research";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/research/{pageId}";
+	public static final String OfName_enUS = "of research";
+	public static final String ANameAdjective_enUS = "a research";
+	public static final String NameAdjectiveSingular_enUS = "research";
+	public static final String NameAdjectivePlural_enUS = "research";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/research";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/research";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/research";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/research/{pageId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/research/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/research/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/research";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/research";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/research";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/research";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/research";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/research";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/research-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/research-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/research-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/research";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/research";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/research";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/research/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/research/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/research/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/research/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/research/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/research/%s";
 
-	public static final String CompanyResearch_Icon = "<i class=\"fa-duotone fa-solid fa-school\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-solid fa-school\"></i>";
 
 	//////////
 	// name //
@@ -373,302 +382,22 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		return pageId;
 	}
 
-	/////////////////
-	// resourceUri //
-	/////////////////
-
-
-	/**	 The entity resourceUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String resourceUri;
-
-	/**	<br> The entity resourceUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resourceUri(Wrap<String> w);
-
-	public String getResourceUri() {
-		return resourceUri;
-	}
-	public void setResourceUri(String o) {
-		this.resourceUri = CompanyResearch.staticSetResourceUri(siteRequest_, o);
-	}
-	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyResearch resourceUriInit() {
-		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
-		if(resourceUri == null) {
-			_resourceUri(resourceUriWrap);
-			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
-				setResourceUri(o);
-			});
-		}
-		return (CompanyResearch)this;
-	}
-
-	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return CompanyResearch.staticSearchResourceUri(siteRequest_, CompanyResearch.staticSetResourceUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlResourceUri() {
-		return resourceUri;
-	}
-
-	/////////////////
-	// templateUri //
-	/////////////////
-
-
-	/**	 The entity templateUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String templateUri;
-
-	/**	<br> The entity templateUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _templateUri(Wrap<String> w);
-
-	public String getTemplateUri() {
-		return templateUri;
-	}
-	public void setTemplateUri(String o) {
-		this.templateUri = CompanyResearch.staticSetTemplateUri(siteRequest_, o);
-	}
-	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyResearch templateUriInit() {
-		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
-		if(templateUri == null) {
-			_templateUri(templateUriWrap);
-			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
-				setTemplateUri(o);
-			});
-		}
-		return (CompanyResearch)this;
-	}
-
-	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return CompanyResearch.staticSearchTemplateUri(siteRequest_, CompanyResearch.staticSetTemplateUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlTemplateUri() {
-		return templateUri;
-	}
-
-	/////////
-	// uri //
-	/////////
-
-
-	/**	 The entity uri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String uri;
-
-	/**	<br> The entity uri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uri(Wrap<String> w);
-
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String o) {
-		this.uri = CompanyResearch.staticSetUri(siteRequest_, o);
-	}
-	public static String staticSetUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyResearch uriInit() {
-		Wrap<String> uriWrap = new Wrap<String>().var("uri");
-		if(uri == null) {
-			_uri(uriWrap);
-			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
-				setUri(o);
-			});
-		}
-		return (CompanyResearch)this;
-	}
-
-	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return CompanyResearch.staticSearchUri(siteRequest_, CompanyResearch.staticSetUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUri() {
-		return uri;
-	}
-
-	/////////
-	// url //
-	/////////
-
-
-	/**	 The entity url
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String url;
-
-	/**	<br> The entity url
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _url(Wrap<String> w);
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String o) {
-		this.url = CompanyResearch.staticSetUrl(siteRequest_, o);
-	}
-	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyResearch urlInit() {
-		Wrap<String> urlWrap = new Wrap<String>().var("url");
-		if(url == null) {
-			_url(urlWrap);
-			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
-				setUrl(o);
-			});
-		}
-		return (CompanyResearch)this;
-	}
-
-	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return CompanyResearch.staticSearchUrl(siteRequest_, CompanyResearch.staticSetUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlUrl() {
-		return url;
-	}
-
-	///////////
-	// title //
-	///////////
-
-
-	/**	 The entity title
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String title;
-
-	/**	<br> The entity title
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.research.CompanyResearch&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _title(Wrap<String> w);
-
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String o) {
-		this.title = CompanyResearch.staticSetTitle(siteRequest_, o);
-	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyResearch titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
-			});
-		}
-		return (CompanyResearch)this;
-	}
-
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyResearch.staticSearchTitle(siteRequest_, CompanyResearch.staticSetTitle(siteRequest_, o)).toString();
-	}
-
-	public String sqlTitle() {
-		return title;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyResearch(SiteRequest siteRequest_) {
+	public Future<CompanyResearchGen<DEV>> promiseDeepCompanyResearch(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyResearch();
 	}
 
-	public Future<Void> promiseDeepCompanyResearch() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyResearchGen<DEV>> promiseDeepCompanyResearch() {
+		Promise<CompanyResearchGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyResearch(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -685,11 +414,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				nameInit();
 				descriptionInit();
 				pageIdInit();
-				resourceUriInit();
-				templateUriInit();
-				uriInit();
-				urlInit();
-				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -703,7 +427,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyResearchGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyResearch(siteRequest_);
 	}
 
@@ -749,16 +473,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				return oCompanyResearch.description;
 			case "pageId":
 				return oCompanyResearch.pageId;
-			case "resourceUri":
-				return oCompanyResearch.resourceUri;
-			case "templateUri":
-				return oCompanyResearch.templateUri;
-			case "uri":
-				return oCompanyResearch.uri;
-			case "url":
-				return oCompanyResearch.url;
-			case "title":
-				return oCompanyResearch.title;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -804,16 +518,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return CompanyResearch.staticSetDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyResearch.staticSetPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyResearch.staticSetResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyResearch.staticSetTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyResearch.staticSetUri(siteRequest_, o);
-		case "url":
-			return CompanyResearch.staticSetUrl(siteRequest_, o);
-		case "title":
-			return CompanyResearch.staticSetTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -834,16 +538,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return CompanyResearch.staticSearchDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyResearch.staticSearchPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyResearch.staticSearchResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyResearch.staticSearchTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyResearch.staticSearchUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyResearch.staticSearchUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyResearch.staticSearchTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -864,16 +558,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return CompanyResearch.staticSearchStrDescription(siteRequest_, (String)o);
 		case "pageId":
 			return CompanyResearch.staticSearchStrPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyResearch.staticSearchStrResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyResearch.staticSearchStrTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyResearch.staticSearchStrUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyResearch.staticSearchStrUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyResearch.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -894,16 +578,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return CompanyResearch.staticSearchFqDescription(siteRequest_, o);
 		case "pageId":
 			return CompanyResearch.staticSearchFqPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyResearch.staticSearchFqResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyResearch.staticSearchFqTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyResearch.staticSearchFqUri(siteRequest_, o);
-		case "url":
-			return CompanyResearch.staticSearchFqUrl(siteRequest_, o);
-		case "title":
-			return CompanyResearch.staticSearchFqTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -948,36 +622,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				}
 				saves.add("pageId");
 				return val;
-			} else if("resourceuri".equals(varLower)) {
-				if(val instanceof String) {
-					setResourceUri((String)val);
-				}
-				saves.add("resourceUri");
-				return val;
-			} else if("templateuri".equals(varLower)) {
-				if(val instanceof String) {
-					setTemplateUri((String)val);
-				}
-				saves.add("templateUri");
-				return val;
-			} else if("uri".equals(varLower)) {
-				if(val instanceof String) {
-					setUri((String)val);
-				}
-				saves.add("uri");
-				return val;
-			} else if("url".equals(varLower)) {
-				if(val instanceof String) {
-					setUrl((String)val);
-				}
-				saves.add("url");
-				return val;
-			} else if("title".equals(varLower)) {
-				if(val instanceof String) {
-					setTitle((String)val);
-				}
-				saves.add("title");
-				return val;
 		} else {
 			return super.persistBaseResult(var, val);
 		}
@@ -1012,36 +656,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				if(pageId != null)
 					oCompanyResearch.setPageId(pageId);
 			}
-
-			if(saves.contains("resourceUri")) {
-				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
-				if(resourceUri != null)
-					oCompanyResearch.setResourceUri(resourceUri);
-			}
-
-			if(saves.contains("templateUri")) {
-				String templateUri = (String)doc.get("templateUri_docvalues_string");
-				if(templateUri != null)
-					oCompanyResearch.setTemplateUri(templateUri);
-			}
-
-			if(saves.contains("uri")) {
-				String uri = (String)doc.get("uri_docvalues_string");
-				if(uri != null)
-					oCompanyResearch.setUri(uri);
-			}
-
-			if(saves.contains("url")) {
-				String url = (String)doc.get("url_docvalues_string");
-				if(url != null)
-					oCompanyResearch.setUrl(url);
-			}
-
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oCompanyResearch.setTitle(title);
-			}
 		}
 
 		super.populateBaseResult(doc);
@@ -1057,21 +671,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
-		if(resourceUri != null) {
-			doc.put("resourceUri_docvalues_string", resourceUri);
-		}
-		if(templateUri != null) {
-			doc.put("templateUri_docvalues_string", templateUri);
-		}
-		if(uri != null) {
-			doc.put("uri_docvalues_string", uri);
-		}
-		if(url != null) {
-			doc.put("url_docvalues_string", url);
-		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
-		}
 		super.indexBaseResult(doc);
 
 	}
@@ -1084,16 +683,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
@@ -1107,16 +696,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				return "description_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
@@ -1130,16 +709,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				return "description";
 			case "pageId_docvalues_string":
 				return "pageId";
-			case "resourceUri_docvalues_string":
-				return "resourceUri";
-			case "templateUri_docvalues_string":
-				return "templateUri";
-			case "uri_docvalues_string":
-				return "uri";
-			case "url_docvalues_string":
-				return "url";
-			case "title_docvalues_string":
-				return "title";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
@@ -1173,11 +742,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		oCompanyResearch.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyResearch.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyResearch.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyResearch.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyResearch.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyResearch.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyResearch.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyResearch.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1197,16 +761,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 				apiRequest.addVars("description");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
-			if(!Objects.equals(resourceUri, original.getResourceUri()))
-				apiRequest.addVars("resourceUri");
-			if(!Objects.equals(templateUri, original.getTemplateUri()))
-				apiRequest.addVars("templateUri");
-			if(!Objects.equals(uri, original.getUri()))
-				apiRequest.addVars("uri");
-			if(!Objects.equals(url, original.getUrl()))
-				apiRequest.addVars("url");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1221,11 +775,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1237,11 +786,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
 	public static final String VAR_pageId = "pageId";
-	public static final String VAR_resourceUri = "resourceUri";
-	public static final String VAR_templateUri = "templateUri";
-	public static final String VAR_uri = "uri";
-	public static final String VAR_url = "url";
-	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
 		return CompanyResearch.varsQCompanyResearch(new ArrayList<String>());
@@ -1258,10 +802,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
 		vars.add(VAR_pageId);
-		vars.add(VAR_resourceUri);
-		vars.add(VAR_templateUri);
-		vars.add(VAR_uri);
-		vars.add(VAR_url);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
@@ -1277,11 +817,41 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_name = "research name";
 	public static final String DISPLAY_NAME_description = "research description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_resourceUri = "resource URI";
-	public static final String DISPLAY_NAME_templateUri = "template URI";
-	public static final String DISPLAY_NAME_uri = "URI";
-	public static final String DISPLAY_NAME_url = "URL";
-	public static final String DISPLAY_NAME_title = "title";
+
+	@Override
+	public String idForClass() {
+		return pageId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return name;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return CompanyResearch.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return description;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/research/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return "%s/en-us/view/research/%s";
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyResearch.displayNameCompanyResearch(var);
@@ -1294,16 +864,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_description;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
-		case VAR_resourceUri:
-			return DISPLAY_NAME_resourceUri;
-		case VAR_templateUri:
-			return DISPLAY_NAME_templateUri;
-		case VAR_uri:
-			return DISPLAY_NAME_uri;
-		case VAR_url:
-			return DISPLAY_NAME_url;
-		case VAR_title:
-			return DISPLAY_NAME_title;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
@@ -1317,16 +877,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return "The research description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
-		case VAR_resourceUri:
-			return "The resource relative URI for this page. ";
-		case VAR_templateUri:
-			return "The template relative URI for this page. ";
-		case VAR_uri:
-			return "The relative URI for this page. ";
-		case VAR_url:
-			return "The URL for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
@@ -1339,16 +889,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		case VAR_description:
 			return "String";
 		case VAR_pageId:
-			return "String";
-		case VAR_resourceUri:
-			return "String";
-		case VAR_templateUri:
-			return "String";
-		case VAR_uri:
-			return "String";
-		case VAR_url:
-			return "String";
-		case VAR_title:
 			return "String";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
@@ -1373,11 +913,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		case VAR_description:
 			return 3;
 		case VAR_pageId:
-			return 4;
-		case VAR_uri:
-			return 3;
-		case VAR_url:
-			return 3;
+			return 99;
 			default:
 				return BaseResult.htmRowBaseResult(var);
 		}
@@ -1391,10 +927,6 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 			return 2;
 		case VAR_pageId:
 			return 1;
-		case VAR_uri:
-			return 2;
-		case VAR_url:
-			return 2;
 			default:
 				return BaseResult.htmCellBaseResult(var);
 		}

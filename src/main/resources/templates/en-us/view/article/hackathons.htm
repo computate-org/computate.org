@@ -1,0 +1,158 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="result.pageId" content="{{ result.shortFileName }}" />
+    <meta name="result.uri" content="/en-us/article/{{ pageId }}" />
+    <meta name="result.title" content="Computate hackathons" />
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+{% endblock htmStylePageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+    <h1>Computate hackathons</h1>
+    <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/2024-shaw-hackathon-cropped.jpg"/>
+    <div class="article-section ">
+      <h1 class="main-header ">Previous Hackathons</h1>
+      <sl-details class="hackathon-card" summary="2024 Red Hat Impact Hackathon with 3 North Carolina Universities: Visualizing live traffic data from edge to the cloud">
+
+        <sl-carousel navigation pagination>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-1.webp" alt="carousel-1-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-2.webp" alt="carousel-1-image-2.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-3.webp" alt="carousel-1-image-3.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-4.webp" alt="carousel-1-image-4.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-5.webp" alt="carousel-1-image-5.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-1-image-6.webp" alt="carousel-1-image-6.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+        <p class="hackathon-subtitle">Hackathon with Historically Black universities across North Carolina</p>
+
+        <h2>Overview</h2>
+        <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/open-iot-data-science-overview.png" alt="smarta-bayar-smart-village-platform-open-iot-data-science-smart-data-operators.webp"/>
+        <p class="paragraph-text">
+          In Q1 2024, Red Hat collaborated on a Cloud-to-Edge Learning Experience with Shaw University, as well as St. Augustine’s University, and North Carolina Central University this time. Participants used a Red Hat provided OpenShift Developer Sandbox cloud development environment to write a Python microservice that interacts with other microservices. They developed Python programming skills to connect to remote services and query traffic data with credentials provided the day of the hackathon. The newly developed Python code aggregates the data together every few seconds and send current traffic data to an existing web service, with a map and dashboard that reports on current traffic conditions. Participants deployed all of the prerequisite services into their online cloud environment with step-by-step instructions. They learned what it's like to work with real edge data that can be visualized in the cloud with this Cloud to Edge Learning Experience.
+        </p>
+
+        <h2>Technical Details</h2>
+        <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/open-iot-data-science-architecture.png" alt="smarta-bayar-smart-village-platform-open-iot-data-science-smart-data-operators.webp"/>
+        <p class="paragraph-text">You can follow the <a href="https://github.com/smartabyar-smartvillage/smartabyar-smartvillage-sandbox-course">Visualizing open source IOT data in the cloud open source course we will be using here</a>. Participants will launch individual <a href="https://developers.redhat.com/developer-sandbox" target="_blank" rel="noopener noreferrer">Red Hat OpenShift Developer Sandbox</a>&nbsp;environments, including their own Red Hat OpenShift AI Workbench. Using the <a href="https://github.com/computate-org/smartvillage-operator/tree/main/kustomize/overlays/sandbox" target="_blank" rel="noopener noreferrer">Smart Village Ansible Operator for OpenShift</a>, they will deploy open source edge components to their cloud sandbox, like message brokers, IoT Agents, and Context Brokers for storing Edge Device Data. They will also deploy the <a href="https://research.redhat.com/blog/research_project/creating-a-global-open-research-platform-to-better-understand-social-sustainability-using-data-from-a-real-life-smart-village/" target="_blank" rel="noopener noreferrer">Smart Village Platform</a> being developed by other students, professors, and Red Hat Engineers in the Red Hat Collaboratory with Boston University. Participants will then develop a new Python microservice in OpenShift AI. The new microservice will connect to the live <a href="https://www.smartabyarsmartvillage.org/api/" target="_blank" rel="noopener noreferrer">Smart Village project API</a> and query traffic data over time. Their new microservice will update a Smart Traffic Light map and dashboard in their own sandbox. Event-driven updates via websockets will update their Smart Traffic Light map and dashboard in real time, enabling a real edge to cloud solution. Participants will build a Containerfile for the new Python microservice and push their new service up to <a href="https://github.com/rh-impact/" target="_blank" rel="noopener noreferrer">Red Hat Impact's GitHub repos</a>, and <a href="https://quay.io/organization/rh-impact" target="_blank" rel="noopener noreferrer">Quay.io container image repos</a>, and test out the microservice on a real edge device running in Microshift on the Red Hat Device Edge operating system.</p>
+
+        <div class="margin-top paragraph-text ">
+          <h2>How do hackathons help communities?</h2>
+          <p>I believe that software can help communities and build a better world;  do you too? Do you find it challenging to get started on socially impactful open source projects? I don't like to wait for the right software to come along—instead, I work with Red Hat’s Global Social Innovation Program and internal Red Hat Impact program to build solutions together with actual domain experts. <br><br>There are many advantages of open source software hackathons: </p>
+          <ul><li>Participants learn lasting skills that make them confident in an enterprise open source architecture by attending the event. </li><li>Participants learn best practices on how to contribute to open source software. They build working solutions with emerging Red Hat technologies. </li><li>Experienced and inexperienced developers teach and learn from each other, building creative solutions. </li><li>Participants can further develop their skills through <a href="https://www.redhat.com/en/services/training/all-courses-exams" target="_blank" rel="noopener noreferrer">Red Hat Training courses</a>. </li></ul>
+        </div>
+      </sl-details>
+      <sl-details class="hackathon-card" summary="March 2023 Red Hat Impact Hackathon: Medical Imaging ChRIS Project Plugins with Shaw University">
+        <p class="paragraph-text">On Thursday March 2, 2023, Red Hat hosted an exciting hackathon in Raleigh, North Carolina with students from Shaw University. The participating Shaw students first attended three pre-workshops, taught by Red Hatters, to learn about Github, Python, and Containers. Then on the day of the event, Christopher Tate introduced the students to the <a href="https://chrisproject.org/" target="_blank" rel="noopener noreferrer">ChRIS project</a>, and led them in developing new plug-ins that convert animated GIF images in exciting new ways over the course of the day. Everyone had a great time, and we are already in conversations with the Red Hat B.U.I.L.D. leadership team to make this annual BUILD Hackathon event, inviting multiple schools to participate.<br><br><a href="https://github.com/rh-impact/pl-pygifsicle/blob/main/README.md">See the results of the hackathon on GitHub</a><br></p>
+        <sl-carousel navigation pagination>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-2-image-1.webp" alt="carousel-2-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-2-image-2.webp" alt="carousel-2-image-2.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-2-image-3.webp" alt="carousel-2-image-3.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+      </sl-details>
+      <sl-details class="hackathon-card" summary="FIWARE Smart Data Model Hackathon for Edge">
+        <p class="paragraph-text">In February 2023, we hosted a Red Hat Impact Hackathon in partnership with FIWARE. Teams ran OpenShift Local on their laptops, deploying FIWARE applications into OpenShift, importing Smart Data Model data, and visualizing the data creatively. You can practice deploying FIWARE Smart Data Models on your own OpenShift Local environment by following our <a href="https://www.youtube.com/watch?v=8W8XniO1iCM&amp;list=PLcVjtgfCeLvRnpjAl9VuTfstMVQe7CupN" target="_blank" rel="noopener noreferrer">FIWARE hackathon onboarding videos</a>. </p>
+        <sl-carousel navigation pagination>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-3-image-1.webp" alt="carousel-3-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-3-image-2.webp" alt="carousel-3-image-2.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-3-image-3.webp" alt="carousel-3-image-3.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+      </sl-details>
+      <sl-details class="hackathon-card" summary="September 2022 Red Hat Day of Learning Hackathon: Containerizing medical analysis ChRIS Project plugins for open computing With Red Hat Software Engineers">
+        <p class="paragraph-text">The goal of this hackathon was to make available additional open source applications that are not yet available for the open source medical imaging <a href="https://chrisproject.org/" target="_blank" rel="noopener noreferrer">ChRIS Project</a>. The Boston Children’s Hospital ChRIS team has identified a list of helpful plugins for the&nbsp;ChRIS ecosystem. Non-technical and technical contributors collaborated to document and develop new ChRIS plugins as container images. <br><br>The Boston Children’s hospital team reviewed all contributions and selected the winners based on impact after testing these new containers with actual brain scan data.&nbsp;The winning <a href="https://github.com/rh-impact/pl-metadata-burn" target="_blank" rel="noopener noreferrer">metadata-burn container</a> added patient data to brain scan data automatically. <br>The new <a href="https://github.com/rh-impact/pl-ocr_tool" target="_blank" rel="noopener noreferrer">ocr_tool container</a> can very accurately do optical character recognition in multiple languages, including accents. <br>The the <a href="https://github.com/rh-impact/pl-matplotlib" target="_blank" rel="noopener noreferrer">matplotlib container</a> put together different views of brain scans like the below images. <br><br><br>You can find the <a href="https://www.youtube.com/watch?v=lEo20dXqEaE&amp;list=PLcVjtgfCeLvRUqAA7ddLtwym7oUsCbtMH" target="_blank" rel="noopener noreferrer">onboarding steps, the kickoff video, and the wrap-up video on Youtube</a>. </p>
+        <sl-carousel navigation pagination>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-4-image-1.webp" alt="carousel-4-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-4-image-2.webp" alt="carousel-4-image-2.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+      </sl-details>
+      <sl-details class="hackathon-card" summary="Red Hat Impact Hackathon: Solving worldwide pandemic problems together through technology">
+        <p class="paragraph-text">Red Hatters around the globe connected in October 2021 for an event called the Red Hat Inspire Hackathon. We partnered with three nonprofit open source projects fighting the pandemic through open science and open education. Over 120 total Red Hat contributors across three regions around the world submitted over 150 commits! <br><br>ChRIS in the Americas : <a href="https://www.bu.edu/rhcollab/radiology/" target="_blank" rel="noopener noreferrer">ChRIS</a> is an open source framework that democratizes medical analytics application development using the open cloud so health organizations can continue to own their data while benefiting from public cloud processing capabilities. For this project based at the Red Hat Collaboratory at Boston University, contributors wrote code to automate the <a href="https://github.com/orgs/team19hackathon2021/projects/19" target="_blank" rel="noopener noreferrer">deployment of the entire ChRIS platform to Podman</a> using Ansible for the first time and containerize the Linux application. <br><br><br>Curriki in Asia Pacific: <a href="https://www.curriki.org/" target="_blank" rel="noopener noreferrer">Curriki</a> is an open education platform that brings online education to underprivileged communities. Participants in the <a href="https://github.com/orgs/team19hackathon2021/projects/3" target="_blank" rel="noopener noreferrer">Curriki hackathon</a> assisted in MSA design, Quarkus efficient services, automation in Tekton or Jenkins, and observable components using Prometheus and Grafana.<br><br><br>Serratus in Europe: <a href="https://serratus.io/" target="_blank" rel="noopener noreferrer">Serratus</a> is an open science discovery platform uncovering and understanding the world's viruses, undertaking a comprehensive reanalysis of 10,000,000+ gigabytes of data to catalog every virus on Earth. Participants in the <a href="https://github.com/orgs/team19hackathon2021/projects/20" target="_blank" rel="noopener noreferrer">Serratus hackathon</a> generated rich and comprehensive data to accelerate the global research efforts in fighting SARS-CoV-2 and other emerging viral diseases.</p>
+        <sl-carousel navigation pagination>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-1.webp" alt="carousel-4-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-2.webp" alt="carousel-4-image-2.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-3.webp" alt="carousel-4-image-3.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-4.webp" alt="carousel-4-image-4.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-5.webp" alt="carousel-4-image-5.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-6.webp" alt="carousel-4-image-6.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-7.webp" alt="carousel-4-image-7.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-8.webp" alt="carousel-4-image-8.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-9.webp" alt="carousel-4-image-9.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-10.webp" alt="carousel-4-image-10.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-11.webp" alt="carousel-4-image-11.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-12.webp" alt="carousel-4-image-12.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-13.webp" alt="carousel-4-image-13.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-14.webp" alt="carousel-4-image-14.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-5-image-15.webp" alt="carousel-4-image-15.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+      </sl-details>
+      <sl-details class="hackathon-card" summary="Open Data Policing Hackathon: Driving social change through collaboration and open data">
+        <p class="paragraph-text">During a hackathon on Martin Luther King Jr. Day 2021 and throughout the year, participants completed development of two open source web-based technologies for SCSJ. The launch of the <a href="https://rerc.southerncoalition.org/" target="_blank" rel="noopener noreferrer">RERC platform</a> makes it easier for SCSJ to enter data through an online form and generate up-to-date report cards instantly, using an API deployed on Red Hat OpenShift. “This solution allows us to focus more on supporting grassroots campaigns addressing these issues and provides these communities with a user-friendly platform to identify racial disparities that need to be addressed,” said SCSJ’s Tyler Whittenberg. SCSJ also launched an <a href="https://www.opendatapolicingnc.com/" target="_blank" rel="noopener noreferrer">Open Data Policing platform</a> on Red Hat OpenShift Online. “It provides community organizers and policymakers with information they can use to help inform their own policies about police departments,” said Whittenberg. </p>
+        <sl-carousel navigation pagination>  
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-6-image-1.webp" alt="carousel-6-image-1.webp"/>
+          </sl-carousel-item>
+          <sl-carousel-item>
+            <img src="{{ STATIC_BASE_URL }}/en-us/article/hackathons/carousel-6-image-2.webp" alt="carousel-6-image-2.webp"/>
+          </sl-carousel-item>
+        </sl-carousel>
+      </sl-details>
+    </div>
+{% endblock %}

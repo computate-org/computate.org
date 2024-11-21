@@ -330,56 +330,56 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 		return (CompanyServiceGenPage)this;
 	}
 
-	////////
-	// id //
-	////////
+	////////////
+	// solrId //
+	////////////
 
 
-	/**	 The entity id
+	/**	 The entity solrId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String id;
+	protected String solrId;
 
-	/**	<br> The entity id
+	/**	<br> The entity solrId
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyServiceGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _id(Wrap<String> w);
+	protected abstract void _solrId(Wrap<String> w);
 
-	public String getId() {
-		return id;
+	public String getSolrId() {
+		return solrId;
 	}
-	public void setId(String o) {
-		this.id = CompanyServiceGenPage.staticSetId(siteRequest_, o);
+	public void setSolrId(String o) {
+		this.solrId = CompanyServiceGenPage.staticSetSolrId(siteRequest_, o);
 	}
-	public static String staticSetId(SiteRequest siteRequest_, String o) {
+	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyServiceGenPage idInit() {
-		Wrap<String> idWrap = new Wrap<String>().var("id");
-		if(id == null) {
-			_id(idWrap);
-			Optional.ofNullable(idWrap.getO()).ifPresent(o -> {
-				setId(o);
+	protected CompanyServiceGenPage solrIdInit() {
+		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+		if(solrId == null) {
+			_solrId(solrIdWrap);
+			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+				setSolrId(o);
 			});
 		}
 		return (CompanyServiceGenPage)this;
 	}
 
-	public static String staticSearchId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqId(SiteRequest siteRequest_, String o) {
-		return CompanyServiceGenPage.staticSearchId(siteRequest_, CompanyServiceGenPage.staticSetId(siteRequest_, o)).toString();
+	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+		return CompanyServiceGenPage.staticSearchSolrId(siteRequest_, CompanyServiceGenPage.staticSetSolrId(siteRequest_, o)).toString();
 	}
 
 	///////////////////////////
@@ -438,18 +438,18 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyServiceGenPage(SiteRequest siteRequest_) {
+	public Future<CompanyServiceGenPageGen<DEV>> promiseDeepCompanyServiceGenPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyServiceGenPage();
 	}
 
-	public Future<Void> promiseDeepCompanyServiceGenPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyServiceGenPageGen<DEV>> promiseDeepCompanyServiceGenPage() {
+		Promise<CompanyServiceGenPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyServiceGenPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -467,7 +467,7 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 				listCompanyServiceInit();
 				resultCountInit();
 				resultInit();
-				idInit();
+				solrIdInit();
 				pageUriCompanyServiceInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -482,7 +482,7 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyServiceGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyServiceGenPage(siteRequest_);
 	}
 
@@ -530,8 +530,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 				return oCompanyServiceGenPage.resultCount;
 			case "result":
 				return oCompanyServiceGenPage.result;
-			case "id":
-				return oCompanyServiceGenPage.id;
+			case "solrId":
+				return oCompanyServiceGenPage.solrId;
 			case "pageUriCompanyService":
 				return oCompanyServiceGenPage.pageUriCompanyService;
 			default:
@@ -577,8 +577,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 			return CompanyServiceGenPage.staticSetListCompanyService(siteRequest_, o);
 		case "resultCount":
 			return CompanyServiceGenPage.staticSetResultCount(siteRequest_, o);
-		case "id":
-			return CompanyServiceGenPage.staticSetId(siteRequest_, o);
+		case "solrId":
+			return CompanyServiceGenPage.staticSetSolrId(siteRequest_, o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSetPageUriCompanyService(siteRequest_, o);
 			default:
@@ -599,8 +599,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 			return CompanyServiceGenPage.staticSearchListCompanyService(siteRequest_, (JsonArray)o);
 		case "resultCount":
 			return CompanyServiceGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
-		case "id":
-			return CompanyServiceGenPage.staticSearchId(siteRequest_, (String)o);
+		case "solrId":
+			return CompanyServiceGenPage.staticSearchSolrId(siteRequest_, (String)o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchPageUriCompanyService(siteRequest_, (String)o);
 			default:
@@ -621,8 +621,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 			return CompanyServiceGenPage.staticSearchStrListCompanyService(siteRequest_, (String)o);
 		case "resultCount":
 			return CompanyServiceGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
-		case "id":
-			return CompanyServiceGenPage.staticSearchStrId(siteRequest_, (String)o);
+		case "solrId":
+			return CompanyServiceGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchStrPageUriCompanyService(siteRequest_, (String)o);
 			default:
@@ -643,8 +643,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 			return CompanyServiceGenPage.staticSearchFqListCompanyService(siteRequest_, o);
 		case "resultCount":
 			return CompanyServiceGenPage.staticSearchFqResultCount(siteRequest_, o);
-		case "id":
-			return CompanyServiceGenPage.staticSearchFqId(siteRequest_, o);
+		case "solrId":
+			return CompanyServiceGenPage.staticSearchFqSolrId(siteRequest_, o);
 		case "pageUriCompanyService":
 			return CompanyServiceGenPage.staticSearchFqPageUriCompanyService(siteRequest_, o);
 			default:
@@ -667,15 +667,50 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 	public static final String VAR_listCompanyService = "listCompanyService";
 	public static final String VAR_resultCount = "resultCount";
 	public static final String VAR_result = "result";
-	public static final String VAR_id = "id";
+	public static final String VAR_solrId = "solrId";
 	public static final String VAR_pageUriCompanyService = "pageUriCompanyService";
 
 	public static final String DISPLAY_NAME_searchListCompanyService_ = "";
 	public static final String DISPLAY_NAME_listCompanyService = "";
 	public static final String DISPLAY_NAME_resultCount = "";
 	public static final String DISPLAY_NAME_result = "";
-	public static final String DISPLAY_NAME_id = "";
+	public static final String DISPLAY_NAME_solrId = "";
 	public static final String DISPLAY_NAME_pageUriCompanyService = "";
+
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyServiceGenPage.displayNameCompanyServiceGenPage(var);
@@ -690,12 +725,87 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_resultCount;
 		case VAR_result:
 			return DISPLAY_NAME_result;
-		case VAR_id:
-			return DISPLAY_NAME_id;
+		case VAR_solrId:
+			return DISPLAY_NAME_solrId;
 		case VAR_pageUriCompanyService:
 			return DISPLAY_NAME_pageUriCompanyService;
 		default:
 			return PageLayout.displayNamePageLayout(var);
+		}
+	}
+
+	public static String descriptionCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.descriptionPageLayout(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyServiceGenPage(String var) {
+		switch(var) {
+		case VAR_searchListCompanyService_:
+			return "SearchList";
+		case VAR_listCompanyService:
+			return "JsonArray";
+		case VAR_resultCount:
+			return "Integer";
+		case VAR_result:
+			return "CompanyService";
+		case VAR_solrId:
+			return "String";
+		case VAR_pageUriCompanyService:
+			return "String";
+			default:
+				return PageLayout.classSimpleNamePageLayout(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmColumnPageLayout(var);
+		}
+	}
+
+	public static Integer htmRowCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmRowPageLayout(var);
+		}
+	}
+
+	public static Integer htmCellCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmCellPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMinPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMaxPageLayout(var);
+		}
+	}
+
+	public static Integer maxCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.maxPageLayout(var);
+		}
+	}
+
+	public static Integer minCompanyServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.minPageLayout(var);
 		}
 	}
 }

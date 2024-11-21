@@ -1,5 +1,5 @@
 
-{%- macro htmButton_patchCompanyAbout() %}<sl-button id="htmButton_patchCompanyAbout" data-id="{{ id }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyAbout() %}<sl-button id="htmButton_patchCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyAbout() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -33,16 +33,6 @@
                   {{ htmModifiedCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
                   {{ htmModifiedCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
               </div>
@@ -79,26 +69,11 @@
                   {{ htmDescriptionCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details open class="HtmRow" id="useful-urls">
+              <div slot="summary">
+                <span>Useful URLs</span>
               </div>
               <div class="grid-with-subgrid-2col ">
 
@@ -111,6 +86,16 @@
                   {{ htmPageIdCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
           </form>
@@ -118,7 +103,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyAbout() %}<sl-button id="htmButton_postCompanyAbout" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyAbout() %}<sl-button id="htmButton_postCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyAbout() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -155,16 +140,6 @@
                   {{ htmModifiedCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
@@ -199,26 +174,11 @@
                   {{ htmDescriptionCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details open class="HtmRow" id="useful-urls">
+              <div slot="summary">
+                <span>Useful URLs</span>
               </div>
               <div class="grid-with-subgrid-2col ">
 
@@ -231,6 +191,16 @@
                   {{ htmPageIdCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
           </form>
@@ -238,7 +208,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteCompanyAbout() %}<sl-button id="htmButton_deleteCompanyAbout" data-id="{{ id }}"><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteCompanyAbout() %}<sl-button id="htmButton_deleteCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteCompanyAbout() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -254,7 +224,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyAbout() %}<sl-button id="htmButton_putimportCompanyAbout" data-id="{{ id }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyAbout() %}<sl-button id="htmButton_putimportCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyAbout() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -269,7 +239,7 @@
               <sl-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
-                  placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
+                  placeholder="{ 'searchList': [ { 'pageId': ... , 'saves': [ ... ] }, ... ] }"
                   >
               </sl-textarea>
             </div>
@@ -314,16 +284,6 @@
                   {{ htmModifiedCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
               <div class="grid-with-subgrid-2col ">
 
@@ -358,26 +318,11 @@
                   {{ htmDescriptionCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUriCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUriCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmUrlCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmUrlCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
+              </div>
+            </sl-details>
+            <sl-details open class="HtmRow" id="useful-urls">
+              <div slot="summary">
+                <span>Useful URLs</span>
               </div>
               <div class="grid-with-subgrid-2col ">
 
@@ -390,6 +335,16 @@
                   {{ htmPageIdCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageCompanyAboutPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
           </div>
@@ -400,14 +355,14 @@
             <sl-divider></sl-divider>
             <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
     {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyAboutGenPage"
-                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'id:{{id}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyAboutGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyAboutGenPage')); }); return false; ">
+                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyAboutGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyAboutGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyAboutGenPage{{id}}"
-                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyAboutGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllCompanyAboutGenPage{{id}}')); }); "
+              <sl-button id="refreshAllCompanyAboutGenPage{{ result.pageId | e }}"
+                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyAboutGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyAboutGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
                 Refresh all 
@@ -422,7 +377,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if id is defined %}
+    {%- if pageId is defined %}
       {{ htmButton_postCompanyAbout() }}
     {%- else %}
       {{ htmButton_postCompanyAbout() }}
@@ -433,7 +388,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if id is defined %}
+    {%- if pageId is defined %}
       {{ htmButton_deleteCompanyAbout() }}
     {%- else %}
     {%- endif %}
@@ -451,7 +406,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if id is defined %}
+    {%- if pageId is defined %}
       {{ htmForm_postCompanyAbout() }}
     {%- else %}
       {{ htmForm_postCompanyAbout() }}
@@ -462,7 +417,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if id is defined %}
+    {%- if pageId is defined %}
       {{ htmForm_deleteCompanyAbout() }}
     {%- else %}
     {%- endif %}

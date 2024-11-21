@@ -470,9 +470,9 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
       w.o(searchListCompanyProduct_.get(0));
   }
 
-  protected void _id(Wrap<String> w) {
+  protected void _solrId(Wrap<String> w) {
     if(result != null)
-      w.o(result.getId());
+      w.o(result.getSolrId());
   }
 
   @Override
@@ -487,8 +487,8 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getObjectTitle() != null)
-      c.o(result.getObjectTitle());
+    if(result != null && result.getTitle() != null)
+      c.o(result.getTitle());
     else if(result != null)
       c.o("products");
     else if(searchListCompanyProduct_ == null || resultCount == 0)

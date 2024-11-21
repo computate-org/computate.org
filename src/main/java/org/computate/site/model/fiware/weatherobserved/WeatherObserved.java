@@ -28,7 +28,7 @@ import io.vertx.pgclient.data.Polygon;
  * Fiware: true
  * 
  * SearchPageUri: /en-us/search/weather-observed
- * EditPageUri: /en-us/edit/weather-observed/{objectId}
+ * EditPageUri: /en-us/edit/weather-observed/{pageId}
  * ApiUri: /en-us/api/weather-observed
  * ApiMethod:
  *   Search:
@@ -66,6 +66,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * HtmColumn: 1
 	 * HtmRowTitle: weather observed details
 	 * Facet: true
+	 * VarName: true
 	 **/
 	protected void _name(Wrap<String> w) {}
 
@@ -80,6 +81,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * HtmCell: 2
 	 * Facet: true
 	 * HtmColumn: 2
+	 * VarDescription: true
 	 **/
 	protected void _description(Wrap<String> w) {}
 
@@ -679,6 +681,7 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 * HtmRow: 13
 	 * HtmCell: 2
 	 * Facet: true
+	 * VarId: true
 	 */
 	protected void _entityId(Wrap<String> w) {
 		w.o(String.format("urn:ngsi-ld:%s:%s", CLASS_SIMPLE_NAME, toId(name)));
@@ -708,22 +711,6 @@ public class WeatherObserved extends WeatherObservedGen<BaseModel> {
 	 */
 	protected void _ngsildContext(Wrap<String> w) {
 		w.o(String.format("https://raw.githubusercontent.com/%s/%s/main/fiware/context.jsonld", siteRequest_.getConfig().getString(ComputateConfigKeys.GITHUB_ORG), siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_STATIC_NAME)));
-	}
-
-	@Override
-	protected void _objectTitle(Wrap<String> w) {
-		StringBuilder b = new StringBuilder();
-		b.append(Optional.ofNullable(entityShortId).map(s -> String.format("%s — %s", WeatherObserved_NameAdjectiveSingular_enUS, s)).orElse(pk.toString()));
-		w.o(b.toString().trim());
-	}
-
-	@Override
-	protected void _objectId(Wrap<String> w) {
-	if(objectTitle != null) {
-			w.o(toId(objectTitle));
-		} else if(id != null){
-			w.o(id.toString());
-		}
 	}
 }
 

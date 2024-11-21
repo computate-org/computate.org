@@ -190,46 +190,55 @@ import org.computate.search.response.solr.SolrResponse;
 public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	protected static final Logger LOG = LoggerFactory.getLogger(WeatherObserved.class);
 
-	public static final String WeatherObserved_Description_enUS = "For keeping track of temperature, humidity, and other weather related details. ";
-	public static final String WeatherObserved_AName_enUS = "a weather observed device";
-	public static final String WeatherObserved_This_enUS = "this ";
-	public static final String WeatherObserved_ThisName_enUS = "this weather observed device";
-	public static final String WeatherObserved_A_enUS = "a ";
-	public static final String WeatherObserved_TheName_enUS = "the weather observed device";
-	public static final String WeatherObserved_SingularName_enUS = "weather observed device";
-	public static final String WeatherObserved_PluralName_enUS = "weather observed devices";
-	public static final String WeatherObserved_NameActual_enUS = "current weather observed device";
-	public static final String WeatherObserved_AllName_enUS = "all weather observed devices";
-	public static final String WeatherObserved_SearchAllNameBy_enUS = "search weather observed devices by ";
-	public static final String WeatherObserved_Title_enUS = "weather observed devices";
-	public static final String WeatherObserved_ThePluralName_enUS = "the weather observed devices";
-	public static final String WeatherObserved_NoNameFound_enUS = "no weather observed device found";
-	public static final String WeatherObserved_ApiUri_enUS = "/en-us/api/weather-observed";
-	public static final String WeatherObserved_ApiUriSearchPage_enUS = "/en-us/search/weather-observed";
-	public static final String WeatherObserved_OfName_enUS = "of weather observed device";
-	public static final String WeatherObserved_ANameAdjective_enUS = "a weather observed device";
-	public static final String WeatherObserved_NameAdjectiveSingular_enUS = "weather observed device";
-	public static final String WeatherObserved_NameAdjectivePlural_enUS = "weather observed devices";
-	public static final String Search_enUS_Uri = "/en-us/api/weather-observed";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/weather-observed/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/weather-observed/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/weather-observed";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/weather-observed";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/weather-observed-999.png";
-	public static final String DELETE_enUS_Uri = "/en-us/api/weather-observed/{objectId}";
-	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/weather-observed/{objectId}-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/weather-observed-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/weather-observed-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/weather-observed";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/weather-observed-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/weather-observed/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/weather-observed/{objectId}-999.png";
+	public static final String Description_enUS = "For keeping track of temperature, humidity, and other weather related details. ";
+	public static final String AName_enUS = "a weather observed device";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this weather observed device";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "the weather observed device";
+	public static final String SingularName_enUS = "weather observed device";
+	public static final String PluralName_enUS = "weather observed devices";
+	public static final String NameActual_enUS = "current weather observed device";
+	public static final String AllName_enUS = "all weather observed devices";
+	public static final String SearchAllNameBy_enUS = "search weather observed devices by ";
+	public static final String Title_enUS = "weather observed devices";
+	public static final String ThePluralName_enUS = "the weather observed devices";
+	public static final String NoNameFound_enUS = "no weather observed device found";
+	public static final String ApiUri_enUS = "/en-us/api/weather-observed";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/weather-observed";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/weather-observed/{pageId}";
+	public static final String OfName_enUS = "of weather observed device";
+	public static final String ANameAdjective_enUS = "a weather observed device";
+	public static final String NameAdjectiveSingular_enUS = "weather observed device";
+	public static final String NameAdjectivePlural_enUS = "weather observed devices";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/weather-observed";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/weather-observed";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/weather-observed";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/weather-observed/{entityId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/weather-observed/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/weather-observed/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/weather-observed";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/weather-observed";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/weather-observed";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/weather-observed";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/weather-observed";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/weather-observed";
+	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/weather-observed/{entityId}";
+	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/weather-observed/%s";
+	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/weather-observed/%s";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/weather-observed-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/weather-observed-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/weather-observed-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/weather-observed";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/weather-observed";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/weather-observed";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/weather-observed/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/weather-observed/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/weather-observed/%s";
 
-	public static final String WeatherObserved_Color = "2017-shaded-spruce";
-	public static final String WeatherObserved_Icon = "<i class=\"fa-regular fa-cloud-bolt-sun\"></i>";
-	public static final Integer WeatherObserved_Rows = 100;
+	public static final String Color = "2017-shaded-spruce";
+	public static final String Icon = "<i class=\"fa-regular fa-cloud-bolt-sun\"></i>";
+	public static final Integer Rows = 100;
 
 	//////////
 	// name //
@@ -3744,18 +3753,18 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepWeatherObserved(SiteRequest siteRequest_) {
+	public Future<WeatherObservedGen<DEV>> promiseDeepWeatherObserved(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepWeatherObserved();
 	}
 
-	public Future<Void> promiseDeepWeatherObserved() {
-		Promise<Void> promise = Promise.promise();
+	public Future<WeatherObservedGen<DEV>> promiseDeepWeatherObserved() {
+		Promise<WeatherObservedGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseWeatherObserved(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -3833,7 +3842,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends WeatherObservedGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepWeatherObserved(siteRequest_);
 	}
 
@@ -6112,6 +6121,41 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_entityId = "entity ID";
 	public static final String DISPLAY_NAME_entityShortId = "short entity ID";
 	public static final String DISPLAY_NAME_ngsildContext = "NGSILD context";
+
+	@Override
+	public String idForClass() {
+		return entityId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return name;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return WeatherObserved.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return description;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/weather-observed/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
 
 	public static String displayNameForClass(String var) {
 		return WeatherObserved.displayNameWeatherObserved(var);

@@ -588,7 +588,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		});
 	}
 
-	public Future<IotService> patchIotServiceFuture(IotService o, Boolean inheritPk) {
+	public Future<IotService> patchIotServiceFuture(IotService o, Boolean pageId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<IotService> promise = Promise.promise();
 
@@ -598,7 +598,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			pgPool.withTransaction(sqlConnection -> {
 				siteRequest.setSqlConnection(sqlConnection);
 				varsIotService(siteRequest).onSuccess(a -> {
-					sqlPATCHIotService(o, inheritPk).onSuccess(iotService -> {
+					sqlPATCHIotService(o, pageId).onSuccess(iotService -> {
 						persistIotService(iotService, true).onSuccess(c -> {
 							relateIotService(iotService).onSuccess(d -> {
 								indexIotService(iotService).onSuccess(o2 -> {
@@ -652,7 +652,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		return promise.future();
 	}
 
-	public Future<IotService> sqlPATCHIotService(IotService o, Boolean inheritPk) {
+	public Future<IotService> sqlPATCHIotService(IotService o, Boolean pageId) {
 		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -673,14 +673,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
 					case "setCreated":
 							o2.setCreated(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -712,6 +704,22 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							bSql.append(IotService.VAR_userKey + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUserKey());
+						break;
+					case "setTitle":
+							o2.setTitle(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_title + "=$" + num);
+							num++;
+							bParams.add(o2.sqlTitle());
+						break;
+					case "setDisplayPage":
+							o2.setDisplayPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_displayPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDisplayPage());
 						break;
 					case "setEntityType":
 							o2.setEntityType(jsonObject.getString(entityVar));
@@ -776,46 +784,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							bSql.append(IotService.VAR_pageId + "=$" + num);
 							num++;
 							bParams.add(o2.sqlPageId());
-						break;
-					case "setResourceUri":
-							o2.setResourceUri(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_resourceUri + "=$" + num);
-							num++;
-							bParams.add(o2.sqlResourceUri());
-						break;
-					case "setTemplateUri":
-							o2.setTemplateUri(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_templateUri + "=$" + num);
-							num++;
-							bParams.add(o2.sqlTemplateUri());
-						break;
-					case "setUri":
-							o2.setUri(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_uri + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUri());
-						break;
-					case "setUrl":
-							o2.setUrl(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_url + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUrl());
-						break;
-					case "setTitle":
-							o2.setTitle(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_title + "=$" + num);
-							num++;
-							bParams.add(o2.sqlTitle());
 						break;
 				}
 			}
@@ -1026,7 +994,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		});
 	}
 
-	public Future<IotService> postIotServiceFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<IotService> postIotServiceFuture(SiteRequest siteRequest, Boolean pageId) {
 		Promise<IotService> promise = Promise.promise();
 
 		try {
@@ -1035,7 +1003,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				siteRequest.setSqlConnection(sqlConnection);
 				varsIotService(siteRequest).onSuccess(a -> {
 					createIotService(siteRequest).onSuccess(iotService -> {
-						sqlPOSTIotService(iotService, inheritPk).onSuccess(b -> {
+						sqlPOSTIotService(iotService, pageId).onSuccess(b -> {
 							persistIotService(iotService, false).onSuccess(c -> {
 								relateIotService(iotService).onSuccess(d -> {
 									indexIotService(iotService).onSuccess(o2 -> {
@@ -1095,7 +1063,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		return promise.future();
 	}
 
-	public Future<IotService> sqlPOSTIotService(IotService o, Boolean inheritPk) {
+	public Future<IotService> sqlPOSTIotService(IotService o, Boolean pageId) {
 		Promise<IotService> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -1134,15 +1102,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case IotService.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
 					case IotService.VAR_created:
 						o2.setCreated(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1178,6 +1137,24 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						bSql.append(IotService.VAR_userKey + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUserKey());
+						break;
+					case IotService.VAR_title:
+						o2.setTitle(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_title + "=$" + num);
+						num++;
+						bParams.add(o2.sqlTitle());
+						break;
+					case IotService.VAR_displayPage:
+						o2.setDisplayPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_displayPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDisplayPage());
 						break;
 					case IotService.VAR_entityType:
 						o2.setEntityType(jsonObject.getString(entityVar));
@@ -1250,51 +1227,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						bSql.append(IotService.VAR_pageId + "=$" + num);
 						num++;
 						bParams.add(o2.sqlPageId());
-						break;
-					case IotService.VAR_resourceUri:
-						o2.setResourceUri(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_resourceUri + "=$" + num);
-						num++;
-						bParams.add(o2.sqlResourceUri());
-						break;
-					case IotService.VAR_templateUri:
-						o2.setTemplateUri(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_templateUri + "=$" + num);
-						num++;
-						bParams.add(o2.sqlTemplateUri());
-						break;
-					case IotService.VAR_uri:
-						o2.setUri(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_uri + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUri());
-						break;
-					case IotService.VAR_url:
-						o2.setUrl(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_url + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUrl());
-						break;
-					case IotService.VAR_title:
-						o2.setTitle(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_title + "=$" + num);
-						num++;
-						bParams.add(o2.sqlTitle());
 						break;
 					}
 				}
@@ -1843,8 +1775,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(IotService.VAR_pk)).orElse(body.getString(IotService.VAR_id));
-				body.put("inheritPk", inheritPk);
+				String pageId = Optional.ofNullable(body.getString(IotService.VAR_pageId)).orElse(body.getString(IotService.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -1854,7 +1785,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				searchList.q("*:*");
 				searchList.setC(IotService.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -1890,13 +1821,13 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -1907,7 +1838,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 								}
 								siteRequest.setJsonObject(body2);
 								patchIotServiceFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import IotService {} succeeded, modified IotService. ", body.getValue(IotService.VAR_pk));
+									LOG.debug("Import IotService {} succeeded, modified IotService. ", body.getValue(IotService.VAR_pageId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
@@ -1918,7 +1849,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							}
 						} else {
 							postIotServiceFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import IotService {} succeeded, created new IotService. ", body.getValue(IotService.VAR_pk));
+								LOG.debug("Import IotService {} succeeded, created new IotService. ", body.getValue(IotService.VAR_pageId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
@@ -2075,7 +2006,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 	}
 
 	public String templateSearchPageIotService(ServiceRequest serviceRequest) {
-		return "en-us/search/iot-service/IotServiceSearch.htm";
+		return "en-us/search/iot-service/IotServiceSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2249,7 +2180,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 	}
 
 	public String templateEditPageIotService(ServiceRequest serviceRequest) {
-		return "en-us/edit/iot-service/IotServiceEdit.htm";
+		return "en-us/edit/iot-service/IotServiceEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2423,7 +2354,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 	}
 
 	public String templateDisplayPageIotService(ServiceRequest serviceRequest) {
-		return String.format("en-us/shop/iot-service/IotServiceDisplayPage.htm", serviceRequest.getExtra().getString("uri").substring(1));
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
 	}
 	public Future<ServiceResponse> response200DisplayPageIotService(SearchList<IotService> listIotService) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2625,11 +2556,11 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(pk_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
+			if(pageId != null && NumberUtils.isCreatable(pageId)) {
+				searchList.fq("(_docvalues_string:" + SearchTool.escapeQueryChars(pageId) + " OR pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId) + ")");
+			} else if(pageId != null) {
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
@@ -2771,7 +2702,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchIotService2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -2932,7 +2863,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pk_docvalues_long:%s)", o.obtainForClass("pk"));
+				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -3020,6 +2951,50 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			}
 		} catch(Exception ex) {
 			LOG.error(String.format("refreshIotService failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			IotService page = new IotService();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(IotService.VAR_created, IotService.staticSetCreated(siteRequest2, (String)result.get(IotService.VAR_created)));
+			page.persistForClass(IotService.VAR_archived, IotService.staticSetArchived(siteRequest2, (String)result.get(IotService.VAR_archived)));
+			page.persistForClass(IotService.VAR_sessionId, IotService.staticSetSessionId(siteRequest2, (String)result.get(IotService.VAR_sessionId)));
+			page.persistForClass(IotService.VAR_userKey, IotService.staticSetUserKey(siteRequest2, (String)result.get(IotService.VAR_userKey)));
+			page.persistForClass(IotService.VAR_title, IotService.staticSetTitle(siteRequest2, (String)result.get(IotService.VAR_title)));
+			page.persistForClass(IotService.VAR_displayPage, IotService.staticSetDisplayPage(siteRequest2, (String)result.get(IotService.VAR_displayPage)));
+			page.persistForClass(IotService.VAR_entityType, IotService.staticSetEntityType(siteRequest2, (String)result.get(IotService.VAR_entityType)));
+			page.persistForClass(IotService.VAR_apiKey, IotService.staticSetApiKey(siteRequest2, (String)result.get(IotService.VAR_apiKey)));
+			page.persistForClass(IotService.VAR_resource, IotService.staticSetResource(siteRequest2, (String)result.get(IotService.VAR_resource)));
+			page.persistForClass(IotService.VAR_ngsildTenant, IotService.staticSetNgsildTenant(siteRequest2, (String)result.get(IotService.VAR_ngsildTenant)));
+			page.persistForClass(IotService.VAR_ngsildPath, IotService.staticSetNgsildPath(siteRequest2, (String)result.get(IotService.VAR_ngsildPath)));
+			page.persistForClass(IotService.VAR_cbHost, IotService.staticSetCbHost(siteRequest2, (String)result.get(IotService.VAR_cbHost)));
+			page.persistForClass(IotService.VAR_attributes, IotService.staticSetAttributes(siteRequest2, (String)result.get(IotService.VAR_attributes)));
+			page.persistForClass(IotService.VAR_pageId, IotService.staticSetPageId(siteRequest2, (String)result.get(IotService.VAR_pageId)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

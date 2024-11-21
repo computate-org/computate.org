@@ -390,56 +390,56 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 		return CompanyWebinarGenPage.staticSearchPk(siteRequest_, CompanyWebinarGenPage.staticSetPk(siteRequest_, o)).toString();
 	}
 
-	////////
-	// id //
-	////////
+	////////////
+	// solrId //
+	////////////
 
 
-	/**	 The entity id
+	/**	 The entity solrId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String id;
+	protected String solrId;
 
-	/**	<br> The entity id
+	/**	<br> The entity solrId
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _id(Wrap<String> w);
+	protected abstract void _solrId(Wrap<String> w);
 
-	public String getId() {
-		return id;
+	public String getSolrId() {
+		return solrId;
 	}
-	public void setId(String o) {
-		this.id = CompanyWebinarGenPage.staticSetId(siteRequest_, o);
+	public void setSolrId(String o) {
+		this.solrId = CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o);
 	}
-	public static String staticSetId(SiteRequest siteRequest_, String o) {
+	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyWebinarGenPage idInit() {
-		Wrap<String> idWrap = new Wrap<String>().var("id");
-		if(id == null) {
-			_id(idWrap);
-			Optional.ofNullable(idWrap.getO()).ifPresent(o -> {
-				setId(o);
+	protected CompanyWebinarGenPage solrIdInit() {
+		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+		if(solrId == null) {
+			_solrId(solrIdWrap);
+			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+				setSolrId(o);
 			});
 		}
 		return (CompanyWebinarGenPage)this;
 	}
 
-	public static String staticSearchId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqId(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchId(siteRequest_, CompanyWebinarGenPage.staticSetId(siteRequest_, o)).toString();
+	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+		return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o)).toString();
 	}
 
 	///////////////////////////
@@ -498,18 +498,18 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyWebinarGenPage(SiteRequest siteRequest_) {
+	public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyWebinarGenPage();
 	}
 
-	public Future<Void> promiseDeepCompanyWebinarGenPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage() {
+		Promise<CompanyWebinarGenPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyWebinarGenPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -528,7 +528,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 				resultCountInit();
 				resultInit();
 				pkInit();
-				idInit();
+				solrIdInit();
 				pageUriCompanyWebinarInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -543,7 +543,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyWebinarGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyWebinarGenPage(siteRequest_);
 	}
 
@@ -593,8 +593,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 				return oCompanyWebinarGenPage.result;
 			case "pk":
 				return oCompanyWebinarGenPage.pk;
-			case "id":
-				return oCompanyWebinarGenPage.id;
+			case "solrId":
+				return oCompanyWebinarGenPage.solrId;
 			case "pageUriCompanyWebinar":
 				return oCompanyWebinarGenPage.pageUriCompanyWebinar;
 			default:
@@ -642,8 +642,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 			return CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSetPk(siteRequest_, o);
-		case "id":
-			return CompanyWebinarGenPage.staticSetId(siteRequest_, o);
+		case "solrId":
+			return CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o);
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o);
 			default:
@@ -666,8 +666,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 			return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchPk(siteRequest_, (Long)o);
-		case "id":
-			return CompanyWebinarGenPage.staticSearchId(siteRequest_, (String)o);
+		case "solrId":
+			return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, (String)o);
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, (String)o);
 			default:
@@ -690,8 +690,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 			return CompanyWebinarGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchStrPk(siteRequest_, (Long)o);
-		case "id":
-			return CompanyWebinarGenPage.staticSearchStrId(siteRequest_, (String)o);
+		case "solrId":
+			return CompanyWebinarGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchStrPageUriCompanyWebinar(siteRequest_, (String)o);
 			default:
@@ -714,8 +714,8 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 			return CompanyWebinarGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return CompanyWebinarGenPage.staticSearchFqPk(siteRequest_, o);
-		case "id":
-			return CompanyWebinarGenPage.staticSearchFqId(siteRequest_, o);
+		case "solrId":
+			return CompanyWebinarGenPage.staticSearchFqSolrId(siteRequest_, o);
 		case "pageUriCompanyWebinar":
 			return CompanyWebinarGenPage.staticSearchFqPageUriCompanyWebinar(siteRequest_, o);
 			default:
@@ -739,7 +739,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 	public static final String VAR_resultCount = "resultCount";
 	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
-	public static final String VAR_id = "id";
+	public static final String VAR_solrId = "solrId";
 	public static final String VAR_pageUriCompanyWebinar = "pageUriCompanyWebinar";
 
 	public static final String DISPLAY_NAME_searchListCompanyWebinar_ = "";
@@ -747,8 +747,43 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 	public static final String DISPLAY_NAME_resultCount = "";
 	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
-	public static final String DISPLAY_NAME_id = "";
+	public static final String DISPLAY_NAME_solrId = "";
 	public static final String DISPLAY_NAME_pageUriCompanyWebinar = "";
+
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
@@ -765,12 +800,89 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
-		case VAR_id:
-			return DISPLAY_NAME_id;
+		case VAR_solrId:
+			return DISPLAY_NAME_solrId;
 		case VAR_pageUriCompanyWebinar:
 			return DISPLAY_NAME_pageUriCompanyWebinar;
 		default:
 			return PageLayout.displayNamePageLayout(var);
+		}
+	}
+
+	public static String descriptionCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.descriptionPageLayout(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyWebinarGenPage(String var) {
+		switch(var) {
+		case VAR_searchListCompanyWebinar_:
+			return "SearchList";
+		case VAR_listCompanyWebinar:
+			return "JsonArray";
+		case VAR_resultCount:
+			return "Integer";
+		case VAR_result:
+			return "CompanyWebinar";
+		case VAR_pk:
+			return "Long";
+		case VAR_solrId:
+			return "String";
+		case VAR_pageUriCompanyWebinar:
+			return "String";
+			default:
+				return PageLayout.classSimpleNamePageLayout(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmColumnPageLayout(var);
+		}
+	}
+
+	public static Integer htmRowCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmRowPageLayout(var);
+		}
+	}
+
+	public static Integer htmCellCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmCellPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMinPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMaxPageLayout(var);
+		}
+	}
+
+	public static Integer maxCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.maxPageLayout(var);
+		}
+	}
+
+	public static Integer minCompanyWebinarGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.minPageLayout(var);
 		}
 	}
 }

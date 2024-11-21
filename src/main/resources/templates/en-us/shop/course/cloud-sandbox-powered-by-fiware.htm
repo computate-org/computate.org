@@ -1,16 +1,13 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta name="site:pageId" content="cloud-sandbox-powered-by-fiware"/>
-    <meta name="site:uri" content="/en-us/course/{{ pageId }}"/>
-    <meta name="site:userUri" content="/en-us/user/course/{{ pageId }}"/>
-    <meta name="site:storeUrl" content="https://store.computate.org/product/cloud-sandbox-powered-by-fiware/14"/>
-    <meta name="site:downloadUri" content="/download/en-us/course/{{ pageId }}"/>
-    <meta name="site:emailTemplate" content="/en-us/email/order-details.htm"/>
-    <meta name="site:name" content="Cloud Sandbox powered by FIWARE"/>
-    <meta name="site:title" content="{{ name }}"/>
-    <meta name="site:description" content="Free course for configuring IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a Red Hat OpenShift Developer Sandbox"/>
-    <meta name="site:courseNum" content="1"/>
-    <meta name="site:price" content="0.00"/>
+    <meta name="result.pageId" content="{{ result.shortFileName }}"/>
+    <meta name="result.storeUrl" content="https://store.computate.org/product/{{ result.pageId }}/14"/>
+    <meta name="result.downloadUri" content="/download/en-us/course/{{ pageId }}"/>
+    <meta name="result.emailTemplate" content="/en-us/email/order-details.htm"/>
+    <meta name="result.name" content="Cloud Sandbox powered by FIWARE"/>
+    <meta name="result.description" content="Free course for configuring IoT services and Smart Data Models with a FIWARE IoT Agent, Context Broker, and other event-driven microservices in a Red Hat OpenShift Developer Sandbox"/>
+    <meta name="result.courseNum" content="1"/>
+    <meta name="result.price" content="0.00"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 {% endblock htmStylePageLayout %}

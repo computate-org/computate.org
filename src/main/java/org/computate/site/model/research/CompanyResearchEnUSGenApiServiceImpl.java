@@ -485,7 +485,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public Future<CompanyResearch> patchCompanyResearchFuture(CompanyResearch o, Boolean inheritPk) {
+	public Future<CompanyResearch> patchCompanyResearchFuture(CompanyResearch o, Boolean pageId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<CompanyResearch> promise = Promise.promise();
 
@@ -676,7 +676,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public Future<CompanyResearch> postCompanyResearchFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<CompanyResearch> postCompanyResearchFuture(SiteRequest siteRequest, Boolean pageId) {
 		Promise<CompanyResearch> promise = Promise.promise();
 
 		try {
@@ -880,9 +880,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyResearch.VAR_id)).orElse(body.getString(CompanyResearch.VAR_id));
-				body.put("inheritPk", inheritPk);
-				body.put("inheritPk", body.getValue("id"));
+				String pageId = Optional.ofNullable(body.getString(CompanyResearch.VAR_pageId)).orElse(body.getString(CompanyResearch.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -892,7 +890,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				searchList.q("*:*");
 				searchList.setC(CompanyResearch.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -928,13 +926,13 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -944,7 +942,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								}
 								siteRequest.setJsonObject(body2);
 								patchCompanyResearchFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyResearch {} succeeded, modified CompanyResearch. ", body.getValue(CompanyResearch.VAR_id));
+									LOG.debug("Import CompanyResearch {} succeeded, modified CompanyResearch. ", body.getValue(CompanyResearch.VAR_pageId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportCompanyResearchFuture failed. "), ex);
@@ -955,7 +953,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 						} else {
 							postCompanyResearchFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyResearch {} succeeded, created new CompanyResearch. ", body.getValue(CompanyResearch.VAR_id));
+								LOG.debug("Import CompanyResearch {} succeeded, created new CompanyResearch. ", body.getValue(CompanyResearch.VAR_pageId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportCompanyResearchFuture failed. "), ex);
@@ -1059,7 +1057,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateSearchPageCompanyResearch(ServiceRequest serviceRequest) {
-		return "en-us/search/research/CompanyResearchSearch.htm";
+		return "en-us/search/research/CompanyResearchSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyResearch(SearchList<CompanyResearch> listCompanyResearch) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1231,7 +1229,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateEditPageCompanyResearch(ServiceRequest serviceRequest) {
-		return "en-us/edit/research/CompanyResearchEdit.htm";
+		return "en-us/edit/research/CompanyResearchEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageCompanyResearch(SearchList<CompanyResearch> listCompanyResearch) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1350,7 +1348,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateDisplayPageCompanyResearch(ServiceRequest serviceRequest) {
-		return String.format("en-us/shop/research/CompanyResearchDisplayPage.htm", serviceRequest.getExtra().getString("uri").substring(1));
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
 	}
 	public Future<ServiceResponse> response200DisplayPageCompanyResearch(SearchList<CompanyResearch> listCompanyResearch) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1534,11 +1532,9 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
+			if(pageId != null) {
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
@@ -1680,7 +1676,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchCompanyResearch2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -1830,7 +1826,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1857,6 +1853,44 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			});
 		} catch(Exception ex) {
 			LOG.error(String.format("unindexCompanyResearch failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			CompanyResearch page = new CompanyResearch();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(CompanyResearch.VAR_created, CompanyResearch.staticSetCreated(siteRequest2, (String)result.get(CompanyResearch.VAR_created)));
+			page.persistForClass(CompanyResearch.VAR_archived, CompanyResearch.staticSetArchived(siteRequest2, (String)result.get(CompanyResearch.VAR_archived)));
+			page.persistForClass(CompanyResearch.VAR_title, CompanyResearch.staticSetTitle(siteRequest2, (String)result.get(CompanyResearch.VAR_title)));
+			page.persistForClass(CompanyResearch.VAR_displayPage, CompanyResearch.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyResearch.VAR_displayPage)));
+			page.persistForClass(CompanyResearch.VAR_solrId, CompanyResearch.staticSetSolrId(siteRequest2, (String)result.get(CompanyResearch.VAR_solrId)));
+			page.persistForClass(CompanyResearch.VAR_name, CompanyResearch.staticSetName(siteRequest2, (String)result.get(CompanyResearch.VAR_name)));
+			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, (String)result.get(CompanyResearch.VAR_description)));
+			page.persistForClass(CompanyResearch.VAR_pageId, CompanyResearch.staticSetPageId(siteRequest2, (String)result.get(CompanyResearch.VAR_pageId)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

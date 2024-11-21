@@ -465,13 +465,13 @@ public class CompanyServiceGenPage extends CompanyServiceGenPageGen<PageLayout> 
    * Initialized: false
   **/
   protected void _result(Wrap<CompanyService> w) {
-    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("id")).orElse(null) != null)
+    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
       w.o(searchListCompanyService_.get(0));
   }
 
-  protected void _id(Wrap<String> w) {
+  protected void _solrId(Wrap<String> w) {
     if(result != null)
-      w.o(result.getId());
+      w.o(result.getSolrId());
   }
 
   @Override
@@ -486,8 +486,8 @@ public class CompanyServiceGenPage extends CompanyServiceGenPageGen<PageLayout> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getObjectTitle() != null)
-      c.o(result.getObjectTitle());
+    if(result != null && result.getTitle() != null)
+      c.o(result.getTitle());
     else if(result != null)
       c.o("services");
     else if(searchListCompanyService_ == null || resultCount == 0)

@@ -28,8 +28,8 @@ import io.vertx.core.json.JsonObject;
  * Icon: <i class="fa-solid fa-tower-cell"></i>
  * 
  * SearchPageUri: /en-us/search/iot-service
- * EditPageUri: /en-us/edit/iot-service/{objectId}
- * DisplayPageUri: /en-us/shop/iot-service/{objectId}
+ * EditPageUri: /en-us/edit/iot-service/{pageId}
+ * DisplayPageUri: /en-us/shop/iot-service/{pageId}
  * ApiUri: /en-us/api/iot-service
  * ApiMethod:
  *   Search:
@@ -174,95 +174,15 @@ public class IotService extends IotServiceGen<BaseModel> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRowTitle: page details
-	 * HtmRow: 7
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
 	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
+	 * VarId: true
 	 */
 	protected void _pageId(Wrap<String> w) {
 		w.o(toId(String.format("%s-%s-%s", entityType, ngsildTenant, ngsildPath)));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: resource URI
-	 * Description: The resource relative URI for this page. 
-	 */
-	protected void _resourceUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: template URI
-	 * Description: The template relative URI for this page. 
-	 */
-	protected void _templateUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 7
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: URI
-	 * Description: The relative URI for this page. 
-	 */
-	protected void _uri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 8
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: URL
-	 * Description: The URL for this page. 
-	 */
-	protected void _url(Wrap<String> w) {
-		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: title
-	 * Description: The title of this page. 
-	 * UrlVar: pageUrlId
-	 */
-	protected void _title(Wrap<String> w) {
-		w.o(String.format("%s entities in %s tenant and %s path", entityType, ngsildTenant, ngsildPath));
-	}
-
-	@Override
-	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s — %s", IotService_NameAdjectiveSingular_enUS, title));
-	}
-
-	@Override
-	protected void _objectId(Wrap<String> w) {
-		w.o(pageId);
-	}
-
-	@Override
-	protected void _id(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
-	}
-
-	@Override
-	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
 	}
 }

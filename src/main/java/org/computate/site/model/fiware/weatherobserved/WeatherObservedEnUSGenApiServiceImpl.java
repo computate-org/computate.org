@@ -588,7 +588,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public Future<WeatherObserved> patchWeatherObservedFuture(WeatherObserved o, Boolean inheritPk) {
+	public Future<WeatherObserved> patchWeatherObservedFuture(WeatherObserved o, Boolean entityId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<WeatherObserved> promise = Promise.promise();
 
@@ -598,7 +598,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			pgPool.withTransaction(sqlConnection -> {
 				siteRequest.setSqlConnection(sqlConnection);
 				varsWeatherObserved(siteRequest).onSuccess(a -> {
-					sqlPATCHWeatherObserved(o, inheritPk).onSuccess(weatherObserved -> {
+					sqlPATCHWeatherObserved(o, entityId).onSuccess(weatherObserved -> {
 						persistWeatherObserved(weatherObserved, true).onSuccess(c -> {
 							relateWeatherObserved(weatherObserved).onSuccess(d -> {
 								indexWeatherObserved(weatherObserved).onSuccess(o2 -> {
@@ -652,7 +652,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return promise.future();
 	}
 
-	public Future<WeatherObserved> sqlPATCHWeatherObserved(WeatherObserved o, Boolean inheritPk) {
+	public Future<WeatherObserved> sqlPATCHWeatherObserved(WeatherObserved o, Boolean entityId) {
 		Promise<WeatherObserved> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -673,14 +673,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
 					case "setCreated":
 							o2.setCreated(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -713,125 +705,21 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlUserKey());
 						break;
-					case "setName":
-							o2.setName(jsonObject.getString(entityVar));
+					case "setTitle":
+							o2.setTitle(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_name + "=$" + num);
+							bSql.append(WeatherObserved.VAR_title + "=$" + num);
 							num++;
-							bParams.add(o2.sqlName());
+							bParams.add(o2.sqlTitle());
 						break;
-					case "setDescription":
-							o2.setDescription(jsonObject.getString(entityVar));
+					case "setDisplayPage":
+							o2.setDisplayPage(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_description + "=$" + num);
+							bSql.append(WeatherObserved.VAR_displayPage + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDescription());
-						break;
-					case "setAddress":
-							o2.setAddress(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_address + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAddress());
-						break;
-					case "setAlternateName":
-							o2.setAlternateName(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAlternateName());
-						break;
-					case "setLocation":
-							o2.setLocation(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_location + "=$" + num);
-							num++;
-							bParams.add(o2.sqlLocation());
-						break;
-					case "setAreaServed":
-							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-							num++;
-							bParams.add(o2.sqlAreaServed());
-						break;
-					case "setDataProvider":
-							o2.setDataProvider(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDataProvider());
-						break;
-					case "setDateCreated":
-							o2.setDateCreated(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDateCreated());
-						break;
-					case "setDateModified":
-							o2.setDateModified(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDateModified());
-						break;
-					case "setDateObserved":
-							o2.setDateObserved(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDateObserved());
-						break;
-					case "setOwner":
-							o2.setOwner(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-							num++;
-							bParams.add(o2.sqlOwner());
-						break;
-					case "setRefDevice":
-							o2.setRefDevice(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRefDevice());
-						break;
-					case "setRefPointOfInterest":
-							o2.setRefPointOfInterest(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
-							num++;
-							bParams.add(o2.sqlRefPointOfInterest());
-						break;
-					case "setSource":
-							o2.setSource(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_source + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSource());
-						break;
-					case "setSeeAlso":
-							o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSeeAlso());
+							bParams.add(o2.sqlDisplayPage());
 						break;
 					case "setAirQualityIndex":
 							o2.setAirQualityIndex(jsonObject.getString(entityVar));
@@ -1089,6 +977,126 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							num++;
 							bParams.add(o2.sqlNgsildContext());
 						break;
+					case "setName":
+							o2.setName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_name + "=$" + num);
+							num++;
+							bParams.add(o2.sqlName());
+						break;
+					case "setDescription":
+							o2.setDescription(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_description + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDescription());
+						break;
+					case "setAddress":
+							o2.setAddress(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_address + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAddress());
+						break;
+					case "setAlternateName":
+							o2.setAlternateName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAlternateName());
+						break;
+					case "setLocation":
+							o2.setLocation(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_location + "=$" + num);
+							num++;
+							bParams.add(o2.sqlLocation());
+						break;
+					case "setAreaServed":
+							o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+							num++;
+							bParams.add(o2.sqlAreaServed());
+						break;
+					case "setDataProvider":
+							o2.setDataProvider(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDataProvider());
+						break;
+					case "setDateCreated":
+							o2.setDateCreated(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDateCreated());
+						break;
+					case "setDateModified":
+							o2.setDateModified(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDateModified());
+						break;
+					case "setOwner":
+							o2.setOwner(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_owner + "=$" + num);
+							num++;
+							bParams.add(o2.sqlOwner());
+						break;
+					case "setRefPointOfInterest":
+							o2.setRefPointOfInterest(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
+							num++;
+							bParams.add(o2.sqlRefPointOfInterest());
+						break;
+					case "setDateObserved":
+							o2.setDateObserved(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDateObserved());
+						break;
+					case "setRefDevice":
+							o2.setRefDevice(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
+							num++;
+							bParams.add(o2.sqlRefDevice());
+						break;
+					case "setSource":
+							o2.setSource(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_source + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSource());
+						break;
+					case "setSeeAlso":
+							o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSeeAlso());
+						break;
 				}
 			}
 			bSql.append(" WHERE pk=$" + num);
@@ -1298,7 +1306,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public Future<WeatherObserved> postWeatherObservedFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<WeatherObserved> postWeatherObservedFuture(SiteRequest siteRequest, Boolean entityId) {
 		Promise<WeatherObserved> promise = Promise.promise();
 
 		try {
@@ -1307,7 +1315,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				siteRequest.setSqlConnection(sqlConnection);
 				varsWeatherObserved(siteRequest).onSuccess(a -> {
 					createWeatherObserved(siteRequest).onSuccess(weatherObserved -> {
-						sqlPOSTWeatherObserved(weatherObserved, inheritPk).onSuccess(b -> {
+						sqlPOSTWeatherObserved(weatherObserved, entityId).onSuccess(b -> {
 							persistWeatherObserved(weatherObserved, false).onSuccess(c -> {
 								relateWeatherObserved(weatherObserved).onSuccess(d -> {
 									indexWeatherObserved(weatherObserved).onSuccess(o2 -> {
@@ -1367,7 +1375,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		return promise.future();
 	}
 
-	public Future<WeatherObserved> sqlPOSTWeatherObserved(WeatherObserved o, Boolean inheritPk) {
+	public Future<WeatherObserved> sqlPOSTWeatherObserved(WeatherObserved o, Boolean entityId) {
 		Promise<WeatherObserved> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -1406,15 +1414,6 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case WeatherObserved.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
 					case WeatherObserved.VAR_created:
 						o2.setCreated(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1451,140 +1450,23 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						num++;
 						bParams.add(o2.sqlUserKey());
 						break;
-					case WeatherObserved.VAR_name:
-						o2.setName(jsonObject.getString(entityVar));
+					case WeatherObserved.VAR_title:
+						o2.setTitle(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_name + "=$" + num);
+						bSql.append(WeatherObserved.VAR_title + "=$" + num);
 						num++;
-						bParams.add(o2.sqlName());
+						bParams.add(o2.sqlTitle());
 						break;
-					case WeatherObserved.VAR_description:
-						o2.setDescription(jsonObject.getString(entityVar));
+					case WeatherObserved.VAR_displayPage:
+						o2.setDisplayPage(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(WeatherObserved.VAR_description + "=$" + num);
+						bSql.append(WeatherObserved.VAR_displayPage + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDescription());
-						break;
-					case WeatherObserved.VAR_address:
-						o2.setAddress(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_address + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAddress());
-						break;
-					case WeatherObserved.VAR_alternateName:
-						o2.setAlternateName(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAlternateName());
-						break;
-					case WeatherObserved.VAR_location:
-						o2.setLocation(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_location + "=$" + num);
-						num++;
-						bParams.add(o2.sqlLocation());
-						break;
-					case WeatherObserved.VAR_areaServed:
-						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
-						num++;
-						bParams.add(o2.sqlAreaServed());
-						break;
-					case WeatherObserved.VAR_dataProvider:
-						o2.setDataProvider(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDataProvider());
-						break;
-					case WeatherObserved.VAR_dateCreated:
-						o2.setDateCreated(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDateCreated());
-						break;
-					case WeatherObserved.VAR_dateModified:
-						o2.setDateModified(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDateModified());
-						break;
-					case WeatherObserved.VAR_dateObserved:
-						o2.setDateObserved(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDateObserved());
-						break;
-					case WeatherObserved.VAR_owner:
-						o2.setOwner(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_owner + "=$" + num);
-						num++;
-						bParams.add(o2.sqlOwner());
-						break;
-					case WeatherObserved.VAR_refDevice:
-						o2.setRefDevice(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRefDevice());
-						break;
-					case WeatherObserved.VAR_refPointOfInterest:
-						o2.setRefPointOfInterest(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
-						num++;
-						bParams.add(o2.sqlRefPointOfInterest());
-						break;
-					case WeatherObserved.VAR_source:
-						o2.setSource(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_source + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSource());
-						break;
-					case WeatherObserved.VAR_seeAlso:
-						o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSeeAlso());
+						bParams.add(o2.sqlDisplayPage());
 						break;
 					case WeatherObserved.VAR_airQualityIndex:
 						o2.setAirQualityIndex(jsonObject.getString(entityVar));
@@ -1873,6 +1755,141 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						bSql.append(WeatherObserved.VAR_ngsildContext + "=$" + num);
 						num++;
 						bParams.add(o2.sqlNgsildContext());
+						break;
+					case WeatherObserved.VAR_name:
+						o2.setName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_name + "=$" + num);
+						num++;
+						bParams.add(o2.sqlName());
+						break;
+					case WeatherObserved.VAR_description:
+						o2.setDescription(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_description + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDescription());
+						break;
+					case WeatherObserved.VAR_address:
+						o2.setAddress(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_address + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAddress());
+						break;
+					case WeatherObserved.VAR_alternateName:
+						o2.setAlternateName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_alternateName + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAlternateName());
+						break;
+					case WeatherObserved.VAR_location:
+						o2.setLocation(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_location + "=$" + num);
+						num++;
+						bParams.add(o2.sqlLocation());
+						break;
+					case WeatherObserved.VAR_areaServed:
+						o2.setAreaServed(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_areaServed + "=$" + num);
+						num++;
+						bParams.add(o2.sqlAreaServed());
+						break;
+					case WeatherObserved.VAR_dataProvider:
+						o2.setDataProvider(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_dataProvider + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDataProvider());
+						break;
+					case WeatherObserved.VAR_dateCreated:
+						o2.setDateCreated(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_dateCreated + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDateCreated());
+						break;
+					case WeatherObserved.VAR_dateModified:
+						o2.setDateModified(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_dateModified + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDateModified());
+						break;
+					case WeatherObserved.VAR_owner:
+						o2.setOwner(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_owner + "=$" + num);
+						num++;
+						bParams.add(o2.sqlOwner());
+						break;
+					case WeatherObserved.VAR_refPointOfInterest:
+						o2.setRefPointOfInterest(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_refPointOfInterest + "=$" + num);
+						num++;
+						bParams.add(o2.sqlRefPointOfInterest());
+						break;
+					case WeatherObserved.VAR_dateObserved:
+						o2.setDateObserved(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_dateObserved + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDateObserved());
+						break;
+					case WeatherObserved.VAR_refDevice:
+						o2.setRefDevice(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_refDevice + "=$" + num);
+						num++;
+						bParams.add(o2.sqlRefDevice());
+						break;
+					case WeatherObserved.VAR_source:
+						o2.setSource(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_source + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSource());
+						break;
+					case WeatherObserved.VAR_seeAlso:
+						o2.setSeeAlso(jsonObject.getJsonObject(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(WeatherObserved.VAR_seeAlso + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSeeAlso());
 						break;
 					}
 				}
@@ -2421,8 +2438,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(WeatherObserved.VAR_pk)).orElse(body.getString(WeatherObserved.VAR_id));
-				body.put("inheritPk", inheritPk);
+				String entityId = Optional.ofNullable(body.getString(WeatherObserved.VAR_entityId)).orElse(body.getString(WeatherObserved.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -2432,7 +2448,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				searchList.q("*:*");
 				searchList.setC(WeatherObserved.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("entityId_docvalues_string:" + SearchTool.escapeQueryChars(entityId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -2468,13 +2484,13 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "entityId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "pk", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "entityId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -2485,7 +2501,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								}
 								siteRequest.setJsonObject(body2);
 								patchWeatherObservedFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import WeatherObserved {} succeeded, modified WeatherObserved. ", body.getValue(WeatherObserved.VAR_pk));
+									LOG.debug("Import WeatherObserved {} succeeded, modified WeatherObserved. ", body.getValue(WeatherObserved.VAR_entityId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
@@ -2496,7 +2512,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 						} else {
 							postWeatherObservedFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import WeatherObserved {} succeeded, created new WeatherObserved. ", body.getValue(WeatherObserved.VAR_pk));
+								LOG.debug("Import WeatherObserved {} succeeded, created new WeatherObserved. ", body.getValue(WeatherObserved.VAR_entityId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportWeatherObservedFuture failed. "), ex);
@@ -2653,7 +2669,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateSearchPageWeatherObserved(ServiceRequest serviceRequest) {
-		return "en-us/search/weather-observed/WeatherObservedSearch.htm";
+		return "en-us/search/weather-observed/WeatherObservedSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2827,7 +2843,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	public String templateEditPageWeatherObserved(ServiceRequest serviceRequest) {
-		return "en-us/edit/weather-observed/WeatherObservedEdit.htm";
+		return "en-us/edit/weather-observed/WeatherObservedEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageWeatherObserved(SearchList<WeatherObserved> listWeatherObserved) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -3029,11 +3045,11 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(pk_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String entityId = serviceRequest.getParams().getJsonObject("path").getString("entityId");
+			if(entityId != null && NumberUtils.isCreatable(entityId)) {
+				searchList.fq("(_docvalues_string:" + SearchTool.escapeQueryChars(entityId) + " OR entityId_docvalues_string:" + SearchTool.escapeQueryChars(entityId) + ")");
+			} else if(entityId != null) {
+				searchList.fq("entityId_docvalues_string:" + SearchTool.escapeQueryChars(entityId));
 			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
@@ -3175,7 +3191,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchWeatherObserved2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -3336,7 +3352,7 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pk_docvalues_long:%s)", o.obtainForClass("pk"));
+				String query = String.format("filter(entityId_docvalues_string:%s)", o.obtainForClass("entityId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -3424,6 +3440,89 @@ public class WeatherObservedEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			}
 		} catch(Exception ex) {
 			LOG.error(String.format("refreshWeatherObserved failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			WeatherObserved page = new WeatherObserved();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(WeatherObserved.VAR_created, WeatherObserved.staticSetCreated(siteRequest2, (String)result.get(WeatherObserved.VAR_created)));
+			page.persistForClass(WeatherObserved.VAR_archived, WeatherObserved.staticSetArchived(siteRequest2, (String)result.get(WeatherObserved.VAR_archived)));
+			page.persistForClass(WeatherObserved.VAR_sessionId, WeatherObserved.staticSetSessionId(siteRequest2, (String)result.get(WeatherObserved.VAR_sessionId)));
+			page.persistForClass(WeatherObserved.VAR_userKey, WeatherObserved.staticSetUserKey(siteRequest2, (String)result.get(WeatherObserved.VAR_userKey)));
+			page.persistForClass(WeatherObserved.VAR_title, WeatherObserved.staticSetTitle(siteRequest2, (String)result.get(WeatherObserved.VAR_title)));
+			page.persistForClass(WeatherObserved.VAR_displayPage, WeatherObserved.staticSetDisplayPage(siteRequest2, (String)result.get(WeatherObserved.VAR_displayPage)));
+			page.persistForClass(WeatherObserved.VAR_airQualityIndex, WeatherObserved.staticSetAirQualityIndex(siteRequest2, (String)result.get(WeatherObserved.VAR_airQualityIndex)));
+			page.persistForClass(WeatherObserved.VAR_airQualityIndexForecast, WeatherObserved.staticSetAirQualityIndexForecast(siteRequest2, (String)result.get(WeatherObserved.VAR_airQualityIndexForecast)));
+			page.persistForClass(WeatherObserved.VAR_aqiMajorPollutant, WeatherObserved.staticSetAqiMajorPollutant(siteRequest2, (String)result.get(WeatherObserved.VAR_aqiMajorPollutant)));
+			page.persistForClass(WeatherObserved.VAR_aqiMajorPollutantForecast, WeatherObserved.staticSetAqiMajorPollutantForecast(siteRequest2, (String)result.get(WeatherObserved.VAR_aqiMajorPollutantForecast)));
+			page.persistForClass(WeatherObserved.VAR_atmosphericPressure, WeatherObserved.staticSetAtmosphericPressure(siteRequest2, (String)result.get(WeatherObserved.VAR_atmosphericPressure)));
+			page.persistForClass(WeatherObserved.VAR_pressureTendency, WeatherObserved.staticSetPressureTendency(siteRequest2, (String)result.get(WeatherObserved.VAR_pressureTendency)));
+			page.persistForClass(WeatherObserved.VAR_gustSpeed, WeatherObserved.staticSetGustSpeed(siteRequest2, (String)result.get(WeatherObserved.VAR_gustSpeed)));
+			page.persistForClass(WeatherObserved.VAR_windDirection, WeatherObserved.staticSetWindDirection(siteRequest2, (String)result.get(WeatherObserved.VAR_windDirection)));
+			page.persistForClass(WeatherObserved.VAR_windSpeed, WeatherObserved.staticSetWindSpeed(siteRequest2, (String)result.get(WeatherObserved.VAR_windSpeed)));
+			page.persistForClass(WeatherObserved.VAR_precipitation, WeatherObserved.staticSetPrecipitation(siteRequest2, (String)result.get(WeatherObserved.VAR_precipitation)));
+			page.persistForClass(WeatherObserved.VAR_precipitationForecast, WeatherObserved.staticSetPrecipitationForecast(siteRequest2, (String)result.get(WeatherObserved.VAR_precipitationForecast)));
+			page.persistForClass(WeatherObserved.VAR_relativeHumidity, WeatherObserved.staticSetRelativeHumidity(siteRequest2, (String)result.get(WeatherObserved.VAR_relativeHumidity)));
+			page.persistForClass(WeatherObserved.VAR_relativeHumidityForecast, WeatherObserved.staticSetRelativeHumidityForecast(siteRequest2, (String)result.get(WeatherObserved.VAR_relativeHumidityForecast)));
+			page.persistForClass(WeatherObserved.VAR_snowHeight, WeatherObserved.staticSetSnowHeight(siteRequest2, (String)result.get(WeatherObserved.VAR_snowHeight)));
+			page.persistForClass(WeatherObserved.VAR_airTemperatureForecast, WeatherObserved.staticSetAirTemperatureForecast(siteRequest2, (String)result.get(WeatherObserved.VAR_airTemperatureForecast)));
+			page.persistForClass(WeatherObserved.VAR_airTemperatureTSA, WeatherObserved.staticSetAirTemperatureTSA(siteRequest2, (String)result.get(WeatherObserved.VAR_airTemperatureTSA)));
+			page.persistForClass(WeatherObserved.VAR_feelsLikeTemperature, WeatherObserved.staticSetFeelsLikeTemperature(siteRequest2, (String)result.get(WeatherObserved.VAR_feelsLikeTemperature)));
+			page.persistForClass(WeatherObserved.VAR_temperature, WeatherObserved.staticSetTemperature(siteRequest2, (String)result.get(WeatherObserved.VAR_temperature)));
+			page.persistForClass(WeatherObserved.VAR_solarRadiation, WeatherObserved.staticSetSolarRadiation(siteRequest2, (String)result.get(WeatherObserved.VAR_solarRadiation)));
+			page.persistForClass(WeatherObserved.VAR_streamGauge, WeatherObserved.staticSetStreamGauge(siteRequest2, (String)result.get(WeatherObserved.VAR_streamGauge)));
+			page.persistForClass(WeatherObserved.VAR_uVIndexMax, WeatherObserved.staticSetUVIndexMax(siteRequest2, (String)result.get(WeatherObserved.VAR_uVIndexMax)));
+			page.persistForClass(WeatherObserved.VAR_visibility, WeatherObserved.staticSetVisibility(siteRequest2, (String)result.get(WeatherObserved.VAR_visibility)));
+			page.persistForClass(WeatherObserved.VAR_weatherType, WeatherObserved.staticSetWeatherType(siteRequest2, (String)result.get(WeatherObserved.VAR_weatherType)));
+			page.persistForClass(WeatherObserved.VAR_dewPoint, WeatherObserved.staticSetDewPoint(siteRequest2, (String)result.get(WeatherObserved.VAR_dewPoint)));
+			page.persistForClass(WeatherObserved.VAR_diffuseIrradiation, WeatherObserved.staticSetDiffuseIrradiation(siteRequest2, (String)result.get(WeatherObserved.VAR_diffuseIrradiation)));
+			page.persistForClass(WeatherObserved.VAR_directIrradiation, WeatherObserved.staticSetDirectIrradiation(siteRequest2, (String)result.get(WeatherObserved.VAR_directIrradiation)));
+			page.persistForClass(WeatherObserved.VAR_illuminance, WeatherObserved.staticSetIlluminance(siteRequest2, (String)result.get(WeatherObserved.VAR_illuminance)));
+			page.persistForClass(WeatherObserved.VAR_ngsildTenant, WeatherObserved.staticSetNgsildTenant(siteRequest2, (String)result.get(WeatherObserved.VAR_ngsildTenant)));
+			page.persistForClass(WeatherObserved.VAR_ngsildPath, WeatherObserved.staticSetNgsildPath(siteRequest2, (String)result.get(WeatherObserved.VAR_ngsildPath)));
+			page.persistForClass(WeatherObserved.VAR_ngsildData, WeatherObserved.staticSetNgsildData(siteRequest2, (String)result.get(WeatherObserved.VAR_ngsildData)));
+			page.persistForClass(WeatherObserved.VAR_entityId, WeatherObserved.staticSetEntityId(siteRequest2, (String)result.get(WeatherObserved.VAR_entityId)));
+			page.persistForClass(WeatherObserved.VAR_ngsildContext, WeatherObserved.staticSetNgsildContext(siteRequest2, (String)result.get(WeatherObserved.VAR_ngsildContext)));
+			page.persistForClass(WeatherObserved.VAR_name, WeatherObserved.staticSetName(siteRequest2, (String)result.get(WeatherObserved.VAR_name)));
+			page.persistForClass(WeatherObserved.VAR_description, WeatherObserved.staticSetDescription(siteRequest2, (String)result.get(WeatherObserved.VAR_description)));
+			page.persistForClass(WeatherObserved.VAR_address, WeatherObserved.staticSetAddress(siteRequest2, (String)result.get(WeatherObserved.VAR_address)));
+			page.persistForClass(WeatherObserved.VAR_alternateName, WeatherObserved.staticSetAlternateName(siteRequest2, (String)result.get(WeatherObserved.VAR_alternateName)));
+			page.persistForClass(WeatherObserved.VAR_location, WeatherObserved.staticSetLocation(siteRequest2, (String)result.get(WeatherObserved.VAR_location)));
+			page.persistForClass(WeatherObserved.VAR_areaServed, WeatherObserved.staticSetAreaServed(siteRequest2, (String)result.get(WeatherObserved.VAR_areaServed)));
+			page.persistForClass(WeatherObserved.VAR_dataProvider, WeatherObserved.staticSetDataProvider(siteRequest2, (String)result.get(WeatherObserved.VAR_dataProvider)));
+			page.persistForClass(WeatherObserved.VAR_dateCreated, WeatherObserved.staticSetDateCreated(siteRequest2, (String)result.get(WeatherObserved.VAR_dateCreated)));
+			page.persistForClass(WeatherObserved.VAR_dateModified, WeatherObserved.staticSetDateModified(siteRequest2, (String)result.get(WeatherObserved.VAR_dateModified)));
+			page.persistForClass(WeatherObserved.VAR_owner, WeatherObserved.staticSetOwner(siteRequest2, (String)result.get(WeatherObserved.VAR_owner)));
+			page.persistForClass(WeatherObserved.VAR_refPointOfInterest, WeatherObserved.staticSetRefPointOfInterest(siteRequest2, (String)result.get(WeatherObserved.VAR_refPointOfInterest)));
+			page.persistForClass(WeatherObserved.VAR_dateObserved, WeatherObserved.staticSetDateObserved(siteRequest2, (String)result.get(WeatherObserved.VAR_dateObserved)));
+			page.persistForClass(WeatherObserved.VAR_refDevice, WeatherObserved.staticSetRefDevice(siteRequest2, (String)result.get(WeatherObserved.VAR_refDevice)));
+			page.persistForClass(WeatherObserved.VAR_source, WeatherObserved.staticSetSource(siteRequest2, (String)result.get(WeatherObserved.VAR_source)));
+			page.persistForClass(WeatherObserved.VAR_seeAlso, WeatherObserved.staticSetSeeAlso(siteRequest2, (String)result.get(WeatherObserved.VAR_seeAlso)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

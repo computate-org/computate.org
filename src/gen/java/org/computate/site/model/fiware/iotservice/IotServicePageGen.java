@@ -117,18 +117,18 @@ public abstract class IotServicePageGen<DEV> extends IotServiceGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepIotServicePage(SiteRequest siteRequest_) {
+	public Future<IotServicePageGen<DEV>> promiseDeepIotServicePage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepIotServicePage();
 	}
 
-	public Future<Void> promiseDeepIotServicePage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<IotServicePageGen<DEV>> promiseDeepIotServicePage() {
+		Promise<IotServicePageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseIotServicePage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepIotServiceGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class IotServicePageGen<DEV> extends IotServiceGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends IotServicePageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepIotServicePage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class IotServicePageGen<DEV> extends IotServiceGenPage {
 	public static final String CLASS_SIMPLE_NAME = "IotServicePage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return IotServicePage.displayNameIotServicePage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class IotServicePageGen<DEV> extends IotServiceGenPage {
 		switch(var) {
 		default:
 			return IotServiceGenPage.displayNameIotServiceGenPage(var);
+		}
+	}
+
+	public static String descriptionIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.descriptionIotServiceGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.classSimpleNameIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.htmColumnIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmRowIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.htmRowIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmCellIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.htmCellIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.lengthMinIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.lengthMaxIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer maxIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.maxIotServiceGenPage(var);
+		}
+	}
+
+	public static Integer minIotServicePage(String var) {
+		switch(var) {
+			default:
+				return IotServiceGenPage.minIotServiceGenPage(var);
 		}
 	}
 }

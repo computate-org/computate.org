@@ -1902,6 +1902,34 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_requestHeaders = "";
 	public static final String DISPLAY_NAME_requestVars = "";
 
+	public String idForClass() {
+		return null;
+	}
+
+	public String titleForClass() {
+		return null;
+	}
+
+	public String nameForClass() {
+		return null;
+	}
+
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	public String descriptionForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SiteRequest.displayNameSiteRequest(var);
 	}
@@ -1963,6 +1991,177 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return DISPLAY_NAME_requestVars;
 		default:
 			return null;
+		}
+	}
+
+	public static String descriptionSiteRequest(String var) {
+		switch(var) {
+		case VAR_config:
+			return "The site configuration variables";
+		case VAR_siteRequest_:
+			return "A reference to this site request itself";
+		case VAR_webClient:
+			return "A Vert.x web client for making HTTP REST calls";
+		case VAR_apiRequest_:
+			return "An API request object for returning information through websockets about API changes";
+		case VAR_jsonObject:
+			return "The JSON object if passed into the request";
+		case VAR_serviceRequest:
+			return "The Vert.x service request";
+		case VAR_user:
+			return "The authenticated user object";
+		case VAR_userPrincipal:
+			return "The authenticated user principal";
+		case VAR_userId:
+			return "The unique ID of the authenticated user in the SSO application";
+		case VAR_userKey:
+			return "The primary key of the user in the database";
+		case VAR_sessionId:
+			return "The session ID of the user's session";
+		case VAR_sessionIdBefore:
+			return "The session ID of the user before the user logged in";
+		case VAR_userName:
+			return "The username of the user";
+		case VAR_userLastName:
+			return "The last name of the user";
+		case VAR_userFirstName:
+			return "The first name of the user";
+		case VAR_userFullName:
+			return "The full name of the user";
+		case VAR_userEmail:
+			return "The user email";
+		case VAR_scopes:
+			return "The user auth scopes for the current request within the SSO realm";
+		case VAR_userResource:
+			return "The authenticated user's auth resource data";
+		case VAR_siteUser_:
+			return "The site user object of the authenticated user";
+		case VAR_lang:
+			return "The request language. ";
+		case VAR_requestPk:
+			return "The primary key of object of the request";
+		case VAR_requestUri:
+			return "The relative URI of the incoming request";
+		case VAR_requestMethod:
+			return "The HTTP method of the incoming request";
+		case VAR_sqlConnection:
+			return "The current SQL connection if present during the request";
+		case VAR_requestHeaders:
+			return "The request headers";
+		case VAR_requestVars:
+			return "Extra variables sent in the request with the var query parameter";
+			default:
+				return null;
+		}
+	}
+
+	public static String classSimpleNameSiteRequest(String var) {
+		switch(var) {
+		case VAR_config:
+			return "JsonObject";
+		case VAR_siteRequest_:
+			return "SiteRequest";
+		case VAR_webClient:
+			return "WebClient";
+		case VAR_apiRequest_:
+			return "ApiRequest";
+		case VAR_jsonObject:
+			return "JsonObject";
+		case VAR_serviceRequest:
+			return "ServiceRequest";
+		case VAR_user:
+			return "User";
+		case VAR_userPrincipal:
+			return "JsonObject";
+		case VAR_userId:
+			return "String";
+		case VAR_userKey:
+			return "Long";
+		case VAR_sessionId:
+			return "String";
+		case VAR_sessionIdBefore:
+			return "String";
+		case VAR_userName:
+			return "String";
+		case VAR_userLastName:
+			return "String";
+		case VAR_userFirstName:
+			return "String";
+		case VAR_userFullName:
+			return "String";
+		case VAR_userEmail:
+			return "String";
+		case VAR_scopes:
+			return "List";
+		case VAR_userResource:
+			return "JsonObject";
+		case VAR_siteUser_:
+			return "SiteUser";
+		case VAR_lang:
+			return "String";
+		case VAR_requestPk:
+			return "Long";
+		case VAR_requestUri:
+			return "String";
+		case VAR_requestMethod:
+			return "String";
+		case VAR_sqlConnection:
+			return "SqlConnection";
+		case VAR_requestHeaders:
+			return "MultiMap";
+		case VAR_requestVars:
+			return "Map";
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmColumnSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmRowSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmCellSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer lengthMinSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer lengthMaxSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer maxSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer minSiteRequest(String var) {
+		switch(var) {
+			default:
+				return null;
 		}
 	}
 }

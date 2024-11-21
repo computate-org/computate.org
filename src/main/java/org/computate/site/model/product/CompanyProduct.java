@@ -15,7 +15,6 @@ import io.vertx.pgclient.data.Point;
  * Order: 5
  * Description: See the computate products that will help you build your own data-driven platforms
  * AName: a product
- * PluralName: products
  * Icon: <i class="fa-regular fa-conveyor-belt"></i>
  * Sort.asc: productNum
  * 
@@ -33,7 +32,7 @@ import io.vertx.pgclient.data.Point;
  *   DELETE:
  *   PUTImport:
  *   SearchDownload:
- *     ApiUri: /download/product
+ *     ApiUri: /download/product{pageId}
  *     ApiMediaType200: application/zip
  *     Role: User
  * 
@@ -64,6 +63,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * HtmCell: 1
    * HtmColumn: 0
    * Facet: true
+	 * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }
@@ -78,6 +78,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * HtmCell: 2
    * HtmColumn: 1
    * Facet: true
+	 * VarDescription: true
    */
   protected void _description(Wrap<String> w) {
   }
@@ -99,35 +100,16 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
+	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
 	 * VarId: true
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(name);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: resource URI
-	 * Description: The resource relative URI for this page. 
-	 */
-	protected void _resourceUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: template URI
-	 * Description: The template relative URI for this page. 
-	 */
-	protected void _templateUri(Wrap<String> w) {
+		w.o(toId(name));
 	}
 
 	/**
@@ -145,60 +127,11 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 3
 	 * Facet: true
-	 * DisplayName: URI
-	 * Description: The relative URI for this page. 
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
 	 */
-	protected void _uri(Wrap<String> w) {
-		w.o(String.format(DisplayPage_enUS_StringFormatUri, pageId));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRowTitleOpen: Useful URLs
-	 * HtmRow: 4
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: product page
-	 * Description: Visit this product's landing page. 
-	 * Link: true
-	 */
-	protected void _url(Wrap<String> w) {
-		w.o(String.format(DisplayPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * HtmRow: 4
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: view
-	 * Description: View the project. 
-	 * Link: true
-	 * Icon: <i class="fa-solid fa-pen-to-square"></i>
-	 */
-	protected void _viewPage(Wrap<String> w) {
-		w.o(String.format(DisplayPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * HtmColumn: 3
-	 * HtmRow: 5
-	 * HtmCell: 3
-	 * Facet: true
-	 * Description: Edit the project. 
-	 * Link: true
-	 * Icon: <i class="fa-solid fa-pen-to-square"></i>
-	 */
-	protected void _editPage(Wrap<String> w) {
-		w.o(String.format(EditPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
+	protected void _storeUrl(Wrap<String> w) {
 	}
 
 	/**
@@ -217,63 +150,9 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: user URI
-	 * Description: The user relative URI for this page. 
-	 */
-	protected void _userUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: store URL
-	 * Description: The store URL for this page. 
-	 */
-	protected void _storeUrl(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: title
-	 * Description: The title of this page. 
-	 * UrlVar: pageUrlId
-	 */
-	protected void _title(Wrap<String> w) {
-		w.o(name);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
 	 * DisplayName: Product Number
 	 * Description: The product number for this page. 
 	 */
 	protected void _productNum(Wrap<Integer> w) {
-	}
-
-	@Override
-	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s — %s", CompanyProduct_NameAdjectiveSingular_enUS, title));
-	}
-
-	@Override
-	protected void _objectId(Wrap<String> w) {
-		w.o(pageId);
-	}
-
-	@Override
-	protected void _id(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
-	}
-
-	@Override
-	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
 	}
 }

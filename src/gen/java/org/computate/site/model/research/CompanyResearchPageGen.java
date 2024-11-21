@@ -117,18 +117,18 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyResearchPage(SiteRequest siteRequest_) {
+	public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyResearchPage();
 	}
 
-	public Future<Void> promiseDeepCompanyResearchPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage() {
+		Promise<CompanyResearchPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyResearchPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepCompanyResearchGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyResearchPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyResearchPage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
 	public static final String CLASS_SIMPLE_NAME = "CompanyResearchPage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyResearchPage.displayNameCompanyResearchPage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
 		switch(var) {
 		default:
 			return CompanyResearchGenPage.displayNameCompanyResearchGenPage(var);
+		}
+	}
+
+	public static String descriptionCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.descriptionCompanyResearchGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.classSimpleNameCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.htmColumnCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer htmRowCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.htmRowCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer htmCellCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.htmCellCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.lengthMinCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.lengthMaxCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer maxCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.maxCompanyResearchGenPage(var);
+		}
+	}
+
+	public static Integer minCompanyResearchPage(String var) {
+		switch(var) {
+			default:
+				return CompanyResearchGenPage.minCompanyResearchGenPage(var);
 		}
 	}
 }

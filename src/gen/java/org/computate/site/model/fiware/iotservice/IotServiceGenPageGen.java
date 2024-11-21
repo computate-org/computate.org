@@ -390,56 +390,56 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 		return IotServiceGenPage.staticSearchPk(siteRequest_, IotServiceGenPage.staticSetPk(siteRequest_, o)).toString();
 	}
 
-	////////
-	// id //
-	////////
+	////////////
+	// solrId //
+	////////////
 
 
-	/**	 The entity id
+	/**	 The entity solrId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String id;
+	protected String solrId;
 
-	/**	<br> The entity id
+	/**	<br> The entity solrId
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotServiceGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _id(Wrap<String> w);
+	protected abstract void _solrId(Wrap<String> w);
 
-	public String getId() {
-		return id;
+	public String getSolrId() {
+		return solrId;
 	}
-	public void setId(String o) {
-		this.id = IotServiceGenPage.staticSetId(siteRequest_, o);
+	public void setSolrId(String o) {
+		this.solrId = IotServiceGenPage.staticSetSolrId(siteRequest_, o);
 	}
-	public static String staticSetId(SiteRequest siteRequest_, String o) {
+	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected IotServiceGenPage idInit() {
-		Wrap<String> idWrap = new Wrap<String>().var("id");
-		if(id == null) {
-			_id(idWrap);
-			Optional.ofNullable(idWrap.getO()).ifPresent(o -> {
-				setId(o);
+	protected IotServiceGenPage solrIdInit() {
+		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+		if(solrId == null) {
+			_solrId(solrIdWrap);
+			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+				setSolrId(o);
 			});
 		}
 		return (IotServiceGenPage)this;
 	}
 
-	public static String staticSearchId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqId(SiteRequest siteRequest_, String o) {
-		return IotServiceGenPage.staticSearchId(siteRequest_, IotServiceGenPage.staticSetId(siteRequest_, o)).toString();
+	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+		return IotServiceGenPage.staticSearchSolrId(siteRequest_, IotServiceGenPage.staticSetSolrId(siteRequest_, o)).toString();
 	}
 
 	///////////////////////
@@ -498,18 +498,18 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepIotServiceGenPage(SiteRequest siteRequest_) {
+	public Future<IotServiceGenPageGen<DEV>> promiseDeepIotServiceGenPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepIotServiceGenPage();
 	}
 
-	public Future<Void> promiseDeepIotServiceGenPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<IotServiceGenPageGen<DEV>> promiseDeepIotServiceGenPage() {
+		Promise<IotServiceGenPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseIotServiceGenPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -528,7 +528,7 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 				resultCountInit();
 				resultInit();
 				pkInit();
-				idInit();
+				solrIdInit();
 				pageUriIotServiceInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -543,7 +543,7 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends IotServiceGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepIotServiceGenPage(siteRequest_);
 	}
 
@@ -593,8 +593,8 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 				return oIotServiceGenPage.result;
 			case "pk":
 				return oIotServiceGenPage.pk;
-			case "id":
-				return oIotServiceGenPage.id;
+			case "solrId":
+				return oIotServiceGenPage.solrId;
 			case "pageUriIotService":
 				return oIotServiceGenPage.pageUriIotService;
 			default:
@@ -642,8 +642,8 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 			return IotServiceGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return IotServiceGenPage.staticSetPk(siteRequest_, o);
-		case "id":
-			return IotServiceGenPage.staticSetId(siteRequest_, o);
+		case "solrId":
+			return IotServiceGenPage.staticSetSolrId(siteRequest_, o);
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSetPageUriIotService(siteRequest_, o);
 			default:
@@ -666,8 +666,8 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 			return IotServiceGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return IotServiceGenPage.staticSearchPk(siteRequest_, (Long)o);
-		case "id":
-			return IotServiceGenPage.staticSearchId(siteRequest_, (String)o);
+		case "solrId":
+			return IotServiceGenPage.staticSearchSolrId(siteRequest_, (String)o);
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchPageUriIotService(siteRequest_, (String)o);
 			default:
@@ -690,8 +690,8 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 			return IotServiceGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return IotServiceGenPage.staticSearchStrPk(siteRequest_, (Long)o);
-		case "id":
-			return IotServiceGenPage.staticSearchStrId(siteRequest_, (String)o);
+		case "solrId":
+			return IotServiceGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchStrPageUriIotService(siteRequest_, (String)o);
 			default:
@@ -714,8 +714,8 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 			return IotServiceGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return IotServiceGenPage.staticSearchFqPk(siteRequest_, o);
-		case "id":
-			return IotServiceGenPage.staticSearchFqId(siteRequest_, o);
+		case "solrId":
+			return IotServiceGenPage.staticSearchFqSolrId(siteRequest_, o);
 		case "pageUriIotService":
 			return IotServiceGenPage.staticSearchFqPageUriIotService(siteRequest_, o);
 			default:
@@ -739,7 +739,7 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 	public static final String VAR_resultCount = "resultCount";
 	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
-	public static final String VAR_id = "id";
+	public static final String VAR_solrId = "solrId";
 	public static final String VAR_pageUriIotService = "pageUriIotService";
 
 	public static final String DISPLAY_NAME_searchListIotService_ = "";
@@ -747,8 +747,43 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 	public static final String DISPLAY_NAME_resultCount = "";
 	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
-	public static final String DISPLAY_NAME_id = "";
+	public static final String DISPLAY_NAME_solrId = "";
 	public static final String DISPLAY_NAME_pageUriIotService = "";
+
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
 
 	public static String displayNameForClass(String var) {
 		return IotServiceGenPage.displayNameIotServiceGenPage(var);
@@ -765,12 +800,89 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
-		case VAR_id:
-			return DISPLAY_NAME_id;
+		case VAR_solrId:
+			return DISPLAY_NAME_solrId;
 		case VAR_pageUriIotService:
 			return DISPLAY_NAME_pageUriIotService;
 		default:
 			return PageLayout.displayNamePageLayout(var);
+		}
+	}
+
+	public static String descriptionIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.descriptionPageLayout(var);
+		}
+	}
+
+	public static String classSimpleNameIotServiceGenPage(String var) {
+		switch(var) {
+		case VAR_searchListIotService_:
+			return "SearchList";
+		case VAR_listIotService:
+			return "JsonArray";
+		case VAR_resultCount:
+			return "Integer";
+		case VAR_result:
+			return "IotService";
+		case VAR_pk:
+			return "Long";
+		case VAR_solrId:
+			return "String";
+		case VAR_pageUriIotService:
+			return "String";
+			default:
+				return PageLayout.classSimpleNamePageLayout(var);
+		}
+	}
+
+	public static Integer htmColumnIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmColumnPageLayout(var);
+		}
+	}
+
+	public static Integer htmRowIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmRowPageLayout(var);
+		}
+	}
+
+	public static Integer htmCellIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmCellPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMinIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMinPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMaxIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMaxPageLayout(var);
+		}
+	}
+
+	public static Integer maxIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.maxPageLayout(var);
+		}
+	}
+
+	public static Integer minIotServiceGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.minPageLayout(var);
 		}
 	}
 }

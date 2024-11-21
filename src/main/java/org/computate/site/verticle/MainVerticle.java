@@ -1236,67 +1236,67 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			initializeApiService(apiCompanyAbout);
 			registerApiService(CompanyAboutEnUSGenApiService.class, apiCompanyAbout, CompanyAbout.getClassApiAddress());
-			// apiCompanyAbout.configureUiResult(router, CompanyAbout.class, SiteRequest.class, "/en-us/learn/about/{objectId}");
+			// apiCompanyAbout.configureUiResult(router, CompanyAbout.class, SiteRequest.class, "/en-us/learn/about/{pageId}");
 
 			UseCaseEnUSApiServiceImpl apiUseCase = new UseCaseEnUSApiServiceImpl();
 			initializeApiService(apiUseCase);
 			registerApiService(UseCaseEnUSGenApiService.class, apiUseCase, UseCase.getClassApiAddress());
-			// apiUseCase.configureUiResult(router, UseCase.class, SiteRequest.class, "/en-us/shop/use-case/{objectId}");
-			// apiUseCase.configureUserUiResult(router, UseCase.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/use-case/{objectId}", "/en-us/use/use-case/{objectId}");
+			// apiUseCase.configureUiResult(router, UseCase.class, SiteRequest.class, "/en-us/shop/use-case/{pageId}");
+			// apiUseCase.configureUserUiResult(router, UseCase.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/use-case/{pageId}", "/en-us/use/use-case/{pageId}");
 
 			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl();
 			initializeApiService(apiCompanyCourse);
 			registerApiService(CompanyCourseEnUSGenApiService.class, apiCompanyCourse, CompanyCourse.getClassApiAddress());
-			// apiCompanyCourse.configureUiResult(router, CompanyCourse.class, SiteRequest.class, "/en-us/shop/course/{objectId}");
-			// apiCompanyCourse.configureUserUiResult(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/course/{objectId}", "/en-us/use/course/{objectId}");
+			// apiCompanyCourse.configureUiResult(router, CompanyCourse.class, SiteRequest.class, "/en-us/shop/course/{pageId}");
+			// apiCompanyCourse.configureUserUiResult(router, CompanyCourse.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/course/{pageId}", "/en-us/use/course/{pageId}");
 
 			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
 			initializeApiService(apiSitePage);
 			registerApiService(SitePageEnUSGenApiService.class, apiSitePage, SitePage.getClassApiAddress());
-			// apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/view/article/{objectId}");
+			// apiSitePage.configureUiResult(router, SitePage.class, SiteRequest.class, "/en-us/view/article/{pageId}");
 
 			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
 			initializeApiService(apiCompanyProduct);
 			registerApiService(CompanyProductEnUSGenApiService.class, apiCompanyProduct, CompanyProduct.getClassApiAddress());
-			// apiCompanyProduct.configureUiResult(router, CompanyProduct.class, SiteRequest.class, "/en-us/shop/product/{objectId}");
-			// apiCompanyProduct.configureUserUiResult(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/product/{objectId}", "/en-us/use/product/{objectId}");
+			// apiCompanyProduct.configureUiResult(router, CompanyProduct.class, SiteRequest.class, "/en-us/shop/product/{pageId}");
+			// apiCompanyProduct.configureUserUiResult(router, CompanyProduct.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/product/{pageId}", "/en-us/use/product/{pageId}");
 
 			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl();
 			initializeApiService(apiCompanyEvent);
 			registerApiService(CompanyEventEnUSGenApiService.class, apiCompanyEvent, CompanyEvent.getClassApiAddress());
-			// apiCompanyEvent.configureUiResult(router, CompanyEvent.class, SiteRequest.class, "/en-us/shop/event/{objectId}");
-			// apiCompanyEvent.configureUserUiResult(router, CompanyEvent.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/event/{objectId}", "/en-us/use/event/{objectId}");
+			// apiCompanyEvent.configureUiResult(router, CompanyEvent.class, SiteRequest.class, "/en-us/shop/event/{pageId}");
+			// apiCompanyEvent.configureUserUiResult(router, CompanyEvent.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/shop/event/{pageId}", "/en-us/use/event/{pageId}");
 
 			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebinar);
 			registerApiService(CompanyWebinarEnUSGenApiService.class, apiCompanyWebinar, CompanyWebinar.getClassApiAddress());
-			// apiCompanyWebinar.configureUiModel(router, CompanyWebinar.class, SiteRequest.class, "/en-us/view/webinar/{objectId}");
-			// apiCompanyWebinar.configureUserUiModel(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/view/webinar/{objectId}", "/en-us/join/webinar/{objectId}");
+			// apiCompanyWebinar.configureUiModel(router, CompanyWebinar.class, SiteRequest.class, "/en-us/view/webinar/{pageId}");
+			// apiCompanyWebinar.configureUserUiModel(router, CompanyWebinar.class, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "/en-us/view/webinar/{pageId}", "/en-us/join/webinar/{pageId}");
 
 			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl();
 			initializeApiService(apiCompanyService);
 			registerApiService(CompanyServiceEnUSGenApiService.class, apiCompanyService, CompanyService.getClassApiAddress());
-			// apiCompanyService.configureUiResult(router, CompanyService.class, SiteRequest.class, "/en-us/shop/service/{objectId}");
+			// apiCompanyService.configureUiResult(router, CompanyService.class, SiteRequest.class, "/en-us/shop/service/{pageId}");
 
 			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl();
 			initializeApiService(apiCompanyResearch);
 			registerApiService(CompanyResearchEnUSGenApiService.class, apiCompanyResearch, CompanyResearch.getClassApiAddress());
-			// apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/shop/research/{objectId}");
+			// apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/shop/research/{pageId}");
 
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
 			registerApiService(CompanyWebsiteEnUSGenApiService.class, apiCompanyWebsite, CompanyWebsite.getClassApiAddress());
-			// apiCompanyWebsite.configureUiResult(router, CompanyWebsite.class, SiteRequest.class, "/en-us/view/website/{objectId}");
+			// apiCompanyWebsite.configureUiResult(router, CompanyWebsite.class, SiteRequest.class, "/en-us/view/website/{pageId}");
 
 			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
 			initializeApiService(apiIotService);
 			registerApiService(IotServiceEnUSGenApiService.class, apiIotService, IotService.getClassApiAddress());
-			// apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/shop/iot-service/{objectId}");
+			// apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/shop/iot-service/{pageId}");
 
 			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
 			initializeApiService(apiWeatherObserved);
 			registerApiService(WeatherObservedEnUSGenApiService.class, apiWeatherObserved, WeatherObserved.getClassApiAddress());
-			// apiWeatherObserved.configureUiModel(router, WeatherObserved.class, SiteRequest.class, "/en-us/shop/weather-observed/{objectId}");
+			// apiWeatherObserved.configureUiModel(router, WeatherObserved.class, SiteRequest.class, "/en-us/shop/weather-observed/{pageId}");
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");

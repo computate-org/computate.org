@@ -390,56 +390,56 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 		return WeatherObservedGenPage.staticSearchPk(siteRequest_, WeatherObservedGenPage.staticSetPk(siteRequest_, o)).toString();
 	}
 
-	////////
-	// id //
-	////////
+	////////////
+	// solrId //
+	////////////
 
 
-	/**	 The entity id
+	/**	 The entity solrId
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String id;
+	protected String solrId;
 
-	/**	<br> The entity id
+	/**	<br> The entity solrId
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:id">Find the entity id in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.weatherobserved.WeatherObservedGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _id(Wrap<String> w);
+	protected abstract void _solrId(Wrap<String> w);
 
-	public String getId() {
-		return id;
+	public String getSolrId() {
+		return solrId;
 	}
-	public void setId(String o) {
-		this.id = WeatherObservedGenPage.staticSetId(siteRequest_, o);
+	public void setSolrId(String o) {
+		this.solrId = WeatherObservedGenPage.staticSetSolrId(siteRequest_, o);
 	}
-	public static String staticSetId(SiteRequest siteRequest_, String o) {
+	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected WeatherObservedGenPage idInit() {
-		Wrap<String> idWrap = new Wrap<String>().var("id");
-		if(id == null) {
-			_id(idWrap);
-			Optional.ofNullable(idWrap.getO()).ifPresent(o -> {
-				setId(o);
+	protected WeatherObservedGenPage solrIdInit() {
+		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+		if(solrId == null) {
+			_solrId(solrIdWrap);
+			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+				setSolrId(o);
 			});
 		}
 		return (WeatherObservedGenPage)this;
 	}
 
-	public static String staticSearchId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrId(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqId(SiteRequest siteRequest_, String o) {
-		return WeatherObservedGenPage.staticSearchId(siteRequest_, WeatherObservedGenPage.staticSetId(siteRequest_, o)).toString();
+	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+		return WeatherObservedGenPage.staticSearchSolrId(siteRequest_, WeatherObservedGenPage.staticSetSolrId(siteRequest_, o)).toString();
 	}
 
 	////////////////////////////
@@ -498,18 +498,18 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepWeatherObservedGenPage(SiteRequest siteRequest_) {
+	public Future<WeatherObservedGenPageGen<DEV>> promiseDeepWeatherObservedGenPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepWeatherObservedGenPage();
 	}
 
-	public Future<Void> promiseDeepWeatherObservedGenPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<WeatherObservedGenPageGen<DEV>> promiseDeepWeatherObservedGenPage() {
+		Promise<WeatherObservedGenPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseWeatherObservedGenPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -528,7 +528,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 				resultCountInit();
 				resultInit();
 				pkInit();
-				idInit();
+				solrIdInit();
 				pageUriWeatherObservedInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -543,7 +543,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends WeatherObservedGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepWeatherObservedGenPage(siteRequest_);
 	}
 
@@ -593,8 +593,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 				return oWeatherObservedGenPage.result;
 			case "pk":
 				return oWeatherObservedGenPage.pk;
-			case "id":
-				return oWeatherObservedGenPage.id;
+			case "solrId":
+				return oWeatherObservedGenPage.solrId;
 			case "pageUriWeatherObserved":
 				return oWeatherObservedGenPage.pageUriWeatherObserved;
 			default:
@@ -642,8 +642,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 			return WeatherObservedGenPage.staticSetResultCount(siteRequest_, o);
 		case "pk":
 			return WeatherObservedGenPage.staticSetPk(siteRequest_, o);
-		case "id":
-			return WeatherObservedGenPage.staticSetId(siteRequest_, o);
+		case "solrId":
+			return WeatherObservedGenPage.staticSetSolrId(siteRequest_, o);
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSetPageUriWeatherObserved(siteRequest_, o);
 			default:
@@ -666,8 +666,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 			return WeatherObservedGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchPk(siteRequest_, (Long)o);
-		case "id":
-			return WeatherObservedGenPage.staticSearchId(siteRequest_, (String)o);
+		case "solrId":
+			return WeatherObservedGenPage.staticSearchSolrId(siteRequest_, (String)o);
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchPageUriWeatherObserved(siteRequest_, (String)o);
 			default:
@@ -690,8 +690,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 			return WeatherObservedGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchStrPk(siteRequest_, (Long)o);
-		case "id":
-			return WeatherObservedGenPage.staticSearchStrId(siteRequest_, (String)o);
+		case "solrId":
+			return WeatherObservedGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchStrPageUriWeatherObserved(siteRequest_, (String)o);
 			default:
@@ -714,8 +714,8 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 			return WeatherObservedGenPage.staticSearchFqResultCount(siteRequest_, o);
 		case "pk":
 			return WeatherObservedGenPage.staticSearchFqPk(siteRequest_, o);
-		case "id":
-			return WeatherObservedGenPage.staticSearchFqId(siteRequest_, o);
+		case "solrId":
+			return WeatherObservedGenPage.staticSearchFqSolrId(siteRequest_, o);
 		case "pageUriWeatherObserved":
 			return WeatherObservedGenPage.staticSearchFqPageUriWeatherObserved(siteRequest_, o);
 			default:
@@ -739,7 +739,7 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 	public static final String VAR_resultCount = "resultCount";
 	public static final String VAR_result = "result";
 	public static final String VAR_pk = "pk";
-	public static final String VAR_id = "id";
+	public static final String VAR_solrId = "solrId";
 	public static final String VAR_pageUriWeatherObserved = "pageUriWeatherObserved";
 
 	public static final String DISPLAY_NAME_searchListWeatherObserved_ = "";
@@ -747,8 +747,43 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 	public static final String DISPLAY_NAME_resultCount = "";
 	public static final String DISPLAY_NAME_result = "";
 	public static final String DISPLAY_NAME_pk = "";
-	public static final String DISPLAY_NAME_id = "";
+	public static final String DISPLAY_NAME_solrId = "";
 	public static final String DISPLAY_NAME_pageUriWeatherObserved = "";
+
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
 
 	public static String displayNameForClass(String var) {
 		return WeatherObservedGenPage.displayNameWeatherObservedGenPage(var);
@@ -765,12 +800,89 @@ public abstract class WeatherObservedGenPageGen<DEV> extends PageLayout {
 			return DISPLAY_NAME_result;
 		case VAR_pk:
 			return DISPLAY_NAME_pk;
-		case VAR_id:
-			return DISPLAY_NAME_id;
+		case VAR_solrId:
+			return DISPLAY_NAME_solrId;
 		case VAR_pageUriWeatherObserved:
 			return DISPLAY_NAME_pageUriWeatherObserved;
 		default:
 			return PageLayout.displayNamePageLayout(var);
+		}
+	}
+
+	public static String descriptionWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.descriptionPageLayout(var);
+		}
+	}
+
+	public static String classSimpleNameWeatherObservedGenPage(String var) {
+		switch(var) {
+		case VAR_searchListWeatherObserved_:
+			return "SearchList";
+		case VAR_listWeatherObserved:
+			return "JsonArray";
+		case VAR_resultCount:
+			return "Integer";
+		case VAR_result:
+			return "WeatherObserved";
+		case VAR_pk:
+			return "Long";
+		case VAR_solrId:
+			return "String";
+		case VAR_pageUriWeatherObserved:
+			return "String";
+			default:
+				return PageLayout.classSimpleNamePageLayout(var);
+		}
+	}
+
+	public static Integer htmColumnWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmColumnPageLayout(var);
+		}
+	}
+
+	public static Integer htmRowWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmRowPageLayout(var);
+		}
+	}
+
+	public static Integer htmCellWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmCellPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMinWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMinPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMaxWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMaxPageLayout(var);
+		}
+	}
+
+	public static Integer maxWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.maxPageLayout(var);
+		}
+	}
+
+	public static Integer minWeatherObservedGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.minPageLayout(var);
 		}
 	}
 }

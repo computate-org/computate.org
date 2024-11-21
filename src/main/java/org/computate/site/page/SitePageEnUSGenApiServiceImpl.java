@@ -485,7 +485,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public Future<SitePage> patchSitePageFuture(SitePage o, Boolean inheritPk) {
+	public Future<SitePage> patchSitePageFuture(SitePage o, Boolean pageId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<SitePage> promise = Promise.promise();
 
@@ -676,7 +676,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public Future<SitePage> postSitePageFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<SitePage> postSitePageFuture(SiteRequest siteRequest, Boolean pageId) {
 		Promise<SitePage> promise = Promise.promise();
 
 		try {
@@ -880,9 +880,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(SitePage.VAR_id)).orElse(body.getString(SitePage.VAR_id));
-				body.put("inheritPk", inheritPk);
-				body.put("inheritPk", body.getValue("id"));
+				String pageId = Optional.ofNullable(body.getString(SitePage.VAR_pageId)).orElse(body.getString(SitePage.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -892,7 +890,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				searchList.q("*:*");
 				searchList.setC(SitePage.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -928,13 +926,13 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -944,7 +942,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 								}
 								siteRequest.setJsonObject(body2);
 								patchSitePageFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import SitePage {} succeeded, modified SitePage. ", body.getValue(SitePage.VAR_id));
+									LOG.debug("Import SitePage {} succeeded, modified SitePage. ", body.getValue(SitePage.VAR_pageId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportSitePageFuture failed. "), ex);
@@ -955,7 +953,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							}
 						} else {
 							postSitePageFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import SitePage {} succeeded, created new SitePage. ", body.getValue(SitePage.VAR_id));
+								LOG.debug("Import SitePage {} succeeded, created new SitePage. ", body.getValue(SitePage.VAR_pageId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportSitePageFuture failed. "), ex);
@@ -1059,7 +1057,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateSearchPageSitePage(ServiceRequest serviceRequest) {
-		return "en-us/search/article/SitePageSearch.htm";
+		return "en-us/search/article/SitePageSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageSitePage(SearchList<SitePage> listSitePage) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1231,7 +1229,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateEditPageSitePage(ServiceRequest serviceRequest) {
-		return "en-us/edit/article/SitePageEdit.htm";
+		return "en-us/edit/article/SitePageEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageSitePage(SearchList<SitePage> listSitePage) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1350,7 +1348,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateDisplayPageSitePage(ServiceRequest serviceRequest) {
-		return String.format("en-us/view/article/SitePageDisplayPage.htm", serviceRequest.getExtra().getString("uri").substring(1));
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
 	}
 	public Future<ServiceResponse> response200DisplayPageSitePage(SearchList<SitePage> listSitePage) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1534,11 +1532,9 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
+			if(pageId != null) {
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
@@ -1681,7 +1677,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchSitePage2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -1831,7 +1827,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1858,6 +1854,49 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			});
 		} catch(Exception ex) {
 			LOG.error(String.format("unindexSitePage failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			SitePage page = new SitePage();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(SitePage.VAR_created, SitePage.staticSetCreated(siteRequest2, (String)result.get(SitePage.VAR_created)));
+			page.persistForClass(SitePage.VAR_archived, SitePage.staticSetArchived(siteRequest2, (String)result.get(SitePage.VAR_archived)));
+			page.persistForClass(SitePage.VAR_title, SitePage.staticSetTitle(siteRequest2, (String)result.get(SitePage.VAR_title)));
+			page.persistForClass(SitePage.VAR_displayPage, SitePage.staticSetDisplayPage(siteRequest2, (String)result.get(SitePage.VAR_displayPage)));
+			page.persistForClass(SitePage.VAR_solrId, SitePage.staticSetSolrId(siteRequest2, (String)result.get(SitePage.VAR_solrId)));
+			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
+			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
+			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, (String)result.get(SitePage.VAR_author)));
+			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, (String)result.get(SitePage.VAR_pageId)));
+			page.persistForClass(SitePage.VAR_h1, SitePage.staticSetH1(siteRequest2, (String)result.get(SitePage.VAR_h1)));
+			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, (String)result.get(SitePage.VAR_h2)));
+			page.persistForClass(SitePage.VAR_pageImageUri, SitePage.staticSetPageImageUri(siteRequest2, (String)result.get(SitePage.VAR_pageImageUri)));
+			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

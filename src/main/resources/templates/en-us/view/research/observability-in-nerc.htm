@@ -1,0 +1,16 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="result.pageId" content="{{ result.shortFileName }}"/>
+    <meta name="result.uri" content="/en-us/research/{{ pageId }}"/>
+    <meta name="result.url" content="https://github.com/OCP-on-NERC/docs/tree/main/architecture/observability"/>
+    <meta name="result.name" content="Observability in the New England Research Cloud"/>
+    <meta name="result.title" content="{{ name }}"/>
+    <meta name="result.description" content="Improvements to OpenShift Observability, logging, and fine-grained authorization to metrics"/>
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+{% endblock htmStylePageLayout %}
+{% block htmTitlePageLayout %}
+    <title>{{ title }}</title>
+{% endblock htmTitlePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+{% endblock %}

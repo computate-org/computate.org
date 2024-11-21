@@ -485,7 +485,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public Future<CompanyWebsite> patchCompanyWebsiteFuture(CompanyWebsite o, Boolean inheritPk) {
+	public Future<CompanyWebsite> patchCompanyWebsiteFuture(CompanyWebsite o, Boolean pageId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<CompanyWebsite> promise = Promise.promise();
 
@@ -676,7 +676,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public Future<CompanyWebsite> postCompanyWebsiteFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<CompanyWebsite> postCompanyWebsiteFuture(SiteRequest siteRequest, Boolean pageId) {
 		Promise<CompanyWebsite> promise = Promise.promise();
 
 		try {
@@ -880,9 +880,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyWebsite.VAR_id)).orElse(body.getString(CompanyWebsite.VAR_id));
-				body.put("inheritPk", inheritPk);
-				body.put("inheritPk", body.getValue("id"));
+				String pageId = Optional.ofNullable(body.getString(CompanyWebsite.VAR_pageId)).orElse(body.getString(CompanyWebsite.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -892,7 +890,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				searchList.q("*:*");
 				searchList.setC(CompanyWebsite.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -928,13 +926,13 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -944,7 +942,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								}
 								siteRequest.setJsonObject(body2);
 								patchCompanyWebsiteFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyWebsite {} succeeded, modified CompanyWebsite. ", body.getValue(CompanyWebsite.VAR_id));
+									LOG.debug("Import CompanyWebsite {} succeeded, modified CompanyWebsite. ", body.getValue(CompanyWebsite.VAR_pageId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportCompanyWebsiteFuture failed. "), ex);
@@ -955,7 +953,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							}
 						} else {
 							postCompanyWebsiteFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyWebsite {} succeeded, created new CompanyWebsite. ", body.getValue(CompanyWebsite.VAR_id));
+								LOG.debug("Import CompanyWebsite {} succeeded, created new CompanyWebsite. ", body.getValue(CompanyWebsite.VAR_pageId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportCompanyWebsiteFuture failed. "), ex);
@@ -1059,7 +1057,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateSearchPageCompanyWebsite(ServiceRequest serviceRequest) {
-		return "en-us/search/website/CompanyWebsiteSearch.htm";
+		return "en-us/search/website/CompanyWebsiteSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyWebsite(SearchList<CompanyWebsite> listCompanyWebsite) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1231,7 +1229,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateEditPageCompanyWebsite(ServiceRequest serviceRequest) {
-		return "en-us/edit/website/CompanyWebsiteEdit.htm";
+		return "en-us/edit/website/CompanyWebsiteEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageCompanyWebsite(SearchList<CompanyWebsite> listCompanyWebsite) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1350,7 +1348,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateDisplayPageCompanyWebsite(ServiceRequest serviceRequest) {
-		return String.format("en-us/view/website/CompanyWebsiteDisplayPage.htm", serviceRequest.getExtra().getString("uri").substring(1));
+		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
 	}
 	public Future<ServiceResponse> response200DisplayPageCompanyWebsite(SearchList<CompanyWebsite> listCompanyWebsite) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1534,11 +1532,9 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
+			if(pageId != null) {
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
@@ -1680,7 +1676,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchCompanyWebsite2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -1830,7 +1826,7 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1857,6 +1853,45 @@ public class CompanyWebsiteEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			});
 		} catch(Exception ex) {
 			LOG.error(String.format("unindexCompanyWebsite failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			CompanyWebsite page = new CompanyWebsite();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(CompanyWebsite.VAR_created, CompanyWebsite.staticSetCreated(siteRequest2, (String)result.get(CompanyWebsite.VAR_created)));
+			page.persistForClass(CompanyWebsite.VAR_archived, CompanyWebsite.staticSetArchived(siteRequest2, (String)result.get(CompanyWebsite.VAR_archived)));
+			page.persistForClass(CompanyWebsite.VAR_title, CompanyWebsite.staticSetTitle(siteRequest2, (String)result.get(CompanyWebsite.VAR_title)));
+			page.persistForClass(CompanyWebsite.VAR_displayPage, CompanyWebsite.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyWebsite.VAR_displayPage)));
+			page.persistForClass(CompanyWebsite.VAR_solrId, CompanyWebsite.staticSetSolrId(siteRequest2, (String)result.get(CompanyWebsite.VAR_solrId)));
+			page.persistForClass(CompanyWebsite.VAR_name, CompanyWebsite.staticSetName(siteRequest2, (String)result.get(CompanyWebsite.VAR_name)));
+			page.persistForClass(CompanyWebsite.VAR_description, CompanyWebsite.staticSetDescription(siteRequest2, (String)result.get(CompanyWebsite.VAR_description)));
+			page.persistForClass(CompanyWebsite.VAR_pageId, CompanyWebsite.staticSetPageId(siteRequest2, (String)result.get(CompanyWebsite.VAR_pageId)));
+			page.persistForClass(CompanyWebsite.VAR_websiteNum, CompanyWebsite.staticSetWebsiteNum(siteRequest2, (String)result.get(CompanyWebsite.VAR_websiteNum)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

@@ -117,18 +117,18 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyEventPage(SiteRequest siteRequest_) {
+	public Future<CompanyEventPageGen<DEV>> promiseDeepCompanyEventPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyEventPage();
 	}
 
-	public Future<Void> promiseDeepCompanyEventPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyEventPageGen<DEV>> promiseDeepCompanyEventPage() {
+		Promise<CompanyEventPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyEventPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepCompanyEventGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyEventPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyEventPage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyEventPage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyEventPage.displayNameCompanyEventPage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 		switch(var) {
 		default:
 			return CompanyEventGenPage.displayNameCompanyEventGenPage(var);
+		}
+	}
+
+	public static String descriptionCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.descriptionCompanyEventGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.classSimpleNameCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.htmColumnCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer htmRowCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.htmRowCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer htmCellCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.htmCellCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.lengthMinCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.lengthMaxCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer maxCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.maxCompanyEventGenPage(var);
+		}
+	}
+
+	public static Integer minCompanyEventPage(String var) {
+		switch(var) {
+			default:
+				return CompanyEventGenPage.minCompanyEventGenPage(var);
 		}
 	}
 }

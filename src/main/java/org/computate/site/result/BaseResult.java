@@ -13,12 +13,12 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.search.wrap.Wrap;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
+import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.result.base.ComputateBaseResult;
 
 import io.vertx.core.Promise;
 
 /**
- * Page: true
  * Indexed: true
  * Keyword: classSimpleNameBaseResult
  * Description: A reusable base class for all non-model search classes
@@ -34,15 +34,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 */
 	protected void _siteRequest_(Wrap<SiteRequest> w) {
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * InheritPrimaryKey: true
-	 * Persist: true
-	 * Description: An optional inherited primary key from a legacy system for this object in the database
-	 */
-	protected void _inheritPk(Wrap<String> w) {}
 
 	/**
 	 * {@inheritDoc}
@@ -123,60 +114,10 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
-	 * Persist: true
-	 * Modify: false
-	 * Description: The session ID of the user that created this object
-	 */
-	protected void _sessionId(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Modify: false
-	 * Description: The primary key of the user that created this record
-	 */
-	protected void _userKey(Wrap<Long> c) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
 	 * Saves: true
 	 * Description: A list of fields that are saved for this record in the database
 	 */
 	protected void _saves(List<String> l) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Description: The icon HTML
-	 */
-	protected void _objectIcon(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * VarTitle: true
-	 * Description: The title of this object
-	 */
-	protected void _objectTitle(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * Persist: true
-	 * DocValues: true
-	 * UrlVar: pageUrlId
-	 * HtmRow: 1
-	 * HtmCell: 4
-	 * DisplayName.enUS: ID
-	 * Description: A URL friendly unique ID for this object
-	 */
-	protected void _objectId(Wrap<String> w) {
 	}
 
 	/**
@@ -197,12 +138,62 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 
 	/**
 	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: title
+	 * Description: The title of this page. 
+	 * VarTitle: true
+	 */
+	protected void _title(Wrap<String> w) {
+		w.o(String.format("%s — %s", classNameAdjectiveSingularForClass(), nameForClass()));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * HtmRow: 99
+	 * HtmCell: 2
+	 * Facet: true
+	 * DisplayName: product page
+	 * Description: Visit this product's landing page. 
+	 * Link: true
+	 * VarUrlDisplayPage: true
+	 */
+	protected void _displayPage(Wrap<String> w) {
+		String f = classStringFormatUrlDisplayPageForClass();
+		if(f != null)
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * HtmColumn: 99
+	 * Facet: true
+	 * DisplayName: edit
+	 * Description: Edit this
+	 * Link: true
+	 * Icon: <i class="fa-solid fa-pen-to-square"></i>
+	 * VarUrlEditPage: true
+	 */
+	protected void _editPage(Wrap<String> w) {
+		String f = classStringFormatUrlEditPageForClass();
+		if(f != null)
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Suggested: true
 	 * Description: The indexed field in the search engine for this record while using autosuggest
 	 * DisplayName: autosuggest
 	 */
 	protected void _objectSuggest(Wrap<String> w) { 
 		StringBuilder b = new StringBuilder();
+		
+		String objectId = idForClass();
+		String objectTitle = titleForClass();
 		if(objectId != null)
 			b.append(" ").append(objectId);
 		if(objectTitle != null)
@@ -217,6 +208,8 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * DisplayName: text
 	 */
 	protected void _objectText(List<String> l) { 
+		String objectId = idForClass();
+		String objectTitle = titleForClass();
 		if(objectId != null)
 			l.add(objectId);
 		if(objectTitle != null)
@@ -225,56 +218,12 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 
 	/**
 	 * {@inheritDoc}
-	 * DocValues: true
-	 * VarUrlId: true
-	 * Description: The link by name for this object in the UI
-	 * DisplayName: URL
-	 */
-	protected void _pageUrlId(Wrap<String> w) {
-		if(objectId != null) {
-			try {
-				Optional.ofNullable((String)FieldUtils.getField(getClass(), String.format("%s_ApiUriSearchPage_%s", getClass().getSimpleName(), siteRequest_.getLang())).get(this)).ifPresent(classApiUri -> {
-					w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_BASE_URL) + classApiUri + "/" + objectId);
-				});
-			} catch (Exception e) {
-				ExceptionUtils.rethrow(e);
-			}
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * VarUrlPk: true
-	 * Description: The link by primary key for this object in the UI
-	 */
-	protected void _pageUrlPk(Wrap<String> w) {
-		w.o(pageUrlId);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * VarUrlApi: true
-	 * Description: The link to this object in the API
-	 */
-	protected void _pageUrlApi(Wrap<String> w) {
-		try {
-			Optional.ofNullable((String)FieldUtils.getField(getClass(), String.format("%s_ApiUri_%s", getClass().getSimpleName(), siteRequest_.getLang())).get(this)).ifPresent(classApiUri -> {
-				w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_BASE_URL) + classApiUri + "/" + objectId);
-			});
-		} catch (Exception e) {
-			ExceptionUtils.rethrow(e);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * UniqueKey: true
 	 * Persist: true
 	 * Description: The unique key for this record in the search engine
 	 */
-	protected void _id(Wrap<String> w) {
-		w.o(objectId);
+	protected void _solrId(Wrap<String> w) {
+		String objectId = idForClass();
+		w.o(String.format("%s_%s", getClass().getSimpleName(), objectId));
 	}
 }

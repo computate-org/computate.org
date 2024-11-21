@@ -18,9 +18,9 @@ import io.vertx.pgclient.data.Point;
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/course
- * EditPageUri: /en-us/edit/course/{objectId}
- * DisplayPageUri: /en-us/shop/course/{objectId}
- * UserPageUri: /en-us/use/course/{objectId}
+ * EditPageUri: /en-us/edit/course/{pageId}
+ * DisplayPageUri: /en-us/shop/course/{pageId}
+ * UserPageUri: /en-us/use/course/{pageId}
  * ApiUri: /en-us/api/course
  * ApiMethod:
  *   Search:
@@ -93,36 +93,16 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 4
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
 	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
+	 * VarId: true
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(name);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: resource URI
-	 * Description: The resource relative URI for this page. 
-	 */
-	protected void _resourceUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: template URI
-	 * Description: The template relative URI for this page. 
-	 */
-	protected void _templateUri(Wrap<String> w) {
+		w.o(toId(name));
 	}
 
 	/**
@@ -140,27 +120,44 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 4
+	 * HtmCell: 1
+	 * Facet: true
+	 * DisplayName: product page
+	 * Description: Visit this product's landing page. 
+	 * Link: true
+	 * VarUrlDisplayPage: true
+	 */
+	protected void _displayPage(Wrap<String> w) {
+		w.o(String.format(DisplayPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * HtmRow: 4
 	 * HtmCell: 2
 	 * Facet: true
-	 * DisplayName: URI
-	 * Description: The relative URI for this page. 
+	 * DisplayName: view
+	 * Description: View the project. 
+	 * Link: true
+	 * Icon: <i class="fa-solid fa-pen-to-square"></i>
+	 * VarUrlEditPage: true
 	 */
-	protected void _uri(Wrap<String> w) {
+	protected void _editPage(Wrap<String> w) {
+		w.o(String.format(EditPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
 	 * Facet: true
-	 * DisplayName: URL
-	 * Description: The URL for this page. 
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
 	 */
-	protected void _url(Wrap<String> w) {
-		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
+	protected void _storeUrl(Wrap<String> w) {
 	}
 
 	/**
@@ -179,21 +176,10 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: user URI
-	 * Description: The user relative URI for this page. 
+	 * DisplayName: Course Number
+	 * Description: The course number for this page. 
 	 */
-	protected void _userUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: store URL
-	 * Description: The store URL for this page. 
-	 */
-	protected void _storeUrl(Wrap<String> w) {
+	protected void _courseNum(Wrap<Integer> w) {
 	}
 
 	/**
@@ -202,40 +188,9 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * Persist: true
 	 * DisplayName: title
 	 * Description: The title of this page. 
-	 * UrlVar: pageUrlId
+	 * VarTitle: true
 	 */
 	protected void _title(Wrap<String> w) {
-		w.o(name);
-	}
-
-	@Override
-	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s — %s", CompanyCourse_NameAdjectiveSingular_enUS, title));
-	}
-
-	@Override
-	protected void _objectId(Wrap<String> w) {
-		w.o(pageId);
-	}
-
-	@Override
-	protected void _id(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
-	}
-
-	@Override
-	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: Course Number
-	 * Description: The course number for this page. 
-	 */
-	protected void _courseNum(Wrap<Integer> w) {
+		w.o(String.format("%s — %s", NameAdjectiveSingular_enUS, name));
 	}
 }

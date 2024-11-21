@@ -316,7 +316,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyAboutResponse'
-  /en-us/api/about/{objectId}:
+  /en-us/api/about/{pageId}:
     get:
       operationId: getCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
@@ -333,7 +333,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -365,7 +365,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -401,7 +401,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETECompanyAboutResponse'
-  /en-us/edit/about/{objectId}:
+  /en-us/edit/about/{pageId}:
     get:
       operationId: editpageCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
@@ -421,7 +421,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -434,7 +434,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EditPageCompanyAboutResponse'
-  /en-us/learn/about/{objectId}:
+  /en-us/learn/about/{pageId}:
     get:
       operationId: displaypageCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
@@ -451,7 +451,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -983,7 +983,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyCourseResponse'
-  /en-us/edit/course/{objectId}:
+  /en-us/edit/course/{pageId}:
     get:
       operationId: editpageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
@@ -1003,7 +1003,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1192,7 +1192,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyCourseResponse'
-  /en-us/shop/course/{objectId}:
+  /en-us/shop/course/{pageId}:
     get:
       operationId: displaypageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
@@ -1209,7 +1209,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1222,7 +1222,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DisplayPageCompanyCourseResponse'
-  /en-us/use/course/{objectId}:
+  /en-us/use/course/{pageId}:
     get:
       operationId: userpageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
@@ -1242,7 +1242,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1653,7 +1653,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETECompanyEventResponse'
-  /en-us/edit/event/{objectId}:
+  /en-us/edit/event/{pageId}:
     get:
       operationId: editpageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
@@ -1673,7 +1673,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1862,7 +1862,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyEventResponse'
-  /en-us/shop/event/{objectId}:
+  /en-us/shop/event/{pageId}:
     get:
       operationId: displaypageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
@@ -1879,7 +1879,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1892,7 +1892,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DisplayPageCompanyEventResponse'
-  /en-us/use/event/{objectId}:
+  /en-us/use/event/{pageId}:
     get:
       operationId: userpageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
@@ -1912,7 +1912,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -2329,7 +2329,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETEIotServiceResponse'
-  /en-us/edit/iot-service/{objectId}:
+  /en-us/edit/iot-service/{pageId}:
     get:
       operationId: editpageIotService
       x-vertx-event-bus: computate.org-enUS-IotService
@@ -2349,7 +2349,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -2541,7 +2541,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageIotServiceResponse'
-  /en-us/shop/iot-service/{objectId}:
+  /en-us/shop/iot-service/{pageId}:
     get:
       operationId: displaypageIotService
       x-vertx-event-bus: computate.org-enUS-IotService
@@ -2561,7 +2561,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -3083,7 +3083,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETEWeatherObservedResponse'
-  /en-us/edit/weather-observed/{objectId}:
+  /en-us/edit/weather-observed/{pageId}:
     get:
       operationId: editpageWeatherObserved
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
@@ -3119,7 +3119,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -3327,7 +3327,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageWeatherObservedResponse'
-  /download/product:
+  /download/product{pageId}:
     get:
       operationId: searchdownloadCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -4516,7 +4516,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyResearchResponse'
-  /en-us/edit/research/{objectId}:
+  /en-us/edit/research/{pageId}:
     get:
       operationId: editpageCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
@@ -4536,7 +4536,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -4725,7 +4725,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyResearchResponse'
-  /en-us/shop/research/{objectId}:
+  /en-us/view/research/{pageId}:
     get:
       operationId: displaypageCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
@@ -4742,7 +4742,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5098,7 +5098,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyServiceResponse'
-  /en-us/edit/service/{objectId}:
+  /en-us/edit/service/{pageId}:
     get:
       operationId: editpageCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
@@ -5118,7 +5118,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5307,7 +5307,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyServiceResponse'
-  /en-us/shop/service/{objectId}:
+  /en-us/shop/service/{pageId}:
     get:
       operationId: displaypageCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
@@ -5324,7 +5324,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5735,7 +5735,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETEUseCaseResponse'
-  /en-us/edit/use-case/{objectId}:
+  /en-us/edit/use-case/{pageId}:
     get:
       operationId: editpageUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
@@ -5755,7 +5755,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5944,7 +5944,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageUseCaseResponse'
-  /en-us/shop/use-case/{objectId}:
+  /en-us/shop/use-case/{pageId}:
     get:
       operationId: displaypageUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
@@ -5961,7 +5961,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5974,7 +5974,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DisplayPageUseCaseResponse'
-  /en-us/use/use-case/{objectId}:
+  /en-us/use/use-case/{pageId}:
     get:
       operationId: userpageUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
@@ -5994,7 +5994,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6350,7 +6350,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyWebinarResponse'
-  /en-us/edit/webinar/{objectId}:
+  /en-us/edit/webinar/{pageId}:
     get:
       operationId: editpageCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
@@ -6370,7 +6370,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6383,7 +6383,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EditPageCompanyWebinarResponse'
-  /en-us/join/webinar/{objectId}:
+  /en-us/join/webinar/{pageId}:
     get:
       operationId: userpageCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
@@ -6403,7 +6403,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6592,7 +6592,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyWebinarResponse'
-  /en-us/view/webinar/{objectId}:
+  /en-us/view/webinar/{pageId}:
     get:
       operationId: displaypageCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
@@ -6609,7 +6609,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6965,7 +6965,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyWebsiteResponse'
-  /en-us/edit/website/{objectId}:
+  /en-us/edit/website/{pageId}:
     get:
       operationId: editpageCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
@@ -6985,7 +6985,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -7174,7 +7174,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyWebsiteResponse'
-  /en-us/view/website/{objectId}:
+  /en-us/view/website/{pageId}:
     get:
       operationId: displaypageCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
@@ -7191,7 +7191,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -7547,7 +7547,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETSitePageResponse'
-  /en-us/edit/article/{objectId}:
+  /en-us/edit/article/{pageId}:
     get:
       operationId: editpageSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
@@ -7567,7 +7567,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -7756,7 +7756,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageSitePageResponse'
-  /en-us/view/article/{objectId}:
+  /en-us/view/article/{pageId}:
     get:
       operationId: displaypageSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
@@ -7773,7 +7773,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -8039,7 +8039,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTSiteUserResponse'
-  /en-us/edit/user/{objectId}:
+  /en-us/edit/user/{pageId}:
     get:
       operationId: editpageSiteUser
       x-vertx-event-bus: computate.org-enUS-SiteUser
@@ -8056,7 +8056,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -9055,24 +9055,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PATCHCompanyAboutRequest:
       allOf:
         - type: object
@@ -9097,69 +9079,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHCompanyAboutResponse:
       allOf:
@@ -9186,69 +9105,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTCompanyAboutRequest:
       allOf:
         - type: object
@@ -9259,24 +9115,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     POSTCompanyAboutResponse:
       allOf:
         - type: object
@@ -9286,24 +9124,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportCompanyAboutRequest:
       allOf:
@@ -9320,24 +9140,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PUTImportCompanyAboutResponse:
       allOf:
         - type: object
@@ -9347,24 +9149,6 @@ components:
                   description:
                     type: string
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     GETCompanyAboutResponse:
       allOf:
@@ -9376,24 +9160,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     DELETECompanyAboutResponse:
       allOf:
         - type: object
@@ -9403,24 +9169,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageCompanyAboutResponse:
       allOf:
@@ -9457,33 +9205,19 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
                     type: string
-                  uri:
+                  displayPage:
                     type: string
-                  url:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
+                  editPage:
                     type: string
                   storeUrl:
                     type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  title:
                     type: string
     PATCHCompanyCourseRequest:
       allOf:
@@ -9517,20 +9251,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -9538,33 +9258,19 @@ components:
               type: string
             removeAllEmailTemplate:
               type: string
-            setUri:
+            setDisplayPage:
               type: string
               nullable: true
-            removeUri:
+            removeDisplayPage:
               type: string
-            removeAllUri:
+            removeAllDisplayPage:
               type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setDownloadUri:
+            setEditPage:
               type: string
               nullable: true
-            removeDownloadUri:
+            removeEditPage:
               type: string
-            removeAllDownloadUri:
-              type: string
-            setUserUri:
-              type: string
-              nullable: true
-            removeUserUri:
-              type: string
-            removeAllUserUri:
+            removeAllEditPage:
               type: string
             setStoreUrl:
               type: string
@@ -9573,40 +9279,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setTitle:
+            setDownloadUri:
               type: string
               nullable: true
-            removeTitle:
+            removeDownloadUri:
               type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
+            removeAllDownloadUri:
               type: string
             setCourseNum:
               type: string
@@ -9614,6 +9292,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setTitle:
+              type: string
+              nullable: true
+            removeTitle:
+              type: string
+            removeAllTitle:
               type: string
     PATCHCompanyCourseResponse:
       allOf:
@@ -9647,20 +9332,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -9668,33 +9339,19 @@ components:
               type: string
             removeAllEmailTemplate:
               type: string
-            setUri:
+            setDisplayPage:
               type: string
               nullable: true
-            removeUri:
+            removeDisplayPage:
               type: string
-            removeAllUri:
+            removeAllDisplayPage:
               type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setDownloadUri:
+            setEditPage:
               type: string
               nullable: true
-            removeDownloadUri:
+            removeEditPage:
               type: string
-            removeAllDownloadUri:
-              type: string
-            setUserUri:
-              type: string
-              nullable: true
-            removeUserUri:
-              type: string
-            removeAllUserUri:
+            removeAllEditPage:
               type: string
             setStoreUrl:
               type: string
@@ -9703,40 +9360,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setTitle:
+            setDownloadUri:
               type: string
               nullable: true
-            removeTitle:
+            removeDownloadUri:
               type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
+            removeAllDownloadUri:
               type: string
             setCourseNum:
               type: string
@@ -9744,6 +9373,13 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setTitle:
+              type: string
+              nullable: true
+            removeTitle:
+              type: string
+            removeAllTitle:
               type: string
     POSTCompanyCourseRequest:
       allOf:
@@ -9757,33 +9393,19 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
               type: string
-            uri:
+            displayPage:
               type: string
-            url:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
+            editPage:
               type: string
             storeUrl:
               type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            downloadUri:
               type: string
             courseNum:
+              type: string
+            title:
               type: string
     POSTCompanyCourseResponse:
       allOf:
@@ -9797,33 +9419,19 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
               type: string
-            uri:
+            displayPage:
               type: string
-            url:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
+            editPage:
               type: string
             storeUrl:
               type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            downloadUri:
               type: string
             courseNum:
+              type: string
+            title:
               type: string
     PUTImportCompanyCourseRequest:
       allOf:
@@ -9842,33 +9450,19 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
                     type: string
-                  uri:
+                  displayPage:
                     type: string
-                  url:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
+                  editPage:
                     type: string
                   storeUrl:
                     type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  title:
                     type: string
     PUTImportCompanyCourseResponse:
       allOf:
@@ -9882,33 +9476,19 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
                     type: string
-                  uri:
+                  displayPage:
                     type: string
-                  url:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
+                  editPage:
                     type: string
                   storeUrl:
                     type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  title:
                     type: string
     GETCompanyCourseResponse:
       allOf:
@@ -9922,33 +9502,19 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
               type: string
-            uri:
+            displayPage:
               type: string
-            url:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
+            editPage:
               type: string
             storeUrl:
               type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            downloadUri:
               type: string
             courseNum:
+              type: string
+            title:
               type: string
     EditPageCompanyCourseResponse:
       allOf:
@@ -9984,25 +9550,13 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
-                  resourceUri:
+                  emailTemplate:
                     type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  storeUrl:
                     type: string
                   location:
                     type: object
@@ -10036,6 +9590,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -10043,68 +9604,19 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
+            setEmailTemplate:
               type: string
               nullable: true
-            removeResourceUri:
+            removeEmailTemplate:
               type: string
-            removeAllResourceUri:
+            removeAllEmailTemplate:
               type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
+            setStoreUrl:
               type: string
               nullable: true
-            removeUri:
+            removeStoreUrl:
               type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
+            removeAllStoreUrl:
               type: string
             setLocation:
               type: object
@@ -10182,6 +9694,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -10189,68 +9708,19 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
+            setEmailTemplate:
               type: string
               nullable: true
-            removeResourceUri:
+            removeEmailTemplate:
               type: string
-            removeAllResourceUri:
+            removeAllEmailTemplate:
               type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
+            setStoreUrl:
               type: string
               nullable: true
-            removeUri:
+            removeStoreUrl:
               type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
+            removeAllStoreUrl:
               type: string
             setLocation:
               type: object
@@ -10318,25 +9788,13 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
-            resourceUri:
+            emailTemplate:
               type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            storeUrl:
               type: string
             location:
               type: object
@@ -10360,25 +9818,13 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
-            resourceUri:
+            emailTemplate:
               type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            storeUrl:
               type: string
             location:
               type: object
@@ -10407,25 +9853,13 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
-                  resourceUri:
+                  emailTemplate:
                     type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  storeUrl:
                     type: string
                   location:
                     type: object
@@ -10449,25 +9883,13 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
-                  resourceUri:
+                  emailTemplate:
                     type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
+                  storeUrl:
                     type: string
                   location:
                     type: object
@@ -10491,25 +9913,13 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
-            resourceUri:
+            emailTemplate:
               type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            storeUrl:
               type: string
             location:
               type: object
@@ -10533,25 +9943,13 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
-            resourceUri:
+            emailTemplate:
               type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
+            storeUrl:
               type: string
             location:
               type: object
@@ -10618,24 +10016,6 @@ components:
                         - type: string
                         - type: boolean
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     PATCHIotServiceRequest:
       allOf:
@@ -10715,69 +10095,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     PATCHIotServiceResponse:
       allOf:
         - type: object
@@ -10856,69 +10173,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTIotServiceRequest:
       allOf:
         - type: object
@@ -10945,24 +10199,6 @@ components:
                   - type: boolean
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     POSTIotServiceResponse:
       allOf:
         - type: object
@@ -10988,24 +10224,6 @@ components:
                   - type: string
                   - type: boolean
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportIotServiceRequest:
       allOf:
@@ -11038,24 +10256,6 @@ components:
                         - type: boolean
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PUTImportIotServiceResponse:
       allOf:
         - type: object
@@ -11081,24 +10281,6 @@ components:
                         - type: string
                         - type: boolean
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     GETIotServiceResponse:
       allOf:
@@ -11126,24 +10308,6 @@ components:
                   - type: boolean
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     DELETEIotServiceResponse:
       allOf:
         - type: object
@@ -11169,24 +10333,6 @@ components:
                   - type: string
                   - type: boolean
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageIotServiceResponse:
       allOf:
@@ -11322,10 +10468,6 @@ components:
                   entityShortId:
                     type: string
                   ngsildContext:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
                     type: string
     PATCHWeatherObservedRequest:
       allOf:
@@ -11718,20 +10860,6 @@ components:
               type: string
             removeAllNgsildContext:
               type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
     PATCHWeatherObservedResponse:
       allOf:
         - type: object
@@ -12123,20 +11251,6 @@ components:
               type: string
             removeAllNgsildContext:
               type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
     POSTWeatherObservedRequest:
       allOf:
         - type: object
@@ -12249,10 +11363,6 @@ components:
               type: string
             ngsildContext:
               type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
     POSTWeatherObservedResponse:
       allOf:
         - type: object
@@ -12364,10 +11474,6 @@ components:
             entityShortId:
               type: string
             ngsildContext:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
               type: string
     PUTImportWeatherObservedRequest:
       allOf:
@@ -12486,10 +11592,6 @@ components:
                     type: string
                   ngsildContext:
                     type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
     PUTImportWeatherObservedResponse:
       allOf:
         - type: object
@@ -12601,10 +11703,6 @@ components:
                   entityShortId:
                     type: string
                   ngsildContext:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
                     type: string
     GETWeatherObservedResponse:
       allOf:
@@ -12718,10 +11816,6 @@ components:
               type: string
             ngsildContext:
               type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
     DELETEWeatherObservedResponse:
       allOf:
         - type: object
@@ -12834,10 +11928,6 @@ components:
               type: string
             ngsildContext:
               type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
     EditPageWeatherObservedResponse:
       allOf:
         - type: string
@@ -12870,37 +11960,13 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  viewPage:
-                    type: string
-                  editPage:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
                     type: string
                   storeUrl:
                     type: string
-                  title:
+                  downloadUri:
                     type: string
                   productNum:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     SearchCompanyProductResponse:
       allOf:
@@ -12928,37 +11994,13 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  viewPage:
-                    type: string
-                  editPage:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
                     type: string
                   storeUrl:
                     type: string
-                  title:
+                  downloadUri:
                     type: string
                   productNum:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     PATCHCompanyProductRequest:
       allOf:
@@ -12992,68 +12034,12 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setEmailTemplate:
               type: string
               nullable: true
             removeEmailTemplate:
               type: string
             removeAllEmailTemplate:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setViewPage:
-              type: string
-              nullable: true
-            removeViewPage:
-              type: string
-            removeAllViewPage:
-              type: string
-            setEditPage:
-              type: string
-              nullable: true
-            removeEditPage:
-              type: string
-            removeAllEditPage:
-              type: string
-            setDownloadUri:
-              type: string
-              nullable: true
-            removeDownloadUri:
-              type: string
-            removeAllDownloadUri:
-              type: string
-            setUserUri:
-              type: string
-              nullable: true
-            removeUserUri:
-              type: string
-            removeAllUserUri:
               type: string
             setStoreUrl:
               type: string
@@ -13062,12 +12048,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setTitle:
+            setDownloadUri:
               type: string
               nullable: true
-            removeTitle:
+            removeDownloadUri:
               type: string
-            removeAllTitle:
+            removeAllDownloadUri:
               type: string
             setProductNum:
               type: string
@@ -13075,34 +12061,6 @@ components:
             removeProductNum:
               type: string
             removeAllProductNum:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHCompanyProductResponse:
       allOf:
@@ -13136,68 +12094,12 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setEmailTemplate:
               type: string
               nullable: true
             removeEmailTemplate:
               type: string
             removeAllEmailTemplate:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setViewPage:
-              type: string
-              nullable: true
-            removeViewPage:
-              type: string
-            removeAllViewPage:
-              type: string
-            setEditPage:
-              type: string
-              nullable: true
-            removeEditPage:
-              type: string
-            removeAllEditPage:
-              type: string
-            setDownloadUri:
-              type: string
-              nullable: true
-            removeDownloadUri:
-              type: string
-            removeAllDownloadUri:
-              type: string
-            setUserUri:
-              type: string
-              nullable: true
-            removeUserUri:
-              type: string
-            removeAllUserUri:
               type: string
             setStoreUrl:
               type: string
@@ -13206,12 +12108,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setTitle:
+            setDownloadUri:
               type: string
               nullable: true
-            removeTitle:
+            removeDownloadUri:
               type: string
-            removeAllTitle:
+            removeAllDownloadUri:
               type: string
             setProductNum:
               type: string
@@ -13219,34 +12121,6 @@ components:
             removeProductNum:
               type: string
             removeAllProductNum:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     POSTCompanyProductRequest:
       allOf:
@@ -13260,37 +12134,13 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            viewPage:
-              type: string
-            editPage:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
               type: string
             storeUrl:
               type: string
-            title:
+            downloadUri:
               type: string
             productNum:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     POSTCompanyProductResponse:
       allOf:
@@ -13304,37 +12154,13 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            viewPage:
-              type: string
-            editPage:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
               type: string
             storeUrl:
               type: string
-            title:
+            downloadUri:
               type: string
             productNum:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportCompanyProductRequest:
       allOf:
@@ -13353,37 +12179,13 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  viewPage:
-                    type: string
-                  editPage:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
                     type: string
                   storeUrl:
                     type: string
-                  title:
+                  downloadUri:
                     type: string
                   productNum:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     PUTImportCompanyProductResponse:
       allOf:
@@ -13397,37 +12199,13 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   emailTemplate:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  viewPage:
-                    type: string
-                  editPage:
-                    type: string
-                  downloadUri:
-                    type: string
-                  userUri:
                     type: string
                   storeUrl:
                     type: string
-                  title:
+                  downloadUri:
                     type: string
                   productNum:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     GETCompanyProductResponse:
       allOf:
@@ -13441,37 +12219,13 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            viewPage:
-              type: string
-            editPage:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
               type: string
             storeUrl:
               type: string
-            title:
+            downloadUri:
               type: string
             productNum:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     DELETECompanyProductResponse:
       allOf:
@@ -13485,37 +12239,13 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             emailTemplate:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            viewPage:
-              type: string
-            editPage:
-              type: string
-            downloadUri:
-              type: string
-            userUri:
               type: string
             storeUrl:
               type: string
-            title:
+            downloadUri:
               type: string
             productNum:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageCompanyProductResponse:
       allOf:
@@ -13553,24 +12283,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PATCHCompanyResearchRequest:
       allOf:
         - type: object
@@ -13595,69 +12307,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHCompanyResearchResponse:
       allOf:
@@ -13684,69 +12333,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTCompanyResearchRequest:
       allOf:
         - type: object
@@ -13757,24 +12343,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     POSTCompanyResearchResponse:
       allOf:
         - type: object
@@ -13784,24 +12352,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportCompanyResearchRequest:
       allOf:
@@ -13818,24 +12368,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PUTImportCompanyResearchResponse:
       allOf:
         - type: object
@@ -13846,24 +12378,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     GETCompanyResearchResponse:
       allOf:
         - type: object
@@ -13873,24 +12387,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageCompanyResearchResponse:
       allOf:
@@ -13925,24 +12421,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PATCHCompanyServiceRequest:
       allOf:
         - type: object
@@ -13967,69 +12445,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHCompanyServiceResponse:
       allOf:
@@ -14056,69 +12471,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTCompanyServiceRequest:
       allOf:
         - type: object
@@ -14129,24 +12481,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     POSTCompanyServiceResponse:
       allOf:
         - type: object
@@ -14156,24 +12490,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportCompanyServiceRequest:
       allOf:
@@ -14190,24 +12506,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PUTImportCompanyServiceResponse:
       allOf:
         - type: object
@@ -14218,24 +12516,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     GETCompanyServiceResponse:
       allOf:
         - type: object
@@ -14245,24 +12525,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageCompanyServiceResponse:
       allOf:
@@ -14299,24 +12561,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PATCHUseCaseRequest:
       allOf:
         - type: object
@@ -14348,69 +12592,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHUseCaseResponse:
       allOf:
@@ -14444,69 +12625,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTUseCaseRequest:
       allOf:
         - type: object
@@ -14519,24 +12637,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     POSTUseCaseResponse:
       allOf:
         - type: object
@@ -14548,24 +12648,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportUseCaseRequest:
       allOf:
@@ -14584,24 +12666,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
     PUTImportUseCaseResponse:
       allOf:
         - type: object
@@ -14613,24 +12677,6 @@ components:
                   description:
                     type: string
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     GETUseCaseResponse:
       allOf:
@@ -14644,24 +12690,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
     DELETEUseCaseResponse:
       allOf:
         - type: object
@@ -14673,24 +12701,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageUseCaseResponse:
       allOf:
@@ -14728,10 +12738,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   joinUri:
                     type: string
                   webinarUrlAmericas:
@@ -14740,21 +12746,7 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
                   joinUrl:
-                    type: string
-                  pageUrlPk:
-                    type: string
-                  pageUrlId:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
                     type: string
     PATCHCompanyWebinarRequest:
       allOf:
@@ -14781,20 +12773,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setJoinUri:
               type: string
               nullable: true
@@ -14823,61 +12801,12 @@ components:
               type: string
             removeAllWebinarUrlEmea:
               type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
             setJoinUrl:
               type: string
               nullable: true
             removeJoinUrl:
               type: string
             removeAllJoinUrl:
-              type: string
-            setPageUrlPk:
-              type: string
-              nullable: true
-            removePageUrlPk:
-              type: string
-            removeAllPageUrlPk:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
               type: string
     PATCHCompanyWebinarResponse:
       allOf:
@@ -14904,20 +12833,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
             setJoinUri:
               type: string
               nullable: true
@@ -14946,61 +12861,12 @@ components:
               type: string
             removeAllWebinarUrlEmea:
               type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
             setJoinUrl:
               type: string
               nullable: true
             removeJoinUrl:
               type: string
             removeAllJoinUrl:
-              type: string
-            setPageUrlPk:
-              type: string
-              nullable: true
-            removePageUrlPk:
-              type: string
-            removeAllPageUrlPk:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
               type: string
     POSTCompanyWebinarRequest:
       allOf:
@@ -15012,10 +12878,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             joinUri:
               type: string
             webinarUrlAmericas:
@@ -15024,21 +12886,7 @@ components:
               type: string
             webinarUrlEmea:
               type: string
-            uri:
-              type: string
-            url:
-              type: string
             joinUrl:
-              type: string
-            pageUrlPk:
-              type: string
-            pageUrlId:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
               type: string
     POSTCompanyWebinarResponse:
       allOf:
@@ -15050,10 +12898,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             joinUri:
               type: string
             webinarUrlAmericas:
@@ -15062,21 +12906,7 @@ components:
               type: string
             webinarUrlEmea:
               type: string
-            uri:
-              type: string
-            url:
-              type: string
             joinUrl:
-              type: string
-            pageUrlPk:
-              type: string
-            pageUrlId:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
               type: string
     PUTImportCompanyWebinarRequest:
       allOf:
@@ -15093,10 +12923,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   joinUri:
                     type: string
                   webinarUrlAmericas:
@@ -15105,21 +12931,7 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
                   joinUrl:
-                    type: string
-                  pageUrlPk:
-                    type: string
-                  pageUrlId:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
                     type: string
     PUTImportCompanyWebinarResponse:
       allOf:
@@ -15131,10 +12943,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
                   joinUri:
                     type: string
                   webinarUrlAmericas:
@@ -15143,21 +12951,7 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
                   joinUrl:
-                    type: string
-                  pageUrlPk:
-                    type: string
-                  pageUrlId:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
                     type: string
     GETCompanyWebinarResponse:
       allOf:
@@ -15169,10 +12963,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
             joinUri:
               type: string
             webinarUrlAmericas:
@@ -15181,21 +12971,7 @@ components:
               type: string
             webinarUrlEmea:
               type: string
-            uri:
-              type: string
-            url:
-              type: string
             joinUrl:
-              type: string
-            pageUrlPk:
-              type: string
-            pageUrlId:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
               type: string
     EditPageCompanyWebinarResponse:
       allOf:
@@ -15233,24 +13009,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
                   websiteNum:
                     type: string
     PATCHCompanyWebsiteRequest:
@@ -15277,69 +13035,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
             setWebsiteNum:
               type: string
@@ -15373,69 +13068,6 @@ components:
               type: string
             removeAllPageId:
               type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
             setWebsiteNum:
               type: string
               nullable: true
@@ -15453,24 +13085,6 @@ components:
               type: string
             pageId:
               type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
-              type: string
             websiteNum:
               type: string
     POSTCompanyWebsiteResponse:
@@ -15482,24 +13096,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
             websiteNum:
               type: string
@@ -15518,24 +13114,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
                   websiteNum:
                     type: string
     PUTImportCompanyWebsiteResponse:
@@ -15548,24 +13126,6 @@ components:
                     type: string
                   pageId:
                     type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
-                    type: string
-                  title:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
-                    type: string
                   websiteNum:
                     type: string
     GETCompanyWebsiteResponse:
@@ -15577,24 +13137,6 @@ components:
             description:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
-              type: string
-            title:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
             websiteNum:
               type: string
@@ -15651,19 +13193,11 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  title:
+                  name:
                     type: string
                   author:
                     type: string
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
                     type: string
                   h1:
                     type: string
@@ -15676,14 +13210,6 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     PATCHSitePageRequest:
       allOf:
@@ -15780,12 +13306,12 @@ components:
               type: string
             removeAllLessonNum:
               type: string
-            setTitle:
+            setName:
               type: string
               nullable: true
-            removeTitle:
+            removeName:
               type: string
-            removeAllTitle:
+            removeAllName:
               type: string
             setAuthor:
               type: string
@@ -15800,34 +13326,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
               type: string
             setH1:
               type: string
@@ -15870,34 +13368,6 @@ components:
             removePageImageType:
               type: string
             removeAllPageImageType:
-              type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
               type: string
     PATCHSitePageResponse:
       allOf:
@@ -15994,12 +13464,12 @@ components:
               type: string
             removeAllLessonNum:
               type: string
-            setTitle:
+            setName:
               type: string
               nullable: true
-            removeTitle:
+            removeName:
               type: string
-            removeAllTitle:
+            removeAllName:
               type: string
             setAuthor:
               type: string
@@ -16014,34 +13484,6 @@ components:
             removePageId:
               type: string
             removeAllPageId:
-              type: string
-            setResourceUri:
-              type: string
-              nullable: true
-            removeResourceUri:
-              type: string
-            removeAllResourceUri:
-              type: string
-            setTemplateUri:
-              type: string
-              nullable: true
-            removeTemplateUri:
-              type: string
-            removeAllTemplateUri:
-              type: string
-            setUri:
-              type: string
-              nullable: true
-            removeUri:
-              type: string
-            removeAllUri:
-              type: string
-            setUrl:
-              type: string
-              nullable: true
-            removeUrl:
-              type: string
-            removeAllUrl:
               type: string
             setH1:
               type: string
@@ -16085,34 +13527,6 @@ components:
               type: string
             removeAllPageImageType:
               type: string
-            setObjectTitle:
-              type: string
-              nullable: true
-            removeObjectTitle:
-              type: string
-            removeAllObjectTitle:
-              type: string
-            setObjectId:
-              type: string
-              nullable: true
-            removeObjectId:
-              type: string
-            removeAllObjectId:
-              type: string
-            setId:
-              type: string
-              nullable: true
-            removeId:
-              type: string
-            removeAllId:
-              type: string
-            setPageUrlId:
-              type: string
-              nullable: true
-            removePageUrlId:
-              type: string
-            removeAllPageUrlId:
-              type: string
     POSTSitePageRequest:
       allOf:
         - type: object
@@ -16143,19 +13557,11 @@ components:
               type: string
             lessonNum:
               type: string
-            title:
+            name:
               type: string
             author:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
               type: string
             h1:
               type: string
@@ -16168,14 +13574,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     POSTSitePageResponse:
       allOf:
@@ -16207,19 +13605,11 @@ components:
               type: string
             lessonNum:
               type: string
-            title:
+            name:
               type: string
             author:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
               type: string
             h1:
               type: string
@@ -16232,14 +13622,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     PUTImportSitePageRequest:
       allOf:
@@ -16276,19 +13658,11 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  title:
+                  name:
                     type: string
                   author:
                     type: string
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
                     type: string
                   h1:
                     type: string
@@ -16301,14 +13675,6 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     PUTImportSitePageResponse:
       allOf:
@@ -16340,19 +13706,11 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  title:
+                  name:
                     type: string
                   author:
                     type: string
                   pageId:
-                    type: string
-                  resourceUri:
-                    type: string
-                  templateUri:
-                    type: string
-                  uri:
-                    type: string
-                  url:
                     type: string
                   h1:
                     type: string
@@ -16365,14 +13723,6 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
-                    type: string
-                  objectTitle:
-                    type: string
-                  objectId:
-                    type: string
-                  id:
-                    type: string
-                  pageUrlId:
                     type: string
     GETSitePageResponse:
       allOf:
@@ -16404,19 +13754,11 @@ components:
               type: string
             lessonNum:
               type: string
-            title:
+            name:
               type: string
             author:
               type: string
             pageId:
-              type: string
-            resourceUri:
-              type: string
-            templateUri:
-              type: string
-            uri:
-              type: string
-            url:
               type: string
             h1:
               type: string
@@ -16429,14 +13771,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            objectTitle:
-              type: string
-            objectId:
-              type: string
-            id:
-              type: string
-            pageUrlId:
               type: string
     EditPageSitePageResponse:
       allOf:
@@ -16485,7 +13819,7 @@ components:
                     type: boolean
                   seeDeleted:
                     type: boolean
-                  objectTitle:
+                  displayName:
                     type: string
     PATCHSiteUserRequest:
       allOf:
@@ -16564,12 +13898,12 @@ components:
               type: boolean
             removeAllSeeDeleted:
               type: boolean
-            setObjectTitle:
+            setDisplayName:
               type: string
               nullable: true
-            removeObjectTitle:
+            removeDisplayName:
               type: string
-            removeAllObjectTitle:
+            removeAllDisplayName:
               type: string
     PATCHSiteUserResponse:
       allOf:
@@ -16648,12 +13982,12 @@ components:
               type: boolean
             removeAllSeeDeleted:
               type: boolean
-            setObjectTitle:
+            setDisplayName:
               type: string
               nullable: true
-            removeObjectTitle:
+            removeDisplayName:
               type: string
-            removeAllObjectTitle:
+            removeAllDisplayName:
               type: string
     POSTSiteUserRequest:
       allOf:
@@ -16679,7 +14013,7 @@ components:
               type: boolean
             seeDeleted:
               type: boolean
-            objectTitle:
+            displayName:
               type: string
     POSTSiteUserResponse:
       allOf:
@@ -16705,7 +14039,7 @@ components:
               type: boolean
             seeDeleted:
               type: boolean
-            objectTitle:
+            displayName:
               type: string
     EditPageSiteUserResponse:
       allOf:

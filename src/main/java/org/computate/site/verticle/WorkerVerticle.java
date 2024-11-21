@@ -680,30 +680,28 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
 			initializeApiService(apiIotService);
 
-			// apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout).onSuccess(q1 -> {
-			// 	apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase).onSuccess(q2 -> {
-			// 		apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse).onSuccess(q3 -> {
-			// 			apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q4 -> {
+			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout).onSuccess(q1 -> {
+				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase).onSuccess(q2 -> {
+					apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse).onSuccess(q3 -> {
+						apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage).onSuccess(q4 -> {
 							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct).onSuccess(q5 -> {
-								// apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q6 -> {
-								// 	apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar).onSuccess(q7 -> {
-								// 		apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
-								// 			apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/shop/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
-								// 				apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
-								// 					apiIotService.importTimer(Paths.get(templatePath, "/en-us/shop/iot-service"), vertx, siteRequest, IotService.CLASS_SIMPLE_NAME, IotService.CLASS_API_ADDRESS_IotService).onSuccess(q11 -> {
+								apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent).onSuccess(q6 -> {
+									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar).onSuccess(q7 -> {
+										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
+											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
+												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
 														LOG.info("data import complete");
 														promise.complete();
-								// 					}).onFailure(ex -> promise.fail(ex));
-								// 				}).onFailure(ex -> promise.fail(ex));
-								// 			}).onFailure(ex -> promise.fail(ex));
-								// 		}).onFailure(ex -> promise.fail(ex));
-								// 	}).onFailure(ex -> promise.fail(ex));
-								// }).onFailure(ex -> promise.fail(ex));
+												}).onFailure(ex -> promise.fail(ex));
+											}).onFailure(ex -> promise.fail(ex));
+										}).onFailure(ex -> promise.fail(ex));
+									}).onFailure(ex -> promise.fail(ex));
+								}).onFailure(ex -> promise.fail(ex));
 							}).onFailure(ex -> promise.fail(ex));
-			// 			}).onFailure(ex -> promise.fail(ex));
-			// 		}).onFailure(ex -> promise.fail(ex));
-			// 	}).onFailure(ex -> promise.fail(ex));
-			// }).onFailure(ex -> promise.fail(ex));
+						}).onFailure(ex -> promise.fail(ex));
+					}).onFailure(ex -> promise.fail(ex));
+				}).onFailure(ex -> promise.fail(ex));
+			}).onFailure(ex -> promise.fail(ex));
 		}
 		else {
 			LOG.info(importDataSkip);

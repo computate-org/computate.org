@@ -485,7 +485,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public Future<CompanyProduct> patchCompanyProductFuture(CompanyProduct o, Boolean inheritPk) {
+	public Future<CompanyProduct> patchCompanyProductFuture(CompanyProduct o, Boolean pageId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<CompanyProduct> promise = Promise.promise();
 
@@ -676,7 +676,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public Future<CompanyProduct> postCompanyProductFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<CompanyProduct> postCompanyProductFuture(SiteRequest siteRequest, Boolean pageId) {
 		Promise<CompanyProduct> promise = Promise.promise();
 
 		try {
@@ -1109,9 +1109,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				apiRequest.setNumPATCH(0L);
 				apiRequest.initDeepApiRequest(siteRequest);
 				siteRequest.setApiRequest_(apiRequest);
-				String inheritPk = Optional.ofNullable(body.getString(CompanyProduct.VAR_id)).orElse(body.getString(CompanyProduct.VAR_id));
-				body.put("inheritPk", inheritPk);
-				body.put("inheritPk", body.getValue("id"));
+				String pageId = Optional.ofNullable(body.getString(CompanyProduct.VAR_pageId)).orElse(body.getString(CompanyProduct.VAR_solrId));
 				if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
 					siteRequest.getRequestVars().put( "refresh", "false" );
 				}
@@ -1121,7 +1119,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				searchList.q("*:*");
 				searchList.setC(CompanyProduct.class);
 				searchList.fq("archived_docvalues_boolean:false");
-				searchList.fq("inheritPk_docvalues_string:" + SearchTool.escapeQueryChars(inheritPk));
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
 				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 					try {
 						if(searchList.size() >= 1) {
@@ -1157,13 +1155,13 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								} else {
 									o2.persistForClass(f, bodyVal);
 									o2.relateForClass(f, bodyVal);
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 								}
 							}
 							for(String f : Optional.ofNullable(o.getSaves()).orElse(new ArrayList<>())) {
 								if(!body.fieldNames().contains(f)) {
-									if(!StringUtils.containsAny(f, "id", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
+									if(!StringUtils.containsAny(f, "pageId", "created", "setCreated") && !Objects.equals(o.obtainForClass(f), o2.obtainForClass(f)))
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
@@ -1173,7 +1171,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								}
 								siteRequest.setJsonObject(body2);
 								patchCompanyProductFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyProduct {} succeeded, modified CompanyProduct. ", body.getValue(CompanyProduct.VAR_id));
+									LOG.debug("Import CompanyProduct {} succeeded, modified CompanyProduct. ", body.getValue(CompanyProduct.VAR_pageId));
 									eventHandler.handle(Future.succeededFuture());
 								}).onFailure(ex -> {
 									LOG.error(String.format("putimportCompanyProductFuture failed. "), ex);
@@ -1184,7 +1182,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							}
 						} else {
 							postCompanyProductFuture(siteRequest, true).onSuccess(b -> {
-								LOG.debug("Import CompanyProduct {} succeeded, created new CompanyProduct. ", body.getValue(CompanyProduct.VAR_id));
+								LOG.debug("Import CompanyProduct {} succeeded, created new CompanyProduct. ", body.getValue(CompanyProduct.VAR_pageId));
 								eventHandler.handle(Future.succeededFuture());
 							}).onFailure(ex -> {
 								LOG.error(String.format("putimportCompanyProductFuture failed. "), ex);
@@ -1406,7 +1404,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateSearchPageCompanyProduct(ServiceRequest serviceRequest) {
-		return "en-us/search/product/CompanyProductSearch.htm";
+		return "en-us/search/product/CompanyProductSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1578,7 +1576,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateEditPageCompanyProduct(ServiceRequest serviceRequest) {
-		return "en-us/edit/product/CompanyProductEdit.htm";
+		return "en-us/edit/product/CompanyProductEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2054,7 +2052,9 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 
 			String pageId = serviceRequest.getParams().getJsonObject("path").getString("pageId");
-			searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
+			if(pageId != null) {
+				searchList.fq("pageId_docvalues_string:" + SearchTool.escapeQueryChars(pageId));
+			}
 
 			for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
 				Object paramValuesObject = serviceRequest.getParams().getJsonObject("query").getValue(paramName);
@@ -2195,7 +2195,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchCompanyProduct2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -2345,7 +2345,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(id_docvalues_string:%s)", o.obtainForClass("id"));
+				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -2386,36 +2386,24 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 			CompanyProduct page = new CompanyProduct();
 			page.setSiteRequest_((SiteRequest)siteRequest);
-			page.persistForClass(CompanyProduct.VAR_resourceUri, resourceUri);
-			page.persistForClass(CompanyProduct.VAR_templateUri, templateUri);
 
-			page.persistForClass(CompanyProduct.VAR_inheritPk, CompanyProduct.staticSetInheritPk(siteRequest2, (String)result.get(CompanyProduct.VAR_inheritPk)));
 			page.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created)));
 			page.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
-			page.persistForClass(CompanyProduct.VAR_sessionId, CompanyProduct.staticSetSessionId(siteRequest2, (String)result.get(CompanyProduct.VAR_sessionId)));
-			page.persistForClass(CompanyProduct.VAR_userKey, CompanyProduct.staticSetUserKey(siteRequest2, (String)result.get(CompanyProduct.VAR_userKey)));
-			page.persistForClass(CompanyProduct.VAR_objectId, CompanyProduct.staticSetObjectId(siteRequest2, (String)result.get(CompanyProduct.VAR_objectId)));
-			page.persistForClass(CompanyProduct.VAR_id, CompanyProduct.staticSetId(siteRequest2, (String)result.get(CompanyProduct.VAR_id)));
+			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_title)));
+			page.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
+			page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
 			page.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
 			page.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
 			page.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
 			page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
-			page.persistForClass(CompanyProduct.VAR_resourceUri, CompanyProduct.staticSetResourceUri(siteRequest2, (String)result.get(CompanyProduct.VAR_resourceUri)));
-			page.persistForClass(CompanyProduct.VAR_templateUri, CompanyProduct.staticSetTemplateUri(siteRequest2, (String)result.get(CompanyProduct.VAR_templateUri)));
 			page.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
-			page.persistForClass(CompanyProduct.VAR_uri, CompanyProduct.staticSetUri(siteRequest2, (String)result.get(CompanyProduct.VAR_uri)));
-			page.persistForClass(CompanyProduct.VAR_url, CompanyProduct.staticSetUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_url)));
-			page.persistForClass(CompanyProduct.VAR_downloadUri, CompanyProduct.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUri)));
-			page.persistForClass(CompanyProduct.VAR_userUri, CompanyProduct.staticSetUserUri(siteRequest2, (String)result.get(CompanyProduct.VAR_userUri)));
 			page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
-			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_title)));
+			page.persistForClass(CompanyProduct.VAR_downloadUri, CompanyProduct.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUri)));
 			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {
-					String uri = page.getUri();
 					JsonObject data = JsonObject.mapFrom(result);
-					data.put(CompanyProduct.VAR_id, uri);
 					promise.complete(data);
 				} catch(Exception ex) {
 					LOG.error(String.format(importModelFail, classSimpleName), ex);

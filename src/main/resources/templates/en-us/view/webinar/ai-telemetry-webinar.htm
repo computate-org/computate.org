@@ -1,12 +1,12 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
-    <meta name="site:pageId" content="ai-telemetry-webinar"/>
-    <meta name="site:uri" content="/en-us/webinar/{{ pageId }}"/>
-    <meta name="site:joinUri" content="/en-us/join/webinar/{{ pageId }}"/>
-    <meta name="site:name" content="AI Telemetry Community Webinar"/>
-    <meta name="site:title" content="{{ name }}"/>
-    <meta name="site:description" content="Learn how to Computate as we build the AI Telemetry open source project with the Red Hat Research team built with the Computate platform! "/>
-    <meta name="site:courseNum" content="1"/>
+    <meta name="result.pageId" content="{{ result.shortFileName }}"/>
+    <meta name="result.uri" content="/en-us/webinar/{{ pageId }}"/>
+    <meta name="result.joinUri" content="/en-us/join/webinar/{{ pageId }}"/>
+    <meta name="result.name" content="AI Telemetry Community Webinar"/>
+    <meta name="result.title" content="{{ name }}"/>
+    <meta name="result.description" content="Learn how to Computate as we build the AI Telemetry open source project with the Red Hat Research team built with the Computate platform! "/>
+    <meta name="result.courseNum" content="1"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 

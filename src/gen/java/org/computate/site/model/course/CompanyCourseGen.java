@@ -171,46 +171,56 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyCourse.class);
 
-	public static final String CompanyCourse_Description_enUS = "Take an exciting hands-on course on your own computer with computate";
-	public static final String CompanyCourse_AName_enUS = "a course";
-	public static final String CompanyCourse_This_enUS = "this ";
-	public static final String CompanyCourse_ThisName_enUS = "this course";
-	public static final String CompanyCourse_A_enUS = "a ";
-	public static final String CompanyCourse_TheName_enUS = "the course";
-	public static final String CompanyCourse_SingularName_enUS = "course";
-	public static final String CompanyCourse_PluralName_enUS = "courses";
-	public static final String CompanyCourse_NameActual_enUS = "current course";
-	public static final String CompanyCourse_AllName_enUS = "all courses";
-	public static final String CompanyCourse_SearchAllNameBy_enUS = "search courses by ";
-	public static final String CompanyCourse_Title_enUS = "courses";
-	public static final String CompanyCourse_ThePluralName_enUS = "the courses";
-	public static final String CompanyCourse_NoNameFound_enUS = "no course found";
-	public static final String CompanyCourse_ApiUri_enUS = "/en-us/api/course";
-	public static final String CompanyCourse_ApiUriSearchPage_enUS = "/en-us/search/course";
-	public static final String CompanyCourse_OfName_enUS = "of course";
-	public static final String CompanyCourse_ANameAdjective_enUS = "a course";
-	public static final String CompanyCourse_NameAdjectiveSingular_enUS = "course";
-	public static final String CompanyCourse_NameAdjectivePlural_enUS = "courses";
-	public static final String Search_enUS_Uri = "/en-us/api/course";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/course-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/course/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/course/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/course";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/course-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/course";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/course-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/course-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/course-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/course";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/course-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/course/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/course/{objectId}-999.png";
-	public static final String DisplayPage_enUS_Uri = "/en-us/shop/course/{objectId}";
-	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/course/{objectId}-999.png";
-	public static final String UserPage_enUS_Uri = "/en-us/use/course/{objectId}";
-	public static final String UserPage_enUS_ImageUri = "/png/en-us/use/course/{objectId}-999.png";
+	public static final String Description_enUS = "Take an exciting hands-on course on your own computer with computate";
+	public static final String AName_enUS = "a course";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this course";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "the course";
+	public static final String SingularName_enUS = "course";
+	public static final String PluralName_enUS = "courses";
+	public static final String NameActual_enUS = "current course";
+	public static final String AllName_enUS = "all courses";
+	public static final String SearchAllNameBy_enUS = "search courses by ";
+	public static final String Title_enUS = "courses";
+	public static final String ThePluralName_enUS = "the courses";
+	public static final String NoNameFound_enUS = "no course found";
+	public static final String ApiUri_enUS = "/en-us/api/course";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/course";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/course/{pageId}";
+	public static final String OfName_enUS = "of course";
+	public static final String ANameAdjective_enUS = "a course";
+	public static final String NameAdjectiveSingular_enUS = "course";
+	public static final String NameAdjectivePlural_enUS = "courses";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/course";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/course";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/course";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/course/{pageId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/course/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/course/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/course";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/course";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/course";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/course";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/course";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/course";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/course-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/course-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/course-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/course";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/course";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/course";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/course/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/course/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/course/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/course/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/course/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/course/%s";
+	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/course/{pageId}";
+	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/course/%s";
+	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/course/%s";
 
-	public static final String CompanyCourse_Icon = "<i class=\"fa-regular fa-notebook\"></i>";
+	public static final String Icon = "<i class=\"fa-regular fa-notebook\"></i>";
 
 	//////////
 	// name //
@@ -457,118 +467,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return pageId;
 	}
 
-	/////////////////
-	// resourceUri //
-	/////////////////
-
-
-	/**	 The entity resourceUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String resourceUri;
-
-	/**	<br> The entity resourceUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resourceUri(Wrap<String> w);
-
-	public String getResourceUri() {
-		return resourceUri;
-	}
-	public void setResourceUri(String o) {
-		this.resourceUri = CompanyCourse.staticSetResourceUri(siteRequest_, o);
-	}
-	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyCourse resourceUriInit() {
-		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
-		if(resourceUri == null) {
-			_resourceUri(resourceUriWrap);
-			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
-				setResourceUri(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchResourceUri(siteRequest_, CompanyCourse.staticSetResourceUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlResourceUri() {
-		return resourceUri;
-	}
-
-	/////////////////
-	// templateUri //
-	/////////////////
-
-
-	/**	 The entity templateUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String templateUri;
-
-	/**	<br> The entity templateUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _templateUri(Wrap<String> w);
-
-	public String getTemplateUri() {
-		return templateUri;
-	}
-	public void setTemplateUri(String o) {
-		this.templateUri = CompanyCourse.staticSetTemplateUri(siteRequest_, o);
-	}
-	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyCourse templateUriInit() {
-		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
-		if(templateUri == null) {
-			_templateUri(templateUriWrap);
-			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
-				setTemplateUri(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchTemplateUri(siteRequest_, CompanyCourse.staticSetTemplateUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlTemplateUri() {
-		return templateUri;
-	}
-
 	///////////////////
 	// emailTemplate //
 	///////////////////
@@ -625,228 +523,112 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return emailTemplate;
 	}
 
-	/////////
-	// uri //
-	/////////
-
-
-	/**	 The entity uri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String uri;
-
-	/**	<br> The entity uri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uri(Wrap<String> w);
-
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String o) {
-		this.uri = CompanyCourse.staticSetUri(siteRequest_, o);
-	}
-	public static String staticSetUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyCourse uriInit() {
-		Wrap<String> uriWrap = new Wrap<String>().var("uri");
-		if(uri == null) {
-			_uri(uriWrap);
-			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
-				setUri(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchUri(siteRequest_, CompanyCourse.staticSetUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUri() {
-		return uri;
-	}
-
-	/////////
-	// url //
-	/////////
-
-
-	/**	 The entity url
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String url;
-
-	/**	<br> The entity url
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _url(Wrap<String> w);
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String o) {
-		this.url = CompanyCourse.staticSetUrl(siteRequest_, o);
-	}
-	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyCourse urlInit() {
-		Wrap<String> urlWrap = new Wrap<String>().var("url");
-		if(url == null) {
-			_url(urlWrap);
-			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
-				setUrl(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchUrl(siteRequest_, CompanyCourse.staticSetUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlUrl() {
-		return url;
-	}
-
 	/////////////////
-	// downloadUri //
+	// displayPage //
 	/////////////////
 
 
-	/**	 The entity downloadUri
+	/**	 The entity displayPage
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String downloadUri;
+	protected String displayPage;
 
-	/**	<br> The entity downloadUri
+	/**	<br> The entity displayPage
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:downloadUri">Find the entity downloadUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:displayPage">Find the entity displayPage in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _downloadUri(Wrap<String> w);
+	protected abstract void _displayPage(Wrap<String> w);
 
-	public String getDownloadUri() {
-		return downloadUri;
+	public String getDisplayPage() {
+		return displayPage;
 	}
-	public void setDownloadUri(String o) {
-		this.downloadUri = CompanyCourse.staticSetDownloadUri(siteRequest_, o);
+	public void setDisplayPage(String o) {
+		this.displayPage = CompanyCourse.staticSetDisplayPage(siteRequest_, o);
 	}
-	public static String staticSetDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetDisplayPage(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse downloadUriInit() {
-		Wrap<String> downloadUriWrap = new Wrap<String>().var("downloadUri");
-		if(downloadUri == null) {
-			_downloadUri(downloadUriWrap);
-			Optional.ofNullable(downloadUriWrap.getO()).ifPresent(o -> {
-				setDownloadUri(o);
+	protected CompanyCourse displayPageInit() {
+		Wrap<String> displayPageWrap = new Wrap<String>().var("displayPage");
+		if(displayPage == null) {
+			_displayPage(displayPageWrap);
+			Optional.ofNullable(displayPageWrap.getO()).ifPresent(o -> {
+				setDisplayPage(o);
 			});
 		}
 		return (CompanyCourse)this;
 	}
 
-	public static String staticSearchDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchDisplayPage(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrDisplayPage(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDownloadUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchDownloadUri(siteRequest_, CompanyCourse.staticSetDownloadUri(siteRequest_, o)).toString();
+	public static String staticSearchFqDisplayPage(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchDisplayPage(siteRequest_, CompanyCourse.staticSetDisplayPage(siteRequest_, o)).toString();
 	}
 
-	public String sqlDownloadUri() {
-		return downloadUri;
+	public String sqlDisplayPage() {
+		return displayPage;
 	}
 
-	/////////////
-	// userUri //
-	/////////////
+	//////////////
+	// editPage //
+	//////////////
 
 
-	/**	 The entity userUri
+	/**	 The entity editPage
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String userUri;
+	protected String editPage;
 
-	/**	<br> The entity userUri
+	/**	<br> The entity editPage
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:userUri">Find the entity userUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:editPage">Find the entity editPage in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _userUri(Wrap<String> w);
+	protected abstract void _editPage(Wrap<String> w);
 
-	public String getUserUri() {
-		return userUri;
+	public String getEditPage() {
+		return editPage;
 	}
-	public void setUserUri(String o) {
-		this.userUri = CompanyCourse.staticSetUserUri(siteRequest_, o);
+	public void setEditPage(String o) {
+		this.editPage = CompanyCourse.staticSetEditPage(siteRequest_, o);
 	}
-	public static String staticSetUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetEditPage(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse userUriInit() {
-		Wrap<String> userUriWrap = new Wrap<String>().var("userUri");
-		if(userUri == null) {
-			_userUri(userUriWrap);
-			Optional.ofNullable(userUriWrap.getO()).ifPresent(o -> {
-				setUserUri(o);
+	protected CompanyCourse editPageInit() {
+		Wrap<String> editPageWrap = new Wrap<String>().var("editPage");
+		if(editPage == null) {
+			_editPage(editPageWrap);
+			Optional.ofNullable(editPageWrap.getO()).ifPresent(o -> {
+				setEditPage(o);
 			});
 		}
 		return (CompanyCourse)this;
 	}
 
-	public static String staticSearchUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchEditPage(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrUserUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrEditPage(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqUserUri(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchUserUri(siteRequest_, CompanyCourse.staticSetUserUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUserUri() {
-		return userUri;
+	public static String staticSearchFqEditPage(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchEditPage(siteRequest_, CompanyCourse.staticSetEditPage(siteRequest_, o)).toString();
 	}
 
 	//////////////
@@ -905,60 +687,60 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return storeUrl;
 	}
 
-	///////////
-	// title //
-	///////////
+	/////////////////
+	// downloadUri //
+	/////////////////
 
 
-	/**	 The entity title
+	/**	 The entity downloadUri
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String title;
+	protected String downloadUri;
 
-	/**	<br> The entity title
+	/**	<br> The entity downloadUri
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:downloadUri">Find the entity downloadUri in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _title(Wrap<String> w);
+	protected abstract void _downloadUri(Wrap<String> w);
 
-	public String getTitle() {
-		return title;
+	public String getDownloadUri() {
+		return downloadUri;
 	}
-	public void setTitle(String o) {
-		this.title = CompanyCourse.staticSetTitle(siteRequest_, o);
+	public void setDownloadUri(String o) {
+		this.downloadUri = CompanyCourse.staticSetDownloadUri(siteRequest_, o);
 	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
+	public static String staticSetDownloadUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyCourse titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
+	protected CompanyCourse downloadUriInit() {
+		Wrap<String> downloadUriWrap = new Wrap<String>().var("downloadUri");
+		if(downloadUri == null) {
+			_downloadUri(downloadUriWrap);
+			Optional.ofNullable(downloadUriWrap.getO()).ifPresent(o -> {
+				setDownloadUri(o);
 			});
 		}
 		return (CompanyCourse)this;
 	}
 
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
+	public static String staticSearchDownloadUri(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrDownloadUri(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchTitle(siteRequest_, CompanyCourse.staticSetTitle(siteRequest_, o)).toString();
+	public static String staticSearchFqDownloadUri(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchDownloadUri(siteRequest_, CompanyCourse.staticSetDownloadUri(siteRequest_, o)).toString();
 	}
 
-	public String sqlTitle() {
-		return title;
+	public String sqlDownloadUri() {
+		return downloadUri;
 	}
 
 	///////////////
@@ -1025,22 +807,78 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return courseNum;
 	}
 
+	///////////
+	// title //
+	///////////
+
+
+	/**	 The entity title
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String title;
+
+	/**	<br> The entity title
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _title(Wrap<String> w);
+
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String o) {
+		this.title = CompanyCourse.staticSetTitle(siteRequest_, o);
+	}
+	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyCourse titleInit() {
+		Wrap<String> titleWrap = new Wrap<String>().var("title");
+		if(title == null) {
+			_title(titleWrap);
+			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
+				setTitle(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchTitle(siteRequest_, CompanyCourse.staticSetTitle(siteRequest_, o)).toString();
+	}
+
+	public String sqlTitle() {
+		return title;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyCourse(SiteRequest siteRequest_) {
+	public Future<CompanyCourseGen<DEV>> promiseDeepCompanyCourse(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyCourse();
 	}
 
-	public Future<Void> promiseDeepCompanyCourse() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyCourseGen<DEV>> promiseDeepCompanyCourse() {
+		Promise<CompanyCourseGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyCourse(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -1058,16 +896,13 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				descriptionInit();
 				priceInit();
 				pageIdInit();
-				resourceUriInit();
-				templateUriInit();
 				emailTemplateInit();
-				uriInit();
-				urlInit();
-				downloadUriInit();
-				userUriInit();
+				displayPageInit();
+				editPageInit();
 				storeUrlInit();
-				titleInit();
+				downloadUriInit();
 				courseNumInit();
+				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -1081,7 +916,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyCourseGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyCourse(siteRequest_);
 	}
 
@@ -1129,26 +964,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return oCompanyCourse.price;
 			case "pageId":
 				return oCompanyCourse.pageId;
-			case "resourceUri":
-				return oCompanyCourse.resourceUri;
-			case "templateUri":
-				return oCompanyCourse.templateUri;
 			case "emailTemplate":
 				return oCompanyCourse.emailTemplate;
-			case "uri":
-				return oCompanyCourse.uri;
-			case "url":
-				return oCompanyCourse.url;
-			case "downloadUri":
-				return oCompanyCourse.downloadUri;
-			case "userUri":
-				return oCompanyCourse.userUri;
+			case "displayPage":
+				return oCompanyCourse.displayPage;
+			case "editPage":
+				return oCompanyCourse.editPage;
 			case "storeUrl":
 				return oCompanyCourse.storeUrl;
-			case "title":
-				return oCompanyCourse.title;
+			case "downloadUri":
+				return oCompanyCourse.downloadUri;
 			case "courseNum":
 				return oCompanyCourse.courseNum;
+			case "title":
+				return oCompanyCourse.title;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -1196,26 +1025,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSetPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyCourse.staticSetPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyCourse.staticSetResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyCourse.staticSetTemplateUri(siteRequest_, o);
 		case "emailTemplate":
 			return CompanyCourse.staticSetEmailTemplate(siteRequest_, o);
-		case "uri":
-			return CompanyCourse.staticSetUri(siteRequest_, o);
-		case "url":
-			return CompanyCourse.staticSetUrl(siteRequest_, o);
-		case "downloadUri":
-			return CompanyCourse.staticSetDownloadUri(siteRequest_, o);
-		case "userUri":
-			return CompanyCourse.staticSetUserUri(siteRequest_, o);
+		case "displayPage":
+			return CompanyCourse.staticSetDisplayPage(siteRequest_, o);
+		case "editPage":
+			return CompanyCourse.staticSetEditPage(siteRequest_, o);
 		case "storeUrl":
 			return CompanyCourse.staticSetStoreUrl(siteRequest_, o);
-		case "title":
-			return CompanyCourse.staticSetTitle(siteRequest_, o);
+		case "downloadUri":
+			return CompanyCourse.staticSetDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSetCourseNum(siteRequest_, o);
+		case "title":
+			return CompanyCourse.staticSetTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1238,26 +1061,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchPrice(siteRequest_, (BigDecimal)o);
 		case "pageId":
 			return CompanyCourse.staticSearchPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyCourse.staticSearchResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyCourse.staticSearchTemplateUri(siteRequest_, (String)o);
 		case "emailTemplate":
 			return CompanyCourse.staticSearchEmailTemplate(siteRequest_, (String)o);
-		case "uri":
-			return CompanyCourse.staticSearchUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyCourse.staticSearchUrl(siteRequest_, (String)o);
-		case "downloadUri":
-			return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
-		case "userUri":
-			return CompanyCourse.staticSearchUserUri(siteRequest_, (String)o);
+		case "displayPage":
+			return CompanyCourse.staticSearchDisplayPage(siteRequest_, (String)o);
+		case "editPage":
+			return CompanyCourse.staticSearchEditPage(siteRequest_, (String)o);
 		case "storeUrl":
 			return CompanyCourse.staticSearchStoreUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyCourse.staticSearchTitle(siteRequest_, (String)o);
+		case "downloadUri":
+			return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
+		case "title":
+			return CompanyCourse.staticSearchTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1280,26 +1097,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchStrPrice(siteRequest_, (Double)o);
 		case "pageId":
 			return CompanyCourse.staticSearchStrPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyCourse.staticSearchStrResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyCourse.staticSearchStrTemplateUri(siteRequest_, (String)o);
 		case "emailTemplate":
 			return CompanyCourse.staticSearchStrEmailTemplate(siteRequest_, (String)o);
-		case "uri":
-			return CompanyCourse.staticSearchStrUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyCourse.staticSearchStrUrl(siteRequest_, (String)o);
-		case "downloadUri":
-			return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
-		case "userUri":
-			return CompanyCourse.staticSearchStrUserUri(siteRequest_, (String)o);
+		case "displayPage":
+			return CompanyCourse.staticSearchStrDisplayPage(siteRequest_, (String)o);
+		case "editPage":
+			return CompanyCourse.staticSearchStrEditPage(siteRequest_, (String)o);
 		case "storeUrl":
 			return CompanyCourse.staticSearchStrStoreUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyCourse.staticSearchStrTitle(siteRequest_, (String)o);
+		case "downloadUri":
+			return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+		case "title":
+			return CompanyCourse.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1322,26 +1133,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchFqPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyCourse.staticSearchFqPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyCourse.staticSearchFqResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyCourse.staticSearchFqTemplateUri(siteRequest_, o);
 		case "emailTemplate":
 			return CompanyCourse.staticSearchFqEmailTemplate(siteRequest_, o);
-		case "uri":
-			return CompanyCourse.staticSearchFqUri(siteRequest_, o);
-		case "url":
-			return CompanyCourse.staticSearchFqUrl(siteRequest_, o);
-		case "downloadUri":
-			return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
-		case "userUri":
-			return CompanyCourse.staticSearchFqUserUri(siteRequest_, o);
+		case "displayPage":
+			return CompanyCourse.staticSearchFqDisplayPage(siteRequest_, o);
+		case "editPage":
+			return CompanyCourse.staticSearchFqEditPage(siteRequest_, o);
 		case "storeUrl":
 			return CompanyCourse.staticSearchFqStoreUrl(siteRequest_, o);
-		case "title":
-			return CompanyCourse.staticSearchFqTitle(siteRequest_, o);
+		case "downloadUri":
+			return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
+		case "title":
+			return CompanyCourse.staticSearchFqTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1394,47 +1199,17 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("pageId");
 				return val;
-			} else if("resourceuri".equals(varLower)) {
-				if(val instanceof String) {
-					setResourceUri((String)val);
-				}
-				saves.add("resourceUri");
-				return val;
-			} else if("templateuri".equals(varLower)) {
-				if(val instanceof String) {
-					setTemplateUri((String)val);
-				}
-				saves.add("templateUri");
-				return val;
 			} else if("emailtemplate".equals(varLower)) {
 				if(val instanceof String) {
 					setEmailTemplate((String)val);
 				}
 				saves.add("emailTemplate");
 				return val;
-			} else if("uri".equals(varLower)) {
+			} else if("displaypage".equals(varLower)) {
 				if(val instanceof String) {
-					setUri((String)val);
+					setDisplayPage((String)val);
 				}
-				saves.add("uri");
-				return val;
-			} else if("url".equals(varLower)) {
-				if(val instanceof String) {
-					setUrl((String)val);
-				}
-				saves.add("url");
-				return val;
-			} else if("downloaduri".equals(varLower)) {
-				if(val instanceof String) {
-					setDownloadUri((String)val);
-				}
-				saves.add("downloadUri");
-				return val;
-			} else if("useruri".equals(varLower)) {
-				if(val instanceof String) {
-					setUserUri((String)val);
-				}
-				saves.add("userUri");
+				saves.add("displayPage");
 				return val;
 			} else if("storeurl".equals(varLower)) {
 				if(val instanceof String) {
@@ -1442,11 +1217,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("storeUrl");
 				return val;
-			} else if("title".equals(varLower)) {
+			} else if("downloaduri".equals(varLower)) {
 				if(val instanceof String) {
-					setTitle((String)val);
+					setDownloadUri((String)val);
 				}
-				saves.add("title");
+				saves.add("downloadUri");
 				return val;
 			} else if("coursenum".equals(varLower)) {
 				if(val instanceof Integer) {
@@ -1455,6 +1230,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 					setCourseNum(val == null ? null : val.toString());
 				}
 				saves.add("courseNum");
+				return val;
+			} else if("title".equals(varLower)) {
+				if(val instanceof String) {
+					setTitle((String)val);
+				}
+				saves.add("title");
 				return val;
 		} else {
 			return super.persistBaseResult(var, val);
@@ -1497,46 +1278,22 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 					oCompanyCourse.setPageId(pageId);
 			}
 
-			if(saves.contains("resourceUri")) {
-				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
-				if(resourceUri != null)
-					oCompanyCourse.setResourceUri(resourceUri);
-			}
-
-			if(saves.contains("templateUri")) {
-				String templateUri = (String)doc.get("templateUri_docvalues_string");
-				if(templateUri != null)
-					oCompanyCourse.setTemplateUri(templateUri);
-			}
-
 			if(saves.contains("emailTemplate")) {
 				String emailTemplate = (String)doc.get("emailTemplate_docvalues_string");
 				if(emailTemplate != null)
 					oCompanyCourse.setEmailTemplate(emailTemplate);
 			}
 
-			if(saves.contains("uri")) {
-				String uri = (String)doc.get("uri_docvalues_string");
-				if(uri != null)
-					oCompanyCourse.setUri(uri);
+			if(saves.contains("displayPage")) {
+				String displayPage = (String)doc.get("displayPage_docvalues_string");
+				if(displayPage != null)
+					oCompanyCourse.setDisplayPage(displayPage);
 			}
 
-			if(saves.contains("url")) {
-				String url = (String)doc.get("url_docvalues_string");
-				if(url != null)
-					oCompanyCourse.setUrl(url);
-			}
-
-			if(saves.contains("downloadUri")) {
-				String downloadUri = (String)doc.get("downloadUri_docvalues_string");
-				if(downloadUri != null)
-					oCompanyCourse.setDownloadUri(downloadUri);
-			}
-
-			if(saves.contains("userUri")) {
-				String userUri = (String)doc.get("userUri_docvalues_string");
-				if(userUri != null)
-					oCompanyCourse.setUserUri(userUri);
+			if(saves.contains("editPage")) {
+				String editPage = (String)doc.get("editPage_docvalues_string");
+				if(editPage != null)
+					oCompanyCourse.setEditPage(editPage);
 			}
 
 			if(saves.contains("storeUrl")) {
@@ -1545,16 +1302,22 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 					oCompanyCourse.setStoreUrl(storeUrl);
 			}
 
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oCompanyCourse.setTitle(title);
+			if(saves.contains("downloadUri")) {
+				String downloadUri = (String)doc.get("downloadUri_docvalues_string");
+				if(downloadUri != null)
+					oCompanyCourse.setDownloadUri(downloadUri);
 			}
 
 			if(saves.contains("courseNum")) {
 				Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
 				if(courseNum != null)
 					oCompanyCourse.setCourseNum(courseNum);
+			}
+
+			if(saves.contains("title")) {
+				String title = (String)doc.get("title_docvalues_string");
+				if(title != null)
+					oCompanyCourse.setTitle(title);
 			}
 		}
 
@@ -1574,35 +1337,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
-		if(resourceUri != null) {
-			doc.put("resourceUri_docvalues_string", resourceUri);
-		}
-		if(templateUri != null) {
-			doc.put("templateUri_docvalues_string", templateUri);
-		}
 		if(emailTemplate != null) {
 			doc.put("emailTemplate_docvalues_string", emailTemplate);
 		}
-		if(uri != null) {
-			doc.put("uri_docvalues_string", uri);
+		if(displayPage != null) {
+			doc.put("displayPage_docvalues_string", displayPage);
 		}
-		if(url != null) {
-			doc.put("url_docvalues_string", url);
-		}
-		if(downloadUri != null) {
-			doc.put("downloadUri_docvalues_string", downloadUri);
-		}
-		if(userUri != null) {
-			doc.put("userUri_docvalues_string", userUri);
+		if(editPage != null) {
+			doc.put("editPage_docvalues_string", editPage);
 		}
 		if(storeUrl != null) {
 			doc.put("storeUrl_docvalues_string", storeUrl);
 		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
+		if(downloadUri != null) {
+			doc.put("downloadUri_docvalues_string", downloadUri);
 		}
 		if(courseNum != null) {
 			doc.put("courseNum_docvalues_int", courseNum);
+		}
+		if(title != null) {
+			doc.put("title_docvalues_string", title);
 		}
 		super.indexBaseResult(doc);
 
@@ -1618,26 +1372,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
 			case "emailTemplate":
 				return "emailTemplate_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "downloadUri":
-				return "downloadUri_docvalues_string";
-			case "userUri":
-				return "userUri_docvalues_string";
+			case "displayPage":
+				return "displayPage_docvalues_string";
+			case "editPage":
+				return "editPage_docvalues_string";
 			case "storeUrl":
 				return "storeUrl_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
+			case "downloadUri":
+				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "title":
+				return "title_docvalues_string";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
@@ -1653,26 +1401,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
 			case "emailTemplate":
 				return "emailTemplate_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "downloadUri":
-				return "downloadUri_docvalues_string";
-			case "userUri":
-				return "userUri_docvalues_string";
+			case "displayPage":
+				return "displayPage_docvalues_string";
+			case "editPage":
+				return "editPage_docvalues_string";
 			case "storeUrl":
 				return "storeUrl_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
+			case "downloadUri":
+				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "title":
+				return "title_docvalues_string";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
@@ -1688,26 +1430,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "price";
 			case "pageId_docvalues_string":
 				return "pageId";
-			case "resourceUri_docvalues_string":
-				return "resourceUri";
-			case "templateUri_docvalues_string":
-				return "templateUri";
 			case "emailTemplate_docvalues_string":
 				return "emailTemplate";
-			case "uri_docvalues_string":
-				return "uri";
-			case "url_docvalues_string":
-				return "url";
-			case "downloadUri_docvalues_string":
-				return "downloadUri";
-			case "userUri_docvalues_string":
-				return "userUri";
+			case "displayPage_docvalues_string":
+				return "displayPage";
+			case "editPage_docvalues_string":
+				return "editPage";
 			case "storeUrl_docvalues_string":
 				return "storeUrl";
-			case "title_docvalues_string":
-				return "title";
+			case "downloadUri_docvalues_string":
+				return "downloadUri";
 			case "courseNum_docvalues_int":
 				return "courseNum";
+			case "title_docvalues_string":
+				return "title";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
@@ -1742,16 +1478,13 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		oCompanyCourse.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setUserUri(Optional.ofNullable(doc.get("userUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setDisplayPage(Optional.ofNullable(doc.get("displayPage_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setEditPage(Optional.ofNullable(doc.get("editPage_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1773,26 +1506,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				apiRequest.addVars("price");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
-			if(!Objects.equals(resourceUri, original.getResourceUri()))
-				apiRequest.addVars("resourceUri");
-			if(!Objects.equals(templateUri, original.getTemplateUri()))
-				apiRequest.addVars("templateUri");
 			if(!Objects.equals(emailTemplate, original.getEmailTemplate()))
 				apiRequest.addVars("emailTemplate");
-			if(!Objects.equals(uri, original.getUri()))
-				apiRequest.addVars("uri");
-			if(!Objects.equals(url, original.getUrl()))
-				apiRequest.addVars("url");
-			if(!Objects.equals(downloadUri, original.getDownloadUri()))
-				apiRequest.addVars("downloadUri");
-			if(!Objects.equals(userUri, original.getUserUri()))
-				apiRequest.addVars("userUri");
+			if(!Objects.equals(displayPage, original.getDisplayPage()))
+				apiRequest.addVars("displayPage");
+			if(!Objects.equals(editPage, original.getEditPage()))
+				apiRequest.addVars("editPage");
 			if(!Objects.equals(storeUrl, original.getStoreUrl()))
 				apiRequest.addVars("storeUrl");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
+			if(!Objects.equals(downloadUri, original.getDownloadUri()))
+				apiRequest.addVars("downloadUri");
 			if(!Objects.equals(courseNum, original.getCourseNum()))
 				apiRequest.addVars("courseNum");
+			if(!Objects.equals(title, original.getTitle()))
+				apiRequest.addVars("title");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1808,16 +1535,13 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(userUri).map(v -> "userUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(displayPage).map(v -> "displayPage: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(editPage).map(v -> "editPage: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1830,16 +1554,13 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String VAR_description = "description";
 	public static final String VAR_price = "price";
 	public static final String VAR_pageId = "pageId";
-	public static final String VAR_resourceUri = "resourceUri";
-	public static final String VAR_templateUri = "templateUri";
 	public static final String VAR_emailTemplate = "emailTemplate";
-	public static final String VAR_uri = "uri";
-	public static final String VAR_url = "url";
-	public static final String VAR_downloadUri = "downloadUri";
-	public static final String VAR_userUri = "userUri";
+	public static final String VAR_displayPage = "displayPage";
+	public static final String VAR_editPage = "editPage";
 	public static final String VAR_storeUrl = "storeUrl";
-	public static final String VAR_title = "title";
+	public static final String VAR_downloadUri = "downloadUri";
 	public static final String VAR_courseNum = "courseNum";
+	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
 		return CompanyCourse.varsQCompanyCourse(new ArrayList<String>());
@@ -1857,14 +1578,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		vars.add(VAR_description);
 		vars.add(VAR_price);
 		vars.add(VAR_pageId);
-		vars.add(VAR_resourceUri);
-		vars.add(VAR_templateUri);
 		vars.add(VAR_emailTemplate);
-		vars.add(VAR_uri);
-		vars.add(VAR_url);
-		vars.add(VAR_downloadUri);
-		vars.add(VAR_userUri);
+		vars.add(VAR_displayPage);
+		vars.add(VAR_editPage);
 		vars.add(VAR_storeUrl);
+		vars.add(VAR_downloadUri);
 		vars.add(VAR_courseNum);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
@@ -1884,16 +1602,48 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_description = "course description";
 	public static final String DISPLAY_NAME_price = "course description";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_resourceUri = "resource URI";
-	public static final String DISPLAY_NAME_templateUri = "template URI";
 	public static final String DISPLAY_NAME_emailTemplate = "email template";
-	public static final String DISPLAY_NAME_uri = "URI";
-	public static final String DISPLAY_NAME_url = "URL";
-	public static final String DISPLAY_NAME_downloadUri = "download URI";
-	public static final String DISPLAY_NAME_userUri = "user URI";
+	public static final String DISPLAY_NAME_displayPage = "product page";
+	public static final String DISPLAY_NAME_editPage = "view";
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
-	public static final String DISPLAY_NAME_title = "title";
+	public static final String DISPLAY_NAME_downloadUri = "download URI";
 	public static final String DISPLAY_NAME_courseNum = "Course Number";
+	public static final String DISPLAY_NAME_title = "title";
+
+	@Override
+	public String idForClass() {
+		return pageId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return CompanyCourse.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/course/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return "%s/en-us/shop/course/%s";
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyCourse.displayNameCompanyCourse(var);
@@ -1908,26 +1658,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_price;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
-		case VAR_resourceUri:
-			return DISPLAY_NAME_resourceUri;
-		case VAR_templateUri:
-			return DISPLAY_NAME_templateUri;
 		case VAR_emailTemplate:
 			return DISPLAY_NAME_emailTemplate;
-		case VAR_uri:
-			return DISPLAY_NAME_uri;
-		case VAR_url:
-			return DISPLAY_NAME_url;
-		case VAR_downloadUri:
-			return DISPLAY_NAME_downloadUri;
-		case VAR_userUri:
-			return DISPLAY_NAME_userUri;
+		case VAR_displayPage:
+			return DISPLAY_NAME_displayPage;
+		case VAR_editPage:
+			return DISPLAY_NAME_editPage;
 		case VAR_storeUrl:
 			return DISPLAY_NAME_storeUrl;
-		case VAR_title:
-			return DISPLAY_NAME_title;
+		case VAR_downloadUri:
+			return DISPLAY_NAME_downloadUri;
 		case VAR_courseNum:
 			return DISPLAY_NAME_courseNum;
+		case VAR_title:
+			return DISPLAY_NAME_title;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
@@ -1943,26 +1687,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "The course description. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
-		case VAR_resourceUri:
-			return "The resource relative URI for this page. ";
-		case VAR_templateUri:
-			return "The template relative URI for this page. ";
 		case VAR_emailTemplate:
 			return "The HTML email template for this product. ";
-		case VAR_uri:
-			return "The relative URI for this page. ";
-		case VAR_url:
-			return "The URL for this page. ";
-		case VAR_downloadUri:
-			return "The download relative URI for this page. ";
-		case VAR_userUri:
-			return "The user relative URI for this page. ";
+		case VAR_displayPage:
+			return "Visit this product's landing page. ";
+		case VAR_editPage:
+			return "View the project. ";
 		case VAR_storeUrl:
 			return "The store URL for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
+		case VAR_downloadUri:
+			return "The download relative URI for this page. ";
 		case VAR_courseNum:
 			return "The course number for this page. ";
+		case VAR_title:
+			return "The title of this page. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
@@ -1978,26 +1716,20 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "BigDecimal";
 		case VAR_pageId:
 			return "String";
-		case VAR_resourceUri:
-			return "String";
-		case VAR_templateUri:
-			return "String";
 		case VAR_emailTemplate:
 			return "String";
-		case VAR_uri:
+		case VAR_displayPage:
 			return "String";
-		case VAR_url:
-			return "String";
-		case VAR_downloadUri:
-			return "String";
-		case VAR_userUri:
+		case VAR_editPage:
 			return "String";
 		case VAR_storeUrl:
 			return "String";
-		case VAR_title:
+		case VAR_downloadUri:
 			return "String";
 		case VAR_courseNum:
 			return "Integer";
+		case VAR_title:
+			return "String";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
 		}
@@ -2023,11 +1755,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		case VAR_price:
 			return 3;
 		case VAR_pageId:
+			return 99;
+		case VAR_displayPage:
 			return 4;
-		case VAR_uri:
-			return 3;
-		case VAR_url:
-			return 3;
+		case VAR_editPage:
+			return 4;
 			default:
 				return BaseResult.htmRowBaseResult(var);
 		}
@@ -2043,9 +1775,9 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_pageId:
 			return 1;
-		case VAR_uri:
-			return 2;
-		case VAR_url:
+		case VAR_displayPage:
+			return 1;
+		case VAR_editPage:
 			return 2;
 			default:
 				return BaseResult.htmCellBaseResult(var);

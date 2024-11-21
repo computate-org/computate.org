@@ -118,18 +118,18 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyWebinarPage(SiteRequest siteRequest_) {
+	public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyWebinarPage();
 	}
 
-	public Future<Void> promiseDeepCompanyWebinarPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage() {
+		Promise<CompanyWebinarPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyWebinarPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepCompanyWebinarGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -156,7 +156,7 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyWebinarPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyWebinarPage(siteRequest_);
 	}
 
@@ -295,6 +295,41 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarPage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyWebinarPage.displayNameCompanyWebinarPage(var);
 	}
@@ -302,6 +337,69 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 		switch(var) {
 		default:
 			return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static String descriptionCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.descriptionCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.classSimpleNameCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.htmColumnCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer htmRowCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.htmRowCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer htmCellCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.htmCellCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.lengthMinCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.lengthMaxCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer maxCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.maxCompanyWebinarGenPage(var);
+		}
+	}
+
+	public static Integer minCompanyWebinarPage(String var) {
+		switch(var) {
+			default:
+				return CompanyWebinarGenPage.minCompanyWebinarGenPage(var);
 		}
 	}
 }

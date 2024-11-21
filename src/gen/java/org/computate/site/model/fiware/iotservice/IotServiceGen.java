@@ -173,46 +173,56 @@ import org.computate.search.response.solr.SolrResponse;
 public abstract class IotServiceGen<DEV> extends BaseModel {
 	protected static final Logger LOG = LoggerFactory.getLogger(IotService.class);
 
-	public static final String IotService_Description_enUS = "A service within a service path in the NGSI-LD standard";
-	public static final String IotService_AName_enUS = "an IoT service";
-	public static final String IotService_This_enUS = "this ";
-	public static final String IotService_ThisName_enUS = "this IoT service";
-	public static final String IotService_A_enUS = "a ";
-	public static final String IotService_TheName_enUS = "theIoT service";
-	public static final String IotService_SingularName_enUS = "IoT service";
-	public static final String IotService_PluralName_enUS = "IoT services";
-	public static final String IotService_NameActual_enUS = "current IoT service";
-	public static final String IotService_AllName_enUS = "all IoT services";
-	public static final String IotService_SearchAllNameBy_enUS = "search IoT services by ";
-	public static final String IotService_Title_enUS = "IoT services";
-	public static final String IotService_ThePluralName_enUS = "the IoT services";
-	public static final String IotService_NoNameFound_enUS = "no IoT service found";
-	public static final String IotService_ApiUri_enUS = "/en-us/api/iot-service";
-	public static final String IotService_ApiUriSearchPage_enUS = "/en-us/search/iot-service";
-	public static final String IotService_OfName_enUS = "of IoT service";
-	public static final String IotService_ANameAdjective_enUS = "an IoT service";
-	public static final String IotService_NameAdjectiveSingular_enUS = "IoT service";
-	public static final String IotService_NameAdjectivePlural_enUS = "IoT services";
-	public static final String Search_enUS_Uri = "/en-us/api/iot-service";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/iot-service/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/iot-service/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/iot-service";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/iot-service";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/iot-service-999.png";
-	public static final String DELETE_enUS_Uri = "/en-us/api/iot-service/{objectId}";
-	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/iot-service/{objectId}-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/iot-service-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/iot-service-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/iot-service";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/iot-service-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/iot-service/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/iot-service/{objectId}-999.png";
-	public static final String DisplayPage_enUS_Uri = "/en-us/shop/iot-service/{objectId}";
-	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/iot-service/{objectId}-999.png";
+	public static final String Description_enUS = "A service within a service path in the NGSI-LD standard";
+	public static final String AName_enUS = "an IoT service";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this IoT service";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "theIoT service";
+	public static final String SingularName_enUS = "IoT service";
+	public static final String PluralName_enUS = "IoT services";
+	public static final String NameActual_enUS = "current IoT service";
+	public static final String AllName_enUS = "all IoT services";
+	public static final String SearchAllNameBy_enUS = "search IoT services by ";
+	public static final String Title_enUS = "IoT services";
+	public static final String ThePluralName_enUS = "the IoT services";
+	public static final String NoNameFound_enUS = "no IoT service found";
+	public static final String ApiUri_enUS = "/en-us/api/iot-service";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/iot-service";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/iot-service/{pageId}";
+	public static final String OfName_enUS = "of IoT service";
+	public static final String ANameAdjective_enUS = "an IoT service";
+	public static final String NameAdjectiveSingular_enUS = "IoT service";
+	public static final String NameAdjectivePlural_enUS = "IoT services";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/iot-service";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/iot-service";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/iot-service";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/iot-service/{pageId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/iot-service/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/iot-service/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/iot-service";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/iot-service";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/iot-service";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/iot-service";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/iot-service";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/iot-service";
+	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/iot-service/{pageId}";
+	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/iot-service/%s";
+	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/iot-service/%s";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/iot-service-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/iot-service-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/iot-service-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/iot-service";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/iot-service";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/iot-service";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/iot-service/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/iot-service/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/iot-service/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/iot-service/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/iot-service/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/iot-service/%s";
 
-	public static final String IotService_Icon = "<i class=\"fa-solid fa-tower-cell\"></i>";
+	public static final String Icon = "<i class=\"fa-solid fa-tower-cell\"></i>";
 
 	////////////////
 	// entityType //
@@ -670,302 +680,22 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		return pageId;
 	}
 
-	/////////////////
-	// resourceUri //
-	/////////////////
-
-
-	/**	 The entity resourceUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String resourceUri;
-
-	/**	<br> The entity resourceUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resourceUri(Wrap<String> w);
-
-	public String getResourceUri() {
-		return resourceUri;
-	}
-	public void setResourceUri(String o) {
-		this.resourceUri = IotService.staticSetResourceUri(siteRequest_, o);
-	}
-	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService resourceUriInit() {
-		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
-		if(resourceUri == null) {
-			_resourceUri(resourceUriWrap);
-			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
-				setResourceUri(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchResourceUri(siteRequest_, IotService.staticSetResourceUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlResourceUri() {
-		return resourceUri;
-	}
-
-	/////////////////
-	// templateUri //
-	/////////////////
-
-
-	/**	 The entity templateUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String templateUri;
-
-	/**	<br> The entity templateUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _templateUri(Wrap<String> w);
-
-	public String getTemplateUri() {
-		return templateUri;
-	}
-	public void setTemplateUri(String o) {
-		this.templateUri = IotService.staticSetTemplateUri(siteRequest_, o);
-	}
-	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService templateUriInit() {
-		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
-		if(templateUri == null) {
-			_templateUri(templateUriWrap);
-			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
-				setTemplateUri(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchTemplateUri(siteRequest_, IotService.staticSetTemplateUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlTemplateUri() {
-		return templateUri;
-	}
-
-	/////////
-	// uri //
-	/////////
-
-
-	/**	 The entity uri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String uri;
-
-	/**	<br> The entity uri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uri(Wrap<String> w);
-
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String o) {
-		this.uri = IotService.staticSetUri(siteRequest_, o);
-	}
-	public static String staticSetUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService uriInit() {
-		Wrap<String> uriWrap = new Wrap<String>().var("uri");
-		if(uri == null) {
-			_uri(uriWrap);
-			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
-				setUri(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchUri(siteRequest_, IotService.staticSetUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUri() {
-		return uri;
-	}
-
-	/////////
-	// url //
-	/////////
-
-
-	/**	 The entity url
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String url;
-
-	/**	<br> The entity url
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _url(Wrap<String> w);
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String o) {
-		this.url = IotService.staticSetUrl(siteRequest_, o);
-	}
-	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService urlInit() {
-		Wrap<String> urlWrap = new Wrap<String>().var("url");
-		if(url == null) {
-			_url(urlWrap);
-			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
-				setUrl(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchUrl(siteRequest_, IotService.staticSetUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlUrl() {
-		return url;
-	}
-
-	///////////
-	// title //
-	///////////
-
-
-	/**	 The entity title
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String title;
-
-	/**	<br> The entity title
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.fiware.iotservice.IotService&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _title(Wrap<String> w);
-
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String o) {
-		this.title = IotService.staticSetTitle(siteRequest_, o);
-	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected IotService titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
-			});
-		}
-		return (IotService)this;
-	}
-
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return IotService.staticSearchTitle(siteRequest_, IotService.staticSetTitle(siteRequest_, o)).toString();
-	}
-
-	public String sqlTitle() {
-		return title;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepIotService(SiteRequest siteRequest_) {
+	public Future<IotServiceGen<DEV>> promiseDeepIotService(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepIotService();
 	}
 
-	public Future<Void> promiseDeepIotService() {
-		Promise<Void> promise = Promise.promise();
+	public Future<IotServiceGen<DEV>> promiseDeepIotService() {
+		Promise<IotServiceGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseIotService(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -987,11 +717,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				cbHostInit();
 				attributesInit();
 				pageIdInit();
-				resourceUriInit();
-				templateUriInit();
-				uriInit();
-				urlInit();
-				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -1005,7 +730,7 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends IotServiceGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepIotService(siteRequest_);
 	}
 
@@ -1061,16 +786,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return oIotService.attributes;
 			case "pageId":
 				return oIotService.pageId;
-			case "resourceUri":
-				return oIotService.resourceUri;
-			case "templateUri":
-				return oIotService.templateUri;
-			case "uri":
-				return oIotService.uri;
-			case "url":
-				return oIotService.url;
-			case "title":
-				return oIotService.title;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -1126,16 +841,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSetAttributes(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSetPageId(siteRequest_, o);
-		case "resourceUri":
-			return IotService.staticSetResourceUri(siteRequest_, o);
-		case "templateUri":
-			return IotService.staticSetTemplateUri(siteRequest_, o);
-		case "uri":
-			return IotService.staticSetUri(siteRequest_, o);
-		case "url":
-			return IotService.staticSetUrl(siteRequest_, o);
-		case "title":
-			return IotService.staticSetTitle(siteRequest_, o);
 			default:
 				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1166,16 +871,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchAttributes(siteRequest_, (JsonArray)o);
 		case "pageId":
 			return IotService.staticSearchPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return IotService.staticSearchResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return IotService.staticSearchTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return IotService.staticSearchUri(siteRequest_, (String)o);
-		case "url":
-			return IotService.staticSearchUrl(siteRequest_, (String)o);
-		case "title":
-			return IotService.staticSearchTitle(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1206,16 +901,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchStrAttributes(siteRequest_, (String)o);
 		case "pageId":
 			return IotService.staticSearchStrPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return IotService.staticSearchStrResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return IotService.staticSearchStrTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return IotService.staticSearchStrUri(siteRequest_, (String)o);
-		case "url":
-			return IotService.staticSearchStrUrl(siteRequest_, (String)o);
-		case "title":
-			return IotService.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1246,16 +931,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return IotService.staticSearchFqAttributes(siteRequest_, o);
 		case "pageId":
 			return IotService.staticSearchFqPageId(siteRequest_, o);
-		case "resourceUri":
-			return IotService.staticSearchFqResourceUri(siteRequest_, o);
-		case "templateUri":
-			return IotService.staticSearchFqTemplateUri(siteRequest_, o);
-		case "uri":
-			return IotService.staticSearchFqUri(siteRequest_, o);
-		case "url":
-			return IotService.staticSearchFqUrl(siteRequest_, o);
-		case "title":
-			return IotService.staticSearchFqTitle(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1332,36 +1007,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				}
 				saves.add("pageId");
 				return val;
-			} else if("resourceuri".equals(varLower)) {
-				if(val instanceof String) {
-					setResourceUri((String)val);
-				}
-				saves.add("resourceUri");
-				return val;
-			} else if("templateuri".equals(varLower)) {
-				if(val instanceof String) {
-					setTemplateUri((String)val);
-				}
-				saves.add("templateUri");
-				return val;
-			} else if("uri".equals(varLower)) {
-				if(val instanceof String) {
-					setUri((String)val);
-				}
-				saves.add("uri");
-				return val;
-			} else if("url".equals(varLower)) {
-				if(val instanceof String) {
-					setUrl((String)val);
-				}
-				saves.add("url");
-				return val;
-			} else if("title".equals(varLower)) {
-				if(val instanceof String) {
-					setTitle((String)val);
-				}
-				saves.add("title");
-				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -1426,36 +1071,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				if(pageId != null)
 					oIotService.setPageId(pageId);
 			}
-
-			if(saves.contains("resourceUri")) {
-				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
-				if(resourceUri != null)
-					oIotService.setResourceUri(resourceUri);
-			}
-
-			if(saves.contains("templateUri")) {
-				String templateUri = (String)doc.get("templateUri_docvalues_string");
-				if(templateUri != null)
-					oIotService.setTemplateUri(templateUri);
-			}
-
-			if(saves.contains("uri")) {
-				String uri = (String)doc.get("uri_docvalues_string");
-				if(uri != null)
-					oIotService.setUri(uri);
-			}
-
-			if(saves.contains("url")) {
-				String url = (String)doc.get("url_docvalues_string");
-				if(url != null)
-					oIotService.setUrl(url);
-			}
-
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oIotService.setTitle(title);
-			}
 		}
 
 		super.populateBaseModel(doc);
@@ -1486,21 +1101,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
-		if(resourceUri != null) {
-			doc.put("resourceUri_docvalues_string", resourceUri);
-		}
-		if(templateUri != null) {
-			doc.put("templateUri_docvalues_string", templateUri);
-		}
-		if(uri != null) {
-			doc.put("uri_docvalues_string", uri);
-		}
-		if(url != null) {
-			doc.put("url_docvalues_string", url);
-		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
-		}
 		super.indexBaseModel(doc);
 
 	}
@@ -1523,16 +1123,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "attributes_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -1556,16 +1146,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "attributes_docvalues_string";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -1589,16 +1169,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				return "attributes";
 			case "pageId_docvalues_string":
 				return "pageId";
-			case "resourceUri_docvalues_string":
-				return "resourceUri";
-			case "templateUri_docvalues_string":
-				return "templateUri";
-			case "uri_docvalues_string":
-				return "uri";
-			case "url_docvalues_string":
-				return "url";
-			case "title_docvalues_string":
-				return "title";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -1637,11 +1207,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		oIotService.setCbHost(Optional.ofNullable(doc.get("cbHost_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setAttributes(Optional.ofNullable(doc.get("attributes_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oIotService.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oIotService.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -1671,16 +1236,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 				apiRequest.addVars("attributes");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
-			if(!Objects.equals(resourceUri, original.getResourceUri()))
-				apiRequest.addVars("resourceUri");
-			if(!Objects.equals(templateUri, original.getTemplateUri()))
-				apiRequest.addVars("templateUri");
-			if(!Objects.equals(uri, original.getUri()))
-				apiRequest.addVars("uri");
-			if(!Objects.equals(url, original.getUrl()))
-				apiRequest.addVars("url");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -1700,11 +1255,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(cbHost).map(v -> "cbHost: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(attributes).map(v -> "attributes: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1721,11 +1271,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String VAR_cbHost = "cbHost";
 	public static final String VAR_attributes = "attributes";
 	public static final String VAR_pageId = "pageId";
-	public static final String VAR_resourceUri = "resourceUri";
-	public static final String VAR_templateUri = "templateUri";
-	public static final String VAR_uri = "uri";
-	public static final String VAR_url = "url";
-	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
 		return IotService.varsQIotService(new ArrayList<String>());
@@ -1747,10 +1292,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		vars.add(VAR_cbHost);
 		vars.add(VAR_attributes);
 		vars.add(VAR_pageId);
-		vars.add(VAR_resourceUri);
-		vars.add(VAR_templateUri);
-		vars.add(VAR_uri);
-		vars.add(VAR_url);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
 	}
@@ -1772,11 +1313,41 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_cbHost = "context broker host";
 	public static final String DISPLAY_NAME_attributes = "attributes";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_resourceUri = "resource URI";
-	public static final String DISPLAY_NAME_templateUri = "template URI";
-	public static final String DISPLAY_NAME_uri = "URI";
-	public static final String DISPLAY_NAME_url = "URL";
-	public static final String DISPLAY_NAME_title = "title";
+
+	@Override
+	public String idForClass() {
+		return pageId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return IotService.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/iot-service/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return "%s/en-us/shop/iot-service/%s";
+	}
 
 	public static String displayNameForClass(String var) {
 		return IotService.displayNameIotService(var);
@@ -1799,16 +1370,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_attributes;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
-		case VAR_resourceUri:
-			return DISPLAY_NAME_resourceUri;
-		case VAR_templateUri:
-			return DISPLAY_NAME_templateUri;
-		case VAR_uri:
-			return DISPLAY_NAME_uri;
-		case VAR_url:
-			return DISPLAY_NAME_url;
-		case VAR_title:
-			return DISPLAY_NAME_title;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
@@ -1832,16 +1393,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 			return "The NGSI-LD attributes";
 		case VAR_pageId:
 			return "The ID for this page. ";
-		case VAR_resourceUri:
-			return "The resource relative URI for this page. ";
-		case VAR_templateUri:
-			return "The template relative URI for this page. ";
-		case VAR_uri:
-			return "The relative URI for this page. ";
-		case VAR_url:
-			return "The URL for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -1864,16 +1415,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		case VAR_attributes:
 			return "JsonArray";
 		case VAR_pageId:
-			return "String";
-		case VAR_resourceUri:
-			return "String";
-		case VAR_templateUri:
-			return "String";
-		case VAR_uri:
-			return "String";
-		case VAR_url:
-			return "String";
-		case VAR_title:
 			return "String";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
@@ -1908,11 +1449,7 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		case VAR_attributes:
 			return 6;
 		case VAR_pageId:
-			return 7;
-		case VAR_uri:
-			return 7;
-		case VAR_url:
-			return 8;
+			return 99;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -1935,10 +1472,6 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		case VAR_attributes:
 			return 1;
 		case VAR_pageId:
-			return 1;
-		case VAR_uri:
-			return 2;
-		case VAR_url:
 			return 1;
 			default:
 				return BaseModel.htmCellBaseModel(var);

@@ -383,7 +383,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean inheritPk) {
+	public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean userId) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<SiteUser> promise = Promise.promise();
 
@@ -393,7 +393,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			pgPool.withTransaction(sqlConnection -> {
 				siteRequest.setSqlConnection(sqlConnection);
 				varsSiteUser(siteRequest).onSuccess(a -> {
-					sqlPATCHSiteUser(o, inheritPk).onSuccess(siteUser -> {
+					sqlPATCHSiteUser(o, userId).onSuccess(siteUser -> {
 						persistSiteUser(siteUser, true).onSuccess(c -> {
 							relateSiteUser(siteUser).onSuccess(d -> {
 								indexSiteUser(siteUser).onSuccess(o2 -> {
@@ -447,7 +447,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		return promise.future();
 	}
 
-	public Future<SiteUser> sqlPATCHSiteUser(SiteUser o, Boolean inheritPk) {
+	public Future<SiteUser> sqlPATCHSiteUser(SiteUser o, Boolean userId) {
 		Promise<SiteUser> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -468,14 +468,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
-					case "setInheritPk":
-							o2.setInheritPk(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(SiteUser.VAR_inheritPk + "=$" + num);
-							num++;
-							bParams.add(o2.sqlInheritPk());
-						break;
 					case "setCreated":
 							o2.setCreated(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -507,6 +499,22 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bSql.append(SiteUser.VAR_userKey + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUserKey());
+						break;
+					case "setTitle":
+							o2.setTitle(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_title + "=$" + num);
+							num++;
+							bParams.add(o2.sqlTitle());
+						break;
+					case "setDisplayPage":
+							o2.setDisplayPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_displayPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDisplayPage());
 						break;
 					case "setUserId":
 							o2.setUserId(jsonObject.getString(entityVar));
@@ -556,14 +564,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							num++;
 							bParams.add(o2.sqlUserFullName());
 						break;
-					case "setSeeArchived":
-							o2.setSeeArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSeeArchived());
-						break;
 					case "setSeeDeleted":
 							o2.setSeeDeleted(jsonObject.getBoolean(entityVar));
 							if(bParams.size() > 0)
@@ -571,6 +571,22 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bSql.append(SiteUser.VAR_seeDeleted + "=$" + num);
 							num++;
 							bParams.add(o2.sqlSeeDeleted());
+						break;
+					case "setDisplayName":
+							o2.setDisplayName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_displayName + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDisplayName());
+						break;
+					case "setSeeArchived":
+							o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSeeArchived());
 						break;
 				}
 			}
@@ -733,7 +749,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public Future<SiteUser> postSiteUserFuture(SiteRequest siteRequest, Boolean inheritPk) {
+	public Future<SiteUser> postSiteUserFuture(SiteRequest siteRequest, Boolean userId) {
 		Promise<SiteUser> promise = Promise.promise();
 
 		try {
@@ -742,7 +758,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				siteRequest.setSqlConnection(sqlConnection);
 				varsSiteUser(siteRequest).onSuccess(a -> {
 					createSiteUser(siteRequest).onSuccess(siteUser -> {
-						sqlPOSTSiteUser(siteUser, inheritPk).onSuccess(b -> {
+						sqlPOSTSiteUser(siteUser, userId).onSuccess(b -> {
 							persistSiteUser(siteUser, false).onSuccess(c -> {
 								relateSiteUser(siteUser).onSuccess(d -> {
 									indexSiteUser(siteUser).onSuccess(o2 -> {
@@ -802,7 +818,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		return promise.future();
 	}
 
-	public Future<SiteUser> sqlPOSTSiteUser(SiteUser o, Boolean inheritPk) {
+	public Future<SiteUser> sqlPOSTSiteUser(SiteUser o, Boolean userId) {
 		Promise<SiteUser> promise = Promise.promise();
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
@@ -849,15 +865,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case SiteUser.VAR_inheritPk:
-						o2.setInheritPk(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(SiteUser.VAR_inheritPk + "=$" + num);
-						num++;
-						bParams.add(o2.sqlInheritPk());
-						break;
 					case SiteUser.VAR_created:
 						o2.setCreated(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -893,6 +900,24 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_userKey + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUserKey());
+						break;
+					case SiteUser.VAR_title:
+						o2.setTitle(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_title + "=$" + num);
+						num++;
+						bParams.add(o2.sqlTitle());
+						break;
+					case SiteUser.VAR_displayPage:
+						o2.setDisplayPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_displayPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDisplayPage());
 						break;
 					case SiteUser.VAR_userId:
 						o2.setUserId(jsonObject.getString(entityVar));
@@ -948,15 +973,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						num++;
 						bParams.add(o2.sqlUserFullName());
 						break;
-					case SiteUser.VAR_seeArchived:
-						o2.setSeeArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSeeArchived());
-						break;
 					case SiteUser.VAR_seeDeleted:
 						o2.setSeeDeleted(jsonObject.getBoolean(entityVar));
 						if(bParams.size() > 0) {
@@ -965,6 +981,24 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_seeDeleted + "=$" + num);
 						num++;
 						bParams.add(o2.sqlSeeDeleted());
+						break;
+					case SiteUser.VAR_displayName:
+						o2.setDisplayName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_displayName + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDisplayName());
+						break;
+					case SiteUser.VAR_seeArchived:
+						o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSeeArchived());
 						break;
 					}
 				}
@@ -1063,7 +1097,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateSearchPageSiteUser(ServiceRequest serviceRequest) {
-		return "en-us/search/user/SiteUserSearch.htm";
+		return "en-us/search/user/SiteUserSearchPage.htm";
 	}
 	public Future<ServiceResponse> response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1184,7 +1218,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	public String templateEditPageSiteUser(ServiceRequest serviceRequest) {
-		return "en-us/edit/user/SiteUserEdit.htm";
+		return "en-us/edit/user/SiteUserEditPage.htm";
 	}
 	public Future<ServiceResponse> response200EditPageSiteUser(SearchList<SiteUser> listSiteUser) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -1386,11 +1420,11 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				}
 			}
 
-			String id = serviceRequest.getParams().getJsonObject("path").getString("id");
-			if(id != null && NumberUtils.isCreatable(id)) {
-				searchList.fq("(pk_docvalues_long:" + SearchTool.escapeQueryChars(id) + " OR objectId_docvalues_string:" + SearchTool.escapeQueryChars(id) + ")");
-			} else if(id != null) {
-				searchList.fq("objectId_docvalues_string:" + SearchTool.escapeQueryChars(id));
+			String userId = serviceRequest.getParams().getJsonObject("path").getString("userId");
+			if(userId != null && NumberUtils.isCreatable(userId)) {
+				searchList.fq("(_docvalues_string:" + SearchTool.escapeQueryChars(userId) + " OR userId_docvalues_string:" + SearchTool.escapeQueryChars(userId) + ")");
+			} else if(userId != null) {
+				searchList.fq("userId_docvalues_string:" + SearchTool.escapeQueryChars(userId));
 			}
 
 			if(!Optional.ofNullable(config.getString(ComputateConfigKeys.AUTH_ROLE_REQUIRED + "_SiteUser")).map(v -> RoleBasedAuthorization.create(v).match(siteRequest.getUser())).orElse(false)) {
@@ -1537,7 +1571,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			String statsField2 = statsField;
 			String statsFieldIndexed2 = statsFieldIndexed;
 			searchSiteUser2(siteRequest, populate, store, modify, searchList);
-			searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+			searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
 				if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
 					StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
 					Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
@@ -1698,7 +1732,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pk_docvalues_long:%s)", o.obtainForClass("pk"));
+				String query = String.format("filter(userId_docvalues_string:%s)", o.obtainForClass("userId"));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1752,6 +1786,51 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			}
 		} catch(Exception ex) {
 			LOG.error(String.format("refreshSiteUser failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
+	@Override
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+		Promise<JsonObject> promise = Promise.promise();
+		try {
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			SiteUser page = new SiteUser();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(SiteUser.VAR_created, SiteUser.staticSetCreated(siteRequest2, (String)result.get(SiteUser.VAR_created)));
+			page.persistForClass(SiteUser.VAR_archived, SiteUser.staticSetArchived(siteRequest2, (String)result.get(SiteUser.VAR_archived)));
+			page.persistForClass(SiteUser.VAR_sessionId, SiteUser.staticSetSessionId(siteRequest2, (String)result.get(SiteUser.VAR_sessionId)));
+			page.persistForClass(SiteUser.VAR_userKey, SiteUser.staticSetUserKey(siteRequest2, (String)result.get(SiteUser.VAR_userKey)));
+			page.persistForClass(SiteUser.VAR_title, SiteUser.staticSetTitle(siteRequest2, (String)result.get(SiteUser.VAR_title)));
+			page.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
+			page.persistForClass(SiteUser.VAR_userId, SiteUser.staticSetUserId(siteRequest2, (String)result.get(SiteUser.VAR_userId)));
+			page.persistForClass(SiteUser.VAR_userName, SiteUser.staticSetUserName(siteRequest2, (String)result.get(SiteUser.VAR_userName)));
+			page.persistForClass(SiteUser.VAR_userEmail, SiteUser.staticSetUserEmail(siteRequest2, (String)result.get(SiteUser.VAR_userEmail)));
+			page.persistForClass(SiteUser.VAR_userFirstName, SiteUser.staticSetUserFirstName(siteRequest2, (String)result.get(SiteUser.VAR_userFirstName)));
+			page.persistForClass(SiteUser.VAR_userLastName, SiteUser.staticSetUserLastName(siteRequest2, (String)result.get(SiteUser.VAR_userLastName)));
+			page.persistForClass(SiteUser.VAR_userFullName, SiteUser.staticSetUserFullName(siteRequest2, (String)result.get(SiteUser.VAR_userFullName)));
+			page.persistForClass(SiteUser.VAR_seeDeleted, SiteUser.staticSetSeeDeleted(siteRequest2, (String)result.get(SiteUser.VAR_seeDeleted)));
+			page.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
+			page.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(result);
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
 		}
 		return promise.future();

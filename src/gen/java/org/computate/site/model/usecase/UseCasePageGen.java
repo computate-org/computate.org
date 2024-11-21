@@ -117,18 +117,18 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepUseCasePage(SiteRequest siteRequest_) {
+	public Future<UseCasePageGen<DEV>> promiseDeepUseCasePage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepUseCasePage();
 	}
 
-	public Future<Void> promiseDeepUseCasePage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<UseCasePageGen<DEV>> promiseDeepUseCasePage() {
+		Promise<UseCasePageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseUseCasePage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepUseCaseGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends UseCasePageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepUseCasePage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 	public static final String CLASS_SIMPLE_NAME = "UseCasePage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return UseCasePage.displayNameUseCasePage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 		switch(var) {
 		default:
 			return UseCaseGenPage.displayNameUseCaseGenPage(var);
+		}
+	}
+
+	public static String descriptionUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.descriptionUseCaseGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.classSimpleNameUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.htmColumnUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer htmRowUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.htmRowUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer htmCellUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.htmCellUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.lengthMinUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.lengthMaxUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer maxUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.maxUseCaseGenPage(var);
+		}
+	}
+
+	public static Integer minUseCasePage(String var) {
+		switch(var) {
+			default:
+				return UseCaseGenPage.minUseCaseGenPage(var);
 		}
 	}
 }

@@ -117,18 +117,18 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyProductPage(SiteRequest siteRequest_) {
+	public Future<CompanyProductPageGen<DEV>> promiseDeepCompanyProductPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyProductPage();
 	}
 
-	public Future<Void> promiseDeepCompanyProductPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyProductPageGen<DEV>> promiseDeepCompanyProductPage() {
+		Promise<CompanyProductPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyProductPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepCompanyProductGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyProductPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyProductPage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyProductPage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyProductPage.displayNameCompanyProductPage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
 		switch(var) {
 		default:
 			return CompanyProductGenPage.displayNameCompanyProductGenPage(var);
+		}
+	}
+
+	public static String descriptionCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.descriptionCompanyProductGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.classSimpleNameCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.htmColumnCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer htmRowCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.htmRowCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer htmCellCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.htmCellCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.lengthMinCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.lengthMaxCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer maxCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.maxCompanyProductGenPage(var);
+		}
+	}
+
+	public static Integer minCompanyProductPage(String var) {
+		switch(var) {
+			default:
+				return CompanyProductGenPage.minCompanyProductGenPage(var);
 		}
 	}
 }

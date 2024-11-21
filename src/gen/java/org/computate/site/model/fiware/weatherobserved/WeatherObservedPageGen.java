@@ -117,18 +117,18 @@ public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepWeatherObservedPage(SiteRequest siteRequest_) {
+	public Future<WeatherObservedPageGen<DEV>> promiseDeepWeatherObservedPage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepWeatherObservedPage();
 	}
 
-	public Future<Void> promiseDeepWeatherObservedPage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<WeatherObservedPageGen<DEV>> promiseDeepWeatherObservedPage() {
+		Promise<WeatherObservedPageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseWeatherObservedPage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepWeatherObservedGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends WeatherObservedPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepWeatherObservedPage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage
 	public static final String CLASS_SIMPLE_NAME = "WeatherObservedPage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return WeatherObservedPage.displayNameWeatherObservedPage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage
 		switch(var) {
 		default:
 			return WeatherObservedGenPage.displayNameWeatherObservedGenPage(var);
+		}
+	}
+
+	public static String descriptionWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.descriptionWeatherObservedGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.classSimpleNameWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.htmColumnWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer htmRowWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.htmRowWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer htmCellWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.htmCellWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.lengthMinWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.lengthMaxWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer maxWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.maxWeatherObservedGenPage(var);
+		}
+	}
+
+	public static Integer minWeatherObservedPage(String var) {
+		switch(var) {
+			default:
+				return WeatherObservedGenPage.minWeatherObservedGenPage(var);
 		}
 	}
 }

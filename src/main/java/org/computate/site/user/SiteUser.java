@@ -22,7 +22,7 @@ import org.computate.site.request.SiteRequest;
  *   PATCH:
  * 
  * SearchPageUri: /en-us/search/user
- * EditPageUri: /en-us/edit/user/{objectId}
+ * EditPageUri: /en-us/edit/user/{pageId}
  * ApiUri: /en-us/api/user
  * ApiMethod:
  *   Search:
@@ -45,6 +45,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DocValues: true
 	 * Persist: true
 	 * Description: The unique user ID from the SSO server
+	 * VarId: true
 	 */
 	protected void _userId(Wrap<String> c) {
 	}
@@ -124,10 +125,12 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	}
 
 	/**
-	 * Description: An implementation for the interface for the object title
+	 * DocValues: true
+	 * Persist: true
+	 * Description: The display name for this user
+	 * VarName: true
 	 */
-	@Override
-	protected void _objectTitle(Wrap<String> c) {
+	protected void _displayName(Wrap<String> c) {
 		c.o(String.format("%s (%s) <%s>", userFullName, userName, userEmail));
 	}
 

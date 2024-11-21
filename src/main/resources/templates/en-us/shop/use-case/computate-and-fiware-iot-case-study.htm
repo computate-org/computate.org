@@ -1,0 +1,60 @@
+{% extends "en-us/PageLayout.htm" %}
+{% block htmMetaPageLayout %}
+    <meta name="result.pageId" content="{{ result.shortFileName }}" />
+    <meta name="result.uri" content="/en-us/case-study/{{ pageId }}" />
+    <meta name="result.name" content="Computate and FIWARE IoT case study"/>
+    <meta name="result.authorName" content="Christopher Tate"/>
+    <meta name="result.title" content="{{ name }}"/>
+{% endblock htmMetaPageLayout %}
+{% block htmStylePageLayout %}
+{% endblock htmStylePageLayout %}
+{% block htmBodyMiddlePageLayout %}
+
+        <div class="max-width-content-width margin-inline-auto ">
+          <sl-card>
+            <h1>{{ title }}</h1>
+            <h2>Author {{ authorName }}</h2>
+
+            <h2>
+              Overview
+            </h2>
+
+            <p>
+              <img src="{{ STATIC_BASE_URL }}/jpg/smartvillage/meet-our-team.jpg" alt="Smart Village team with Juanjo from FIWARE"/>
+              <a href="https://www.fiware.org/about-us/">FIWARE</a> is a non-profit organization, headquartered in Berlin. 
+              They have a mission of building an open, sustainable ecosystem around public, royalty-free, and implementation-driven software platform standards for the development of smart solutions in multiple sectors, following a digital twin approach. 
+              In 2022, I heard that the <a href="https://www.redhat.com/en/about/social-innovation">Red Hat Social Innovation Program</a> started an <a href="https://www.redhat.com/en/success-stories/fiware">innovative engagement with FIWARE</a> to harness the power of open source technologies to solve global problems. 
+              I helped start the conversations with FIWARE and the Red Hat Social Innovation Program as the Social Innovation Architect. 
+              I also started a related <a href="https://research.redhat.com/blog/research_project/creating-a-global-open-research-platform-to-better-understand-social-sustainability-using-data-from-a-real-life-smart-village/">research project with Boston University</a>, the <a href="https://www.bu.edu/rhcollab/">Red Hat Collaboratory with Boston University</a>, and <a href="https://veberod.nu/category/smarta-byar/">Smarta Byar</a> in Veberöd, Sweden. 
+            </p>
+            <p>
+              <img src="{{ STATIC_BASE_URL }}/jpg/fiware/2022-summit/chris-presents.jpg" alt="Christopher Tate presents at the FIWARE Global Summit 2022 in Gran Canaria, Spain"/>
+              I also attended the 2022 FIWARE Global Summit in Gran Canaria, Spain, and presented about our FIWARE Innovation Hub on the way at Boston University. 
+              Because of the open source value for FIWARE provided for building smart solutions, I started a FIWARE iHub between Red Hat and Boston University. 
+            </p>
+            <p>
+              In 2024, the FIWARE community reached out to me and other iHubs, to start some discussions about community building related to standards for IoT smart device computing. 
+              The target domains included smart cities, smart ports, and smart agriculture. 
+              The focus was on how the FIWARE community, including the FIWARE iHubs, can help. 
+            </p>
+            <p>
+              I was asked to prepare a panel discussion with 4 other FIWARE iHubs at the upcoming FIWARE Global Summit. 
+              This would enhance community cooperation, contribution, and participation with FIWARE's approach to "Think global, act local." 
+            </p>
+            <p>
+              In addition to preparing for this upcoming panel discussion, I decided to focus on developing some new tools within my computate platform to support FIWARE use cases of Smart Data Models. 
+              I also developed a free course that runs on the Red Hat OpenShift Developer Sandbox. 
+              I was also building the Computate Smart Website Builder that allows software developers to build a custom data-driven website powered by FIWARE. 
+            </p>
+            <p>
+              I wanted to put together a complete solution for the FIWARE community to deploy FIWARE microservices to the very best enterprise open source cloud environment, 
+              create Smart Data Models, 
+              register entities with the IoT Agent and Context Broker, 
+              and visualize their data in a computate platform. 
+            </p>
+            <p>
+              To be continued...
+            </p>
+          </sl-card>
+        </div>
+{% endblock %}

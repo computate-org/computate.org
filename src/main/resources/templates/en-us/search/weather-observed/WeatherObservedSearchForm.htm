@@ -1,5 +1,5 @@
 
-{%- macro htmButton_patchWeatherObserved() %}<sl-button id="htmButton_patchWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchWeatherObserved() %}<sl-button id="htmButton_patchWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -23,16 +23,6 @@
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
@@ -511,13 +501,25 @@
                 {%- endif %}
               {%- endif %}
               </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
             </sl-details>
           </form>
           {{ htmFormButton_patchWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postWeatherObserved() %}<sl-button id="htmButton_postWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postWeatherObserved() %}<sl-button id="htmButton_postWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -542,16 +544,6 @@
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
@@ -1030,13 +1022,25 @@
                 {%- endif %}
               {%- endif %}
               </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
             </sl-details>
           </form>
           {{ htmFormButton_postWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteWeatherObserved() %}<sl-button id="htmButton_deleteWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteWeatherObserved() %}<sl-button id="htmButton_deleteWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1052,7 +1056,7 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportWeatherObserved() %}<sl-button id="htmButton_putimportWeatherObserved" data-pk="{{ pk }}"><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportWeatherObserved() %}<sl-button id="htmButton_putimportWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportWeatherObserved() %}
             <sl-button slot="footer" type="submit" variant="primary"
@@ -1067,7 +1071,7 @@
               <sl-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
-                  placeholder="{ 'searchList': [ { 'pk': ... , 'saves': [ ... ] }, ... ] }"
+                  placeholder="{ 'searchList': [ { 'entityId': ... , 'saves': [ ... ] }, ... ] }"
                   >
               </sl-textarea>
             </div>
@@ -1100,16 +1104,6 @@
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
                 {%- else %}
                   {{ htmPkWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmObjectIdWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
 
@@ -1588,6 +1582,18 @@
                 {%- endif %}
               {%- endif %}
               </div>
+              <div class="grid-with-subgrid-2col ">
+
+              {%- if "PATCH" in scopes %}
+                {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmDisplayPageWeatherObservedPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
+              </div>
             </sl-details>
           </div>
         </div>
@@ -1597,14 +1603,14 @@
             <sl-divider></sl-divider>
             <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
     {% if resultCount == 1 %}              <sl-button id="refreshThisWeatherObservedGenPage"
-                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pk:{{pk}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
+                   onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'entityId:{{entityId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllWeatherObservedGenPage{{id}}"
-                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{id}}')); }); "
+              <sl-button id="refreshAllWeatherObservedGenPage{{ result.entityId | e }}"
+                   onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{ result.entityId | e }}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{ result.entityId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
                 Refresh all 
@@ -1619,7 +1625,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pk is defined %}
+    {%- if entityId is defined %}
       {{ htmButton_postWeatherObserved() }}
     {%- else %}
       {{ htmButton_postWeatherObserved() }}
@@ -1630,7 +1636,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pk is defined %}
+    {%- if entityId is defined %}
       {{ htmButton_deleteWeatherObserved() }}
     {%- else %}
     {%- endif %}
@@ -1648,7 +1654,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pk is defined %}
+    {%- if entityId is defined %}
       {{ htmForm_postWeatherObserved() }}
     {%- else %}
       {{ htmForm_postWeatherObserved() }}
@@ -1659,7 +1665,7 @@
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pk is defined %}
+    {%- if entityId is defined %}
       {{ htmForm_deleteWeatherObserved() }}
     {%- else %}
     {%- endif %}

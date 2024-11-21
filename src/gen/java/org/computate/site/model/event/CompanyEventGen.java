@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.math.BigDecimal;
 import io.vertx.pgclient.data.Point;
 import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
 import org.computate.vertx.serialize.pgclient.PgClientPointDeserializer;
@@ -183,48 +184,59 @@ import org.computate.search.response.solr.SolrResponse;
 public abstract class CompanyEventGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(CompanyEvent.class);
 
-	public static final String CompanyEvent_Description_enUS = "See the upcoming computate in-person and online events";
-	public static final String CompanyEvent_AName_enUS = "an event";
-	public static final String CompanyEvent_This_enUS = "this ";
-	public static final String CompanyEvent_ThisName_enUS = "this event";
-	public static final String CompanyEvent_A_enUS = "a ";
-	public static final String CompanyEvent_TheName_enUS = "theevent";
-	public static final String CompanyEvent_SingularName_enUS = "event";
-	public static final String CompanyEvent_PluralName_enUS = "events";
-	public static final String CompanyEvent_NameActual_enUS = "current event";
-	public static final String CompanyEvent_AllName_enUS = "all events";
-	public static final String CompanyEvent_SearchAllNameBy_enUS = "search events by ";
-	public static final String CompanyEvent_Title_enUS = "events";
-	public static final String CompanyEvent_ThePluralName_enUS = "the events";
-	public static final String CompanyEvent_NoNameFound_enUS = "no event found";
-	public static final String CompanyEvent_ApiUri_enUS = "/en-us/api/event";
-	public static final String CompanyEvent_ApiUriSearchPage_enUS = "/en-us/search/event";
-	public static final String CompanyEvent_OfName_enUS = "of event";
-	public static final String CompanyEvent_ANameAdjective_enUS = "an event";
-	public static final String CompanyEvent_NameAdjectiveSingular_enUS = "event";
-	public static final String CompanyEvent_NameAdjectivePlural_enUS = "events";
-	public static final String Search_enUS_Uri = "/en-us/api/event";
-	public static final String Search_enUS_ImageUri = "/png/en-us/api/event-999.png";
-	public static final String GET_enUS_Uri = "/en-us/api/event/{objectId}";
-	public static final String GET_enUS_ImageUri = "/png/en-us/api/event/{objectId}-999.png";
-	public static final String PATCH_enUS_Uri = "/en-us/api/event";
-	public static final String PATCH_enUS_ImageUri = "/png/en-us/api/event-999.png";
-	public static final String POST_enUS_Uri = "/en-us/api/event";
-	public static final String POST_enUS_ImageUri = "/png/en-us/api/event-999.png";
-	public static final String DELETE_enUS_Uri = "/en-us/api/event/{objectId}";
-	public static final String DELETE_enUS_ImageUri = "/png/en-us/api/event/{objectId}-999.png";
-	public static final String PUTImport_enUS_Uri = "/en-us/api/event-import";
-	public static final String PUTImport_enUS_ImageUri = "/png/en-us/api/event-import-999.png";
-	public static final String SearchPage_enUS_Uri = "/en-us/search/event";
-	public static final String SearchPage_enUS_ImageUri = "/png/en-us/search/event-999.png";
-	public static final String EditPage_enUS_Uri = "/en-us/edit/event/{objectId}";
-	public static final String EditPage_enUS_ImageUri = "/png/en-us/edit/event/{objectId}-999.png";
-	public static final String DisplayPage_enUS_Uri = "/en-us/shop/event/{objectId}";
-	public static final String DisplayPage_enUS_ImageUri = "/png/en-us/shop/event/{objectId}-999.png";
-	public static final String UserPage_enUS_Uri = "/en-us/use/event/{objectId}";
-	public static final String UserPage_enUS_ImageUri = "/png/en-us/use/event/{objectId}-999.png";
+	public static final String Description_enUS = "See the upcoming computate in-person and online events";
+	public static final String AName_enUS = "an event";
+	public static final String This_enUS = "this ";
+	public static final String ThisName_enUS = "this event";
+	public static final String A_enUS = "a ";
+	public static final String TheName_enUS = "theevent";
+	public static final String SingularName_enUS = "event";
+	public static final String PluralName_enUS = "events";
+	public static final String NameActual_enUS = "current event";
+	public static final String AllName_enUS = "all events";
+	public static final String SearchAllNameBy_enUS = "search events by ";
+	public static final String Title_enUS = "events";
+	public static final String ThePluralName_enUS = "the events";
+	public static final String NoNameFound_enUS = "no event found";
+	public static final String ApiUri_enUS = "/en-us/api/event";
+	public static final String ApiUriSearchPage_enUS = "/en-us/search/event";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/event/{pageId}";
+	public static final String OfName_enUS = "of event";
+	public static final String ANameAdjective_enUS = "an event";
+	public static final String NameAdjectiveSingular_enUS = "event";
+	public static final String NameAdjectivePlural_enUS = "events";
+	public static final String Search_enUS_OpenApiUri = "/en-us/api/event";
+	public static final String Search_enUS_StringFormatUri = "/en-us/api/event";
+	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/event";
+	public static final String GET_enUS_OpenApiUri = "/en-us/api/event/{pageId}";
+	public static final String GET_enUS_StringFormatUri = "/en-us/api/event/%s";
+	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/event/%s";
+	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/event";
+	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/event";
+	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/event";
+	public static final String POST_enUS_OpenApiUri = "/en-us/api/event";
+	public static final String POST_enUS_StringFormatUri = "/en-us/api/event";
+	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/event";
+	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/event/{pageId}";
+	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/event/%s";
+	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/event/%s";
+	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/event-import";
+	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/event-import";
+	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/event-import";
+	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/event";
+	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/event";
+	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/event";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/event/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/event/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/event/%s";
+	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/event/{pageId}";
+	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/event/%s";
+	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/event/%s";
+	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/event/{pageId}";
+	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/event/%s";
+	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/event/%s";
 
-	public static final String CompanyEvent_Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
 
 	//////////
 	// name //
@@ -338,6 +350,83 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return description;
 	}
 
+	///////////
+	// price //
+	///////////
+
+
+	/**	 The entity price
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal price;
+
+	/**	<br> The entity price
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:price">Find the entity price in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _price(Wrap<BigDecimal> w);
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	@JsonIgnore
+	public void setPrice(String o) {
+		this.price = CompanyEvent.staticSetPrice(siteRequest_, o);
+	}
+	public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setPrice(Double o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Integer o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Number o) {
+		setPrice(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected CompanyEvent priceInit() {
+		Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
+		if(price == null) {
+			_price(priceWrap);
+			Optional.ofNullable(priceWrap.getO()).ifPresent(o -> {
+				setPrice(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static Double staticSearchPrice(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrPrice(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPrice(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchPrice(siteRequest_, CompanyEvent.staticSetPrice(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlPrice() {
+		return price;
+	}
+
 	////////////
 	// pageId //
 	////////////
@@ -394,284 +483,116 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return pageId;
 	}
 
-	/////////////////
-	// resourceUri //
-	/////////////////
+	///////////////////
+	// emailTemplate //
+	///////////////////
 
 
-	/**	 The entity resourceUri
+	/**	 The entity emailTemplate
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String resourceUri;
+	protected String emailTemplate;
 
-	/**	<br> The entity resourceUri
+	/**	<br> The entity emailTemplate
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:resourceUri">Find the entity resourceUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:emailTemplate">Find the entity emailTemplate in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _resourceUri(Wrap<String> w);
+	protected abstract void _emailTemplate(Wrap<String> w);
 
-	public String getResourceUri() {
-		return resourceUri;
+	public String getEmailTemplate() {
+		return emailTemplate;
 	}
-	public void setResourceUri(String o) {
-		this.resourceUri = CompanyEvent.staticSetResourceUri(siteRequest_, o);
+	public void setEmailTemplate(String o) {
+		this.emailTemplate = CompanyEvent.staticSetEmailTemplate(siteRequest_, o);
 	}
-	public static String staticSetResourceUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetEmailTemplate(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyEvent resourceUriInit() {
-		Wrap<String> resourceUriWrap = new Wrap<String>().var("resourceUri");
-		if(resourceUri == null) {
-			_resourceUri(resourceUriWrap);
-			Optional.ofNullable(resourceUriWrap.getO()).ifPresent(o -> {
-				setResourceUri(o);
+	protected CompanyEvent emailTemplateInit() {
+		Wrap<String> emailTemplateWrap = new Wrap<String>().var("emailTemplate");
+		if(emailTemplate == null) {
+			_emailTemplate(emailTemplateWrap);
+			Optional.ofNullable(emailTemplateWrap.getO()).ifPresent(o -> {
+				setEmailTemplate(o);
 			});
 		}
 		return (CompanyEvent)this;
 	}
 
-	public static String staticSearchResourceUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchEmailTemplate(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrResourceUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrEmailTemplate(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqResourceUri(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchResourceUri(siteRequest_, CompanyEvent.staticSetResourceUri(siteRequest_, o)).toString();
+	public static String staticSearchFqEmailTemplate(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchEmailTemplate(siteRequest_, CompanyEvent.staticSetEmailTemplate(siteRequest_, o)).toString();
 	}
 
-	public String sqlResourceUri() {
-		return resourceUri;
+	public String sqlEmailTemplate() {
+		return emailTemplate;
 	}
 
-	/////////////////
-	// templateUri //
-	/////////////////
+	//////////////
+	// storeUrl //
+	//////////////
 
 
-	/**	 The entity templateUri
+	/**	 The entity storeUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String templateUri;
+	protected String storeUrl;
 
-	/**	<br> The entity templateUri
+	/**	<br> The entity storeUrl
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:templateUri">Find the entity templateUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:storeUrl">Find the entity storeUrl in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _templateUri(Wrap<String> w);
+	protected abstract void _storeUrl(Wrap<String> w);
 
-	public String getTemplateUri() {
-		return templateUri;
+	public String getStoreUrl() {
+		return storeUrl;
 	}
-	public void setTemplateUri(String o) {
-		this.templateUri = CompanyEvent.staticSetTemplateUri(siteRequest_, o);
+	public void setStoreUrl(String o) {
+		this.storeUrl = CompanyEvent.staticSetStoreUrl(siteRequest_, o);
 	}
-	public static String staticSetTemplateUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetStoreUrl(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyEvent templateUriInit() {
-		Wrap<String> templateUriWrap = new Wrap<String>().var("templateUri");
-		if(templateUri == null) {
-			_templateUri(templateUriWrap);
-			Optional.ofNullable(templateUriWrap.getO()).ifPresent(o -> {
-				setTemplateUri(o);
+	protected CompanyEvent storeUrlInit() {
+		Wrap<String> storeUrlWrap = new Wrap<String>().var("storeUrl");
+		if(storeUrl == null) {
+			_storeUrl(storeUrlWrap);
+			Optional.ofNullable(storeUrlWrap.getO()).ifPresent(o -> {
+				setStoreUrl(o);
 			});
 		}
 		return (CompanyEvent)this;
 	}
 
-	public static String staticSearchTemplateUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStoreUrl(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrTemplateUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrStoreUrl(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqTemplateUri(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchTemplateUri(siteRequest_, CompanyEvent.staticSetTemplateUri(siteRequest_, o)).toString();
+	public static String staticSearchFqStoreUrl(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchStoreUrl(siteRequest_, CompanyEvent.staticSetStoreUrl(siteRequest_, o)).toString();
 	}
 
-	public String sqlTemplateUri() {
-		return templateUri;
-	}
-
-	/////////
-	// uri //
-	/////////
-
-
-	/**	 The entity uri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String uri;
-
-	/**	<br> The entity uri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:uri">Find the entity uri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _uri(Wrap<String> w);
-
-	public String getUri() {
-		return uri;
-	}
-	public void setUri(String o) {
-		this.uri = CompanyEvent.staticSetUri(siteRequest_, o);
-	}
-	public static String staticSetUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyEvent uriInit() {
-		Wrap<String> uriWrap = new Wrap<String>().var("uri");
-		if(uri == null) {
-			_uri(uriWrap);
-			Optional.ofNullable(uriWrap.getO()).ifPresent(o -> {
-				setUri(o);
-			});
-		}
-		return (CompanyEvent)this;
-	}
-
-	public static String staticSearchUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUri(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchUri(siteRequest_, CompanyEvent.staticSetUri(siteRequest_, o)).toString();
-	}
-
-	public String sqlUri() {
-		return uri;
-	}
-
-	/////////
-	// url //
-	/////////
-
-
-	/**	 The entity url
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String url;
-
-	/**	<br> The entity url
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:url">Find the entity url in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _url(Wrap<String> w);
-
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String o) {
-		this.url = CompanyEvent.staticSetUrl(siteRequest_, o);
-	}
-	public static String staticSetUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyEvent urlInit() {
-		Wrap<String> urlWrap = new Wrap<String>().var("url");
-		if(url == null) {
-			_url(urlWrap);
-			Optional.ofNullable(urlWrap.getO()).ifPresent(o -> {
-				setUrl(o);
-			});
-		}
-		return (CompanyEvent)this;
-	}
-
-	public static String staticSearchUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqUrl(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchUrl(siteRequest_, CompanyEvent.staticSetUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlUrl() {
-		return url;
-	}
-
-	///////////
-	// title //
-	///////////
-
-
-	/**	 The entity title
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String title;
-
-	/**	<br> The entity title
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _title(Wrap<String> w);
-
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String o) {
-		this.title = CompanyEvent.staticSetTitle(siteRequest_, o);
-	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyEvent titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
-			});
-		}
-		return (CompanyEvent)this;
-	}
-
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchTitle(siteRequest_, CompanyEvent.staticSetTitle(siteRequest_, o)).toString();
-	}
-
-	public String sqlTitle() {
-		return title;
+	public String sqlStoreUrl() {
+		return storeUrl;
 	}
 
 	//////////////
@@ -1003,18 +924,18 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyEvent(SiteRequest siteRequest_) {
+	public Future<CompanyEventGen<DEV>> promiseDeepCompanyEvent(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyEvent();
 	}
 
-	public Future<Void> promiseDeepCompanyEvent() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyEventGen<DEV>> promiseDeepCompanyEvent() {
+		Promise<CompanyEventGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyEvent(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -1030,12 +951,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			try {
 				nameInit();
 				descriptionInit();
+				priceInit();
 				pageIdInit();
-				resourceUriInit();
-				templateUriInit();
-				uriInit();
-				urlInit();
-				titleInit();
+				emailTemplateInit();
+				storeUrlInit();
 				locationInit();
 				locationColorsInit();
 				locationTitlesInit();
@@ -1053,7 +972,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyEventGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyEvent(siteRequest_);
 	}
 
@@ -1097,18 +1016,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return oCompanyEvent.name;
 			case "description":
 				return oCompanyEvent.description;
+			case "price":
+				return oCompanyEvent.price;
 			case "pageId":
 				return oCompanyEvent.pageId;
-			case "resourceUri":
-				return oCompanyEvent.resourceUri;
-			case "templateUri":
-				return oCompanyEvent.templateUri;
-			case "uri":
-				return oCompanyEvent.uri;
-			case "url":
-				return oCompanyEvent.url;
-			case "title":
-				return oCompanyEvent.title;
+			case "emailTemplate":
+				return oCompanyEvent.emailTemplate;
+			case "storeUrl":
+				return oCompanyEvent.storeUrl;
 			case "location":
 				return oCompanyEvent.location;
 			case "locationColors":
@@ -1160,18 +1075,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSetName(siteRequest_, o);
 		case "description":
 			return CompanyEvent.staticSetDescription(siteRequest_, o);
+		case "price":
+			return CompanyEvent.staticSetPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyEvent.staticSetPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyEvent.staticSetResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyEvent.staticSetTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyEvent.staticSetUri(siteRequest_, o);
-		case "url":
-			return CompanyEvent.staticSetUrl(siteRequest_, o);
-		case "title":
-			return CompanyEvent.staticSetTitle(siteRequest_, o);
+		case "emailTemplate":
+			return CompanyEvent.staticSetEmailTemplate(siteRequest_, o);
+		case "storeUrl":
+			return CompanyEvent.staticSetStoreUrl(siteRequest_, o);
 		case "location":
 			return CompanyEvent.staticSetLocation(siteRequest_, o);
 		case "locationColors":
@@ -1198,18 +1109,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchName(siteRequest_, (String)o);
 		case "description":
 			return CompanyEvent.staticSearchDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyEvent.staticSearchPrice(siteRequest_, (BigDecimal)o);
 		case "pageId":
 			return CompanyEvent.staticSearchPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyEvent.staticSearchResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyEvent.staticSearchTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyEvent.staticSearchUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyEvent.staticSearchUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyEvent.staticSearchTitle(siteRequest_, (String)o);
+		case "emailTemplate":
+			return CompanyEvent.staticSearchEmailTemplate(siteRequest_, (String)o);
+		case "storeUrl":
+			return CompanyEvent.staticSearchStoreUrl(siteRequest_, (String)o);
 		case "location":
 			return CompanyEvent.staticSearchLocation(siteRequest_, (Point)o);
 		case "locationColors":
@@ -1236,18 +1143,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchStrName(siteRequest_, (String)o);
 		case "description":
 			return CompanyEvent.staticSearchStrDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyEvent.staticSearchStrPrice(siteRequest_, (Double)o);
 		case "pageId":
 			return CompanyEvent.staticSearchStrPageId(siteRequest_, (String)o);
-		case "resourceUri":
-			return CompanyEvent.staticSearchStrResourceUri(siteRequest_, (String)o);
-		case "templateUri":
-			return CompanyEvent.staticSearchStrTemplateUri(siteRequest_, (String)o);
-		case "uri":
-			return CompanyEvent.staticSearchStrUri(siteRequest_, (String)o);
-		case "url":
-			return CompanyEvent.staticSearchStrUrl(siteRequest_, (String)o);
-		case "title":
-			return CompanyEvent.staticSearchStrTitle(siteRequest_, (String)o);
+		case "emailTemplate":
+			return CompanyEvent.staticSearchStrEmailTemplate(siteRequest_, (String)o);
+		case "storeUrl":
+			return CompanyEvent.staticSearchStrStoreUrl(siteRequest_, (String)o);
 		case "location":
 			return CompanyEvent.staticSearchStrLocation(siteRequest_, (Point)o);
 		case "locationColors":
@@ -1274,18 +1177,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchFqName(siteRequest_, o);
 		case "description":
 			return CompanyEvent.staticSearchFqDescription(siteRequest_, o);
+		case "price":
+			return CompanyEvent.staticSearchFqPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyEvent.staticSearchFqPageId(siteRequest_, o);
-		case "resourceUri":
-			return CompanyEvent.staticSearchFqResourceUri(siteRequest_, o);
-		case "templateUri":
-			return CompanyEvent.staticSearchFqTemplateUri(siteRequest_, o);
-		case "uri":
-			return CompanyEvent.staticSearchFqUri(siteRequest_, o);
-		case "url":
-			return CompanyEvent.staticSearchFqUrl(siteRequest_, o);
-		case "title":
-			return CompanyEvent.staticSearchFqTitle(siteRequest_, o);
+		case "emailTemplate":
+			return CompanyEvent.staticSearchFqEmailTemplate(siteRequest_, o);
+		case "storeUrl":
+			return CompanyEvent.staticSearchFqStoreUrl(siteRequest_, o);
 		case "location":
 			return CompanyEvent.staticSearchFqLocation(siteRequest_, o);
 		case "locationColors":
@@ -1332,41 +1231,31 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				}
 				saves.add("description");
 				return val;
+			} else if("price".equals(varLower)) {
+				if(val instanceof String) {
+					setPrice((String)val);
+				} else if(val instanceof Number) {
+					setPrice(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("price");
+				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
 					setPageId((String)val);
 				}
 				saves.add("pageId");
 				return val;
-			} else if("resourceuri".equals(varLower)) {
+			} else if("emailtemplate".equals(varLower)) {
 				if(val instanceof String) {
-					setResourceUri((String)val);
+					setEmailTemplate((String)val);
 				}
-				saves.add("resourceUri");
+				saves.add("emailTemplate");
 				return val;
-			} else if("templateuri".equals(varLower)) {
+			} else if("storeurl".equals(varLower)) {
 				if(val instanceof String) {
-					setTemplateUri((String)val);
+					setStoreUrl((String)val);
 				}
-				saves.add("templateUri");
-				return val;
-			} else if("uri".equals(varLower)) {
-				if(val instanceof String) {
-					setUri((String)val);
-				}
-				saves.add("uri");
-				return val;
-			} else if("url".equals(varLower)) {
-				if(val instanceof String) {
-					setUrl((String)val);
-				}
-				saves.add("url");
-				return val;
-			} else if("title".equals(varLower)) {
-				if(val instanceof String) {
-					setTitle((String)val);
-				}
-				saves.add("title");
+				saves.add("storeUrl");
 				return val;
 			} else if("location".equals(varLower)) {
 				if(val instanceof String) {
@@ -1405,40 +1294,28 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 					oCompanyEvent.setDescription(description);
 			}
 
+			if(saves.contains("price")) {
+				Double price = (Double)doc.get("price_docvalues_double");
+				if(price != null)
+					oCompanyEvent.setPrice(price);
+			}
+
 			if(saves.contains("pageId")) {
 				String pageId = (String)doc.get("pageId_docvalues_string");
 				if(pageId != null)
 					oCompanyEvent.setPageId(pageId);
 			}
 
-			if(saves.contains("resourceUri")) {
-				String resourceUri = (String)doc.get("resourceUri_docvalues_string");
-				if(resourceUri != null)
-					oCompanyEvent.setResourceUri(resourceUri);
+			if(saves.contains("emailTemplate")) {
+				String emailTemplate = (String)doc.get("emailTemplate_docvalues_string");
+				if(emailTemplate != null)
+					oCompanyEvent.setEmailTemplate(emailTemplate);
 			}
 
-			if(saves.contains("templateUri")) {
-				String templateUri = (String)doc.get("templateUri_docvalues_string");
-				if(templateUri != null)
-					oCompanyEvent.setTemplateUri(templateUri);
-			}
-
-			if(saves.contains("uri")) {
-				String uri = (String)doc.get("uri_docvalues_string");
-				if(uri != null)
-					oCompanyEvent.setUri(uri);
-			}
-
-			if(saves.contains("url")) {
-				String url = (String)doc.get("url_docvalues_string");
-				if(url != null)
-					oCompanyEvent.setUrl(url);
-			}
-
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oCompanyEvent.setTitle(title);
+			if(saves.contains("storeUrl")) {
+				String storeUrl = (String)doc.get("storeUrl_docvalues_string");
+				if(storeUrl != null)
+					oCompanyEvent.setStoreUrl(storeUrl);
 			}
 
 			if(saves.contains("location")) {
@@ -1476,23 +1353,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		if(description != null) {
 			doc.put("description_docvalues_string", description);
 		}
+		if(price != null) {
+			doc.put("price_docvalues_double", price.doubleValue());
+		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
-		if(resourceUri != null) {
-			doc.put("resourceUri_docvalues_string", resourceUri);
+		if(emailTemplate != null) {
+			doc.put("emailTemplate_docvalues_string", emailTemplate);
 		}
-		if(templateUri != null) {
-			doc.put("templateUri_docvalues_string", templateUri);
-		}
-		if(uri != null) {
-			doc.put("uri_docvalues_string", uri);
-		}
-		if(url != null) {
-			doc.put("url_docvalues_string", url);
-		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
+		if(storeUrl != null) {
+			doc.put("storeUrl_docvalues_string", storeUrl);
 		}
 		if(location != null) {
 			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
@@ -1528,18 +1399,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
+			case "emailTemplate":
+				return "emailTemplate_docvalues_string";
+			case "storeUrl":
+				return "storeUrl_docvalues_string";
 			case "location":
 				return "location_docvalues_location";
 			case "locationColors":
@@ -1559,18 +1426,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
-			case "resourceUri":
-				return "resourceUri_docvalues_string";
-			case "templateUri":
-				return "templateUri_docvalues_string";
-			case "uri":
-				return "uri_docvalues_string";
-			case "url":
-				return "url_docvalues_string";
-			case "title":
-				return "title_docvalues_string";
+			case "emailTemplate":
+				return "emailTemplate_docvalues_string";
+			case "storeUrl":
+				return "storeUrl_docvalues_string";
 			case "location":
 				return "location_docvalues_location";
 			case "locationColors":
@@ -1590,18 +1453,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name";
 			case "description_docvalues_string":
 				return "description";
+			case "price_docvalues_double":
+				return "price";
 			case "pageId_docvalues_string":
 				return "pageId";
-			case "resourceUri_docvalues_string":
-				return "resourceUri";
-			case "templateUri_docvalues_string":
-				return "templateUri";
-			case "uri_docvalues_string":
-				return "uri";
-			case "url_docvalues_string":
-				return "url";
-			case "title_docvalues_string":
-				return "title";
+			case "emailTemplate_docvalues_string":
+				return "emailTemplate";
+			case "storeUrl_docvalues_string":
+				return "storeUrl";
 			case "location_docvalues_location":
 				return "location";
 			case "locationColors_indexedstored_strings":
@@ -1642,12 +1501,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 		oCompanyEvent.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyEvent.setResourceUri(Optional.ofNullable(doc.get("resourceUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyEvent.setTemplateUri(Optional.ofNullable(doc.get("templateUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyEvent.setUri(Optional.ofNullable(doc.get("uri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyEvent.setUrl(Optional.ofNullable(doc.get("url_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyEvent.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setLocation(Optional.ofNullable(doc.get("location_docvalues_location")).map(v -> v.toString()).orElse(null));
 		Optional.ofNullable((List<?>)doc.get("locationColors_indexedstored_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
 			oCompanyEvent.addLocationColors(CompanyEvent.staticSetLocationColors(siteRequest, v.toString()));
@@ -1675,18 +1532,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				apiRequest.addVars("name");
 			if(!Objects.equals(description, original.getDescription()))
 				apiRequest.addVars("description");
+			if(!Objects.equals(price, original.getPrice()) && price != null && original.getPrice() != null && price.compareTo(original.getPrice()) != 0)
+				apiRequest.addVars("price");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
-			if(!Objects.equals(resourceUri, original.getResourceUri()))
-				apiRequest.addVars("resourceUri");
-			if(!Objects.equals(templateUri, original.getTemplateUri()))
-				apiRequest.addVars("templateUri");
-			if(!Objects.equals(uri, original.getUri()))
-				apiRequest.addVars("uri");
-			if(!Objects.equals(url, original.getUrl()))
-				apiRequest.addVars("url");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
+			if(!Objects.equals(emailTemplate, original.getEmailTemplate()))
+				apiRequest.addVars("emailTemplate");
+			if(!Objects.equals(storeUrl, original.getStoreUrl()))
+				apiRequest.addVars("storeUrl");
 			if(!Objects.equals(location, original.getLocation()))
 				apiRequest.addVars("location");
 			if(!Objects.equals(locationColors, original.getLocationColors()))
@@ -1708,12 +1561,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(resourceUri).map(v -> "resourceUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(templateUri).map(v -> "templateUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(uri).map(v -> "uri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(url).map(v -> "url: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(location).map(v -> "location: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(locationColors).map(v -> "locationColors: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(locationTitles).map(v -> "locationTitles: " + v + "\n").orElse(""));
@@ -1728,12 +1579,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	}
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
+	public static final String VAR_price = "price";
 	public static final String VAR_pageId = "pageId";
-	public static final String VAR_resourceUri = "resourceUri";
-	public static final String VAR_templateUri = "templateUri";
-	public static final String VAR_uri = "uri";
-	public static final String VAR_url = "url";
-	public static final String VAR_title = "title";
+	public static final String VAR_emailTemplate = "emailTemplate";
+	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_location = "location";
 	public static final String VAR_locationColors = "locationColors";
 	public static final String VAR_locationTitles = "locationTitles";
@@ -1753,11 +1602,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static List<String> varsFqCompanyEvent(List<String> vars) {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
+		vars.add(VAR_price);
 		vars.add(VAR_pageId);
-		vars.add(VAR_resourceUri);
-		vars.add(VAR_templateUri);
-		vars.add(VAR_uri);
-		vars.add(VAR_url);
+		vars.add(VAR_emailTemplate);
+		vars.add(VAR_storeUrl);
 		vars.add(VAR_location);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
@@ -1767,6 +1615,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return CompanyEvent.varsRangeCompanyEvent(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyEvent(List<String> vars) {
+		vars.add(VAR_price);
 		vars.add(VAR_location);
 		BaseResult.varsRangeBaseResult(vars);
 		return vars;
@@ -1774,16 +1623,49 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	public static final String DISPLAY_NAME_name = "event name";
 	public static final String DISPLAY_NAME_description = "event description";
+	public static final String DISPLAY_NAME_price = "price";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_resourceUri = "resource URI";
-	public static final String DISPLAY_NAME_templateUri = "template URI";
-	public static final String DISPLAY_NAME_uri = "URI";
-	public static final String DISPLAY_NAME_url = "URL";
-	public static final String DISPLAY_NAME_title = "title";
+	public static final String DISPLAY_NAME_emailTemplate = "email template";
+	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_location = "map location";
 	public static final String DISPLAY_NAME_locationColors = "location colors";
 	public static final String DISPLAY_NAME_locationTitles = "location titles";
 	public static final String DISPLAY_NAME_locationLinks = "location links";
+
+	@Override
+	public String idForClass() {
+		return pageId;
+	}
+
+	@Override
+	public String titleForClass() {
+		return title;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return CompanyEvent.NameAdjectiveSingular_enUS;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return "%s/en-us/edit/event/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return "%s/en-us/shop/event/%s";
+	}
 
 	public static String displayNameForClass(String var) {
 		return CompanyEvent.displayNameCompanyEvent(var);
@@ -1794,18 +1676,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_name;
 		case VAR_description:
 			return DISPLAY_NAME_description;
+		case VAR_price:
+			return DISPLAY_NAME_price;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
-		case VAR_resourceUri:
-			return DISPLAY_NAME_resourceUri;
-		case VAR_templateUri:
-			return DISPLAY_NAME_templateUri;
-		case VAR_uri:
-			return DISPLAY_NAME_uri;
-		case VAR_url:
-			return DISPLAY_NAME_url;
-		case VAR_title:
-			return DISPLAY_NAME_title;
+		case VAR_emailTemplate:
+			return DISPLAY_NAME_emailTemplate;
+		case VAR_storeUrl:
+			return DISPLAY_NAME_storeUrl;
 		case VAR_location:
 			return DISPLAY_NAME_location;
 		case VAR_locationColors:
@@ -1825,18 +1703,14 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return "The event name. ";
 		case VAR_description:
 			return "The event description. ";
+		case VAR_price:
+			return "The price of the product per developer. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
-		case VAR_resourceUri:
-			return "The resource relative URI for this page. ";
-		case VAR_templateUri:
-			return "The template relative URI for this page. ";
-		case VAR_uri:
-			return "The relative URI for this page. ";
-		case VAR_url:
-			return "The URL for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
+		case VAR_emailTemplate:
+			return "The HTML email template for this product. ";
+		case VAR_storeUrl:
+			return "The store URL for this page. ";
 		case VAR_locationColors:
 			return "The colors of each location Points. ";
 		case VAR_locationTitles:
@@ -1854,17 +1728,13 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_description:
 			return "String";
+		case VAR_price:
+			return "BigDecimal";
 		case VAR_pageId:
 			return "String";
-		case VAR_resourceUri:
+		case VAR_emailTemplate:
 			return "String";
-		case VAR_templateUri:
-			return "String";
-		case VAR_uri:
-			return "String";
-		case VAR_url:
-			return "String";
-		case VAR_title:
+		case VAR_storeUrl:
 			return "String";
 		case VAR_location:
 			return "Point";
@@ -1896,12 +1766,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_description:
 			return 3;
+		case VAR_price:
+			return 3;
 		case VAR_pageId:
-			return 4;
-		case VAR_uri:
-			return 3;
-		case VAR_url:
-			return 3;
+			return 99;
 		case VAR_location:
 			return 3;
 			default:
@@ -1915,12 +1783,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return 1;
 		case VAR_description:
 			return 2;
+		case VAR_price:
+			return 3;
 		case VAR_pageId:
 			return 1;
-		case VAR_uri:
-			return 2;
-		case VAR_url:
-			return 2;
 		case VAR_location:
 			return 1;
 			default:

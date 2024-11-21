@@ -1,5 +1,6 @@
 package org.computate.site.model.event;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.computate.search.wrap.Wrap;
@@ -16,9 +17,9 @@ import io.vertx.pgclient.data.Point;
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/event
- * EditPageUri: /en-us/edit/event/{objectId}
- * DisplayPageUri: /en-us/shop/event/{objectId}
- * UserPageUri: /en-us/use/event/{objectId}
+ * EditPageUri: /en-us/edit/event/{pageId}
+ * DisplayPageUri: /en-us/shop/event/{pageId}
+ * UserPageUri: /en-us/use/event/{pageId}
  * ApiUri: /en-us/api/event
  * ApiMethod:
  *   Search:
@@ -72,18 +73,33 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
   protected void _description(Wrap<String> w) {
   }
 
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: price
+   * Description: The price of the product per developer. 
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   */
+  protected void _price(Wrap<BigDecimal> w) {
+  }
+
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
-	 * HtmRow: 4
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
 	 * HtmCell: 1
 	 * Facet: true
 	 * DisplayName: Page ID
 	 * Description: The ID for this page. 
+	 * VarId: true
 	 */
 	protected void _pageId(Wrap<String> w) {
-		toId(name);
+		w.o(toId(name));
 	}
 
 	/**
@@ -91,10 +107,10 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: resource URI
-	 * Description: The resource relative URI for this page. 
+	 * DisplayName: email template
+	 * Description: The HTML email template for this product. 
 	 */
-	protected void _resourceUri(Wrap<String> w) {
+	protected void _emailTemplate(Wrap<String> w) {
 	}
 
 	/**
@@ -102,69 +118,10 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: template URI
-	 * Description: The template relative URI for this page. 
+	 * DisplayName: store URL
+	 * Description: The store URL for this page. 
 	 */
-	protected void _templateUri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: URI
-	 * Description: The relative URI for this page. 
-	 */
-	protected void _uri(Wrap<String> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRow: 3
-	 * HtmCell: 2
-	 * Facet: true
-	 * DisplayName: URL
-	 * Description: The URL for this page. 
-	 */
-	protected void _url(Wrap<String> w) {
-		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), uri));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: title
-	 * Description: The title of this page. 
-	 * UrlVar: pageUrlId
-	 */
-	protected void _title(Wrap<String> w) {
-		w.o(name);
-	}
-
-	@Override
-	protected void _objectTitle(Wrap<String> w) {
-		w.o(String.format("%s — %s", CompanyEvent_NameAdjectiveSingular_enUS, title));
-	}
-
-	@Override
-	protected void _objectId(Wrap<String> w) {
-		w.o(pageId);
-	}
-
-	@Override
-	protected void _id(Wrap<String> w) {
-		w.o(String.format("%s_%s", CLASS_SIMPLE_NAME, pageId));
-	}
-
-	@Override
-	protected void _pageUrlId(Wrap<String> w) {
-		w.o(url);
+	protected void _storeUrl(Wrap<String> w) {
 	}
 
   /**
@@ -201,7 +158,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The titles of each location Paths. 
    */
   protected void _locationTitles(List<String> l) {
-    l.add(objectTitle);
+    l.add(title);
   }
 
   /**
@@ -213,6 +170,6 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The links of each location Paths. 
    */
   protected void _locationLinks(List<String> l) {
-    l.add(pageUrlId);
+    l.add(editPage);
   }
 }

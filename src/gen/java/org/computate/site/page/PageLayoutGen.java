@@ -3895,17 +3895,17 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepPageLayout(SiteRequest siteRequest_) {
+	public Future<PageLayoutGen<DEV>> promiseDeepPageLayout(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepPageLayout();
 	}
 
-	public Future<Void> promiseDeepPageLayout() {
-		Promise<Void> promise = Promise.promise();
+	public Future<PageLayoutGen<DEV>> promiseDeepPageLayout() {
+		Promise<PageLayoutGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promisePageLayout(promise2);
 		promise2.future().onSuccess(a -> {
-			promise.complete();
+			promise.complete(this);
 		}).onFailure(ex -> {
 			promise.fail(ex);
 		});
@@ -4026,7 +4026,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return promise.future();
 	}
 
-	public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	public Future<? extends PageLayoutGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepPageLayout(siteRequest_);
 	}
 
@@ -4895,6 +4895,34 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_classIcon = "";
 	public static final String DISPLAY_NAME_pageDescription = "";
 
+	public String idForClass() {
+		return null;
+	}
+
+	public String titleForClass() {
+		return null;
+	}
+
+	public String nameForClass() {
+		return null;
+	}
+
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	public String descriptionForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return PageLayout.displayNamePageLayout(var);
 	}
@@ -5036,6 +5064,263 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_pageDescription;
 		default:
 			return null;
+		}
+	}
+
+	public static String descriptionPageLayout(String var) {
+		switch(var) {
+		case VAR_siteRequest_:
+			return "The current request object";
+		case VAR_lang:
+			return "The current request language";
+		case VAR_requestVars:
+			return "The current request vars";
+		case VAR_serviceRequest:
+			return "The current Vert.x service request";
+		case VAR_pageUri:
+			return "The current request URI";
+		case VAR_pageId:
+			return "The current page name";
+		case VAR_apiUri:
+			return "The API request URI";
+		case VAR_pageMethod:
+			return "The current request HTTP method";
+		case VAR_params:
+			return "The current request parameters";
+		case VAR_userKey:
+			return "The current user's primary key";
+		case VAR_userFullName:
+			return "The current user's full name";
+		case VAR_userName:
+			return "The current user's username";
+		case VAR_userEmail:
+			return "The current user's email";
+		case VAR_logoutUrl:
+			return "The logout URL";
+		case VAR_promiseBefore:
+			return "A method that can be overridden at the start of the request that makes this main template be initialized with a Vert.x promise for reactive initialization";
+		case VAR_classSimpleName:
+			return "The simple name of this Java class";
+		case VAR_pageTitle:
+			return "The page title to override";
+		case VAR_scopes:
+			return "The user request scopes";
+		case VAR_roleForWrite:
+			return "The required roles to access this page";
+		case VAR_roleForRead:
+			return "The required roles to access this page";
+		case VAR_pagination:
+			return "The pagination data about this request";
+		case VAR_query:
+			return "The query data about this request";
+		case VAR_queryStr:
+			return "The query String for this request";
+		case VAR_promiseAfter:
+			return "A method that can be overridden at the end of the request that makes this main template be initialized with a Vert.x promise for reactive initialization";
+		case VAR_pageImageUri:
+			return "The image URI for this page";
+		case VAR_pageImageWidth:
+			return "The image width";
+		case VAR_pageImageHeight:
+			return "The image height";
+		case VAR_pageVideoId:
+			return "The video ID for this page";
+		case VAR_classIcon:
+			return "The icon for this page";
+		case VAR_pageDescription:
+			return "An optional description field for the page";
+			default:
+				return null;
+		}
+	}
+
+	public static String classSimpleNamePageLayout(String var) {
+		switch(var) {
+		case VAR_siteRequest_:
+			return "SiteRequest";
+		case VAR_lang:
+			return "String";
+		case VAR_requestVars:
+			return "Map";
+		case VAR_serviceRequest:
+			return "ServiceRequest";
+		case VAR_staticBaseUrl:
+			return "String";
+		case VAR_siteBaseUrl:
+			return "String";
+		case VAR_siteAuthUrl:
+			return "String";
+		case VAR_siteAuthRealm:
+			return "String";
+		case VAR_fontAwesomeKit:
+			return "String";
+		case VAR_facebookGraphVersion:
+			return "String";
+		case VAR_facebookAppId:
+			return "String";
+		case VAR_pageUri:
+			return "String";
+		case VAR_pageId:
+			return "String";
+		case VAR_apiUri:
+			return "String";
+		case VAR_pageMethod:
+			return "String";
+		case VAR_params:
+			return "JsonObject";
+		case VAR_userKey:
+			return "Long";
+		case VAR_userFullName:
+			return "String";
+		case VAR_userName:
+			return "String";
+		case VAR_userEmail:
+			return "String";
+		case VAR_logoutUrl:
+			return "String";
+		case VAR_promiseBefore:
+			return "Void";
+		case VAR_classSimpleName:
+			return "String";
+		case VAR_pageTitle:
+			return "String";
+		case VAR_scopes:
+			return "List";
+		case VAR_roleForWrite:
+			return "List";
+		case VAR_roleForRead:
+			return "List";
+		case VAR_stats:
+			return "Stats";
+		case VAR_facetCounts:
+			return "FacetCounts";
+		case VAR_pagination:
+			return "JsonObject";
+		case VAR_defaultFieldListVars:
+			return "List";
+		case VAR_defaultSortVars:
+			return "List";
+		case VAR_defaultStatsVars:
+			return "List";
+		case VAR_defaultPivotVars:
+			return "List";
+		case VAR_varsQ:
+			return "JsonObject";
+		case VAR_varsFq:
+			return "JsonObject";
+		case VAR_varsRange:
+			return "JsonObject";
+		case VAR_query:
+			return "JsonObject";
+		case VAR_pageResponse:
+			return "String";
+		case VAR_defaultZoneId:
+			return "String";
+		case VAR_defaultTimeZone:
+			return "ZoneId";
+		case VAR_defaultLocaleId:
+			return "String";
+		case VAR_rows:
+			return "Long";
+		case VAR_start:
+			return "Long";
+		case VAR_defaultLocale:
+			return "Locale";
+		case VAR_rangeGap:
+			return "String";
+		case VAR_rangeEnd:
+			return "ZonedDateTime";
+		case VAR_rangeStart:
+			return "ZonedDateTime";
+		case VAR_defaultRangeStats:
+			return "JsonObject";
+		case VAR_defaultRangeGap:
+			return "String";
+		case VAR_defaultRangeEnd:
+			return "ZonedDateTime";
+		case VAR_defaultRangeStart:
+			return "ZonedDateTime";
+		case VAR_defaultRangeVar:
+			return "String";
+		case VAR_defaultFacetSort:
+			return "String";
+		case VAR_defaultFacetLimit:
+			return "Integer";
+		case VAR_defaultFacetMinCount:
+			return "Integer";
+		case VAR_defaultPivotMinCount:
+			return "Integer";
+		case VAR_DEFAULT_MAP_LOCATION:
+			return "JsonObject";
+		case VAR_DEFAULT_MAP_ZOOM:
+			return "BigDecimal";
+		case VAR_queryStr:
+			return "String";
+		case VAR_promiseAfter:
+			return "Void";
+		case VAR_pageImageUri:
+			return "String";
+		case VAR_pageImageWidth:
+			return "Integer";
+		case VAR_pageImageHeight:
+			return "Integer";
+		case VAR_pageVideoId:
+			return "String";
+		case VAR_classIcon:
+			return "String";
+		case VAR_pageDescription:
+			return "String";
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmColumnPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmRowPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer htmCellPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer lengthMinPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer lengthMaxPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer maxPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
+		}
+	}
+
+	public static Integer minPageLayout(String var) {
+		switch(var) {
+			default:
+				return null;
 		}
 	}
 }

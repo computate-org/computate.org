@@ -117,18 +117,18 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 	// initDeep //
 	//////////////
 
-	public Future<Void> promiseDeepCompanyServicePage(SiteRequest siteRequest_) {
+	public Future<CompanyServicePageGen<DEV>> promiseDeepCompanyServicePage(SiteRequest siteRequest_) {
 		setSiteRequest_(siteRequest_);
 		return promiseDeepCompanyServicePage();
 	}
 
-	public Future<Void> promiseDeepCompanyServicePage() {
-		Promise<Void> promise = Promise.promise();
+	public Future<CompanyServicePageGen<DEV>> promiseDeepCompanyServicePage() {
+		Promise<CompanyServicePageGen<DEV>> promise = Promise.promise();
 		Promise<Void> promise2 = Promise.promise();
 		promiseCompanyServicePage(promise2);
 		promise2.future().onSuccess(a -> {
 			super.promiseDeepCompanyServiceGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete();
+				promise.complete(this);
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -155,7 +155,7 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 		return promise.future();
 	}
 
-	@Override public Future<Void> promiseDeepForClass(SiteRequest siteRequest_) {
+	@Override public Future<? extends CompanyServicePageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
 		return promiseDeepCompanyServicePage(siteRequest_);
 	}
 
@@ -294,6 +294,41 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 	public static final String CLASS_SIMPLE_NAME = "CompanyServicePage";
 
 
+	@Override
+	public String idForClass() {
+		return null;
+	}
+
+	@Override
+	public String titleForClass() {
+		return null;
+	}
+
+	@Override
+	public String nameForClass() {
+		return null;
+	}
+
+	@Override
+	public String classNameAdjectiveSingularForClass() {
+		return null;
+	}
+
+	@Override
+	public String descriptionForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlEditPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDisplayPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyServicePage.displayNameCompanyServicePage(var);
 	}
@@ -301,6 +336,69 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 		switch(var) {
 		default:
 			return CompanyServiceGenPage.displayNameCompanyServiceGenPage(var);
+		}
+	}
+
+	public static String descriptionCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.descriptionCompanyServiceGenPage(var);
+		}
+	}
+
+	public static String classSimpleNameCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.classSimpleNameCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmColumnCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.htmColumnCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmRowCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.htmRowCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer htmCellCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.htmCellCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer lengthMinCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.lengthMinCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer lengthMaxCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.lengthMaxCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer maxCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.maxCompanyServiceGenPage(var);
+		}
+	}
+
+	public static Integer minCompanyServicePage(String var) {
+		switch(var) {
+			default:
+				return CompanyServiceGenPage.minCompanyServiceGenPage(var);
 		}
 	}
 }
