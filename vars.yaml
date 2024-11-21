@@ -312,7 +312,7 @@ DATABASE_DATABASE: "{{ SITE_SHORT_NAME }}"
 AUTH_NAMESPACE: keycloak
 # The Auth host name. 
 #AUTH_HOST_NAME: "keycloak.{{ OPENSHIFT_APPS_DOMAIN }}"
-AUTH_HOST_NAME: "{{ query('kubernetes.core.k8s', kind='Ingress', resource_name='keycloak', namespace=AUTH_NAMESPACE)[0].spec.rules[0].host }}"
+AUTH_HOST_NAME: "keycloak.apps-crc.testing"
 # The Auth port. 
 AUTH_PORT: 443
 # Whether the Auth server uses SSL. 
