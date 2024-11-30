@@ -391,12 +391,14 @@ public class UseCaseGenPage extends UseCaseGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    Optional.ofNullable(searchListUseCase_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
-      String varSortParts[] = varSortStr.split(" ");
-      String varSort = UseCase.searchVarUseCase(varSortParts[0]);
-      String varSortDirection = varSortParts[1];
-      l.add(String.format("%s %s", varSort, varSortDirection));
-    });
+    if(!searchListUseCase_.getDefaultSort()) {
+      Optional.ofNullable(searchListUseCase_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+        String varSortParts[] = varSortStr.split(" ");
+        String varSort = UseCase.searchVarUseCase(varSortParts[0]);
+        String varSortDirection = varSortParts[1];
+        l.add(String.format("%s %s", varSort, varSortDirection));
+      });
+    }
   }
 
   @Override

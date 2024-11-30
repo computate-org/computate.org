@@ -329,6 +329,11 @@ public abstract class WeatherObservedPageGen<DEV> extends WeatherObservedGenPage
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return WeatherObservedPage.displayNameWeatherObservedPage(var);
 	}

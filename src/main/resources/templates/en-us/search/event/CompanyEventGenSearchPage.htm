@@ -297,27 +297,27 @@
 {% include en-us/search/event/CompanyEventPaginationButtons.htm %}
           <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown_name">
+              <sl-dropdown id="htmDropdown-name">
                 <sl-button slot="trigger" caret>event name</sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by event name ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by event name descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
-              <sl-dropdown id="htmDropdown_description">
+              <sl-dropdown id="htmDropdown-description">
                 <sl-button slot="trigger" caret>event description</sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by event description ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by event description descending
                   </sl-menu-item>

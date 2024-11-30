@@ -4923,6 +4923,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return null;
 	}
 
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return PageLayout.displayNamePageLayout(var);
 	}

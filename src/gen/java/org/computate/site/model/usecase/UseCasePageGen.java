@@ -329,6 +329,11 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return UseCasePage.displayNameUseCasePage(var);
 	}

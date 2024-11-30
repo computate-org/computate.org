@@ -329,6 +329,11 @@ public abstract class SitePagePageGen<DEV> extends SitePageGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SitePagePage.displayNameSitePagePage(var);
 	}

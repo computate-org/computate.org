@@ -330,6 +330,11 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyWebinarPage.displayNameCompanyWebinarPage(var);
 	}

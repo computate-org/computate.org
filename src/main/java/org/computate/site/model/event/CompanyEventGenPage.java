@@ -392,12 +392,14 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyEvent_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
-      String varSortParts[] = varSortStr.split(" ");
-      String varSort = CompanyEvent.searchVarCompanyEvent(varSortParts[0]);
-      String varSortDirection = varSortParts[1];
-      l.add(String.format("%s %s", varSort, varSortDirection));
-    });
+    if(!searchListCompanyEvent_.getDefaultSort()) {
+      Optional.ofNullable(searchListCompanyEvent_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+        String varSortParts[] = varSortStr.split(" ");
+        String varSort = CompanyEvent.searchVarCompanyEvent(varSortParts[0]);
+        String varSortDirection = varSortParts[1];
+        l.add(String.format("%s %s", varSort, varSortDirection));
+      });
+    }
   }
 
   @Override

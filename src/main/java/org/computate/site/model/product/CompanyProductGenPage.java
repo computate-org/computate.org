@@ -392,12 +392,14 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyProduct_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
-      String varSortParts[] = varSortStr.split(" ");
-      String varSort = CompanyProduct.searchVarCompanyProduct(varSortParts[0]);
-      String varSortDirection = varSortParts[1];
-      l.add(String.format("%s %s", varSort, varSortDirection));
-    });
+    if(!searchListCompanyProduct_.getDefaultSort()) {
+      Optional.ofNullable(searchListCompanyProduct_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+        String varSortParts[] = varSortStr.split(" ");
+        String varSort = CompanyProduct.searchVarCompanyProduct(varSortParts[0]);
+        String varSortDirection = varSortParts[1];
+        l.add(String.format("%s %s", varSort, varSortDirection));
+      });
+    }
   }
 
   @Override

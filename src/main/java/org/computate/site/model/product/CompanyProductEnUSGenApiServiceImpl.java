@@ -188,7 +188,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			});
 			json.put("list", l);
 			response200Search(listCompanyProduct.getRequest(), listCompanyProduct.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -278,7 +286,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
 			JsonObject json = JsonObject.mapFrom(listCompanyProduct.getList().stream().findFirst().orElse(null));
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200GETCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -511,7 +527,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -705,7 +729,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -934,7 +966,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200DELETECompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -1165,21 +1205,17 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
-							if(body2.size() > 0) {
-								if(searchList.size() == 1) {
-									apiRequest.setOriginal(o);
-								}
-								siteRequest.setJsonObject(body2);
-								patchCompanyProductFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyProduct {} succeeded, modified CompanyProduct. ", body.getValue(CompanyProduct.VAR_pageId));
-									eventHandler.handle(Future.succeededFuture());
-								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyProductFuture failed. "), ex);
-									eventHandler.handle(Future.failedFuture(ex));
-								});
-							} else {
-								eventHandler.handle(Future.succeededFuture());
+							if(searchList.size() == 1) {
+								apiRequest.setOriginal(o);
 							}
+							siteRequest.setJsonObject(body2);
+							patchCompanyProductFuture(o2, true).onSuccess(b -> {
+								LOG.debug("Import CompanyProduct {} succeeded, modified CompanyProduct. ", body.getValue(CompanyProduct.VAR_pageId));
+								eventHandler.handle(Future.succeededFuture());
+							}).onFailure(ex -> {
+								LOG.error(String.format("putimportCompanyProductFuture failed. "), ex);
+								eventHandler.handle(Future.failedFuture(ex));
+							});
 						} else {
 							postCompanyProductFuture(siteRequest, true).onSuccess(b -> {
 								LOG.debug("Import CompanyProduct {} succeeded, created new CompanyProduct. ", body.getValue(CompanyProduct.VAR_pageId));
@@ -1231,7 +1267,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PUTImportCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -1315,7 +1359,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			});
 			json.put("list", l);
 			response200Search(listCompanyProduct.getRequest(), listCompanyProduct.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "product", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchDownloadCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -2187,6 +2239,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			}
 			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
 				searchList.sort("productNum_docvalues_int", "asc");
+				searchList.setDefaultSort(true);
 			}
 			String facetRange2 = facetRange;
 			Date facetRangeStart2 = facetRangeStart;

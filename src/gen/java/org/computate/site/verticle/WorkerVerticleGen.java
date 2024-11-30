@@ -295,6 +295,10 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 		return null;
 	}
 
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return WorkerVerticle.displayNameWorkerVerticle(var);
 	}

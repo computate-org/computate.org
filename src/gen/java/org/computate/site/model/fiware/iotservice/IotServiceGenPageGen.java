@@ -785,6 +785,11 @@ public abstract class IotServiceGenPageGen<DEV> extends PageLayout {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return IotServiceGenPage.displayNameIotServiceGenPage(var);
 	}

@@ -853,6 +853,11 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 		return "%s/en-us/shop/service/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyService.displayNameCompanyService(var);
 	}

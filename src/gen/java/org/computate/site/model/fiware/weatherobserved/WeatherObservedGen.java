@@ -6157,6 +6157,11 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return WeatherObserved.displayNameWeatherObserved(var);
 	}

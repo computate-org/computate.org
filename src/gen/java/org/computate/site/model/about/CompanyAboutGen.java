@@ -859,6 +859,11 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 		return "%s/en-us/learn/about/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyAbout.displayNameCompanyAbout(var);
 	}

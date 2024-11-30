@@ -1667,6 +1667,11 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return "%s/en-us/shop/event/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return "%s/en-us/use/event/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyEvent.displayNameCompanyEvent(var);
 	}

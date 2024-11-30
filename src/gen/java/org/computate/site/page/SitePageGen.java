@@ -2280,6 +2280,11 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 		return "%s/en-us/view/article/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SitePage.displayNameSitePage(var);
 	}

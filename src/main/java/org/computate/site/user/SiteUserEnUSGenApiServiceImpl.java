@@ -188,7 +188,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			});
 			json.put("list", l);
 			response200Search(listSiteUser.getRequest(), listSiteUser.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+						String m = String.format("%s %s not found", "site user", userId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchSiteUser failed. "), ex);
 			promise.fail(ex);
@@ -564,6 +572,14 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							num++;
 							bParams.add(o2.sqlUserFullName());
 						break;
+					case "setSeeArchived":
+							o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSeeArchived());
+						break;
 					case "setSeeDeleted":
 							o2.setSeeDeleted(jsonObject.getBoolean(entityVar));
 							if(bParams.size() > 0)
@@ -579,14 +595,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bSql.append(SiteUser.VAR_displayName + "=$" + num);
 							num++;
 							bParams.add(o2.sqlDisplayName());
-						break;
-					case "setSeeArchived":
-							o2.setSeeArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSeeArchived());
 						break;
 				}
 			}
@@ -631,7 +639,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+						String m = String.format("%s %s not found", "site user", userId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHSiteUser failed. "), ex);
 			promise.fail(ex);
@@ -973,6 +989,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						num++;
 						bParams.add(o2.sqlUserFullName());
 						break;
+					case SiteUser.VAR_seeArchived:
+						o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSeeArchived());
+						break;
 					case SiteUser.VAR_seeDeleted:
 						o2.setSeeDeleted(jsonObject.getBoolean(entityVar));
 						if(bParams.size() > 0) {
@@ -990,15 +1015,6 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_displayName + "=$" + num);
 						num++;
 						bParams.add(o2.sqlDisplayName());
-						break;
-					case SiteUser.VAR_seeArchived:
-						o2.setSeeArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSeeArchived());
 						break;
 					}
 				}
@@ -1042,7 +1058,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+						String m = String.format("%s %s not found", "site user", userId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTSiteUser failed. "), ex);
 			promise.fail(ex);
@@ -1813,9 +1837,9 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SiteUser.VAR_userFirstName, SiteUser.staticSetUserFirstName(siteRequest2, (String)result.get(SiteUser.VAR_userFirstName)));
 			page.persistForClass(SiteUser.VAR_userLastName, SiteUser.staticSetUserLastName(siteRequest2, (String)result.get(SiteUser.VAR_userLastName)));
 			page.persistForClass(SiteUser.VAR_userFullName, SiteUser.staticSetUserFullName(siteRequest2, (String)result.get(SiteUser.VAR_userFullName)));
+			page.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
 			page.persistForClass(SiteUser.VAR_seeDeleted, SiteUser.staticSetSeeDeleted(siteRequest2, (String)result.get(SiteUser.VAR_seeDeleted)));
 			page.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
-			page.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

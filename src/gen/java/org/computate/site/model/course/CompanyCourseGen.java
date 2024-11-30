@@ -1645,6 +1645,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return "%s/en-us/shop/course/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return "%s/en-us/use/course/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyCourse.displayNameCompanyCourse(var);
 	}

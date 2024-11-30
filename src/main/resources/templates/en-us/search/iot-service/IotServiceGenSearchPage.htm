@@ -224,27 +224,27 @@
 {% include en-us/search/iot-service/IotServicePaginationButtons.htm %}
           <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown_ngsildTenant">
+              <sl-dropdown id="htmDropdown-ngsildTenant">
                 <sl-button slot="trigger" caret>NGSILD-Tenant</sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-ngsildTenant-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by NGSILD-Tenant ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-ngsildTenant-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by NGSILD-Tenant descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
-              <sl-dropdown id="htmDropdown_ngsildPath">
+              <sl-dropdown id="htmDropdown-ngsildPath">
                 <sl-button slot="trigger" caret>NGSILD-Path</sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-ngsildPath-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by NGSILD-Path ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-ngsildPath-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by NGSILD-Path descending
                   </sl-menu-item>

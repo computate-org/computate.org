@@ -86,19 +86,19 @@
             </div>
             <div>
               {%- block htmBodySortCompanyServicePage %}
-              <div style="display: none; " id="pageSearchVal-SortCompanyServiceHidden">
-                {% for item in defaultSortVars %}
-                  <div class="pageSearchVal-SortCompanyServiceHidden " id="pageSearchVal-SortCompanyServiceHidden_{{ item }}">{{ item }}</div>
-                {% endfor %}
-              </div>
-              <div id="pageSearchVal-SortCompanyService">
-                {% if defaultSortVars is defined and defaultSortVars.length > 0 %}
-                  <div class="pageSearchVal pageSearchVal-SortCompanyService " id="pageSearchVal-SortCompanyService_1">facet.pivot={!range=r1}{% for item in defaultSortVars %}{% if loop.index > 0 %},{% endif %}{{ item }}{% endfor %}</div>
-                {% endif %}
+              <div id="pageSearchVal-pageSort-CompanyService">
+              {% for key, value in varsFq.items() %}
+                  <div class="pageSearchVal pageSearchVal-pageSort-CompanyService-{{ key }} " id="pageSearchVal-pageSort-CompanyService-{{ key }}">{% if defaultSortVars is defined and (key + ' asc') in defaultSortVars %}sort={{ key }} asc{% else %}{% if defaultSortVars is defined and (key + ' desc') in defaultSortVars %}sort={{ key }} desc{% endif %}{% endif %}</div>
+              {% endfor %}
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-checkbox name="pageFacetTri" class="pageFacetTri " id="pageFacetTriCompanyService_{{ key }}" value="{{ value.var }}"{% if pivot is defined %} checked="checked"{% endif %}>{{ value.displayName }}</sl-checkbox>
+                <sl-radio-group name="pageFacetSort" class="pageFacetSort " id="pageFacetSortCompanyService_{{ key }}" value="{% if (key + ' asc') in defaultSortVars %}asc{% else %}{% if (key + ' desc') in defaultSortVars %}desc{% endif %}{% endif %}"{% if pivot is defined %} checked="checked"{% endif %} label={{ value.displayName | tojson }} size="small"
+>
+                  <sl-radio-button value="" pill>none</sl-radio-button>
+                  <sl-radio-button value="asc" pill>ascending</sl-radio-button>
+                  <sl-radio-button value="desc" pill>descending</sl-radio-button>
+</sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodySortCompanyServicePage %}

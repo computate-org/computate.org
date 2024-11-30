@@ -1230,8 +1230,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
 			registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
-			// apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
-			// apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
+			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
+			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
 
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			initializeApiService(apiCompanyAbout);

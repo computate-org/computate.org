@@ -217,6 +217,21 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 
 	/**
 	 * {@inheritDoc}
+	 * DocValues: true
+	 * Facet: true
+	 * DisplayName: user
+	 * Description: User page
+	 * Link: true
+	 * VarUrlUserPage: true
+	 */
+	protected void _userPage(Wrap<String> w) {
+		String f = classStringFormatUrlUserPageForClass();
+		if(f != null)
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * Suggested: true
 	 * Description: The indexed field in the search engine for this record while using autosuggest
 	 * DisplayName: autosuggest

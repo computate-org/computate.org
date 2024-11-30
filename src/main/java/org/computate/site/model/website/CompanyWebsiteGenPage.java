@@ -392,12 +392,14 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyWebsite_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
-      String varSortParts[] = varSortStr.split(" ");
-      String varSort = CompanyWebsite.searchVarCompanyWebsite(varSortParts[0]);
-      String varSortDirection = varSortParts[1];
-      l.add(String.format("%s %s", varSort, varSortDirection));
-    });
+    if(!searchListCompanyWebsite_.getDefaultSort()) {
+      Optional.ofNullable(searchListCompanyWebsite_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+        String varSortParts[] = varSortStr.split(" ");
+        String varSort = CompanyWebsite.searchVarCompanyWebsite(varSortParts[0]);
+        String varSortDirection = varSortParts[1];
+        l.add(String.format("%s %s", varSort, varSortDirection));
+      });
+    }
   }
 
   @Override

@@ -1349,6 +1349,11 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 		return "%s/en-us/shop/iot-service/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return IotService.displayNameIotService(var);
 	}

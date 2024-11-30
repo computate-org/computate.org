@@ -274,6 +274,10 @@ public abstract class MainVerticleGen<DEV> extends AbstractVerticle {
 		return null;
 	}
 
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return MainVerticle.displayNameMainVerticle(var);
 	}

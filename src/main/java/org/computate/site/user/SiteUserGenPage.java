@@ -392,12 +392,14 @@ public class SiteUserGenPage extends SiteUserGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    Optional.ofNullable(searchListSiteUser_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
-      String varSortParts[] = varSortStr.split(" ");
-      String varSort = SiteUser.searchVarSiteUser(varSortParts[0]);
-      String varSortDirection = varSortParts[1];
-      l.add(String.format("%s %s", varSort, varSortDirection));
-    });
+    if(!searchListSiteUser_.getDefaultSort()) {
+      Optional.ofNullable(searchListSiteUser_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+        String varSortParts[] = varSortStr.split(" ");
+        String varSort = SiteUser.searchVarSiteUser(varSortParts[0]);
+        String varSortDirection = varSortParts[1];
+        l.add(String.format("%s %s", varSort, varSortDirection));
+      });
+    }
   }
 
   @Override

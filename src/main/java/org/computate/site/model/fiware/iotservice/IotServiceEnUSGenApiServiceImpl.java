@@ -241,7 +241,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			});
 			json.put("list", l);
 			response200Search(listIotService.getRequest(), listIotService.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchIotService failed. "), ex);
 			promise.fail(ex);
@@ -379,7 +387,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		try {
 			SiteRequest siteRequest = listIotService.getSiteRequest_(SiteRequest.class);
 			JsonObject json = JsonObject.mapFrom(listIotService.getList().stream().findFirst().orElse(null));
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200GETIotService failed. "), ex);
 			promise.fail(ex);
@@ -828,7 +844,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHIotService failed. "), ex);
 			promise.fail(ex);
@@ -1270,7 +1294,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTIotService failed. "), ex);
 			promise.fail(ex);
@@ -1600,7 +1632,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200DELETEIotService failed. "), ex);
 			promise.fail(ex);
@@ -1831,22 +1871,18 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
-							if(body2.size() > 0) {
-								if(searchList.size() == 1) {
-									apiRequest.setOriginal(o);
-									apiRequest.setPk(o.getPk());
-								}
-								siteRequest.setJsonObject(body2);
-								patchIotServiceFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import IotService {} succeeded, modified IotService. ", body.getValue(IotService.VAR_pageId));
-									eventHandler.handle(Future.succeededFuture());
-								}).onFailure(ex -> {
-									LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
-									eventHandler.handle(Future.failedFuture(ex));
-								});
-							} else {
-								eventHandler.handle(Future.succeededFuture());
+							if(searchList.size() == 1) {
+								apiRequest.setOriginal(o);
+								apiRequest.setPk(o.getPk());
 							}
+							siteRequest.setJsonObject(body2);
+							patchIotServiceFuture(o, true).onSuccess(b -> {
+								LOG.debug("Import IotService {} succeeded, modified IotService. ", body.getValue(IotService.VAR_pageId));
+								eventHandler.handle(Future.succeededFuture());
+							}).onFailure(ex -> {
+								LOG.error(String.format("putimportIotServiceFuture failed. "), ex);
+								eventHandler.handle(Future.failedFuture(ex));
+							});
 						} else {
 							postIotServiceFuture(siteRequest, true).onSuccess(b -> {
 								LOG.debug("Import IotService {} succeeded, created new IotService. ", body.getValue(IotService.VAR_pageId));
@@ -1898,7 +1934,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "IoT service", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PUTImportIotService failed. "), ex);
 			promise.fail(ex);

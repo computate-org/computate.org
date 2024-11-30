@@ -214,14 +214,14 @@
 {% include en-us/search/article/SitePagePaginationButtons.htm %}
           <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown_name">
+              <sl-dropdown id="htmDropdown-name">
                 <sl-button slot="trigger" caret>title</sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by title ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by title descending
                   </sl-menu-item>

@@ -1327,6 +1327,11 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		return "%s/en-us/view/webinar/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return "%s/en-us/join/webinar/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyWebinar.displayNameCompanyWebinar(var);
 	}

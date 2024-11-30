@@ -47,7 +47,7 @@
               {% endif %}
               {% else %}
               <div>Want to get started with the {{ result.name }}? Start by logging into computate.org with your GitHub account. </div>
-              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ result.userUri }}" variant="neutral">
+              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ result.userPage }}" variant="neutral">
                 <i class="fa-duotone fa-right-to-bracket"></i>
                 Log in with GitHub
               </sl-button>
@@ -288,7 +288,7 @@
               {% endif %}
               {% else %}
               <div>Want to get started with the {{ result.name }}? Start by logging into computate.org with your GitHub account. </div>
-              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ SITE_BASE_URL }}{{ result.userUri }}" variant="neutral">
+              <sl-button id="order-button" class="gradient-button pink-purple-background" href="{{ result.userPage }}" variant="neutral">
                 <i class="fa-duotone fa-right-to-bracket"></i>
                 Log in with GitHub
               </sl-button>

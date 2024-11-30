@@ -1930,6 +1930,10 @@ public abstract class SiteRequestGen<DEV> extends Object {
 		return null;
 	}
 
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SiteRequest.displayNameSiteRequest(var);
 	}

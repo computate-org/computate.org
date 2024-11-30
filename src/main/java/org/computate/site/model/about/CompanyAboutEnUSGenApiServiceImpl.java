@@ -188,7 +188,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			});
 			json.put("list", l);
 			response200Search(listCompanyAbout.getRequest(), listCompanyAbout.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchCompanyAbout failed. "), ex);
 			promise.fail(ex);
@@ -278,7 +286,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		try {
 			SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
 			JsonObject json = JsonObject.mapFrom(listCompanyAbout.getList().stream().findFirst().orElse(null));
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200GETCompanyAbout failed. "), ex);
 			promise.fail(ex);
@@ -511,7 +527,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHCompanyAbout failed. "), ex);
 			promise.fail(ex);
@@ -705,7 +729,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTCompanyAbout failed. "), ex);
 			promise.fail(ex);
@@ -934,7 +966,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200DELETECompanyAbout failed. "), ex);
 			promise.fail(ex);
@@ -1165,21 +1205,17 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
-							if(body2.size() > 0) {
-								if(searchList.size() == 1) {
-									apiRequest.setOriginal(o);
-								}
-								siteRequest.setJsonObject(body2);
-								patchCompanyAboutFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import CompanyAbout {} succeeded, modified CompanyAbout. ", body.getValue(CompanyAbout.VAR_pageId));
-									eventHandler.handle(Future.succeededFuture());
-								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
-									eventHandler.handle(Future.failedFuture(ex));
-								});
-							} else {
-								eventHandler.handle(Future.succeededFuture());
+							if(searchList.size() == 1) {
+								apiRequest.setOriginal(o);
 							}
+							siteRequest.setJsonObject(body2);
+							patchCompanyAboutFuture(o2, true).onSuccess(b -> {
+								LOG.debug("Import CompanyAbout {} succeeded, modified CompanyAbout. ", body.getValue(CompanyAbout.VAR_pageId));
+								eventHandler.handle(Future.succeededFuture());
+							}).onFailure(ex -> {
+								LOG.error(String.format("putimportCompanyAboutFuture failed. "), ex);
+								eventHandler.handle(Future.failedFuture(ex));
+							});
 						} else {
 							postCompanyAboutFuture(siteRequest, true).onSuccess(b -> {
 								LOG.debug("Import CompanyAbout {} succeeded, created new CompanyAbout. ", body.getValue(CompanyAbout.VAR_pageId));
@@ -1231,7 +1267,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "about page", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PUTImportCompanyAbout failed. "), ex);
 			promise.fail(ex);

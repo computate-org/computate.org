@@ -4,6 +4,7 @@
 #############
 
 OVERLAY_SITE_PATH: kustomize/overlays/prod
+USING_OPENSHIFT_AI: "{{ true if lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/namespace', errors='ignore') else false }}"
 
 # The name of this application. 
 SITE_NAME: computate.org
@@ -228,7 +229,7 @@ SITE_POWERED_BY_NAME: Google Kubernetes Engine
 # The URL of the cloud provider where the public site is deployed. 
 SITE_POWERED_BY_URL: https://cloud.google.com/kubernetes-engine
 # The static path to the logo of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_IMAGE_URI: /svg/google-gke.svg
+SITE_POWERED_BY_IMAGE_URI: '<img class="footer-img" alt="Google Kubernetes Engine" src=\"\{\{ STATIC_BASE_URL \}\}/svg/google-gke.svg"/>'
 
 ######################
 # Zookeeper defaults #

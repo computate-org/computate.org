@@ -188,7 +188,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			});
 			json.put("list", l);
 			response200Search(listSitePage.getRequest(), listSitePage.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "article", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchSitePage failed. "), ex);
 			promise.fail(ex);
@@ -278,7 +286,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		try {
 			SiteRequest siteRequest = listSitePage.getSiteRequest_(SiteRequest.class);
 			JsonObject json = JsonObject.mapFrom(listSitePage.getList().stream().findFirst().orElse(null));
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "article", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200GETSitePage failed. "), ex);
 			promise.fail(ex);
@@ -511,7 +527,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "article", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHSitePage failed. "), ex);
 			promise.fail(ex);
@@ -705,7 +729,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "article", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTSitePage failed. "), ex);
 			promise.fail(ex);
@@ -936,21 +968,17 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
-							if(body2.size() > 0) {
-								if(searchList.size() == 1) {
-									apiRequest.setOriginal(o);
-								}
-								siteRequest.setJsonObject(body2);
-								patchSitePageFuture(o2, true).onSuccess(b -> {
-									LOG.debug("Import SitePage {} succeeded, modified SitePage. ", body.getValue(SitePage.VAR_pageId));
-									eventHandler.handle(Future.succeededFuture());
-								}).onFailure(ex -> {
-									LOG.error(String.format("putimportSitePageFuture failed. "), ex);
-									eventHandler.handle(Future.failedFuture(ex));
-								});
-							} else {
-								eventHandler.handle(Future.succeededFuture());
+							if(searchList.size() == 1) {
+								apiRequest.setOriginal(o);
 							}
+							siteRequest.setJsonObject(body2);
+							patchSitePageFuture(o2, true).onSuccess(b -> {
+								LOG.debug("Import SitePage {} succeeded, modified SitePage. ", body.getValue(SitePage.VAR_pageId));
+								eventHandler.handle(Future.succeededFuture());
+							}).onFailure(ex -> {
+								LOG.error(String.format("putimportSitePageFuture failed. "), ex);
+								eventHandler.handle(Future.failedFuture(ex));
+							});
 						} else {
 							postSitePageFuture(siteRequest, true).onSuccess(b -> {
 								LOG.debug("Import SitePage {} succeeded, created new SitePage. ", body.getValue(SitePage.VAR_pageId));
@@ -1002,7 +1030,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "article", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PUTImportSitePage failed. "), ex);
 			promise.fail(ex);
@@ -1669,6 +1705,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
 				searchList.sort("courseNum_docvalues_int", "desc");
 				searchList.sort("lessonNum_docvalues_int", "desc");
+				searchList.setDefaultSort(true);
 			}
 			String facetRange2 = facetRange;
 			Date facetRangeStart2 = facetRangeStart;
@@ -1876,12 +1913,12 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_solrId, SitePage.staticSetSolrId(siteRequest2, (String)result.get(SitePage.VAR_solrId)));
 			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
 			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
+			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
 			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, (String)result.get(SitePage.VAR_author)));
 			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, (String)result.get(SitePage.VAR_pageId)));
 			page.persistForClass(SitePage.VAR_h1, SitePage.staticSetH1(siteRequest2, (String)result.get(SitePage.VAR_h1)));
 			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, (String)result.get(SitePage.VAR_h2)));
 			page.persistForClass(SitePage.VAR_pageImageUri, SitePage.staticSetPageImageUri(siteRequest2, (String)result.get(SitePage.VAR_pageImageUri)));
-			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

@@ -1539,6 +1539,11 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SiteUser.displayNameSiteUser(var);
 	}

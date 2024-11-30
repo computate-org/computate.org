@@ -329,6 +329,11 @@ public abstract class IotServicePageGen<DEV> extends IotServiceGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return IotServicePage.displayNameIotServicePage(var);
 	}

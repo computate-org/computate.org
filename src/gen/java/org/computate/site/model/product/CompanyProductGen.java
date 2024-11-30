@@ -1383,6 +1383,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return "%s/en-us/shop/product/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return "%s/en-us/use/product/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyProduct.displayNameCompanyProduct(var);
 	}

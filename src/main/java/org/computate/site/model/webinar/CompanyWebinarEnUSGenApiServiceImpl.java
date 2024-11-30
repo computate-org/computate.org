@@ -188,7 +188,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			});
 			json.put("list", l);
 			response200Search(listCompanyWebinar.getRequest(), listCompanyWebinar.getResponse(), json);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "webinar", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200SearchCompanyWebinar failed. "), ex);
 			promise.fail(ex);
@@ -278,7 +286,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = listCompanyWebinar.getSiteRequest_(SiteRequest.class);
 			JsonObject json = JsonObject.mapFrom(listCompanyWebinar.getList().stream().findFirst().orElse(null));
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "webinar", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200GETCompanyWebinar failed. "), ex);
 			promise.fail(ex);
@@ -636,6 +652,14 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							num++;
 							bParams.add(o2.sqlDescription());
 						break;
+					case "setPageId":
+							o2.setPageId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlPageId());
+						break;
 					case "setJoinUri":
 							o2.setJoinUri(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -667,14 +691,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							bSql.append(CompanyWebinar.VAR_webinarUrlEmea + "=$" + num);
 							num++;
 							bParams.add(o2.sqlWebinarUrlEmea());
-						break;
-					case "setPageId":
-							o2.setPageId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlPageId());
 						break;
 				}
 			}
@@ -719,7 +735,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "webinar", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PATCHCompanyWebinar failed. "), ex);
 			promise.fail(ex);
@@ -1065,6 +1089,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						num++;
 						bParams.add(o2.sqlDescription());
 						break;
+					case CompanyWebinar.VAR_pageId:
+						o2.setPageId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlPageId());
+						break;
 					case CompanyWebinar.VAR_joinUri:
 						o2.setJoinUri(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1100,15 +1133,6 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_webinarUrlEmea + "=$" + num);
 						num++;
 						bParams.add(o2.sqlWebinarUrlEmea());
-						break;
-					case CompanyWebinar.VAR_pageId:
-						o2.setPageId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(CompanyWebinar.VAR_pageId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlPageId());
 						break;
 					}
 				}
@@ -1152,7 +1176,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			JsonObject json = JsonObject.mapFrom(o);
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "webinar", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200POSTCompanyWebinar failed. "), ex);
 			promise.fail(ex);
@@ -1383,22 +1415,18 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 										body2.putNull("set" + StringUtils.capitalize(f));
 								}
 							}
-							if(body2.size() > 0) {
-								if(searchList.size() == 1) {
-									apiRequest.setOriginal(o);
-									apiRequest.setPk(o.getPk());
-								}
-								siteRequest.setJsonObject(body2);
-								patchCompanyWebinarFuture(o, true).onSuccess(b -> {
-									LOG.debug("Import CompanyWebinar {} succeeded, modified CompanyWebinar. ", body.getValue(CompanyWebinar.VAR_pageId));
-									eventHandler.handle(Future.succeededFuture());
-								}).onFailure(ex -> {
-									LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
-									eventHandler.handle(Future.failedFuture(ex));
-								});
-							} else {
-								eventHandler.handle(Future.succeededFuture());
+							if(searchList.size() == 1) {
+								apiRequest.setOriginal(o);
+								apiRequest.setPk(o.getPk());
 							}
+							siteRequest.setJsonObject(body2);
+							patchCompanyWebinarFuture(o, true).onSuccess(b -> {
+								LOG.debug("Import CompanyWebinar {} succeeded, modified CompanyWebinar. ", body.getValue(CompanyWebinar.VAR_pageId));
+								eventHandler.handle(Future.succeededFuture());
+							}).onFailure(ex -> {
+								LOG.error(String.format("putimportCompanyWebinarFuture failed. "), ex);
+								eventHandler.handle(Future.failedFuture(ex));
+							});
 						} else {
 							postCompanyWebinarFuture(siteRequest, true).onSuccess(b -> {
 								LOG.debug("Import CompanyWebinar {} succeeded, created new CompanyWebinar. ", body.getValue(CompanyWebinar.VAR_pageId));
@@ -1450,7 +1478,15 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Promise<ServiceResponse> promise = Promise.promise();
 		try {
 			JsonObject json = new JsonObject();
-			promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			if(json == null) {
+				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+						String m = String.format("%s %s not found", "webinar", pageId);
+				promise.complete(new ServiceResponse(404
+						, m
+						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
+			} else {
+				promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200PUTImportCompanyWebinar failed. "), ex);
 			promise.fail(ex);
@@ -2594,11 +2630,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_displayPage, CompanyWebinar.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyWebinar.VAR_displayPage)));
 			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, (String)result.get(CompanyWebinar.VAR_name)));
 			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, (String)result.get(CompanyWebinar.VAR_description)));
+			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, (String)result.get(CompanyWebinar.VAR_pageId)));
 			page.persistForClass(CompanyWebinar.VAR_joinUri, CompanyWebinar.staticSetJoinUri(siteRequest2, (String)result.get(CompanyWebinar.VAR_joinUri)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlAmericas, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest2, (String)result.get(CompanyWebinar.VAR_webinarUrlAmericas)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlApac, CompanyWebinar.staticSetWebinarUrlApac(siteRequest2, (String)result.get(CompanyWebinar.VAR_webinarUrlApac)));
 			page.persistForClass(CompanyWebinar.VAR_webinarUrlEmea, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest2, (String)result.get(CompanyWebinar.VAR_webinarUrlEmea)));
-			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, (String)result.get(CompanyWebinar.VAR_pageId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

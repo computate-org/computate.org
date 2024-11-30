@@ -960,6 +960,11 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 		return "%s/en-us/view/website/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyWebsite.displayNameCompanyWebsite(var);
 	}

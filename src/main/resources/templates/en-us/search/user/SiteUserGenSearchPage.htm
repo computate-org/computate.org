@@ -204,27 +204,27 @@
 {% include en-us/search/user/SiteUserPaginationButtons.htm %}
           <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown_userFullName">
+              <sl-dropdown id="htmDropdown-userFullName">
                 <sl-button slot="trigger" caret></sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-userFullName-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by null ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-userFullName-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by null descending
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
-              <sl-dropdown id="htmDropdown_userName">
+              <sl-dropdown id="htmDropdown-userName">
                 <sl-button slot="trigger" caret></sl-button>
                 <sl-menu>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-userName-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
                     sort by null ascending
                   </sl-menu-item>
-                  <sl-menu-item type="checkbox" data-action="sort">
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-userName-desc">
                     <i class="fa-solid fa-arrow-down-z-a"></i>
                     sort by null descending
                   </sl-menu-item>

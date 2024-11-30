@@ -329,6 +329,11 @@ public abstract class CompanyAboutPageGen<DEV> extends CompanyAboutGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyAboutPage.displayNameCompanyAboutPage(var);
 	}

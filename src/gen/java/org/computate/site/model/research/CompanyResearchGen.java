@@ -853,6 +853,11 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 		return "%s/en-us/view/research/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyResearch.displayNameCompanyResearch(var);
 	}

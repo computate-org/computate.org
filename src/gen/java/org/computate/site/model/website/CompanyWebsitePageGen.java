@@ -329,6 +329,11 @@ public abstract class CompanyWebsitePageGen<DEV> extends CompanyWebsiteGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyWebsitePage.displayNameCompanyWebsitePage(var);
 	}

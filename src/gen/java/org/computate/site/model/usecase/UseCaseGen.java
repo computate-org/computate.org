@@ -960,6 +960,11 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 		return "%s/en-us/shop/use-case/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return "%s/en-us/use/use-case/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return UseCase.displayNameUseCase(var);
 	}

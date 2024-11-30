@@ -329,6 +329,11 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyEventPage.displayNameCompanyEventPage(var);
 	}

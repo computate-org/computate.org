@@ -785,6 +785,11 @@ public abstract class SiteUserGenPageGen<DEV> extends PageLayout {
 		return null;
 	}
 
+	@Override
+	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
 	public static String displayNameForClass(String var) {
 		return SiteUserGenPage.displayNameSiteUserGenPage(var);
 	}

@@ -953,7 +953,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyCourseResponse'
-  /en-us/api/course/{objectId}:
+  /en-us/api/course/{pageId}:
     get:
       operationId: getCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
@@ -970,7 +970,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1568,7 +1568,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyEventResponse'
-  /en-us/api/event/{objectId}:
+  /en-us/api/event/{pageId}:
     get:
       operationId: getCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
@@ -1585,7 +1585,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -1617,7 +1617,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -2241,7 +2241,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportIotServiceResponse'
-  /en-us/api/iot-service/{objectId}:
+  /en-us/api/iot-service/{pageId}:
     get:
       operationId: getIotService
       x-vertx-event-bus: computate.org-enUS-IotService
@@ -2261,7 +2261,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -2293,7 +2293,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -2963,7 +2963,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportWeatherObservedResponse'
-  /en-us/api/weather-observed/{objectId}:
+  /en-us/api/weather-observed/{entityId}:
     get:
       operationId: getWeatherObserved
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
@@ -2999,7 +2999,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: entityId
           in: path
           description: >+
           required: true
@@ -3047,7 +3047,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: entityId
           in: path
           description: >+
           required: true
@@ -3816,7 +3816,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyProductResponse'
-  /en-us/api/product/{objectId}:
+  /en-us/api/product/{pageId}:
     get:
       operationId: getCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -3833,7 +3833,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -3865,7 +3865,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -4486,7 +4486,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyResearchResponse'
-  /en-us/api/research/{objectId}:
+  /en-us/api/research/{pageId}:
     get:
       operationId: getCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
@@ -4503,7 +4503,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5068,7 +5068,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyServiceResponse'
-  /en-us/api/service/{objectId}:
+  /en-us/api/service/{pageId}:
     get:
       operationId: getCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
@@ -5085,7 +5085,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5650,7 +5650,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportUseCaseResponse'
-  /en-us/api/use-case/{objectId}:
+  /en-us/api/use-case/{pageId}:
     get:
       operationId: getUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
@@ -5667,7 +5667,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -5699,7 +5699,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6320,7 +6320,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyWebinarResponse'
-  /en-us/api/webinar/{objectId}:
+  /en-us/api/webinar/{pageId}:
     get:
       operationId: getCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
@@ -6337,7 +6337,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -6935,7 +6935,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyWebsiteResponse'
-  /en-us/api/website/{objectId}:
+  /en-us/api/website/{pageId}:
     get:
       operationId: getCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
@@ -6952,7 +6952,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
@@ -7517,7 +7517,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportSitePageResponse'
-  /en-us/api/article/{objectId}:
+  /en-us/api/article/{pageId}:
     get:
       operationId: getSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
@@ -7534,7 +7534,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: objectId
+        - name: pageId
           in: path
           description: >+
           required: true
