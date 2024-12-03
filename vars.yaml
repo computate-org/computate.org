@@ -4,7 +4,7 @@
 #############
 
 OVERLAY_SITE_PATH: kustomize/overlays/prod
-USING_OPENSHIFT_AI: "{{ true if lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/namespace', errors='ignore') else false }}"
+USING_OPENSHIFT_AI: "{{ true if lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/namespace') else false | default(false) }}"
 
 # The name of this application. 
 SITE_NAME: computate.org
@@ -18,6 +18,8 @@ VARS_FILENAME: vars.yaml
 VARS_PATH: "{{ SITE_SRC }}/{{ VARS_FILENAME }}"
 # A shorter name for the application used for database names, collections, and artifact IDs. 
 SITE_SHORT_NAME: "{{ SITE_NAME | replace('-', '') | replace('_', '') | replace('.', '') | lower }}"
+# The namespace in OpenShift where the site will run. 
+SITE_NAMESPACE: "{{ SITE_SHORT_NAME }}"
 # A pretty version of the site name. 
 SITE_DISPLAY_NAME: Learn that computer
 # A short description of the site. 
@@ -48,8 +50,10 @@ SITE_PUBLIC_URL: "https://www.{{ DOMAIN_NAME }}"
 CLUSTER_PORT: "{{ (SITE_PORT | int) + 1 }}"
 # Verify SSL connections. 
 SSL_VERIFY: false
-# The namespace in OpenShift where the site will run. 
-SITE_NAMESPACE: "{{ SITE_SHORT_NAME }}"
+# The public search endpoint for searching public items in the site. 
+PUBLIC_SEARCH_URI: "/en-us/search"
+# The user search endpoint for searching public and authorized items in the site. 
+USER_SEARCH_URI: "/en-us/user-search"
 
 #########################
 # Mailing list defaults #
@@ -192,9 +196,11 @@ DYNAMIC_PAGE_PATHS:
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
 FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
 # An optional link element to either a Shoelace web components stylesheet or a Web Awesome Backer web components stylesheet. 
-WEB_COMPONENTS_CSS: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_CSS'] | b64decode }}"
+WEB_COMPONENTS_CSS: |-
+  {{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_CSS'] | b64decode | default('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/themes/light.css" />') }}
 # An optional link element to either a Shoelace web components JavaScript or a Web Awesome Backer web components JavaScript. 
-WEB_COMPONENTS_JS: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_JS'] | b64decode }}"
+WEB_COMPONENTS_JS: |-
+  {{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_JS'] | b64decode | default('<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/shoelace-autoloader.js"></script>') }}
 # Switch between Shoelace "sl-" and Web Awesome "wa-" element prefixes. 
 WEB_COMPONENTS_PREFIX: "sl-"
 # Site default theme, light or dark. 
@@ -229,7 +235,7 @@ SITE_POWERED_BY_NAME: Google Kubernetes Engine
 # The URL of the cloud provider where the public site is deployed. 
 SITE_POWERED_BY_URL: https://cloud.google.com/kubernetes-engine
 # The static path to the logo of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_IMAGE_URI: '<img class="footer-img" alt="Google Kubernetes Engine" src=\"\{\{ STATIC_BASE_URL \}\}/svg/google-gke.svg"/>'
+SITE_POWERED_BY_IMAGE: '<img class="footer-img" alt="Google Kubernetes Engine" src=\"\{\{ STATIC_BASE_URL \}\}/svg/google-gke.svg"/>'
 
 ######################
 # Zookeeper defaults #
