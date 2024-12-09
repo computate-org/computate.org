@@ -360,6 +360,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listSitePage.first());
+								apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId()).orElse(null));
 								eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHSitePage(apiRequest, listSitePage).onSuccess(e -> {
@@ -422,8 +423,11 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			SitePage o2 = jsonObject.mapTo(SitePage.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
-				patchSitePageFuture(o, false).onSuccess(a -> {
+				patchSitePageFuture(o2, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("listPATCHSitePage failed. "), ex);
@@ -475,7 +479,11 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							patchSitePageFuture(o, false).onSuccess(o2 -> {
+							apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId()).orElse(null));
+							JsonObject jsonObject = JsonObject.mapFrom(o);
+							SitePage o2 = jsonObject.mapTo(SitePage.class);
+							o2.setSiteRequest_(siteRequest);
+							patchSitePageFuture(o2, false).onSuccess(o3 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -509,6 +517,14 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			persistSitePage(o, true).onSuccess(c -> {
 				indexSitePage(o).onSuccess(e -> {
+					if(apiRequest != null) {
+						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+							o.apiRequestSitePage();
+							if(apiRequest.getVars().size() > 0)
+								eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
+						}
+					}
 					promise.complete(o);
 				}).onFailure(ex -> {
 					promise.fail(ex);
@@ -970,6 +986,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							}
 							if(searchList.size() == 1) {
 								apiRequest.setOriginal(o);
+								apiRequest.setId(o.getPageId());
 							}
 							siteRequest.setJsonObject(body2);
 							patchSitePageFuture(o2, true).onSuccess(b -> {
@@ -1910,11 +1927,11 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_archived, SitePage.staticSetArchived(siteRequest2, (String)result.get(SitePage.VAR_archived)));
 			page.persistForClass(SitePage.VAR_title, SitePage.staticSetTitle(siteRequest2, (String)result.get(SitePage.VAR_title)));
 			page.persistForClass(SitePage.VAR_displayPage, SitePage.staticSetDisplayPage(siteRequest2, (String)result.get(SitePage.VAR_displayPage)));
-			page.persistForClass(SitePage.VAR_solrId, SitePage.staticSetSolrId(siteRequest2, (String)result.get(SitePage.VAR_solrId)));
 			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
 			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
 			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
 			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, (String)result.get(SitePage.VAR_author)));
+			page.persistForClass(SitePage.VAR_solrId, SitePage.staticSetSolrId(siteRequest2, (String)result.get(SitePage.VAR_solrId)));
 			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, (String)result.get(SitePage.VAR_pageId)));
 			page.persistForClass(SitePage.VAR_h1, SitePage.staticSetH1(siteRequest2, (String)result.get(SitePage.VAR_h1)));
 			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, (String)result.get(SitePage.VAR_h2)));

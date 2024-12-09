@@ -603,6 +603,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public void setAreaServedColors(List<String> areaServedColors) {
 		this.areaServedColors = areaServedColors;
 	}
+	@JsonIgnore
 	public void setAreaServedColors(String o) {
 		String l = WeatherObserved.staticSetAreaServedColors(siteRequest_, o);
 		if(l != null)
@@ -677,6 +678,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public void setAreaServedTitles(List<String> areaServedTitles) {
 		this.areaServedTitles = areaServedTitles;
 	}
+	@JsonIgnore
 	public void setAreaServedTitles(String o) {
 		String l = WeatherObserved.staticSetAreaServedTitles(siteRequest_, o);
 		if(l != null)
@@ -751,6 +753,7 @@ public abstract class WeatherObservedGen<DEV> extends BaseModel {
 	public void setAreaServedLinks(List<String> areaServedLinks) {
 		this.areaServedLinks = areaServedLinks;
 	}
+	@JsonIgnore
 	public void setAreaServedLinks(String o) {
 		String l = WeatherObserved.staticSetAreaServedLinks(siteRequest_, o);
 		if(l != null)

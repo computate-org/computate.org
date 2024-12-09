@@ -1,7 +1,7 @@
 {% extends "en-us/PageLayout.htm" %}
 {%- block htmTitlePageLayout %}
 {%- block htmTitleCompanyWebinarPage %}
-    <title>{{ result.objectTitle }}</title>
+    <title>{{ result.title }}</title>
 {%- endblock htmTitleCompanyWebinarPage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyWebinarPage %}
     <script>
 
-      function jsWebsocketCompanyWebinar(pk, vars, $response) {
+      function jsWebsocketCompanyWebinar(pageId, vars, $response) {
 {%- block jsWebsocketCompanyWebinarPage %}{%- endblock %}
       }
 
@@ -167,19 +167,15 @@
 {%- block htmBodyMiddleCompanyWebinarPage %}
 {%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
 {%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
+        <div class="main-content">
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all webinars">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all webinars
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-video"></i>
-          <span>webinars</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all webinars
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
         <h2>
@@ -193,33 +189,24 @@
 {% else %}
   {% if resultCount == 1 %}
     {% if solrId is defined %}
-        <div>
-          <sl-tooltip content="back to all webinars">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+            <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all webinars
             </sl-button>
-          </sl-tooltip>
-        </div>
+          </div>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
-        <h1>
-          <i class="fa-regular fa-video"></i>
-          {{result.objectTitle}}
-        </h1>
+          <h1 class="Page_title"><i class="fa-regular fa-video"></i> {{ result.title | e }}</h1>
     {% else %}
-        <div>
-          <sl-tooltip content="back to all webinars">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all webinars
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-video"></i>
-          <span>webinars</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all webinars
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
         <h2>
@@ -232,18 +219,13 @@
         </h2>
     {% endif %}
   {% else %}
-        <div>
-          <sl-tooltip content="back to all webinars">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all webinars
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-video"></i>
-          <span>webinars</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all webinars
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
         <h2>
@@ -257,20 +239,21 @@
   {% endif %}
 {% endif %}
 {%- block htmFormCompanyWebinarPage %}
-        <form action="/en-us/api/webinar" id="CompanyWebinarForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+          <form action="/en-us/api/webinar" id="CompanyWebinarForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
 {% if pageId is defined %}
-          <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
-          {% endif %}
-          <input name="focusId" type="hidden"/>
-          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-          <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result_) }}' type="hidden"/>
-          <input name="listCompanyWebinar" id="listCompanyWebinar" class="listCompanyWebinar"  value='{{ toJsonArrayStringInApostrophes(listCompanyWebinar) }}' type="hidden"/>
-        </form>
+            <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
+            {% endif %}
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result) }}' type="hidden"/>
+            <input name="listCompanyWebinar" id="listCompanyWebinar" class="listCompanyWebinar"  value='{{ toJsonArrayStringInApostrophes(listCompanyWebinar) }}' type="hidden"/>
+          </form>
   {% if solrId is defined %}
-        {{ htmButton_searchpageCompanyWebinar() }}
-        {{ htmForm_searchpageCompanyWebinar() }}
+          {{ htmButton_searchpageCompanyWebinar() }}
+          {{ htmForm_searchpageCompanyWebinar() }}
   {% endif %}
 {%- endblock htmFormCompanyWebinarPage %}
+        </div>
 {%- endblock htmBodyMiddleCompanyWebinarPage %}
 {%- endblock htmBodyMiddlePageLayout %}
 
@@ -375,7 +358,7 @@ The primary key of this object in the database"
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary" outline
                       id="{{classApiMethodMethod}}_archived"
                       placeholder="archive"
                       label="archive"
@@ -617,6 +600,43 @@ The actual link to the Webinar in EMEA"
 {%- macro htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
                             {{ inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
+{%- macro inputIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_icalUrl">
+  {%- endif %}
+                  <sl-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] ICal URL"
+                      label="ICal URL"
+                      help-text="
+The ICalendar URL for the events. "
+                      id="{{classApiMethodMethod}}_icalUrl"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="setIcalUrl"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="setIcalUrl"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl valueIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="icalUrl"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.icalUrl | e }}"
+  {%- endif %}
+                      ></sl-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputIcalUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
 {%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}
                 <form class="subgrid-2col " id="PageForm_pageId">
@@ -659,7 +679,7 @@ The ID for this page. "
                 <form class="subgrid-2col " id="PageForm_displayPage">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary" outline
                       id="{{classApiMethodMethod}}_displayPage"
                       placeholder="[String] product page"
                       label="product page"

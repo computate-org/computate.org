@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyProductPage %}
     <script>
 
-      function jsWebsocketCompanyProduct(solrId, vars, $response) {
+      function jsWebsocketCompanyProduct(pageId, vars, $response) {
 {%- block jsWebsocketCompanyProductPage %}{%- endblock %}
       }
 
@@ -178,18 +178,13 @@
 {%- include en-us/search/product/CompanyProductSidebar.htm %}
 {%- include en-us/search/product/CompanyProductSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all products">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all products
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-conveyor-belt"></i>
-          <span>products</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyProduct">back to all products</sl-tooltip>
+          <sl-button id="return-to-CompanyProduct" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all products
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-conveyor-belt"></i> <span>products</span></h1>
 {% include en-us/search/product/CompanyProductSearchButtons.htm %}
 {% include en-us/search/product/CompanyProductSearchForm.htm %}
         <h2>
@@ -205,27 +200,21 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-          <div>
-            <sl-tooltip content="back to all products">
-              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-                <i class="fa-solid fa-angle-left"></i>
-                all products
-              </sl-button>
-            </sl-tooltip>
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyProduct">back to all products</sl-tooltip>
+            <sl-button id="return-to-CompanyProduct" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all products
+            </sl-button>
           </div>
-          <h1>
-            <a href="{{pageUri}}">
-              <i class="fa-regular fa-conveyor-belt"></i>
-              <span>products</span>
-            </a>
-          </h1>
+          <h1><a href="{{pageUri}}"><i class="fa-regular fa-conveyor-belt"></i> <span>products</span></a></h1>
 {% include en-us/search/product/CompanyProductSearchButtons.htm %}
 {% include en-us/search/product/CompanyProductSearchForm.htm %}
 {% include en-us/search/product/CompanyProductPaginationButtons.htm %}
-          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+          <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <sl-dropdown id="htmDropdown-name">
-                <sl-button slot="trigger" caret>product name</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>product name</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -238,7 +227,7 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown id="htmDropdown-description">
-                <sl-button slot="trigger" caret>product description</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>product description</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -261,11 +250,11 @@
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button
+              <sl-button variant="primary"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
-                  help-text="Edit this"
+                  title="Edit this"
                   class="button-on-left {{classApiMethodMethod}}_editPage classCompanyProduct inputCompanyProduct{{pageId}}EditPage "
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
@@ -288,6 +277,7 @@
                 </div>
               {% endif %}
           </div>
+        </div>
 {% endif %}
 {%- endblock htmBodyMiddleCompanyProductPage %}
 {%- endblock htmBodyMiddlePageLayout %}

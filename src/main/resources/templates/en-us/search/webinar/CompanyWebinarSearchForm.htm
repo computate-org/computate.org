@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchCompanyWebinar() %}<sl-button id="htmButton_patchCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_patchCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyWebinar() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyWebinar"
                 >Modify webinar</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyWebinar() %}
         <sl-dialog id="patchCompanyWebinarDialog" label="Modify webinar">
-          <form id="htmForm_patchCompanyWebinar" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchCompanyWebinar" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -116,6 +116,16 @@
                   {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             <sl-details open class="HtmRow" id="useful-urls">
@@ -150,18 +160,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyWebinar() %}<sl-button id="htmButton_postCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_postCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyWebinar() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyWebinar"
                 >Create a webinar</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyWebinar() %}
         <sl-dialog id="postCompanyWebinarDialog" label="Create a webinar">
-          <form id="htmForm_postCompanyWebinar" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postCompanyWebinar" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -268,6 +278,16 @@
                   {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             <sl-details open class="HtmRow" id="useful-urls">
@@ -302,17 +322,17 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyWebinar() %}<sl-button id="htmButton_putimportCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_putimportCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyWebinar() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyWebinar"
                 >Import webinars</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyWebinar() %}
         <sl-dialog id="putimportCompanyWebinarDialog" label="Import webinars">
-          <form id="htmForm_putimportCompanyWebinar" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportCompanyWebinar" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -329,14 +349,14 @@
 {%- macro htmButton_searchpageCompanyWebinar() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyWebinar() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyWebinar"
                 >Search webinars</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyWebinar() %}
         <div id="searchpageCompanyWebinarDialog" label="Search webinars">
-          <div id="htmForm_searchpageCompanyWebinar" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageCompanyWebinar" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -443,6 +463,16 @@
                   {{ htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
+
+              {%- if "PATCH" in scopes %}
+                {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
+              {%- else %}
+                {%- if "GET" in scopes %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
+                {%- else %}
+                  {{ htmIcalUrlCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
+                {%- endif %}
+              {%- endif %}
               </div>
             </sl-details>
             <sl-details open class="HtmRow" id="useful-urls">
@@ -475,18 +505,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyWebinarGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" outline id="refreshThisCompanyWebinarGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebinarGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebinarGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyWebinarGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" outline id="refreshAllCompanyWebinarGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebinarGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebinarGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -515,6 +547,8 @@
   {{ htmButton_putimportCompanyWebinar() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchCompanyWebinar() }}

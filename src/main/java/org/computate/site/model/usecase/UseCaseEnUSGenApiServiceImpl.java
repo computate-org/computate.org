@@ -360,6 +360,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listUseCase.first());
+								apiRequest.setId(Optional.ofNullable(listUseCase.first()).map(o2 -> o2.getPageId()).orElse(null));
 								eventBus.publish("websocketUseCase", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHUseCase(apiRequest, listUseCase).onSuccess(e -> {
@@ -422,8 +423,11 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			UseCase o2 = jsonObject.mapTo(UseCase.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
-				patchUseCaseFuture(o, false).onSuccess(a -> {
+				patchUseCaseFuture(o2, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("listPATCHUseCase failed. "), ex);
@@ -475,7 +479,11 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							patchUseCaseFuture(o, false).onSuccess(o2 -> {
+							apiRequest.setId(Optional.ofNullable(listUseCase.first()).map(o2 -> o2.getPageId()).orElse(null));
+							JsonObject jsonObject = JsonObject.mapFrom(o);
+							UseCase o2 = jsonObject.mapTo(UseCase.class);
+							o2.setSiteRequest_(siteRequest);
+							patchUseCaseFuture(o2, false).onSuccess(o3 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -509,6 +517,14 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			persistUseCase(o, true).onSuccess(c -> {
 				indexUseCase(o).onSuccess(e -> {
+					if(apiRequest != null) {
+						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+							o.apiRequestUseCase();
+							if(apiRequest.getVars().size() > 0)
+								eventBus.publish("websocketUseCase", JsonObject.mapFrom(apiRequest).toString());
+						}
+					}
 					promise.complete(o);
 				}).onFailure(ex -> {
 					promise.fail(ex);
@@ -865,6 +881,9 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			UseCase o2 = jsonObject.mapTo(UseCase.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
 				deleteUseCaseFuture(o).onSuccess(a -> {
 					promise1.complete();
@@ -918,6 +937,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
+							apiRequest.setId(Optional.ofNullable(listUseCase.first()).map(o2 -> o2.getPageId()).orElse(null));
 							deleteUseCaseFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -1207,6 +1227,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 							}
 							if(searchList.size() == 1) {
 								apiRequest.setOriginal(o);
+								apiRequest.setId(o.getPageId());
 							}
 							siteRequest.setJsonObject(body2);
 							patchUseCaseFuture(o2, true).onSuccess(b -> {
@@ -2313,15 +2334,15 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 			UseCase page = new UseCase();
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
+			page.persistForClass(UseCase.VAR_name, UseCase.staticSetName(siteRequest2, (String)result.get(UseCase.VAR_name)));
 			page.persistForClass(UseCase.VAR_created, UseCase.staticSetCreated(siteRequest2, (String)result.get(UseCase.VAR_created)));
+			page.persistForClass(UseCase.VAR_authorName, UseCase.staticSetAuthorName(siteRequest2, (String)result.get(UseCase.VAR_authorName)));
+			page.persistForClass(UseCase.VAR_description, UseCase.staticSetDescription(siteRequest2, (String)result.get(UseCase.VAR_description)));
 			page.persistForClass(UseCase.VAR_archived, UseCase.staticSetArchived(siteRequest2, (String)result.get(UseCase.VAR_archived)));
+			page.persistForClass(UseCase.VAR_pageId, UseCase.staticSetPageId(siteRequest2, (String)result.get(UseCase.VAR_pageId)));
 			page.persistForClass(UseCase.VAR_title, UseCase.staticSetTitle(siteRequest2, (String)result.get(UseCase.VAR_title)));
 			page.persistForClass(UseCase.VAR_displayPage, UseCase.staticSetDisplayPage(siteRequest2, (String)result.get(UseCase.VAR_displayPage)));
 			page.persistForClass(UseCase.VAR_solrId, UseCase.staticSetSolrId(siteRequest2, (String)result.get(UseCase.VAR_solrId)));
-			page.persistForClass(UseCase.VAR_name, UseCase.staticSetName(siteRequest2, (String)result.get(UseCase.VAR_name)));
-			page.persistForClass(UseCase.VAR_authorName, UseCase.staticSetAuthorName(siteRequest2, (String)result.get(UseCase.VAR_authorName)));
-			page.persistForClass(UseCase.VAR_description, UseCase.staticSetDescription(siteRequest2, (String)result.get(UseCase.VAR_description)));
-			page.persistForClass(UseCase.VAR_pageId, UseCase.staticSetPageId(siteRequest2, (String)result.get(UseCase.VAR_pageId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

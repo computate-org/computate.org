@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchWeatherObserved() %}<sl-button id="htmButton_patchWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchWeatherObserved() %}<sl-button variant="primary" id="htmButton_patchWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchWeatherObserved() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchWeatherObserved"
                 >Modify weather observed device</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchWeatherObserved() %}
         <sl-dialog id="patchWeatherObservedDialog" label="Modify weather observed device">
-          <form id="htmForm_patchWeatherObserved" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchWeatherObserved" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -519,18 +519,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postWeatherObserved() %}<sl-button id="htmButton_postWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postWeatherObserved() %}<sl-button variant="primary" id="htmButton_postWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postWeatherObserved() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postWeatherObserved"
                 >Create a weather observed device</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postWeatherObserved() %}
         <sl-dialog id="postWeatherObservedDialog" label="Create a weather observed device">
-          <form id="htmForm_postWeatherObserved" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postWeatherObserved" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1040,33 +1040,33 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteWeatherObserved() %}<sl-button id="htmButton_deleteWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteWeatherObserved() %}<sl-button variant="primary" id="htmButton_deleteWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteWeatherObserved() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_deleteWeatherObserved"
                 >Delete weather observed device</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteWeatherObserved() %}
         <sl-dialog id="deleteWeatherObservedDialog" label="Delete weather observed device">
-          <form id="htmForm_deleteWeatherObserved" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_deleteWeatherObserved" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteWeatherObserved() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportWeatherObserved() %}<sl-button id="htmButton_putimportWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportWeatherObserved() %}<sl-button variant="primary" id="htmButton_putimportWeatherObserved" data-entityId={{ result.entityId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportWeatherObserved() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportWeatherObserved"
                 >Import weather observed devices</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportWeatherObserved() %}
         <sl-dialog id="putimportWeatherObservedDialog" label="Import weather observed devices">
-          <form id="htmForm_putimportWeatherObserved" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportWeatherObserved" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -1083,14 +1083,14 @@
 {%- macro htmButton_searchpageWeatherObserved() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageWeatherObserved() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageWeatherObserved"
                 >Search weather observed devices</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageWeatherObserved() %}
         <div id="searchpageWeatherObservedDialog" label="Search weather observed devices">
-          <div id="htmForm_searchpageWeatherObserved" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageWeatherObserved" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -1598,18 +1598,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisWeatherObservedGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisWeatherObservedGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'entityId:{{entityId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisWeatherObservedGenPage')); }, function() { addError(document.querySelector('#refreshThisWeatherObservedGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllWeatherObservedGenPage{{ result.entityId | e }}"
+              <sl-button variant="primary" id="refreshAllWeatherObservedGenPage{{ result.entityId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllWeatherObservedGenPage{{ result.entityId | e }}')); }, function() { addError(document.querySelector('#refreshAllWeatherObservedGenPage{{ result.entityId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -1647,6 +1649,8 @@
   {{ htmButton_putimportWeatherObserved() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchWeatherObserved() }}

@@ -1,7 +1,7 @@
 {% extends "en-us/PageLayout.htm" %}
 {%- block htmTitlePageLayout %}
 {%- block htmTitleUseCasePage %}
-    <title>{{ result.objectTitle }}</title>
+    <title>{{ result.title }}</title>
 {%- endblock htmTitleUseCasePage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -31,7 +31,7 @@
 {%- block htmScriptUseCasePage %}
     <script>
 
-      function jsWebsocketUseCase(solrId, vars, $response) {
+      function jsWebsocketUseCase(pageId, vars, $response) {
 {%- block jsWebsocketUseCasePage %}{%- endblock %}
       }
 
@@ -177,19 +177,15 @@
 {%- block htmBodyMiddleUseCasePage %}
 {%- include en-us/search/use-case/UseCaseSidebar.htm %}
 {%- include en-us/search/use-case/UseCaseSuggestedSearch.htm %}
+        <div class="main-content">
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all use cases">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all use cases
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-file-invoice"></i>
-          <span>use cases</span>
-        </h1>
+        <sl-tooltip for="return-to-UseCase">back to all use cases</sl-tooltip>
+          <sl-button id="return-to-UseCase" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all use cases
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-file-invoice"></i> <span>use cases</span></h1>
 {% include en-us/search/use-case/UseCaseSearchButtons.htm %}
 {% include en-us/search/use-case/UseCaseSearchForm.htm %}
         <h2>
@@ -203,33 +199,24 @@
 {% else %}
   {% if resultCount == 1 %}
     {% if solrId is defined %}
-        <div>
-          <sl-tooltip content="back to all use cases">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+          <div class="margin-block">
+            <sl-tooltip for="return-to-UseCase">back to all use cases</sl-tooltip>
+            <sl-button id="return-to-UseCase" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all use cases
             </sl-button>
-          </sl-tooltip>
-        </div>
+          </div>
 {% include en-us/search/use-case/UseCaseSearchButtons.htm %}
 {% include en-us/search/use-case/UseCaseSearchForm.htm %}
-        <h1>
-          <i class="fa-solid fa-file-invoice"></i>
-          {{result.objectTitle}}
-        </h1>
+          <h1 class="Page_title"><i class="fa-solid fa-file-invoice"></i> {{ result.title | e }}</h1>
     {% else %}
-        <div>
-          <sl-tooltip content="back to all use cases">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all use cases
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-file-invoice"></i>
-          <span>use cases</span>
-        </h1>
+        <sl-tooltip for="return-to-UseCase">back to all use cases</sl-tooltip>
+          <sl-button id="return-to-UseCase" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all use cases
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-file-invoice"></i> <span>use cases</span></h1>
 {% include en-us/search/use-case/UseCaseSearchButtons.htm %}
 {% include en-us/search/use-case/UseCaseSearchForm.htm %}
         <h2>
@@ -242,18 +229,13 @@
         </h2>
     {% endif %}
   {% else %}
-        <div>
-          <sl-tooltip content="back to all use cases">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all use cases
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-file-invoice"></i>
-          <span>use cases</span>
-        </h1>
+        <sl-tooltip for="return-to-UseCase">back to all use cases</sl-tooltip>
+          <sl-button id="return-to-UseCase" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all use cases
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-file-invoice"></i> <span>use cases</span></h1>
 {% include en-us/search/use-case/UseCaseSearchButtons.htm %}
 {% include en-us/search/use-case/UseCaseSearchForm.htm %}
         <h2>
@@ -267,20 +249,21 @@
   {% endif %}
 {% endif %}
 {%- block htmFormUseCasePage %}
-        <form action="/en-us/api/use-case" id="UseCaseForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+          <form action="/en-us/api/use-case" id="UseCaseForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
 {% if pageId is defined %}
-          <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
-          {% endif %}
-          <input name="focusId" type="hidden"/>
-          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-          <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result_) }}' type="hidden"/>
-          <input name="listUseCase" id="listUseCase" class="listUseCase"  value='{{ toJsonArrayStringInApostrophes(listUseCase) }}' type="hidden"/>
-        </form>
+            <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
+            {% endif %}
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result) }}' type="hidden"/>
+            <input name="listUseCase" id="listUseCase" class="listUseCase"  value='{{ toJsonArrayStringInApostrophes(listUseCase) }}' type="hidden"/>
+          </form>
   {% if solrId is defined %}
-        {{ htmButton_searchpageUseCase() }}
-        {{ htmForm_searchpageUseCase() }}
+          {{ htmButton_searchpageUseCase() }}
+          {{ htmForm_searchpageUseCase() }}
   {% endif %}
 {%- endblock htmFormUseCasePage %}
+        </div>
 {%- endblock htmBodyMiddleUseCasePage %}
 {%- endblock htmBodyMiddlePageLayout %}
 
@@ -348,7 +331,7 @@
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_archived"
                       placeholder="archived"
                       label="archived"
@@ -558,7 +541,7 @@ The ID for this page. "
                 <form class="subgrid-2col " id="PageForm_displayPage">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_displayPage"
                       placeholder="[String] product page"
                       label="product page"

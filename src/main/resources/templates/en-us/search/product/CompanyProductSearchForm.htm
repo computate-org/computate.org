@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchCompanyProduct() %}<sl-button id="htmButton_patchCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyProduct() %}<sl-button variant="primary" id="htmButton_patchCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyProduct() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyProduct"
                 >Modify product</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyProduct() %}
         <sl-dialog id="patchCompanyProductDialog" label="Modify product">
-          <form id="htmForm_patchCompanyProduct" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchCompanyProduct" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -118,18 +118,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyProduct() %}<sl-button id="htmButton_postCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyProduct() %}<sl-button variant="primary" id="htmButton_postCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyProduct() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyProduct"
                 >Create a product</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyProduct() %}
         <sl-dialog id="postCompanyProductDialog" label="Create a product">
-          <form id="htmForm_postCompanyProduct" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postCompanyProduct" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -238,33 +238,33 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteCompanyProduct() %}<sl-button id="htmButton_deleteCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteCompanyProduct() %}<sl-button variant="primary" id="htmButton_deleteCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteCompanyProduct() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_deleteCompanyProduct"
                 >Delete product</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteCompanyProduct() %}
         <sl-dialog id="deleteCompanyProductDialog" label="Delete product">
-          <form id="htmForm_deleteCompanyProduct" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_deleteCompanyProduct" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteCompanyProduct() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyProduct() %}<sl-button id="htmButton_putimportCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyProduct() %}<sl-button variant="primary" id="htmButton_putimportCompanyProduct" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyProduct() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyProduct"
                 >Import products</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyProduct() %}
         <sl-dialog id="putimportCompanyProductDialog" label="Import products">
-          <form id="htmForm_putimportCompanyProduct" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportCompanyProduct" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -281,14 +281,14 @@
 {%- macro htmButton_searchpageCompanyProduct() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyProduct() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyProduct"
                 >Search products</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyProduct() %}
         <div id="searchpageCompanyProductDialog" label="Search products">
-          <div id="htmForm_searchpageCompanyProduct" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageCompanyProduct" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -395,18 +395,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyProductGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisCompanyProductGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyProductGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyProductGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyProductGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllCompanyProductGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyProductGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyProductGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -444,6 +446,8 @@
   {{ htmButton_putimportCompanyProduct() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchCompanyProduct() }}

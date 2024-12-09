@@ -461,6 +461,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listIotService.first());
+								apiRequest.setId(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPageId()).orElse(null));
 								apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
 								eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
 
@@ -524,8 +525,11 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			IotService o2 = jsonObject.mapTo(IotService.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
-				patchIotServiceFuture(o, false).onSuccess(a -> {
+				patchIotServiceFuture(o2, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("listPATCHIotService failed. "), ex);
@@ -577,8 +581,12 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
+							apiRequest.setId(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPageId()).orElse(null));
 							apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
-							patchIotServiceFuture(o, false).onSuccess(o2 -> {
+							JsonObject jsonObject = JsonObject.mapFrom(o);
+							IotService o2 = jsonObject.mapTo(IotService.class);
+							o2.setSiteRequest_(siteRequest);
+							patchIotServiceFuture(o2, false).onSuccess(o3 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -689,54 +697,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 
 			for(String entityVar : methodNames) {
 				switch(entityVar) {
-					case "setCreated":
-							o2.setCreated(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_created + "=$" + num);
-							num++;
-							bParams.add(o2.sqlCreated());
-						break;
-					case "setArchived":
-							o2.setArchived(jsonObject.getBoolean(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_archived + "=$" + num);
-							num++;
-							bParams.add(o2.sqlArchived());
-						break;
-					case "setSessionId":
-							o2.setSessionId(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_sessionId + "=$" + num);
-							num++;
-							bParams.add(o2.sqlSessionId());
-						break;
-					case "setUserKey":
-							o2.setUserKey(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_userKey + "=$" + num);
-							num++;
-							bParams.add(o2.sqlUserKey());
-						break;
-					case "setTitle":
-							o2.setTitle(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_title + "=$" + num);
-							num++;
-							bParams.add(o2.sqlTitle());
-						break;
-					case "setDisplayPage":
-							o2.setDisplayPage(jsonObject.getString(entityVar));
-							if(bParams.size() > 0)
-								bSql.append(", ");
-							bSql.append(IotService.VAR_displayPage + "=$" + num);
-							num++;
-							bParams.add(o2.sqlDisplayPage());
-						break;
 					case "setEntityType":
 							o2.setEntityType(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -753,6 +713,14 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							num++;
 							bParams.add(o2.sqlApiKey());
 						break;
+					case "setCreated":
+							o2.setCreated(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_created + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCreated());
+						break;
 					case "setResource":
 							o2.setResource(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
@@ -768,6 +736,14 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							bSql.append(IotService.VAR_ngsildTenant + "=$" + num);
 							num++;
 							bParams.add(o2.sqlNgsildTenant());
+						break;
+					case "setArchived":
+							o2.setArchived(jsonObject.getBoolean(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_archived + "=$" + num);
+							num++;
+							bParams.add(o2.sqlArchived());
 						break;
 					case "setNgsildPath":
 							o2.setNgsildPath(jsonObject.getString(entityVar));
@@ -800,6 +776,38 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							bSql.append(IotService.VAR_pageId + "=$" + num);
 							num++;
 							bParams.add(o2.sqlPageId());
+						break;
+					case "setSessionId":
+							o2.setSessionId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_sessionId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlSessionId());
+						break;
+					case "setUserKey":
+							o2.setUserKey(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_userKey + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserKey());
+						break;
+					case "setTitle":
+							o2.setTitle(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_title + "=$" + num);
+							num++;
+							bParams.add(o2.sqlTitle());
+						break;
+					case "setDisplayPage":
+							o2.setDisplayPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(IotService.VAR_displayPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDisplayPage());
 						break;
 				}
 			}
@@ -1076,7 +1084,18 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				});
 				return promise2.future();
 			}).onSuccess(iotService -> {
-				promise.complete(iotService);
+				try {
+					ApiRequest apiRequest = siteRequest.getApiRequest_();
+					if(apiRequest != null) {
+						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+						iotService.apiRequestIotService();
+						eventBus.publish("websocketIotService", JsonObject.mapFrom(apiRequest).toString());
+					}
+					promise.complete(iotService);
+				} catch(Exception ex) {
+					LOG.error(String.format("postIotServiceFuture failed. "), ex);
+					promise.fail(ex);
+				}
 			}).onFailure(ex -> {
 				promise.fail(ex);
 			});
@@ -1126,60 +1145,6 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 				Set<String> entityVars = jsonObject.fieldNames();
 				for(String entityVar : entityVars) {
 					switch(entityVar) {
-					case IotService.VAR_created:
-						o2.setCreated(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_created + "=$" + num);
-						num++;
-						bParams.add(o2.sqlCreated());
-						break;
-					case IotService.VAR_archived:
-						o2.setArchived(jsonObject.getBoolean(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_archived + "=$" + num);
-						num++;
-						bParams.add(o2.sqlArchived());
-						break;
-					case IotService.VAR_sessionId:
-						o2.setSessionId(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_sessionId + "=$" + num);
-						num++;
-						bParams.add(o2.sqlSessionId());
-						break;
-					case IotService.VAR_userKey:
-						o2.setUserKey(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_userKey + "=$" + num);
-						num++;
-						bParams.add(o2.sqlUserKey());
-						break;
-					case IotService.VAR_title:
-						o2.setTitle(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_title + "=$" + num);
-						num++;
-						bParams.add(o2.sqlTitle());
-						break;
-					case IotService.VAR_displayPage:
-						o2.setDisplayPage(jsonObject.getString(entityVar));
-						if(bParams.size() > 0) {
-							bSql.append(", ");
-						}
-						bSql.append(IotService.VAR_displayPage + "=$" + num);
-						num++;
-						bParams.add(o2.sqlDisplayPage());
-						break;
 					case IotService.VAR_entityType:
 						o2.setEntityType(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1198,6 +1163,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						num++;
 						bParams.add(o2.sqlApiKey());
 						break;
+					case IotService.VAR_created:
+						o2.setCreated(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_created + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCreated());
+						break;
 					case IotService.VAR_resource:
 						o2.setResource(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
@@ -1215,6 +1189,15 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						bSql.append(IotService.VAR_ngsildTenant + "=$" + num);
 						num++;
 						bParams.add(o2.sqlNgsildTenant());
+						break;
+					case IotService.VAR_archived:
+						o2.setArchived(jsonObject.getBoolean(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_archived + "=$" + num);
+						num++;
+						bParams.add(o2.sqlArchived());
 						break;
 					case IotService.VAR_ngsildPath:
 						o2.setNgsildPath(jsonObject.getString(entityVar));
@@ -1251,6 +1234,42 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 						bSql.append(IotService.VAR_pageId + "=$" + num);
 						num++;
 						bParams.add(o2.sqlPageId());
+						break;
+					case IotService.VAR_sessionId:
+						o2.setSessionId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_sessionId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlSessionId());
+						break;
+					case IotService.VAR_userKey:
+						o2.setUserKey(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_userKey + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserKey());
+						break;
+					case IotService.VAR_title:
+						o2.setTitle(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_title + "=$" + num);
+						num++;
+						bParams.add(o2.sqlTitle());
+						break;
+					case IotService.VAR_displayPage:
+						o2.setDisplayPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(IotService.VAR_displayPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDisplayPage());
 						break;
 					}
 				}
@@ -1431,6 +1450,9 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			IotService o2 = jsonObject.mapTo(IotService.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
 				deleteIotServiceFuture(o).onSuccess(a -> {
 					promise1.complete();
@@ -1484,6 +1506,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
+							apiRequest.setId(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPageId()).orElse(null));
 							apiRequest.setPk(Optional.ofNullable(listIotService.first()).map(o2 -> o2.getPk()).orElse(null));
 							deleteIotServiceFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
@@ -1873,6 +1896,7 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 							}
 							if(searchList.size() == 1) {
 								apiRequest.setOriginal(o);
+								apiRequest.setId(o.getPageId());
 								apiRequest.setPk(o.getPk());
 							}
 							siteRequest.setJsonObject(body2);
@@ -3010,20 +3034,20 @@ public class IotServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl implemen
 			IotService page = new IotService();
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
-			page.persistForClass(IotService.VAR_created, IotService.staticSetCreated(siteRequest2, (String)result.get(IotService.VAR_created)));
-			page.persistForClass(IotService.VAR_archived, IotService.staticSetArchived(siteRequest2, (String)result.get(IotService.VAR_archived)));
-			page.persistForClass(IotService.VAR_sessionId, IotService.staticSetSessionId(siteRequest2, (String)result.get(IotService.VAR_sessionId)));
-			page.persistForClass(IotService.VAR_userKey, IotService.staticSetUserKey(siteRequest2, (String)result.get(IotService.VAR_userKey)));
-			page.persistForClass(IotService.VAR_title, IotService.staticSetTitle(siteRequest2, (String)result.get(IotService.VAR_title)));
-			page.persistForClass(IotService.VAR_displayPage, IotService.staticSetDisplayPage(siteRequest2, (String)result.get(IotService.VAR_displayPage)));
 			page.persistForClass(IotService.VAR_entityType, IotService.staticSetEntityType(siteRequest2, (String)result.get(IotService.VAR_entityType)));
 			page.persistForClass(IotService.VAR_apiKey, IotService.staticSetApiKey(siteRequest2, (String)result.get(IotService.VAR_apiKey)));
+			page.persistForClass(IotService.VAR_created, IotService.staticSetCreated(siteRequest2, (String)result.get(IotService.VAR_created)));
 			page.persistForClass(IotService.VAR_resource, IotService.staticSetResource(siteRequest2, (String)result.get(IotService.VAR_resource)));
 			page.persistForClass(IotService.VAR_ngsildTenant, IotService.staticSetNgsildTenant(siteRequest2, (String)result.get(IotService.VAR_ngsildTenant)));
+			page.persistForClass(IotService.VAR_archived, IotService.staticSetArchived(siteRequest2, (String)result.get(IotService.VAR_archived)));
 			page.persistForClass(IotService.VAR_ngsildPath, IotService.staticSetNgsildPath(siteRequest2, (String)result.get(IotService.VAR_ngsildPath)));
 			page.persistForClass(IotService.VAR_cbHost, IotService.staticSetCbHost(siteRequest2, (String)result.get(IotService.VAR_cbHost)));
 			page.persistForClass(IotService.VAR_attributes, IotService.staticSetAttributes(siteRequest2, (String)result.get(IotService.VAR_attributes)));
 			page.persistForClass(IotService.VAR_pageId, IotService.staticSetPageId(siteRequest2, (String)result.get(IotService.VAR_pageId)));
+			page.persistForClass(IotService.VAR_sessionId, IotService.staticSetSessionId(siteRequest2, (String)result.get(IotService.VAR_sessionId)));
+			page.persistForClass(IotService.VAR_userKey, IotService.staticSetUserKey(siteRequest2, (String)result.get(IotService.VAR_userKey)));
+			page.persistForClass(IotService.VAR_title, IotService.staticSetTitle(siteRequest2, (String)result.get(IotService.VAR_title)));
+			page.persistForClass(IotService.VAR_displayPage, IotService.staticSetDisplayPage(siteRequest2, (String)result.get(IotService.VAR_displayPage)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

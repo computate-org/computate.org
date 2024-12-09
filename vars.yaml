@@ -235,7 +235,7 @@ SITE_POWERED_BY_NAME: Google Kubernetes Engine
 # The URL of the cloud provider where the public site is deployed. 
 SITE_POWERED_BY_URL: https://cloud.google.com/kubernetes-engine
 # The static path to the logo of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_IMAGE: '<img class="footer-img" alt="Google Kubernetes Engine" src=\"\{\{ STATIC_BASE_URL \}\}/svg/google-gke.svg"/>'
+SITE_POWERED_BY_IMAGE: '<img class="footer-img" alt="Google Kubernetes Engine" src="\{\{ STATIC_BASE_URL \}\}/svg/google-gke.svg"/>'
 
 ######################
 # Zookeeper defaults #

@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchCompanyResearch() %}<sl-button id="htmButton_patchCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyResearch() %}<sl-button variant="primary" id="htmButton_patchCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyResearch() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyResearch"
                 >Modify research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyResearch() %}
         <sl-dialog id="patchCompanyResearchDialog" label="Modify research">
-          <form id="htmForm_patchCompanyResearch" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchCompanyResearch" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -103,18 +103,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyResearch() %}<sl-button id="htmButton_postCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyResearch() %}<sl-button variant="primary" id="htmButton_postCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyResearch() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyResearch"
                 >Create a research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyResearch() %}
         <sl-dialog id="postCompanyResearchDialog" label="Create a research">
-          <form id="htmForm_postCompanyResearch" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postCompanyResearch" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -208,17 +208,17 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyResearch() %}<sl-button id="htmButton_putimportCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyResearch() %}<sl-button variant="primary" id="htmButton_putimportCompanyResearch" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyResearch() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyResearch"
                 >Import research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyResearch() %}
         <sl-dialog id="putimportCompanyResearchDialog" label="Import research">
-          <form id="htmForm_putimportCompanyResearch" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportCompanyResearch" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -235,14 +235,14 @@
 {%- macro htmButton_searchpageCompanyResearch() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyResearch() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyResearch"
                 >Search research</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyResearch() %}
         <div id="searchpageCompanyResearchDialog" label="Search research">
-          <div id="htmForm_searchpageCompanyResearch" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageCompanyResearch" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -334,18 +334,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyResearchGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisCompanyResearchGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyResearchGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyResearchGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyResearchGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllCompanyResearchGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyResearchGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyResearchGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -374,6 +376,8 @@
   {{ htmButton_putimportCompanyResearch() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchCompanyResearch() }}

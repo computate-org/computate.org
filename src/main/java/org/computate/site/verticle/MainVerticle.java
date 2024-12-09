@@ -172,8 +172,6 @@ import io.vertx.tracing.opentelemetry.OpenTelemetryOptions;
 
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
-import org.computate.site.page.SitePage;
-import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.user.SiteUser;
 import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSApiServiceImpl;
@@ -214,7 +212,6 @@ import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
 import org.computate.site.model.fiware.iotservice.IotService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
 
 
 /**
@@ -1230,8 +1227,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
 			registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
-			apiSiteUser.configureUserSearchApi("/user-search", router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
-			apiSiteUser.configurePublicSearchApi("/search", router, SiteRequest.class, config(), webClient, publicResources);
+			apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
+			apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicResources);
 
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			initializeApiService(apiCompanyAbout);
@@ -1281,7 +1278,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl();
 			initializeApiService(apiCompanyResearch);
 			registerApiService(CompanyResearchEnUSGenApiService.class, apiCompanyResearch, CompanyResearch.getClassApiAddress());
-			// apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/shop/research/{pageId}");
+			// apiCompanyResearch.configureUiResult(router, CompanyResearch.class, SiteRequest.class, "/en-us/view/research/{pageId}");
 
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
@@ -1292,11 +1289,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			initializeApiService(apiIotService);
 			registerApiService(IotServiceEnUSGenApiService.class, apiIotService, IotService.getClassApiAddress());
 			// apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/shop/iot-service/{pageId}");
-
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
-			initializeApiService(apiWeatherObserved);
-			registerApiService(WeatherObservedEnUSGenApiService.class, apiWeatherObserved, WeatherObserved.getClassApiAddress());
-			// apiWeatherObserved.configureUiModel(router, WeatherObserved.class, SiteRequest.class, "/en-us/shop/weather-observed/{pageId}");
+// 
+			// WeatherObservedEnUSGenApiService.registerService(vertx, config(), workerExecutor, oauth2AuthHandler, pgPool, kafkaProducer, mqttClient, amqpSender, rabbitmqClient, webClient, oauth2AuthenticationProvider, authorizationProvider, jinjava);
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");

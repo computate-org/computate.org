@@ -522,6 +522,7 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public void setClassCanonicalNames(List<String> classCanonicalNames) {
 		this.classCanonicalNames = classCanonicalNames;
 	}
+	@JsonIgnore
 	public void setClassCanonicalNames(String o) {
 		String l = BaseResult.staticSetClassCanonicalNames(siteRequest_, o);
 		if(l != null)
@@ -596,6 +597,7 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public void setSaves(List<String> saves) {
 		this.saves = saves;
 	}
+	@JsonIgnore
 	public void setSaves(String o) {
 		String l = BaseResult.staticSetSaves(siteRequest_, o);
 		if(l != null)
@@ -938,6 +940,7 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public void setObjectText(List<String> objectText) {
 		this.objectText = objectText;
 	}
+	@JsonIgnore
 	public void setObjectText(String o) {
 		String l = BaseResult.staticSetObjectText(siteRequest_, o);
 		if(l != null)

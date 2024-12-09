@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html lang="{{ SITE_LOCALE }}" class="sl-theme-{{ SITE_THEME }}">
   <head>
-{% block htmHeadPageLayout %}
+{%- block htmHeadPageLayout %}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-{% block htmMetaPageLayout %}
-{% endblock htmMetaPageLayout %}
-{% block htmTitlePageLayout %}
-    <title>computate-smart-laptop-challenge</title>
-{% endblock htmTitlePageLayout %}
-{% block htmStylesPageLayout %}
-    <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.ico" />
+{%- block htmMetaPageLayout %}
+{%- endblock htmMetaPageLayout %}
+{%- block htmTitlePageLayout %}
+    <title>{{ SITE_DISPLAY_NAME }}</title>
+{%- endblock htmTitlePageLayout %}
+{%- block htmStylesPageLayout %}
+    <link rel="icon" href="{{ STATIC_BASE_URL }}/favicon.svg" />
+    {{ WEB_COMPONENTS_CSS }}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/themes/dark.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css" />
     <link rel="stylesheet" href="{{ STATIC_BASE_URL }}/css/site.css"/>
-{% endblock htmStylesPageLayout %}
-
-    <style>
-{% block htmStylePageLayout %}
-{% endblock htmStylePageLayout %}
-    </style>
-
-{% block htmScriptsPageLayout %}
-{% if FONTAWESOME_KIT is defined %}
+{%- endblock htmStylesPageLayout %}
+    <style>{%- block htmStylePageLayout %}{%- endblock htmStylePageLayout %}</style>
+{%- block htmScriptsPageLayout %}
+{%- if FONTAWESOME_KIT is defined %}
     {{ FONTAWESOME_KIT }}
-{% endif %}
+{%- endif %}
     <script type="module">
       import { registerIconLibrary } from 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.1/cdn/utilities/icon-library.js';
     
@@ -49,7 +45,7 @@
           filters.push({ name: 'q', value: 'objectSuggest:' + event.target.value });
 
         fetch(
-          '/search?' + filters.map(function(m) { return m.name + '=' + encodeURIComponent(m.value) }).join('&')
+          '{{ PUBLIC_SEARCH_URI }}?' + filters.map(function(m) { return m.name + '=' + encodeURIComponent(m.value) }).join('&')
           , {
             headers: {'Content-Type':'application/json; charset=utf-8'}
           }).then(response => {
@@ -60,8 +56,8 @@
                 dropdownMenu.innerHTML = '';
                 body.list.forEach((o) => {
                   var menuItem = document.createElement('sl-menu-item');
-                  menuItem.innerText = o.objectTitle;
-                  menuItem.setAttribute('data-href', o.pageUrlId);
+                  menuItem.innerText = o.title;
+                  menuItem.setAttribute('data-href', o.displayPage);
                   dropdownMenu.appendChild(menuItem);
                   menuItem.addEventListener('click', (event) => window.location.href = event.target.getAttribute('data-href') );
                 });
@@ -82,7 +78,7 @@
         document.querySelector('#siteSearchInput')?.addEventListener('sl-focus', siteSearchInput);
       });
     </script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/cdn/shoelace-autoloader.js"></script>
+    {{ WEB_COMPONENTS_JS }}
     <script src="{{ STATIC_BASE_URL }}/js/site.js"></script>
     <script type="module" src="{{ STATIC_BASE_URL }}/js/siteModule.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
@@ -90,136 +86,137 @@
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
-{% endblock htmScriptsPageLayout %}
-{% block htmScriptPageLayout %}
-{% endblock htmScriptPageLayout %}
-{% endblock htmHeadPageLayout %}
-
+{%- endblock htmScriptsPageLayout %}
+{%- block htmScriptPageLayout %}
+{%- endblock htmScriptPageLayout %}
+{%- endblock htmHeadPageLayout %}
     <script>
 {%- block websocketPageLayout %}{%- endblock websocketPageLayout %}
     </script>
-  </head>
+   </head>
   <body>
     <div id="site-grid">
-{% block htmBodyPageLayout %}
-{% block htmBodyStartPageLayout %}
+{%- block htmBodyPageLayout %}
+{%- block htmBodyStartPageLayout %}
       <aside id="site-aside-left" class="hide-mobile margin-block-end-1rem ">
-        <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop margin-block-end-1rem ">
+        <sl-button id="site-aside-left-close-button" label="Close" data-drawer="close" class="hide-desktop">
           <i slot="prefix" class="fas fa-xmark"></i>
         </sl-button>
-        <a href="/">
-          <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
-        </a>
-        <div class="round-first-and-last-row-x-large margin-block-end-1rem">
-{% if userName is defined %}
-          <sl-details>
-            <div slot="summary">
-              <sl-avatar label="user"></sl-avatar>
-              user: {{userName}}
-            </div>
-            <div>{{ userFullName }}</div>
-            <div>{{ userEmail }}</div>
-            <div>
-              <sl-tooltip content="see or change your user profile">
-                <sl-button href="/user" label="see or change your user profile">
-                  <i slot="prefix" class="fad fa-house-user"></i>
-                  <span>my user page</span>
-                </sl-button>
-              </sl-tooltip>
-              <sl-tooltip placement="right" content="sign out">
-                <sl-button href="{{ logoutUrl }}" label="sign out">
-                  <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
-                  <span>sign out</span>
-                </sl-button>
-              </sl-tooltip>
-            </div>
-          </sl-details>
-{% else %}
-          <sl-button href="{{ SITE_BASE_URL }}/user">
-            <i class="fa-duotone fa-person-to-portal"></i> login
-          </sl-button>
-{% endif %}
-        </div>
-        <div class="round-first-and-last-row-x-large">
-          <sl-tooltip placement="right" content="Learn about our team, company, culture, and values. ">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/about">
-              <i class="fa-solid fa-address-card"></i>
-              about
+        <nav>
+          <div>
+            <a href="/">
+              <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
+            </a>
+          </div>
+          <div class="flex flex-column round-row primary-smart-border-radius margin-block">
+{%- if userName is defined %}
+            <sl-details>
+              <div slot="summary">
+                <sl-avatar label="user"></sl-avatar>
+                user: {{userName}}
+              </div>
+              <div>{{ userFullName }}</div>
+              <div>{{ userEmail }}</div>
+              <div>
+                <sl-tooltip content="see or change your user profile">
+                  <sl-button variant="primary" outline href="/user" label="see or change your user profile">
+                    <i slot="prefix" class="fad fa-house-user"></i>
+                    <span>my user page</span>
+                  </sl-button>
+                </sl-tooltip>
+                <sl-tooltip placement="right" content="sign out">
+                  <sl-button variant="primary" outline href="{{ logoutUrl }}" label="sign out">
+                    <i slot="prefix" class="fa-duotone fa-person-from-portal"></i>
+                    <span>sign out</span>
+                  </sl-button>
+                </sl-tooltip>
+              </div>
+            </sl-details>
+{%- else %}
+            <sl-button variant="primary" outline href="{{ SITE_BASE_URL }}/user">
+              <i class="fa-duotone fa-person-to-portal"></i> login
             </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="See computate use cases for real organizations. ">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/use-case">
-              <i class="fa-solid fa-file-invoice"></i>
-              use cases
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/course">
-              <i class="fa-regular fa-notebook"></i>
-              courses
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="Read the latest articles to learn more">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/article">
-              <i class="fa-duotone fa-solid fa-newspaper"></i>
-              articles
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/product">
-              <i class="fa-regular fa-conveyor-belt"></i>
-              products
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/event">
-              <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-              events
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/webinar">
-              <i class="fa-regular fa-video"></i>
-              webinars
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/service">
-              <i class="fa-regular fa-conveyor-belt"></i>
-              services
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/research">
-              <i class="fa-duotone fa-solid fa-school"></i>
-              research
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="See the live websites built with computate">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/website">
-              <i class="fa-regular fa-globe-pointer"></i>
-              websites
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="A service within a service path in the NGSI-LD standard">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/iot-service">
-              <i class="fa-solid fa-tower-cell"></i>
-              IoT services
-            </sl-button>
-          </sl-tooltip>
-          <sl-tooltip placement="right" content="For keeping track of temperature, humidity, and other weather related details. ">
-            <sl-button href="{{ SITE_BASE_URL }}/en-us/search/weather-observed">
-              <i class="fa-regular fa-cloud-bolt-sun"></i>
-              weather observed devices
-            </sl-button>
-          </sl-tooltip>
-        </div>
+{%- endif %}
+          </div>
+          <div class="flex flex-column round-first-and-last-row-x-large ">
+            <sl-tooltip placement="right" content="Learn about our team, company, culture, and values. ">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyAbout" href="{{ SITE_BASE_URL }}/en-us/search/about">
+                <i class="fa-solid fa-address-card"></i>
+                about
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="See computate use cases for real organizations. ">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-UseCase" href="{{ SITE_BASE_URL }}/en-us/search/use-case">
+                <i class="fa-solid fa-file-invoice"></i>
+                use cases
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="Take an exciting hands-on course on your own computer with computate">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyCourse" href="{{ SITE_BASE_URL }}/en-us/search/course">
+                <i class="fa-regular fa-notebook"></i>
+                courses
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="Read the latest articles to learn more">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-SitePage" href="{{ SITE_BASE_URL }}/en-us/search/article">
+                <i class="fa-duotone fa-solid fa-newspaper"></i>
+                articles
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="See the computate products that will help you build your own data-driven platforms">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyProduct" href="{{ SITE_BASE_URL }}/en-us/search/product">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                products
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="See the upcoming computate in-person and online events">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyEvent" href="{{ SITE_BASE_URL }}/en-us/search/event">
+                <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+                events
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="Join the Computate community for regular weekly webinars">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyWebinar" href="{{ SITE_BASE_URL }}/en-us/search/webinar">
+                <i class="fa-regular fa-video"></i>
+                webinars
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="See the services provided by computate that will help you build your own data-driven platforms">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyService" href="{{ SITE_BASE_URL }}/en-us/search/service">
+                <i class="fa-regular fa-conveyor-belt"></i>
+                services
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="Read about the computate project related research going on at Red Hat research">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyResearch" href="{{ SITE_BASE_URL }}/en-us/search/research">
+                <i class="fa-duotone fa-solid fa-school"></i>
+                research
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="See the live websites built with computate">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-CompanyWebsite" href="{{ SITE_BASE_URL }}/en-us/search/website">
+                <i class="fa-regular fa-globe-pointer"></i>
+                websites
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="A service within a service path in the NGSI-LD standard">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-IotService" href="{{ SITE_BASE_URL }}/en-us/search/iot-service">
+                <i class="fa-solid fa-tower-cell"></i>
+                IoT services
+              </sl-button>
+            </sl-tooltip>
+            <sl-tooltip placement="right" content="For keeping track of temperature, humidity, and other weather related details. ">
+              <sl-button variant="primary" outline id="site-aside-left-model-button-WeatherObserved" href="{{ SITE_BASE_URL }}/en-us/search/weather-observed">
+                <i class="fa-regular fa-cloud-bolt-sun"></i>
+                weather observed devices
+              </sl-button>
+            </sl-tooltip>
+          </div>
+        </nav>
       </aside>
       <main>
-        <header id="top-bar">
-          <sl-button data-toggle-nav id="nav-toggle-button" class="hide-desktop " label="open menu" appearance="text">
-            <i slot="prefix" class="fas fa-bars"></i>
-          </sl-button>
+        <header class="margin-block flex gap-m align-items-center">
+          <sl-icon-button data-toggle-nav name="bars" class="nav-toggle-button hide-desktop" class="hide-desktop " label="open menu" appearance="text"></sl-icon-button>
           <sl-input placeholder="search" id="siteSearchInput">
             <i slot="prefix" class="fa-light fa-magnifying-glass"></i>
           </sl-input>
@@ -228,49 +225,31 @@
           <sl-menu id="siteSearchDropdownMenu">
           </sl-menu>
         </sl-dropdown>
-        </header>
-{% endblock htmBodyStartPageLayout %}
+{%- endblock htmBodyStartPageLayout %}
 {% block htmBodyMiddlePageLayout %}
         <div class="pageContent ">
           put stuff here
         </div>
-{% endblock htmBodyMiddlePageLayout %}
-{% block htmBodyEndPageLayout %}
+{%- endblock htmBodyMiddlePageLayout %}
+{%- block htmBodyEndPageLayout %}
       </main>
-      <footer id="site-footer" class="split-block round-row-xl-mobile-round-column-xl-desktop ">
+      <footer class="flex flex-column round-row primary-smart-border-radius" slot="main-footer">
         {% if GITHUB_ORG is defined %}
-        <sl-button size="large" id="footer-open-source" target="_blank" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/">
-          <div>
-            <i class="fa-brands fa-github fa-5x "></i>
-          </div>
-          <div>
-            This site is open source. 
-          </div>
+        <sl-button variant="primary" outline size="large" href="https://github.com/{{ GITHUB_ORG }}/{{ SITE_NAME }}/" target="_blank">
+          This site is <b><i class="fa-brands fa-github"></i> open source</b>.
         </sl-button>
         {% endif %}
-        <sl-button size="large" id="footer-generated-by" href="https://www.computate.org/" target="_blank">
-          <div>
-            <div>Generated with </div>
-            <div>
-              <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" alt="computate logo"/>
-            </div>
-          </div>
+        <sl-button variant="primary" outline size="large" id="footer-generated-by" href="https://www.computate.org/" target="_blank">
+            Generated with <b><img class="footer-img" src="{{ STATIC_BASE_URL }}/svg/computate-keys.svg" alt="Computate"/></b>.
         </sl-button>
         {% if SITE_POWERED_BY_URL is defined %}
-        <sl-button size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
-          <div>
-            <div>
-              <i class="fa-kit fa-openshift fa-5x "></i>
-            </div>
-            <div>
-              Powered by {{ SITE_POWERED_BY_NAME }}
-            </div>
-          </div>
+        <sl-button variant="primary" outline size="large" id="footer-powered-by" href="{{ SITE_POWERED_BY_URL }}" target="_blank">
+          Powered by <b><img class="footer-img" alt="Google Kubernetes Engine" src="{{ STATIC_BASE_URL }}/svg/google-gke.svg"/> {{ SITE_POWERED_BY_NAME | e }}</b>
         </sl-button>
         {% endif %}
       </footer>
     </div>
-{% endblock htmBodyEndPageLayout %}
-{% endblock htmBodyPageLayout %}
+{%- endblock htmBodyEndPageLayout %}
+{%- endblock htmBodyPageLayout %}
   </body>
 </html>

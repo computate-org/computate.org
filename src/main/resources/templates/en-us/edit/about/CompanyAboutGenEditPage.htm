@@ -1,7 +1,7 @@
 {% extends "en-us/PageLayout.htm" %}
 {%- block htmTitlePageLayout %}
 {%- block htmTitleCompanyAboutPage %}
-    <title>{{ result.objectTitle }}</title>
+    <title>{{ result.title }}</title>
 {%- endblock htmTitleCompanyAboutPage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyAboutPage %}
     <script>
 
-      function jsWebsocketCompanyAbout(solrId, vars, $response) {
+      function jsWebsocketCompanyAbout(pageId, vars, $response) {
 {%- block jsWebsocketCompanyAboutPage %}{%- endblock %}
       }
 
@@ -177,19 +177,15 @@
 {%- block htmBodyMiddleCompanyAboutPage %}
 {%- include en-us/search/about/CompanyAboutSidebar.htm %}
 {%- include en-us/search/about/CompanyAboutSuggestedSearch.htm %}
+        <div class="main-content">
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all about">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all about
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-address-card"></i>
-          <span>about</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyAbout">back to all about</sl-tooltip>
+          <sl-button id="return-to-CompanyAbout" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all about
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-address-card"></i> <span>about</span></h1>
 {% include en-us/search/about/CompanyAboutSearchButtons.htm %}
 {% include en-us/search/about/CompanyAboutSearchForm.htm %}
         <h2>
@@ -203,33 +199,24 @@
 {% else %}
   {% if resultCount == 1 %}
     {% if solrId is defined %}
-        <div>
-          <sl-tooltip content="back to all about">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyAbout">back to all about</sl-tooltip>
+            <sl-button id="return-to-CompanyAbout" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all about
             </sl-button>
-          </sl-tooltip>
-        </div>
+          </div>
 {% include en-us/search/about/CompanyAboutSearchButtons.htm %}
 {% include en-us/search/about/CompanyAboutSearchForm.htm %}
-        <h1>
-          <i class="fa-solid fa-address-card"></i>
-          {{result.objectTitle}}
-        </h1>
+          <h1 class="Page_title"><i class="fa-solid fa-address-card"></i> {{ result.title | e }}</h1>
     {% else %}
-        <div>
-          <sl-tooltip content="back to all about">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all about
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-address-card"></i>
-          <span>about</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyAbout">back to all about</sl-tooltip>
+          <sl-button id="return-to-CompanyAbout" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all about
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-address-card"></i> <span>about</span></h1>
 {% include en-us/search/about/CompanyAboutSearchButtons.htm %}
 {% include en-us/search/about/CompanyAboutSearchForm.htm %}
         <h2>
@@ -242,18 +229,13 @@
         </h2>
     {% endif %}
   {% else %}
-        <div>
-          <sl-tooltip content="back to all about">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all about
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-solid fa-address-card"></i>
-          <span>about</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyAbout">back to all about</sl-tooltip>
+          <sl-button id="return-to-CompanyAbout" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all about
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-solid fa-address-card"></i> <span>about</span></h1>
 {% include en-us/search/about/CompanyAboutSearchButtons.htm %}
 {% include en-us/search/about/CompanyAboutSearchForm.htm %}
         <h2>
@@ -267,20 +249,21 @@
   {% endif %}
 {% endif %}
 {%- block htmFormCompanyAboutPage %}
-        <form action="/en-us/api/about" id="CompanyAboutForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+          <form action="/en-us/api/about" id="CompanyAboutForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
 {% if pageId is defined %}
-          <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
-          {% endif %}
-          <input name="focusId" type="hidden"/>
-          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-          <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result_) }}' type="hidden"/>
-          <input name="listCompanyAbout" id="listCompanyAbout" class="listCompanyAbout"  value='{{ toJsonArrayStringInApostrophes(listCompanyAbout) }}' type="hidden"/>
-        </form>
+            <input name="pageId" class="valuePageId" type="hidden" value="{{pageId}}"/>
+            {% endif %}
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result) }}' type="hidden"/>
+            <input name="listCompanyAbout" id="listCompanyAbout" class="listCompanyAbout"  value='{{ toJsonArrayStringInApostrophes(listCompanyAbout) }}' type="hidden"/>
+          </form>
   {% if solrId is defined %}
-        {{ htmButton_searchpageCompanyAbout() }}
-        {{ htmForm_searchpageCompanyAbout() }}
+          {{ htmButton_searchpageCompanyAbout() }}
+          {{ htmForm_searchpageCompanyAbout() }}
   {% endif %}
 {%- endblock htmFormCompanyAboutPage %}
+        </div>
 {%- endblock htmBodyMiddleCompanyAboutPage %}
 {%- endblock htmBodyMiddlePageLayout %}
 
@@ -348,7 +331,7 @@
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_archived"
                       placeholder="archived"
                       label="archived"
@@ -521,7 +504,7 @@ The ID for this page. "
                 <form class="subgrid-2col " id="PageForm_displayPage">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_displayPage"
                       placeholder="[String] product page"
                       label="product page"

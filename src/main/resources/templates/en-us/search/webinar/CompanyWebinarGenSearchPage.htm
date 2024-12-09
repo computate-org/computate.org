@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyWebinarPage %}
     <script>
 
-      function jsWebsocketCompanyWebinar(pk, vars, $response) {
+      function jsWebsocketCompanyWebinar(pageId, vars, $response) {
 {%- block jsWebsocketCompanyWebinarPage %}{%- endblock %}
       }
 
@@ -168,18 +168,13 @@
 {%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
 {%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all webinars">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all webinars
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-video"></i>
-          <span>webinars</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all webinars
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
         <h2>
@@ -195,28 +190,22 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-          <div>
-            <sl-tooltip content="back to all webinars">
-              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-                <i class="fa-solid fa-angle-left"></i>
-                all webinars
-              </sl-button>
-            </sl-tooltip>
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
+            <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all webinars
+            </sl-button>
           </div>
-          <h1>
-            <a href="{{pageUri}}">
-              <i class="fa-regular fa-video"></i>
-              <span>webinars</span>
-            </a>
-          </h1>
+          <h1><a href="{{pageUri}}"><i class="fa-regular fa-video"></i> <span>webinars</span></a></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
 {% include en-us/search/webinar/CompanyWebinarPaginationButtons.htm %}
-          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+          <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <div></div>
               <sl-dropdown id="htmDropdown-name">
-                <sl-button slot="trigger" caret>name</sl-button>
+                <sl-button variant="primary" outline slot="trigger" caret>name</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -229,7 +218,7 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown id="htmDropdown-description">
-                <sl-button slot="trigger" caret>description</sl-button>
+                <sl-button variant="primary" outline slot="trigger" caret>description</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -245,11 +234,11 @@
             </div>
             {% for item in listCompanyWebinar%}
             <div>
-              <sl-button
+              <sl-button variant="primary" outline
                   id="{{classApiMethodMethod}}_joinUrl"
                   placeholder="[String] Join the webinar"
                   label="Join the webinar"
-                  help-text="Access the webinar links. "
+                  title="Access the webinar links. "
                   class="button-on-left {{classApiMethodMethod}}_joinUrl classCompanyWebinar inputCompanyWebinar{{pageId}}JoinUrl "
                   name="setJoinUrl"
                   href="{{ item.joinUrl | e }}"
@@ -263,11 +252,11 @@
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button
+              <sl-button variant="primary" outline
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
-                  help-text="Edit this"
+                  title="Edit this"
                   class="button-on-left {{classApiMethodMethod}}_editPage classCompanyWebinar inputCompanyWebinar{{pageId}}EditPage "
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
@@ -294,6 +283,7 @@
                 </div>
               {% endif %}
           </div>
+        </div>
 {% endif %}
 {%- endblock htmBodyMiddleCompanyWebinarPage %}
 {%- endblock htmBodyMiddlePageLayout %}

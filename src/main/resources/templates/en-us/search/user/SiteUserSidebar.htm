@@ -1,7 +1,7 @@
         <div class="htmBodySidebarSiteUserPage ">
 {%- block htmBodySidebarSiteUserPage %}
-          <sl-drawer placement="end" id="siteSidebarToggleSearch">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleSearch">
+            <div slot="label">
               <i class="fad fa-magnifying-glass "></i>
               Search
             </div>
@@ -47,8 +47,8 @@
               {%- endblock htmBodySearchSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarToggleFilters">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleFilters">
+            <div slot="label">
               <span>
               <i class="fad fa-filters "></i> Filters</span>
             </div>
@@ -58,8 +58,9 @@
                 {% for key, value in varsFq.items() %}
                   <div class="">
                     <label for="fqSiteUser_{{ key }}">{{ value.displayName }}<sup> ({{ value.classSimpleName }})</sup></label>
-                    <div class="display-flex ">
-                      <sl-button id="buttonFacetSiteUser_{{ key }}" title="see values " data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
+                    <sl-tooltip for="buttonFacetSiteUser_{{ key }}">see values</sl-tooltip>
+                    <div class="flex round-column pill-smart-border-radius ">
+                      <sl-button variant="primary" id="buttonFacetSiteUser_{{ key }}" data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="fas fa-list "></i></sl-button>
                       <sl-input id="fqSiteUser_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('SiteUser', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></sl-input>
                     </div>
                   </div>
@@ -79,8 +80,8 @@
               {%- endblock htmBodyFiltersSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarToggleSort">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleSort">
+            <div slot="label">
               <i class="fad fa-solid fa-arrow-down-a-z "></i>
               Sort
             </div>
@@ -93,19 +94,18 @@
               </div>
               {% for key, value in varsFq.items() %}
               <div>
-                <sl-radio-group name="pageFacetSort" class="pageFacetSort " id="pageFacetSortSiteUser_{{ key }}" value="{% if (key + ' asc') in defaultSortVars %}asc{% else %}{% if (key + ' desc') in defaultSortVars %}desc{% endif %}{% endif %}"{% if pivot is defined %} checked="checked"{% endif %} label={{ value.displayName | tojson }} size="small"
->
+                <sl-radio-group name="pageFacetSort" class="pageFacetSort " id="pageFacetSortSiteUser_{{ key }}" value="{% if (key + ' asc') in defaultSortVars %}asc{% else %}{% if (key + ' desc') in defaultSortVars %}desc{% endif %}{% endif %}"{% if pivot is defined %} checked="checked"{% endif %} label={{ value.displayName | tojson }} size="small">
                   <sl-radio-button value="" pill>none</sl-radio-button>
                   <sl-radio-button value="asc" pill>ascending</sl-radio-button>
                   <sl-radio-button value="desc" pill>descending</sl-radio-button>
-</sl-radio-group>
+                </sl-radio-group>
               </div>
               {% endfor %}
               {%- endblock htmBodySortSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarToggleRange">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleRange">
+            <div slot="label">
               <span>
               <i class="fad fa-calendar-range "></i> Range</span>
             </div>
@@ -166,8 +166,8 @@
               {%- endblock htmBodyRangeSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarTogglePivot">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarTogglePivot">
+            <div slot="label">
               <span>
               <i class="fad fa-table-pivot "></i> Pivot</span>
             </div>
@@ -191,8 +191,8 @@
               {%- endblock htmBodyPivotSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarToggleFieldList">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleFieldList">
+            <div slot="label">
               <span>
               <i class="fad fa-list-ul "></i> Field List</span>
             </div>
@@ -218,8 +218,8 @@
 {%- endblock htmBodyFieldListSiteUserPage %}
             </div>
           </sl-drawer>
-          <sl-drawer placement="end" id="siteSidebarToggleStats">
-            <div>
+          <sl-drawer with-header light-dismiss placement="end" id="siteSidebarToggleStats">
+            <div slot="label">
               <i class="fad fa-chart-candlestick "></i>
               Stats
             </div>
@@ -265,7 +265,7 @@
                                 <sl-input id="animateStatsMax" placeholder="max" value="{{ value.stats.max }}" style="width: 4em; "></sl-input>
                                 <span> speed in seconds </span>
                                 <sl-input id="animateStatsSpeed" placeholder="speed" value="1" style="width: 4em; "></sl-input>
-                                <sl-button onclick="animateStats(); ">animate</sl-button>
+                                <sl-button variant="primary" onclick="animateStats(); ">animate</sl-button>
                               </div>
                             {% endif %}
                           {% endif %}

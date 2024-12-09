@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyEventPage %}
     <script>
 
-      function jsWebsocketCompanyEvent(solrId, vars, $response) {
+      function jsWebsocketCompanyEvent(pageId, vars, $response) {
 {%- block jsWebsocketCompanyEventPage %}{%- endblock %}
       }
 
@@ -251,18 +251,13 @@
 {%- include en-us/search/event/CompanyEventSidebar.htm %}
 {%- include en-us/search/event/CompanyEventSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all events">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all events
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-          <span>events</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
+          <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all events
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></h1>
 {% include en-us/search/event/CompanyEventSearchButtons.htm %}
 {% include en-us/search/event/CompanyEventSearchForm.htm %}
         <h2>
@@ -278,27 +273,21 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-          <div>
-            <sl-tooltip content="back to all events">
-              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-                <i class="fa-solid fa-angle-left"></i>
-                all events
-              </sl-button>
-            </sl-tooltip>
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
+            <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all events
+            </sl-button>
           </div>
-          <h1>
-            <a href="{{pageUri}}">
-              <i class="fa-duotone fa-solid fa-map-location-dot"></i>
-              <span>events</span>
-            </a>
-          </h1>
+          <h1><a href="{{pageUri}}"><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></a></h1>
 {% include en-us/search/event/CompanyEventSearchButtons.htm %}
 {% include en-us/search/event/CompanyEventSearchForm.htm %}
 {% include en-us/search/event/CompanyEventPaginationButtons.htm %}
-          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+          <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <sl-dropdown id="htmDropdown-name">
-                <sl-button slot="trigger" caret>event name</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>event name</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -311,7 +300,7 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown id="htmDropdown-description">
-                <sl-button slot="trigger" caret>event description</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>event description</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -334,11 +323,11 @@
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button
+              <sl-button variant="primary"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
-                  help-text="Edit this"
+                  title="Edit this"
                   class="button-on-left {{classApiMethodMethod}}_editPage classCompanyEvent inputCompanyEvent{{pageId}}EditPage "
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
@@ -361,6 +350,7 @@
                 </div>
               {% endif %}
           </div>
+        </div>
 {% endif %}
 {%- endblock htmBodyMiddleCompanyEventPage %}
 {%- endblock htmBodyMiddlePageLayout %}

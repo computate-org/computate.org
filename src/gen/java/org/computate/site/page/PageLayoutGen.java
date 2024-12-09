@@ -1383,6 +1383,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setScopes(List<String> scopes) {
 		this.scopes = scopes;
 	}
+	@JsonIgnore
 	public void setScopes(String o) {
 		String l = PageLayout.staticSetScopes(siteRequest_, o);
 		if(l != null)
@@ -1457,6 +1458,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setRoleForWrite(List<String> roleForWrite) {
 		this.roleForWrite = roleForWrite;
 	}
+	@JsonIgnore
 	public void setRoleForWrite(String o) {
 		String l = PageLayout.staticSetRoleForWrite(siteRequest_, o);
 		if(l != null)
@@ -1531,6 +1533,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setRoleForRead(List<String> roleForRead) {
 		this.roleForRead = roleForRead;
 	}
+	@JsonIgnore
 	public void setRoleForRead(String o) {
 		String l = PageLayout.staticSetRoleForRead(siteRequest_, o);
 		if(l != null)
@@ -1741,6 +1744,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setDefaultFieldListVars(List<String> defaultFieldListVars) {
 		this.defaultFieldListVars = defaultFieldListVars;
 	}
+	@JsonIgnore
 	public void setDefaultFieldListVars(String o) {
 		String l = PageLayout.staticSetDefaultFieldListVars(siteRequest_, o);
 		if(l != null)
@@ -1815,6 +1819,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setDefaultSortVars(List<String> defaultSortVars) {
 		this.defaultSortVars = defaultSortVars;
 	}
+	@JsonIgnore
 	public void setDefaultSortVars(String o) {
 		String l = PageLayout.staticSetDefaultSortVars(siteRequest_, o);
 		if(l != null)
@@ -1889,6 +1894,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setDefaultStatsVars(List<String> defaultStatsVars) {
 		this.defaultStatsVars = defaultStatsVars;
 	}
+	@JsonIgnore
 	public void setDefaultStatsVars(String o) {
 		String l = PageLayout.staticSetDefaultStatsVars(siteRequest_, o);
 		if(l != null)
@@ -1963,6 +1969,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public void setDefaultPivotVars(List<String> defaultPivotVars) {
 		this.defaultPivotVars = defaultPivotVars;
 	}
+	@JsonIgnore
 	public void setDefaultPivotVars(String o) {
 		String l = PageLayout.staticSetDefaultPivotVars(siteRequest_, o);
 		if(l != null)

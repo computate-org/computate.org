@@ -35,8 +35,6 @@ import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
-import org.computate.site.page.SitePage;
-import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
@@ -270,7 +268,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<Jinjava> promise = Promise.promise();
 
 		try {
-			jinjava = new Jinjava();
+			jinjava = ComputateConfigKeys.getJinjava();
 			String templatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
 			if(!StringUtils.isBlank(templatePath))
 				jinjava.setResourceLocator(new FileLocator(new File(templatePath)));
@@ -690,8 +688,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
 											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
 												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
+													apiIotService.importTimer(Paths.get(templatePath, "/en-us/shop/iot-service"), vertx, siteRequest, IotService.CLASS_SIMPLE_NAME, IotService.CLASS_API_ADDRESS_IotService).onSuccess(q11 -> {
 														LOG.info("data import complete");
 														promise.complete();
+													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));
 										}).onFailure(ex -> promise.fail(ex));

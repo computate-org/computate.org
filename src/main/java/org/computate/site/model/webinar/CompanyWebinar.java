@@ -1,16 +1,31 @@
 package org.computate.site.model.webinar;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
+import org.computate.search.serialize.ComputateZonedDateTimeSerializer;
 import org.computate.search.tool.SearchTool;
 import org.computate.search.wrap.Wrap;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.search.list.SearchList;
+
 import org.computate.site.model.BaseModel;
 
 import io.vertx.core.Promise;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.data.Path;
@@ -64,7 +79,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * HtmColumn: 1
    * HtmRowTitle: webinar details
    * Facet: true
-	 * VarName: true
+   * VarName: true
    **/
   protected void _name(Wrap<String> w) {}
 
@@ -78,36 +93,36 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * HtmCell: 2
    * Facet: true
    * HtmColumn: 2
-	 * VarDescription: true
+   * VarDescription: true
    **/
   protected void _description(Wrap<String> w) {}
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRowTitleOpen: Useful URLs
-	 * HtmRow: 99
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: Page ID
-	 * Description: The ID for this page. 
-	 * VarId: true
-	 */
-	protected void _pageId(Wrap<String> w) {
-		w.o(toId(name));
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRowTitleOpen: Useful URLs
+   * HtmRow: 99
+   * HtmCell: 1
+   * Facet: true
+   * DisplayName: Page ID
+   * Description: The ID for this page. 
+   * VarId: true
+   */
+  protected void _pageId(Wrap<String> w) {
+    w.o(toId(name));
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: join URI
-	 * Description: The join relative URI for this page. 
-	 */
-	protected void _joinUri(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: join URI
+   * Description: The join relative URI for this page. 
+   */
+  protected void _joinUri(Wrap<String> w) {
+  }
 
   /**
    * {@inheritDoc}
@@ -145,16 +160,102 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    **/
   protected void _webinarUrlEmea(Wrap<String> w) {}
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Link: true
-	 * HtmColumn: 0
-	 * DisplayName: Join the webinar
-	 * Icon: <i class="fa-solid fa-video"></i>
-	 * Description: Access the webinar links. 
-	 */
-	protected void _joinUrl(Wrap<String> w) {
-		w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), joinUri));
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: ICal URL
+   * Description: The ICalendar URL for the events. 
+   * HtmRow: 4
+   * HtmCell: 4
+   * Facet: true
+   **/
+  protected void _icalUrl(Wrap<String> w) {}
+
+  /**
+   * Val.Fail.enUS: Failed to query the ICal file: %s
+   */
+  // protected void _caldav(Promise<String> promise) {
+  //   if(icalUrl == null) {
+  //     promise.complete();
+  //   } else {
+  //     try {
+  //       String utcDateTimeFormat = "yyyyMMdd'T'HHmmss";
+  //       ZoneId zoneId = ZoneId.of("UTC");
+  //       DateTimeFormatter utcDateTimeFormatter = DateTimeFormatter.ofPattern(utcDateTimeFormat);
+  //       String start = utcDateTimeFormatter.format(Instant.now().minus(1, ChronoUnit.HOURS).atZone(zoneId));
+  //       String end = utcDateTimeFormatter.format(Instant.now().plus(1, ChronoUnit.DAYS).atZone(zoneId));
+  //       URL url = new URL(icalUrl);
+  //       String host = url.getHost();
+  //       Integer port = Optional.of(url.getPort()).map(p -> p.equals(-1) ? null : p).orElse("https".equals(url.getProtocol()) ? 443 : 80);
+  //       Boolean ssl = "https".equals(url.getProtocol());
+  //       String uri = url.getPath();
+  //       siteRequest_.getWebClient().get(port, host, uri).ssl(ssl)
+  //           .followRedirects(true)
+  //           .send().onSuccess(response -> {
+  //         try {
+  //           String icalStr = response.body().toString();
+  //           Matcher mEvent = Pattern.compile("^BEGIN:VEVENT($[\\w\\W]+?)^END:VEVENT$", Pattern.MULTILINE).matcher(icalStr);
+  //           boolean mFound = mEvent.find();
+  //           LOG.info(icalStr);
+  //           while (mFound) {
+  //             String eventStr = mEvent.group(1);
+
+  //             Matcher mStart = Pattern.compile("^DTSTART;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+  //             mStart.find();
+  //             String startZoneId = mStart.group(1);
+  //             String startDateStr = mStart.group(2);
+  //             ZonedDateTime startDateTime = ZonedDateTime.parse(startDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(startZoneId)));
+
+  //             Matcher mEnd = Pattern.compile("^DTEND;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+  //             mEnd.find();
+  //             String endZoneId = mEnd.group(1);
+  //             String endDateStr = mEnd.group(2);
+  //             ZonedDateTime endDateTime = ZonedDateTime.parse(endDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+
+  //             Matcher mRule = Pattern.compile("^RRULE:FREQ=([^;]+);BYDAY=([^;]+);UNTIL=(.*)", Pattern.MULTILINE).matcher(eventStr);
+  //             if(mRule.find()) {
+  //               String ruleFreqStr = mEnd.group(1);
+  //               String ruleByDayStr = mEnd.group(2);
+  //               String untilDateStr = mEnd.group(3);
+  //               ZonedDateTime untilDateTime = ZonedDateTime.parse(untilDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+  //             }
+
+  //             Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+  //             boolean mExceptionFound = mException.find();
+  //             while (mExceptionFound) {
+  //               String exceptionZoneId = mException.group(1);
+  //               String exceptionDateStr = mException.group(2);
+  //               ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
+  //             }
+  //           }
+  //           // Calendar calendar = new CalendarBuilder().build(new ByteArrayInputStream(response.body().getBytes()));
+  //           promise.complete();
+  //         } catch(Throwable ex) {
+  //           LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+  //           promise.fail(ex);
+  //         }
+  //       }).onFailure(ex -> {
+  //         LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+  //         promise.fail(ex);
+  //       });
+  //     } catch(Throwable ex) {
+  //       LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+  //       promise.fail(ex);
+  //     }
+  //   }
+  // }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Link: true
+   * HtmColumn: 0
+   * DisplayName: Join the webinar
+   * Icon: <i class="fa-solid fa-video"></i>
+   * Description: Access the webinar links. 
+   */
+  protected void _joinUrl(Wrap<String> w) {
+    w.o(String.format("%s%s", siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), joinUri));
+  }
 }

@@ -360,6 +360,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyEvent.first());
+								apiRequest.setId(Optional.ofNullable(listCompanyEvent.first()).map(o2 -> o2.getPageId()).orElse(null));
 								eventBus.publish("websocketCompanyEvent", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHCompanyEvent(apiRequest, listCompanyEvent).onSuccess(e -> {
@@ -422,8 +423,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			CompanyEvent o2 = jsonObject.mapTo(CompanyEvent.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
-				patchCompanyEventFuture(o, false).onSuccess(a -> {
+				patchCompanyEventFuture(o2, false).onSuccess(a -> {
 					promise1.complete();
 				}).onFailure(ex -> {
 					LOG.error(String.format("listPATCHCompanyEvent failed. "), ex);
@@ -475,7 +479,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							patchCompanyEventFuture(o, false).onSuccess(o2 -> {
+							apiRequest.setId(Optional.ofNullable(listCompanyEvent.first()).map(o2 -> o2.getPageId()).orElse(null));
+							JsonObject jsonObject = JsonObject.mapFrom(o);
+							CompanyEvent o2 = jsonObject.mapTo(CompanyEvent.class);
+							o2.setSiteRequest_(siteRequest);
+							patchCompanyEventFuture(o2, false).onSuccess(o3 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
 								eventHandler.handle(Future.failedFuture(ex));
@@ -509,6 +517,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
 			persistCompanyEvent(o, true).onSuccess(c -> {
 				indexCompanyEvent(o).onSuccess(e -> {
+					if(apiRequest != null) {
+						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+							o.apiRequestCompanyEvent();
+							if(apiRequest.getVars().size() > 0)
+								eventBus.publish("websocketCompanyEvent", JsonObject.mapFrom(apiRequest).toString());
+						}
+					}
 					promise.complete(o);
 				}).onFailure(ex -> {
 					promise.fail(ex);
@@ -865,6 +881,9 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+			JsonObject jsonObject = JsonObject.mapFrom(o);
+			CompanyEvent o2 = jsonObject.mapTo(CompanyEvent.class);
+			o2.setSiteRequest_(siteRequest2);
 			futures.add(Future.future(promise1 -> {
 				deleteCompanyEventFuture(o).onSuccess(a -> {
 					promise1.complete();
@@ -918,6 +937,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
+							apiRequest.setId(Optional.ofNullable(listCompanyEvent.first()).map(o2 -> o2.getPageId()).orElse(null));
 							deleteCompanyEventFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -1207,6 +1227,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							}
 							if(searchList.size() == 1) {
 								apiRequest.setOriginal(o);
+								apiRequest.setId(o.getPageId());
 							}
 							siteRequest.setJsonObject(body2);
 							patchCompanyEventFuture(o2, true).onSuccess(b -> {
@@ -2313,18 +2334,18 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			CompanyEvent page = new CompanyEvent();
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
-			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, (String)result.get(CompanyEvent.VAR_created)));
-			page.persistForClass(CompanyEvent.VAR_archived, CompanyEvent.staticSetArchived(siteRequest2, (String)result.get(CompanyEvent.VAR_archived)));
-			page.persistForClass(CompanyEvent.VAR_title, CompanyEvent.staticSetTitle(siteRequest2, (String)result.get(CompanyEvent.VAR_title)));
-			page.persistForClass(CompanyEvent.VAR_displayPage, CompanyEvent.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyEvent.VAR_displayPage)));
-			page.persistForClass(CompanyEvent.VAR_solrId, CompanyEvent.staticSetSolrId(siteRequest2, (String)result.get(CompanyEvent.VAR_solrId)));
 			page.persistForClass(CompanyEvent.VAR_name, CompanyEvent.staticSetName(siteRequest2, (String)result.get(CompanyEvent.VAR_name)));
+			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, (String)result.get(CompanyEvent.VAR_created)));
 			page.persistForClass(CompanyEvent.VAR_description, CompanyEvent.staticSetDescription(siteRequest2, (String)result.get(CompanyEvent.VAR_description)));
 			page.persistForClass(CompanyEvent.VAR_price, CompanyEvent.staticSetPrice(siteRequest2, (String)result.get(CompanyEvent.VAR_price)));
+			page.persistForClass(CompanyEvent.VAR_archived, CompanyEvent.staticSetArchived(siteRequest2, (String)result.get(CompanyEvent.VAR_archived)));
 			page.persistForClass(CompanyEvent.VAR_pageId, CompanyEvent.staticSetPageId(siteRequest2, (String)result.get(CompanyEvent.VAR_pageId)));
 			page.persistForClass(CompanyEvent.VAR_emailTemplate, CompanyEvent.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyEvent.VAR_emailTemplate)));
 			page.persistForClass(CompanyEvent.VAR_storeUrl, CompanyEvent.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyEvent.VAR_storeUrl)));
 			page.persistForClass(CompanyEvent.VAR_location, CompanyEvent.staticSetLocation(siteRequest2, (String)result.get(CompanyEvent.VAR_location)));
+			page.persistForClass(CompanyEvent.VAR_title, CompanyEvent.staticSetTitle(siteRequest2, (String)result.get(CompanyEvent.VAR_title)));
+			page.persistForClass(CompanyEvent.VAR_displayPage, CompanyEvent.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyEvent.VAR_displayPage)));
+			page.persistForClass(CompanyEvent.VAR_solrId, CompanyEvent.staticSetSolrId(siteRequest2, (String)result.get(CompanyEvent.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

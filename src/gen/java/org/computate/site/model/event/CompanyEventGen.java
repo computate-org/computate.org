@@ -726,6 +726,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public void setLocationColors(List<String> locationColors) {
 		this.locationColors = locationColors;
 	}
+	@JsonIgnore
 	public void setLocationColors(String o) {
 		String l = CompanyEvent.staticSetLocationColors(siteRequest_, o);
 		if(l != null)
@@ -800,6 +801,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public void setLocationTitles(List<String> locationTitles) {
 		this.locationTitles = locationTitles;
 	}
+	@JsonIgnore
 	public void setLocationTitles(String o) {
 		String l = CompanyEvent.staticSetLocationTitles(siteRequest_, o);
 		if(l != null)
@@ -874,6 +876,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public void setLocationLinks(List<String> locationLinks) {
 		this.locationLinks = locationLinks;
 	}
+	@JsonIgnore
 	public void setLocationLinks(String o) {
 		String l = CompanyEvent.staticSetLocationLinks(siteRequest_, o);
 		if(l != null)

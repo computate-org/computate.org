@@ -1,7 +1,7 @@
 {% extends "en-us/PageLayout.htm" %}
 {%- block htmTitlePageLayout %}
 {%- block htmTitleWeatherObservedPage %}
-    <title>{{ result.objectTitle }}</title>
+    <title>{{ result.title }}</title>
 {%- endblock htmTitleWeatherObservedPage %}
 {%- endblock htmTitlePageLayout %}
 
@@ -31,7 +31,7 @@
 {%- block htmScriptWeatherObservedPage %}
     <script>
 
-      function jsWebsocketWeatherObserved(pk, vars, $response) {
+      function jsWebsocketWeatherObserved(entityId, vars, $response) {
 {%- block jsWebsocketWeatherObservedPage %}{%- endblock %}
       }
 
@@ -250,19 +250,15 @@
 {%- block htmBodyMiddleWeatherObservedPage %}
 {%- include en-us/search/weather-observed/WeatherObservedSidebar.htm %}
 {%- include en-us/search/weather-observed/WeatherObservedSuggestedSearch.htm %}
+        <div class="main-content">
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all weather observed devices">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all weather observed devices
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-cloud-bolt-sun"></i>
-          <span>weather observed devices</span>
-        </h1>
+        <sl-tooltip for="return-to-WeatherObserved">back to all weather observed devices</sl-tooltip>
+          <sl-button id="return-to-WeatherObserved" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all weather observed devices
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-cloud-bolt-sun"></i> <span>weather observed devices</span></h1>
 {% include en-us/search/weather-observed/WeatherObservedSearchButtons.htm %}
 {% include en-us/search/weather-observed/WeatherObservedSearchForm.htm %}
         <h2>
@@ -276,33 +272,24 @@
 {% else %}
   {% if resultCount == 1 %}
     {% if solrId is defined %}
-        <div>
-          <sl-tooltip content="back to all weather observed devices">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
+          <div class="margin-block">
+            <sl-tooltip for="return-to-WeatherObserved">back to all weather observed devices</sl-tooltip>
+            <sl-button id="return-to-WeatherObserved" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
               <i class="fa-solid fa-angle-left"></i>
               all weather observed devices
             </sl-button>
-          </sl-tooltip>
-        </div>
+          </div>
 {% include en-us/search/weather-observed/WeatherObservedSearchButtons.htm %}
 {% include en-us/search/weather-observed/WeatherObservedSearchForm.htm %}
-        <h1>
-          <i class="fa-regular fa-cloud-bolt-sun"></i>
-          {{result.objectTitle}}
-        </h1>
+          <h1 class="Page_title"><i class="fa-regular fa-cloud-bolt-sun"></i> {{ result.title | e }}</h1>
     {% else %}
-        <div>
-          <sl-tooltip content="back to all weather observed devices">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all weather observed devices
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-cloud-bolt-sun"></i>
-          <span>weather observed devices</span>
-        </h1>
+        <sl-tooltip for="return-to-WeatherObserved">back to all weather observed devices</sl-tooltip>
+          <sl-button id="return-to-WeatherObserved" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all weather observed devices
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-cloud-bolt-sun"></i> <span>weather observed devices</span></h1>
 {% include en-us/search/weather-observed/WeatherObservedSearchButtons.htm %}
 {% include en-us/search/weather-observed/WeatherObservedSearchForm.htm %}
         <h2>
@@ -315,18 +302,13 @@
         </h2>
     {% endif %}
   {% else %}
-        <div>
-          <sl-tooltip content="back to all weather observed devices">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all weather observed devices
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-regular fa-cloud-bolt-sun"></i>
-          <span>weather observed devices</span>
-        </h1>
+        <sl-tooltip for="return-to-WeatherObserved">back to all weather observed devices</sl-tooltip>
+          <sl-button id="return-to-WeatherObserved" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all weather observed devices
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-regular fa-cloud-bolt-sun"></i> <span>weather observed devices</span></h1>
 {% include en-us/search/weather-observed/WeatherObservedSearchButtons.htm %}
 {% include en-us/search/weather-observed/WeatherObservedSearchForm.htm %}
         <h2>
@@ -340,20 +322,21 @@
   {% endif %}
 {% endif %}
 {%- block htmFormWeatherObservedPage %}
-        <form action="/en-us/api/weather-observed" id="WeatherObservedForm" class="pageForm " style="" onsubmit="event.preventDefault(); return false; ">
+          <form action="/en-us/api/weather-observed" id="WeatherObservedForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
 {% if entityId is defined %}
-          <input name="entityId" class="valueEntityId" type="hidden" value="{{entityId}}"/>
-          {% endif %}
-          <input name="focusId" type="hidden"/>
-          <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
-          <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result_) }}' type="hidden"/>
-          <input name="listWeatherObserved" id="listWeatherObserved" class="listWeatherObserved"  value='{{ toJsonArrayStringInApostrophes(listWeatherObserved) }}' type="hidden"/>
-        </form>
+            <input name="entityId" class="valueEntityId" type="hidden" value="{{entityId}}"/>
+            {% endif %}
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="result" id="result" class="result"  value='{{ toJsonObjectStringInApostrophes(result) }}' type="hidden"/>
+            <input name="listWeatherObserved" id="listWeatherObserved" class="listWeatherObserved"  value='{{ toJsonArrayStringInApostrophes(listWeatherObserved) }}' type="hidden"/>
+          </form>
   {% if solrId is defined %}
-        {{ htmButton_searchpageWeatherObserved() }}
-        {{ htmForm_searchpageWeatherObserved() }}
+          {{ htmButton_searchpageWeatherObserved() }}
+          {{ htmForm_searchpageWeatherObserved() }}
   {% endif %}
 {%- endblock htmFormWeatherObservedPage %}
+        </div>
 {%- endblock htmBodyMiddleWeatherObservedPage %}
 {%- endblock htmBodyMiddlePageLayout %}
 
@@ -458,7 +441,7 @@ The primary key of this object in the database"
                 <form class="subgrid-2col " id="PageForm_archived">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_archived"
                       placeholder="archive"
                       label="archive"
@@ -1924,7 +1907,7 @@ The NGSILD context URL for @context data. "
                 <form class="subgrid-2col " id="PageForm_displayPage">
   {%- endif %}
   {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button
+                  <sl-button variant="primary"
                       id="{{classApiMethodMethod}}_displayPage"
                       placeholder="[String] product page"
                       label="product page"

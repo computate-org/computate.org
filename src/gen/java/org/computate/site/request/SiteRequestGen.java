@@ -989,6 +989,7 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public void setScopes(List<String> scopes) {
 		this.scopes = scopes;
 	}
+	@JsonIgnore
 	public void setScopes(String o) {
 		String l = SiteRequest.staticSetScopes(siteRequest_, o);
 		if(l != null)

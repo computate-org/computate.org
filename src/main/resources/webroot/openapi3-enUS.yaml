@@ -12746,6 +12746,10 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
+                  icalUrl:
+                    type: string
+                  caldav:
+                    type: string
                   joinUrl:
                     type: string
     PATCHCompanyWebinarRequest:
@@ -12800,6 +12804,20 @@ components:
             removeWebinarUrlEmea:
               type: string
             removeAllWebinarUrlEmea:
+              type: string
+            setIcalUrl:
+              type: string
+              nullable: true
+            removeIcalUrl:
+              type: string
+            removeAllIcalUrl:
+              type: string
+            setCaldav:
+              type: string
+              nullable: true
+            removeCaldav:
+              type: string
+            removeAllCaldav:
               type: string
             setJoinUrl:
               type: string
@@ -12861,6 +12879,20 @@ components:
               type: string
             removeAllWebinarUrlEmea:
               type: string
+            setIcalUrl:
+              type: string
+              nullable: true
+            removeIcalUrl:
+              type: string
+            removeAllIcalUrl:
+              type: string
+            setCaldav:
+              type: string
+              nullable: true
+            removeCaldav:
+              type: string
+            removeAllCaldav:
+              type: string
             setJoinUrl:
               type: string
               nullable: true
@@ -12886,6 +12918,10 @@ components:
               type: string
             webinarUrlEmea:
               type: string
+            icalUrl:
+              type: string
+            caldav:
+              type: string
             joinUrl:
               type: string
     POSTCompanyWebinarResponse:
@@ -12905,6 +12941,10 @@ components:
             webinarUrlApac:
               type: string
             webinarUrlEmea:
+              type: string
+            icalUrl:
+              type: string
+            caldav:
               type: string
             joinUrl:
               type: string
@@ -12931,6 +12971,10 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
+                  icalUrl:
+                    type: string
+                  caldav:
+                    type: string
                   joinUrl:
                     type: string
     PUTImportCompanyWebinarResponse:
@@ -12951,6 +12995,10 @@ components:
                     type: string
                   webinarUrlEmea:
                     type: string
+                  icalUrl:
+                    type: string
+                  caldav:
+                    type: string
                   joinUrl:
                     type: string
     GETCompanyWebinarResponse:
@@ -12970,6 +13018,10 @@ components:
             webinarUrlApac:
               type: string
             webinarUrlEmea:
+              type: string
+            icalUrl:
+              type: string
+            caldav:
               type: string
             joinUrl:
               type: string

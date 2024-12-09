@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchIotService() %}<sl-button id="htmButton_patchIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchIotService() %}<sl-button variant="primary" id="htmButton_patchIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchIotService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchIotService"
                 >Modify IoT service</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchIotService() %}
         <sl-dialog id="patchIotServiceDialog" label="Modify IoT service">
-          <form id="htmForm_patchIotService" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchIotService" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -174,18 +174,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postIotService() %}<sl-button id="htmButton_postIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postIotService() %}<sl-button variant="primary" id="htmButton_postIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postIotService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postIotService"
                 >Create an IoT service</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postIotService() %}
         <sl-dialog id="postIotServiceDialog" label="Create an IoT service">
-          <form id="htmForm_postIotService" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postIotService" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -350,33 +350,33 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteIotService() %}<sl-button id="htmButton_deleteIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteIotService() %}<sl-button variant="primary" id="htmButton_deleteIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteIotService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_deleteIotService"
                 >Delete IoT service</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteIotService() %}
         <sl-dialog id="deleteIotServiceDialog" label="Delete IoT service">
-          <form id="htmForm_deleteIotService" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_deleteIotService" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteIotService() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportIotService() %}<sl-button id="htmButton_putimportIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportIotService() %}<sl-button variant="primary" id="htmButton_putimportIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportIotService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportIotService"
                 >Import IoT services</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportIotService() %}
         <sl-dialog id="putimportIotServiceDialog" label="Import IoT services">
-          <form id="htmForm_putimportIotService" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportIotService" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -393,14 +393,14 @@
 {%- macro htmButton_searchpageIotService() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageIotService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageIotService"
                 >Search IoT services</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageIotService() %}
         <div id="searchpageIotServiceDialog" label="Search IoT services">
-          <div id="htmForm_searchpageIotService" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageIotService" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -563,18 +563,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisIotServiceGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisIotServiceGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisIotServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisIotServiceGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllIotServiceGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllIotServiceGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllIotServiceGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllIotServiceGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -612,6 +614,8 @@
   {{ htmButton_putimportIotService() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchIotService() }}

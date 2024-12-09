@@ -31,7 +31,7 @@
 {%- block htmScriptCompanyResearchPage %}
     <script>
 
-      function jsWebsocketCompanyResearch(solrId, vars, $response) {
+      function jsWebsocketCompanyResearch(pageId, vars, $response) {
 {%- block jsWebsocketCompanyResearchPage %}{%- endblock %}
       }
 
@@ -168,18 +168,13 @@
 {%- include en-us/search/research/CompanyResearchSidebar.htm %}
 {%- include en-us/search/research/CompanyResearchSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all research">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all research
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-duotone fa-solid fa-school"></i>
-          <span>research</span>
-        </h1>
+        <sl-tooltip for="return-to-CompanyResearch">back to all research</sl-tooltip>
+          <sl-button id="return-to-CompanyResearch" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all research
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-duotone fa-solid fa-school"></i> <span>research</span></h1>
 {% include en-us/search/research/CompanyResearchSearchButtons.htm %}
 {% include en-us/search/research/CompanyResearchSearchForm.htm %}
         <h2>
@@ -195,27 +190,21 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-          <div>
-            <sl-tooltip content="back to all research">
-              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-                <i class="fa-solid fa-angle-left"></i>
-                all research
-              </sl-button>
-            </sl-tooltip>
+          <div class="margin-block">
+            <sl-tooltip for="return-to-CompanyResearch">back to all research</sl-tooltip>
+            <sl-button id="return-to-CompanyResearch" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all research
+            </sl-button>
           </div>
-          <h1>
-            <a href="{{pageUri}}">
-              <i class="fa-duotone fa-solid fa-school"></i>
-              <span>research</span>
-            </a>
-          </h1>
+          <h1><a href="{{pageUri}}"><i class="fa-duotone fa-solid fa-school"></i> <span>research</span></a></h1>
 {% include en-us/search/research/CompanyResearchSearchButtons.htm %}
 {% include en-us/search/research/CompanyResearchSearchForm.htm %}
 {% include en-us/search/research/CompanyResearchPaginationButtons.htm %}
-          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+          <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <sl-dropdown id="htmDropdown-name">
-                <sl-button slot="trigger" caret>research name</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>research name</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -228,7 +217,7 @@
                 </sl-menu>
               </sl-dropdown>
               <sl-dropdown id="htmDropdown-description">
-                <sl-button slot="trigger" caret>research description</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>research description</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -251,11 +240,11 @@
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button
+              <sl-button variant="primary"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
-                  help-text="Edit this"
+                  title="Edit this"
                   class="button-on-left {{classApiMethodMethod}}_editPage classCompanyResearch inputCompanyResearch{{pageId}}EditPage "
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
@@ -278,6 +267,7 @@
                 </div>
               {% endif %}
           </div>
+        </div>
 {% endif %}
 {%- endblock htmBodyMiddleCompanyResearchPage %}
 {%- endblock htmBodyMiddlePageLayout %}

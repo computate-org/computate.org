@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchUseCase() %}<sl-button id="htmButton_patchUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchUseCase() %}<sl-button variant="primary" id="htmButton_patchUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchUseCase() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchUseCase"
                 >Modify use case</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchUseCase() %}
         <sl-dialog id="patchUseCaseDialog" label="Modify use case">
-          <form id="htmForm_patchUseCase" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchUseCase" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -113,18 +113,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postUseCase() %}<sl-button id="htmButton_postUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postUseCase() %}<sl-button variant="primary" id="htmButton_postUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postUseCase() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postUseCase"
                 >Create a use case</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postUseCase() %}
         <sl-dialog id="postUseCaseDialog" label="Create a use case">
-          <form id="htmForm_postUseCase" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postUseCase" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -228,33 +228,33 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteUseCase() %}<sl-button id="htmButton_deleteUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteUseCase() %}<sl-button variant="primary" id="htmButton_deleteUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteUseCase() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_deleteUseCase"
                 >Delete use case</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteUseCase() %}
         <sl-dialog id="deleteUseCaseDialog" label="Delete use case">
-          <form id="htmForm_deleteUseCase" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_deleteUseCase" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteUseCase() }}
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportUseCase() %}<sl-button id="htmButton_putimportUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportUseCase() %}<sl-button variant="primary" id="htmButton_putimportUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportUseCase() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportUseCase"
                 >Import use cases</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportUseCase() %}
         <sl-dialog id="putimportUseCaseDialog" label="Import use cases">
-          <form id="htmForm_putimportUseCase" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportUseCase" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -271,14 +271,14 @@
 {%- macro htmButton_searchpageUseCase() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageUseCase() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageUseCase"
                 >Search use cases</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageUseCase() %}
         <div id="searchpageUseCaseDialog" label="Search use cases">
-          <div id="htmForm_searchpageUseCase" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageUseCase" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -380,18 +380,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisUseCaseGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisUseCaseGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisUseCaseGenPage')); }, function() { addError(document.querySelector('#refreshThisUseCaseGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllUseCaseGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllUseCaseGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllUseCaseGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllUseCaseGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -429,6 +431,8 @@
   {{ htmButton_putimportUseCase() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchUseCase() }}

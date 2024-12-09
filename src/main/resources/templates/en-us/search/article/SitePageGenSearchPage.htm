@@ -31,7 +31,7 @@
 {%- block htmScriptSitePagePage %}
     <script>
 
-      function jsWebsocketSitePage(solrId, vars, $response) {
+      function jsWebsocketSitePage(pageId, vars, $response) {
 {%- block jsWebsocketSitePagePage %}{%- endblock %}
       }
 
@@ -168,18 +168,13 @@
 {%- include en-us/search/article/SitePageSidebar.htm %}
 {%- include en-us/search/article/SitePageSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <div>
-          <sl-tooltip content="back to all articles">
-            <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all articles
-            </sl-button>
-          </sl-tooltip>
-        </div>
-        <h1>
-          <i class="fa-duotone fa-solid fa-newspaper"></i>
-          <span>articles</span>
-        </h1>
+        <sl-tooltip for="return-to-SitePage">back to all articles</sl-tooltip>
+          <sl-button id="return-to-SitePage" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="fa-solid fa-angle-left"></i>
+            all articles
+          </sl-button>
+        </sl-tooltip>
+        <h1><i class="fa-duotone fa-solid fa-newspaper"></i> <span>articles</span></h1>
 {% include en-us/search/article/SitePageSearchButtons.htm %}
 {% include en-us/search/article/SitePageSearchForm.htm %}
         <h2>
@@ -195,27 +190,21 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
-          <div>
-            <sl-tooltip content="back to all articles">
-              <sl-button href="{{ SITE_BASE_URL }}{{ pageUri }}">
-                <i class="fa-solid fa-angle-left"></i>
-                all articles
-              </sl-button>
-            </sl-tooltip>
+          <div class="margin-block">
+            <sl-tooltip for="return-to-SitePage">back to all articles</sl-tooltip>
+            <sl-button id="return-to-SitePage" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="fa-solid fa-angle-left"></i>
+              all articles
+            </sl-button>
           </div>
-          <h1>
-            <a href="{{pageUri}}">
-              <i class="fa-duotone fa-solid fa-newspaper"></i>
-              <span>articles</span>
-            </a>
-          </h1>
+          <h1><a href="{{pageUri}}"><i class="fa-duotone fa-solid fa-newspaper"></i> <span>articles</span></a></h1>
 {% include en-us/search/article/SitePageSearchButtons.htm %}
 {% include en-us/search/article/SitePageSearchForm.htm %}
 {% include en-us/search/article/SitePagePaginationButtons.htm %}
-          <div class="grid-mode-details border-radius-x-large" id="site-results-grid">
+          <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <sl-dropdown id="htmDropdown-name">
-                <sl-button slot="trigger" caret>title</sl-button>
+                <sl-button variant="primary" slot="trigger" caret>title</sl-button>
                 <sl-menu>
                   <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
                     <i class="fa-solid fa-arrow-down-a-z"></i>
@@ -235,11 +224,11 @@
                 <i class="fa-duotone fa-solid fa-newspaper"></i>
               {{ item.name }}
               </a>
-              <sl-button
+              <sl-button variant="primary"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
-                  help-text="Edit this"
+                  title="Edit this"
                   class="button-on-left {{classApiMethodMethod}}_editPage classSitePage inputSitePage{{pageId}}EditPage "
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
@@ -258,6 +247,7 @@
                 </div>
               {% endif %}
           </div>
+        </div>
 {% endif %}
 {%- endblock htmBodyMiddleSitePagePage %}
 {%- endblock htmBodyMiddlePageLayout %}

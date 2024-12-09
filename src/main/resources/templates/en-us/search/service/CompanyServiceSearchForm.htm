@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchCompanyService() %}<sl-button id="htmButton_patchCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyService() %}<sl-button variant="primary" id="htmButton_patchCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyService"
                 >Modify service</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyService() %}
         <sl-dialog id="patchCompanyServiceDialog" label="Modify service">
-          <form id="htmForm_patchCompanyService" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchCompanyService" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -103,18 +103,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyService() %}<sl-button id="htmButton_postCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyService() %}<sl-button variant="primary" id="htmButton_postCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyService"
                 >Create a service</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyService() %}
         <sl-dialog id="postCompanyServiceDialog" label="Create a service">
-          <form id="htmForm_postCompanyService" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postCompanyService" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -208,17 +208,17 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyService() %}<sl-button id="htmButton_putimportCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyService() %}<sl-button variant="primary" id="htmButton_putimportCompanyService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyService"
                 >Import services</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyService() %}
         <sl-dialog id="putimportCompanyServiceDialog" label="Import services">
-          <form id="htmForm_putimportCompanyService" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportCompanyService" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -235,14 +235,14 @@
 {%- macro htmButton_searchpageCompanyService() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyService() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyService"
                 >Search services</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyService() %}
         <div id="searchpageCompanyServiceDialog" label="Search services">
-          <div id="htmForm_searchpageCompanyService" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageCompanyService" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -334,18 +334,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyServiceGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisCompanyServiceGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyServiceGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyServiceGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllCompanyServiceGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyServiceGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyServiceGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -374,6 +376,8 @@
   {{ htmButton_putimportCompanyService() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchCompanyService() }}

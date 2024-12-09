@@ -1,15 +1,15 @@
 
-{%- macro htmButton_patchCompanyCourse() %}<sl-button id="htmButton_patchCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmButton_patchCompanyCourse() %}<sl-button variant="primary" id="htmButton_patchCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyCourse() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_patchCompanyCourse"
                 >Modify course</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyCourse() %}
         <sl-dialog id="patchCompanyCourseDialog" label="Modify course">
-          <form id="htmForm_patchCompanyCourse" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_patchCompanyCourse" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -135,18 +135,18 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyCourse() %}<sl-button id="htmButton_postCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyCourse() %}<sl-button variant="primary" id="htmButton_postCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyCourse() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_postCompanyCourse"
                 >Create a course</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyCourse() %}
         <sl-dialog id="postCompanyCourseDialog" label="Create a course">
-          <form id="htmForm_postCompanyCourse" class="round-first-and-last-row-x-large ">
-            <div class="">You can override any default values below: </div>
+          <form id="htmForm_postCompanyCourse" class="round-row primary-smart-border-radius ">
+            <div>You can override any default values below: </div>
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -272,17 +272,17 @@
         </sl-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyCourse() %}<sl-button id="htmButton_putimportCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyCourse() %}<sl-button variant="primary" id="htmButton_putimportCompanyCourse" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyCourse() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_putimportCompanyCourse"
                 >Import courses</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyCourse() %}
         <sl-dialog id="putimportCompanyCourseDialog" label="Import courses">
-          <form id="htmForm_putimportCompanyCourse" class="round-first-and-last-row-x-large ">
+          <form id="htmForm_putimportCompanyCourse" class="round-row primary-smart-border-radius ">
             <div>
               <sl-textarea
                   class="PUTImport_searchList "
@@ -299,14 +299,14 @@
 {%- macro htmButton_searchpageCompanyCourse() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyCourse() %}
-            <sl-button slot="footer" type="submit" variant="primary"
+            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
                 id="htmFormButton_searchpageCompanyCourse"
                 >Search courses</sl-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyCourse() %}
         <div id="searchpageCompanyCourseDialog" label="Search courses">
-          <div id="htmForm_searchpageCompanyCourse" class="round-first-and-last-row-x-large ">
+          <div id="htmForm_searchpageCompanyCourse" class="round-row primary-smart-border-radius ">
             <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
@@ -430,18 +430,20 @@
           </div>
         </div>
 {%- endmacro %}
+          <sl-divider></sl-divider>
+          <div id="htmButtonGroup">
+            <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-            <sl-divider></sl-divider>
-            <div id="htmButtonGroup" class="round-first-and-last-column-pill ">
-    {% if resultCount == 1 %}              <sl-button id="refreshThisCompanyCourseGenPage"
+    {% if resultCount == 1 %}
+              <sl-button variant="primary" id="refreshThisCompanyCourseGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyCourseGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyCourseGenPage')); }); return false; ">
                 <i slot="prefix" class="fas fa-sync-alt "></i>
                 refresh
               </sl-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button id="refreshAllCompanyCourseGenPage{{ result.pageId | e }}"
+              <sl-button variant="primary" id="refreshAllCompanyCourseGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyCourseGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyCourseGenPage{{ result.pageId | e }}')); }); "
                   >
                 <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
@@ -470,6 +472,8 @@
   {{ htmButton_putimportCompanyCourse() }}
 {%- endif %}
 
+            </div>
+          </div>
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {%- if resultCount > 0 %}
     {{ htmForm_patchCompanyCourse() }}
