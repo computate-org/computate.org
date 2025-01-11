@@ -169,12 +169,14 @@
 {%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
         <div class="main-content">
 {% if resultCount == 0 %}
+        {% if varsFqCount > 0 %}
         <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
           <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
             <i class="fa-solid fa-angle-left"></i>
             all webinars
           </sl-button>
         </sl-tooltip>
+        {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
@@ -200,12 +202,14 @@
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
           <h1 class="Page_title"><i class="fa-regular fa-video"></i> {{ result.title | e }}</h1>
     {% else %}
+        {% if varsFqCount > 0 %}
         <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
           <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
             <i class="fa-solid fa-angle-left"></i>
             all webinars
           </sl-button>
         </sl-tooltip>
+        {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
@@ -219,12 +223,14 @@
         </h2>
     {% endif %}
   {% else %}
+        {% if varsFqCount > 0 %}
         <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
           <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
             <i class="fa-solid fa-angle-left"></i>
             all webinars
           </sl-button>
         </sl-tooltip>
+        {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
@@ -636,6 +642,33 @@ The ICalendar URL for the events. "
 
 {%- macro htmIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
                             {{ inputIcalUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_nextWebinar">
+  {%- endif %}
+                  <sl-input
+                      type="text"
+                      readonly
+                      help-text="The start date time of the next webinar. "
+                      label="next webinar"
+                      class="label-on-left {{classApiMethodMethod}}_nextWebinar datetimepicker setNextWebinar classCompanyWebinar inputCompanyWebinar{{pageId}}NextWebinar "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_nextWebinar"
+                      value="{%- if result.nextWebinar is defined %}{{ formatZonedDateTime(result.nextWebinar, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </sl-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNextWebinarCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
 {%- endmacro %}
 {%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
   {%- if 'Page' == classApiMethodMethod %}

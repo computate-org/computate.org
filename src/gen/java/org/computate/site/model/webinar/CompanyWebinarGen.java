@@ -36,6 +36,16 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.util.Locale;
+import java.time.OffsetDateTime;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -672,6 +682,138 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		return icalUrl;
 	}
 
+	////////////
+	// caldav //
+	////////////
+
+	public static final String caldavFail1_enUS = "Failed to query the ICal file: %s";
+	public static final String caldavFail_enUS = caldavFail1_enUS;
+
+	/**	 The entity caldav
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String caldav;
+
+	/**	<br> The entity caldav
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:caldav">Find the entity caldav in Solr</a>
+	 * <br>
+	 * @param promise is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _caldav(Promise<String> promise);
+
+	public String getCaldav() {
+		return caldav;
+	}
+	public void setCaldav(String o) {
+		this.caldav = CompanyWebinar.staticSetCaldav(siteRequest_, o);
+	}
+	public static String staticSetCaldav(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected Future<String> caldavPromise() {
+		Promise<String> promise = Promise.promise();
+		Promise<String> promise2 = Promise.promise();
+		_caldav(promise2);
+		promise2.future().onSuccess(o -> {
+			setCaldav(o);
+			promise.complete(o);
+		}).onFailure(ex -> {
+			promise.fail(ex);
+		});
+		return promise.future();
+	}
+
+	public static String staticSearchCaldav(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrCaldav(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqCaldav(SiteRequest siteRequest_, String o) {
+		return CompanyWebinar.staticSearchCaldav(siteRequest_, CompanyWebinar.staticSetCaldav(siteRequest_, o)).toString();
+	}
+
+	/////////////////
+	// nextWebinar //
+	/////////////////
+
+
+	/**	 The entity nextWebinar
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonDeserialize(using = ComputateZonedDateTimeDeserializer.class)
+	@JsonSerialize(using = ComputateZonedDateTimeSerializer.class)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
+	@JsonInclude(Include.NON_NULL)
+	protected ZonedDateTime nextWebinar;
+
+	/**	<br> The entity nextWebinar
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinar">Find the entity nextWebinar in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _nextWebinar(Wrap<ZonedDateTime> w);
+
+	public ZonedDateTime getNextWebinar() {
+		return nextWebinar;
+	}
+
+	public void setNextWebinar(ZonedDateTime nextWebinar) {
+		this.nextWebinar = Optional.ofNullable(nextWebinar).map(v -> v.truncatedTo(ChronoUnit.MILLIS)).orElse(null);
+	}
+	@JsonIgnore
+	public void setNextWebinar(Instant o) {
+		this.nextWebinar = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+	}
+	/** Example: 2011-12-03T10:15:30+01:00 **/
+	@JsonIgnore
+	public void setNextWebinar(String o) {
+		this.nextWebinar = CompanyWebinar.staticSetNextWebinar(siteRequest_, o);
+	}
+	public static ZonedDateTime staticSetNextWebinar(SiteRequest siteRequest_, String o) {
+		if(StringUtils.endsWith(o, "]"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
+		else if(StringUtils.endsWith(o, "Z"))
+			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+		else if(StringUtils.contains(o, "T"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
+		else
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	@JsonIgnore
+	public void setNextWebinar(Date o) {
+		this.nextWebinar = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	protected CompanyWebinar nextWebinarInit() {
+		Wrap<ZonedDateTime> nextWebinarWrap = new Wrap<ZonedDateTime>().var("nextWebinar");
+		if(nextWebinar == null) {
+			_nextWebinar(nextWebinarWrap);
+			Optional.ofNullable(nextWebinarWrap.getO()).ifPresent(o -> {
+				setNextWebinar(o);
+			});
+		}
+		return (CompanyWebinar)this;
+	}
+
+	public static String staticSearchNextWebinar(SiteRequest siteRequest_, ZonedDateTime o) {
+		return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
+	}
+
+	public static String staticSearchStrNextWebinar(SiteRequest siteRequest_, String o) {
+		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o));
+	}
+
+	public static String staticSearchFqNextWebinar(SiteRequest siteRequest_, String o) {
+		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o)).toString();
+	}
+
 	/////////////
 	// joinUrl //
 	/////////////
@@ -761,6 +903,23 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				webinarUrlApacInit();
 				webinarUrlEmeaInit();
 				icalUrlInit();
+				promise2.complete();
+			} catch(Exception ex) {
+				promise2.fail(ex);
+			}
+			return promise2.future();
+		}).compose(a -> {
+			Promise<Void> promise2 = Promise.promise();
+			caldavPromise().onSuccess(caldav -> {
+				promise2.complete();
+			}).onFailure(ex -> {
+				promise2.fail(ex);
+			});
+			return promise2.future();
+		}).compose(a -> {
+			Promise<Void> promise2 = Promise.promise();
+			try {
+				nextWebinarInit();
 				joinUrlInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -831,6 +990,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return oCompanyWebinar.webinarUrlEmea;
 			case "icalUrl":
 				return oCompanyWebinar.icalUrl;
+			case "caldav":
+				return oCompanyWebinar.caldav;
+			case "nextWebinar":
+				return oCompanyWebinar.nextWebinar;
 			case "joinUrl":
 				return oCompanyWebinar.joinUrl;
 			default:
@@ -888,6 +1051,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o);
 		case "icalUrl":
 			return CompanyWebinar.staticSetIcalUrl(siteRequest_, o);
+		case "caldav":
+			return CompanyWebinar.staticSetCaldav(siteRequest_, o);
+		case "nextWebinar":
+			return CompanyWebinar.staticSetNextWebinar(siteRequest_, o);
 		case "joinUrl":
 			return CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
 			default:
@@ -920,6 +1087,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchWebinarUrlEmea(siteRequest_, (String)o);
 		case "icalUrl":
 			return CompanyWebinar.staticSearchIcalUrl(siteRequest_, (String)o);
+		case "caldav":
+			return CompanyWebinar.staticSearchCaldav(siteRequest_, (String)o);
+		case "nextWebinar":
+			return CompanyWebinar.staticSearchNextWebinar(siteRequest_, (ZonedDateTime)o);
 		case "joinUrl":
 			return CompanyWebinar.staticSearchJoinUrl(siteRequest_, (String)o);
 			default:
@@ -952,6 +1123,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchStrWebinarUrlEmea(siteRequest_, (String)o);
 		case "icalUrl":
 			return CompanyWebinar.staticSearchStrIcalUrl(siteRequest_, (String)o);
+		case "caldav":
+			return CompanyWebinar.staticSearchStrCaldav(siteRequest_, (String)o);
+		case "nextWebinar":
+			return CompanyWebinar.staticSearchStrNextWebinar(siteRequest_, (String)o);
 		case "joinUrl":
 			return CompanyWebinar.staticSearchStrJoinUrl(siteRequest_, (String)o);
 			default:
@@ -984,6 +1159,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return CompanyWebinar.staticSearchFqWebinarUrlEmea(siteRequest_, o);
 		case "icalUrl":
 			return CompanyWebinar.staticSearchFqIcalUrl(siteRequest_, o);
+		case "caldav":
+			return CompanyWebinar.staticSearchFqCaldav(siteRequest_, o);
+		case "nextWebinar":
+			return CompanyWebinar.staticSearchFqNextWebinar(siteRequest_, o);
 		case "joinUrl":
 			return CompanyWebinar.staticSearchFqJoinUrl(siteRequest_, o);
 			default:
@@ -1125,6 +1304,12 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 					oCompanyWebinar.setIcalUrl(icalUrl);
 			}
 
+			if(saves.contains("nextWebinar")) {
+				String nextWebinar = (String)doc.get("nextWebinar_docvalues_date");
+				if(nextWebinar != null)
+					oCompanyWebinar.setNextWebinar(nextWebinar);
+			}
+
 			if(saves.contains("joinUrl")) {
 				String joinUrl = (String)doc.get("joinUrl_docvalues_string");
 				if(joinUrl != null)
@@ -1160,6 +1345,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		if(icalUrl != null) {
 			doc.put("icalUrl_docvalues_string", icalUrl);
 		}
+		if(nextWebinar != null) {
+			doc.put("nextWebinar_docvalues_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(nextWebinar.toInstant(), ZoneId.of("UTC"))));
+		}
 		if(joinUrl != null) {
 			doc.put("joinUrl_docvalues_string", joinUrl);
 		}
@@ -1185,6 +1373,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "webinarUrlEmea_docvalues_string";
 			case "icalUrl":
 				return "icalUrl_docvalues_string";
+			case "nextWebinar":
+				return "nextWebinar_docvalues_date";
 			case "joinUrl":
 				return "joinUrl_docvalues_string";
 			default:
@@ -1210,6 +1400,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "webinarUrlEmea_docvalues_string";
 			case "icalUrl":
 				return "icalUrl_docvalues_string";
+			case "nextWebinar":
+				return "nextWebinar_docvalues_date";
 			case "joinUrl":
 				return "joinUrl_docvalues_string";
 			default:
@@ -1235,6 +1427,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				return "webinarUrlEmea";
 			case "icalUrl_docvalues_string":
 				return "icalUrl";
+			case "nextWebinar_docvalues_date":
+				return "nextWebinar";
 			case "joinUrl_docvalues_string":
 				return "joinUrl";
 			default:
@@ -1275,6 +1469,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		oCompanyWebinar.setWebinarUrlApac(Optional.ofNullable(doc.get("webinarUrlApac_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setWebinarUrlEmea(Optional.ofNullable(doc.get("webinarUrlEmea_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setIcalUrl(Optional.ofNullable(doc.get("icalUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyWebinar.setNextWebinar(Optional.ofNullable(doc.get("nextWebinar_docvalues_date")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setJoinUrl(Optional.ofNullable(doc.get("joinUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
@@ -1305,6 +1500,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				apiRequest.addVars("webinarUrlEmea");
 			if(!Objects.equals(icalUrl, original.getIcalUrl()))
 				apiRequest.addVars("icalUrl");
+			if(!Objects.equals(nextWebinar, original.getNextWebinar()))
+				apiRequest.addVars("nextWebinar");
 			if(!Objects.equals(joinUrl, original.getJoinUrl()))
 				apiRequest.addVars("joinUrl");
 			super.apiRequestBaseModel();
@@ -1326,9 +1523,12 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(webinarUrlApac).map(v -> "webinarUrlApac: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(webinarUrlEmea).map(v -> "webinarUrlEmea: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(icalUrl).map(v -> "icalUrl: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(nextWebinar).map(v -> "nextWebinar: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(joinUrl).map(v -> "joinUrl: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
+
+	public static final String[] CompanyWebinarVals = new String[] { caldavFail1_enUS };
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinar";
 	public static final String CLASS_API_ADDRESS_CompanyWebinar = "computate.org-enUS-CompanyWebinar";
@@ -1343,6 +1543,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String VAR_webinarUrlApac = "webinarUrlApac";
 	public static final String VAR_webinarUrlEmea = "webinarUrlEmea";
 	public static final String VAR_icalUrl = "icalUrl";
+	public static final String VAR_caldav = "caldav";
+	public static final String VAR_nextWebinar = "nextWebinar";
 	public static final String VAR_joinUrl = "joinUrl";
 
 	public static List<String> varsQForClass() {
@@ -1365,6 +1567,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		vars.add(VAR_webinarUrlApac);
 		vars.add(VAR_webinarUrlEmea);
 		vars.add(VAR_icalUrl);
+		vars.add(VAR_nextWebinar);
 		BaseModel.varsFqBaseModel(vars);
 		return vars;
 	}
@@ -1373,6 +1576,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		return CompanyWebinar.varsRangeCompanyWebinar(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyWebinar(List<String> vars) {
+		vars.add(VAR_nextWebinar);
 		BaseModel.varsRangeBaseModel(vars);
 		return vars;
 	}
@@ -1385,6 +1589,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_webinarUrlApac = "Webinar URL APAC";
 	public static final String DISPLAY_NAME_webinarUrlEmea = "Webinar URL EMEA";
 	public static final String DISPLAY_NAME_icalUrl = "ICal URL";
+	public static final String DISPLAY_NAME_caldav = "";
+	public static final String DISPLAY_NAME_nextWebinar = "next webinar";
 	public static final String DISPLAY_NAME_joinUrl = "Join the webinar";
 
 	@Override
@@ -1448,6 +1654,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_webinarUrlEmea;
 		case VAR_icalUrl:
 			return DISPLAY_NAME_icalUrl;
+		case VAR_caldav:
+			return DISPLAY_NAME_caldav;
+		case VAR_nextWebinar:
+			return DISPLAY_NAME_nextWebinar;
 		case VAR_joinUrl:
 			return DISPLAY_NAME_joinUrl;
 		default:
@@ -1473,6 +1683,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return "The actual link to the Webinar in EMEA";
 		case VAR_icalUrl:
 			return "The ICalendar URL for the events. ";
+		case VAR_nextWebinar:
+			return "The start date time of the next webinar. ";
 		case VAR_joinUrl:
 			return "Access the webinar links. ";
 			default:
@@ -1498,6 +1710,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return "String";
 		case VAR_icalUrl:
 			return "String";
+		case VAR_caldav:
+			return "String";
+		case VAR_nextWebinar:
+			return "ZonedDateTime";
 		case VAR_joinUrl:
 			return "String";
 			default:
@@ -1510,6 +1726,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		case VAR_name:
 			return 1;
 		case VAR_description:
+			return 2;
+		case VAR_nextWebinar:
 			return 2;
 		case VAR_joinUrl:
 			return 0;
@@ -1534,6 +1752,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return 4;
 		case VAR_icalUrl:
 			return 4;
+		case VAR_nextWebinar:
+			return 4;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -1555,6 +1775,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			return 3;
 		case VAR_icalUrl:
 			return 4;
+		case VAR_nextWebinar:
+			return 5;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

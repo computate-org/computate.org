@@ -168,12 +168,14 @@
 {%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
 {%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
 {% if resultCount == 0 %}
+        {% if varsFqCount > 0 %}
         <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
           <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
             <i class="fa-solid fa-angle-left"></i>
             all webinars
           </sl-button>
         </sl-tooltip>
+        {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
@@ -190,6 +192,7 @@
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
+          {% if varsFqCount > 0 %}
           <div class="margin-block">
             <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
             <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
@@ -197,6 +200,7 @@
               all webinars
             </sl-button>
           </div>
+          {% endif %}
           <h1><a href="{{pageUri}}"><i class="fa-regular fa-video"></i> <span>webinars</span></a></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
 {% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
@@ -230,6 +234,19 @@
                   </sl-menu-item>
                 </sl-menu>
               </sl-dropdown>
+              <sl-dropdown id="htmDropdown-nextWebinar">
+                <sl-button variant="primary" outline slot="trigger" caret>next webinar</sl-button>
+                <sl-menu>
+                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-nextWebinar-asc">
+                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                    sort by next webinar ascending
+                  </sl-menu-item>
+                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-nextWebinar-desc">
+                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                    sort by next webinar descending
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
               <div></div>
             </div>
             {% for item in listCompanyWebinar%}
@@ -251,6 +268,9 @@
               </a>
               <a href="{{ item.displayPage }}">
               {{ item.description }}
+              </a>
+              <a href="{{ item.displayPage }}">
+              <sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.nextWebinar, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date>
               </a>
               <sl-button variant="primary" outline
                   id="{{classApiMethodMethod}}_editPage"
@@ -275,6 +295,10 @@
                 </div>
               {% endif %}
               {% if getColumnDescription is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnNextWebinar is defined %}
                 <div>
                 </div>
               {% endif %}

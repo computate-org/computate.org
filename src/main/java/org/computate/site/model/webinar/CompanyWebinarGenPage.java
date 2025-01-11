@@ -2,6 +2,9 @@ package org.computate.site.model.webinar;
 
 import org.computate.site.model.webinar.CompanyWebinar;
 import java.lang.String;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -13,12 +16,9 @@ import org.computate.search.wrap.Wrap;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Locale;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.core.json.JsonArray;
@@ -131,9 +131,14 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
   }
 
   @Override
+  protected void _varsFqCount(Wrap<Integer> w) {
+  }
+
+  @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    CompanyWebinar.varsFqForClass().forEach(var -> {
+    Integer varsFqCount = 0;
+    for(String var : CompanyWebinar.varsFqForClass()) {
       String varIndexed = CompanyWebinar.varIndexedCompanyWebinar(var);
       String varStored = CompanyWebinar.varStoredCompanyWebinar(var);
       JsonObject json = new JsonObject();
@@ -143,7 +148,11 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
       String type = StringUtils.substringAfterLast(varIndexed, "_");
       json.put("displayName", Optional.ofNullable(CompanyWebinar.displayNameCompanyWebinar(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
       json.put("classSimpleName", Optional.ofNullable(CompanyWebinar.classSimpleNameCompanyWebinar(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListCompanyWebinar_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyWebinar.varIndexedCompanyWebinar(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      Object v = searchListCompanyWebinar_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyWebinar.varIndexedCompanyWebinar(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
+      if(v != null) {
+        json.put("val", v);
+        varsFqCount++;
+      }
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
         json.put("stats", JsonObject.mapFrom(stat));
       });
@@ -200,7 +209,7 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
         json.put("pivot", true);
       }
       vars.put(var, json);
-    });
+    }
   }
 
   @Override

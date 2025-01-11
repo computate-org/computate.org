@@ -3,11 +3,14 @@ package org.computate.site.model.webinar;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
 import java.util.List;
 import java.util.Locale;
@@ -175,76 +178,135 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
   /**
    * Val.Fail.enUS: Failed to query the ICal file: %s
    */
-  // protected void _caldav(Promise<String> promise) {
-  //   if(icalUrl == null) {
-  //     promise.complete();
-  //   } else {
-  //     try {
-  //       String utcDateTimeFormat = "yyyyMMdd'T'HHmmss";
-  //       ZoneId zoneId = ZoneId.of("UTC");
-  //       DateTimeFormatter utcDateTimeFormatter = DateTimeFormatter.ofPattern(utcDateTimeFormat);
-  //       String start = utcDateTimeFormatter.format(Instant.now().minus(1, ChronoUnit.HOURS).atZone(zoneId));
-  //       String end = utcDateTimeFormatter.format(Instant.now().plus(1, ChronoUnit.DAYS).atZone(zoneId));
-  //       URL url = new URL(icalUrl);
-  //       String host = url.getHost();
-  //       Integer port = Optional.of(url.getPort()).map(p -> p.equals(-1) ? null : p).orElse("https".equals(url.getProtocol()) ? 443 : 80);
-  //       Boolean ssl = "https".equals(url.getProtocol());
-  //       String uri = url.getPath();
-  //       siteRequest_.getWebClient().get(port, host, uri).ssl(ssl)
-  //           .followRedirects(true)
-  //           .send().onSuccess(response -> {
-  //         try {
-  //           String icalStr = response.body().toString();
-  //           Matcher mEvent = Pattern.compile("^BEGIN:VEVENT($[\\w\\W]+?)^END:VEVENT$", Pattern.MULTILINE).matcher(icalStr);
-  //           boolean mFound = mEvent.find();
-  //           LOG.info(icalStr);
-  //           while (mFound) {
-  //             String eventStr = mEvent.group(1);
+  protected void _caldav(Promise<String> promise) {
+    if(icalUrl == null) {
+      promise.complete();
+    } else {
+      try {
+        ZonedDateTime now = ZonedDateTime.now();
+        String utcDateTimeFormat = "yyyyMMdd'T'HHmmss";
+        ZoneId zoneId = ZoneId.of("UTC");
+        DateTimeFormatter utcDateTimeFormatter = DateTimeFormatter.ofPattern(utcDateTimeFormat);
+        String start = utcDateTimeFormatter.format(Instant.now().minus(1, ChronoUnit.HOURS).atZone(zoneId));
+        String end = utcDateTimeFormatter.format(Instant.now().plus(1, ChronoUnit.DAYS).atZone(zoneId));
+        URL url = new URL(icalUrl);
+        String host = url.getHost();
+        Integer port = Optional.of(url.getPort()).map(p -> p.equals(-1) ? null : p).orElse("https".equals(url.getProtocol()) ? 443 : 80);
+        Boolean ssl = "https".equals(url.getProtocol());
+        String uri = url.getPath();
+        siteRequest_.getWebClient().get(port, host, uri).ssl(ssl)
+            .followRedirects(true)
+            .send().onSuccess(response -> {
+          try {
+            String icalStr = response.body().toString();
+            Matcher mEvent = Pattern.compile("^BEGIN:VEVENT($[\\w\\W]+?)^END:VEVENT$", Pattern.MULTILINE).matcher(icalStr);
+            boolean mFound = mEvent.find();
+            LOG.info(icalStr);
+            while (mFound) {
+              String eventStr = mEvent.group(1);
 
-  //             Matcher mStart = Pattern.compile("^DTSTART;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
-  //             mStart.find();
-  //             String startZoneId = mStart.group(1);
-  //             String startDateStr = mStart.group(2);
-  //             ZonedDateTime startDateTime = ZonedDateTime.parse(startDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(startZoneId)));
+              Matcher mStart = Pattern.compile("^DTSTART;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+              mStart.find();
+              String startZoneId = mStart.group(1);
+              String startDateStr = mStart.group(2);
+              ZonedDateTime startDateTime = ZonedDateTime.parse(startDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(startZoneId)));
 
-  //             Matcher mEnd = Pattern.compile("^DTEND;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
-  //             mEnd.find();
-  //             String endZoneId = mEnd.group(1);
-  //             String endDateStr = mEnd.group(2);
-  //             ZonedDateTime endDateTime = ZonedDateTime.parse(endDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+              Matcher mEnd = Pattern.compile("^DTEND;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+              mEnd.find();
+              String endZoneId = mEnd.group(1);
+              String endDateStr = mEnd.group(2);
+              ZonedDateTime endDateTime = ZonedDateTime.parse(endDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+              if(endDateTime.isBefore(now)) {
+                break;
+              }
 
-  //             Matcher mRule = Pattern.compile("^RRULE:FREQ=([^;]+);BYDAY=([^;]+);UNTIL=(.*)", Pattern.MULTILINE).matcher(eventStr);
-  //             if(mRule.find()) {
-  //               String ruleFreqStr = mEnd.group(1);
-  //               String ruleByDayStr = mEnd.group(2);
-  //               String untilDateStr = mEnd.group(3);
-  //               ZonedDateTime untilDateTime = ZonedDateTime.parse(untilDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
-  //             }
+              ZonedDateTime nextStart = null;
+              ZonedDateTime nextEnd = null;
+              Matcher mRule = Pattern.compile("^RRULE:(.*)", Pattern.MULTILINE).matcher(eventStr);
+              if(mRule.find()) {
+                String ruleStr = mRule.group(1);
+                if(ruleStr.contains("FREQ=WEEKLY") && ruleStr.contains("BYDAY=") && ruleStr.contains("UNTIL=")) {
+                  Matcher mByDay = Pattern.compile(";BYDAY=(.*?);", Pattern.MULTILINE).matcher(ruleStr);
+                  String byDayStr = mByDay.group(1);
+                  Matcher mUntil = Pattern.compile(";UNTIL=(.*?)[;\n]", Pattern.MULTILINE).matcher(ruleStr);
+                  String untilStr = mUntil.group(1);
+                  ZonedDateTime until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(startZoneId)));
+                  String[] byDays = byDayStr.split(",");
+                  for(String byDay : byDays) {
+                    ZonedDateTime nextGuess = now
+                        .withHour(endDateTime.getHour())
+                        .withMinute(endDateTime.getMinute())
+                        .withSecond(endDateTime.getSecond())
+                        .withNano(endDateTime.getNano())
+                        .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(byDay)));
+                    if(nextGuess.isAfter(until)) {
+                      break;
+                    } else {
+                      nextEnd = nextGuess;
+                      nextStart = nextGuess
+                          .withHour(startDateTime.getHour())
+                          .withMinute(startDateTime.getMinute())
+                          .withSecond(startDateTime.getSecond())
+                          .withNano(startDateTime.getNano());
+                      break;
+                    }
+                  }
+                }
+                String ruleFreqStr = mRule.group(1);
+                String ruleByDayStr = mRule.group(2);
+                String untilDateStr = mRule.group(3);
+                ZonedDateTime untilDateTime = ZonedDateTime.parse(untilDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+              }
 
-  //             Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
-  //             boolean mExceptionFound = mException.find();
-  //             while (mExceptionFound) {
-  //               String exceptionZoneId = mException.group(1);
-  //               String exceptionDateStr = mException.group(2);
-  //               ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
-  //             }
-  //           }
-  //           // Calendar calendar = new CalendarBuilder().build(new ByteArrayInputStream(response.body().getBytes()));
-  //           promise.complete();
-  //         } catch(Throwable ex) {
-  //           LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
-  //           promise.fail(ex);
-  //         }
-  //       }).onFailure(ex -> {
-  //         LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
-  //         promise.fail(ex);
-  //       });
-  //     } catch(Throwable ex) {
-  //       LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
-  //       promise.fail(ex);
-  //     }
-  //   }
-  // }
+              if(nextStart != null) {
+                Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+                boolean mExceptionFound = mException.find();
+                while (mExceptionFound) {
+                  String exceptionZoneId = mException.group(1);
+                  String exceptionDateStr = mException.group(2);
+                  ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
+                  if(exceptionDateTime.isEqual(nextStart)
+                      || exceptionDateTime.isEqual(nextEnd)
+                      || exceptionDateTime.isAfter(nextStart) && exceptionDateTime.isBefore(nextEnd)) {
+                    nextStart = null;
+                    nextEnd = null;
+                    break;
+                  }
+                }
+              }
+              if(nextStart != null) {
+                nextWebinar = nextStart;
+              }
+            }
+            promise.complete();
+          } catch(Throwable ex) {
+            LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+          promise.fail(ex);
+        });
+      } catch(Throwable ex) {
+        LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
+        promise.fail(ex);
+      }
+    }
+  }
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Modify: false
+	 * HtmRow: 4
+	 * HtmCell: 5
+   * HtmColumn: 2
+	 * DisplayName.enUS: next webinar
+	 * FormatHtm: MMM d, yyyy h:mm:ss a
+	 * Description: The start date time of the next webinar. 
+	 * Facet: true
+	 */
+	protected void _nextWebinar(Wrap<ZonedDateTime> w) {}
 
   /**
    * {@inheritDoc}
