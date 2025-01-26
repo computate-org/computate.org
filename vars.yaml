@@ -120,7 +120,7 @@ SOLR_ID: "solrId"
 # The paths to the internationalization for this project. 
 I18N_PATHS: ["{{ COMPUTATE_VERTX_SRC }}/src/main/resources/org/computate/i18n/i18n_{{ SITE_LANG }}.yaml"]
 # The Java main class of the site. 
-JAVA_MAIN_CLASS: "{{ SITE_MAIN_VERTICLE_PACKAGE }}.AppVertx"
+JAVA_MAIN_CLASS: "{{ SITE_MAIN_VERTICLE_PACKAGE }}.MainVerticle"
 # Enables Vert.x reactive APIs. 
 ENABLE_VERTX: true
 # Enables a Quarkus application to also be created in addition to the Vert.x main verticle. 
@@ -257,8 +257,6 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Solr defaults #
 #################
 
-# Name of the solr deployment in OpenShift. 
-#SOLR_NAME: solr
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL: true
 # The host name to connect to Solr in OpenShift. 
@@ -318,8 +316,7 @@ DATABASE_DATABASE: "{{ SITE_SHORT_NAME }}"
 # The namespace in OpenShift where Keycloak will run. 
 AUTH_NAMESPACE: keycloak
 # The Auth host name. 
-#AUTH_HOST_NAME: "keycloak.{{ OPENSHIFT_APPS_DOMAIN }}"
-AUTH_HOST_NAME: "keycloak.apps-crc.testing"
+AUTH_HOST_NAME: "keycloak.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The Auth port. 
 AUTH_PORT: 443
 # Whether the Auth server uses SSL. 
@@ -352,27 +349,6 @@ AUTH_SCOPE_ADMIN: Admin
 AUTH_SCOPE_SUPER_ADMIN: SuperAdmin
 # Enables authorization fine-grained resource permissions. 
 AUTH_FINE_GRAINED_POLICY_PERMISSIONS: true
-
-#################
-# Operator vars #
-#################
-
-# The name of the operator used to deploy data as YAML. 
-OPERATOR_NAME: "{{ SITE_NAME }}-operator"
-# The name of the operator used to deploy data as YAML. 
-OPERATOR_SRC: "{{ (PARENT_SRC + '/' + OPERATOR_NAME) | realpath }}"
-OPERATOR_DOMAIN_NAME: "{{ DOMAIN_NAME }}"
-OPERATOR_REPO: "git@github.com:{{ GITHUB_ORG }}/{{ OPERATOR_NAME }}.git"
-OPERATOR_PYTHON_DEPENDENCY_LIST:
-  - openshift
-  - jmespath
-  - jinja2
-  - configparser
-OPERATOR_REDHAT_DEPENDENCY_LIST:
-  - git
-  - tcl
-  - tk
-OPERATOR_SYSTEM_DEPENDENCY_LIST: "{{ OPERATOR_REDHAT_DEPENDENCY_LIST if ansible_distribution_file_variety == 'RedHat' else OPERATOR_REDHAT_DEPENDENCY_LIST }}"
 
 ###############
 # FIWARE vars #
@@ -506,7 +482,7 @@ RABBITMQ_VIRTUAL_HOST: "/"
 ################################
 
 # The amount of memory requested when the pod is first created in OpenShift. 
-SITE_REQUESTS_MEMORY: "500Mi"
+SITE_REQUESTS_MEMORY: "1500Mi"
 # The amount of total memory that can be used by the pod in OpenShift. 
 SITE_LIMITS_MEMORY: "1500Mi"
 # The amount of cpus requested when the pod is first created in OpenShift. 
