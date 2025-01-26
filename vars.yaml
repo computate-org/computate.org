@@ -1,15 +1,25 @@
 
+######################
+# OpenShift defaults #
+######################
+
+# The path to kustomize resources for production deployment
+OVERLAY_SITE_PATH: kustomize/overlays/prod
+# The wildcard domain suffix where OpenShift Routes are available by default. 
+OPENSHIFT_APPS_DOMAIN: "{{ lookup('env', 'OPENSHIFT_APPS_DOMAIN') | default('apps-crc.testing', true) }}"
+# Look up the default container namespace to see if using OpenShift AI.
+USING_OPENSHIFT_AI: "{{ lookup('env', 'USING_OPENSHIFT_AI') | default('false', true) | bool }}"
+# The name of the OpenShift AI Workbench. 
+OPENSHIFT_AI_WORKBENCH: "{{ lookup('env', 'OPENSHIFT_AI_WORKBENCH') | default('', true) }}"
+
 #############
 # Site vars #
 #############
 
-OVERLAY_SITE_PATH: kustomize/overlays/prod
-USING_OPENSHIFT_AI: "{{ true if lookup('file', '/var/run/secrets/kubernetes.io/serviceaccount/namespace') else false | default(false) }}"
-
 # The name of this application. 
 SITE_NAME: computate.org
 # The source code directory for the project. 
-SITE_SRC: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}"
+SITE_SRC: "{{ lookup('env', 'HOME') + ('/' if USING_OPENSHIFT_AI else '/.local/src/') + SITE_NAME }}"
 # The parent source directory. 
 PARENT_SRC: "{{ (SITE_SRC + '/..') | realpath }}"
 # The vars.yaml filename to load when running in development. 
@@ -17,9 +27,9 @@ VARS_FILENAME: vars.yaml
 # The vars.yaml path to load when running in development. 
 VARS_PATH: "{{ SITE_SRC }}/{{ VARS_FILENAME }}"
 # A shorter name for the application used for database names, collections, and artifact IDs. 
-SITE_SHORT_NAME: "{{ SITE_NAME | replace('-', '') | replace('_', '') | replace('.', '') | lower }}"
+SITE_SHORT_NAME: "computateorg"
 # The namespace in OpenShift where the site will run. 
-SITE_NAMESPACE: "{{ SITE_SHORT_NAME }}"
+SITE_NAMESPACE: "{{ lookup('env', 'SITE_NAMESPACE') | default(SITE_SHORT_NAME, true) }}"
 # A pretty version of the site name. 
 SITE_DISPLAY_NAME: Learn that computer
 # A short description of the site. 
@@ -29,7 +39,7 @@ SITE_LOCALE: en-US
 # A computate specific identifier for the locale and language of the code. 
 SITE_LANG: "{{ SITE_LOCALE | replace('-', '') }}"
 # The timezone of the site. 
-SITE_ZONE: "America/New_York"
+SITE_ZONE: "{{ lookup('env', 'SITE_ZONE') | default('America/New_York', true) }}"
 # The domain name of the site. 
 DOMAIN_NAME: computate.org
 # The GitHub organization for this project. 
@@ -41,13 +51,15 @@ SITE_REPO_HTTPS: "{{ SITE_REPO | replace('git@github.com:', 'https://github.com/
 # The port of the site. 
 SITE_PORT: 10200
 # The host name of the site. 
-SITE_HOST_NAME: "localhost"
+SITE_HOST_NAME: "{{ lookup('env', 'SITE_HOST_NAME') | default('localhost', true) }}"
 # The base URL of the site. 
-SITE_BASE_URL: "http://{{ SITE_HOST_NAME }}:{{ SITE_PORT }}"
+SITE_BASE_URL: "{{ lookup('env', 'SITE_BASE_URL') | default('http://' + SITE_HOST_NAME + ':' + SITE_PORT, true) }}"
 # The public facing URL for the site. 
 SITE_PUBLIC_URL: "https://www.{{ DOMAIN_NAME }}"
 # The port of the Zookeeper cluster manager. 
 CLUSTER_PORT: "{{ (SITE_PORT | int) + 1 }}"
+# Zookeeper root path to avoid conflicts with other apps using Zookeeper for clustering. 
+ZOOKEEPER_ROOT_PATH: "{{ lookup('env', 'ZOOKEEPER_ROOT_PATH') | default(SITE_NAME, true) }}"
 # Verify SSL connections. 
 SSL_VERIFY: false
 # The public search endpoint for searching public items in the site. 
@@ -153,13 +165,6 @@ SITE_LICENSE_NAME: GNU GENERAL PUBLIC LICENSE, Version 3
 SITE_LICENSE_URL: https://www.gnu.org/licenses/gpl-3.0.en.html
 
 ######################
-# OpenShift defaults #
-######################
-
-# The wildcard domain suffix where OpenShift Routes are available by default. 
-OPENSHIFT_APPS_DOMAIN: "apps-crc.testing"
-
-######################
 # Container defaults #
 ######################
 
@@ -195,6 +200,8 @@ DYNAMIC_PAGE_PATHS:
   - "en-us/article"
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
 FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
+# A default FontAwesome style. 
+FONTAWESOME_STYLE: "fa-duotone fa-regular"
 # An optional link element to either a Shoelace web components stylesheet or a Web Awesome Backer web components stylesheet. 
 WEB_COMPONENTS_CSS: |-
   {{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_CSS'] | b64decode | default('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/themes/light.css" />') }}
@@ -202,7 +209,7 @@ WEB_COMPONENTS_CSS: |-
 WEB_COMPONENTS_JS: |-
   {{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_JS'] | b64decode | default('<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.18.0/cdn/shoelace-autoloader.js"></script>') }}
 # Switch between Shoelace "sl-" and Web Awesome "wa-" element prefixes. 
-WEB_COMPONENTS_PREFIX: "sl-"
+WEB_COMPONENTS_PREFIX: "wa-"
 # Site default theme, light or dark. 
 SITE_THEME: dark
 
@@ -221,6 +228,8 @@ DEVELOPER_ORG_URL: https://www.computate.org/
 # Service defaults #
 ####################
 
+# Enable systemd. 
+ENABLE_SYSTEMD: "{{ not USING_OPENSHIFT_AI }}"
 # The systemd service name for project that generates and translates most of the code. 
 SITE_SERVICE: "watch-{{ SITE_NAME }}"
 # The systemd service file for project that generates and translates most of the code. 
@@ -242,11 +251,11 @@ SITE_POWERED_BY_IMAGE: '<img class="footer-img" alt="Google Kubernetes Engine" s
 ######################
 
 # The namespace in OpenShift where Zookeeper will run. 
-ZOOKEEPER_NAMESPACE: zookeeper
+ZOOKEEPER_NAMESPACE: "{{ lookup('env', 'ZOOKEEPER_NAMESPACE') | default('zookeeper', true) }}"
 # The default hostname for the Zookeeper cluster manager. 
-ZOOKEEPER_HOST_NAME: "zookeeper.{{ OPENSHIFT_APPS_DOMAIN }}"
+ZOOKEEPER_HOST_NAME: "{{ lookup('env', 'ZOOKEEPER_HOST_NAME') | default('zookeeper.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The default port that Zookeeper runs to manage the cluster. 
-ZOOKEEPER_PORT: 30081
+ZOOKEEPER_PORT: "{{ lookup('env', 'ZOOKEEPER_PORT') | default('30081', true) }}"
 ZOOKEEPER_MAX_RETRIES: 0
 ZOOKEEPER_BASE_SLEEP_TIME_MILLIS: 5000
 ZOOKEEPER_MAX_SLEEP_MILLIS: 5000
@@ -257,38 +266,37 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Solr defaults #
 #################
 
-# Name of the solr deployment in OpenShift. 
-#SOLR_NAME: solr
+# The namespace in OpenShift where Solr will run. 
+SOLR_NAMESPACE: "{{ lookup('env', 'SOLR_NAMESPACE') | default('solr', true) }}"
 # Whether to use SSL when connecting to Solr. 
-SOLR_SSL: true
+SOLR_SSL: "{{ (lookup('env', 'SOLR_SSL') | lower) != 'false' }}"
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME: "{{ lookup('env', 'SOLR_HOST_NAME') | default('solr.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The default port that Solr runs. 
-SOLR_PORT: 443
+SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('443', true) }}"
+# The solr collection to use for the site. 
+SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION') | default(SITE_SHORT_NAME, true) }}"
+# The URL to the Solr collection. 
+SOLR_URL: "{{ ('https://' if SOLR_SSL == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT == 443 else (':' + SOLR_PORT)) }}/solr/{{ SOLR_COLLECTION }}"
 # The solr pod name to connect and create Solr configsets and collections. 
 SOLR_POD_NAME: "solr-0"
-# The solr collection to use for the site. 
-SOLR_COLLECTION: "{{ SITE_SHORT_NAME }}"
 # The solr configset to use for the site. 
 SOLR_CONFIGSET: "computate"
 # The Solr admin username
 SOLR_USERNAME: admin
 # The Solr admin password
-SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr', namespace='solr')[0].data['solr-password'] | b64decode }}"
-# The URL to the Solr collection. 
-SOLR_URL: "https://{{ SOLR_HOST_NAME }}:{{ SOLR_PORT }}/solr/{{ SOLR_COLLECTION }}"
+SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-secret', namespace=SOLR_NAMESPACE)[0].data['solr-password'] | b64decode }}"
+
 # Whether to use SSL when connecting to Solr. 
-SOLR_SSL_COMPUTATE: true
+SOLR_SSL_COMPUTATE: "{{ lookup('env', 'SOLR_SSL_COMPUTATE') | default(SOLR_SSL, true) | bool }}"
 # The host name to connect to Solr in OpenShift. 
-SOLR_HOST_NAME_COMPUTATE: "solr.{{ OPENSHIFT_APPS_DOMAIN }}"
+SOLR_HOST_NAME_COMPUTATE: "{{ lookup('env', 'SOLR_HOST_NAME_COMPUTATE') | default(SOLR_HOST_NAME, true) }}"
 # The default port that Solr runs. 
-SOLR_PORT_COMPUTATE: 443
+SOLR_PORT_COMPUTATE: "{{ lookup('env', 'SOLR_PORT_COMPUTATE') | default(SOLR_PORT, true) }}"
 # The solr collection to use for the site. 
-SOLR_COLLECTION_COMPUTATE: computate
-# The URL to the Solr collection for the watched Java code API. 
-SOLR_URL_COMPUTATE: "https://{{ SOLR_HOST_NAME }}:{{ SOLR_PORT }}/solr/{{ SOLR_COLLECTION_COMPUTATE }}"
-# The namespace in OpenShift where Solr will run. 
-SOLR_NAMESPACE: solr
+SOLR_COLLECTION_COMPUTATE: "{{ lookup('env', 'SOLR_COLLECTION_COMPUTATE') | default(SOLR_COLLECTION, true) }}"
+# The URL to the Solr collection. 
+SOLR_URL_COMPUTATE: "{{ ('https://' if SOLR_SSL_COMPUTATE == True else 'http://') + SOLR_HOST_NAME_COMPUTATE + ('' if SOLR_PORT_COMPUTATE == 443 else (':' + SOLR_PORT_COMPUTATE)) }}/solr/{{ SOLR_COLLECTION_COMPUTATE }}"
 
 #####################
 # Database defaults #
@@ -305,11 +313,11 @@ DATABASE_HOST: "postgres.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The PostgreSQL database port. 
 DATABASE_PORT: 30432
 # The PostgreSQL database user name of the site. 
-DATABASE_USERNAME: "{{ SITE_SHORT_NAME }}"
+DATABASE_USERNAME: "{{ SITE_SHORT_NAME }}{{ '' if OPENSHIFT_AI_WORKBENCH == '' else ('_' + OPENSHIFT_AI_WORKBENCH) }}"
 # The PostgreSQL database password of the site. 
 DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=('postgres-pguser-' + DATABASE_USERNAME), namespace=SITE_NAMESPACE)[0].data.password | b64decode }}"
 # The PostgreSQL database name of the site. 
-DATABASE_DATABASE: "{{ SITE_SHORT_NAME }}"
+DATABASE_DATABASE: "{{ SITE_SHORT_NAME }}{{ '' if OPENSHIFT_AI_WORKBENCH == '' else ('_' + OPENSHIFT_AI_WORKBENCH) }}"
 
 #####################################
 # Authentication/authorization vars #
