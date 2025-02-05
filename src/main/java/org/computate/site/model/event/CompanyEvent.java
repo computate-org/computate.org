@@ -1,6 +1,8 @@
 package org.computate.site.model.event;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.computate.search.wrap.Wrap;
@@ -14,6 +16,7 @@ import io.vertx.pgclient.data.Point;
  * Description: See the upcoming computate in-person and online events
  * AName: an event
  * Icon: <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+ * Sort.desc: startDateTime
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/event
@@ -77,10 +80,23 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * DisplayName: start date time
+   * Description: The start date time. 
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   */
+  protected void _startDateTime(Wrap<ZonedDateTime> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
    * DisplayName: price
    * Description: The price of the product per developer. 
    * HtmRow: 3
-   * HtmCell: 3
+   * HtmCell: 5
    * Facet: true
    */
   protected void _price(Wrap<BigDecimal> w) {
