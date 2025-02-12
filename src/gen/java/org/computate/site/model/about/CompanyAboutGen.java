@@ -98,6 +98,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: DisplayPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
  * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
+ * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: about"</b>, which groups all of the OpenAPIs for CompanyAbout objects under the tag "about". 
  * </p>
@@ -217,6 +220,9 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/learn/about/{pageId}";
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/learn/about/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/learn/about/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/about";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/about";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/about";
 
 	public static final String Icon = "<i class=\"fa-solid fa-address-card\"></i>";
 

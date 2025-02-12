@@ -56,7 +56,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The event name. 
    * HtmRow: 3
    * HtmCell: 1
-   * HtmColumn: 1
+   * HtmColumn: 2
    * Facet: true
    */
   protected void _name(Wrap<String> w) {
@@ -70,7 +70,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The event description. 
    * HtmRow: 3
    * HtmCell: 2
-   * HtmColumn: 2
+   * HtmColumn: 3
    * Facet: true
    */
   protected void _description(Wrap<String> w) {
@@ -84,9 +84,23 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The start date time. 
    * HtmRow: 3
    * HtmCell: 3
+   * HtmColumn: 1
    * Facet: true
    */
   protected void _startDateTime(Wrap<ZonedDateTime> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: end date time
+   * Description: The end date time. 
+   * HtmRow: 3
+   * HtmCell: 4
+   * Facet: true
+   */
+  protected void _endDateTime(Wrap<ZonedDateTime> w) {
   }
 
   /**

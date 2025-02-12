@@ -35,6 +35,9 @@ import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
+import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
+import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
@@ -68,9 +71,6 @@ import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.fiware.iotservice.IotService;
 import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
 import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -97,6 +97,9 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.opentelemetry.sdk.metrics.SdkMeterProvider;
+import io.opentelemetry.sdk.trace.SdkTracerProvider;
+import io.opentelemetry.api.trace.Tracer;
 import io.vertx.ext.auth.authentication.TokenCredentials;
 import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
 import io.vertx.ext.jdbc.JDBCClient;
@@ -117,8 +120,9 @@ import com.rabbitmq.client.AMQP.BasicProperties;
 import io.vertx.amqp.AmqpMessage;
 import io.vertx.amqp.AmqpMessageBuilder;
 import io.vertx.amqp.AmqpSenderOptions;
+import io.vertx.pgclient.PgBuilder;
 import io.vertx.pgclient.PgConnectOptions;
-import io.vertx.pgclient.PgPool;
+import io.vertx.sqlclient.Pool;
 import io.vertx.sqlclient.Cursor;
 import io.vertx.sqlclient.PoolOptions;
 import io.vertx.sqlclient.Row;
@@ -162,13 +166,13 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	/**
 	 * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
 	 **/
-	private PgPool pgPool;
+	private Pool pgPool;
 
-	public PgPool getPgPool() {
+	public Pool getPgPool() {
 		return pgPool;
 	}
 
-	public void setPgPool(PgPool pgPool) {
+	public void setPgPool(Pool pgPool) {
 		this.pgPool = pgPool;
 	}
 
@@ -180,6 +184,16 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 
 	Jinjava jinjava;
 
+	SdkTracerProvider sdkTracerProvider;
+	public void setSdkTracerProvider(SdkTracerProvider sdkTracerProvider) {
+		this.sdkTracerProvider = sdkTracerProvider;
+	}
+
+	SdkMeterProvider sdkMeterProvider;
+	public void setSdkMeterProvider(SdkMeterProvider sdkMeterProvider) {
+		this.sdkMeterProvider = sdkMeterProvider;
+	}
+
 	/**	
 	 *	This is called by Vert.x when the verticle instance is deployed. 
 	 *	Initialize a new site context object for storing information about the entire site in English. 
@@ -187,7 +201,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	 **/
 	@Override()
 	public void start(Promise<Void> startPromise) throws Exception, Exception {
-		commitWithin = config().getInteger(ConfigKeys.SOLR_WORKER_COMMIT_WITHIN_MILLIS);
+		commitWithin = Integer.parseInt(config().getString(ConfigKeys.SOLR_WORKER_COMMIT_WITHIN_MILLIS));
 
 		try {
 			configureI18n().onSuccess(a -> 
@@ -199,10 +213,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 									configureMqtt().onSuccess(g -> 
 										configureAmqp().onSuccess(h -> 
 											configureRabbitmq().onSuccess(i -> 
-												authorizeData().onSuccess(j -> 
-													importData().onSuccess(k -> 
-														startPromise.complete()
-													).onFailure(ex -> startPromise.fail(ex))
+												importData().onSuccess(j -> 
+													startPromise.complete()
 												).onFailure(ex -> startPromise.fail(ex))
 											).onFailure(ex -> startPromise.fail(ex))
 										).onFailure(ex -> startPromise.fail(ex))
@@ -287,7 +299,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 
 		try {
-			Boolean sslVerify = config().getBoolean(ConfigKeys.SSL_VERIFY);
+			Boolean sslVerify = Boolean.valueOf(config().getString(ConfigKeys.SSL_VERIFY));
 			webClient = WebClient.create(vertx, new WebClientOptions().setVerifyHost(sslVerify).setTrustAll(!sslVerify));
 			promise.complete();
 		} catch(Exception ex) {
@@ -304,7 +316,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	 * Val.ConnectionSuccess.enUS: The database client connection was successful. 
 	 * 
 	 * Val.InitError.enUS: Could not initialize the database tables. 
-	 * Val.InitSuccess.enUS: The database tables were created successfully. 
+	 * Val.InitSuccess.enUS: The database was initialized successfully. 
 	 * 
 	 *	Configure shared database connections across the cluster for massive scaling of the application. 
 	 *	Return a promise that configures a shared database client connection. 
@@ -315,22 +327,22 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		try {
 			PgConnectOptions pgOptions = new PgConnectOptions();
-			Integer jdbcMaxPoolSize = config().getInteger(ConfigKeys.DATABASE_MAX_POOL_SIZE, 1);
+			Integer jdbcMaxPoolSize = Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_POOL_SIZE));
 
-			pgOptions.setPort(config().getInteger(ConfigKeys.DATABASE_PORT));
+			pgOptions.setPort(Integer.parseInt(config().getString(ConfigKeys.DATABASE_PORT)));
 			pgOptions.setHost(config().getString(ConfigKeys.DATABASE_HOST));
 			pgOptions.setDatabase(config().getString(ConfigKeys.DATABASE_DATABASE));
 			pgOptions.setUser(config().getString(ConfigKeys.DATABASE_USERNAME));
 			pgOptions.setPassword(config().getString(ConfigKeys.DATABASE_PASSWORD));
-			pgOptions.setIdleTimeout(config().getInteger(ConfigKeys.DATABASE_MAX_IDLE_TIME, 24));
+			pgOptions.setIdleTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_IDLE_TIME)));
 			pgOptions.setIdleTimeoutUnit(TimeUnit.HOURS);
-			pgOptions.setConnectTimeout(config().getInteger(ConfigKeys.DATABASE_CONNECT_TIMEOUT, 5000));
+			pgOptions.setConnectTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_CONNECT_TIMEOUT)));
 
 			PoolOptions poolOptions = new PoolOptions();
 			poolOptions.setMaxSize(jdbcMaxPoolSize);
-			poolOptions.setMaxWaitQueueSize(config().getInteger(ConfigKeys.DATABASE_MAX_WAIT_QUEUE_SIZE, 10));
+			poolOptions.setMaxWaitQueueSize(Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_WAIT_QUEUE_SIZE)));
 
-			pgPool = PgPool.pool(vertx, pgOptions, poolOptions);
+			pgPool = PgBuilder.pool().connectingTo(pgOptions).with(poolOptions).using(vertx).build();
 
 			LOG.info(configureDataInitSuccess);
 			promise.complete();
@@ -372,7 +384,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<KafkaProducer<String, String>> promise = Promise.promise();
 
 		try {
-			if(config().getBoolean(ConfigKeys.ENABLE_KAFKA)) {
+			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_KAFKA))) {
 				Map<String, String> kafkaConfig = new HashMap<>();
 				kafkaConfig.put("bootstrap.servers", config().getString(ConfigKeys.KAFKA_BROKERS));
 				kafkaConfig.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
@@ -407,10 +419,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<MqttClient> promise = Promise.promise();
 
 		try {
-			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_MQTT))) {
+			if(BooleanUtils.isTrue(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_MQTT)))) {
 				try {
 					mqttClient = MqttClient.create(vertx);
-					mqttClient.connect(config().getInteger(ConfigKeys.MQTT_PORT), config().getString(ConfigKeys.MQTT_HOST)).onSuccess(a -> {
+					mqttClient.connect(Integer.parseInt(config().getString(ConfigKeys.MQTT_PORT)), config().getString(ConfigKeys.MQTT_HOST)).onSuccess(a -> {
 						try {
 							LOG.info("The MQTT client was initialized successfully.");
 							promise.complete(mqttClient);
@@ -443,11 +455,11 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<AmqpClient> promise = Promise.promise();
 
 		try {
-			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_AMQP))) {
+			if(BooleanUtils.isTrue(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_AMQP)))) {
 				try {
 					AmqpClientOptions options = new AmqpClientOptions()
 							.setHost(config().getString(ConfigKeys.AMQP_HOST))
-							.setPort(config().getInteger(ConfigKeys.AMQP_PORT))
+							.setPort(Integer.parseInt(config().getString(ConfigKeys.AMQP_PORT)))
 							.setUsername(config().getString(ConfigKeys.AMQP_USER))
 							.setPassword(config().getString(ConfigKeys.AMQP_PASSWORD))
 							.setVirtualHost(config().getString(ConfigKeys.AMQP_VIRTUAL_HOST))
@@ -495,11 +507,11 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 		Promise<RabbitMQClient> promise = Promise.promise();
 
 		try {
-			if(BooleanUtils.isTrue(config().getBoolean(ConfigKeys.ENABLE_RABBITMQ))) {
+			if(BooleanUtils.isTrue(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_RABBITMQ)))) {
 				try {
 					RabbitMQOptions options = new RabbitMQOptions()
 							.setHost(config().getString(ConfigKeys.RABBITMQ_HOST_NAME))
-							.setPort(config().getInteger(ConfigKeys.RABBITMQ_PORT))
+							.setPort(Integer.parseInt(config().getString(ConfigKeys.RABBITMQ_PORT)))
 							.setUser(config().getString(ConfigKeys.RABBITMQ_USER))
 							.setPassword(config().getString(ConfigKeys.RABBITMQ_PASSWORD))
 							.setVirtualHost(config().getString(ConfigKeys.RABBITMQ_VIRTUAL_HOST))
@@ -545,110 +557,12 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 	}
 
 	/**
-	 * Description: Add Keycloak authorization resources, policies, and permissions for a data model. 
-	 * Val.Fail.enUS: Adding Keycloak authorization resources, policies, and permissions failed. 
-	 **/
-	private Future<Void> authorizeData() {
-		Promise<Void> promise = Promise.promise();
-		try {
-			SiteRequest siteRequest = new SiteRequest();
-			siteRequest.setConfig(config());
-			siteRequest.setWebClient(webClient);
-			siteRequest.initDeepSiteRequest(siteRequest);
-			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
-			initializeApiService(apiSiteUser);
-			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
-			initializeApiService(apiCompanyAbout);
-			UseCaseEnUSApiServiceImpl apiUseCase = new UseCaseEnUSApiServiceImpl();
-			initializeApiService(apiUseCase);
-			CompanyCourseEnUSApiServiceImpl apiCompanyCourse = new CompanyCourseEnUSApiServiceImpl();
-			initializeApiService(apiCompanyCourse);
-			SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
-			initializeApiService(apiSitePage);
-			CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
-			initializeApiService(apiCompanyProduct);
-			CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl();
-			initializeApiService(apiCompanyEvent);
-			CompanyWebinarEnUSApiServiceImpl apiCompanyWebinar = new CompanyWebinarEnUSApiServiceImpl();
-			initializeApiService(apiCompanyWebinar);
-			CompanyServiceEnUSApiServiceImpl apiCompanyService = new CompanyServiceEnUSApiServiceImpl();
-			initializeApiService(apiCompanyService);
-			CompanyResearchEnUSApiServiceImpl apiCompanyResearch = new CompanyResearchEnUSApiServiceImpl();
-			initializeApiService(apiCompanyResearch);
-			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
-			initializeApiService(apiCompanyWebsite);
-			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
-			initializeApiService(apiIotService);
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
-			initializeApiService(apiWeatherObserved);
-			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
-				apiSiteUser.authorizeClientData(authToken, SiteUser.CLASS_SIMPLE_NAME, config().getString(ComputateConfigKeys.AUTH_CLIENT), new String[] { "GET", "PATCH" }).onSuccess(q1 -> {
-					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-							.onSuccess(q2 -> {
-						apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-								.compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-								.onSuccess(q3 -> {
-							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-									.compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-									.onSuccess(q4 -> {
-								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-										.compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-										.onSuccess(q5 -> {
-									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-											.compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-											.onSuccess(q6 -> {
-										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-												.compose(q7 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-												.onSuccess(q7 -> {
-											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-													.compose(q8 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-													.onSuccess(q8 -> {
-												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-														.compose(q9 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-														.onSuccess(q9 -> {
-													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-															.compose(q10 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-															.onSuccess(q10 -> {
-														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-																.onSuccess(q11 -> {
-															apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																	.compose(q12 -> apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-																	.onSuccess(q12 -> {
-																apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																		.compose(q13 -> apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-																		.onSuccess(q13 -> {
-																	LOG.info("authorize data complete");
-																	promise.complete();
-																}).onFailure(ex -> promise.fail(ex));
-															}).onFailure(ex -> promise.fail(ex));
-														}).onFailure(ex -> promise.fail(ex));
-													}).onFailure(ex -> promise.fail(ex));
-												}).onFailure(ex -> promise.fail(ex));
-											}).onFailure(ex -> promise.fail(ex));
-										}).onFailure(ex -> promise.fail(ex));
-									}).onFailure(ex -> promise.fail(ex));
-								}).onFailure(ex -> promise.fail(ex));
-							}).onFailure(ex -> promise.fail(ex));
-						}).onFailure(ex -> promise.fail(ex));
-					}).onFailure(ex -> promise.fail(ex));
-				}).onFailure(ex -> promise.fail(ex));
-			}).onFailure(ex -> promise.fail(ex));
-		} catch(Throwable ex) {
-			LOG.error(authorizeDataFail, ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
-	/**
 	 * Description: Import initial data
 	 * Val.Skip.enUS: The data import is disabled. 
 	 **/
 	private Future<Void> importData() {
 		Promise<Void> promise = Promise.promise();
-		if(config().getBoolean(ConfigKeys.ENABLE_IMPORT_DATA)) {
+		if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_IMPORT_DATA))) {
 			SiteRequest siteRequest = new SiteRequest();
 			siteRequest.setConfig(config());
 			siteRequest.setWebClient(webClient);

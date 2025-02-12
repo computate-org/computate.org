@@ -34,6 +34,17 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.Instant;
+import java.util.Locale;
+import java.time.OffsetDateTime;
 import java.math.BigDecimal;
 import io.vertx.pgclient.data.Point;
 import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
@@ -112,6 +123,9 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * <h2>ApiMethode: UserPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: events"</b>, which groups all of the OpenAPIs for CompanyEvent objects under the tag "events". 
@@ -235,6 +249,9 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/event/{pageId}";
 	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/event/%s";
 	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/event/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/event";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/event";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/event";
 
 	public static final String Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
 
@@ -348,6 +365,166 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	public String sqlDescription() {
 		return description;
+	}
+
+	///////////////////
+	// startDateTime //
+	///////////////////
+
+
+	/**	 The entity startDateTime
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonDeserialize(using = ComputateZonedDateTimeDeserializer.class)
+	@JsonSerialize(using = ComputateZonedDateTimeSerializer.class)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
+	@JsonInclude(Include.NON_NULL)
+	protected ZonedDateTime startDateTime;
+
+	/**	<br> The entity startDateTime
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:startDateTime">Find the entity startDateTime in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _startDateTime(Wrap<ZonedDateTime> w);
+
+	public ZonedDateTime getStartDateTime() {
+		return startDateTime;
+	}
+
+	public void setStartDateTime(ZonedDateTime startDateTime) {
+		this.startDateTime = Optional.ofNullable(startDateTime).map(v -> v.truncatedTo(ChronoUnit.MILLIS)).orElse(null);
+	}
+	@JsonIgnore
+	public void setStartDateTime(Instant o) {
+		this.startDateTime = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+	}
+	/** Example: 2011-12-03T10:15:30+01:00 **/
+	@JsonIgnore
+	public void setStartDateTime(String o) {
+		this.startDateTime = CompanyEvent.staticSetStartDateTime(siteRequest_, o);
+	}
+	public static ZonedDateTime staticSetStartDateTime(SiteRequest siteRequest_, String o) {
+		if(StringUtils.endsWith(o, "]"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
+		else if(StringUtils.endsWith(o, "Z"))
+			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+		else if(StringUtils.contains(o, "T"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
+		else
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	@JsonIgnore
+	public void setStartDateTime(Date o) {
+		this.startDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	protected CompanyEvent startDateTimeInit() {
+		Wrap<ZonedDateTime> startDateTimeWrap = new Wrap<ZonedDateTime>().var("startDateTime");
+		if(startDateTime == null) {
+			_startDateTime(startDateTimeWrap);
+			Optional.ofNullable(startDateTimeWrap.getO()).ifPresent(o -> {
+				setStartDateTime(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchStartDateTime(SiteRequest siteRequest_, ZonedDateTime o) {
+		return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
+	}
+
+	public static String staticSearchStrStartDateTime(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o));
+	}
+
+	public static String staticSearchFqStartDateTime(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o)).toString();
+	}
+
+	public OffsetDateTime sqlStartDateTime() {
+		return startDateTime == null ? null : startDateTime.toOffsetDateTime();
+	}
+
+	/////////////////
+	// endDateTime //
+	/////////////////
+
+
+	/**	 The entity endDateTime
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonDeserialize(using = ComputateZonedDateTimeDeserializer.class)
+	@JsonSerialize(using = ComputateZonedDateTimeSerializer.class)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
+	@JsonInclude(Include.NON_NULL)
+	protected ZonedDateTime endDateTime;
+
+	/**	<br> The entity endDateTime
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:endDateTime">Find the entity endDateTime in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _endDateTime(Wrap<ZonedDateTime> w);
+
+	public ZonedDateTime getEndDateTime() {
+		return endDateTime;
+	}
+
+	public void setEndDateTime(ZonedDateTime endDateTime) {
+		this.endDateTime = Optional.ofNullable(endDateTime).map(v -> v.truncatedTo(ChronoUnit.MILLIS)).orElse(null);
+	}
+	@JsonIgnore
+	public void setEndDateTime(Instant o) {
+		this.endDateTime = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+	}
+	/** Example: 2011-12-03T10:15:30+01:00 **/
+	@JsonIgnore
+	public void setEndDateTime(String o) {
+		this.endDateTime = CompanyEvent.staticSetEndDateTime(siteRequest_, o);
+	}
+	public static ZonedDateTime staticSetEndDateTime(SiteRequest siteRequest_, String o) {
+		if(StringUtils.endsWith(o, "]"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
+		else if(StringUtils.endsWith(o, "Z"))
+			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+		else if(StringUtils.contains(o, "T"))
+			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
+		else
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	@JsonIgnore
+	public void setEndDateTime(Date o) {
+		this.endDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
+	protected CompanyEvent endDateTimeInit() {
+		Wrap<ZonedDateTime> endDateTimeWrap = new Wrap<ZonedDateTime>().var("endDateTime");
+		if(endDateTime == null) {
+			_endDateTime(endDateTimeWrap);
+			Optional.ofNullable(endDateTimeWrap.getO()).ifPresent(o -> {
+				setEndDateTime(o);
+			});
+		}
+		return (CompanyEvent)this;
+	}
+
+	public static String staticSearchEndDateTime(SiteRequest siteRequest_, ZonedDateTime o) {
+		return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
+	}
+
+	public static String staticSearchStrEndDateTime(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o));
+	}
+
+	public static String staticSearchFqEndDateTime(SiteRequest siteRequest_, String o) {
+		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o)).toString();
+	}
+
+	public OffsetDateTime sqlEndDateTime() {
+		return endDateTime == null ? null : endDateTime.toOffsetDateTime();
 	}
 
 	///////////
@@ -654,6 +831,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		}
 		return null;
 	}
+	@JsonIgnore
 	public void setLocation(JsonObject o) {
 		this.location = CompanyEvent.staticSetLocation(siteRequest_, o);
 	}
@@ -954,6 +1132,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			try {
 				nameInit();
 				descriptionInit();
+				startDateTimeInit();
+				endDateTimeInit();
 				priceInit();
 				pageIdInit();
 				emailTemplateInit();
@@ -1019,6 +1199,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return oCompanyEvent.name;
 			case "description":
 				return oCompanyEvent.description;
+			case "startDateTime":
+				return oCompanyEvent.startDateTime;
+			case "endDateTime":
+				return oCompanyEvent.endDateTime;
 			case "price":
 				return oCompanyEvent.price;
 			case "pageId":
@@ -1078,6 +1262,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSetName(siteRequest_, o);
 		case "description":
 			return CompanyEvent.staticSetDescription(siteRequest_, o);
+		case "startDateTime":
+			return CompanyEvent.staticSetStartDateTime(siteRequest_, o);
+		case "endDateTime":
+			return CompanyEvent.staticSetEndDateTime(siteRequest_, o);
 		case "price":
 			return CompanyEvent.staticSetPrice(siteRequest_, o);
 		case "pageId":
@@ -1112,6 +1300,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchName(siteRequest_, (String)o);
 		case "description":
 			return CompanyEvent.staticSearchDescription(siteRequest_, (String)o);
+		case "startDateTime":
+			return CompanyEvent.staticSearchStartDateTime(siteRequest_, (ZonedDateTime)o);
+		case "endDateTime":
+			return CompanyEvent.staticSearchEndDateTime(siteRequest_, (ZonedDateTime)o);
 		case "price":
 			return CompanyEvent.staticSearchPrice(siteRequest_, (BigDecimal)o);
 		case "pageId":
@@ -1146,6 +1338,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchStrName(siteRequest_, (String)o);
 		case "description":
 			return CompanyEvent.staticSearchStrDescription(siteRequest_, (String)o);
+		case "startDateTime":
+			return CompanyEvent.staticSearchStrStartDateTime(siteRequest_, (String)o);
+		case "endDateTime":
+			return CompanyEvent.staticSearchStrEndDateTime(siteRequest_, (String)o);
 		case "price":
 			return CompanyEvent.staticSearchStrPrice(siteRequest_, (Double)o);
 		case "pageId":
@@ -1180,6 +1376,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return CompanyEvent.staticSearchFqName(siteRequest_, o);
 		case "description":
 			return CompanyEvent.staticSearchFqDescription(siteRequest_, o);
+		case "startDateTime":
+			return CompanyEvent.staticSearchFqStartDateTime(siteRequest_, o);
+		case "endDateTime":
+			return CompanyEvent.staticSearchFqEndDateTime(siteRequest_, o);
 		case "price":
 			return CompanyEvent.staticSearchFqPrice(siteRequest_, o);
 		case "pageId":
@@ -1233,6 +1433,22 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 					setDescription((String)val);
 				}
 				saves.add("description");
+				return val;
+			} else if("startdatetime".equals(varLower)) {
+				if(val instanceof String) {
+					setStartDateTime((String)val);
+				} else if(val instanceof OffsetDateTime) {
+					setStartDateTime(((OffsetDateTime)val).atZoneSameInstant(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))));
+				}
+				saves.add("startDateTime");
+				return val;
+			} else if("enddatetime".equals(varLower)) {
+				if(val instanceof String) {
+					setEndDateTime((String)val);
+				} else if(val instanceof OffsetDateTime) {
+					setEndDateTime(((OffsetDateTime)val).atZoneSameInstant(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))));
+				}
+				saves.add("endDateTime");
 				return val;
 			} else if("price".equals(varLower)) {
 				if(val instanceof String) {
@@ -1297,6 +1513,18 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 					oCompanyEvent.setDescription(description);
 			}
 
+			if(saves.contains("startDateTime")) {
+				String startDateTime = (String)doc.get("startDateTime_docvalues_date");
+				if(startDateTime != null)
+					oCompanyEvent.setStartDateTime(startDateTime);
+			}
+
+			if(saves.contains("endDateTime")) {
+				String endDateTime = (String)doc.get("endDateTime_docvalues_date");
+				if(endDateTime != null)
+					oCompanyEvent.setEndDateTime(endDateTime);
+			}
+
 			if(saves.contains("price")) {
 				Double price = (Double)doc.get("price_docvalues_double");
 				if(price != null)
@@ -1356,6 +1584,12 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		if(description != null) {
 			doc.put("description_docvalues_string", description);
 		}
+		if(startDateTime != null) {
+			doc.put("startDateTime_docvalues_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(startDateTime.toInstant(), ZoneId.of("UTC"))));
+		}
+		if(endDateTime != null) {
+			doc.put("endDateTime_docvalues_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(endDateTime.toInstant(), ZoneId.of("UTC"))));
+		}
 		if(price != null) {
 			doc.put("price_docvalues_double", price.doubleValue());
 		}
@@ -1369,7 +1603,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			doc.put("storeUrl_docvalues_string", storeUrl);
 		}
 		if(location != null) {
-			doc.put("location_docvalues_location", String.format("%s,%s", location.getX(), location.getY()));
+			doc.put("location_docvalues_location", String.format("%s,%s", location.getY(), location.getX()));
 		}
 		if(locationColors != null) {
 			JsonArray l = new JsonArray();
@@ -1402,6 +1636,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "startDateTime":
+				return "startDateTime_docvalues_date";
+			case "endDateTime":
+				return "endDateTime_docvalues_date";
 			case "price":
 				return "price_docvalues_double";
 			case "pageId":
@@ -1429,6 +1667,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "startDateTime":
+				return "startDateTime_docvalues_date";
+			case "endDateTime":
+				return "endDateTime_docvalues_date";
 			case "price":
 				return "price_docvalues_double";
 			case "pageId":
@@ -1456,6 +1698,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				return "name";
 			case "description_docvalues_string":
 				return "description";
+			case "startDateTime_docvalues_date":
+				return "startDateTime";
+			case "endDateTime_docvalues_date":
+				return "endDateTime";
 			case "price_docvalues_double":
 				return "price";
 			case "pageId_docvalues_string":
@@ -1504,6 +1750,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 		oCompanyEvent.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setStartDateTime(Optional.ofNullable(doc.get("startDateTime_docvalues_date")).map(v -> v.toString()).orElse(null));
+		oCompanyEvent.setEndDateTime(Optional.ofNullable(doc.get("endDateTime_docvalues_date")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyEvent.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1535,6 +1783,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 				apiRequest.addVars("name");
 			if(!Objects.equals(description, original.getDescription()))
 				apiRequest.addVars("description");
+			if(!Objects.equals(startDateTime, original.getStartDateTime()))
+				apiRequest.addVars("startDateTime");
+			if(!Objects.equals(endDateTime, original.getEndDateTime()))
+				apiRequest.addVars("endDateTime");
 			if(!Objects.equals(price, original.getPrice()) && price != null && original.getPrice() != null && price.compareTo(original.getPrice()) != 0)
 				apiRequest.addVars("price");
 			if(!Objects.equals(pageId, original.getPageId()))
@@ -1564,6 +1816,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(startDateTime).map(v -> "startDateTime: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(endDateTime).map(v -> "endDateTime: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
@@ -1582,6 +1836,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	}
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
+	public static final String VAR_startDateTime = "startDateTime";
+	public static final String VAR_endDateTime = "endDateTime";
 	public static final String VAR_price = "price";
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_emailTemplate = "emailTemplate";
@@ -1605,6 +1861,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static List<String> varsFqCompanyEvent(List<String> vars) {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
+		vars.add(VAR_startDateTime);
+		vars.add(VAR_endDateTime);
 		vars.add(VAR_price);
 		vars.add(VAR_pageId);
 		vars.add(VAR_emailTemplate);
@@ -1618,6 +1876,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		return CompanyEvent.varsRangeCompanyEvent(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyEvent(List<String> vars) {
+		vars.add(VAR_startDateTime);
+		vars.add(VAR_endDateTime);
 		vars.add(VAR_price);
 		vars.add(VAR_location);
 		BaseResult.varsRangeBaseResult(vars);
@@ -1626,6 +1886,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	public static final String DISPLAY_NAME_name = "event name";
 	public static final String DISPLAY_NAME_description = "event description";
+	public static final String DISPLAY_NAME_startDateTime = "start date time";
+	public static final String DISPLAY_NAME_endDateTime = "end date time";
 	public static final String DISPLAY_NAME_price = "price";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_emailTemplate = "email template";
@@ -1684,6 +1946,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_name;
 		case VAR_description:
 			return DISPLAY_NAME_description;
+		case VAR_startDateTime:
+			return DISPLAY_NAME_startDateTime;
+		case VAR_endDateTime:
+			return DISPLAY_NAME_endDateTime;
 		case VAR_price:
 			return DISPLAY_NAME_price;
 		case VAR_pageId:
@@ -1711,6 +1977,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return "The event name. ";
 		case VAR_description:
 			return "The event description. ";
+		case VAR_startDateTime:
+			return "The start date time. ";
+		case VAR_endDateTime:
+			return "The end date time. ";
 		case VAR_price:
 			return "The price of the product per developer. ";
 		case VAR_pageId:
@@ -1736,6 +2006,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_description:
 			return "String";
+		case VAR_startDateTime:
+			return "ZonedDateTime";
+		case VAR_endDateTime:
+			return "ZonedDateTime";
 		case VAR_price:
 			return "BigDecimal";
 		case VAR_pageId:
@@ -1760,9 +2034,11 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static Integer htmColumnCompanyEvent(String var) {
 		switch(var) {
 		case VAR_name:
-			return 1;
-		case VAR_description:
 			return 2;
+		case VAR_description:
+			return 3;
+		case VAR_startDateTime:
+			return 1;
 			default:
 				return BaseResult.htmColumnBaseResult(var);
 		}
@@ -1773,6 +2049,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 		case VAR_name:
 			return 3;
 		case VAR_description:
+			return 3;
+		case VAR_startDateTime:
+			return 3;
+		case VAR_endDateTime:
 			return 3;
 		case VAR_price:
 			return 3;
@@ -1791,8 +2071,12 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return 1;
 		case VAR_description:
 			return 2;
-		case VAR_price:
+		case VAR_startDateTime:
 			return 3;
+		case VAR_endDateTime:
+			return 4;
+		case VAR_price:
+			return 5;
 		case VAR_pageId:
 			return 1;
 		case VAR_location:

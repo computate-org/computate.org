@@ -281,7 +281,7 @@ SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('443', true) }}"
 # The solr collection to use for the site. 
 SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
 # The URL to the Solr collection. 
-SOLR_URL: "{{ ('https://' if SOLR_SSL == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT == 443 else (':' + SOLR_PORT)) }}/solr/{{ SOLR_COLLECTION }}"
+SOLR_URL: "{{ ('https://' if SOLR_SSL | bool == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT | int == 443 else (':' + SOLR_PORT)) }}/solr/{{ SOLR_COLLECTION }}"
 # The solr pod name to connect and create Solr configsets and collections. 
 SOLR_POD_NAME: "solr-0"
 # The time before committing Solr data in milliseconds. 
@@ -291,7 +291,7 @@ SOLR_CONFIGSET: "computate"
 # The Solr admin username
 SOLR_USERNAME: admin
 # The Solr admin password
-SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-secret', namespace=SOLR_NAMESPACE)[0].data['solr-password'] | b64decode }}"
+SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr', namespace=SOLR_NAMESPACE)[0].data['solr-password'] | b64decode }}"
 
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL_COMPUTATE: "{{ lookup('env', 'SOLR_SSL_COMPUTATE') | default(SOLR_SSL, true) | bool }}"
@@ -302,7 +302,7 @@ SOLR_PORT_COMPUTATE: "{{ lookup('env', 'SOLR_PORT_COMPUTATE') | default(SOLR_POR
 # The solr collection to use for the site. 
 SOLR_COLLECTION_COMPUTATE: "{{ lookup('env', 'SOLR_COLLECTION_COMPUTATE') | default('computate', true) }}"
 # The URL to the Solr collection. 
-SOLR_URL_COMPUTATE: "{{ ('https://' if SOLR_SSL_COMPUTATE == True else 'http://') + SOLR_HOST_NAME_COMPUTATE + ('' if SOLR_PORT_COMPUTATE == 443 else (':' + SOLR_PORT_COMPUTATE)) }}/solr/{{ SOLR_COLLECTION_COMPUTATE }}"
+SOLR_URL_COMPUTATE: "{{ ('https://' if SOLR_SSL_COMPUTATE | bool == True else 'http://') + SOLR_HOST_NAME_COMPUTATE + ('' if SOLR_PORT_COMPUTATE | int == 443 else (':' + SOLR_PORT_COMPUTATE)) }}/solr/{{ SOLR_COLLECTION_COMPUTATE }}"
 
 #####################
 # Database defaults #
@@ -358,9 +358,9 @@ AUTH_SECRET: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_
 # The Auth openshift secret with the admin credentials. 
 AUTH_ADMIN_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_ADMIN_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('keycloak-initial-admin', true) }}"
 # The Auth admin username. 
-AUTH_ADMIN_USERNAME: admin
+AUTH_ADMIN_USERNAME: temp-admin
 # The Auth admin password. 
-AUTH_ADMIN_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_ADMIN_OPENSHIFT_SECRET, namespace=AUTH_NAMESPACE)[0].data['admin-password'] | b64decode }}"
+AUTH_ADMIN_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_ADMIN_OPENSHIFT_SECRET, namespace=AUTH_NAMESPACE)[0].data['password'] | b64decode }}"
 # The Auth URL. 
 AUTH_URL: "https://{{ AUTH_HOST_NAME }}"
 # The Auth URL to retrieve tokens. 
@@ -400,7 +400,7 @@ SOLR_PORT_FIWARE: "{{ lookup('env', 'SOLR_PORT_FIWARE') | default(SOLR_PORT, tru
 # The solr collection to use for the site. 
 SOLR_COLLECTION_FIWARE: "{{ lookup('env', 'SOLR_COLLECTION_FIWARE') | default(SOLR_COLLECTION_COMPUTATE, true) }}"
 # The URL to the Solr collection. 
-SOLR_URL_FIWARE: "{{ ('https://' if SOLR_SSL_FIWARE == True else 'http://') + SOLR_HOST_NAME_FIWARE + ('' if SOLR_PORT_FIWARE == 443 else (':' + SOLR_PORT_FIWARE)) }}/solr/{{ SOLR_COLLECTION_FIWARE }}"
+SOLR_URL_FIWARE: "{{ ('https://' if SOLR_SSL_FIWARE | bool == True else 'http://') + SOLR_HOST_NAME_FIWARE + ('' if SOLR_PORT_FIWARE | int == 443 else (':' + SOLR_PORT_FIWARE)) }}/solr/{{ SOLR_COLLECTION_FIWARE }}"
 
 ##################
 # Context Broker #
@@ -413,21 +413,21 @@ CONTEXT_BROKER_NAMESPACE: "scorpiobroker"
 # Whether to use SSL when connecting to the Context Broker. 
 CONTEXT_BROKER_SSL: "{{ (lookup('env', 'CONTEXT_BROKER_SSL') | lower) != 'false' }}"
 # The host name to connect to the Context Broker in OpenShift. 
-CONTEXT_BROKER_HOST_NAME: "{{ lookup('env', 'CONTEXT_BROKER_HOST_NAME') | default('scorpiobroker.' + CONTEXT_BROKER_NAMESPACE + '.svc') }}"
+CONTEXT_BROKER_HOST_NAME: "{{ lookup('env', 'CONTEXT_BROKER_HOST_NAME') | default('scorpiobroker.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The default port that the Context Broker runs. 
-CONTEXT_BROKER_PORT: "{{ lookup('env', 'CONTEXT_BROKER_PORT') | default('9090') }}"
+CONTEXT_BROKER_PORT: "{{ lookup('env', 'CONTEXT_BROKER_PORT') | default('443', true) }}"
 # The delay between messages and requerying entity @context. 
 CONTEXT_BROKER_DELAY_MILLIS: 0
 # The Context Broker namespace. 
 CONTEXT_BROKER_CONTEXT: "{{ STATIC_BASE_URL }}/fiware/context.jsonld"
 # The default NGSI-LD tenant environment variable
-NGSILD_TENANT_ENV: "{{ lookup('env', 'NGSILD_TENANT_ENV') | default('NGSILD_TENANT') }}"
+NGSILD_TENANT_ENV: "{{ lookup('env', 'NGSILD_TENANT_ENV') | default('NGSILD_TENANT', true) }}"
 # The default NGSI-LD path
-NGSILD_PATH_ENV: "{{ lookup('env', 'NGSILD_PATH_ENV') | default('NGSILD_PATH') }}"
+NGSILD_PATH_ENV: "{{ lookup('env', 'NGSILD_PATH_ENV') | default('NGSILD_PATH', true) }}"
 # The default NGSI-LD tenant
-NGSILD_TENANT: "{{ lookup('env', NGSILD_TENANT_ENV) | default('') }}"
+NGSILD_TENANT: "{{ lookup('env', NGSILD_TENANT_ENV) | default('', true) }}"
 # The default NGSI-LD path
-NGSILD_PATH: "{{ lookup('env', NGSILD_PATH_ENV) | default('') }}"
+NGSILD_PATH: "{{ lookup('env', NGSILD_PATH_ENV) | default('', true) }}"
 
 #################
 # iotagent-json #
@@ -476,7 +476,7 @@ MQTT_HOST_NAME: "rabbitmq.{{ MQTT_NAMESPACE }}.svc"
 # The MQTT user. 
 MQTT_USER: "user"
 # The MQTT password. 
-#MQTT_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='iotagent-json-message-broker-secret', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
+#MQTT_PASSWORD: ""
 
 #############
 # AMQP vars #
@@ -494,7 +494,7 @@ AMQP_HOST_NAME: "rabbitmq.{{ AMQP_NAMESPACE }}.svc"
 AMQP_USER: "user"
 # The AMQP password. 
 AMQP_PASSWORD: ""
-#AMQP_HOST_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='iotagent-json-message-broker-secret', namespace=SITE_NAMESPACE)[0].data['password'] | b64decode }}"
+#AMQP_HOST_PASSWORD: ""
 # The AMQP virtual host. 
 AMQP_VIRTUAL_HOST: "%2F"
 
@@ -503,7 +503,7 @@ AMQP_VIRTUAL_HOST: "%2F"
 #################
 
 # Enable RabbitMQ message integration. 
-ENABLE_RABBITMQ: true
+ENABLE_RABBITMQ: false
 # The namespace in OpenShift where the AMQP message broker will run. 
 RABBITMQ_NAMESPACE: rabbitmq
 # The AMQP port. 
@@ -513,7 +513,7 @@ RABBITMQ_HOST_NAME: "rabbitmq.apps-crc.testing"
 # The AMQP user. 
 RABBITMQ_USER: "user"
 # The AMQP password. 
-RABBITMQ_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='rabbitmq', namespace=RABBITMQ_NAMESPACE)[0].data['rabbitmq-password'] | b64decode }}"
+RABBITMQ_PASSWORD: ""
 # The AMQP virtual host. 
 RABBITMQ_VIRTUAL_HOST: "/"
 

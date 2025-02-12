@@ -37,6 +37,7 @@ import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
 import io.vertx.core.json.JsonArray;
+import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -98,6 +99,9 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * <h2>ApiMethode: DisplayPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
+ * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: IoT services"</b>, which groups all of the OpenAPIs for IotService objects under the tag "IoT services". 
@@ -221,6 +225,9 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/iot-service/{pageId}";
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/iot-service/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/iot-service/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/iot-service";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/iot-service";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/iot-service";
 
 	public static final String Icon = "<i class=\"fa-solid fa-tower-cell\"></i>";
 
@@ -569,6 +576,7 @@ public abstract class IotServiceGen<DEV> extends BaseModel {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonArrayDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonArray attributes;
 

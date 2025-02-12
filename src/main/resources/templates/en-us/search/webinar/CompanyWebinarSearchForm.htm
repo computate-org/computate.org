@@ -1,16 +1,453 @@
+{%- macro inputPkCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pk">
+  {%- endif %}
+                  <wa-input
+                      readonly
+                      placeholder="[Long] primary key"
+                      label="primary key"
+                      help-text="
+The primary key of this object in the database"
+                      id="{{classApiMethodMethod}}_pk"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
+                      name="setPk"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
+                      name="setPk"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pk valuePk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
+                      name="pk"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pk | e }}"
+  {%- endif %}
+                      ></wa-input>
 
-{%- macro htmButton_patchCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_patchCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPkCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPkCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputCreatedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_created">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyWebinar inputCompanyWebinar{{pageId}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmCreatedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputModifiedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_modified">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyWebinar inputCompanyWebinar{{pageId}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmModifiedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputArchivedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
+                      name="setArchived"
+                      data-pageId={{ result.pageId | tojson }}
+                      data-val="{{ result.archived | e }}"
+                      >archive</wa-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <wa-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if result.archived == true %}
+                      checked
+    {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >archive</wa-checkbox>
+  {%- else %}
+                      >
+                    <wa-option value="" selected="selected"></wa-option>
+                    <wa-option value="true">true</wa-option>
+                    <wa-option value="false">false</wa-option>
+                  </wa-select>
+  {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmArchivedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNameCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_name">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] name"
+                      label="name"
+                      help-text="
+The name of this webinar"
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.name | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNameCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNameCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDescriptionCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_description">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] description"
+                      label="description"
+                      help-text="
+A description of this webinar"
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.description | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDescriptionCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_webinarUrlAmericas">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Webinar URL Americas"
+                      label="Webinar URL Americas"
+                      help-text="
+The actual link to the Webinar in Americas"
+                      id="{{classApiMethodMethod}}_webinarUrlAmericas"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
+                      name="setWebinarUrlAmericas"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
+                      name="setWebinarUrlAmericas"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas valueWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
+                      name="webinarUrlAmericas"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.webinarUrlAmericas | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_webinarUrlApac">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Webinar URL APAC"
+                      label="Webinar URL APAC"
+                      help-text="
+The actual link to the Webinar in APAC"
+                      id="{{classApiMethodMethod}}_webinarUrlApac"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
+                      name="setWebinarUrlApac"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
+                      name="setWebinarUrlApac"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac valueWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
+                      name="webinarUrlApac"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.webinarUrlApac | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_webinarUrlEmea">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Webinar URL EMEA"
+                      label="Webinar URL EMEA"
+                      help-text="
+The actual link to the Webinar in EMEA"
+                      id="{{classApiMethodMethod}}_webinarUrlEmea"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
+                      name="setWebinarUrlEmea"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
+                      name="setWebinarUrlEmea"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea valueWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
+                      name="webinarUrlEmea"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.webinarUrlEmea | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_icalUrl">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] ICal URL"
+                      label="ICal URL"
+                      help-text="
+The ICalendar URL for the events. "
+                      id="{{classApiMethodMethod}}_icalUrl"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="setIcalUrl"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="setIcalUrl"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_icalUrl valueIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
+                      name="icalUrl"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.icalUrl | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputIcalUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_nextWebinar">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="The start date time of the next webinar. "
+                      label="next webinar"
+                      class="label-on-left {{classApiMethodMethod}}_nextWebinar datetimepicker setNextWebinar classCompanyWebinar inputCompanyWebinar{{pageId}}NextWebinar "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_nextWebinar"
+                      value="{%- if result.nextWebinar is defined %}{{ formatZonedDateTime(result.nextWebinar, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNextWebinarCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pageId">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pageId | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPageIdCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPageIdCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+
+{%- macro htmButton_patchCompanyWebinar() %}<wa-button variant="brand" id="htmButton_patchCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-edit "></i>Modify</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyWebinar() %}
-            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
-                id="htmFormButton_patchCompanyWebinar"
-                >Modify webinar</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_patchCompanyWebinar">Modify webinar</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyWebinar() %}
-        <sl-dialog id="patchCompanyWebinarDialog" label="Modify webinar">
+        <wa-dialog with-footer id="patchCompanyWebinarDialog" label="Modify webinar">
           <form id="htmForm_patchCompanyWebinar" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -58,8 +495,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="webinar-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="webinar-details">
               <div slot="summary">
                 <span>webinar details</span>
               </div>
@@ -137,8 +574,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -153,36 +590,24 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_patchCompanyWebinar() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_postCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyWebinar() %}<wa-button variant="brand" id="htmButton_postCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-plus "></i>Create</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyWebinar() %}
-            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
-                id="htmFormButton_postCompanyWebinar"
-                >Create a webinar</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_postCompanyWebinar">Create a webinar</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyWebinar() %}
-        <sl-dialog id="postCompanyWebinarDialog" label="Create a webinar">
+        <wa-dialog with-footer id="postCompanyWebinarDialog" label="Create a webinar">
           <form id="htmForm_postCompanyWebinar" class="round-row primary-smart-border-radius ">
             <div>You can override any default values below: </div>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -230,8 +655,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="webinar-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="webinar-details">
               <div slot="summary">
                 <span>webinar details</span>
               </div>
@@ -309,8 +734,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -325,59 +750,45 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_postCompanyWebinar() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyWebinar() %}<sl-button variant="primary" outline id="htmButton_putimportCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyWebinar() %}<wa-button variant="brand" id="htmButton_putimportCompanyWebinar" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-import "></i>Import</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyWebinar() %}
-            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
-                id="htmFormButton_putimportCompanyWebinar"
-                >Import webinars</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_putimportCompanyWebinar">Import webinars</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyWebinar() %}
-        <sl-dialog id="putimportCompanyWebinarDialog" label="Import webinars">
+        <wa-dialog with-footer id="putimportCompanyWebinarDialog" label="Import webinars">
           <form id="htmForm_putimportCompanyWebinar" class="round-row primary-smart-border-radius ">
             <div>
-              <sl-textarea
+              <wa-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pageId': ... , 'saves': [ ... ] }, ... ] }"
                   >
-              </sl-textarea>
+              </wa-textarea>
             </div>
           </form>
           {{ htmFormButton_putimportCompanyWebinar() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_searchpageCompanyWebinar() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyWebinar() %}
-            <sl-button variant="primary" outline slot="footer" type="submit" variant="primary"
-                id="htmFormButton_searchpageCompanyWebinar"
-                >Search webinars</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_searchpageCompanyWebinar">Search webinars</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyWebinar() %}
-        <div id="searchpageCompanyWebinarDialog" label="Search webinars">
+        <div with-footer id="searchpageCompanyWebinarDialog" label="Search webinars">
           <div id="htmForm_searchpageCompanyWebinar" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -425,8 +836,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="webinar-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="webinar-details">
               <div slot="summary">
                 <span>webinar details</span>
               </div>
@@ -504,8 +915,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -520,40 +931,30 @@
                   {{ htmPageIdCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageCompanyWebinarPage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </div>
         </div>
 {%- endmacro %}
-          <sl-divider></sl-divider>
+          <wa-divider></wa-divider>
           <div id="htmButtonGroup">
             <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-    {% if resultCount == 1 %}
-              <sl-button variant="primary" outline id="refreshThisCompanyWebinarGenPage"
+    {% if resultCount >= 1 %}
+              <wa-button variant="brand" id="refreshThisCompanyWebinarGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyWebinarGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyWebinarGenPage')); }); return false; ">
-                <i slot="prefix" class="fas fa-sync-alt "></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-sync-alt "></i>
                 refresh
-              </sl-button>
+              </wa-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button variant="primary" outline id="refreshAllCompanyWebinarGenPage{{ result.pageId | e }}"
+              <wa-button variant="brand" id="refreshAllCompanyWebinarGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyWebinarGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyWebinarGenPage{{ result.pageId | e }}')); }); "
                   >
-                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-arrows-rotate"></i>
                 Refresh all 
-              </sl-button>
+              </wa-button>
     {% endif %}
   {% endif %}
 {% endif %}
@@ -563,12 +964,8 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_postCompanyWebinar() }}
-    {%- else %}
-      {{ htmButton_postCompanyWebinar() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmButton_postCompanyWebinar() }}
   {%- else %}
     {{ htmButton_postCompanyWebinar() }}
   {%- endif %}
@@ -585,12 +982,8 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_postCompanyWebinar() }}
-    {%- else %}
-      {{ htmForm_postCompanyWebinar() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_postCompanyWebinar() }}
   {%- else %}
     {{ htmForm_postCompanyWebinar() }}
   {%- endif %}
@@ -598,3 +991,4 @@
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmForm_putimportCompanyWebinar() }}
 {%- endif %}
+          <wa-divider></wa-divider>

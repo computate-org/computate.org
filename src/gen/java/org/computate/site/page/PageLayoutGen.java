@@ -33,14 +33,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
+import io.vertx.ext.web.client.WebClient;
+import io.vertx.core.Vertx;
 import java.lang.String;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.core.json.JsonObject;
+import org.computate.vertx.serialize.vertx.JsonObjectDeserializer;
 import java.lang.Long;
 import java.lang.Void;
 import io.vertx.core.json.JsonArray;
 import org.computate.search.response.solr.SolrResponse.Stats;
 import org.computate.search.response.solr.SolrResponse.FacetCounts;
+import java.lang.Integer;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.time.ZonedDateTime;
@@ -52,7 +56,6 @@ import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.lang.Integer;
 import java.math.BigDecimal;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
@@ -132,6 +135,88 @@ import io.vertx.core.Future;
  **/
 public abstract class PageLayoutGen<DEV> extends Object {
 	protected static final Logger LOG = LoggerFactory.getLogger(PageLayout.class);
+
+	///////////////
+	// webClient //
+	///////////////
+
+
+	/**	 The entity webClient
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected WebClient webClient;
+
+	/**	<br> The entity webClient
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:webClient">Find the entity webClient in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _webClient(Wrap<WebClient> w);
+
+	public WebClient getWebClient() {
+		return webClient;
+	}
+
+	public void setWebClient(WebClient webClient) {
+		this.webClient = webClient;
+	}
+	public static WebClient staticSetWebClient(SiteRequest siteRequest_, String o) {
+		return null;
+	}
+	protected PageLayout webClientInit() {
+		Wrap<WebClient> webClientWrap = new Wrap<WebClient>().var("webClient");
+		if(webClient == null) {
+			_webClient(webClientWrap);
+			Optional.ofNullable(webClientWrap.getO()).ifPresent(o -> {
+				setWebClient(o);
+			});
+		}
+		return (PageLayout)this;
+	}
+
+	///////////
+	// vertx //
+	///////////
+
+
+	/**	 The entity vertx
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected Vertx vertx;
+
+	/**	<br> The entity vertx
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:vertx">Find the entity vertx in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _vertx(Wrap<Vertx> w);
+
+	public Vertx getVertx() {
+		return vertx;
+	}
+
+	public void setVertx(Vertx vertx) {
+		this.vertx = vertx;
+	}
+	public static Vertx staticSetVertx(SiteRequest siteRequest_, String o) {
+		return null;
+	}
+	protected PageLayout vertxInit() {
+		Wrap<Vertx> vertxWrap = new Wrap<Vertx>().var("vertx");
+		if(vertx == null) {
+			_vertx(vertxWrap);
+			Optional.ofNullable(vertxWrap.getO()).ifPresent(o -> {
+				setVertx(o);
+			});
+		}
+		return (PageLayout)this;
+	}
 
 	//////////////////
 	// siteRequest_ //
@@ -889,6 +974,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject params;
 
@@ -1102,6 +1188,58 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String staticSearchFqUserName(SiteRequest siteRequest_, String o) {
 		return PageLayout.staticSearchUserName(siteRequest_, PageLayout.staticSetUserName(siteRequest_, o)).toString();
+	}
+
+	////////////
+	// userId //
+	////////////
+
+
+	/**	 The entity userId
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String userId;
+
+	/**	<br> The entity userId
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:userId">Find the entity userId in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _userId(Wrap<String> w);
+
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String o) {
+		this.userId = PageLayout.staticSetUserId(siteRequest_, o);
+	}
+	public static String staticSetUserId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected PageLayout userIdInit() {
+		Wrap<String> userIdWrap = new Wrap<String>().var("userId");
+		if(userId == null) {
+			_userId(userIdWrap);
+			Optional.ofNullable(userIdWrap.getO()).ifPresent(o -> {
+				setUserId(o);
+			});
+		}
+		return (PageLayout)this;
+	}
+
+	public static String staticSearchUserId(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrUserId(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUserId(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchUserId(siteRequest_, PageLayout.staticSetUserId(siteRequest_, o)).toString();
 	}
 
 	///////////////
@@ -1671,6 +1809,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject pagination = new JsonObject();
 
@@ -2025,6 +2164,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject varsQ = new JsonObject();
 
@@ -2070,6 +2210,66 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		return PageLayout.staticSearchVarsQ(siteRequest_, PageLayout.staticSetVarsQ(siteRequest_, o)).toString();
 	}
 
+	/////////////////
+	// varsFqCount //
+	/////////////////
+
+
+	/**	 The entity varsFqCount
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer varsFqCount;
+
+	/**	<br> The entity varsFqCount
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:varsFqCount">Find the entity varsFqCount in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _varsFqCount(Wrap<Integer> w);
+
+	public Integer getVarsFqCount() {
+		return varsFqCount;
+	}
+
+	public void setVarsFqCount(Integer varsFqCount) {
+		this.varsFqCount = varsFqCount;
+	}
+	@JsonIgnore
+	public void setVarsFqCount(String o) {
+		this.varsFqCount = PageLayout.staticSetVarsFqCount(siteRequest_, o);
+	}
+	public static Integer staticSetVarsFqCount(SiteRequest siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
+	}
+	protected PageLayout varsFqCountInit() {
+		Wrap<Integer> varsFqCountWrap = new Wrap<Integer>().var("varsFqCount");
+		if(varsFqCount == null) {
+			_varsFqCount(varsFqCountWrap);
+			Optional.ofNullable(varsFqCountWrap.getO()).ifPresent(o -> {
+				setVarsFqCount(o);
+			});
+		}
+		return (PageLayout)this;
+	}
+
+	public static Integer staticSearchVarsFqCount(SiteRequest siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSearchStrVarsFqCount(SiteRequest siteRequest_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqVarsFqCount(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchVarsFqCount(siteRequest_, PageLayout.staticSetVarsFqCount(siteRequest_, o)).toString();
+	}
+
 	////////////
 	// varsFq //
 	////////////
@@ -2079,6 +2279,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject varsFq = new JsonObject();
 
@@ -2133,6 +2334,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject varsRange = new JsonObject();
 
@@ -2187,6 +2389,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 It is constructed before being initialized with the constructor by default. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject query = new JsonObject();
 
@@ -2803,6 +3006,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject defaultRangeStats;
 
@@ -3351,6 +3555,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
+	@JsonDeserialize(using = JsonObjectDeserializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected JsonObject DEFAULT_MAP_LOCATION;
 
@@ -3923,6 +4128,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
+				webClientInit();
+				vertxInit();
 				siteRequest_Init();
 				langInit();
 				requestVarsInit();
@@ -3942,6 +4149,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				userKeyInit();
 				userFullNameInit();
 				userNameInit();
+				userIdInit();
 				userEmailInit();
 				logoutUrlInit();
 				promise2.complete();
@@ -3973,6 +4181,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				defaultStatsVarsInit();
 				defaultPivotVarsInit();
 				varsQInit();
+				varsFqCountInit();
 				varsFqInit();
 				varsRangeInit();
 				queryInit();
@@ -4072,6 +4281,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public Object obtainPageLayout(String var) {
 		PageLayout oPageLayout = (PageLayout)this;
 		switch(var) {
+			case "webClient":
+				return oPageLayout.webClient;
+			case "vertx":
+				return oPageLayout.vertx;
 			case "siteRequest_":
 				return oPageLayout.siteRequest_;
 			case "lang":
@@ -4110,6 +4323,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.userFullName;
 			case "userName":
 				return oPageLayout.userName;
+			case "userId":
+				return oPageLayout.userId;
 			case "userEmail":
 				return oPageLayout.userEmail;
 			case "logoutUrl":
@@ -4142,6 +4357,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.defaultPivotVars;
 			case "varsQ":
 				return oPageLayout.varsQ;
+			case "varsFqCount":
+				return oPageLayout.varsFqCount;
 			case "varsFq":
 				return oPageLayout.varsFq;
 			case "varsRange":
@@ -4277,6 +4494,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetUserFullName(siteRequest_, o);
 		case "userName":
 			return PageLayout.staticSetUserName(siteRequest_, o);
+		case "userId":
+			return PageLayout.staticSetUserId(siteRequest_, o);
 		case "userEmail":
 			return PageLayout.staticSetUserEmail(siteRequest_, o);
 		case "logoutUrl":
@@ -4303,6 +4522,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetDefaultPivotVars(siteRequest_, o);
 		case "varsQ":
 			return PageLayout.staticSetVarsQ(siteRequest_, o);
+		case "varsFqCount":
+			return PageLayout.staticSetVarsFqCount(siteRequest_, o);
 		case "varsFq":
 			return PageLayout.staticSetVarsFq(siteRequest_, o);
 		case "varsRange":
@@ -4407,6 +4628,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchUserFullName(siteRequest_, (String)o);
 		case "userName":
 			return PageLayout.staticSearchUserName(siteRequest_, (String)o);
+		case "userId":
+			return PageLayout.staticSearchUserId(siteRequest_, (String)o);
 		case "userEmail":
 			return PageLayout.staticSearchUserEmail(siteRequest_, (String)o);
 		case "logoutUrl":
@@ -4433,6 +4656,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchDefaultPivotVars(siteRequest_, (String)o);
 		case "varsQ":
 			return PageLayout.staticSearchVarsQ(siteRequest_, (JsonObject)o);
+		case "varsFqCount":
+			return PageLayout.staticSearchVarsFqCount(siteRequest_, (Integer)o);
 		case "varsFq":
 			return PageLayout.staticSearchVarsFq(siteRequest_, (JsonObject)o);
 		case "varsRange":
@@ -4537,6 +4762,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrUserFullName(siteRequest_, (String)o);
 		case "userName":
 			return PageLayout.staticSearchStrUserName(siteRequest_, (String)o);
+		case "userId":
+			return PageLayout.staticSearchStrUserId(siteRequest_, (String)o);
 		case "userEmail":
 			return PageLayout.staticSearchStrUserEmail(siteRequest_, (String)o);
 		case "logoutUrl":
@@ -4563,6 +4790,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrDefaultPivotVars(siteRequest_, (String)o);
 		case "varsQ":
 			return PageLayout.staticSearchStrVarsQ(siteRequest_, (String)o);
+		case "varsFqCount":
+			return PageLayout.staticSearchStrVarsFqCount(siteRequest_, (Integer)o);
 		case "varsFq":
 			return PageLayout.staticSearchStrVarsFq(siteRequest_, (String)o);
 		case "varsRange":
@@ -4667,6 +4896,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqUserFullName(siteRequest_, o);
 		case "userName":
 			return PageLayout.staticSearchFqUserName(siteRequest_, o);
+		case "userId":
+			return PageLayout.staticSearchFqUserId(siteRequest_, o);
 		case "userEmail":
 			return PageLayout.staticSearchFqUserEmail(siteRequest_, o);
 		case "logoutUrl":
@@ -4693,6 +4924,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqDefaultPivotVars(siteRequest_, o);
 		case "varsQ":
 			return PageLayout.staticSearchFqVarsQ(siteRequest_, o);
+		case "varsFqCount":
+			return PageLayout.staticSearchFqVarsFqCount(siteRequest_, o);
 		case "varsFq":
 			return PageLayout.staticSearchFqVarsFq(siteRequest_, o);
 		case "varsRange":
@@ -4766,6 +4999,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "PageLayout";
+	public static final String VAR_webClient = "webClient";
+	public static final String VAR_vertx = "vertx";
 	public static final String VAR_siteRequest_ = "siteRequest_";
 	public static final String VAR_lang = "lang";
 	public static final String VAR_requestVars = "requestVars";
@@ -4785,6 +5020,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_userKey = "userKey";
 	public static final String VAR_userFullName = "userFullName";
 	public static final String VAR_userName = "userName";
+	public static final String VAR_userId = "userId";
 	public static final String VAR_userEmail = "userEmail";
 	public static final String VAR_logoutUrl = "logoutUrl";
 	public static final String VAR_promiseBefore = "promiseBefore";
@@ -4801,6 +5037,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_defaultStatsVars = "defaultStatsVars";
 	public static final String VAR_defaultPivotVars = "defaultPivotVars";
 	public static final String VAR_varsQ = "varsQ";
+	public static final String VAR_varsFqCount = "varsFqCount";
 	public static final String VAR_varsFq = "varsFq";
 	public static final String VAR_varsRange = "varsRange";
 	public static final String VAR_query = "query";
@@ -4834,6 +5071,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_classIcon = "classIcon";
 	public static final String VAR_pageDescription = "pageDescription";
 
+	public static final String DISPLAY_NAME_webClient = "";
+	public static final String DISPLAY_NAME_vertx = "";
 	public static final String DISPLAY_NAME_siteRequest_ = "";
 	public static final String DISPLAY_NAME_lang = "";
 	public static final String DISPLAY_NAME_requestVars = "";
@@ -4853,6 +5092,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_userKey = "";
 	public static final String DISPLAY_NAME_userFullName = "";
 	public static final String DISPLAY_NAME_userName = "";
+	public static final String DISPLAY_NAME_userId = "";
 	public static final String DISPLAY_NAME_userEmail = "";
 	public static final String DISPLAY_NAME_logoutUrl = "";
 	public static final String DISPLAY_NAME_promiseBefore = "";
@@ -4869,6 +5109,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_defaultStatsVars = "";
 	public static final String DISPLAY_NAME_defaultPivotVars = "";
 	public static final String DISPLAY_NAME_varsQ = "";
+	public static final String DISPLAY_NAME_varsFqCount = "";
 	public static final String DISPLAY_NAME_varsFq = "";
 	public static final String DISPLAY_NAME_varsRange = "";
 	public static final String DISPLAY_NAME_query = "";
@@ -4939,6 +5180,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 	public static String displayNamePageLayout(String var) {
 		switch(var) {
+		case VAR_webClient:
+			return DISPLAY_NAME_webClient;
+		case VAR_vertx:
+			return DISPLAY_NAME_vertx;
 		case VAR_siteRequest_:
 			return DISPLAY_NAME_siteRequest_;
 		case VAR_lang:
@@ -4977,6 +5222,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_userFullName;
 		case VAR_userName:
 			return DISPLAY_NAME_userName;
+		case VAR_userId:
+			return DISPLAY_NAME_userId;
 		case VAR_userEmail:
 			return DISPLAY_NAME_userEmail;
 		case VAR_logoutUrl:
@@ -5009,6 +5256,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_defaultPivotVars;
 		case VAR_varsQ:
 			return DISPLAY_NAME_varsQ;
+		case VAR_varsFqCount:
+			return DISPLAY_NAME_varsFqCount;
 		case VAR_varsFq:
 			return DISPLAY_NAME_varsFq;
 		case VAR_varsRange:
@@ -5080,6 +5329,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String descriptionPageLayout(String var) {
 		switch(var) {
+		case VAR_webClient:
+			return "The current request object";
+		case VAR_vertx:
+			return "The current request object";
 		case VAR_siteRequest_:
 			return "The current request object";
 		case VAR_lang:
@@ -5104,6 +5357,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return "The current user's full name";
 		case VAR_userName:
 			return "The current user's username";
+		case VAR_userId:
+			return "The current user's id";
 		case VAR_userEmail:
 			return "The current user's email";
 		case VAR_logoutUrl:
@@ -5147,6 +5402,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String classSimpleNamePageLayout(String var) {
 		switch(var) {
+		case VAR_webClient:
+			return "WebClient";
+		case VAR_vertx:
+			return "Vertx";
 		case VAR_siteRequest_:
 			return "SiteRequest";
 		case VAR_lang:
@@ -5185,6 +5444,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return "String";
 		case VAR_userName:
 			return "String";
+		case VAR_userId:
+			return "String";
 		case VAR_userEmail:
 			return "String";
 		case VAR_logoutUrl:
@@ -5217,6 +5478,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return "List";
 		case VAR_varsQ:
 			return "JsonObject";
+		case VAR_varsFqCount:
+			return "Integer";
 		case VAR_varsFq:
 			return "JsonObject";
 		case VAR_varsRange:

@@ -76,7 +76,7 @@
         htm += `{%- block htmLegendCompanyEventPage %}
     <div title="${quoteattr(title)}">
     <div style="width: 20px; ">
-      <i class="fa-light fa-circle" style="color: ${color}; "></i>
+      <i class="{{ FONTAWESOME_STYLE }} fa-circle" style="color: ${color}; "></i>
     </div>
     <div class="text-overflow-ellipsis ">
       <span class="" data-solrId="${result.solrId}" onclick="window.mapLayers[this.getAttribute('data-solrId')].openPopup(); return false;" href="">${title}</span>
@@ -99,6 +99,15 @@
             , weight: 1
             , opacity: 0.7
             , fillOpacity: 0.7
+            , contextmenu: true
+            , contextmenuItems: [
+              {
+                text: 'Show coordinates'
+                , callback: function(event) {
+                  alert(event2.target.getLatLngs());
+                }
+              }
+            ]
           };
         } else if(feature.geometry.type == 'LineString') {
           return {
@@ -120,15 +129,15 @@
     </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { type: 'Point', coordinates: [ {{ DEFAULT_MAP_LOCATION.coordinates[0] }}, {{ DEFAULT_MAP_LOCATION.coordinates[1] }} ]};
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
       window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
       window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
       Promise.all([
-        customElements.whenDefined('sl-button')
-        , customElements.whenDefined('sl-input')
+        customElements.whenDefined('wa-button')
+        , customElements.whenDefined('wa-input')
       ]).then(() => {
 
         var pageId = {% if result.pageId is defined %}{{ result.pageId | tojson }}{% else %}null{% endif %};
@@ -162,16 +171,16 @@
         pageGraphCompanyEvent();
         {% for key, value in varsQ.items() %}
 
-        document.querySelector('#qCompanyEvent_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+        document.querySelector('#qCompanyEvent_{{ key }}')?.addEventListener('wa-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
           qChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_{{ key }}'));
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyEvent_rows')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyEvent_rows')?.addEventListener('wa-change', event => {
           paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_rows'));
         });
 
-        document.querySelector('#qCompanyEvent_start')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyEvent_start')?.addEventListener('wa-change', event => {
           paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_start'));
         });
 
@@ -225,6 +234,16 @@
           searchpageCompanyEvent();
           return false;
         });
+
+        var submitForm_deletefilterCompanyEvent = document.querySelector('#htmForm_deletefilterCompanyEvent')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deletefilterCompanyEvent')?.addEventListener('click', event => {
+          event.preventDefault();
+          deletefilterCompanyEvent(event.target);
+          return false;
+        });
       });
     </script>
 {%- endblock htmScriptCompanyEventPage %}
@@ -243,21 +262,35 @@
 {%- block htmBodyStartPageLayout %}
     {{ super() }}
 {%- block htmBodyStartCompanyEventPage %}
+{% if resultCount > 0 %}
+          <div class="wa-flank ">
+            <wa-tooltip for="return-to-CompanyEvent">back to all events</wa-tooltip>
+            <wa-button id="return-to-CompanyEvent" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
+              all events
+            </wa-button>
+            <h1 class="Page_title"><i class="fa-duotone fa-solid fa-map-location-dot"></i> {{ result.title | e }}</h1>
+          </div>
+          <div class="margin-block">
+          </div>
+{% include en-us/search/event/CompanyEventSearchButtons.htm %}
+{% include en-us/search/event/CompanyEventSearchForm.htm %}
+{% endif %}
 {%- endblock htmBodyStartCompanyEventPage %}
 {%- endblock htmBodyStartPageLayout %}
 
 {%- block htmBodyMiddlePageLayout %}
 {%- block htmBodyMiddleCompanyEventPage %}
-{%- include en-us/search/event/CompanyEventSidebar.htm %}
-{%- include en-us/search/event/CompanyEventSuggestedSearch.htm %}
         <div class="main-content">
 {% if resultCount == 0 %}
-        <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-          <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
+        {% if varsFqCount > 0 %}
+        <wa-tooltip for="return-to-CompanyEvent">back to all events</wa-tooltip>
+          <wa-button id="return-to-CompanyEvent" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
             all events
-          </sl-button>
-        </sl-tooltip>
+          </wa-button>
+        </wa-tooltip>
+        {% endif %}
         <h1><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></h1>
 {% include en-us/search/event/CompanyEventSearchButtons.htm %}
 {% include en-us/search/event/CompanyEventSearchForm.htm %}
@@ -270,56 +303,8 @@
           </span>
         </h2>
 {% else %}
-  {% if resultCount == 1 %}
-    {% if solrId is defined %}
-          <div class="margin-block">
-            <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-            <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all events
-            </sl-button>
-          </div>
-{% include en-us/search/event/CompanyEventSearchButtons.htm %}
-{% include en-us/search/event/CompanyEventSearchForm.htm %}
-          <h1 class="Page_title"><i class="fa-duotone fa-solid fa-map-location-dot"></i> {{ result.title | e }}</h1>
-    {% else %}
-        <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-          <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
-            all events
-          </sl-button>
-        </sl-tooltip>
-        <h1><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></h1>
-{% include en-us/search/event/CompanyEventSearchButtons.htm %}
-{% include en-us/search/event/CompanyEventSearchForm.htm %}
-        <h2>
-          <span>
-  {% if classIconCssClasses is defined %}
-            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
-  {% endif %}
-            <span class="">no event found</span>
-          </span>
-        </h2>
-    {% endif %}
-  {% else %}
-        <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-          <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
-            all events
-          </sl-button>
-        </sl-tooltip>
-        <h1><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></h1>
-{% include en-us/search/event/CompanyEventSearchButtons.htm %}
-{% include en-us/search/event/CompanyEventSearchForm.htm %}
-        <h2>
-          <span>
-  {% if classIconCssClasses is defined %}
-            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
-  {% endif %}
-            <span class="">no event found</span>
-          </span>
-        </h2>
-  {% endif %}
+{%- include en-us/search/event/CompanyEventSidebar.htm %}
+{%- include en-us/search/event/CompanyEventSuggestedSearch.htm %}
 {% endif %}
 {%- block htmFormCompanyEventPage %}
           <form action="/en-us/api/event" id="CompanyEventForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
@@ -345,354 +330,3 @@
 {%- block htmBodyEndCompanyEventPage %}
 {%- endblock htmBodyEndCompanyEventPage %}
 {%- endblock htmBodyEndPageLayout %}
-{%- macro inputCreatedCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_created">
-  {%- endif %}
-                  <sl-input
-                      type="text"
-                      readonly
-                      help-text="A created timestamp for this record in the database"
-                      label="created"
-                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyEvent inputCompanyEvent{{pageId}}Created "
-                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                      id="{{classApiMethodMethod}}_created"
-                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
-  {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >
-                  </sl-input>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmCreatedCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputCreatedCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputModifiedCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_modified">
-  {%- endif %}
-                  <sl-input
-                      type="text"
-                      readonly
-                      help-text="A modified timestamp for this record in the database"
-                      label="modified"
-                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyEvent inputCompanyEvent{{pageId}}Modified "
-                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                      id="{{classApiMethodMethod}}_modified"
-                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
-  {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >
-                  </sl-input>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmModifiedCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputModifiedCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputArchivedCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_archived">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button variant="primary"
-                      id="{{classApiMethodMethod}}_archived"
-                      placeholder="archived"
-                      label="archived"
-                      help-text="For archiving this record"
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyEvent inputCompanyEvent{{pageId}}Archived "
-                      name="setArchived"
-                      data-pageId={{ result.pageId | tojson }}
-                      data-val="{{ result.archived | e }}"
-                      >archived</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_archived"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_archived"
-  {%- endif %}
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="archived"
-                      label="archived"
-                      help-text="For archiving this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyEvent inputCompanyEvent{{pageId}}Archived "
-                      name="setArchived"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyEvent inputCompanyEvent{{pageId}}Archived "
-                      name="setArchived"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyEvent inputCompanyEvent{{pageId}}Archived "
-                      name="setArchived"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if result.archived == true %}
-                      checked
-    {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >archived</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmArchivedCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputArchivedCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputNameCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_name">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] event name"
-                      label="event name"
-                      help-text="
-The event name. "
-                      id="{{classApiMethodMethod}}_name"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyEvent inputCompanyEvent{{pageId}}Name "
-                      name="setName"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyEvent inputCompanyEvent{{pageId}}Name "
-                      name="setName"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyEvent inputCompanyEvent{{pageId}}Name "
-                      name="name"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.name | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmNameCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputNameCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputLocationCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_location">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[Point] map location"
-                      label="map location"
-                      id="{{classApiMethodMethod}}_location"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_location setLocation classCompanyEvent inputCompanyEvent{{pageId}}Location "
-                      name="setLocation"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_location setLocation classCompanyEvent inputCompanyEvent{{pageId}}Location "
-                      name="setLocation"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_location valueLocation classCompanyEvent inputCompanyEvent{{pageId}}Location "
-                      name="location"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{ toJsonObjectString(result.location) | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmLocationCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputLocationCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputDescriptionCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_description">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] event description"
-                      label="event description"
-                      help-text="
-The event description. "
-                      id="{{classApiMethodMethod}}_description"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{pageId}}Description "
-                      name="setDescription"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyEvent inputCompanyEvent{{pageId}}Description "
-                      name="setDescription"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyEvent inputCompanyEvent{{pageId}}Description "
-                      name="description"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.description | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDescriptionCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputDescriptionCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputPriceCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_price">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[BigDecimal] price"
-                      label="price"
-                      help-text="
-The price of the product per developer. "
-                      id="{{classApiMethodMethod}}_price"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyEvent inputCompanyEvent{{pageId}}Price "
-                      name="setPrice"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_price setPrice classCompanyEvent inputCompanyEvent{{pageId}}Price "
-                      name="setPrice"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_price valuePrice classCompanyEvent inputCompanyEvent{{pageId}}Price "
-                      name="price"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.price | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmPriceCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputPriceCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputPageIdCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_pageId">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] Page ID"
-                      label="Page ID"
-                      help-text="
-The ID for this page. "
-                      id="{{classApiMethodMethod}}_pageId"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyEvent inputCompanyEvent{{pageId}}PageId "
-                      name="setPageId"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyEvent inputCompanyEvent{{pageId}}PageId "
-                      name="setPageId"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classCompanyEvent inputCompanyEvent{{pageId}}PageId "
-                      name="pageId"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.pageId | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmPageIdCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputPageIdCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputDisplayPageCompanyEventPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_displayPage">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button variant="primary"
-                      id="{{classApiMethodMethod}}_displayPage"
-                      placeholder="[String] product page"
-                      label="product page"
-                      help-text="Visit this product's landing page. "
-                      class="button-on-left {{classApiMethodMethod}}_displayPage classCompanyEvent inputCompanyEvent{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-                      href="{{ result.displayPage | e }}"
-                      >
-                    product page
-                  </sl-button>
-                  <div class="button-description-on-right ">Visit this product's landing page. </div>
-  {%- else %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] product page"
-                      label="product page"
-                      help-text="
-Visit this product's landing page. "
-                      id="{{classApiMethodMethod}}_displayPage"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyEvent inputCompanyEvent{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyEvent inputCompanyEvent{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage valueDisplayPage classCompanyEvent inputCompanyEvent{{pageId}}DisplayPage "
-                      name="displayPage"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.displayPage | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDisplayPageCompanyEventPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputDisplayPageCompanyEventPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}

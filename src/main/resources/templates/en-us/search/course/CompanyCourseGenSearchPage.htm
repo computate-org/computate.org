@@ -47,15 +47,15 @@
     </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { type: 'Point', coordinates: [ {{ DEFAULT_MAP_LOCATION.coordinates[0] }}, {{ DEFAULT_MAP_LOCATION.coordinates[1] }} ]};
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
       window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
       window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
       Promise.all([
-        customElements.whenDefined('sl-button')
-        , customElements.whenDefined('sl-input')
+        customElements.whenDefined('wa-button')
+        , customElements.whenDefined('wa-input')
       ]).then(() => {
 
         var pageId = {% if result.pageId is defined %}{{ result.pageId | tojson }}{% else %}null{% endif %};
@@ -89,16 +89,16 @@
         pageGraphCompanyCourse();
         {% for key, value in varsQ.items() %}
 
-        document.querySelector('#qCompanyCourse_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+        document.querySelector('#qCompanyCourse_{{ key }}')?.addEventListener('wa-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
           qChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_{{ key }}'));
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyCourse_rows')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyCourse_rows')?.addEventListener('wa-change', event => {
           paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_rows'));
         });
 
-        document.querySelector('#qCompanyCourse_start')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyCourse_start')?.addEventListener('wa-change', event => {
           paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_start'));
         });
 
@@ -160,20 +160,26 @@
 {%- block htmBodyStartPageLayout %}
 {{ super() }}
 {%- block htmBodyStartCompanyCoursePage %}
+{% if resultCount > 0 %}
+          <h1><a href="{{pageUri}}"><i class="fa-regular fa-notebook"></i> <span>courses</span></a></h1>
+{%- include en-us/search/course/CompanyCourseSuggestedSearch.htm %}
+{% include en-us/search/course/CompanyCourseSearchButtons.htm %}
+{% include en-us/search/course/CompanyCourseSearchForm.htm %}
+{% endif %}
 {%- endblock htmBodyStartCompanyCoursePage %}
 {%- endblock htmBodyStartPageLayout %}
 
 {%- block htmBodyMiddlePageLayout %}
 {%- block htmBodyMiddleCompanyCoursePage %}
-{%- include en-us/search/course/CompanyCourseSidebar.htm %}
-{%- include en-us/search/course/CompanyCourseSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <sl-tooltip for="return-to-CompanyCourse">back to all courses</sl-tooltip>
-          <sl-button id="return-to-CompanyCourse" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
+        {% if varsFqCount > 0 %}
+        <wa-tooltip for="return-to-CompanyCourse">back to all courses</wa-tooltip>
+          <wa-button id="return-to-CompanyCourse" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
             all courses
-          </sl-button>
-        </sl-tooltip>
+          </wa-button>
+        </wa-tooltip>
+        {% endif %}
         <h1><i class="fa-regular fa-notebook"></i> <span>courses</span></h1>
 {% include en-us/search/course/CompanyCourseSearchButtons.htm %}
 {% include en-us/search/course/CompanyCourseSearchForm.htm %}
@@ -186,49 +192,54 @@
           </span>
         </h2>
 {% else %}
+{%- include en-us/search/course/CompanyCourseSidebar.htm %}
+          <form action="/en-us/api/course" id="CompanyCourseForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="listCompanyCourse" id="listCompanyCourse" class="listCompanyCourse"  value='{{ toJsonArrayStringInApostrophes(listCompanyCourse) }}' type="hidden"/>
+          </form>
         <div class="pageContent ">
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
+          {% if varsFqCount > 0 %}
           <div class="margin-block">
-            <sl-tooltip for="return-to-CompanyCourse">back to all courses</sl-tooltip>
-            <sl-button id="return-to-CompanyCourse" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
+            <wa-tooltip for="return-to-CompanyCourse">back to all courses</wa-tooltip>
+            <wa-button id="return-to-CompanyCourse" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
               all courses
-            </sl-button>
+            </wa-button>
           </div>
-          <h1><a href="{{pageUri}}"><i class="fa-regular fa-notebook"></i> <span>courses</span></a></h1>
-{% include en-us/search/course/CompanyCourseSearchButtons.htm %}
-{% include en-us/search/course/CompanyCourseSearchForm.htm %}
+          {% endif %}
 {% include en-us/search/course/CompanyCoursePaginationButtons.htm %}
           <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown-name">
-                <sl-button variant="primary" slot="trigger" caret>course name</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+              <wa-dropdown id="htmDropdown-name">
+                <wa-button variant="brand" slot="trigger" caret>course name</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by course name ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by course name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown id="htmDropdown-description">
-                <sl-button variant="primary" slot="trigger" caret>course description</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <wa-dropdown id="htmDropdown-description">
+                <wa-button variant="brand" slot="trigger" caret>course description</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by course description ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by course description descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
               <div></div>
             </div>
             {% for item in listCompanyCourse%}
@@ -240,7 +251,7 @@
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button variant="primary"
+              <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
@@ -249,9 +260,9 @@
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
                   >
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-duotone fa-regular fa-pen-to-square"></i>
                 edit
-              </sl-button>
+              </wa-button>
             </div>
             {% endfor %}
               {% if getColumnName is defined %}

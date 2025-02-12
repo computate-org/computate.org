@@ -25,9 +25,11 @@ import org.computate.site.request.SiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
 
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.api.service.ServiceRequest;
+import io.vertx.ext.web.client.WebClient;
 
 
 /**
@@ -52,6 +54,23 @@ public class PageLayout extends PageLayoutGen<Object> {
 
 	public static DateTimeFormatter FORMATTimeDisplay = DateTimeFormatter.ofPattern("h:mm a", Locale.US);
 
+	/**
+	 * {@inheritDoc}
+	 * Ignore: true
+	 * Description: The current request object
+	 * Initialized: true
+	**/
+	protected void _webClient(Wrap<WebClient> w) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Ignore: true
+	 * Description: The current request object
+	 * Initialized: true
+	**/
+	protected void _vertx(Wrap<Vertx> w) {
+	}
 	/**
 	 * Ignore: true
 	 * Description: The current request object
@@ -165,6 +184,13 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	/**
+	 * Description: The current user's id
+	 */
+	protected void _userId(Wrap<String> w) {
+		w.o(siteRequest_.getUserId());
+	}
+
+	/**
 	 * Description: The current user's email
 	 */
 	protected void _userEmail(Wrap<String> w) {
@@ -254,6 +280,9 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	protected void _varsQ(JsonObject vars) {
+	}
+
+	protected void _varsFqCount(Wrap<Integer> w) {
 	}
 
 	protected void _varsFq(JsonObject vars) {

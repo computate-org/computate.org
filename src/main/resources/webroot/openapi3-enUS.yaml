@@ -184,6 +184,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -240,6 +241,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -259,12 +261,83 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTCompanyAboutResponse'
+    delete:
+      operationId: deletefilterCompanyAbout
+      x-vertx-event-bus: computate.org-enUS-CompanyAbout
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - about
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterCompanyAboutResponse'
   /en-us/api/about-import:
     put:
       operationId: putimportCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -351,6 +424,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -394,6 +468,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -407,6 +501,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -821,6 +916,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -877,6 +973,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -902,6 +999,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -989,6 +1087,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1228,6 +1327,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1436,6 +1536,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1492,6 +1593,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1511,12 +1613,83 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTCompanyEventResponse'
+    delete:
+      operationId: deletefilterCompanyEvent
+      x-vertx-event-bus: computate.org-enUS-CompanyEvent
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - events
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterCompanyEventResponse'
   /en-us/api/event-import:
     put:
       operationId: putimportCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1603,6 +1776,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1646,6 +1820,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -1659,6 +1853,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1898,6 +2093,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -1931,6 +2127,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2109,6 +2306,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2165,6 +2363,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2184,12 +2383,83 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTIotServiceResponse'
+    delete:
+      operationId: deletefilterIotService
+      x-vertx-event-bus: computate.org-enUS-IotService
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - IoT services
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterIotServiceResponse'
   /en-us/api/iot-service-import:
     put:
       operationId: putimportIotService
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2247,6 +2517,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2279,6 +2550,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2322,6 +2594,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -2335,6 +2627,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2368,6 +2661,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-IotService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -2545,9 +2839,6 @@ paths:
     get:
       operationId: displaypageIotService
       x-vertx-event-bus: computate.org-enUS-IotService
-      security:
-        - openIdConnect:
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2580,11 +2871,12 @@ paths:
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -2774,11 +3066,12 @@ paths:
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -2846,11 +3139,12 @@ paths:
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -2890,17 +3184,104 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTWeatherObservedResponse'
+    delete:
+      operationId: deletefilterWeatherObserved
+      x-vertx-event-bus: computate.org-enUS-WeatherObserved
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - WeatherObserveds
+      parameters:
+        - name: Fiware-Service
+          in: header
+          schema:
+            type: string
+        - name: Fiware-ServicePath
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Tenant
+          in: header
+          schema:
+            type: string
+        - name: NGSILD-Path
+          in: header
+          schema:
+            type: string
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterWeatherObservedResponse'
   /en-us/api/weather-observed-import:
     put:
       operationId: putimportWeatherObserved
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -2963,17 +3344,18 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportWeatherObservedResponse'
-  /en-us/api/weather-observed/{entityId}:
+  /en-us/api/weather-observed/{entityShortId}:
     get:
       operationId: getWeatherObserved
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -2999,7 +3381,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: entityId
+        - name: entityShortId
           in: path
           description: >+
           required: true
@@ -3017,11 +3399,12 @@ paths:
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -3047,7 +3430,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: entityId
+        - name: entityShortId
           in: path
           description: >+
           required: true
@@ -3076,6 +3459,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -3083,17 +3486,18 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETEWeatherObservedResponse'
-  /en-us/edit/weather-observed/{pageId}:
+  /en-us/edit/weather-observed/{entityShortId}:
     get:
       operationId: editpageWeatherObserved
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -3119,7 +3523,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: pageId
+        - name: entityShortId
           in: path
           description: >+
           required: true
@@ -3138,11 +3542,12 @@ paths:
       x-vertx-event-bus: computate.org-enUS-WeatherObserved
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
       tags:
-        - weather observed devices
+        - WeatherObserveds
       parameters:
         - name: Fiware-Service
           in: header
@@ -3684,6 +4089,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -3740,6 +4146,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -3759,12 +4166,83 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTCompanyProductResponse'
+    delete:
+      operationId: deletefilterCompanyProduct
+      x-vertx-event-bus: computate.org-enUS-CompanyProduct
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - products
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterCompanyProductResponse'
   /en-us/api/product-import:
     put:
       operationId: putimportCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -3851,6 +4329,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -3894,6 +4373,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -3907,6 +4406,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4146,6 +4646,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4354,6 +4855,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4410,6 +4912,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4435,6 +4938,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4522,6 +5026,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4936,6 +5441,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -4992,6 +5498,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5017,6 +5524,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5104,6 +5612,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyService
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5518,6 +6027,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5574,6 +6084,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5593,12 +6104,83 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTUseCaseResponse'
+    delete:
+      operationId: deletefilterUseCase
+      x-vertx-event-bus: computate.org-enUS-UseCase
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - use cases
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterUseCaseResponse'
   /en-us/api/use-case-import:
     put:
       operationId: putimportUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5685,6 +6267,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5728,6 +6311,26 @@ paths:
             type: array
             items:
                 type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
       responses:
         '200':
           description: >+
@@ -5741,6 +6344,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -5980,6 +6584,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-UseCase
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6188,6 +6793,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6244,6 +6850,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6269,6 +6876,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6356,6 +6964,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6389,6 +6998,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6803,6 +7413,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6859,6 +7470,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6884,6 +7496,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -6971,6 +7584,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7385,6 +7999,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SitePage
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7441,6 +8056,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SitePage
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7466,6 +8082,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SitePage
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7553,6 +8170,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SitePage
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7792,6 +8410,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SiteUser
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -7968,6 +8587,10 @@ paths:
     patch:
       operationId: patchSiteUser
       x-vertx-event-bus: computate.org-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - openid
+          - profile
       description: >+
       summary: >+
       tags:
@@ -8021,6 +8644,10 @@ paths:
     post:
       operationId: postSiteUser
       x-vertx-event-bus: computate.org-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - openid
+          - profile
       description: >+
       summary: >+
       tags:
@@ -8039,10 +8666,14 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTSiteUserResponse'
-  /en-us/edit/user/{pageId}:
+  /en-us/edit/user/{userId}:
     get:
       operationId: editpageSiteUser
       x-vertx-event-bus: computate.org-enUS-SiteUser
+      security:
+        - openIdConnect:
+          - openid
+          - profile
       description: >+
       summary: >+
       tags:
@@ -8056,7 +8687,7 @@ paths:
           in: cookie
           schema:
             type: string
-        - name: pageId
+        - name: userId
           in: path
           description: >+
           required: true
@@ -8075,6 +8706,7 @@ paths:
       x-vertx-event-bus: computate.org-enUS-SiteUser
       security:
         - openIdConnect:
+          - openid
           - profile
       description: >+
       summary: >+
@@ -8305,6 +8937,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTCompanyAboutResponse'
+    DELETEFilterCompanyAboutResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterCompanyAboutResponse'
     PUTImportCompanyAboutRequest:
       content:
         application/json:
@@ -8425,6 +9062,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTCompanyEventResponse'
+    DELETEFilterCompanyEventResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterCompanyEventResponse'
     PUTImportCompanyEventRequest:
       content:
         application/json:
@@ -8490,6 +9132,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTIotServiceResponse'
+    DELETEFilterIotServiceResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterIotServiceResponse'
     PUTImportIotServiceRequest:
       content:
         application/json:
@@ -8550,6 +9197,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTWeatherObservedResponse'
+    DELETEFilterWeatherObservedResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterWeatherObservedResponse'
     PUTImportWeatherObservedRequest:
       content:
         application/json:
@@ -8610,6 +9262,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTCompanyProductResponse'
+    DELETEFilterCompanyProductResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterCompanyProductResponse'
     PUTImportCompanyProductRequest:
       content:
         application/json:
@@ -8785,6 +9442,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTUseCaseResponse'
+    DELETEFilterUseCaseResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterUseCaseResponse'
     PUTImportUseCaseRequest:
       content:
         application/json:
@@ -9125,6 +9787,16 @@ components:
               type: string
             pageId:
               type: string
+    DELETEFilterCompanyAboutResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            pageId:
+              type: string
     PUTImportCompanyAboutRequest:
       allOf:
         - type: object
@@ -9550,6 +10222,10 @@ components:
                     type: string
                   description:
                     type: string
+                  startDateTime:
+                    type: string
+                  endDateTime:
+                    type: string
                   price:
                     type: string
                   pageId:
@@ -9589,6 +10265,20 @@ components:
             removeDescription:
               type: string
             removeAllDescription:
+              type: string
+            setStartDateTime:
+              type: string
+              nullable: true
+            removeStartDateTime:
+              type: string
+            removeAllStartDateTime:
+              type: string
+            setEndDateTime:
+              type: string
+              nullable: true
+            removeEndDateTime:
+              type: string
+            removeAllEndDateTime:
               type: string
             setPrice:
               type: string
@@ -9694,6 +10384,20 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setStartDateTime:
+              type: string
+              nullable: true
+            removeStartDateTime:
+              type: string
+            removeAllStartDateTime:
+              type: string
+            setEndDateTime:
+              type: string
+              nullable: true
+            removeEndDateTime:
+              type: string
+            removeAllEndDateTime:
+              type: string
             setPrice:
               type: string
               nullable: true
@@ -9788,6 +10492,10 @@ components:
               type: string
             description:
               type: string
+            startDateTime:
+              type: string
+            endDateTime:
+              type: string
             price:
               type: string
             pageId:
@@ -9817,6 +10525,44 @@ components:
             name:
               type: string
             description:
+              type: string
+            startDateTime:
+              type: string
+            endDateTime:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
+            emailTemplate:
+              type: string
+            storeUrl:
+              type: string
+            location:
+              type: object
+            locationColors:
+              type: array
+              items:
+                type: string
+            locationTitles:
+              type: array
+              items:
+                type: string
+            locationLinks:
+              type: array
+              items:
+                type: string
+    DELETEFilterCompanyEventResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            startDateTime:
+              type: string
+            endDateTime:
               type: string
             price:
               type: string
@@ -9853,6 +10599,10 @@ components:
                     type: string
                   description:
                     type: string
+                  startDateTime:
+                    type: string
+                  endDateTime:
+                    type: string
                   price:
                     type: string
                   pageId:
@@ -9882,6 +10632,10 @@ components:
                   name:
                     type: string
                   description:
+                    type: string
+                  startDateTime:
+                    type: string
+                  endDateTime:
                     type: string
                   price:
                     type: string
@@ -9913,6 +10667,10 @@ components:
               type: string
             description:
               type: string
+            startDateTime:
+              type: string
+            endDateTime:
+              type: string
             price:
               type: string
             pageId:
@@ -9942,6 +10700,10 @@ components:
             name:
               type: string
             description:
+              type: string
+            startDateTime:
+              type: string
+            endDateTime:
               type: string
             price:
               type: string
@@ -10225,6 +10987,32 @@ components:
                   - type: boolean
             pageId:
               type: string
+    DELETEFilterIotServiceResponse:
+      allOf:
+        - type: object
+          properties:
+            entityType:
+              type: string
+            apiKey:
+              type: string
+            resource:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            cbHost:
+              type: string
+            attributes:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            pageId:
+              type: string
     PUTImportIotServiceRequest:
       allOf:
         - type: object
@@ -10365,10 +11153,6 @@ components:
                     type: string
                   description:
                     type: string
-                  address:
-                    type: object
-                  alternateName:
-                    type: string
                   location:
                     type: object
                   areaServedColors:
@@ -10385,6 +11169,36 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  id:
+                    type: string
+                  entityShortId:
+                    type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
+                  ngsildContext:
+                    type: string
+                  ngsildData:
+                    type: object
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  atmosphericPressure:
+                    type: string
                   dataProvider:
                     type: string
                   dateCreated:
@@ -10393,81 +11207,55 @@ components:
                     type: string
                   dateObserved:
                     type: string
-                  owner:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
-                    type: string
-                  source:
-                    type: string
-                  seeAlso:
-                    type: object
-                  airQualityIndex:
-                    type: string
-                  airQualityIndexForecast:
-                    type: string
-                  aqiMajorPollutant:
-                    type: string
-                  aqiMajorPollutantForecast:
-                    type: string
-                  atmosphericPressure:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  gustSpeed:
-                    type: string
-                  windDirection:
-                    type: string
-                  windSpeed:
-                    type: string
-                  precipitation:
-                    type: string
-                  precipitationForecast:
-                    type: string
-                  relativeHumidity:
-                    type: string
-                  relativeHumidityForecast:
-                    type: string
-                  snowHeight:
-                    type: string
-                  airTemperatureForecast:
-                    type: string
-                  airTemperatureTSA:
-                    type: object
-                  feelsLikeTemperature:
-                    type: string
-                  temperature:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  streamGauge:
-                    type: string
-                  uVIndexMax:
-                    type: string
-                  visibility:
-                    type: object
-                  weatherType:
-                    type: string
                   dewPoint:
                     type: string
                   diffuseIrradiation:
                     type: string
                   directIrradiation:
                     type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
                   illuminance:
                     type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
-                    type: string
-                  ngsildData:
+                  owner:
                     type: object
-                  entityId:
+                  precipitation:
                     type: string
-                  entityShortId:
+                  precipitationForecast:
                     type: string
-                  ngsildContext:
+                  pressureTendency:
+                    type: string
+                  refDevice:
+                    type: string
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: string
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: string
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
                     type: string
     PATCHWeatherObservedRequest:
       allOf:
@@ -10487,20 +11275,6 @@ components:
               type: string
             removeAllDescription:
               type: string
-            setAddress:
-              type: object
-              nullable: true
-            removeAddress:
-              type: object
-            removeAllAddress:
-              type: object
-            setAlternateName:
-              type: string
-              nullable: true
-            removeAlternateName:
-              type: string
-            removeAllAlternateName:
-              type: string
             setLocation:
               type: object
               nullable: true
@@ -10566,6 +11340,111 @@ components:
               type: object
             removeAllAreaServed:
               type: object
+            setId:
+              type: string
+              nullable: true
+            removeId:
+              type: string
+            removeAllId:
+              type: string
+            setEntityShortId:
+              type: string
+              nullable: true
+            removeEntityShortId:
+              type: string
+            removeAllEntityShortId:
+              type: string
+            setNgsildTenant:
+              type: string
+              nullable: true
+            removeNgsildTenant:
+              type: string
+            removeAllNgsildTenant:
+              type: string
+            setNgsildPath:
+              type: string
+              nullable: true
+            removeNgsildPath:
+              type: string
+            removeAllNgsildPath:
+              type: string
+            setNgsildContext:
+              type: string
+              nullable: true
+            removeNgsildContext:
+              type: string
+            removeAllNgsildContext:
+              type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
+            setAddress:
+              type: object
+              nullable: true
+            removeAddress:
+              type: object
+            removeAllAddress:
+              type: object
+            setAirQualityIndex:
+              type: string
+              nullable: true
+            removeAirQualityIndex:
+              type: string
+            removeAllAirQualityIndex:
+              type: string
+            setAirQualityIndexForecast:
+              type: string
+              nullable: true
+            removeAirQualityIndexForecast:
+              type: string
+            removeAllAirQualityIndexForecast:
+              type: string
+            setAirTemperatureForecast:
+              type: string
+              nullable: true
+            removeAirTemperatureForecast:
+              type: string
+            removeAllAirTemperatureForecast:
+              type: string
+            setAirTemperatureTSA:
+              type: object
+              nullable: true
+            removeAirTemperatureTSA:
+              type: object
+            removeAllAirTemperatureTSA:
+              type: object
+            setAlternateName:
+              type: string
+              nullable: true
+            removeAlternateName:
+              type: string
+            removeAllAlternateName:
+              type: string
+            setAqiMajorPollutant:
+              type: string
+              nullable: true
+            removeAqiMajorPollutant:
+              type: string
+            removeAllAqiMajorPollutant:
+              type: string
+            setAqiMajorPollutantForecast:
+              type: string
+              nullable: true
+            removeAqiMajorPollutantForecast:
+              type: string
+            removeAllAqiMajorPollutantForecast:
+              type: string
+            setAtmosphericPressure:
+              type: string
+              nullable: true
+            removeAtmosphericPressure:
+              type: string
+            removeAllAtmosphericPressure:
+              type: string
             setDataProvider:
               type: string
               nullable: true
@@ -10594,202 +11473,6 @@ components:
               type: string
             removeAllDateObserved:
               type: string
-            setOwner:
-              type: object
-              nullable: true
-            removeOwner:
-              type: object
-            removeAllOwner:
-              type: object
-            setRefDevice:
-              type: object
-              nullable: true
-            removeRefDevice:
-              type: object
-            removeAllRefDevice:
-              type: object
-            setRefPointOfInterest:
-              type: string
-              nullable: true
-            removeRefPointOfInterest:
-              type: string
-            removeAllRefPointOfInterest:
-              type: string
-            setSource:
-              type: string
-              nullable: true
-            removeSource:
-              type: string
-            removeAllSource:
-              type: string
-            setSeeAlso:
-              type: object
-              nullable: true
-            removeSeeAlso:
-              type: object
-            removeAllSeeAlso:
-              type: object
-            setAirQualityIndex:
-              type: string
-              nullable: true
-            removeAirQualityIndex:
-              type: string
-            removeAllAirQualityIndex:
-              type: string
-            setAirQualityIndexForecast:
-              type: string
-              nullable: true
-            removeAirQualityIndexForecast:
-              type: string
-            removeAllAirQualityIndexForecast:
-              type: string
-            setAqiMajorPollutant:
-              type: string
-              nullable: true
-            removeAqiMajorPollutant:
-              type: string
-            removeAllAqiMajorPollutant:
-              type: string
-            setAqiMajorPollutantForecast:
-              type: string
-              nullable: true
-            removeAqiMajorPollutantForecast:
-              type: string
-            removeAllAqiMajorPollutantForecast:
-              type: string
-            setAtmosphericPressure:
-              type: string
-              nullable: true
-            removeAtmosphericPressure:
-              type: string
-            removeAllAtmosphericPressure:
-              type: string
-            setPressureTendency:
-              type: object
-              nullable: true
-            removePressureTendency:
-              type: object
-            removeAllPressureTendency:
-              type: object
-            setGustSpeed:
-              type: string
-              nullable: true
-            removeGustSpeed:
-              type: string
-            removeAllGustSpeed:
-              type: string
-            setWindDirection:
-              type: string
-              nullable: true
-            removeWindDirection:
-              type: string
-            removeAllWindDirection:
-              type: string
-            setWindSpeed:
-              type: string
-              nullable: true
-            removeWindSpeed:
-              type: string
-            removeAllWindSpeed:
-              type: string
-            setPrecipitation:
-              type: string
-              nullable: true
-            removePrecipitation:
-              type: string
-            removeAllPrecipitation:
-              type: string
-            setPrecipitationForecast:
-              type: string
-              nullable: true
-            removePrecipitationForecast:
-              type: string
-            removeAllPrecipitationForecast:
-              type: string
-            setRelativeHumidity:
-              type: string
-              nullable: true
-            removeRelativeHumidity:
-              type: string
-            removeAllRelativeHumidity:
-              type: string
-            setRelativeHumidityForecast:
-              type: string
-              nullable: true
-            removeRelativeHumidityForecast:
-              type: string
-            removeAllRelativeHumidityForecast:
-              type: string
-            setSnowHeight:
-              type: string
-              nullable: true
-            removeSnowHeight:
-              type: string
-            removeAllSnowHeight:
-              type: string
-            setAirTemperatureForecast:
-              type: string
-              nullable: true
-            removeAirTemperatureForecast:
-              type: string
-            removeAllAirTemperatureForecast:
-              type: string
-            setAirTemperatureTSA:
-              type: object
-              nullable: true
-            removeAirTemperatureTSA:
-              type: object
-            removeAllAirTemperatureTSA:
-              type: object
-            setFeelsLikeTemperature:
-              type: string
-              nullable: true
-            removeFeelsLikeTemperature:
-              type: string
-            removeAllFeelsLikeTemperature:
-              type: string
-            setTemperature:
-              type: string
-              nullable: true
-            removeTemperature:
-              type: string
-            removeAllTemperature:
-              type: string
-            setSolarRadiation:
-              type: string
-              nullable: true
-            removeSolarRadiation:
-              type: string
-            removeAllSolarRadiation:
-              type: string
-            setStreamGauge:
-              type: string
-              nullable: true
-            removeStreamGauge:
-              type: string
-            removeAllStreamGauge:
-              type: string
-            setUVIndexMax:
-              type: string
-              nullable: true
-            removeUVIndexMax:
-              type: string
-            removeAllUVIndexMax:
-              type: string
-            setVisibility:
-              type: object
-              nullable: true
-            removeVisibility:
-              type: object
-            removeAllVisibility:
-              type: object
-            setWeatherType:
-              type: string
-              nullable: true
-            removeWeatherType:
-              type: string
-            removeAllWeatherType:
-              type: string
             setDewPoint:
               type: string
               nullable: true
@@ -10811,6 +11494,20 @@ components:
               type: string
             removeAllDirectIrradiation:
               type: string
+            setFeelsLikeTemperature:
+              type: string
+              nullable: true
+            removeFeelsLikeTemperature:
+              type: string
+            removeAllFeelsLikeTemperature:
+              type: string
+            setGustSpeed:
+              type: string
+              nullable: true
+            removeGustSpeed:
+              type: string
+            removeAllGustSpeed:
+              type: string
             setIlluminance:
               type: string
               nullable: true
@@ -10818,47 +11515,138 @@ components:
               type: string
             removeAllIlluminance:
               type: string
-            setNgsildTenant:
-              type: string
-              nullable: true
-            removeNgsildTenant:
-              type: string
-            removeAllNgsildTenant:
-              type: string
-            setNgsildPath:
-              type: string
-              nullable: true
-            removeNgsildPath:
-              type: string
-            removeAllNgsildPath:
-              type: string
-            setNgsildData:
+            setOwner:
               type: object
               nullable: true
-            removeNgsildData:
+            removeOwner:
               type: object
-            removeAllNgsildData:
+            removeAllOwner:
               type: object
-            setEntityId:
+            setPrecipitation:
               type: string
               nullable: true
-            removeEntityId:
+            removePrecipitation:
               type: string
-            removeAllEntityId:
+            removeAllPrecipitation:
               type: string
-            setEntityShortId:
-              type: string
-              nullable: true
-            removeEntityShortId:
-              type: string
-            removeAllEntityShortId:
-              type: string
-            setNgsildContext:
+            setPrecipitationForecast:
               type: string
               nullable: true
-            removeNgsildContext:
+            removePrecipitationForecast:
               type: string
-            removeAllNgsildContext:
+            removeAllPrecipitationForecast:
+              type: string
+            setPressureTendency:
+              type: string
+              nullable: true
+            removePressureTendency:
+              type: string
+            removeAllPressureTendency:
+              type: string
+            setRefDevice:
+              type: string
+              nullable: true
+            removeRefDevice:
+              type: string
+            removeAllRefDevice:
+              type: string
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setRelativeHumidity:
+              type: string
+              nullable: true
+            removeRelativeHumidity:
+              type: string
+            removeAllRelativeHumidity:
+              type: string
+            setRelativeHumidityForecast:
+              type: string
+              nullable: true
+            removeRelativeHumidityForecast:
+              type: string
+            removeAllRelativeHumidityForecast:
+              type: string
+            setSeeAlso:
+              type: string
+              nullable: true
+            removeSeeAlso:
+              type: string
+            removeAllSeeAlso:
+              type: string
+            setSnowHeight:
+              type: string
+              nullable: true
+            removeSnowHeight:
+              type: string
+            removeAllSnowHeight:
+              type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
+              type: string
+            setUVIndexMax:
+              type: string
+              nullable: true
+            removeUVIndexMax:
+              type: string
+            removeAllUVIndexMax:
+              type: string
+            setVisibility:
+              type: string
+              nullable: true
+            removeVisibility:
+              type: string
+            removeAllVisibility:
+              type: string
+            setWeatherType:
+              type: string
+              nullable: true
+            removeWeatherType:
+              type: string
+            removeAllWeatherType:
+              type: string
+            setWindDirection:
+              type: string
+              nullable: true
+            removeWindDirection:
+              type: string
+            removeAllWindDirection:
+              type: string
+            setWindSpeed:
+              type: string
+              nullable: true
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
               type: string
     PATCHWeatherObservedResponse:
       allOf:
@@ -10878,20 +11666,6 @@ components:
               type: string
             removeAllDescription:
               type: string
-            setAddress:
-              type: object
-              nullable: true
-            removeAddress:
-              type: object
-            removeAllAddress:
-              type: object
-            setAlternateName:
-              type: string
-              nullable: true
-            removeAlternateName:
-              type: string
-            removeAllAlternateName:
-              type: string
             setLocation:
               type: object
               nullable: true
@@ -10957,6 +11731,111 @@ components:
               type: object
             removeAllAreaServed:
               type: object
+            setId:
+              type: string
+              nullable: true
+            removeId:
+              type: string
+            removeAllId:
+              type: string
+            setEntityShortId:
+              type: string
+              nullable: true
+            removeEntityShortId:
+              type: string
+            removeAllEntityShortId:
+              type: string
+            setNgsildTenant:
+              type: string
+              nullable: true
+            removeNgsildTenant:
+              type: string
+            removeAllNgsildTenant:
+              type: string
+            setNgsildPath:
+              type: string
+              nullable: true
+            removeNgsildPath:
+              type: string
+            removeAllNgsildPath:
+              type: string
+            setNgsildContext:
+              type: string
+              nullable: true
+            removeNgsildContext:
+              type: string
+            removeAllNgsildContext:
+              type: string
+            setNgsildData:
+              type: object
+              nullable: true
+            removeNgsildData:
+              type: object
+            removeAllNgsildData:
+              type: object
+            setAddress:
+              type: object
+              nullable: true
+            removeAddress:
+              type: object
+            removeAllAddress:
+              type: object
+            setAirQualityIndex:
+              type: string
+              nullable: true
+            removeAirQualityIndex:
+              type: string
+            removeAllAirQualityIndex:
+              type: string
+            setAirQualityIndexForecast:
+              type: string
+              nullable: true
+            removeAirQualityIndexForecast:
+              type: string
+            removeAllAirQualityIndexForecast:
+              type: string
+            setAirTemperatureForecast:
+              type: string
+              nullable: true
+            removeAirTemperatureForecast:
+              type: string
+            removeAllAirTemperatureForecast:
+              type: string
+            setAirTemperatureTSA:
+              type: object
+              nullable: true
+            removeAirTemperatureTSA:
+              type: object
+            removeAllAirTemperatureTSA:
+              type: object
+            setAlternateName:
+              type: string
+              nullable: true
+            removeAlternateName:
+              type: string
+            removeAllAlternateName:
+              type: string
+            setAqiMajorPollutant:
+              type: string
+              nullable: true
+            removeAqiMajorPollutant:
+              type: string
+            removeAllAqiMajorPollutant:
+              type: string
+            setAqiMajorPollutantForecast:
+              type: string
+              nullable: true
+            removeAqiMajorPollutantForecast:
+              type: string
+            removeAllAqiMajorPollutantForecast:
+              type: string
+            setAtmosphericPressure:
+              type: string
+              nullable: true
+            removeAtmosphericPressure:
+              type: string
+            removeAllAtmosphericPressure:
+              type: string
             setDataProvider:
               type: string
               nullable: true
@@ -10985,202 +11864,6 @@ components:
               type: string
             removeAllDateObserved:
               type: string
-            setOwner:
-              type: object
-              nullable: true
-            removeOwner:
-              type: object
-            removeAllOwner:
-              type: object
-            setRefDevice:
-              type: object
-              nullable: true
-            removeRefDevice:
-              type: object
-            removeAllRefDevice:
-              type: object
-            setRefPointOfInterest:
-              type: string
-              nullable: true
-            removeRefPointOfInterest:
-              type: string
-            removeAllRefPointOfInterest:
-              type: string
-            setSource:
-              type: string
-              nullable: true
-            removeSource:
-              type: string
-            removeAllSource:
-              type: string
-            setSeeAlso:
-              type: object
-              nullable: true
-            removeSeeAlso:
-              type: object
-            removeAllSeeAlso:
-              type: object
-            setAirQualityIndex:
-              type: string
-              nullable: true
-            removeAirQualityIndex:
-              type: string
-            removeAllAirQualityIndex:
-              type: string
-            setAirQualityIndexForecast:
-              type: string
-              nullable: true
-            removeAirQualityIndexForecast:
-              type: string
-            removeAllAirQualityIndexForecast:
-              type: string
-            setAqiMajorPollutant:
-              type: string
-              nullable: true
-            removeAqiMajorPollutant:
-              type: string
-            removeAllAqiMajorPollutant:
-              type: string
-            setAqiMajorPollutantForecast:
-              type: string
-              nullable: true
-            removeAqiMajorPollutantForecast:
-              type: string
-            removeAllAqiMajorPollutantForecast:
-              type: string
-            setAtmosphericPressure:
-              type: string
-              nullable: true
-            removeAtmosphericPressure:
-              type: string
-            removeAllAtmosphericPressure:
-              type: string
-            setPressureTendency:
-              type: object
-              nullable: true
-            removePressureTendency:
-              type: object
-            removeAllPressureTendency:
-              type: object
-            setGustSpeed:
-              type: string
-              nullable: true
-            removeGustSpeed:
-              type: string
-            removeAllGustSpeed:
-              type: string
-            setWindDirection:
-              type: string
-              nullable: true
-            removeWindDirection:
-              type: string
-            removeAllWindDirection:
-              type: string
-            setWindSpeed:
-              type: string
-              nullable: true
-            removeWindSpeed:
-              type: string
-            removeAllWindSpeed:
-              type: string
-            setPrecipitation:
-              type: string
-              nullable: true
-            removePrecipitation:
-              type: string
-            removeAllPrecipitation:
-              type: string
-            setPrecipitationForecast:
-              type: string
-              nullable: true
-            removePrecipitationForecast:
-              type: string
-            removeAllPrecipitationForecast:
-              type: string
-            setRelativeHumidity:
-              type: string
-              nullable: true
-            removeRelativeHumidity:
-              type: string
-            removeAllRelativeHumidity:
-              type: string
-            setRelativeHumidityForecast:
-              type: string
-              nullable: true
-            removeRelativeHumidityForecast:
-              type: string
-            removeAllRelativeHumidityForecast:
-              type: string
-            setSnowHeight:
-              type: string
-              nullable: true
-            removeSnowHeight:
-              type: string
-            removeAllSnowHeight:
-              type: string
-            setAirTemperatureForecast:
-              type: string
-              nullable: true
-            removeAirTemperatureForecast:
-              type: string
-            removeAllAirTemperatureForecast:
-              type: string
-            setAirTemperatureTSA:
-              type: object
-              nullable: true
-            removeAirTemperatureTSA:
-              type: object
-            removeAllAirTemperatureTSA:
-              type: object
-            setFeelsLikeTemperature:
-              type: string
-              nullable: true
-            removeFeelsLikeTemperature:
-              type: string
-            removeAllFeelsLikeTemperature:
-              type: string
-            setTemperature:
-              type: string
-              nullable: true
-            removeTemperature:
-              type: string
-            removeAllTemperature:
-              type: string
-            setSolarRadiation:
-              type: string
-              nullable: true
-            removeSolarRadiation:
-              type: string
-            removeAllSolarRadiation:
-              type: string
-            setStreamGauge:
-              type: string
-              nullable: true
-            removeStreamGauge:
-              type: string
-            removeAllStreamGauge:
-              type: string
-            setUVIndexMax:
-              type: string
-              nullable: true
-            removeUVIndexMax:
-              type: string
-            removeAllUVIndexMax:
-              type: string
-            setVisibility:
-              type: object
-              nullable: true
-            removeVisibility:
-              type: object
-            removeAllVisibility:
-              type: object
-            setWeatherType:
-              type: string
-              nullable: true
-            removeWeatherType:
-              type: string
-            removeAllWeatherType:
-              type: string
             setDewPoint:
               type: string
               nullable: true
@@ -11202,6 +11885,20 @@ components:
               type: string
             removeAllDirectIrradiation:
               type: string
+            setFeelsLikeTemperature:
+              type: string
+              nullable: true
+            removeFeelsLikeTemperature:
+              type: string
+            removeAllFeelsLikeTemperature:
+              type: string
+            setGustSpeed:
+              type: string
+              nullable: true
+            removeGustSpeed:
+              type: string
+            removeAllGustSpeed:
+              type: string
             setIlluminance:
               type: string
               nullable: true
@@ -11209,47 +11906,138 @@ components:
               type: string
             removeAllIlluminance:
               type: string
-            setNgsildTenant:
-              type: string
-              nullable: true
-            removeNgsildTenant:
-              type: string
-            removeAllNgsildTenant:
-              type: string
-            setNgsildPath:
-              type: string
-              nullable: true
-            removeNgsildPath:
-              type: string
-            removeAllNgsildPath:
-              type: string
-            setNgsildData:
+            setOwner:
               type: object
               nullable: true
-            removeNgsildData:
+            removeOwner:
               type: object
-            removeAllNgsildData:
+            removeAllOwner:
               type: object
-            setEntityId:
+            setPrecipitation:
               type: string
               nullable: true
-            removeEntityId:
+            removePrecipitation:
               type: string
-            removeAllEntityId:
+            removeAllPrecipitation:
               type: string
-            setEntityShortId:
-              type: string
-              nullable: true
-            removeEntityShortId:
-              type: string
-            removeAllEntityShortId:
-              type: string
-            setNgsildContext:
+            setPrecipitationForecast:
               type: string
               nullable: true
-            removeNgsildContext:
+            removePrecipitationForecast:
               type: string
-            removeAllNgsildContext:
+            removeAllPrecipitationForecast:
+              type: string
+            setPressureTendency:
+              type: string
+              nullable: true
+            removePressureTendency:
+              type: string
+            removeAllPressureTendency:
+              type: string
+            setRefDevice:
+              type: string
+              nullable: true
+            removeRefDevice:
+              type: string
+            removeAllRefDevice:
+              type: string
+            setRefPointOfInterest:
+              type: string
+              nullable: true
+            removeRefPointOfInterest:
+              type: string
+            removeAllRefPointOfInterest:
+              type: string
+            setRelativeHumidity:
+              type: string
+              nullable: true
+            removeRelativeHumidity:
+              type: string
+            removeAllRelativeHumidity:
+              type: string
+            setRelativeHumidityForecast:
+              type: string
+              nullable: true
+            removeRelativeHumidityForecast:
+              type: string
+            removeAllRelativeHumidityForecast:
+              type: string
+            setSeeAlso:
+              type: string
+              nullable: true
+            removeSeeAlso:
+              type: string
+            removeAllSeeAlso:
+              type: string
+            setSnowHeight:
+              type: string
+              nullable: true
+            removeSnowHeight:
+              type: string
+            removeAllSnowHeight:
+              type: string
+            setSolarRadiation:
+              type: string
+              nullable: true
+            removeSolarRadiation:
+              type: string
+            removeAllSolarRadiation:
+              type: string
+            setSource:
+              type: string
+              nullable: true
+            removeSource:
+              type: string
+            removeAllSource:
+              type: string
+            setStreamGauge:
+              type: string
+              nullable: true
+            removeStreamGauge:
+              type: string
+            removeAllStreamGauge:
+              type: string
+            setTemperature:
+              type: string
+              nullable: true
+            removeTemperature:
+              type: string
+            removeAllTemperature:
+              type: string
+            setUVIndexMax:
+              type: string
+              nullable: true
+            removeUVIndexMax:
+              type: string
+            removeAllUVIndexMax:
+              type: string
+            setVisibility:
+              type: string
+              nullable: true
+            removeVisibility:
+              type: string
+            removeAllVisibility:
+              type: string
+            setWeatherType:
+              type: string
+              nullable: true
+            removeWeatherType:
+              type: string
+            removeAllWeatherType:
+              type: string
+            setWindDirection:
+              type: string
+              nullable: true
+            removeWindDirection:
+              type: string
+            removeAllWindDirection:
+              type: string
+            setWindSpeed:
+              type: string
+              nullable: true
+            removeWindSpeed:
+              type: string
+            removeAllWindSpeed:
               type: string
     POSTWeatherObservedRequest:
       allOf:
@@ -11259,10 +12047,6 @@ components:
               type: string
             description:
               type: string
-            address:
-              type: object
-            alternateName:
-              type: string
             location:
               type: object
             areaServedColors:
@@ -11279,6 +12063,36 @@ components:
                 type: string
             areaServed:
               type: object
+            id:
+              type: string
+            entityShortId:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            ngsildContext:
+              type: string
+            ngsildData:
+              type: object
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            atmosphericPressure:
+              type: string
             dataProvider:
               type: string
             dateCreated:
@@ -11287,81 +12101,55 @@ components:
               type: string
             dateObserved:
               type: string
-            owner:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
-              type: string
-            source:
-              type: string
-            seeAlso:
-              type: object
-            airQualityIndex:
-              type: string
-            airQualityIndexForecast:
-              type: string
-            aqiMajorPollutant:
-              type: string
-            aqiMajorPollutantForecast:
-              type: string
-            atmosphericPressure:
-              type: string
-            pressureTendency:
-              type: object
-            gustSpeed:
-              type: string
-            windDirection:
-              type: string
-            windSpeed:
-              type: string
-            precipitation:
-              type: string
-            precipitationForecast:
-              type: string
-            relativeHumidity:
-              type: string
-            relativeHumidityForecast:
-              type: string
-            snowHeight:
-              type: string
-            airTemperatureForecast:
-              type: string
-            airTemperatureTSA:
-              type: object
-            feelsLikeTemperature:
-              type: string
-            temperature:
-              type: string
-            solarRadiation:
-              type: string
-            streamGauge:
-              type: string
-            uVIndexMax:
-              type: string
-            visibility:
-              type: object
-            weatherType:
-              type: string
             dewPoint:
               type: string
             diffuseIrradiation:
               type: string
             directIrradiation:
               type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
             illuminance:
               type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
-              type: string
-            ngsildData:
+            owner:
               type: object
-            entityId:
+            precipitation:
               type: string
-            entityShortId:
+            precipitationForecast:
               type: string
-            ngsildContext:
+            pressureTendency:
+              type: string
+            refDevice:
+              type: string
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: string
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: string
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
               type: string
     POSTWeatherObservedResponse:
       allOf:
@@ -11371,9 +12159,117 @@ components:
               type: string
             description:
               type: string
+            location:
+              type: object
+            areaServedColors:
+              type: array
+              items:
+                type: string
+            areaServedTitles:
+              type: array
+              items:
+                type: string
+            areaServedLinks:
+              type: array
+              items:
+                type: string
+            areaServed:
+              type: object
+            id:
+              type: string
+            entityShortId:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            ngsildContext:
+              type: string
+            ngsildData:
+              type: object
             address:
               type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
             alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            atmosphericPressure:
+              type: string
+            dataProvider:
+              type: string
+            dateCreated:
+              type: string
+            dateModified:
+              type: string
+            dateObserved:
+              type: string
+            dewPoint:
+              type: string
+            diffuseIrradiation:
+              type: string
+            directIrradiation:
+              type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
+            illuminance:
+              type: string
+            owner:
+              type: object
+            precipitation:
+              type: string
+            precipitationForecast:
+              type: string
+            pressureTendency:
+              type: string
+            refDevice:
+              type: string
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: string
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: string
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
+              type: string
+    DELETEFilterWeatherObservedResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
               type: string
             location:
               type: object
@@ -11391,6 +12287,36 @@ components:
                 type: string
             areaServed:
               type: object
+            id:
+              type: string
+            entityShortId:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            ngsildContext:
+              type: string
+            ngsildData:
+              type: object
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            atmosphericPressure:
+              type: string
             dataProvider:
               type: string
             dateCreated:
@@ -11399,81 +12325,55 @@ components:
               type: string
             dateObserved:
               type: string
-            owner:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
-              type: string
-            source:
-              type: string
-            seeAlso:
-              type: object
-            airQualityIndex:
-              type: string
-            airQualityIndexForecast:
-              type: string
-            aqiMajorPollutant:
-              type: string
-            aqiMajorPollutantForecast:
-              type: string
-            atmosphericPressure:
-              type: string
-            pressureTendency:
-              type: object
-            gustSpeed:
-              type: string
-            windDirection:
-              type: string
-            windSpeed:
-              type: string
-            precipitation:
-              type: string
-            precipitationForecast:
-              type: string
-            relativeHumidity:
-              type: string
-            relativeHumidityForecast:
-              type: string
-            snowHeight:
-              type: string
-            airTemperatureForecast:
-              type: string
-            airTemperatureTSA:
-              type: object
-            feelsLikeTemperature:
-              type: string
-            temperature:
-              type: string
-            solarRadiation:
-              type: string
-            streamGauge:
-              type: string
-            uVIndexMax:
-              type: string
-            visibility:
-              type: object
-            weatherType:
-              type: string
             dewPoint:
               type: string
             diffuseIrradiation:
               type: string
             directIrradiation:
               type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
             illuminance:
               type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
-              type: string
-            ngsildData:
+            owner:
               type: object
-            entityId:
+            precipitation:
               type: string
-            entityShortId:
+            precipitationForecast:
               type: string
-            ngsildContext:
+            pressureTendency:
+              type: string
+            refDevice:
+              type: string
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: string
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: string
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
               type: string
     PUTImportWeatherObservedRequest:
       allOf:
@@ -11488,10 +12388,6 @@ components:
                     type: string
                   description:
                     type: string
-                  address:
-                    type: object
-                  alternateName:
-                    type: string
                   location:
                     type: object
                   areaServedColors:
@@ -11508,6 +12404,36 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  id:
+                    type: string
+                  entityShortId:
+                    type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
+                  ngsildContext:
+                    type: string
+                  ngsildData:
+                    type: object
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  atmosphericPressure:
+                    type: string
                   dataProvider:
                     type: string
                   dateCreated:
@@ -11516,81 +12442,55 @@ components:
                     type: string
                   dateObserved:
                     type: string
-                  owner:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
-                    type: string
-                  source:
-                    type: string
-                  seeAlso:
-                    type: object
-                  airQualityIndex:
-                    type: string
-                  airQualityIndexForecast:
-                    type: string
-                  aqiMajorPollutant:
-                    type: string
-                  aqiMajorPollutantForecast:
-                    type: string
-                  atmosphericPressure:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  gustSpeed:
-                    type: string
-                  windDirection:
-                    type: string
-                  windSpeed:
-                    type: string
-                  precipitation:
-                    type: string
-                  precipitationForecast:
-                    type: string
-                  relativeHumidity:
-                    type: string
-                  relativeHumidityForecast:
-                    type: string
-                  snowHeight:
-                    type: string
-                  airTemperatureForecast:
-                    type: string
-                  airTemperatureTSA:
-                    type: object
-                  feelsLikeTemperature:
-                    type: string
-                  temperature:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  streamGauge:
-                    type: string
-                  uVIndexMax:
-                    type: string
-                  visibility:
-                    type: object
-                  weatherType:
-                    type: string
                   dewPoint:
                     type: string
                   diffuseIrradiation:
                     type: string
                   directIrradiation:
                     type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
                   illuminance:
                     type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
-                    type: string
-                  ngsildData:
+                  owner:
                     type: object
-                  entityId:
+                  precipitation:
                     type: string
-                  entityShortId:
+                  precipitationForecast:
                     type: string
-                  ngsildContext:
+                  pressureTendency:
+                    type: string
+                  refDevice:
+                    type: string
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: string
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: string
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
                     type: string
     PUTImportWeatherObservedResponse:
       allOf:
@@ -11600,10 +12500,6 @@ components:
                     type: string
                   description:
                     type: string
-                  address:
-                    type: object
-                  alternateName:
-                    type: string
                   location:
                     type: object
                   areaServedColors:
@@ -11620,6 +12516,36 @@ components:
                       type: string
                   areaServed:
                     type: object
+                  id:
+                    type: string
+                  entityShortId:
+                    type: string
+                  ngsildTenant:
+                    type: string
+                  ngsildPath:
+                    type: string
+                  ngsildContext:
+                    type: string
+                  ngsildData:
+                    type: object
+                  address:
+                    type: object
+                  airQualityIndex:
+                    type: string
+                  airQualityIndexForecast:
+                    type: string
+                  airTemperatureForecast:
+                    type: string
+                  airTemperatureTSA:
+                    type: object
+                  alternateName:
+                    type: string
+                  aqiMajorPollutant:
+                    type: string
+                  aqiMajorPollutantForecast:
+                    type: string
+                  atmosphericPressure:
+                    type: string
                   dataProvider:
                     type: string
                   dateCreated:
@@ -11628,81 +12554,55 @@ components:
                     type: string
                   dateObserved:
                     type: string
-                  owner:
-                    type: object
-                  refDevice:
-                    type: object
-                  refPointOfInterest:
-                    type: string
-                  source:
-                    type: string
-                  seeAlso:
-                    type: object
-                  airQualityIndex:
-                    type: string
-                  airQualityIndexForecast:
-                    type: string
-                  aqiMajorPollutant:
-                    type: string
-                  aqiMajorPollutantForecast:
-                    type: string
-                  atmosphericPressure:
-                    type: string
-                  pressureTendency:
-                    type: object
-                  gustSpeed:
-                    type: string
-                  windDirection:
-                    type: string
-                  windSpeed:
-                    type: string
-                  precipitation:
-                    type: string
-                  precipitationForecast:
-                    type: string
-                  relativeHumidity:
-                    type: string
-                  relativeHumidityForecast:
-                    type: string
-                  snowHeight:
-                    type: string
-                  airTemperatureForecast:
-                    type: string
-                  airTemperatureTSA:
-                    type: object
-                  feelsLikeTemperature:
-                    type: string
-                  temperature:
-                    type: string
-                  solarRadiation:
-                    type: string
-                  streamGauge:
-                    type: string
-                  uVIndexMax:
-                    type: string
-                  visibility:
-                    type: object
-                  weatherType:
-                    type: string
                   dewPoint:
                     type: string
                   diffuseIrradiation:
                     type: string
                   directIrradiation:
                     type: string
+                  feelsLikeTemperature:
+                    type: string
+                  gustSpeed:
+                    type: string
                   illuminance:
                     type: string
-                  ngsildTenant:
-                    type: string
-                  ngsildPath:
-                    type: string
-                  ngsildData:
+                  owner:
                     type: object
-                  entityId:
+                  precipitation:
                     type: string
-                  entityShortId:
+                  precipitationForecast:
                     type: string
-                  ngsildContext:
+                  pressureTendency:
+                    type: string
+                  refDevice:
+                    type: string
+                  refPointOfInterest:
+                    type: string
+                  relativeHumidity:
+                    type: string
+                  relativeHumidityForecast:
+                    type: string
+                  seeAlso:
+                    type: string
+                  snowHeight:
+                    type: string
+                  solarRadiation:
+                    type: string
+                  source:
+                    type: string
+                  streamGauge:
+                    type: string
+                  temperature:
+                    type: string
+                  uVIndexMax:
+                    type: string
+                  visibility:
+                    type: string
+                  weatherType:
+                    type: string
+                  windDirection:
+                    type: string
+                  windSpeed:
                     type: string
     GETWeatherObservedResponse:
       allOf:
@@ -11712,10 +12612,6 @@ components:
               type: string
             description:
               type: string
-            address:
-              type: object
-            alternateName:
-              type: string
             location:
               type: object
             areaServedColors:
@@ -11732,6 +12628,36 @@ components:
                 type: string
             areaServed:
               type: object
+            id:
+              type: string
+            entityShortId:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            ngsildContext:
+              type: string
+            ngsildData:
+              type: object
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            atmosphericPressure:
+              type: string
             dataProvider:
               type: string
             dateCreated:
@@ -11740,81 +12666,55 @@ components:
               type: string
             dateObserved:
               type: string
-            owner:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
-              type: string
-            source:
-              type: string
-            seeAlso:
-              type: object
-            airQualityIndex:
-              type: string
-            airQualityIndexForecast:
-              type: string
-            aqiMajorPollutant:
-              type: string
-            aqiMajorPollutantForecast:
-              type: string
-            atmosphericPressure:
-              type: string
-            pressureTendency:
-              type: object
-            gustSpeed:
-              type: string
-            windDirection:
-              type: string
-            windSpeed:
-              type: string
-            precipitation:
-              type: string
-            precipitationForecast:
-              type: string
-            relativeHumidity:
-              type: string
-            relativeHumidityForecast:
-              type: string
-            snowHeight:
-              type: string
-            airTemperatureForecast:
-              type: string
-            airTemperatureTSA:
-              type: object
-            feelsLikeTemperature:
-              type: string
-            temperature:
-              type: string
-            solarRadiation:
-              type: string
-            streamGauge:
-              type: string
-            uVIndexMax:
-              type: string
-            visibility:
-              type: object
-            weatherType:
-              type: string
             dewPoint:
               type: string
             diffuseIrradiation:
               type: string
             directIrradiation:
               type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
             illuminance:
               type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
-              type: string
-            ngsildData:
+            owner:
               type: object
-            entityId:
+            precipitation:
               type: string
-            entityShortId:
+            precipitationForecast:
               type: string
-            ngsildContext:
+            pressureTendency:
+              type: string
+            refDevice:
+              type: string
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: string
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: string
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
               type: string
     DELETEWeatherObservedResponse:
       allOf:
@@ -11824,10 +12724,6 @@ components:
               type: string
             description:
               type: string
-            address:
-              type: object
-            alternateName:
-              type: string
             location:
               type: object
             areaServedColors:
@@ -11844,6 +12740,36 @@ components:
                 type: string
             areaServed:
               type: object
+            id:
+              type: string
+            entityShortId:
+              type: string
+            ngsildTenant:
+              type: string
+            ngsildPath:
+              type: string
+            ngsildContext:
+              type: string
+            ngsildData:
+              type: object
+            address:
+              type: object
+            airQualityIndex:
+              type: string
+            airQualityIndexForecast:
+              type: string
+            airTemperatureForecast:
+              type: string
+            airTemperatureTSA:
+              type: object
+            alternateName:
+              type: string
+            aqiMajorPollutant:
+              type: string
+            aqiMajorPollutantForecast:
+              type: string
+            atmosphericPressure:
+              type: string
             dataProvider:
               type: string
             dateCreated:
@@ -11852,81 +12778,55 @@ components:
               type: string
             dateObserved:
               type: string
-            owner:
-              type: object
-            refDevice:
-              type: object
-            refPointOfInterest:
-              type: string
-            source:
-              type: string
-            seeAlso:
-              type: object
-            airQualityIndex:
-              type: string
-            airQualityIndexForecast:
-              type: string
-            aqiMajorPollutant:
-              type: string
-            aqiMajorPollutantForecast:
-              type: string
-            atmosphericPressure:
-              type: string
-            pressureTendency:
-              type: object
-            gustSpeed:
-              type: string
-            windDirection:
-              type: string
-            windSpeed:
-              type: string
-            precipitation:
-              type: string
-            precipitationForecast:
-              type: string
-            relativeHumidity:
-              type: string
-            relativeHumidityForecast:
-              type: string
-            snowHeight:
-              type: string
-            airTemperatureForecast:
-              type: string
-            airTemperatureTSA:
-              type: object
-            feelsLikeTemperature:
-              type: string
-            temperature:
-              type: string
-            solarRadiation:
-              type: string
-            streamGauge:
-              type: string
-            uVIndexMax:
-              type: string
-            visibility:
-              type: object
-            weatherType:
-              type: string
             dewPoint:
               type: string
             diffuseIrradiation:
               type: string
             directIrradiation:
               type: string
+            feelsLikeTemperature:
+              type: string
+            gustSpeed:
+              type: string
             illuminance:
               type: string
-            ngsildTenant:
-              type: string
-            ngsildPath:
-              type: string
-            ngsildData:
+            owner:
               type: object
-            entityId:
+            precipitation:
               type: string
-            entityShortId:
+            precipitationForecast:
               type: string
-            ngsildContext:
+            pressureTendency:
+              type: string
+            refDevice:
+              type: string
+            refPointOfInterest:
+              type: string
+            relativeHumidity:
+              type: string
+            relativeHumidityForecast:
+              type: string
+            seeAlso:
+              type: string
+            snowHeight:
+              type: string
+            solarRadiation:
+              type: string
+            source:
+              type: string
+            streamGauge:
+              type: string
+            temperature:
+              type: string
+            uVIndexMax:
+              type: string
+            visibility:
+              type: string
+            weatherType:
+              type: string
+            windDirection:
+              type: string
+            windSpeed:
               type: string
     EditPageWeatherObservedResponse:
       allOf:
@@ -12143,6 +13043,26 @@ components:
             productNum:
               type: string
     POSTCompanyProductResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
+            emailTemplate:
+              type: string
+            storeUrl:
+              type: string
+            downloadUri:
+              type: string
+            productNum:
+              type: string
+    DELETEFilterCompanyProductResponse:
       allOf:
         - type: object
           properties:
@@ -12649,6 +13569,18 @@ components:
               type: string
             pageId:
               type: string
+    DELETEFilterUseCaseResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            authorName:
+              type: string
+            description:
+              type: string
+            pageId:
+              type: string
     PUTImportUseCaseRequest:
       allOf:
         - type: object
@@ -12750,6 +13682,8 @@ components:
                     type: string
                   caldav:
                     type: string
+                  nextWebinar:
+                    type: string
                   joinUrl:
                     type: string
     PATCHCompanyWebinarRequest:
@@ -12818,6 +13752,13 @@ components:
             removeCaldav:
               type: string
             removeAllCaldav:
+              type: string
+            setNextWebinar:
+              type: string
+              nullable: true
+            removeNextWebinar:
+              type: string
+            removeAllNextWebinar:
               type: string
             setJoinUrl:
               type: string
@@ -12893,6 +13834,13 @@ components:
               type: string
             removeAllCaldav:
               type: string
+            setNextWebinar:
+              type: string
+              nullable: true
+            removeNextWebinar:
+              type: string
+            removeAllNextWebinar:
+              type: string
             setJoinUrl:
               type: string
               nullable: true
@@ -12922,6 +13870,8 @@ components:
               type: string
             caldav:
               type: string
+            nextWebinar:
+              type: string
             joinUrl:
               type: string
     POSTCompanyWebinarResponse:
@@ -12945,6 +13895,8 @@ components:
             icalUrl:
               type: string
             caldav:
+              type: string
+            nextWebinar:
               type: string
             joinUrl:
               type: string
@@ -12975,6 +13927,8 @@ components:
                     type: string
                   caldav:
                     type: string
+                  nextWebinar:
+                    type: string
                   joinUrl:
                     type: string
     PUTImportCompanyWebinarResponse:
@@ -12999,6 +13953,8 @@ components:
                     type: string
                   caldav:
                     type: string
+                  nextWebinar:
+                    type: string
                   joinUrl:
                     type: string
     GETCompanyWebinarResponse:
@@ -13022,6 +13978,8 @@ components:
             icalUrl:
               type: string
             caldav:
+              type: string
+            nextWebinar:
               type: string
             joinUrl:
               type: string
@@ -13869,8 +14827,6 @@ components:
                     type: string
                   seeArchived:
                     type: boolean
-                  seeDeleted:
-                    type: boolean
                   displayName:
                     type: string
     PATCHSiteUserRequest:
@@ -13942,13 +14898,6 @@ components:
             removeSeeArchived:
               type: boolean
             removeAllSeeArchived:
-              type: boolean
-            setSeeDeleted:
-              type: boolean
-              nullable: true
-            removeSeeDeleted:
-              type: boolean
-            removeAllSeeDeleted:
               type: boolean
             setDisplayName:
               type: string
@@ -14027,13 +14976,6 @@ components:
               type: boolean
             removeAllSeeArchived:
               type: boolean
-            setSeeDeleted:
-              type: boolean
-              nullable: true
-            removeSeeDeleted:
-              type: boolean
-            removeAllSeeDeleted:
-              type: boolean
             setDisplayName:
               type: string
               nullable: true
@@ -14063,8 +15005,6 @@ components:
               type: string
             seeArchived:
               type: boolean
-            seeDeleted:
-              type: boolean
             displayName:
               type: string
     POSTSiteUserResponse:
@@ -14088,8 +15028,6 @@ components:
             userFullName:
               type: string
             seeArchived:
-              type: boolean
-            seeDeleted:
               type: boolean
             displayName:
               type: string

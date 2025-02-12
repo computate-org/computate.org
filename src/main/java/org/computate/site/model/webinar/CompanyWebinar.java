@@ -216,66 +216,117 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
               String endZoneId = mEnd.group(1);
               String endDateStr = mEnd.group(2);
               ZonedDateTime endDateTime = ZonedDateTime.parse(endDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
-              if(endDateTime.isBefore(now)) {
-                break;
-              }
 
               ZonedDateTime nextStart = null;
               ZonedDateTime nextEnd = null;
+              ZonedDateTime until = null;
               Matcher mRule = Pattern.compile("^RRULE:(.*)", Pattern.MULTILINE).matcher(eventStr);
               if(mRule.find()) {
                 String ruleStr = mRule.group(1);
                 if(ruleStr.contains("FREQ=WEEKLY") && ruleStr.contains("BYDAY=") && ruleStr.contains("UNTIL=")) {
-                  Matcher mByDay = Pattern.compile(";BYDAY=(.*?);", Pattern.MULTILINE).matcher(ruleStr);
+                  Matcher mByDay = Pattern.compile("\\;BYDAY=([^\\;\\n]+)", Pattern.MULTILINE).matcher(ruleStr);
+                  mByDay.find();
                   String byDayStr = mByDay.group(1);
-                  Matcher mUntil = Pattern.compile(";UNTIL=(.*?)[;\n]", Pattern.MULTILINE).matcher(ruleStr);
+                  Matcher mUntil = Pattern.compile("\\;UNTIL=([^\\;\\n]+)Z", Pattern.MULTILINE).matcher(ruleStr);
+                  mUntil.find();
                   String untilStr = mUntil.group(1);
-                  ZonedDateTime until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(startZoneId)));
+                  until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
                   String[] byDays = byDayStr.split(",");
-                  for(String byDay : byDays) {
-                    ZonedDateTime nextGuess = now
-                        .withHour(endDateTime.getHour())
-                        .withMinute(endDateTime.getMinute())
-                        .withSecond(endDateTime.getSecond())
-                        .withNano(endDateTime.getNano())
-                        .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(byDay)));
-                    if(nextGuess.isAfter(until)) {
+
+                  ZonedDateTime currentWeek = now
+                      .withHour(endDateTime.getHour())
+                      .withMinute(endDateTime.getMinute())
+                      .withSecond(endDateTime.getSecond())
+                      .withNano(endDateTime.getNano())
+                      ;
+                  while(currentWeek.isBefore(until)) {
+                    for(String byDay : byDays) {
+                      String byDayValue = null;
+                      switch(byDay) {
+                        case "SU":
+                          byDayValue = "SUNDAY";
+                          break;
+                        case "MO":
+                          byDayValue = "MONDAY";
+                          break;
+                        case "TU":
+                          byDayValue = "TUESDAY";
+                          break;
+                        case "WE":
+                          byDayValue = "WEDNESDAY";
+                          break;
+                        case "TH":
+                          byDayValue = "THURSDAY";
+                          break;
+                        case "FR":
+                          byDayValue = "FRIDAY";
+                          break;
+                        default:
+                          byDayValue = "SATURDAY";
+                          break;
+                      }
+
+                      ZonedDateTime nextGuess = currentWeek
+                          .withHour(endDateTime.getHour())
+                          .withMinute(endDateTime.getMinute())
+                          .withSecond(endDateTime.getSecond())
+                          .withNano(endDateTime.getNano())
+                          .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(byDayValue)));
+                      if(nextGuess.isAfter(until)) {
+                        break;
+                      } else {
+                        nextEnd = nextGuess;
+                        nextStart = nextGuess
+                            .withHour(startDateTime.getHour())
+                            .withMinute(startDateTime.getMinute())
+                            .withSecond(startDateTime.getSecond())
+                            .withNano(startDateTime.getNano());
+
+                        if(nextGuess.isBefore(now)) {
+                          nextEnd = null;
+                          nextStart = null;
+                          continue;
+                        } else {
+                          Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
+                          boolean mExceptionFound = mException.find();
+                          while (mExceptionFound) {
+                            String exceptionZoneId = mException.group(1);
+                            String exceptionDateStr = mException.group(2);
+                            ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
+                            if(exceptionDateTime.isEqual(nextStart)
+                                || exceptionDateTime.isEqual(nextEnd)
+                                || exceptionDateTime.isAfter(nextStart) && exceptionDateTime.isBefore(nextEnd)) {
+                              nextStart = null;
+                              nextEnd = null;
+                              break;
+                            }
+                          }
+                          if(nextStart != null) {
+                            break;
+                          }
+                        }
+                      }
+                    }
+                    if(nextStart != null) {
                       break;
                     } else {
-                      nextEnd = nextGuess;
-                      nextStart = nextGuess
-                          .withHour(startDateTime.getHour())
-                          .withMinute(startDateTime.getMinute())
-                          .withSecond(startDateTime.getSecond())
-                          .withNano(startDateTime.getNano());
-                      break;
+                      currentWeek = currentWeek.plusWeeks(1);
                     }
                   }
                 }
-                String ruleFreqStr = mRule.group(1);
-                String ruleByDayStr = mRule.group(2);
-                String untilDateStr = mRule.group(3);
-                ZonedDateTime untilDateTime = ZonedDateTime.parse(untilDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+              } else {
+                if(endDateTime.isBefore(now)) {
+                  mFound = mEvent.find();
+                  continue;
+                }
               }
 
               if(nextStart != null) {
-                Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
-                boolean mExceptionFound = mException.find();
-                while (mExceptionFound) {
-                  String exceptionZoneId = mException.group(1);
-                  String exceptionDateStr = mException.group(2);
-                  ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
-                  if(exceptionDateTime.isEqual(nextStart)
-                      || exceptionDateTime.isEqual(nextEnd)
-                      || exceptionDateTime.isAfter(nextStart) && exceptionDateTime.isBefore(nextEnd)) {
-                    nextStart = null;
-                    nextEnd = null;
-                    break;
-                  }
-                }
-              }
-              if(nextStart != null) {
                 nextWebinar = nextStart;
+                break;
+              } else {
+                mFound = mEvent.find();
+                continue;
               }
             }
             promise.complete();
@@ -300,7 +351,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 * Modify: false
 	 * HtmRow: 4
 	 * HtmCell: 5
-   * HtmColumn: 2
+   * HtmColumn: 3
 	 * DisplayName.enUS: next webinar
 	 * FormatHtm: MMM d, yyyy h:mm:ss a
 	 * Description: The start date time of the next webinar. 

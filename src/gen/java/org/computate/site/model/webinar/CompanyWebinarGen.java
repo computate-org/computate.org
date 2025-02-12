@@ -1728,7 +1728,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		case VAR_description:
 			return 2;
 		case VAR_nextWebinar:
-			return 2;
+			return 3;
 		case VAR_joinUrl:
 			return 0;
 			default:

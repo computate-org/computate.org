@@ -47,15 +47,15 @@
     </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { type: 'Point', coordinates: [ {{ DEFAULT_MAP_LOCATION.coordinates[0] }}, {{ DEFAULT_MAP_LOCATION.coordinates[1] }} ]};
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
       window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
       window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
       Promise.all([
-        customElements.whenDefined('sl-button')
-        , customElements.whenDefined('sl-input')
+        customElements.whenDefined('wa-button')
+        , customElements.whenDefined('wa-input')
       ]).then(() => {
 
         var pageId = {% if result.pageId is defined %}{{ result.pageId | tojson }}{% else %}null{% endif %};
@@ -89,16 +89,16 @@
         pageGraphCompanyWebinar();
         {% for key, value in varsQ.items() %}
 
-        document.querySelector('#qCompanyWebinar_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+        document.querySelector('#qCompanyWebinar_{{ key }}')?.addEventListener('wa-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
           qChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_{{ key }}'));
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyWebinar_rows')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyWebinar_rows')?.addEventListener('change', event => {
           paramChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_rows'));
         });
 
-        document.querySelector('#qCompanyWebinar_start')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyWebinar_start')?.addEventListener('change', event => {
           paramChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_start'));
         });
 
@@ -160,21 +160,25 @@
 {%- block htmBodyStartPageLayout %}
 {{ super() }}
 {%- block htmBodyStartCompanyWebinarPage %}
+{% if resultCount > 0 %}
+          <h1><a href="{{pageUri}}"><i class="fa-regular fa-video"></i> <span>webinars</span></a></h1>
+{%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
+{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
+{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
+{% endif %}
 {%- endblock htmBodyStartCompanyWebinarPage %}
 {%- endblock htmBodyStartPageLayout %}
 
 {%- block htmBodyMiddlePageLayout %}
 {%- block htmBodyMiddleCompanyWebinarPage %}
-{%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
-{%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
 {% if resultCount == 0 %}
         {% if varsFqCount > 0 %}
-        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
+        <wa-tooltip for="return-to-CompanyWebinar">back to all webinars</wa-tooltip>
+          <wa-button id="return-to-CompanyWebinar" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
             all webinars
-          </sl-button>
-        </sl-tooltip>
+          </wa-button>
+        </wa-tooltip>
         {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
@@ -188,70 +192,73 @@
           </span>
         </h2>
 {% else %}
+{%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
+          <form action="/en-us/api/webinar" id="CompanyWebinarForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="listCompanyWebinar" id="listCompanyWebinar" class="listCompanyWebinar"  value='{{ toJsonArrayStringInApostrophes(listCompanyWebinar) }}' type="hidden"/>
+          </form>
         <div class="pageContent ">
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
           {% if varsFqCount > 0 %}
           <div class="margin-block">
-            <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-            <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
+            <wa-tooltip for="return-to-CompanyWebinar">back to all webinars</wa-tooltip>
+            <wa-button id="return-to-CompanyWebinar" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
               all webinars
-            </sl-button>
+            </wa-button>
           </div>
           {% endif %}
-          <h1><a href="{{pageUri}}"><i class="fa-regular fa-video"></i> <span>webinars</span></a></h1>
-{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
-{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
 {% include en-us/search/webinar/CompanyWebinarPaginationButtons.htm %}
           <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
               <div></div>
-              <sl-dropdown id="htmDropdown-name">
-                <sl-button variant="primary" outline slot="trigger" caret>name</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+              <wa-dropdown id="htmDropdown-name">
+                <wa-button variant="brand" slot="trigger" caret>name</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by name ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown id="htmDropdown-description">
-                <sl-button variant="primary" outline slot="trigger" caret>description</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <wa-dropdown id="htmDropdown-description">
+                <wa-button variant="brand" slot="trigger" caret>description</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by description ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by description descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown id="htmDropdown-nextWebinar">
-                <sl-button variant="primary" outline slot="trigger" caret>next webinar</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-nextWebinar-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <wa-dropdown id="htmDropdown-nextWebinar">
+                <wa-button variant="brand" slot="trigger" caret>next webinar</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-nextWebinar-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by next webinar ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-nextWebinar-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-nextWebinar-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by next webinar descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
               <div></div>
             </div>
             {% for item in listCompanyWebinar%}
             <div>
-              <sl-button variant="primary" outline
+              <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_joinUrl"
                   placeholder="[String] Join the webinar"
                   label="Join the webinar"
@@ -262,7 +269,7 @@
                   >
                 <i class="fa-solid fa-video"></i>
                 Join the webinar
-              </sl-button>
+              </wa-button>
               <a href="{{ item.displayPage }}">
               {{ item.name }}
               </a>
@@ -270,9 +277,9 @@
               {{ item.description }}
               </a>
               <a href="{{ item.displayPage }}">
-              <sl-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.nextWebinar, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></sl-format-date>
+              <wa-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.nextWebinar, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></wa-format-date>
               </a>
-              <sl-button variant="primary" outline
+              <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
@@ -281,9 +288,9 @@
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
                   >
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-duotone fa-regular fa-pen-to-square"></i>
                 edit
-              </sl-button>
+              </wa-button>
             </div>
             {% endfor %}
               {% if getColumnJoinUrl is defined %}

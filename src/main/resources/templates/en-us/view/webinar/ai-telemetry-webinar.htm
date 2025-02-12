@@ -30,13 +30,12 @@
 {% endblock htmTitlePageLayout %}
 {% block htmBodyMiddlePageLayout %}
 
-        <div class="blue-teal-background background border-radius-x-large ">
-          <div class="intro-content">
-            <div class="wa-crown">
-              <h1 class="brand-font">
-                <i class="fa-duotone fa-solid fa-video fa-2x "></i>
-                {{ name }}
-              </h1>
+        <div class="wa-stack ">
+
+          <wa-card>
+            <div class="wa-flank">
+              <i class="fa-duotone fa-solid fa-video fa-2x "></i>
+              <h1>{{ result.name }}</h1>
             </div>
             <h2 class="brand-font">
               Come learn how to Computate as we build a brand new, public open source, custom data-driven platform 
@@ -44,10 +43,25 @@
               <i class="fa-brands fa-redhat fa-2xl fa-red" style="color: red; "></i>
               Red Hat Research in the New England Research Cloud! 
             </h2>
-            <h3 class="brand-font">
-              Watch the ai-telemetry project use the Computate Smart Cloud Deployer to deploy all the required microservices to the cloud, 
-              then do live development adding new features to the ai-telemetry project in OpenShift AI VSCode Java Workbench. 
-            </h3>
+          </wa-card>
+          <wa-card>
+            <div class="wa-grid">
+              <img src="{{ STATIC_BASE_URL }}/png/ai-telemetry/ai-telemetry-smart-cloud-deployer-video.png" 
+                  alt="AI Telemetry Smart Cloud Deployer Video"/>
+              <h2 class="wa-align-items-center wa-cluster ">
+                Watch the ai-telemetry project use the Computate Smart Cloud Deployer to deploy all the required microservices to the cloud, 
+                then do live development adding new features to the ai-telemetry project in OpenShift AI VSCode Java Workbench. 
+              </h2>
+            </div>
+          </wa-card>
+
+        </div>
+        <div class="blue-teal-background background border-radius-x-large ">
+          <div class="intro-content">
+            <wa-card>
+              <h1 class="brand-font">
+              </h1>
+            </wa-card>
             <iframe width="560" height="315" src="https://www.youtube.com/embed/Z3hgoWvlvQY?si=k0yj-0xHMWR8oubQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <h3 class="brand-font">
               The {{ name }} series will occur live weekdays from Sep 2, 2024 — Feb 28, 2025. 

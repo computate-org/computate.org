@@ -2,10 +2,10 @@ package org.computate.site.model.fiware.weatherobserved;
 
 import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
 import java.lang.String;
-import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.data.Point;
 import java.util.List;
 import io.vertx.pgclient.data.Polygon;
+import io.vertx.core.json.JsonObject;
 import java.math.BigDecimal;
 import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
@@ -133,9 +133,14 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
   }
 
   @Override
+  protected void _varsFqCount(Wrap<Integer> w) {
+  }
+
+  @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    WeatherObserved.varsFqForClass().forEach(var -> {
+    Integer varsFqCount = 0;
+    for(String var : WeatherObserved.varsFqForClass()) {
       String varIndexed = WeatherObserved.varIndexedWeatherObserved(var);
       String varStored = WeatherObserved.varStoredWeatherObserved(var);
       JsonObject json = new JsonObject();
@@ -145,7 +150,11 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
       String type = StringUtils.substringAfterLast(varIndexed, "_");
       json.put("displayName", Optional.ofNullable(WeatherObserved.displayNameWeatherObserved(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
       json.put("classSimpleName", Optional.ofNullable(WeatherObserved.classSimpleNameWeatherObserved(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListWeatherObserved_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(WeatherObserved.varIndexedWeatherObserved(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      Object v = searchListWeatherObserved_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(WeatherObserved.varIndexedWeatherObserved(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
+      if(v != null) {
+        json.put("val", v);
+        varsFqCount++;
+      }
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
         json.put("stats", JsonObject.mapFrom(stat));
       });
@@ -202,7 +211,7 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
         json.put("pivot", true);
       }
       vars.put(var, json);
-    });
+    }
   }
 
   @Override
@@ -376,12 +385,8 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
 
   @Override
   protected void _DEFAULT_MAP_LOCATION(Wrap<JsonObject> w) {
-    String pointStr = Optional.ofNullable(siteRequest_.getRequestVars().get(VAR_DEFAULT_MAP_LOCATION)).orElse(siteRequest_.getConfig().getString(ConfigKeys.DEFAULT_MAP_LOCATION));
-    if(pointStr != null) {
-      String[] parts = pointStr.replace("[", "").replace("]", "").replace("\"", "").split(",");
-      JsonObject point = new JsonObject().put("lat", Double.parseDouble(parts[0])).put("lon", Double.parseDouble(parts[1]));
-      w.o(point);
-    }
+    Point point = WeatherObserved.staticSetLocation(siteRequest_, Optional.ofNullable(siteRequest_.getRequestVars().get(VAR_DEFAULT_MAP_LOCATION)).orElse(siteRequest_.getConfig().getString(ConfigKeys.DEFAULT_MAP_LOCATION)));
+    w.o(new JsonObject().put("type", "Point").put("coordinates", new JsonArray().add(Double.valueOf(point.getX())).add(Double.valueOf(point.getY()))));
   }
 
   @Override
@@ -469,7 +474,7 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
    * Initialized: false
   **/
   protected void _result(Wrap<WeatherObserved> w) {
-    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("entityId")).orElse(null) != null)
+    if(resultCount >= 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("entityShortId")).orElse(null) != null)
       w.o(searchListWeatherObserved_.get(0));
   }
 
@@ -498,11 +503,11 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
     if(result != null && result.getTitle() != null)
       c.o(result.getTitle());
     else if(result != null)
-      c.o("weather observed devices");
+      c.o("WeatherObserveds");
     else if(searchListWeatherObserved_ == null || resultCount == 0)
-      c.o("no weather observed device found");
+      c.o("no WeatherObserved found");
     else
-      c.o("weather observed devices");
+      c.o("WeatherObserveds");
   }
 
   @Override
@@ -522,7 +527,7 @@ public class WeatherObservedGenPage extends WeatherObservedGenPageGen<PageLayout
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("For keeping track of temperature, humidity, and other weather related details. ");
+      c.o("An observation of weather conditions at a certain place and time. This data model has been developed in cooperation with mobile operators and the GSMA.");
   }
 
   @Override

@@ -1,16 +1,293 @@
+{%- macro inputCreatedCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_created">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyAbout inputCompanyAbout{{pageId}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
 
-{%- macro htmButton_patchCompanyAbout() %}<sl-button variant="primary" id="htmButton_patchCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmCreatedCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputModifiedCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_modified">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyAbout inputCompanyAbout{{pageId}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmModifiedCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputArchivedCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyAbout inputCompanyAbout{{pageId}}Archived "
+                      name="setArchived"
+                      data-pageId={{ result.pageId | tojson }}
+                      data-val="{{ result.archived | e }}"
+                      >archived</wa-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <wa-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyAbout inputCompanyAbout{{pageId}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyAbout inputCompanyAbout{{pageId}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyAbout inputCompanyAbout{{pageId}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if result.archived == true %}
+                      checked
+    {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >archived</wa-checkbox>
+  {%- else %}
+                      >
+                    <wa-option value="" selected="selected"></wa-option>
+                    <wa-option value="true">true</wa-option>
+                    <wa-option value="false">false</wa-option>
+                  </wa-select>
+  {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmArchivedCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNameCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_name">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] about name"
+                      label="about name"
+                      help-text="
+The about name. "
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyAbout inputCompanyAbout{{pageId}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyAbout inputCompanyAbout{{pageId}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyAbout inputCompanyAbout{{pageId}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.name | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNameCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNameCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDescriptionCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_description">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] about description"
+                      label="about description"
+                      help-text="
+The about description. "
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyAbout inputCompanyAbout{{pageId}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyAbout inputCompanyAbout{{pageId}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyAbout inputCompanyAbout{{pageId}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.description | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDescriptionCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputPageIdCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pageId">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyAbout inputCompanyAbout{{pageId}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyAbout inputCompanyAbout{{pageId}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classCompanyAbout inputCompanyAbout{{pageId}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pageId | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPageIdCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPageIdCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDisplayPageCompanyAboutPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_displayPage">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_displayPage"
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="Visit this product's landing page. "
+                      class="button-on-left {{classApiMethodMethod}}_displayPage classCompanyAbout inputCompanyAbout{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+                      href="{{ result.displayPage | e }}"
+                      >
+                    product page
+                  </wa-button>
+                  <div class="button-description-on-right ">Visit this product's landing page. </div>
+  {%- else %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="
+Visit this product's landing page. "
+                      id="{{classApiMethodMethod}}_displayPage"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyAbout inputCompanyAbout{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyAbout inputCompanyAbout{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage valueDisplayPage classCompanyAbout inputCompanyAbout{{pageId}}DisplayPage "
+                      name="displayPage"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.displayPage | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDisplayPageCompanyAboutPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDisplayPageCompanyAboutPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+
+{%- macro htmButton_patchCompanyAbout() %}<wa-button variant="brand" id="htmButton_patchCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-edit "></i>Modify</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchCompanyAbout() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_patchCompanyAbout"
-                >Modify about page</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_patchCompanyAbout">Modify about page</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchCompanyAbout() %}
-        <sl-dialog id="patchCompanyAboutDialog" label="Modify about page">
+        <wa-dialog with-footer id="patchCompanyAboutDialog" label="Modify about page">
           <form id="htmForm_patchCompanyAbout" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -70,8 +347,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -97,25 +374,23 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_patchCompanyAbout() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postCompanyAbout() %}<sl-button variant="primary" id="htmButton_postCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postCompanyAbout() %}<wa-button variant="brand" id="htmButton_postCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-plus "></i>Create</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_postCompanyAbout() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_postCompanyAbout"
-                >Create an about page</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_postCompanyAbout">Create an about page</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_postCompanyAbout() %}
-        <sl-dialog id="postCompanyAboutDialog" label="Create an about page">
+        <wa-dialog with-footer id="postCompanyAboutDialog" label="Create an about page">
           <form id="htmForm_postCompanyAbout" class="round-row primary-smart-border-radius ">
             <div>You can override any default values below: </div>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -175,8 +450,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -202,64 +477,58 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_postCompanyAbout() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteCompanyAbout() %}<sl-button variant="primary" id="htmButton_deleteCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteCompanyAbout() %}<wa-button variant="brand" id="htmButton_deleteCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteCompanyAbout() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_deleteCompanyAbout"
-                >Delete about page</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deleteCompanyAbout">Delete about page</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteCompanyAbout() %}
-        <sl-dialog id="deleteCompanyAboutDialog" label="Delete about page">
+        <wa-dialog with-footer id="deleteCompanyAboutDialog" label="Delete about page">
           <form id="htmForm_deleteCompanyAbout" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteCompanyAbout() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportCompanyAbout() %}<sl-button variant="primary" id="htmButton_putimportCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportCompanyAbout() %}<wa-button variant="brand" id="htmButton_putimportCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-import "></i>Import</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportCompanyAbout() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_putimportCompanyAbout"
-                >Import about</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_putimportCompanyAbout">Import about</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportCompanyAbout() %}
-        <sl-dialog id="putimportCompanyAboutDialog" label="Import about">
+        <wa-dialog with-footer id="putimportCompanyAboutDialog" label="Import about">
           <form id="htmForm_putimportCompanyAbout" class="round-row primary-smart-border-radius ">
             <div>
-              <sl-textarea
+              <wa-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pageId': ... , 'saves': [ ... ] }, ... ] }"
                   >
-              </sl-textarea>
+              </wa-textarea>
             </div>
           </form>
           {{ htmFormButton_putimportCompanyAbout() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_searchpageCompanyAbout() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageCompanyAbout() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_searchpageCompanyAbout"
-                >Search about</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_searchpageCompanyAbout">Search about</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageCompanyAbout() %}
-        <div id="searchpageCompanyAboutDialog" label="Search about">
+        <div with-footer id="searchpageCompanyAboutDialog" label="Search about">
           <div id="htmForm_searchpageCompanyAbout" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -319,8 +588,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -346,29 +615,43 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </div>
         </div>
 {%- endmacro %}
-          <sl-divider></sl-divider>
+
+{%- macro htmButton_deletefilterCompanyAbout() %}<wa-button variant="brand" id="htmButton_deletefilterCompanyAbout" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
+
+{%- macro htmFormButton_deletefilterCompanyAbout() %}
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deletefilterCompanyAbout">Delete about page</wa-button>
+{%- endmacro %}
+
+{%- macro htmForm_deletefilterCompanyAbout() %}
+        <wa-dialog with-footer id="deletefilterCompanyAboutDialog" label="Delete about page">
+          <form id="htmForm_deletefilterCompanyAbout" class="round-row primary-smart-border-radius ">
+          </form>
+          {{ htmFormButton_deletefilterCompanyAbout() }}
+        </wa-dialog>
+{%- endmacro %}
+          <wa-divider></wa-divider>
           <div id="htmButtonGroup">
             <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-    {% if resultCount == 1 %}
-              <sl-button variant="primary" id="refreshThisCompanyAboutGenPage"
+    {% if resultCount >= 1 %}
+              <wa-button variant="brand" id="refreshThisCompanyAboutGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisCompanyAboutGenPage')); }, function() { addError(document.querySelector('#refreshThisCompanyAboutGenPage')); }); return false; ">
-                <i slot="prefix" class="fas fa-sync-alt "></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-sync-alt "></i>
                 refresh
-              </sl-button>
+              </wa-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button variant="primary" id="refreshAllCompanyAboutGenPage{{ result.pageId | e }}"
+              <wa-button variant="brand" id="refreshAllCompanyAboutGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllCompanyAboutGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllCompanyAboutGenPage{{ result.pageId | e }}')); }); "
                   >
-                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-arrows-rotate"></i>
                 Refresh all 
-              </sl-button>
+              </wa-button>
     {% endif %}
   {% endif %}
 {% endif %}
@@ -378,27 +661,24 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_postCompanyAbout() }}
-    {%- else %}
-      {{ htmButton_postCompanyAbout() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmButton_postCompanyAbout() }}
   {%- else %}
     {{ htmButton_postCompanyAbout() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_deleteCompanyAbout() }}
-    {%- else %}
-    {%- endif %}
-  {%- else %}
+    {{ htmButton_deleteCompanyAbout() }}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmButton_putimportCompanyAbout() }}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount > 1 %}
+    {{ htmButton_deletefilterCompanyAbout() }}
+  {%- endif %}
 {%- endif %}
 
             </div>
@@ -409,25 +689,25 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_postCompanyAbout() }}
-    {%- else %}
-      {{ htmForm_postCompanyAbout() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_postCompanyAbout() }}
   {%- else %}
     {{ htmForm_postCompanyAbout() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_deleteCompanyAbout() }}
-    {%- else %}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deleteCompanyAbout() }}
   {%- else %}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmForm_putimportCompanyAbout() }}
 {%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deletefilterCompanyAbout() }}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+          <wa-divider></wa-divider>

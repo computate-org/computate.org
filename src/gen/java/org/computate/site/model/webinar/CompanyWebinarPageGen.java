@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import io.vertx.core.json.JsonArray;
+import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import java.lang.String;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;

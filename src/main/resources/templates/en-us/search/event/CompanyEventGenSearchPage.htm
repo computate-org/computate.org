@@ -76,7 +76,7 @@
         htm += `{%- block htmLegendCompanyEventPage %}
     <div title="${quoteattr(title)}">
     <div style="width: 20px; ">
-      <i class="fa-light fa-circle" style="color: ${color}; "></i>
+      <i class="{{ FONTAWESOME_STYLE }} fa-circle" style="color: ${color}; "></i>
     </div>
     <div class="text-overflow-ellipsis ">
       <span class="" data-solrId="${result.solrId}" onclick="window.mapLayers[this.getAttribute('data-solrId')].openPopup(); return false;" href="">${title}</span>
@@ -99,6 +99,15 @@
             , weight: 1
             , opacity: 0.7
             , fillOpacity: 0.7
+            , contextmenu: true
+            , contextmenuItems: [
+              {
+                text: 'Show coordinates'
+                , callback: function(event) {
+                  alert(event2.target.getLatLngs());
+                }
+              }
+            ]
           };
         } else if(feature.geometry.type == 'LineString') {
           return {
@@ -120,15 +129,15 @@
     </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { type: 'Point', coordinates: [ {{ DEFAULT_MAP_LOCATION.coordinates[0] }}, {{ DEFAULT_MAP_LOCATION.coordinates[1] }} ]};
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
       window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
       window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
       Promise.all([
-        customElements.whenDefined('sl-button')
-        , customElements.whenDefined('sl-input')
+        customElements.whenDefined('wa-button')
+        , customElements.whenDefined('wa-input')
       ]).then(() => {
 
         var pageId = {% if result.pageId is defined %}{{ result.pageId | tojson }}{% else %}null{% endif %};
@@ -162,16 +171,16 @@
         pageGraphCompanyEvent();
         {% for key, value in varsQ.items() %}
 
-        document.querySelector('#qCompanyEvent_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+        document.querySelector('#qCompanyEvent_{{ key }}')?.addEventListener('wa-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
           qChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_{{ key }}'));
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyEvent_rows')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyEvent_rows')?.addEventListener('wa-change', event => {
           paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_rows'));
         });
 
-        document.querySelector('#qCompanyEvent_start')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyEvent_start')?.addEventListener('wa-change', event => {
           paramChange('CompanyEvent', event.target, document.querySelector('#qCompanyEventDiv_start'));
         });
 
@@ -225,6 +234,16 @@
           searchpageCompanyEvent();
           return false;
         });
+
+        var submitForm_deletefilterCompanyEvent = document.querySelector('#htmForm_deletefilterCompanyEvent')?.addEventListener('submit', event => {
+          event.preventDefault();
+          return false;
+        });
+        document.querySelector('#htmFormButton_deletefilterCompanyEvent')?.addEventListener('click', event => {
+          event.preventDefault();
+          deletefilterCompanyEvent(event.target);
+          return false;
+        });
       });
     </script>
 {%- endblock htmScriptCompanyEventPage %}
@@ -243,20 +262,26 @@
 {%- block htmBodyStartPageLayout %}
 {{ super() }}
 {%- block htmBodyStartCompanyEventPage %}
+{% if resultCount > 0 %}
+          <h1><a href="{{pageUri}}"><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></a></h1>
+{%- include en-us/search/event/CompanyEventSuggestedSearch.htm %}
+{% include en-us/search/event/CompanyEventSearchButtons.htm %}
+{% include en-us/search/event/CompanyEventSearchForm.htm %}
+{% endif %}
 {%- endblock htmBodyStartCompanyEventPage %}
 {%- endblock htmBodyStartPageLayout %}
 
 {%- block htmBodyMiddlePageLayout %}
 {%- block htmBodyMiddleCompanyEventPage %}
-{%- include en-us/search/event/CompanyEventSidebar.htm %}
-{%- include en-us/search/event/CompanyEventSuggestedSearch.htm %}
 {% if resultCount == 0 %}
-        <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-          <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
+        {% if varsFqCount > 0 %}
+        <wa-tooltip for="return-to-CompanyEvent">back to all events</wa-tooltip>
+          <wa-button id="return-to-CompanyEvent" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
             all events
-          </sl-button>
-        </sl-tooltip>
+          </wa-button>
+        </wa-tooltip>
+        {% endif %}
         <h1><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></h1>
 {% include en-us/search/event/CompanyEventSearchButtons.htm %}
 {% include en-us/search/event/CompanyEventSearchForm.htm %}
@@ -269,61 +294,82 @@
           </span>
         </h2>
 {% else %}
+{%- include en-us/search/event/CompanyEventSidebar.htm %}
+          <form action="/en-us/api/event" id="CompanyEventForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
+            <input name="focusId" type="hidden"/>
+            <input name="pageResponse" id="pageResponse" class="pageResponse"  value='{{ toJsonObjectStringInApostrophes(pageResponse) }}' type="hidden"/>
+            <input name="listCompanyEvent" id="listCompanyEvent" class="listCompanyEvent"  value='{{ toJsonArrayStringInApostrophes(listCompanyEvent) }}' type="hidden"/>
+          </form>
         <div class="pageContent ">
           <div id="site-calendar-box">
             <div id="site-calendar"><!-- // --></div>
           </div>
+          {% if varsFqCount > 0 %}
           <div class="margin-block">
-            <sl-tooltip for="return-to-CompanyEvent">back to all events</sl-tooltip>
-            <sl-button id="return-to-CompanyEvent" variant="primary" href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
+            <wa-tooltip for="return-to-CompanyEvent">back to all events</wa-tooltip>
+            <wa-button id="return-to-CompanyEvent" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
               all events
-            </sl-button>
+            </wa-button>
           </div>
-          <h1><a href="{{pageUri}}"><i class="fa-duotone fa-solid fa-map-location-dot"></i> <span>events</span></a></h1>
-{% include en-us/search/event/CompanyEventSearchButtons.htm %}
-{% include en-us/search/event/CompanyEventSearchForm.htm %}
+          {% endif %}
 {% include en-us/search/event/CompanyEventPaginationButtons.htm %}
           <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
-              <sl-dropdown id="htmDropdown-name">
-                <sl-button variant="primary" slot="trigger" caret>event name</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+              <wa-dropdown id="htmDropdown-startDateTime">
+                <wa-button variant="brand" slot="trigger" caret>start date time</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-startDateTime-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
+                    sort by start date time ascending
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-startDateTime-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
+                    sort by start date time descending
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <wa-dropdown id="htmDropdown-name">
+                <wa-button variant="brand" slot="trigger" caret>event name</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-name-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by event name ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by event name descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
-              <sl-dropdown id="htmDropdown-description">
-                <sl-button variant="primary" slot="trigger" caret>event description</sl-button>
-                <sl-menu>
-                  <sl-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
-                    <i class="fa-solid fa-arrow-down-a-z"></i>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <wa-dropdown id="htmDropdown-description">
+                <wa-button variant="brand" slot="trigger" caret>event description</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
                     sort by event description ascending
-                  </sl-menu-item>
-                  <sl-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
-                    <i class="fa-solid fa-arrow-down-z-a"></i>
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by event description descending
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
               <div></div>
             </div>
             {% for item in listCompanyEvent%}
             <div>
               <a href="{{ item.displayPage }}">
                 <i class="fa-duotone fa-solid fa-map-location-dot"></i>
+              <wa-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.startDateTime, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></wa-format-date>
+              </a>
+              <a href="{{ item.displayPage }}">
               {{ item.name }}
               </a>
               <a href="{{ item.displayPage }}">
               {{ item.description }}
               </a>
-              <sl-button variant="primary"
+              <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_editPage"
                   placeholder="[String] edit"
                   label="edit"
@@ -332,11 +378,15 @@
                   name="setEditPage"
                   href="{{ item.editPage | e }}"
                   >
-                <i class="fa-solid fa-pen-to-square"></i>
+                <i class="fa-duotone fa-regular fa-pen-to-square"></i>
                 edit
-              </sl-button>
+              </wa-button>
             </div>
             {% endfor %}
+              {% if getColumnStartDateTime is defined %}
+                <div>
+                </div>
+              {% endif %}
               {% if getColumnName is defined %}
                 <div>
                 </div>

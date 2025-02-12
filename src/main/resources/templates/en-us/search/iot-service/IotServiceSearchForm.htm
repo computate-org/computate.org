@@ -1,16 +1,463 @@
+{%- macro inputPkIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pk">
+  {%- endif %}
+                  <wa-input
+                      readonly
+                      placeholder="[Long] primary key"
+                      label="primary key"
+                      help-text="
+The primary key of this object in the database"
+                      id="{{classApiMethodMethod}}_pk"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classIotService inputIotService{{pageId}}Pk "
+                      name="setPk"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pk setPk classIotService inputIotService{{pageId}}Pk "
+                      name="setPk"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pk valuePk classIotService inputIotService{{pageId}}Pk "
+                      name="pk"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pk | e }}"
+  {%- endif %}
+                      ></wa-input>
 
-{%- macro htmButton_patchIotService() %}<sl-button variant="primary" id="htmButton_patchIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPkIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPkIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputCreatedIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_created">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classIotService inputIotService{{pageId}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmCreatedIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputModifiedIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_modified">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classIotService inputIotService{{pageId}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmModifiedIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputArchivedIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classIotService inputIotService{{pageId}}Archived "
+                      name="setArchived"
+                      data-pageId={{ result.pageId | tojson }}
+                      data-val="{{ result.archived | e }}"
+                      >archive</wa-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <wa-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archive"
+                      label="archive"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classIotService inputIotService{{pageId}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classIotService inputIotService{{pageId}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classIotService inputIotService{{pageId}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if result.archived == true %}
+                      checked
+    {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >archive</wa-checkbox>
+  {%- else %}
+                      >
+                    <wa-option value="" selected="selected"></wa-option>
+                    <wa-option value="true">true</wa-option>
+                    <wa-option value="false">false</wa-option>
+                  </wa-select>
+  {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmArchivedIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputEntityTypeIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_entityType">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] entity type"
+                      label="entity type"
+                      help-text="
+The NGSI-LD entity type"
+                      id="{{classApiMethodMethod}}_entityType"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_entityType setEntityType classIotService inputIotService{{pageId}}EntityType "
+                      name="setEntityType"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_entityType setEntityType classIotService inputIotService{{pageId}}EntityType "
+                      name="setEntityType"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_entityType valueEntityType classIotService inputIotService{{pageId}}EntityType "
+                      name="entityType"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.entityType | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmEntityTypeIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputEntityTypeIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputApiKeyIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_apiKey">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] API key"
+                      label="API key"
+                      help-text="
+The NGSI-LD API Key"
+                      id="{{classApiMethodMethod}}_apiKey"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_apiKey setApiKey classIotService inputIotService{{pageId}}ApiKey "
+                      name="setApiKey"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_apiKey setApiKey classIotService inputIotService{{pageId}}ApiKey "
+                      name="setApiKey"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_apiKey valueApiKey classIotService inputIotService{{pageId}}ApiKey "
+                      name="apiKey"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.apiKey | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmApiKeyIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputApiKeyIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputResourceIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_resource">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] resource"
+                      label="resource"
+                      help-text="
+The NGSI-LD resource"
+                      id="{{classApiMethodMethod}}_resource"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_resource setResource classIotService inputIotService{{pageId}}Resource "
+                      name="setResource"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_resource setResource classIotService inputIotService{{pageId}}Resource "
+                      name="setResource"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_resource valueResource classIotService inputIotService{{pageId}}Resource "
+                      name="resource"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.resource | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmResourceIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputResourceIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNgsildTenantIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_ngsildTenant">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] NGSILD-Tenant"
+                      label="NGSILD-Tenant"
+                      help-text="
+The NGSILD-Tenant or Fiware-Service"
+                      id="{{classApiMethodMethod}}_ngsildTenant"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant setNgsildTenant classIotService inputIotService{{pageId}}NgsildTenant "
+                      name="setNgsildTenant"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant setNgsildTenant classIotService inputIotService{{pageId}}NgsildTenant "
+                      name="setNgsildTenant"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildTenant valueNgsildTenant classIotService inputIotService{{pageId}}NgsildTenant "
+                      name="ngsildTenant"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.ngsildTenant | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNgsildTenantIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNgsildTenantIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNgsildPathIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_ngsildPath">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] NGSILD-Path"
+                      label="NGSILD-Path"
+                      help-text="
+The NGSILD-Path or Fiware-ServicePath"
+                      id="{{classApiMethodMethod}}_ngsildPath"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath setNgsildPath classIotService inputIotService{{pageId}}NgsildPath "
+                      name="setNgsildPath"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath setNgsildPath classIotService inputIotService{{pageId}}NgsildPath "
+                      name="setNgsildPath"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_ngsildPath valueNgsildPath classIotService inputIotService{{pageId}}NgsildPath "
+                      name="ngsildPath"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.ngsildPath | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNgsildPathIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNgsildPathIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputCbHostIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_cbHost">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] context broker host"
+                      label="context broker host"
+                      help-text="
+The NGSI-LD Context Broker host"
+                      id="{{classApiMethodMethod}}_cbHost"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pageId}}CbHost "
+                      name="setCbHost"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_cbHost setCbHost classIotService inputIotService{{pageId}}CbHost "
+                      name="setCbHost"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_cbHost valueCbHost classIotService inputIotService{{pageId}}CbHost "
+                      name="cbHost"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.cbHost | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmCbHostIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCbHostIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputAttributesIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_attributes">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[JsonArray] attributes"
+                      label="attributes"
+                      help-text="
+The NGSI-LD attributes"
+                      id="{{classApiMethodMethod}}_attributes"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pageId}}Attributes "
+                      name="setAttributes"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_attributes setAttributes classIotService inputIotService{{pageId}}Attributes "
+                      name="setAttributes"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_attributes valueAttributes classIotService inputIotService{{pageId}}Attributes "
+                      name="attributes"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{ toJsonArrayString(result.attributes) | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmAttributesIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputAttributesIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputPageIdIotServicePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pageId">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pageId}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classIotService inputIotService{{pageId}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classIotService inputIotService{{pageId}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pageId | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPageIdIotServicePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPageIdIotServicePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+
+{%- macro htmButton_patchIotService() %}<wa-button variant="brand" id="htmButton_patchIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-edit "></i>Modify</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchIotService() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_patchIotService"
-                >Modify IoT service</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_patchIotService">Modify IoT service</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchIotService() %}
-        <sl-dialog id="patchIotServiceDialog" label="Modify IoT service">
+        <wa-dialog with-footer id="patchIotServiceDialog" label="Modify IoT service">
           <form id="htmForm_patchIotService" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -58,8 +505,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="iot-service-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="iot-service-details">
               <div slot="summary">
                 <span>IoT service details</span>
               </div>
@@ -141,8 +588,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -157,36 +604,24 @@
                   {{ htmPageIdIotServicePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageIotServicePage(classApiMethodMethod='PATCH', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='PATCH', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_patchIotService() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postIotService() %}<sl-button variant="primary" id="htmButton_postIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postIotService() %}<wa-button variant="brand" id="htmButton_postIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-plus "></i>Create</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_postIotService() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_postIotService"
-                >Create an IoT service</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_postIotService">Create an IoT service</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_postIotService() %}
-        <sl-dialog id="postIotServiceDialog" label="Create an IoT service">
+        <wa-dialog with-footer id="postIotServiceDialog" label="Create an IoT service">
           <form id="htmForm_postIotService" class="round-row primary-smart-border-radius ">
             <div>You can override any default values below: </div>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -234,8 +669,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="iot-service-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="iot-service-details">
               <div slot="summary">
                 <span>IoT service details</span>
               </div>
@@ -317,8 +752,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -333,75 +768,59 @@
                   {{ htmPageIdIotServicePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageIotServicePage(classApiMethodMethod='POST', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='POST', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_postIotService() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteIotService() %}<sl-button variant="primary" id="htmButton_deleteIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteIotService() %}<wa-button variant="brand" id="htmButton_deleteIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteIotService() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_deleteIotService"
-                >Delete IoT service</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deleteIotService">Delete IoT service</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteIotService() %}
-        <sl-dialog id="deleteIotServiceDialog" label="Delete IoT service">
+        <wa-dialog with-footer id="deleteIotServiceDialog" label="Delete IoT service">
           <form id="htmForm_deleteIotService" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteIotService() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportIotService() %}<sl-button variant="primary" id="htmButton_putimportIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportIotService() %}<wa-button variant="brand" id="htmButton_putimportIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-import "></i>Import</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportIotService() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_putimportIotService"
-                >Import IoT services</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_putimportIotService">Import IoT services</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportIotService() %}
-        <sl-dialog id="putimportIotServiceDialog" label="Import IoT services">
+        <wa-dialog with-footer id="putimportIotServiceDialog" label="Import IoT services">
           <form id="htmForm_putimportIotService" class="round-row primary-smart-border-radius ">
             <div>
-              <sl-textarea
+              <wa-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pageId': ... , 'saves': [ ... ] }, ... ] }"
                   >
-              </sl-textarea>
+              </wa-textarea>
             </div>
           </form>
           {{ htmFormButton_putimportIotService() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_searchpageIotService() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageIotService() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_searchpageIotService"
-                >Search IoT services</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_searchpageIotService">Search IoT services</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageIotService() %}
-        <div id="searchpageIotServiceDialog" label="Search IoT services">
+        <div with-footer id="searchpageIotServiceDialog" label="Search IoT services">
           <div id="htmForm_searchpageIotService" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -449,8 +868,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details class="HtmRow" id="iot-service-details">
+            </wa-details>
+            <wa-details class="HtmRow" id="iot-service-details">
               <div slot="summary">
                 <span>IoT service details</span>
               </div>
@@ -532,8 +951,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -548,40 +967,44 @@
                   {{ htmPageIdIotServicePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
                 {%- endif %}
               {%- endif %}
-
-              {%- if "PATCH" in scopes %}
-                {{ htmDisplayPageIotServicePage(classApiMethodMethod='Page', authForWriteBool=true, authForReadBool=true) }}
-              {%- else %}
-                {%- if "GET" in scopes %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=true) }}
-                {%- else %}
-                  {{ htmDisplayPageIotServicePage(classApiMethodMethod='Page', authForWriteBool=false, authForReadBool=false) }}
-                {%- endif %}
-              {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </div>
         </div>
 {%- endmacro %}
-          <sl-divider></sl-divider>
+
+{%- macro htmButton_deletefilterIotService() %}<wa-button variant="brand" id="htmButton_deletefilterIotService" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
+
+{%- macro htmFormButton_deletefilterIotService() %}
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deletefilterIotService">Delete IoT service</wa-button>
+{%- endmacro %}
+
+{%- macro htmForm_deletefilterIotService() %}
+        <wa-dialog with-footer id="deletefilterIotServiceDialog" label="Delete IoT service">
+          <form id="htmForm_deletefilterIotService" class="round-row primary-smart-border-radius ">
+          </form>
+          {{ htmFormButton_deletefilterIotService() }}
+        </wa-dialog>
+{%- endmacro %}
+          <wa-divider></wa-divider>
           <div id="htmButtonGroup">
             <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-    {% if resultCount == 1 %}
-              <sl-button variant="primary" id="refreshThisIotServiceGenPage"
+    {% if resultCount >= 1 %}
+              <wa-button variant="brand" id="refreshThisIotServiceGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisIotServiceGenPage')); }, function() { addError(document.querySelector('#refreshThisIotServiceGenPage')); }); return false; ">
-                <i slot="prefix" class="fas fa-sync-alt "></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-sync-alt "></i>
                 refresh
-              </sl-button>
+              </wa-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button variant="primary" id="refreshAllIotServiceGenPage{{ result.pageId | e }}"
+              <wa-button variant="brand" id="refreshAllIotServiceGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllIotServiceGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllIotServiceGenPage{{ result.pageId | e }}')); }); "
                   >
-                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-arrows-rotate"></i>
                 Refresh all 
-              </sl-button>
+              </wa-button>
     {% endif %}
   {% endif %}
 {% endif %}
@@ -591,27 +1014,24 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_postIotService() }}
-    {%- else %}
-      {{ htmButton_postIotService() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmButton_postIotService() }}
   {%- else %}
     {{ htmButton_postIotService() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_deleteIotService() }}
-    {%- else %}
-    {%- endif %}
-  {%- else %}
+    {{ htmButton_deleteIotService() }}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmButton_putimportIotService() }}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount > 1 %}
+    {{ htmButton_deletefilterIotService() }}
+  {%- endif %}
 {%- endif %}
 
             </div>
@@ -622,25 +1042,25 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_postIotService() }}
-    {%- else %}
-      {{ htmForm_postIotService() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_postIotService() }}
   {%- else %}
     {{ htmForm_postIotService() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_deleteIotService() }}
-    {%- else %}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deleteIotService() }}
   {%- else %}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmForm_putimportIotService() }}
 {%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deletefilterIotService() }}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+          <wa-divider></wa-divider>

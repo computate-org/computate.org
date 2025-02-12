@@ -131,9 +131,14 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
   }
 
   @Override
+  protected void _varsFqCount(Wrap<Integer> w) {
+  }
+
+  @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    CompanyAbout.varsFqForClass().forEach(var -> {
+    Integer varsFqCount = 0;
+    for(String var : CompanyAbout.varsFqForClass()) {
       String varIndexed = CompanyAbout.varIndexedCompanyAbout(var);
       String varStored = CompanyAbout.varStoredCompanyAbout(var);
       JsonObject json = new JsonObject();
@@ -143,7 +148,11 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
       String type = StringUtils.substringAfterLast(varIndexed, "_");
       json.put("displayName", Optional.ofNullable(CompanyAbout.displayNameCompanyAbout(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
       json.put("classSimpleName", Optional.ofNullable(CompanyAbout.classSimpleNameCompanyAbout(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListCompanyAbout_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyAbout.varIndexedCompanyAbout(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      Object v = searchListCompanyAbout_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyAbout.varIndexedCompanyAbout(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
+      if(v != null) {
+        json.put("val", v);
+        varsFqCount++;
+      }
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
         json.put("stats", JsonObject.mapFrom(stat));
       });
@@ -200,7 +209,7 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
         json.put("pivot", true);
       }
       vars.put(var, json);
-    });
+    }
   }
 
   @Override
@@ -374,12 +383,6 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
 
   @Override
   protected void _DEFAULT_MAP_LOCATION(Wrap<JsonObject> w) {
-    String pointStr = Optional.ofNullable(siteRequest_.getRequestVars().get(VAR_DEFAULT_MAP_LOCATION)).orElse(siteRequest_.getConfig().getString(ConfigKeys.DEFAULT_MAP_LOCATION));
-    if(pointStr != null) {
-      String[] parts = pointStr.replace("[", "").replace("]", "").replace("\"", "").split(",");
-      JsonObject point = new JsonObject().put("lat", Double.parseDouble(parts[0])).put("lon", Double.parseDouble(parts[1]));
-      w.o(point);
-    }
   }
 
   @Override
@@ -467,7 +470,7 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
    * Initialized: false
   **/
   protected void _result(Wrap<CompanyAbout> w) {
-    if(resultCount == 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
+    if(resultCount >= 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
       w.o(searchListCompanyAbout_.get(0));
   }
 

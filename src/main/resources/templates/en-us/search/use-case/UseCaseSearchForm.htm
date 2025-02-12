@@ -1,16 +1,330 @@
+{%- macro inputCreatedUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_created">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A created timestamp for this record in the database"
+                      label="created"
+                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classUseCase inputUseCase{{pageId}}Created "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_created"
+                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
 
-{%- macro htmButton_patchUseCase() %}<sl-button variant="primary" id="htmButton_patchUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-edit "></i>Modify</sl-button>{%- endmacro %}
+{%- macro htmCreatedUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputCreatedUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputModifiedUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_modified">
+  {%- endif %}
+                  <wa-input
+                      type="text"
+                      readonly
+                      help-text="A modified timestamp for this record in the database"
+                      label="modified"
+                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classUseCase inputUseCase{{pageId}}Modified "
+                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
+                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
+                      id="{{classApiMethodMethod}}_modified"
+                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
+  {%- if 'Page' == classApiMethodMethod %}
+  {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >
+                  </wa-input>
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmModifiedUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputModifiedUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputArchivedUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_archived">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_archived"
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+                      class="label-on-left {{classApiMethodMethod}}_archived classUseCase inputUseCase{{pageId}}Archived "
+                      name="setArchived"
+                      data-pageId={{ result.pageId | tojson }}
+                      data-val="{{ result.archived | e }}"
+                      >archived</wa-button>
+  {%- else %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-checkbox
+                      id="{{classApiMethodMethod}}_archived"
+                      value="true"
+  {%- else %}
+                  <wa-select
+                      id="{{classApiMethodMethod}}_archived"
+  {%- endif %}
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="archived"
+                      label="archived"
+                      help-text="For archiving this record"
+  {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classUseCase inputUseCase{{pageId}}Archived "
+                      name="setArchived"
+  {%- else %}
+    {%- if 'Page' == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_archived classUseCase inputUseCase{{pageId}}Archived "
+                      name="setArchived"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classUseCase inputUseCase{{pageId}}Archived "
+                      name="setArchived"
+    {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+    {%- if result.archived == true %}
+                      checked
+    {%- endif %}
+                      data-pageId={{ result.pageId | tojson }}
+                      >archived</wa-checkbox>
+  {%- else %}
+                      >
+                    <wa-option value="" selected="selected"></wa-option>
+                    <wa-option value="true">true</wa-option>
+                    <wa-option value="false">false</wa-option>
+                  </wa-select>
+  {%- endif %}
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmArchivedUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputArchivedUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputNameUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_name">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] use case name"
+                      label="use case name"
+                      help-text="
+The use case name. "
+                      id="{{classApiMethodMethod}}_name"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classUseCase inputUseCase{{pageId}}Name "
+                      name="setName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_name setName classUseCase inputUseCase{{pageId}}Name "
+                      name="setName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_name valueName classUseCase inputUseCase{{pageId}}Name "
+                      name="name"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.name | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmNameUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputNameUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputAuthorNameUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_authorName">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] author name"
+                      label="author name"
+                      help-text="
+The author name. "
+                      id="{{classApiMethodMethod}}_authorName"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_authorName setAuthorName classUseCase inputUseCase{{pageId}}AuthorName "
+                      name="setAuthorName"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_authorName setAuthorName classUseCase inputUseCase{{pageId}}AuthorName "
+                      name="setAuthorName"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_authorName valueAuthorName classUseCase inputUseCase{{pageId}}AuthorName "
+                      name="authorName"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.authorName | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmAuthorNameUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputAuthorNameUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDescriptionUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_description">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] use case description"
+                      label="use case description"
+                      help-text="
+The use case description. "
+                      id="{{classApiMethodMethod}}_description"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classUseCase inputUseCase{{pageId}}Description "
+                      name="setDescription"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_description setDescription classUseCase inputUseCase{{pageId}}Description "
+                      name="setDescription"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classUseCase inputUseCase{{pageId}}Description "
+                      name="description"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.description | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDescriptionUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDescriptionUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputPageIdUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_pageId">
+  {%- endif %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] Page ID"
+                      label="Page ID"
+                      help-text="
+The ID for this page. "
+                      id="{{classApiMethodMethod}}_pageId"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classUseCase inputUseCase{{pageId}}PageId "
+                      name="setPageId"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classUseCase inputUseCase{{pageId}}PageId "
+                      name="setPageId"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classUseCase inputUseCase{{pageId}}PageId "
+                      name="pageId"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.pageId | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmPageIdUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputPageIdUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+{%- macro inputDisplayPageUseCasePage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
+  {%- if 'Page' == classApiMethodMethod %}
+                <form class="subgrid-2col " id="PageForm_displayPage">
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                  <wa-button variant="brand"
+                      id="{{classApiMethodMethod}}_displayPage"
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="Visit this product's landing page. "
+                      class="button-on-left {{classApiMethodMethod}}_displayPage classUseCase inputUseCase{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+                      href="{{ result.displayPage | e }}"
+                      >
+                    product page
+                  </wa-button>
+                  <div class="button-description-on-right ">Visit this product's landing page. </div>
+  {%- else %}
+                  <wa-input
+                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
+                      placeholder="[String] product page"
+                      label="product page"
+                      help-text="
+Visit this product's landing page. "
+                      id="{{classApiMethodMethod}}_displayPage"
+  {%- if "Page" == classApiMethodMethod %}
+                      data-pageId={{ result.pageId | tojson }}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classUseCase inputUseCase{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+  {%- else %}
+    {%- if "PATCH" == classApiMethodMethod %}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classUseCase inputUseCase{{pageId}}DisplayPage "
+                      name="setDisplayPage"
+    {%- else %}
+                      class="label-on-left {{classApiMethodMethod}}_displayPage valueDisplayPage classUseCase inputUseCase{{pageId}}DisplayPage "
+                      name="displayPage"
+    {%- endif %}
+  {%- endif %}
+  {%- if "Page" == classApiMethodMethod %}
+                      value="{{result.displayPage | e }}"
+  {%- endif %}
+                      ></wa-input>
+
+  {%- endif %}
+  {%- if 'Page' == classApiMethodMethod %}
+                </form>
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro htmDisplayPageUseCasePage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
+                            {{ inputDisplayPageUseCasePage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
+{%- endmacro %}
+
+{%- macro htmButton_patchUseCase() %}<wa-button variant="brand" id="htmButton_patchUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-edit "></i>Modify</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_patchUseCase() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_patchUseCase"
-                >Modify use case</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_patchUseCase">Modify use case</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_patchUseCase() %}
-        <sl-dialog id="patchUseCaseDialog" label="Modify use case">
+        <wa-dialog with-footer id="patchUseCaseDialog" label="Modify use case">
           <form id="htmForm_patchUseCase" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -80,8 +394,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -107,25 +421,23 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_patchUseCase() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_postUseCase() %}<sl-button variant="primary" id="htmButton_postUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-plus "></i>Create</sl-button>{%- endmacro %}
+{%- macro htmButton_postUseCase() %}<wa-button variant="brand" id="htmButton_postUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-plus "></i>Create</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_postUseCase() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_postUseCase"
-                >Create a use case</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_postUseCase">Create a use case</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_postUseCase() %}
-        <sl-dialog id="postUseCaseDialog" label="Create a use case">
+        <wa-dialog with-footer id="postUseCaseDialog" label="Create a use case">
           <form id="htmForm_postUseCase" class="round-row primary-smart-border-radius ">
             <div>You can override any default values below: </div>
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -195,8 +507,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -222,64 +534,58 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </form>
           {{ htmFormButton_postUseCase() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_deleteUseCase() %}<sl-button variant="primary" id="htmButton_deleteUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-trash "></i>Delete</sl-button>{%- endmacro %}
+{%- macro htmButton_deleteUseCase() %}<wa-button variant="brand" id="htmButton_deleteUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_deleteUseCase() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_deleteUseCase"
-                >Delete use case</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deleteUseCase">Delete use case</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_deleteUseCase() %}
-        <sl-dialog id="deleteUseCaseDialog" label="Delete use case">
+        <wa-dialog with-footer id="deleteUseCaseDialog" label="Delete use case">
           <form id="htmForm_deleteUseCase" class="round-row primary-smart-border-radius ">
           </form>
           {{ htmFormButton_deleteUseCase() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
-{%- macro htmButton_putimportUseCase() %}<sl-button variant="primary" id="htmButton_putimportUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="fas fa-file-import "></i>Import</sl-button>{%- endmacro %}
+{%- macro htmButton_putimportUseCase() %}<wa-button variant="brand" id="htmButton_putimportUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-file-import "></i>Import</wa-button>{%- endmacro %}
 
 {%- macro htmFormButton_putimportUseCase() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_putimportUseCase"
-                >Import use cases</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_putimportUseCase">Import use cases</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_putimportUseCase() %}
-        <sl-dialog id="putimportUseCaseDialog" label="Import use cases">
+        <wa-dialog with-footer id="putimportUseCaseDialog" label="Import use cases">
           <form id="htmForm_putimportUseCase" class="round-row primary-smart-border-radius ">
             <div>
-              <sl-textarea
+              <wa-textarea
                   class="PUTImport_searchList "
                   style="height: 300px; "
                   placeholder="{ 'searchList': [ { 'pageId': ... , 'saves': [ ... ] }, ... ] }"
                   >
-              </sl-textarea>
+              </wa-textarea>
             </div>
           </form>
           {{ htmFormButton_putimportUseCase() }}
-        </sl-dialog>
+        </wa-dialog>
 {%- endmacro %}
 
 {%- macro htmButton_searchpageUseCase() %}{%- endmacro %}
 
 {%- macro htmFormButton_searchpageUseCase() %}
-            <sl-button variant="primary" slot="footer" type="submit" variant="primary"
-                id="htmFormButton_searchpageUseCase"
-                >Search use cases</sl-button>
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_searchpageUseCase">Search use cases</wa-button>
 {%- endmacro %}
 
 {%- macro htmForm_searchpageUseCase() %}
-        <div id="searchpageUseCaseDialog" label="Search use cases">
+        <div with-footer id="searchpageUseCaseDialog" label="Search use cases">
           <div id="htmForm_searchpageUseCase" class="round-row primary-smart-border-radius ">
-            <sl-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
+            <wa-details class="HtmRow" id="primary-key-id-created-modified-archive-details">
               <div slot="summary">
                 <span>primary key, ID, created, modified, archive details</span>
               </div>
@@ -349,8 +655,8 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
-            <sl-details open class="HtmRow" id="useful-urls">
+            </wa-details>
+            <wa-details open class="HtmRow" id="useful-urls">
               <div slot="summary">
                 <span>Useful URLs</span>
               </div>
@@ -376,29 +682,43 @@
                 {%- endif %}
               {%- endif %}
               </div>
-            </sl-details>
+            </wa-details>
           </div>
         </div>
 {%- endmacro %}
-          <sl-divider></sl-divider>
+
+{%- macro htmButton_deletefilterUseCase() %}<wa-button variant="brand" id="htmButton_deletefilterUseCase" data-pageId={{ result.pageId | tojson }}><i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-trash "></i>Delete</wa-button>{%- endmacro %}
+
+{%- macro htmFormButton_deletefilterUseCase() %}
+          <wa-button variant="brand" slot="footer" type="submit" id="htmFormButton_deletefilterUseCase">Delete use case</wa-button>
+{%- endmacro %}
+
+{%- macro htmForm_deletefilterUseCase() %}
+        <wa-dialog with-footer id="deletefilterUseCaseDialog" label="Delete use case">
+          <form id="htmForm_deletefilterUseCase" class="round-row primary-smart-border-radius ">
+          </form>
+          {{ htmFormButton_deletefilterUseCase() }}
+        </wa-dialog>
+{%- endmacro %}
+          <wa-divider></wa-divider>
           <div id="htmButtonGroup">
             <div class="flex flex-wrap round-column pill-smart-border-radius ">
 {% if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {% if "PATCH" in scopes %}
-    {% if resultCount == 1 %}
-              <sl-button variant="primary" id="refreshThisUseCaseGenPage"
+    {% if resultCount >= 1 %}
+              <wa-button variant="brand" id="refreshThisUseCaseGenPage"
                    onclick="patch{{classSimpleName}}Vals( [ {name: 'fq', value: 'pageId:{{pageId}}' } ], {}, this, function() { addGlow(document.querySelector('#refreshThisUseCaseGenPage')); }, function() { addError(document.querySelector('#refreshThisUseCaseGenPage')); }); return false; ">
-                <i slot="prefix" class="fas fa-sync-alt "></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-sync-alt "></i>
                 refresh
-              </sl-button>
+              </wa-button>
     {% endif %}
     {% if resultCount > 0 %}
-              <sl-button variant="primary" id="refreshAllUseCaseGenPage{{ result.pageId | e }}"
+              <wa-button variant="brand" id="refreshAllUseCaseGenPage{{ result.pageId | e }}"
                    onclick="patch{{classSimpleName}}Vals([], {}, this, function() { addGlow(document.querySelector('#refreshAllUseCaseGenPage{{ result.pageId | e }}')); }, function() { addError(document.querySelector('#refreshAllUseCaseGenPage{{ result.pageId | e }}')); }); "
                   >
-                <i slot="prefix" class="fa-kit fa-solid-arrows-rotate-rotate"></i>
+                <i slot="prefix" class="{{ FONTAWESOME_STYLE }} fa-arrows-rotate"></i>
                 Refresh all 
-              </sl-button>
+              </wa-button>
     {% endif %}
   {% endif %}
 {% endif %}
@@ -408,27 +728,24 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_postUseCase() }}
-    {%- else %}
-      {{ htmButton_postUseCase() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmButton_postUseCase() }}
   {%- else %}
     {{ htmButton_postUseCase() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
   {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmButton_deleteUseCase() }}
-    {%- else %}
-    {%- endif %}
-  {%- else %}
+    {{ htmButton_deleteUseCase() }}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmButton_putimportUseCase() }}
+{%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount > 1 %}
+    {{ htmButton_deletefilterUseCase() }}
+  {%- endif %}
 {%- endif %}
 
             </div>
@@ -439,25 +756,25 @@
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_postUseCase() }}
-    {%- else %}
-      {{ htmForm_postUseCase() }}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_postUseCase() }}
   {%- else %}
     {{ htmForm_postUseCase() }}
   {%- endif %}
 {%- endif %}
 {% if AUTH_SCOPE_ADMIN in scopes %}
-  {%- if resultCount == 1 %}
-    {%- if pageId is defined %}
-      {{ htmForm_deleteUseCase() }}
-    {%- else %}
-    {%- endif %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deleteUseCase() }}
   {%- else %}
   {%- endif %}
 {%- endif %}
 {%- if AUTH_SCOPE_SUPER_ADMIN in scopes %}
   {{ htmForm_putimportUseCase() }}
 {%- endif %}
+{% if AUTH_SCOPE_ADMIN in scopes %}
+  {%- if resultCount >= 1 %}
+    {{ htmForm_deletefilterUseCase() }}
+  {%- else %}
+  {%- endif %}
+{%- endif %}
+          <wa-divider></wa-divider>

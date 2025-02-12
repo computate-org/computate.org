@@ -101,6 +101,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: UserPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
  * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
+ * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: use cases"</b>, which groups all of the OpenAPIs for UseCase objects under the tag "use cases". 
  * </p>
@@ -223,6 +226,9 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/use-case/{pageId}";
 	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/use-case/%s";
 	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/use-case/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/use-case";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/use-case";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/use-case";
 
 	public static final String Icon = "<i class=\"fa-solid fa-file-invoice\"></i>";
 

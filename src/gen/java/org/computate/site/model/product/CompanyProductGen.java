@@ -106,6 +106,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: UserPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
  * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
+ * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: products"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "products". 
  * </p>
@@ -231,6 +234,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String UserPage_enUS_OpenApiUri = "/en-us/use/product/{pageId}";
 	public static final String UserPage_enUS_StringFormatUri = "/en-us/use/product/%s";
 	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/use/product/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/product";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/product";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/product";
 
 	public static final String Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
 

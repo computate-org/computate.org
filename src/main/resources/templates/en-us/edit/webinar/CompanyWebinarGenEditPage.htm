@@ -47,15 +47,15 @@
     </script>
     <script type="module">
 {% if DEFAULT_MAP_LOCATION is defined %}
-      window.DEFAULT_MAP_LOCATION = { lat: {{ DEFAULT_MAP_LOCATION.lat }}, lon: {{ DEFAULT_MAP_LOCATION.lon }} };
+      window.DEFAULT_MAP_LOCATION = { type: 'Point', coordinates: [ {{ DEFAULT_MAP_LOCATION.coordinates[0] }}, {{ DEFAULT_MAP_LOCATION.coordinates[1] }} ]};
 {% endif %}
 {% if DEFAULT_MAP_ZOOM is defined %}
       window.DEFAULT_MAP_ZOOM = {{ DEFAULT_MAP_ZOOM }};
 {% endif %}
       window.DEFAULT_ZONE_ID = '{{ defaultZoneId }}';
       Promise.all([
-        customElements.whenDefined('sl-button')
-        , customElements.whenDefined('sl-input')
+        customElements.whenDefined('wa-button')
+        , customElements.whenDefined('wa-input')
       ]).then(() => {
 
         var pageId = {% if result.pageId is defined %}{{ result.pageId | tojson }}{% else %}null{% endif %};
@@ -89,16 +89,16 @@
         pageGraphCompanyWebinar();
         {% for key, value in varsQ.items() %}
 
-        document.querySelector('#qCompanyWebinar_{{ key }}')?.addEventListener('sl-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
+        document.querySelector('#qCompanyWebinar_{{ key }}')?.addEventListener('wa-{% if var == 'objectSuggest' %}keyup{% else %}change{% endif %}', event => {
           qChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_{{ key }}'));
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyWebinar_rows')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyWebinar_rows')?.addEventListener('change', event => {
           paramChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_rows'));
         });
 
-        document.querySelector('#qCompanyWebinar_start')?.addEventListener('sl-change', event => {
+        document.querySelector('#qCompanyWebinar_start')?.addEventListener('change', event => {
           paramChange('CompanyWebinar', event.target, document.querySelector('#qCompanyWebinarDiv_start'));
         });
 
@@ -160,22 +160,34 @@
 {%- block htmBodyStartPageLayout %}
     {{ super() }}
 {%- block htmBodyStartCompanyWebinarPage %}
+{% if resultCount > 0 %}
+          <div class="wa-flank ">
+            <wa-tooltip for="return-to-CompanyWebinar">back to all webinars</wa-tooltip>
+            <wa-button id="return-to-CompanyWebinar" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+              <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
+              all webinars
+            </wa-button>
+            <h1 class="Page_title"><i class="fa-regular fa-video"></i> {{ result.title | e }}</h1>
+          </div>
+          <div class="margin-block">
+          </div>
+{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
+{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
+{% endif %}
 {%- endblock htmBodyStartCompanyWebinarPage %}
 {%- endblock htmBodyStartPageLayout %}
 
 {%- block htmBodyMiddlePageLayout %}
 {%- block htmBodyMiddleCompanyWebinarPage %}
-{%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
-{%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
         <div class="main-content">
 {% if resultCount == 0 %}
         {% if varsFqCount > 0 %}
-        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
+        <wa-tooltip for="return-to-CompanyWebinar">back to all webinars</wa-tooltip>
+          <wa-button id="return-to-CompanyWebinar" variant="brand" href="{{ SITE_BASE_URL }}{{ pageUri }}">
+            <i class="{{ FONTAWESOME_STYLE }} fa-angle-left"></i>
             all webinars
-          </sl-button>
-        </sl-tooltip>
+          </wa-button>
+        </wa-tooltip>
         {% endif %}
         <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
 {% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
@@ -189,60 +201,8 @@
           </span>
         </h2>
 {% else %}
-  {% if resultCount == 1 %}
-    {% if solrId is defined %}
-          <div class="margin-block">
-            <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-            <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-              <i class="fa-solid fa-angle-left"></i>
-              all webinars
-            </sl-button>
-          </div>
-{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
-{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
-          <h1 class="Page_title"><i class="fa-regular fa-video"></i> {{ result.title | e }}</h1>
-    {% else %}
-        {% if varsFqCount > 0 %}
-        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
-            all webinars
-          </sl-button>
-        </sl-tooltip>
-        {% endif %}
-        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
-{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
-{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
-        <h2>
-          <span>
-  {% if classIconCssClasses is defined %}
-            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
-  {% endif %}
-            <span class="">no webinar found</span>
-          </span>
-        </h2>
-    {% endif %}
-  {% else %}
-        {% if varsFqCount > 0 %}
-        <sl-tooltip for="return-to-CompanyWebinar">back to all webinars</sl-tooltip>
-          <sl-button id="return-to-CompanyWebinar" variant="primary" outline href="{{ SITE_BASE_URL }}{{ pageUri }}">
-            <i class="fa-solid fa-angle-left"></i>
-            all webinars
-          </sl-button>
-        </sl-tooltip>
-        {% endif %}
-        <h1><i class="fa-regular fa-video"></i> <span>webinars</span></h1>
-{% include en-us/search/webinar/CompanyWebinarSearchButtons.htm %}
-{% include en-us/search/webinar/CompanyWebinarSearchForm.htm %}
-        <h2>
-          <span>
-  {% if classIconCssClasses is defined %}
-            <i class="{{ classIconCssClasses }}  site-menu-icon "></i>
-  {% endif %}
-            <span class="">no webinar found</span>
-          </span>
-        </h2>
-  {% endif %}
+{%- include en-us/search/webinar/CompanyWebinarSidebar.htm %}
+{%- include en-us/search/webinar/CompanyWebinarSuggestedSearch.htm %}
 {% endif %}
 {%- block htmFormCompanyWebinarPage %}
           <form action="/en-us/api/webinar" id="CompanyWebinarForm" class="pageForm " onsubmit="event.preventDefault(); return false; ">
@@ -268,494 +228,3 @@
 {%- block htmBodyEndCompanyWebinarPage %}
 {%- endblock htmBodyEndCompanyWebinarPage %}
 {%- endblock htmBodyEndPageLayout %}
-{%- macro inputPkCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_pk">
-  {%- endif %}
-                  <sl-input
-                      readonly
-                      placeholder="[Long] primary key"
-                      label="primary key"
-                      help-text="
-The primary key of this object in the database"
-                      id="{{classApiMethodMethod}}_pk"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
-                      name="setPk"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_pk setPk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
-                      name="setPk"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pk valuePk classCompanyWebinar inputCompanyWebinar{{pageId}}Pk "
-                      name="pk"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.pk | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmPkCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputPkCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputCreatedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_created">
-  {%- endif %}
-                  <sl-input
-                      type="text"
-                      readonly
-                      help-text="A created timestamp for this record in the database"
-                      label="created"
-                      class="label-on-left {{classApiMethodMethod}}_created datetimepicker setCreated classCompanyWebinar inputCompanyWebinar{{pageId}}Created "
-                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                      id="{{classApiMethodMethod}}_created"
-                      value="{%- if result.created is defined %}{{ formatZonedDateTime(result.created, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
-  {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >
-                  </sl-input>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmCreatedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputCreatedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputModifiedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_modified">
-  {%- endif %}
-                  <sl-input
-                      type="text"
-                      readonly
-                      help-text="A modified timestamp for this record in the database"
-                      label="modified"
-                      class="label-on-left {{classApiMethodMethod}}_modified datetimepicker setModified classCompanyWebinar inputCompanyWebinar{{pageId}}Modified "
-                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                      id="{{classApiMethodMethod}}_modified"
-                      value="{%- if result.modified is defined %}{{ formatZonedDateTime(result.modified, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
-  {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >
-                  </sl-input>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmModifiedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputModifiedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputArchivedCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_archived">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button variant="primary" outline
-                      id="{{classApiMethodMethod}}_archived"
-                      placeholder="archive"
-                      label="archive"
-                      help-text="For archiving this record"
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
-                      name="setArchived"
-                      data-pageId={{ result.pageId | tojson }}
-                      data-val="{{ result.archived | e }}"
-                      >archive</sl-button>
-  {%- else %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-checkbox
-                      id="{{classApiMethodMethod}}_archived"
-                      value="true"
-  {%- else %}
-                  <sl-select
-                      id="{{classApiMethodMethod}}_archived"
-  {%- endif %}
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="archive"
-                      label="archive"
-                      help-text="For archiving this record"
-  {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
-                      name="setArchived"
-  {%- else %}
-    {%- if 'Page' == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_archived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
-                      name="setArchived"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_archived setArchived valueArchived classCompanyWebinar inputCompanyWebinar{{pageId}}Archived "
-                      name="setArchived"
-    {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-    {%- if result.archived == true %}
-                      checked
-    {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >archive</sl-checkbox>
-  {%- else %}
-                      >
-                    <sl-option value="" selected="selected"></sl-option>
-                    <sl-option value="true">true</sl-option>
-                    <sl-option value="false">false</sl-option>
-                  </sl-select>
-  {%- endif %}
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmArchivedCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputArchivedCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputNameCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_name">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] name"
-                      label="name"
-                      help-text="
-The name of this webinar"
-                      id="{{classApiMethodMethod}}_name"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
-                      name="setName"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_name setName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
-                      name="setName"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_name valueName classCompanyWebinar inputCompanyWebinar{{pageId}}Name "
-                      name="name"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.name | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmNameCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputNameCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputDescriptionCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_description">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] description"
-                      label="description"
-                      help-text="
-A description of this webinar"
-                      id="{{classApiMethodMethod}}_description"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
-                      name="setDescription"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_description setDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
-                      name="setDescription"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_description valueDescription classCompanyWebinar inputCompanyWebinar{{pageId}}Description "
-                      name="description"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.description | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDescriptionCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputDescriptionCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_webinarUrlAmericas">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] Webinar URL Americas"
-                      label="Webinar URL Americas"
-                      help-text="
-The actual link to the Webinar in Americas"
-                      id="{{classApiMethodMethod}}_webinarUrlAmericas"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
-                      name="setWebinarUrlAmericas"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas setWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
-                      name="setWebinarUrlAmericas"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlAmericas valueWebinarUrlAmericas classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlAmericas "
-                      name="webinarUrlAmericas"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.webinarUrlAmericas | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputWebinarUrlAmericasCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_webinarUrlApac">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] Webinar URL APAC"
-                      label="Webinar URL APAC"
-                      help-text="
-The actual link to the Webinar in APAC"
-                      id="{{classApiMethodMethod}}_webinarUrlApac"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
-                      name="setWebinarUrlApac"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac setWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
-                      name="setWebinarUrlApac"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlApac valueWebinarUrlApac classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlApac "
-                      name="webinarUrlApac"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.webinarUrlApac | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmWebinarUrlApacCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputWebinarUrlApacCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_webinarUrlEmea">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] Webinar URL EMEA"
-                      label="Webinar URL EMEA"
-                      help-text="
-The actual link to the Webinar in EMEA"
-                      id="{{classApiMethodMethod}}_webinarUrlEmea"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
-                      name="setWebinarUrlEmea"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea setWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
-                      name="setWebinarUrlEmea"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_webinarUrlEmea valueWebinarUrlEmea classCompanyWebinar inputCompanyWebinar{{pageId}}WebinarUrlEmea "
-                      name="webinarUrlEmea"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.webinarUrlEmea | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputWebinarUrlEmeaCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_icalUrl">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] ICal URL"
-                      label="ICal URL"
-                      help-text="
-The ICalendar URL for the events. "
-                      id="{{classApiMethodMethod}}_icalUrl"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
-                      name="setIcalUrl"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_icalUrl setIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
-                      name="setIcalUrl"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_icalUrl valueIcalUrl classCompanyWebinar inputCompanyWebinar{{pageId}}IcalUrl "
-                      name="icalUrl"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.icalUrl | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmIcalUrlCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputIcalUrlCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_nextWebinar">
-  {%- endif %}
-                  <sl-input
-                      type="text"
-                      readonly
-                      help-text="The start date time of the next webinar. "
-                      label="next webinar"
-                      class="label-on-left {{classApiMethodMethod}}_nextWebinar datetimepicker setNextWebinar classCompanyWebinar inputCompanyWebinar{{pageId}}NextWebinar "
-                      placeholder="MM/dd/yyyy h:mm a '['VV']'"
-                      data-timeformat="MM/dd/yyyy h:mm a '['VV']'"
-                      id="{{classApiMethodMethod}}_nextWebinar"
-                      value="{%- if result.nextWebinar is defined %}{{ formatZonedDateTime(result.nextWebinar, "MM/dd/yyyy h:mm a '['VV']'", defaultLocaleId, defaultZoneId) | e }}{%- endif %}"
-  {%- if 'Page' == classApiMethodMethod %}
-  {%- endif %}
-                      data-pageId={{ result.pageId | tojson }}
-                      >
-                  </sl-input>
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmNextWebinarCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputNextWebinarCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputPageIdCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_pageId">
-  {%- endif %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] Page ID"
-                      label="Page ID"
-                      help-text="
-The ID for this page. "
-                      id="{{classApiMethodMethod}}_pageId"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
-                      name="setPageId"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId setPageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
-                      name="setPageId"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_pageId valuePageId classCompanyWebinar inputCompanyWebinar{{pageId}}PageId "
-                      name="pageId"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.pageId | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmPageIdCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputPageIdCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
-{%- macro inputDisplayPageCompanyWebinarPage(classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) %}
-  {%- if 'Page' == classApiMethodMethod %}
-                <form class="subgrid-2col " id="PageForm_displayPage">
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                  <sl-button variant="primary" outline
-                      id="{{classApiMethodMethod}}_displayPage"
-                      placeholder="[String] product page"
-                      label="product page"
-                      help-text="Visit this product's landing page. "
-                      class="button-on-left {{classApiMethodMethod}}_displayPage classCompanyWebinar inputCompanyWebinar{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-                      href="{{ result.displayPage | e }}"
-                      >
-                    product page
-                  </sl-button>
-                  <div class="button-description-on-right ">Visit this product's landing page. </div>
-  {%- else %}
-                  <sl-input
-                      {% if authForWriteBool == true %}clearable{% else %}readonly{% endif %}
-                      placeholder="[String] product page"
-                      label="product page"
-                      help-text="
-Visit this product's landing page. "
-                      id="{{classApiMethodMethod}}_displayPage"
-  {%- if "Page" == classApiMethodMethod %}
-                      data-pageId={{ result.pageId | tojson }}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyWebinar inputCompanyWebinar{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-  {%- else %}
-    {%- if "PATCH" == classApiMethodMethod %}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage setDisplayPage classCompanyWebinar inputCompanyWebinar{{pageId}}DisplayPage "
-                      name="setDisplayPage"
-    {%- else %}
-                      class="label-on-left {{classApiMethodMethod}}_displayPage valueDisplayPage classCompanyWebinar inputCompanyWebinar{{pageId}}DisplayPage "
-                      name="displayPage"
-    {%- endif %}
-  {%- endif %}
-  {%- if "Page" == classApiMethodMethod %}
-                      value="{{result.displayPage | e }}"
-  {%- endif %}
-                      ></sl-input>
-
-  {%- endif %}
-  {%- if 'Page' == classApiMethodMethod %}
-                </form>
-  {%- endif %}
-{%- endmacro %}
-
-{%- macro htmDisplayPageCompanyWebinarPage(classApiMethodMethod, authForWriteBool=false, authForReadBool=false) %}
-                            {{ inputDisplayPageCompanyWebinarPage(classApiMethodMethod=classApiMethodMethod, authForWrite=authForWrite, authForRead=authForRead) }}
-{%- endmacro %}
