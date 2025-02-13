@@ -94,11 +94,11 @@
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyService_rows')?.addEventListener('wa-change', event => {
+        document.querySelector('#qCompanyService_rows')?.addEventListener('change', event => {
           paramChange('CompanyService', event.target, document.querySelector('#qCompanyServiceDiv_rows'));
         });
 
-        document.querySelector('#qCompanyService_start')?.addEventListener('wa-change', event => {
+        document.querySelector('#qCompanyService_start')?.addEventListener('change', event => {
           paramChange('CompanyService', event.target, document.querySelector('#qCompanyServiceDiv_start'));
         });
 

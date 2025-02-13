@@ -1724,13 +1724,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static Integer htmColumnCompanyWebinar(String var) {
 		switch(var) {
 		case VAR_name:
-			return 1;
-		case VAR_description:
-			return 2;
-		case VAR_nextWebinar:
-			return 3;
-		case VAR_joinUrl:
 			return 0;
+		case VAR_description:
+			return 3;
+		case VAR_nextWebinar:
+			return 1;
+		case VAR_joinUrl:
+			return 2;
 			default:
 				return BaseModel.htmColumnBaseModel(var);
 		}

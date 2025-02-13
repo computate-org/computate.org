@@ -79,7 +79,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * Description: The name of this webinar
    * HtmRow: 3
    * HtmCell: 1
-   * HtmColumn: 1
+   * HtmColumn: 0
    * HtmRowTitle: webinar details
    * Facet: true
    * VarName: true
@@ -95,7 +95,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * HtmRow: 3
    * HtmCell: 2
    * Facet: true
-   * HtmColumn: 2
+   * HtmColumn: 3
    * VarDescription: true
    **/
   protected void _description(Wrap<String> w) {}
@@ -351,7 +351,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 * Modify: false
 	 * HtmRow: 4
 	 * HtmCell: 5
-   * HtmColumn: 3
+   * HtmColumn: 1
 	 * DisplayName.enUS: next webinar
 	 * FormatHtm: MMM d, yyyy h:mm:ss a
 	 * Description: The start date time of the next webinar. 
@@ -363,7 +363,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * {@inheritDoc}
    * DocValues: true
    * Link: true
-   * HtmColumn: 0
+   * HtmColumn: 2
    * DisplayName: Join the webinar
    * Icon: <i class="fa-solid fa-video"></i>
    * Description: Access the webinar links. 

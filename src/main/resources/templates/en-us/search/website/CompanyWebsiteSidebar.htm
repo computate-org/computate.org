@@ -1,10 +1,3 @@
-        <wa-details open>
-          <div slot="summary">Map of websites</div>
-
-{%- block htmBodyGraphCompanyWebsitePage %}
-        <div id="htmBodyGraphCompanyWebsitePage" class="htmBodyGraph "></div>
-{%- endblock htmBodyGraphCompanyWebsitePage %}
-        </wa-details>
           <div class="htmBodySidebarCompanyWebsitePage ">
 {%- block htmBodySidebarCompanyWebsitePage %}
           <wa-drawer with-header light-dismiss placement="end" id="siteSidebarToggleSearch">
@@ -68,7 +61,7 @@
                     <wa-tooltip for="buttonFacetCompanyWebsite_{{ key }}">see values</wa-tooltip>
                     <div class="flex round-column pill-smart-border-radius ">
                       <wa-button variant="brand" id="buttonFacetCompanyWebsite_{{ key }}" data-var="{{ value.var }}" data-clear="{% if value.facetField is defined %}true{% else %}false{% endif %}"><i class="{{ FONTAWESOME_STYLE }} fa-list "></i></wa-button>
-                      <wa-input id="fqCompanyWebsite_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyWebsite', value); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></wa-input>
+                      <wa-input id="fqCompanyWebsite_{{ key }}" placeholder="{{ value.displayName }}" class="" onchange="fqChange('CompanyWebsite', this); " data-var="{{ value.var }}" autocomplete="off=" value="{{ value.val }}"></wa-input>
                     </div>
                   </div>
                   <div>
@@ -135,7 +128,7 @@
                     <span>Range Gap</span>
                   </td>
                   <td class="">
-                    <wa-select name="facet.range.gap" id="pageFacetRangeGap-CompanyWebsite" onchange="facetRangeGapChange('CompanyWebsite', this); ">
+                    <select name="facet.range.gap" id="pageFacetRangeGap-CompanyWebsite" onchange="facetRangeGapChange('CompanyWebsite', this); ">
                       <wa-option value="+1YEAR"{% if defaultRangeGap == '+1YEAR' %} selected="selected"{% else %}{% endif %}>Year</wa-option>
                       <wa-option value="+1MONTH"{% if defaultRangeGap == '+1MONTH' %} selected="selected"{% else %}{% endif %}>Month</wa-option>
                       <wa-option value="+1WEEK"{% if defaultRangeGap == '+1WEEK' %} selected="selected"{% else %}{% endif %}>Week</wa-option>
@@ -143,7 +136,7 @@
                       <wa-option value="+1HOUR"{% if defaultRangeGap == '+1HOUR' %} selected="selected"{% else %}{% endif %}>Hour</wa-option>
                       <wa-option value="+1MINUTE"{% if defaultRangeGap == '+1MINUTE' %} selected="selected"{% else %}{% endif %}>Minute</wa-option>
                       <wa-option value="+1SECOND"{% if defaultRangeGap == '+1SECOND' %} selected="selected"{% else %}{% endif %}>Second</wa-option>
-                    </wa-select>
+                    </select>
                   </td>
                 </tr>
                 <tr class="">

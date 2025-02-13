@@ -61,13 +61,12 @@
         customElements.whenDefined('wa-button')
         , customElements.whenDefined('wa-input')
       ]).then(() => {
-        document.querySelector('#siteSearchInput')?.addEventListener('wa-input', siteSearchInput);
-        document.querySelector('#siteSearchInput')?.addEventListener('wa-focus', siteSearchInput);
+        document.querySelector('#siteSearchInput')?.addEventListener('input', siteSearchInput);
+        document.querySelector('#siteSearchInput')?.addEventListener('focus', siteSearchInput);
       });
     </script>
     {{ WEB_COMPONENTS_JS }}
     <script src="{{ STATIC_BASE_URL }}/js/site.js"></script>
-    <script type="module" src="{{ STATIC_BASE_URL }}/js/siteModule.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/sockjs.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/vertx-eventbus.js"></script>
     <script src="{{ STATIC_BASE_URL }}/js/plotly-2.9.0.min.js"></script>
@@ -83,6 +82,7 @@
     </script>
    </head>
   <body>
+    <wa-fade-in>
     <wa-page disable-sticky="header">
 {%- block htmBodyPageLayout %}
 {%- block htmBodyStartPageLayout %}
@@ -93,7 +93,6 @@
               <img id="site-aside-left-img-logo" src="{{ STATIC_BASE_URL }}{{ SITE_LOGO_URI }}"/>
             </a>
           </div>
-          <wa-tooltip for="site-aside-left-model-button-WeatherObserved" placement="right" hoist>An observation of weather conditions at a certain place and time. This data model has been developed in cooperation with mobile operators and the GSMA.</wa-tooltip>
           <wa-tooltip for="site-aside-left-model-button-CompanyAbout" placement="right" hoist>Learn about our team, company, culture, and values. </wa-tooltip>
           <wa-tooltip for="site-aside-left-model-button-UseCase" placement="right" hoist>See computate use cases for real organizations. </wa-tooltip>
           <wa-tooltip for="site-aside-left-model-button-CompanyCourse" placement="right" hoist>Take an exciting hands-on course on your own computer with computate</wa-tooltip>
@@ -104,7 +103,6 @@
           <wa-tooltip for="site-aside-left-model-button-CompanyService" placement="right" hoist>See the services provided by computate that will help you build your own data-driven platforms</wa-tooltip>
           <wa-tooltip for="site-aside-left-model-button-CompanyResearch" placement="right" hoist>Read about the computate project related research going on at Red Hat research</wa-tooltip>
           <wa-tooltip for="site-aside-left-model-button-CompanyWebsite" placement="right" hoist>See the live websites built with computate</wa-tooltip>
-          <wa-tooltip for="site-aside-left-model-button-IotService" placement="right" hoist>A service within a service path in the NGSI-LD standard</wa-tooltip>
           <div class="flex flex-column round-row primary-smart-border-radius margin-block">
 {%- if userName is defined %}
             <wa-details>
@@ -134,10 +132,6 @@
 {%- endif %}
           </div>
           <div class="flex flex-column round-row primary-smart-border-radius margin-block">
-            <wa-button variant="brand" id="site-aside-left-model-button-WeatherObserved" href="{{ SITE_BASE_URL }}/en-us/search/weather-observed">
-              <i class="fa-regular fa-cloud-bolt-sun"></i>
-              WeatherObserveds
-            </wa-button>
             <wa-button variant="brand" id="site-aside-left-model-button-CompanyAbout" href="{{ SITE_BASE_URL }}/en-us/search/about">
               <i class="fa-solid fa-address-card"></i>
               about
@@ -177,10 +171,6 @@
             <wa-button variant="brand" id="site-aside-left-model-button-CompanyWebsite" href="{{ SITE_BASE_URL }}/en-us/search/website">
               <i class="fa-regular fa-globe-pointer"></i>
               websites
-            </wa-button>
-            <wa-button variant="brand" id="site-aside-left-model-button-IotService" href="{{ SITE_BASE_URL }}/en-us/search/iot-service">
-              <i class="fa-solid fa-tower-cell"></i>
-              IoT services
             </wa-button>
           </div>
         </nav>
@@ -228,5 +218,6 @@
     </wa-page>
 {%- endblock htmBodyEndPageLayout %}
 {%- endblock htmBodyPageLayout %}
+    </wa-fade-in>
   </body>
 </html>

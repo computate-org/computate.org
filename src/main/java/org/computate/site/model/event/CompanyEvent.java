@@ -58,6 +58,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * HtmCell: 1
    * HtmColumn: 2
    * Facet: true
+   * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }

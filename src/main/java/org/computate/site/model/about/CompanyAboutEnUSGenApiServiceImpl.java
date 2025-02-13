@@ -1028,6 +1028,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PUT"))
+							.add("permission", String.format("%s#%s", serviceRequest.getExtra().getString("uri"), "PUT"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1451,6 +1452,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PUT"))
+							.add("permission", String.format("%s#%s", serviceRequest.getExtra().getString("uri"), "GET"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1748,6 +1750,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyAbout.CLASS_SIMPLE_NAME, "PUT"))
+							.add("permission", String.format("%s#%s", serviceRequest.getExtra().getString("uri"), "DELETE"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(

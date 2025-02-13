@@ -94,11 +94,11 @@
         });
         {% endfor %}
 
-        document.querySelector('#qCompanyCourse_rows')?.addEventListener('wa-change', event => {
+        document.querySelector('#qCompanyCourse_rows')?.addEventListener('change', event => {
           paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_rows'));
         });
 
-        document.querySelector('#qCompanyCourse_start')?.addEventListener('wa-change', event => {
+        document.querySelector('#qCompanyCourse_start')?.addEventListener('change', event => {
           paramChange('CompanyCourse', event.target, document.querySelector('#qCompanyCourseDiv_start'));
         });
 

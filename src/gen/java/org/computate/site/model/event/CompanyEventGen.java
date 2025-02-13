@@ -1909,7 +1909,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	@Override
 	public String nameForClass() {
-		return null;
+		return name;
 	}
 
 	@Override

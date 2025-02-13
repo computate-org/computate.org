@@ -1,19 +1,17 @@
 {% extends "en-us/PageLayout.htm" %}
 {% block htmMetaPageLayout %}
     <meta name="result.pageId" content="{{ result.shortFileName }}" />
-    <meta name="result.uri" content="/en-us/case-study/{{ pageId }}" />
     <meta name="result.name" content="Computate and Smart Aquaculture use case"/>
     <meta name="result.authorName" content="Christopher Tate"/>
-    <meta name="result.title" content="{{ name }}"/>
 {% endblock htmMetaPageLayout %}
 {% block htmStylePageLayout %}
 {% endblock htmStylePageLayout %}
 {% block htmBodyMiddlePageLayout %}
 
-        <div class="max-width-content-width margin-inline-auto ">
+        <div class="main-content">
           <sl-card>
-            <h1>{{ title }}</h1>
-            <h2>Author {{ authorName }}</h2>
+            <h1>{{ result.name }}</h1>
+            <h2>Author: {{ result.authorName }}</h2>
 
             <h2>
               Overview
@@ -21,7 +19,7 @@
 
             <p>
               The Smart Aquaculture use case began when Professor B. Dewayne Branch reached out to me to learn the latest developments in open source for IoT and secure data standards. 
-              He shared with me some research about Smart Aquacultures solutions for sustainable fisheries and I was intruigued. 
+              He shared with me some research about Smart Aquaculture solutions for sustainable fisheries and I was intruigued. 
               I did some research as well, and determined that FIWARE has already been working on open source Smart Aquaculture solutions. 
               My Computate platforms integrate perfectly with FIWARE data, so I put together the Smart Aquaculture use case. 
             </p>

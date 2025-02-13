@@ -94,11 +94,11 @@
         });
         {% endfor %}
 
-        document.querySelector('#qUseCase_rows')?.addEventListener('wa-change', event => {
+        document.querySelector('#qUseCase_rows')?.addEventListener('change', event => {
           paramChange('UseCase', event.target, document.querySelector('#qUseCaseDiv_rows'));
         });
 
-        document.querySelector('#qUseCase_start')?.addEventListener('wa-change', event => {
+        document.querySelector('#qUseCase_start')?.addEventListener('change', event => {
           paramChange('UseCase', event.target, document.querySelector('#qUseCaseDiv_start'));
         });
 

@@ -181,9 +181,6 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSApiServiceImpl;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAbout;
@@ -214,9 +211,6 @@ import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
-import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
-import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
-import org.computate.site.model.fiware.iotservice.IotService;
 
 
 /**
@@ -354,10 +348,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			apiSiteUser.setVertx(vertx);
 			apiSiteUser.setConfig(config);
 			apiSiteUser.setWebClient(webClient);
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
-			apiWeatherObserved.setVertx(vertx);
-			apiWeatherObserved.setConfig(config);
-			apiWeatherObserved.setWebClient(webClient);
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			apiCompanyAbout.setVertx(vertx);
 			apiCompanyAbout.setConfig(config);
@@ -398,54 +388,40 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			apiCompanyWebsite.setVertx(vertx);
 			apiCompanyWebsite.setConfig(config);
 			apiCompanyWebsite.setWebClient(webClient);
-			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
-			apiIotService.setVertx(vertx);
-			apiIotService.setConfig(config);
-			apiIotService.setWebClient(webClient);
 			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
 				apiSiteUser.authorizeClientData(authToken, SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_CLIENT), new String[] { "GET", "PATCH" }).onSuccess(q1 -> {
-					apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "WeatherObservedViewer", new String[] { "GET" })
-							.compose(q2 -> apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "WeatherObservedEditor", new String[] { "GET", "POST", "PATCH" }))
-							.compose(q2 -> apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "PUT", "DELETE", "SuperAdmin", "Admin" }))
-							.compose(q2 -> apiWeatherObserved.authorizeGroupData(authToken, WeatherObserved.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "PUT", "DELETE", "Admin" }))
+					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 							.onSuccess(q2 -> {
-						apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-								.compose(q3 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+						apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+								.compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 								.onSuccess(q3 -> {
-							apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-									.compose(q4 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+									.compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 									.onSuccess(q4 -> {
-								apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-										.compose(q5 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+										.compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 										.onSuccess(q5 -> {
-									apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-											.compose(q6 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+											.compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 											.onSuccess(q6 -> {
-										apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-												.compose(q7 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+												.compose(q7 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 												.onSuccess(q7 -> {
-											apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-													.compose(q8 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+													.compose(q8 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 													.onSuccess(q8 -> {
-												apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-														.compose(q9 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+														.compose(q9 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 														.onSuccess(q9 -> {
-													apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-															.compose(q10 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+															.compose(q10 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 															.onSuccess(q10 -> {
-														apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																.compose(q11 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																.onSuccess(q11 -> {
-															apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																	.compose(q12 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-																	.onSuccess(q12 -> {
-																apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																		.compose(q13 -> apiIotService.authorizeGroupData(authToken, IotService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-																		.onSuccess(q13 -> {
-																	LOG.info("authorize data complete");
-																	promise.complete();
-																}).onFailure(ex -> promise.fail(ex));
-															}).onFailure(ex -> promise.fail(ex));
+															LOG.info("authorize data complete");
+															promise.complete();
 														}).onFailure(ex -> promise.fail(ex));
 													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
@@ -1477,17 +1453,13 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("WeatherObserved","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","IotService");
+			List<String> authResources = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
 			List<String> publicResources = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
 			registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
 			apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
 			apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicResources);
-
-			WeatherObservedEnUSApiServiceImpl apiWeatherObserved = new WeatherObservedEnUSApiServiceImpl();
-			initializeApiService(apiWeatherObserved);
-			registerApiService(WeatherObservedEnUSGenApiService.class, apiWeatherObserved, WeatherObserved.getClassApiAddress());
 
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			initializeApiService(apiCompanyAbout);
@@ -1543,11 +1515,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			initializeApiService(apiCompanyWebsite);
 			registerApiService(CompanyWebsiteEnUSGenApiService.class, apiCompanyWebsite, CompanyWebsite.getClassApiAddress());
 			// apiCompanyWebsite.configureUiResult(router, CompanyWebsite.class, SiteRequest.class, "/en-us/view/website/{pageId}");
-
-			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
-			initializeApiService(apiIotService);
-			registerApiService(IotServiceEnUSGenApiService.class, apiIotService, IotService.getClassApiAddress());
-			// apiIotService.configureUiModel(router, IotService.class, SiteRequest.class, "/en-us/shop/iot-service/{pageId}");
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");

@@ -214,7 +214,6 @@
 {% include en-us/search/webinar/CompanyWebinarPaginationButtons.htm %}
           <div class="card-like-thing background-color-surface-border" id="site-results-grid">
             <div>
-              <div></div>
               <wa-dropdown id="htmDropdown-name">
                 <wa-button variant="brand" slot="trigger" caret>name</wa-button>
                 <wa-menu>
@@ -225,19 +224,6 @@
                   <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-name-desc">
                     <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
                     sort by name descending
-                  </wa-menu-item>
-                </wa-menu>
-              </wa-dropdown>
-              <wa-dropdown id="htmDropdown-description">
-                <wa-button variant="brand" slot="trigger" caret>description</wa-button>
-                <wa-menu>
-                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
-                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
-                    sort by description ascending
-                  </wa-menu-item>
-                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
-                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
-                    sort by description descending
                   </wa-menu-item>
                 </wa-menu>
               </wa-dropdown>
@@ -255,9 +241,30 @@
                 </wa-menu>
               </wa-dropdown>
               <div></div>
+              <wa-dropdown id="htmDropdown-description">
+                <wa-button variant="brand" slot="trigger" caret>description</wa-button>
+                <wa-menu>
+                  <wa-menu-item data-action="sort" data-order="asc" id="htmDropdown-description-asc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-a-z"></i>
+                    sort by description ascending
+                  </wa-menu-item>
+                  <wa-menu-item data-action="sort" data-order="desc" id="htmDropdown-description-desc">
+                    <i class="{{ FONTAWESOME_STYLE }} fa-arrow-down-z-a"></i>
+                    sort by description descending
+                  </wa-menu-item>
+                </wa-menu>
+              </wa-dropdown>
+              <div></div>
             </div>
             {% for item in listCompanyWebinar%}
             <div>
+              <a href="{{ item.displayPage }}">
+                <i class="fa-regular fa-video"></i>
+              {{ item.name }}
+              </a>
+              <a href="{{ item.displayPage }}">
+              <wa-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.nextWebinar, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></wa-format-date>
+              </a>
               <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_joinUrl"
                   placeholder="[String] Join the webinar"
@@ -271,13 +278,7 @@
                 Join the webinar
               </wa-button>
               <a href="{{ item.displayPage }}">
-              {{ item.name }}
-              </a>
-              <a href="{{ item.displayPage }}">
               {{ item.description }}
-              </a>
-              <a href="{{ item.displayPage }}">
-              <wa-format-date weekday="short" month="short" day="numeric" year="numeric" hour="numeric" minute="numeric" second="numeric" time-zone-name="short" date="{{ formatZonedDateTime(item.nextWebinar, "yyyy-MM-dd'T'HH:mm:ss.SSSX", defaultLocaleId, "UTC") }}"></wa-format-date>
               </a>
               <wa-button variant="brand"
                   id="{{classApiMethodMethod}}_editPage"
@@ -293,19 +294,19 @@
               </wa-button>
             </div>
             {% endfor %}
-              {% if getColumnJoinUrl is defined %}
-                <div>
-                </div>
-              {% endif %}
               {% if getColumnName is defined %}
                 <div>
                 </div>
               {% endif %}
-              {% if getColumnDescription is defined %}
+              {% if getColumnNextWebinar is defined %}
                 <div>
                 </div>
               {% endif %}
-              {% if getColumnNextWebinar is defined %}
+              {% if getColumnJoinUrl is defined %}
+                <div>
+                </div>
+              {% endif %}
+              {% if getColumnDescription is defined %}
                 <div>
                 </div>
               {% endif %}

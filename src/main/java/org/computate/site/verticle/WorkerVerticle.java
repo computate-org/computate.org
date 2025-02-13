@@ -35,9 +35,6 @@ import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
-import org.computate.site.model.fiware.weatherobserved.WeatherObserved;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSApiServiceImpl;
-import org.computate.site.model.fiware.weatherobserved.WeatherObservedEnUSGenApiService;
 import org.computate.site.model.about.CompanyAbout;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
@@ -68,9 +65,6 @@ import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.fiware.iotservice.IotService;
-import org.computate.site.model.fiware.iotservice.IotServiceEnUSApiServiceImpl;
-import org.computate.site.model.fiware.iotservice.IotServiceEnUSGenApiService;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -589,8 +583,6 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			initializeApiService(apiCompanyResearch);
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
-			IotServiceEnUSApiServiceImpl apiIotService = new IotServiceEnUSApiServiceImpl();
-			initializeApiService(apiIotService);
 
 			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout).onSuccess(q1 -> {
 				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase).onSuccess(q2 -> {
@@ -602,10 +594,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService).onSuccess(q8 -> {
 											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch).onSuccess(q9 -> {
 												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite).onSuccess(q10 -> {
-													apiIotService.importTimer(Paths.get(templatePath, "/en-us/shop/iot-service"), vertx, siteRequest, IotService.CLASS_SIMPLE_NAME, IotService.CLASS_API_ADDRESS_IotService).onSuccess(q11 -> {
-														LOG.info("data import complete");
-														promise.complete();
-													}).onFailure(ex -> promise.fail(ex));
+													LOG.info("data import complete");
+													promise.complete();
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));
 										}).onFailure(ex -> promise.fail(ex));
