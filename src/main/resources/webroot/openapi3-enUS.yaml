@@ -5405,6 +5405,76 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/POSTCompanyWebinarResponse'
+    delete:
+      operationId: deletefilterCompanyWebinar
+      x-vertx-event-bus: computate.org-enUS-CompanyWebinar
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - webinars
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterCompanyWebinarResponse'
   /en-us/api/webinar-import:
     put:
       operationId: putimportCompanyWebinar
@@ -5493,6 +5563,82 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/GETCompanyWebinarResponse'
+    delete:
+      operationId: deleteCompanyWebinar
+      x-vertx-event-bus: computate.org-enUS-CompanyWebinar
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - webinars
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETECompanyWebinarResponse'
   /en-us/edit/webinar/{pageId}:
     get:
       operationId: editpageCompanyWebinar
@@ -7932,6 +8078,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/POSTCompanyWebinarResponse'
+    DELETEFilterCompanyWebinarResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterCompanyWebinarResponse'
     PUTImportCompanyWebinarRequest:
       content:
         application/json:
@@ -7947,6 +8098,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/GETCompanyWebinarResponse'
+    DELETECompanyWebinarResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETECompanyWebinarResponse'
     EditPageCompanyWebinarResponse:
       content:
         text/html; charset=utf-8:
@@ -10277,6 +10433,32 @@ components:
               type: string
             joinUrl:
               type: string
+    DELETEFilterCompanyWebinarResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            pageId:
+              type: string
+            joinUri:
+              type: string
+            webinarUrlAmericas:
+              type: string
+            webinarUrlApac:
+              type: string
+            webinarUrlEmea:
+              type: string
+            icalUrl:
+              type: string
+            caldav:
+              type: string
+            nextWebinar:
+              type: string
+            joinUrl:
+              type: string
     PUTImportCompanyWebinarRequest:
       allOf:
         - type: object
@@ -10335,6 +10517,32 @@ components:
                   joinUrl:
                     type: string
     GETCompanyWebinarResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            pageId:
+              type: string
+            joinUri:
+              type: string
+            webinarUrlAmericas:
+              type: string
+            webinarUrlApac:
+              type: string
+            webinarUrlEmea:
+              type: string
+            icalUrl:
+              type: string
+            caldav:
+              type: string
+            nextWebinar:
+              type: string
+            joinUrl:
+              type: string
+    DELETECompanyWebinarResponse:
       allOf:
         - type: object
           properties:

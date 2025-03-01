@@ -37,10 +37,14 @@ public interface CompanyWebinarEnUSGenApiService {
 	public void patchCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void postCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void postCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void deleteCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void deleteCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void putimportCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void putimportCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void searchpageCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void editpageCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void displaypageCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 	public void userpageCompanyWebinar(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void deletefilterCompanyWebinar(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
+	public void deletefilterCompanyWebinarFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
 }

@@ -94,6 +94,9 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>ApiMethode: POST</h2>
  * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
  * </p>
+ * <h2>ApiMethode: DELETE</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETE"</b>, which creates an API "DELETE". 
+ * </p>
  * <h2>ApiMethode: PUTImport</h2>
  * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
  * </p>
@@ -108,6 +111,9 @@ import org.computate.search.response.solr.SolrResponse;
  * </p>
  * <h2>ApiMethode: UserPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
+ * </p>
+ * <h2>ApiMethode: DELETEFilter</h2>
+ * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: webinars"</b>, which groups all of the OpenAPIs for CompanyWebinar objects under the tag "webinars". 
@@ -216,6 +222,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String POST_enUS_OpenApiUri = "/en-us/api/webinar";
 	public static final String POST_enUS_StringFormatUri = "/en-us/api/webinar";
 	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/webinar";
+	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/webinar/{pageId}";
+	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/webinar/%s";
+	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/webinar/%s";
 	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/webinar-import";
 	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/webinar-import";
 	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/webinar-import";
@@ -231,6 +240,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String UserPage_enUS_OpenApiUri = "/en-us/join/webinar/{pageId}";
 	public static final String UserPage_enUS_StringFormatUri = "/en-us/join/webinar/%s";
 	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/join/webinar/%s";
+	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/webinar";
+	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/webinar";
+	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/webinar";
 
 	public static final String Icon = "<i class=\"fa-regular fa-video\"></i>";
 
