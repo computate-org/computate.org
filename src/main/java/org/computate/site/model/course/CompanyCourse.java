@@ -27,6 +27,7 @@ import io.vertx.pgclient.data.Point;
  *   GET:
  *   PATCH:
  *   POST:
+ *   DELETE:
  *   PUTImport:
  * 
  * AuthGroup:
@@ -111,42 +112,29 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * Persist: true
 	 * Facet: true
 	 * DisplayName: email template
-	 * Description: The HTML email template for this product. 
+	 * Description: The HTML email template for this course. 
 	 */
 	protected void _emailTemplate(Wrap<String> w) {
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRowTitleOpen: Useful URLs
-	 * HtmRow: 4
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: product page
-	 * Description: Visit this product's landing page. 
-	 * Link: true
-	 * VarUrlDisplayPage: true
+	 * DisplayName: course page
+	 * Description: Visit this course's landing page. 
 	 */
+	@Override
 	protected void _displayPage(Wrap<String> w) {
-		w.o(String.format(DisplayPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
+		super._displayPage(w);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * DocValues: true
-	 * HtmRow: 4
-	 * HtmCell: 2
-	 * Facet: true
 	 * DisplayName: view
-	 * Description: View the project. 
-	 * Link: true
-	 * Icon: <i class="fa-solid fa-pen-to-square"></i>
-	 * VarUrlEditPage: true
+	 * Description: View the course. 
 	 */
+	@Override
 	protected void _editPage(Wrap<String> w) {
-		w.o(String.format(EditPage_enUS_StringFormatUrl, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), pageId));
+		super._editPage(w);
 	}
 
 	/**

@@ -5,3 +5,5 @@ bin/generate.sh
 bin/generatenow.sh
 bin/index.sh
 bin/indexnow.sh
+*.code-workspace
+

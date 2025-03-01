@@ -1841,7 +1841,7 @@ public abstract class BaseResultGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_classCanonicalNames = "";
 	public static final String DISPLAY_NAME_saves = "";
 	public static final String DISPLAY_NAME_title = "title";
-	public static final String DISPLAY_NAME_displayPage = "product page";
+	public static final String DISPLAY_NAME_displayPage = "";
 	public static final String DISPLAY_NAME_editPage = "edit";
 	public static final String DISPLAY_NAME_userPage = "user";
 	public static final String DISPLAY_NAME_objectSuggest = "autosuggest";
@@ -1940,8 +1940,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 			return "A list of fields that are saved for this record in the database";
 		case VAR_title:
 			return "The title of this page. ";
-		case VAR_displayPage:
-			return "Visit this product's landing page. ";
 		case VAR_editPage:
 			return "Edit this";
 		case VAR_userPage:

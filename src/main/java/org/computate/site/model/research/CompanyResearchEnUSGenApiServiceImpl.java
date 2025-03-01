@@ -1923,7 +1923,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String resourceUri, String templateUri, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
 			Map<String, Object> result = (Map<String, Object>)ctx.get("result");

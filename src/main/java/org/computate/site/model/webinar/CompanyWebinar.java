@@ -201,7 +201,6 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
             String icalStr = response.body().toString();
             Matcher mEvent = Pattern.compile("^BEGIN:VEVENT($[\\w\\W]+?)^END:VEVENT$", Pattern.MULTILINE).matcher(icalStr);
             boolean mFound = mEvent.find();
-            LOG.info(icalStr);
             while (mFound) {
               String eventStr = mEvent.group(1);
 
