@@ -565,13 +565,13 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							num++;
 							bParams.add(o2.sqlSessionId());
 						break;
-					case "setDisplayName":
-							o2.setDisplayName(jsonObject.getString(entityVar));
+					case "setAwesomeEffect":
+							o2.setAwesomeEffect(jsonObject.getBoolean(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
-							bSql.append(SiteUser.VAR_displayName + "=$" + num);
+							bSql.append(SiteUser.VAR_awesomeEffect + "=$" + num);
 							num++;
-							bParams.add(o2.sqlDisplayName());
+							bParams.add(o2.sqlAwesomeEffect());
 						break;
 					case "setUserKey":
 							o2.setUserKey(jsonObject.getString(entityVar));
@@ -580,6 +580,14 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bSql.append(SiteUser.VAR_userKey + "=$" + num);
 							num++;
 							bParams.add(o2.sqlUserKey());
+						break;
+					case "setDisplayName":
+							o2.setDisplayName(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_displayName + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDisplayName());
 						break;
 					case "setTitle":
 							o2.setTitle(jsonObject.getString(entityVar));
@@ -983,14 +991,14 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						num++;
 						bParams.add(o2.sqlSessionId());
 						break;
-					case SiteUser.VAR_displayName:
-						o2.setDisplayName(jsonObject.getString(entityVar));
+					case SiteUser.VAR_awesomeEffect:
+						o2.setAwesomeEffect(jsonObject.getBoolean(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
-						bSql.append(SiteUser.VAR_displayName + "=$" + num);
+						bSql.append(SiteUser.VAR_awesomeEffect + "=$" + num);
 						num++;
-						bParams.add(o2.sqlDisplayName());
+						bParams.add(o2.sqlAwesomeEffect());
 						break;
 					case SiteUser.VAR_userKey:
 						o2.setUserKey(jsonObject.getString(entityVar));
@@ -1000,6 +1008,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_userKey + "=$" + num);
 						num++;
 						bParams.add(o2.sqlUserKey());
+						break;
+					case SiteUser.VAR_displayName:
+						o2.setDisplayName(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_displayName + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDisplayName());
 						break;
 					case SiteUser.VAR_title:
 						o2.setTitle(jsonObject.getString(entityVar));
@@ -1842,8 +1859,9 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SiteUser.VAR_userFullName, SiteUser.staticSetUserFullName(siteRequest2, (String)result.get(SiteUser.VAR_userFullName)));
 			page.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
 			page.persistForClass(SiteUser.VAR_sessionId, SiteUser.staticSetSessionId(siteRequest2, (String)result.get(SiteUser.VAR_sessionId)));
-			page.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
+			page.persistForClass(SiteUser.VAR_awesomeEffect, SiteUser.staticSetAwesomeEffect(siteRequest2, (String)result.get(SiteUser.VAR_awesomeEffect)));
 			page.persistForClass(SiteUser.VAR_userKey, SiteUser.staticSetUserKey(siteRequest2, (String)result.get(SiteUser.VAR_userKey)));
+			page.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
 			page.persistForClass(SiteUser.VAR_title, SiteUser.staticSetTitle(siteRequest2, (String)result.get(SiteUser.VAR_title)));
 			page.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
 

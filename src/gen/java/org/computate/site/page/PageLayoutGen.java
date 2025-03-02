@@ -40,6 +40,7 @@ import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.core.json.JsonObject;
 import org.computate.vertx.serialize.vertx.JsonObjectDeserializer;
 import java.lang.Long;
+import java.lang.Boolean;
 import java.lang.Void;
 import io.vertx.core.json.JsonArray;
 import org.computate.search.response.solr.SolrResponse.Stats;
@@ -1292,6 +1293,63 @@ public abstract class PageLayoutGen<DEV> extends Object {
 
 	public static String staticSearchFqUserEmail(SiteRequest siteRequest_, String o) {
 		return PageLayout.staticSearchUserEmail(siteRequest_, PageLayout.staticSetUserEmail(siteRequest_, o)).toString();
+	}
+
+	///////////////////////
+	// userAwesomeEffect //
+	///////////////////////
+
+
+	/**	 The entity userAwesomeEffect
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected Boolean userAwesomeEffect;
+
+	/**	<br> The entity userAwesomeEffect
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:userAwesomeEffect">Find the entity userAwesomeEffect in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _userAwesomeEffect(Wrap<Boolean> w);
+
+	public Boolean getUserAwesomeEffect() {
+		return userAwesomeEffect;
+	}
+
+	public void setUserAwesomeEffect(Boolean userAwesomeEffect) {
+		this.userAwesomeEffect = userAwesomeEffect;
+	}
+	@JsonIgnore
+	public void setUserAwesomeEffect(String o) {
+		this.userAwesomeEffect = PageLayout.staticSetUserAwesomeEffect(siteRequest_, o);
+	}
+	public static Boolean staticSetUserAwesomeEffect(SiteRequest siteRequest_, String o) {
+		return Boolean.parseBoolean(o);
+	}
+	protected PageLayout userAwesomeEffectInit() {
+		Wrap<Boolean> userAwesomeEffectWrap = new Wrap<Boolean>().var("userAwesomeEffect");
+		if(userAwesomeEffect == null) {
+			_userAwesomeEffect(userAwesomeEffectWrap);
+			Optional.ofNullable(userAwesomeEffectWrap.getO()).ifPresent(o -> {
+				setUserAwesomeEffect(o);
+			});
+		}
+		return (PageLayout)this;
+	}
+
+	public static Boolean staticSearchUserAwesomeEffect(SiteRequest siteRequest_, Boolean o) {
+		return o;
+	}
+
+	public static String staticSearchStrUserAwesomeEffect(SiteRequest siteRequest_, Boolean o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqUserAwesomeEffect(SiteRequest siteRequest_, String o) {
+		return PageLayout.staticSearchUserAwesomeEffect(siteRequest_, PageLayout.staticSetUserAwesomeEffect(siteRequest_, o)).toString();
 	}
 
 	///////////////
@@ -4151,6 +4209,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				userNameInit();
 				userIdInit();
 				userEmailInit();
+				userAwesomeEffectInit();
 				logoutUrlInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -4327,6 +4386,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 				return oPageLayout.userId;
 			case "userEmail":
 				return oPageLayout.userEmail;
+			case "userAwesomeEffect":
+				return oPageLayout.userAwesomeEffect;
 			case "logoutUrl":
 				return oPageLayout.logoutUrl;
 			case "promiseBefore":
@@ -4498,6 +4559,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSetUserId(siteRequest_, o);
 		case "userEmail":
 			return PageLayout.staticSetUserEmail(siteRequest_, o);
+		case "userAwesomeEffect":
+			return PageLayout.staticSetUserAwesomeEffect(siteRequest_, o);
 		case "logoutUrl":
 			return PageLayout.staticSetLogoutUrl(siteRequest_, o);
 		case "classSimpleName":
@@ -4632,6 +4695,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchUserId(siteRequest_, (String)o);
 		case "userEmail":
 			return PageLayout.staticSearchUserEmail(siteRequest_, (String)o);
+		case "userAwesomeEffect":
+			return PageLayout.staticSearchUserAwesomeEffect(siteRequest_, (Boolean)o);
 		case "logoutUrl":
 			return PageLayout.staticSearchLogoutUrl(siteRequest_, (String)o);
 		case "classSimpleName":
@@ -4766,6 +4831,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchStrUserId(siteRequest_, (String)o);
 		case "userEmail":
 			return PageLayout.staticSearchStrUserEmail(siteRequest_, (String)o);
+		case "userAwesomeEffect":
+			return PageLayout.staticSearchStrUserAwesomeEffect(siteRequest_, (Boolean)o);
 		case "logoutUrl":
 			return PageLayout.staticSearchStrLogoutUrl(siteRequest_, (String)o);
 		case "classSimpleName":
@@ -4900,6 +4967,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return PageLayout.staticSearchFqUserId(siteRequest_, o);
 		case "userEmail":
 			return PageLayout.staticSearchFqUserEmail(siteRequest_, o);
+		case "userAwesomeEffect":
+			return PageLayout.staticSearchFqUserAwesomeEffect(siteRequest_, o);
 		case "logoutUrl":
 			return PageLayout.staticSearchFqLogoutUrl(siteRequest_, o);
 		case "classSimpleName":
@@ -5022,6 +5091,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String VAR_userName = "userName";
 	public static final String VAR_userId = "userId";
 	public static final String VAR_userEmail = "userEmail";
+	public static final String VAR_userAwesomeEffect = "userAwesomeEffect";
 	public static final String VAR_logoutUrl = "logoutUrl";
 	public static final String VAR_promiseBefore = "promiseBefore";
 	public static final String VAR_classSimpleName = "classSimpleName";
@@ -5094,6 +5164,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_userName = "";
 	public static final String DISPLAY_NAME_userId = "";
 	public static final String DISPLAY_NAME_userEmail = "";
+	public static final String DISPLAY_NAME_userAwesomeEffect = "";
 	public static final String DISPLAY_NAME_logoutUrl = "";
 	public static final String DISPLAY_NAME_promiseBefore = "";
 	public static final String DISPLAY_NAME_classSimpleName = "";
@@ -5226,6 +5297,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return DISPLAY_NAME_userId;
 		case VAR_userEmail:
 			return DISPLAY_NAME_userEmail;
+		case VAR_userAwesomeEffect:
+			return DISPLAY_NAME_userAwesomeEffect;
 		case VAR_logoutUrl:
 			return DISPLAY_NAME_logoutUrl;
 		case VAR_promiseBefore:
@@ -5361,6 +5434,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return "The current user's id";
 		case VAR_userEmail:
 			return "The current user's email";
+		case VAR_userAwesomeEffect:
+			return "The user's awesome effect setting";
 		case VAR_logoutUrl:
 			return "The logout URL";
 		case VAR_promiseBefore:
@@ -5448,6 +5523,8 @@ public abstract class PageLayoutGen<DEV> extends Object {
 			return "String";
 		case VAR_userEmail:
 			return "String";
+		case VAR_userAwesomeEffect:
+			return "Boolean";
 		case VAR_logoutUrl:
 			return "String";
 		case VAR_promiseBefore:

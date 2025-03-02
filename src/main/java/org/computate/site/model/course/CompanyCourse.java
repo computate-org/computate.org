@@ -129,16 +129,6 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 
 	/**
 	 * {@inheritDoc}
-	 * DisplayName: view
-	 * Description: View the course. 
-	 */
-	@Override
-	protected void _editPage(Wrap<String> w) {
-		super._editPage(w);
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true

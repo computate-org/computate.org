@@ -112,6 +112,19 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * HtmRow: 4
+	 * HtmCell: 2
+	 * DisplayName: awesome effect (requires refresh)
+	 * Description: an awesome effect for the entire site
+	 */
+	protected void _awesomeEffect(Wrap<Boolean> w) {
+		w.o(false);
+	}
+
+	/**
 	 * DocValues: true
 	 * Persist: true
 	 * Description: The display name for this user

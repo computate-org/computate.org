@@ -198,6 +198,13 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	/**
+	 * Description: The user's awesome effect setting
+	 */
+	protected void _userAwesomeEffect(Wrap<Boolean> w) {
+		w.o(Optional.ofNullable(siteRequest_.getSiteUser_()).map(user -> user.getAwesomeEffect()).orElse(false));
+	}
+
+	/**
 	 * Description: The logout URL
 	 */
 	protected void _logoutUrl(Wrap<String> w) {
