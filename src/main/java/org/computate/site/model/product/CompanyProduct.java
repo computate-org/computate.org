@@ -23,6 +23,7 @@ import io.vertx.pgclient.data.Point;
  * EditPageUri: /en-us/edit/product/{pageId}
  * DisplayPageUri: /en-us/shop/product/{pageId}
  * UserPageUri: /en-us/use/product/{pageId}
+ * DownloadUri: /en-us/download/product/{pageId}
  * ApiUri: /en-us/api/product
  * ApiMethod:
  *   Search:
@@ -31,8 +32,8 @@ import io.vertx.pgclient.data.Point;
  *   POST:
  *   DELETE:
  *   PUTImport:
- *   SearchDownload:
- *     ApiUri: /download/product{pageId}
+ *   Download:
+ *     ApiUri: /en-us/download/product/{pageId}
  *     ApiMediaType200: application/zip
  *     Role: User
  * 
@@ -139,10 +140,14 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
 	 * DocValues: true
 	 * Persist: true
 	 * Facet: true
-	 * DisplayName: download URI
-	 * Description: The download relative URI for this page. 
+	 * DisplayName: download URL
+	 * Description: The download URL for this page. 
+	 * VarUrlDownload: true
 	 */
-	protected void _downloadUri(Wrap<String> w) {
+	protected void _downloadUrl(Wrap<String> w) {
+		String f = classStringFormatUrlDownloadForClass();
+		if(f != null)
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
 	}
 
 	/**

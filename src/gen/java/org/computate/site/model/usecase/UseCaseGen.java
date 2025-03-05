@@ -889,6 +889,7 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "UseCase";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.usecase.UseCase";
 	public static final String CLASS_API_ADDRESS_UseCase = "computate.org-enUS-UseCase";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_UseCase;
@@ -969,6 +970,11 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
 		return "%s/en-us/use/use-case/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
+		return null;
 	}
 
 	public static String displayNameForClass(String var) {

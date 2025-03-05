@@ -292,6 +292,7 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyServicePage";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.service.CompanyServicePage";
 
 
 	@Override
@@ -331,6 +332,11 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

@@ -5068,6 +5068,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "PageLayout";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.page.PageLayout";
 	public static final String VAR_webClient = "webClient";
 	public static final String VAR_vertx = "vertx";
 	public static final String VAR_siteRequest_ = "siteRequest_";
@@ -5243,6 +5244,10 @@ public abstract class PageLayoutGen<DEV> extends Object {
 	}
 
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

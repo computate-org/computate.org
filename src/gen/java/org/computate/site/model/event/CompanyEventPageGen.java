@@ -292,6 +292,7 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyEventPage";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.event.CompanyEventPage";
 
 
 	@Override
@@ -331,6 +332,11 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

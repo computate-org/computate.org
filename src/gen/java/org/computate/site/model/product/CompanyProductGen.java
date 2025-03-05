@@ -91,8 +91,8 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: PUTImport</h2>
  * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
  * </p>
- * <h2>ApiMethode: SearchDownload</h2>
- * <p>This class contains a comment <b>"ApiMethod: SearchDownload"</b>, which creates an API "SearchDownload". 
+ * <h2>ApiMethode: Download</h2>
+ * <p>This class contains a comment <b>"ApiMethod: Download"</b>, which creates an API "Download". 
  * </p>
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
@@ -219,9 +219,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/product-import";
 	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/product-import";
 	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/product-import";
-	public static final String SearchDownload_enUS_OpenApiUri = "/download/product{pageId}";
-	public static final String SearchDownload_enUS_StringFormatUri = "/download/product%s";
-	public static final String SearchDownload_enUS_StringFormatUrl = "%s/download/product%s";
+	public static final String Download_enUS_OpenApiUri = "/en-us/download/product/{pageId}";
+	public static final String Download_enUS_StringFormatUri = "/en-us/download/product/%s";
+	public static final String Download_enUS_StringFormatUrl = "%s/en-us/download/product/%s";
 	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/product";
 	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/product";
 	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/product";
@@ -598,59 +598,59 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	}
 
 	/////////////////
-	// downloadUri //
+	// downloadUrl //
 	/////////////////
 
 
-	/**	 The entity downloadUri
+	/**	 The entity downloadUrl
 	 *	 is defined as null before being initialized. 
 	 */
 	@JsonProperty
 	@JsonInclude(Include.NON_NULL)
-	protected String downloadUri;
+	protected String downloadUrl;
 
-	/**	<br> The entity downloadUri
+	/**	<br> The entity downloadUrl
 	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:downloadUri">Find the entity downloadUri in Solr</a>
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:downloadUrl">Find the entity downloadUrl in Solr</a>
 	 * <br>
 	 * @param w is for wrapping a value to assign to this entity during initialization. 
 	 **/
-	protected abstract void _downloadUri(Wrap<String> w);
+	protected abstract void _downloadUrl(Wrap<String> w);
 
-	public String getDownloadUri() {
-		return downloadUri;
+	public String getDownloadUrl() {
+		return downloadUrl;
 	}
-	public void setDownloadUri(String o) {
-		this.downloadUri = CompanyProduct.staticSetDownloadUri(siteRequest_, o);
+	public void setDownloadUrl(String o) {
+		this.downloadUrl = CompanyProduct.staticSetDownloadUrl(siteRequest_, o);
 	}
-	public static String staticSetDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSetDownloadUrl(SiteRequest siteRequest_, String o) {
 		return o;
 	}
-	protected CompanyProduct downloadUriInit() {
-		Wrap<String> downloadUriWrap = new Wrap<String>().var("downloadUri");
-		if(downloadUri == null) {
-			_downloadUri(downloadUriWrap);
-			Optional.ofNullable(downloadUriWrap.getO()).ifPresent(o -> {
-				setDownloadUri(o);
+	protected CompanyProduct downloadUrlInit() {
+		Wrap<String> downloadUrlWrap = new Wrap<String>().var("downloadUrl");
+		if(downloadUrl == null) {
+			_downloadUrl(downloadUrlWrap);
+			Optional.ofNullable(downloadUrlWrap.getO()).ifPresent(o -> {
+				setDownloadUrl(o);
 			});
 		}
 		return (CompanyProduct)this;
 	}
 
-	public static String staticSearchDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchDownloadUrl(SiteRequest siteRequest_, String o) {
 		return o;
 	}
 
-	public static String staticSearchStrDownloadUri(SiteRequest siteRequest_, String o) {
+	public static String staticSearchStrDownloadUrl(SiteRequest siteRequest_, String o) {
 		return o == null ? null : o.toString();
 	}
 
-	public static String staticSearchFqDownloadUri(SiteRequest siteRequest_, String o) {
-		return CompanyProduct.staticSearchDownloadUri(siteRequest_, CompanyProduct.staticSetDownloadUri(siteRequest_, o)).toString();
+	public static String staticSearchFqDownloadUrl(SiteRequest siteRequest_, String o) {
+		return CompanyProduct.staticSearchDownloadUrl(siteRequest_, CompanyProduct.staticSetDownloadUrl(siteRequest_, o)).toString();
 	}
 
-	public String sqlDownloadUri() {
-		return downloadUri;
+	public String sqlDownloadUrl() {
+		return downloadUrl;
 	}
 
 	////////////////
@@ -752,7 +752,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				pageIdInit();
 				emailTemplateInit();
 				storeUrlInit();
-				downloadUriInit();
+				downloadUrlInit();
 				productNumInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -819,8 +819,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return oCompanyProduct.emailTemplate;
 			case "storeUrl":
 				return oCompanyProduct.storeUrl;
-			case "downloadUri":
-				return oCompanyProduct.downloadUri;
+			case "downloadUrl":
+				return oCompanyProduct.downloadUrl;
 			case "productNum":
 				return oCompanyProduct.productNum;
 			default:
@@ -874,8 +874,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSetEmailTemplate(siteRequest_, o);
 		case "storeUrl":
 			return CompanyProduct.staticSetStoreUrl(siteRequest_, o);
-		case "downloadUri":
-			return CompanyProduct.staticSetDownloadUri(siteRequest_, o);
+		case "downloadUrl":
+			return CompanyProduct.staticSetDownloadUrl(siteRequest_, o);
 		case "productNum":
 			return CompanyProduct.staticSetProductNum(siteRequest_, o);
 			default:
@@ -904,8 +904,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchEmailTemplate(siteRequest_, (String)o);
 		case "storeUrl":
 			return CompanyProduct.staticSearchStoreUrl(siteRequest_, (String)o);
-		case "downloadUri":
-			return CompanyProduct.staticSearchDownloadUri(siteRequest_, (String)o);
+		case "downloadUrl":
+			return CompanyProduct.staticSearchDownloadUrl(siteRequest_, (String)o);
 		case "productNum":
 			return CompanyProduct.staticSearchProductNum(siteRequest_, (Integer)o);
 			default:
@@ -934,8 +934,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchStrEmailTemplate(siteRequest_, (String)o);
 		case "storeUrl":
 			return CompanyProduct.staticSearchStrStoreUrl(siteRequest_, (String)o);
-		case "downloadUri":
-			return CompanyProduct.staticSearchStrDownloadUri(siteRequest_, (String)o);
+		case "downloadUrl":
+			return CompanyProduct.staticSearchStrDownloadUrl(siteRequest_, (String)o);
 		case "productNum":
 			return CompanyProduct.staticSearchStrProductNum(siteRequest_, (Integer)o);
 			default:
@@ -964,8 +964,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return CompanyProduct.staticSearchFqEmailTemplate(siteRequest_, o);
 		case "storeUrl":
 			return CompanyProduct.staticSearchFqStoreUrl(siteRequest_, o);
-		case "downloadUri":
-			return CompanyProduct.staticSearchFqDownloadUri(siteRequest_, o);
+		case "downloadUrl":
+			return CompanyProduct.staticSearchFqDownloadUrl(siteRequest_, o);
 		case "productNum":
 			return CompanyProduct.staticSearchFqProductNum(siteRequest_, o);
 			default:
@@ -1032,11 +1032,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				}
 				saves.add("storeUrl");
 				return val;
-			} else if("downloaduri".equals(varLower)) {
+			} else if("downloadurl".equals(varLower)) {
 				if(val instanceof String) {
-					setDownloadUri((String)val);
+					setDownloadUrl((String)val);
 				}
-				saves.add("downloadUri");
+				saves.add("downloadUrl");
 				return val;
 			} else if("productnum".equals(varLower)) {
 				if(val instanceof Integer) {
@@ -1099,10 +1099,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					oCompanyProduct.setStoreUrl(storeUrl);
 			}
 
-			if(saves.contains("downloadUri")) {
-				String downloadUri = (String)doc.get("downloadUri_docvalues_string");
-				if(downloadUri != null)
-					oCompanyProduct.setDownloadUri(downloadUri);
+			if(saves.contains("downloadUrl")) {
+				String downloadUrl = (String)doc.get("downloadUrl_docvalues_string");
+				if(downloadUrl != null)
+					oCompanyProduct.setDownloadUrl(downloadUrl);
 			}
 
 			if(saves.contains("productNum")) {
@@ -1134,8 +1134,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		if(storeUrl != null) {
 			doc.put("storeUrl_docvalues_string", storeUrl);
 		}
-		if(downloadUri != null) {
-			doc.put("downloadUri_docvalues_string", downloadUri);
+		if(downloadUrl != null) {
+			doc.put("downloadUrl_docvalues_string", downloadUrl);
 		}
 		if(productNum != null) {
 			doc.put("productNum_docvalues_int", productNum);
@@ -1158,8 +1158,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "emailTemplate_docvalues_string";
 			case "storeUrl":
 				return "storeUrl_docvalues_string";
-			case "downloadUri":
-				return "downloadUri_docvalues_string";
+			case "downloadUrl":
+				return "downloadUrl_docvalues_string";
 			case "productNum":
 				return "productNum_docvalues_int";
 			default:
@@ -1181,8 +1181,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "emailTemplate_docvalues_string";
 			case "storeUrl":
 				return "storeUrl_docvalues_string";
-			case "downloadUri":
-				return "downloadUri_docvalues_string";
+			case "downloadUrl":
+				return "downloadUrl_docvalues_string";
 			case "productNum":
 				return "productNum_docvalues_int";
 			default:
@@ -1204,8 +1204,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				return "emailTemplate";
 			case "storeUrl_docvalues_string":
 				return "storeUrl";
-			case "downloadUri_docvalues_string":
-				return "downloadUri";
+			case "downloadUrl_docvalues_string":
+				return "downloadUrl";
 			case "productNum_docvalues_int":
 				return "productNum";
 			default:
@@ -1244,7 +1244,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		oCompanyProduct.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyProduct.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyProduct.setDownloadUrl(Optional.ofNullable(doc.get("downloadUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyProduct.setProductNum(Optional.ofNullable(doc.get("productNum_docvalues_int")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
@@ -1271,8 +1271,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 				apiRequest.addVars("emailTemplate");
 			if(!Objects.equals(storeUrl, original.getStoreUrl()))
 				apiRequest.addVars("storeUrl");
-			if(!Objects.equals(downloadUri, original.getDownloadUri()))
-				apiRequest.addVars("downloadUri");
+			if(!Objects.equals(downloadUrl, original.getDownloadUrl()))
+				apiRequest.addVars("downloadUrl");
 			if(!Objects.equals(productNum, original.getProductNum()))
 				apiRequest.addVars("productNum");
 			super.apiRequestBaseResult();
@@ -1292,12 +1292,13 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(downloadUrl).map(v -> "downloadUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(productNum).map(v -> "productNum: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyProduct";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProduct";
 	public static final String CLASS_API_ADDRESS_CompanyProduct = "computate.org-enUS-CompanyProduct";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyProduct;
@@ -1308,7 +1309,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String VAR_pageId = "pageId";
 	public static final String VAR_emailTemplate = "emailTemplate";
 	public static final String VAR_storeUrl = "storeUrl";
-	public static final String VAR_downloadUri = "downloadUri";
+	public static final String VAR_downloadUrl = "downloadUrl";
 	public static final String VAR_productNum = "productNum";
 
 	public static List<String> varsQForClass() {
@@ -1329,7 +1330,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		vars.add(VAR_pageId);
 		vars.add(VAR_emailTemplate);
 		vars.add(VAR_storeUrl);
-		vars.add(VAR_downloadUri);
+		vars.add(VAR_downloadUrl);
 		vars.add(VAR_productNum);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
@@ -1351,7 +1352,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 	public static final String DISPLAY_NAME_emailTemplate = "email template";
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
-	public static final String DISPLAY_NAME_downloadUri = "download URI";
+	public static final String DISPLAY_NAME_downloadUrl = "download URL";
 	public static final String DISPLAY_NAME_productNum = "Product Number";
 
 	@Override
@@ -1394,6 +1395,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return "%s/en-us/use/product/%s";
 	}
 
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
+		return "%s/en-us/download/product/%s";
+	}
+
 	public static String displayNameForClass(String var) {
 		return CompanyProduct.displayNameCompanyProduct(var);
 	}
@@ -1411,8 +1417,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_emailTemplate;
 		case VAR_storeUrl:
 			return DISPLAY_NAME_storeUrl;
-		case VAR_downloadUri:
-			return DISPLAY_NAME_downloadUri;
+		case VAR_downloadUrl:
+			return DISPLAY_NAME_downloadUrl;
 		case VAR_productNum:
 			return DISPLAY_NAME_productNum;
 		default:
@@ -1434,8 +1440,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "The HTML email template for this product. ";
 		case VAR_storeUrl:
 			return "The store URL for this page. ";
-		case VAR_downloadUri:
-			return "The download relative URI for this page. ";
+		case VAR_downloadUrl:
+			return "The download URL for this page. ";
 		case VAR_productNum:
 			return "The product number for this page. ";
 			default:
@@ -1457,7 +1463,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_storeUrl:
 			return "String";
-		case VAR_downloadUri:
+		case VAR_downloadUrl:
 			return "String";
 		case VAR_productNum:
 			return "Integer";

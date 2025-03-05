@@ -262,6 +262,7 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 	public static final String[] WorkerVerticleVals = new String[] { configureI18nFileError1, configureI18nError1, configureI18nComplete1, configureI18nLoaded1, configureDataConnectionError1, configureDataConnectionSuccess1, configureDataInitError1, configureDataInitSuccess1, configureSharedWorkerExecutorFail1, configureSharedWorkerExecutorComplete1, configureKafkaSuccess1, importDataSkip1 };
 
 	public static final String CLASS_SIMPLE_NAME = "WorkerVerticle";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.verticle.WorkerVerticle";
 
 
 	public String idForClass() {
@@ -293,6 +294,10 @@ public abstract class WorkerVerticleGen<DEV> extends AbstractVerticle {
 	}
 
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

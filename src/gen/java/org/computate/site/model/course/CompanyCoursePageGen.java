@@ -292,6 +292,7 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyCoursePage";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.course.CompanyCoursePage";
 
 
 	@Override
@@ -331,6 +332,11 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

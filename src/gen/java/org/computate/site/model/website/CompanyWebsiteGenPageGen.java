@@ -666,6 +666,7 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebsiteGenPage";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.website.CompanyWebsiteGenPage";
 	public static final String VAR_searchListCompanyWebsite_ = "searchListCompanyWebsite_";
 	public static final String VAR_listCompanyWebsite = "listCompanyWebsite";
 	public static final String VAR_resultCount = "resultCount";
@@ -717,6 +718,11 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

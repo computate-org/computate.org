@@ -791,6 +791,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyAbout";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAbout";
 	public static final String CLASS_API_ADDRESS_CompanyAbout = "computate.org-enUS-CompanyAbout";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyAbout;
@@ -867,6 +868,11 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

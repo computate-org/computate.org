@@ -882,6 +882,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebsite";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.website.CompanyWebsite";
 	public static final String CLASS_API_ADDRESS_CompanyWebsite = "computate.org-enUS-CompanyWebsite";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyWebsite;
@@ -962,6 +963,11 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

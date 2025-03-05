@@ -2267,182 +2267,6 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/UserPageCompanyEventResponse'
-  /download/product{pageId}:
-    get:
-      operationId: searchdownloadCompanyProduct
-      x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      description: >+
-      summary: >+
-      tags:
-        - products
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: q
-          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
-          required: false
-          schema:
-            type: string
-            default: '*:*'
-        - in: query
-          name: fq
-          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: var
-          description: 'The var parameters are additional optional variables and values to pass into the application. '
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - in: query
-          name: fl
-          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sort
-          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: start
-          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
-          required: false
-          schema:
-            type: integer
-            default: 0
-            minimum: 0
-        - in: query
-          name: rows
-          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
-          required: false
-          schema:
-            type: integer
-            default: 10
-            minimum: 0
-        - in: query
-          name: facet
-          description: 'The facet parameter enables facet counts in the query response. '
-          required: false
-          schema:
-            type: boolean
-        - in: query
-          name: facet.range.start
-          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: facet.range.end
-          description: 'The facet.range.end specifies the upper bound of the ranges. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: facet.range.gap
-          description: 'The span of each range expressed as a value to be added to the lower bound. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: facet.pivot
-          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: facet.range
-          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: facet.field
-          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-        - in: query
-          name: d
-          description: 'The radial distance, usually in kilometers. '
-          required: false
-          schema:
-            type: integer
-            minimum: 0
-        - in: query
-          name: pt
-          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: sfield
-          description: 'A spatial indexed field. '
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: score
-          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: distanceUnits
-          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: stats
-          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
-          required: false
-          schema:
-            type: boolean
-        - in: query
-          name: stats.field
-          description: 'Specifies a field for which statistics should be generated. '
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            application/zip; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/SearchDownloadCompanyProductResponse'
   /en-us/api/product:
     get:
       operationId: searchCompanyProduct
@@ -2935,6 +2759,40 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETECompanyProductResponse'
+  /en-us/download/product/{pageId}:
+    get:
+      operationId: downloadCompanyProduct
+      x-vertx-event-bus: computate.org-enUS-CompanyProduct
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+      description: >+
+      summary: >+
+      tags:
+        - products
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/zip; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DownloadCompanyProductResponse'
   /en-us/edit/product/{pageId}:
     get:
       operationId: editpageCompanyProduct
@@ -7798,11 +7656,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/UserPageCompanyEventResponse'
-    SearchDownloadCompanyProductResponse:
-      content:
-        application/zip; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/SearchDownloadCompanyProductResponse'
     SearchCompanyProductResponse:
       content:
         application/json; charset=utf-8:
@@ -7853,6 +7706,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/DELETECompanyProductResponse'
+    DownloadCompanyProductResponse:
+      content:
+        application/zip; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DownloadCompanyProductResponse'
     EditPageCompanyProductResponse:
       content:
         text/html; charset=utf-8:
@@ -8457,8 +8315,6 @@ components:
                     type: string
                   displayPage:
                     type: string
-                  editPage:
-                    type: string
                   storeUrl:
                     type: string
                   downloadUri:
@@ -8512,13 +8368,6 @@ components:
             removeDisplayPage:
               type: string
             removeAllDisplayPage:
-              type: string
-            setEditPage:
-              type: string
-              nullable: true
-            removeEditPage:
-              type: string
-            removeAllEditPage:
               type: string
             setStoreUrl:
               type: string
@@ -8594,13 +8443,6 @@ components:
               type: string
             removeAllDisplayPage:
               type: string
-            setEditPage:
-              type: string
-              nullable: true
-            removeEditPage:
-              type: string
-            removeAllEditPage:
-              type: string
             setStoreUrl:
               type: string
               nullable: true
@@ -8645,8 +8487,6 @@ components:
               type: string
             displayPage:
               type: string
-            editPage:
-              type: string
             storeUrl:
               type: string
             downloadUri:
@@ -8671,8 +8511,6 @@ components:
               type: string
             displayPage:
               type: string
-            editPage:
-              type: string
             storeUrl:
               type: string
             downloadUri:
@@ -8696,8 +8534,6 @@ components:
             emailTemplate:
               type: string
             displayPage:
-              type: string
-            editPage:
               type: string
             storeUrl:
               type: string
@@ -8728,8 +8564,6 @@ components:
                     type: string
                   displayPage:
                     type: string
-                  editPage:
-                    type: string
                   storeUrl:
                     type: string
                   downloadUri:
@@ -8753,8 +8587,6 @@ components:
                   emailTemplate:
                     type: string
                   displayPage:
-                    type: string
-                  editPage:
                     type: string
                   storeUrl:
                     type: string
@@ -8780,8 +8612,6 @@ components:
               type: string
             displayPage:
               type: string
-            editPage:
-              type: string
             storeUrl:
               type: string
             downloadUri:
@@ -8805,8 +8635,6 @@ components:
             emailTemplate:
               type: string
             displayPage:
-              type: string
-            editPage:
               type: string
             storeUrl:
               type: string
@@ -9367,40 +9195,6 @@ components:
     UserPageCompanyEventResponse:
       allOf:
         - type: string
-    SearchDownloadCompanyProductResponse:
-      allOf:
-        - type: object
-          properties:
-            startNum:
-              type: integer
-              minimum: 0
-            foundNum:
-              type: integer
-              minimum: 0
-            returnedNum:
-              type: integer
-              minimum: 0
-            list:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: string
-                  pageId:
-                    type: string
-                  emailTemplate:
-                    type: string
-                  storeUrl:
-                    type: string
-                  downloadUri:
-                    type: string
-                  productNum:
-                    type: string
     SearchCompanyProductResponse:
       allOf:
         - type: object
@@ -9431,7 +9225,7 @@ components:
                     type: string
                   storeUrl:
                     type: string
-                  downloadUri:
+                  downloadUrl:
                     type: string
                   productNum:
                     type: string
@@ -9481,12 +9275,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setDownloadUri:
+            setDownloadUrl:
               type: string
               nullable: true
-            removeDownloadUri:
+            removeDownloadUrl:
               type: string
-            removeAllDownloadUri:
+            removeAllDownloadUrl:
               type: string
             setProductNum:
               type: string
@@ -9541,12 +9335,12 @@ components:
               type: string
             removeAllStoreUrl:
               type: string
-            setDownloadUri:
+            setDownloadUrl:
               type: string
               nullable: true
-            removeDownloadUri:
+            removeDownloadUrl:
               type: string
-            removeAllDownloadUri:
+            removeAllDownloadUrl:
               type: string
             setProductNum:
               type: string
@@ -9571,7 +9365,7 @@ components:
               type: string
             storeUrl:
               type: string
-            downloadUri:
+            downloadUrl:
               type: string
             productNum:
               type: string
@@ -9591,7 +9385,7 @@ components:
               type: string
             storeUrl:
               type: string
-            downloadUri:
+            downloadUrl:
               type: string
             productNum:
               type: string
@@ -9611,7 +9405,7 @@ components:
               type: string
             storeUrl:
               type: string
-            downloadUri:
+            downloadUrl:
               type: string
             productNum:
               type: string
@@ -9636,7 +9430,7 @@ components:
                     type: string
                   storeUrl:
                     type: string
-                  downloadUri:
+                  downloadUrl:
                     type: string
                   productNum:
                     type: string
@@ -9656,7 +9450,7 @@ components:
                     type: string
                   storeUrl:
                     type: string
-                  downloadUri:
+                  downloadUrl:
                     type: string
                   productNum:
                     type: string
@@ -9676,7 +9470,7 @@ components:
               type: string
             storeUrl:
               type: string
-            downloadUri:
+            downloadUrl:
               type: string
             productNum:
               type: string
@@ -9696,7 +9490,27 @@ components:
               type: string
             storeUrl:
               type: string
-            downloadUri:
+            downloadUrl:
+              type: string
+            productNum:
+              type: string
+    DownloadCompanyProductResponse:
+      allOf:
+        - type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
+            emailTemplate:
+              type: string
+            storeUrl:
+              type: string
+            downloadUrl:
               type: string
             productNum:
               type: string

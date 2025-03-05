@@ -666,6 +666,7 @@ public abstract class CompanyProductGenPageGen<DEV> extends PageLayout {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyProductGenPage";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProductGenPage";
 	public static final String VAR_searchListCompanyProduct_ = "searchListCompanyProduct_";
 	public static final String VAR_listCompanyProduct = "listCompanyProduct";
 	public static final String VAR_resultCount = "resultCount";
@@ -717,6 +718,11 @@ public abstract class CompanyProductGenPageGen<DEV> extends PageLayout {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 

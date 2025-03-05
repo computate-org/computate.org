@@ -1543,6 +1543,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String[] CompanyWebinarVals = new String[] { caldavFail1_enUS };
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinar";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinar";
 	public static final String CLASS_API_ADDRESS_CompanyWebinar = "computate.org-enUS-CompanyWebinar";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyWebinar;
@@ -1643,6 +1644,11 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
 		return "%s/en-us/join/webinar/%s";
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
+		return null;
 	}
 
 	public static String displayNameForClass(String var) {

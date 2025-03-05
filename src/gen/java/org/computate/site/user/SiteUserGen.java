@@ -1454,6 +1454,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	}
 
 	public static final String CLASS_SIMPLE_NAME = "SiteUser";
+	public static final String CLASS_CANONICAL_NAME = "org.computate.site.user.SiteUser";
 	public static final String CLASS_API_ADDRESS_SiteUser = "computate.org-enUS-SiteUser";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_SiteUser;
@@ -1541,6 +1542,11 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 
 	@Override
 	public String classStringFormatUrlUserPageForClass() {
+		return null;
+	}
+
+	@Override
+	public String classStringFormatUrlDownloadForClass() {
 		return null;
 	}
 
