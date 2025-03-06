@@ -323,7 +323,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -582,7 +589,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "POST"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -791,7 +805,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1034,14 +1055,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "PUT"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
-							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "PUT"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -1460,6 +1481,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
@@ -1467,7 +1489,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
-							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "GET"))
 			).onComplete(authorizationDecisionResult -> {
 				HttpResponse<Buffer> authorizationDecision = authorizationDecisionResult.result();
 				try {
@@ -1735,6 +1756,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
@@ -1742,7 +1764,6 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
-							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "GET"))
 			).onComplete(authorizationDecisionResult -> {
 				HttpResponse<Buffer> authorizationDecision = authorizationDecisionResult.result();
 				try {
@@ -1890,14 +1911,14 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
 							.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT))
 							.add("response_mode", "permissions")
+							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "DELETE"))
+							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)))
-							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"))
 							.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"))
-							.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "DELETE"))
 			).onFailure(ex -> {
 				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 				eventHandler.handle(Future.succeededFuture(
@@ -2252,8 +2273,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 				try {
 					if(paramValuesObject != null && "facet.pivot".equals(paramName)) {
 						Matcher mFacetPivot = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher(StringUtils.join(paramObjects.getList().toArray(), ","));
-						boolean foundFacetPivot = mFacetPivot.find();
-						if(foundFacetPivot) {
+						if(mFacetPivot.find()) {
 							String solrLocalParams = mFacetPivot.group(1);
 							String[] entityVars = mFacetPivot.group(2).trim().split(",");
 							String[] varsIndexed = new String[entityVars.length];
@@ -2267,33 +2287,29 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 						for(Object paramObject : paramObjects) {
 							if(paramName.equals("q")) {
 								Matcher mQ = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|\\^|$)))").matcher((String)paramObject);
-								boolean foundQ = mQ.find();
-								if(foundQ) {
-									StringBuffer sb = new StringBuffer();
-									while(foundQ) {
-										entityVar = mQ.group(1).trim();
-										valueIndexed = mQ.group(2).trim();
-										varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
-										String entityQ = searchCompanyEventFq(searchList, entityVar, valueIndexed, varIndexed);
-										mQ.appendReplacement(sb, entityQ);
-										foundQ = mQ.find();
-									}
+								StringBuffer sb = new StringBuffer();
+								while(mQ.find()) {
+									entityVar = mQ.group(1).trim();
+									valueIndexed = mQ.group(2).trim();
+									varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
+									String entityQ = searchCompanyEventFq(searchList, entityVar, valueIndexed, varIndexed);
+									mQ.appendReplacement(sb, entityQ);
+								}
+								if(!sb.isEmpty()) {
 									mQ.appendTail(sb);
 									searchList.q(sb.toString());
 								}
 							} else if(paramName.equals("fq")) {
 								Matcher mFq = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|$)))").matcher((String)paramObject);
-								boolean foundFq = mFq.find();
-								if(foundFq) {
 									StringBuffer sb = new StringBuffer();
-									while(foundFq) {
-										entityVar = mFq.group(1).trim();
-										valueIndexed = mFq.group(2).trim();
-										varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
-										String entityFq = searchCompanyEventFq(searchList, entityVar, valueIndexed, varIndexed);
-										mFq.appendReplacement(sb, entityFq);
-										foundFq = mFq.find();
-									}
+								while(mFq.find()) {
+									entityVar = mFq.group(1).trim();
+									valueIndexed = mFq.group(2).trim();
+									varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
+									String entityFq = searchCompanyEventFq(searchList, entityVar, valueIndexed, varIndexed);
+									mFq.appendReplacement(sb, entityFq);
+								}
+								if(!sb.isEmpty()) {
 									mFq.appendTail(sb);
 									searchList.fq(sb.toString());
 								}
@@ -2312,8 +2328,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 								searchList.stats((Boolean)paramObject);
 							} else if(paramName.equals("stats.field")) {
 								Matcher mStats = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher((String)paramObject);
-								boolean foundStats = mStats.find();
-								if(foundStats) {
+								if(mStats.find()) {
 									String solrLocalParams = mStats.group(1);
 									entityVar = mStats.group(2).trim();
 									varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
@@ -2339,8 +2354,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 								facetRangeGap = gap;
 							} else if(paramName.equals("facet.range")) {
 								Matcher mFacetRange = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher((String)paramObject);
-								boolean foundFacetRange = mFacetRange.find();
-								if(foundFacetRange) {
+								if(mFacetRange.find()) {
 									String solrLocalParams = mFacetRange.group(1);
 									entityVar = mFacetRange.group(2).trim();
 									varIndexed = CompanyEvent.varIndexedCompanyEvent(entityVar);
