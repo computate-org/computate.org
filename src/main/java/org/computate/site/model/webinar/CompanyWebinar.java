@@ -8,10 +8,12 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -223,15 +225,25 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
               Matcher mRule = Pattern.compile("^RRULE:(.*)", Pattern.MULTILINE).matcher(eventStr);
               if(mRule.find()) {
                 String ruleStr = mRule.group(1);
-                if(ruleStr.contains("FREQ=WEEKLY") && ruleStr.contains("BYDAY=") && ruleStr.contains("UNTIL=")) {
+                if(ruleStr.contains("FREQ=WEEKLY") && ruleStr.contains("BYDAY=")) {
                   Matcher mByDay = Pattern.compile("\\;BYDAY=([^\\;\\n]+)", Pattern.MULTILINE).matcher(ruleStr);
                   mByDay.find();
+                  if(ruleStr.contains("UNTIL=")) {
+                    Matcher mUntil = Pattern.compile("\\;UNTIL=([^\\;\\n]+)Z", Pattern.MULTILINE).matcher(ruleStr);
+                    mUntil.find();
+                    String untilStr = mUntil.group(1);
+                    until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
+                  }
                   String byDayStr = mByDay.group(1);
-                  Matcher mUntil = Pattern.compile("\\;UNTIL=([^\\;\\n]+)Z", Pattern.MULTILINE).matcher(ruleStr);
-                  mUntil.find();
-                  String untilStr = mUntil.group(1);
-                  until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
                   String[] byDays = byDayStr.split(",");
+                  ArrayList<String> byDaysNext = new ArrayList<>();
+                  DayOfWeek nowDayOfWeek = now.getDayOfWeek();
+                  int nowDayOfWeekIndex = nowDayOfWeek.getValue() - 1;
+                  for(int i = 0; i < 7; i++) {
+                    int currentDayOfWeekIndex = (nowDayOfWeekIndex + i) % 7;
+                    DayOfWeek currentDayOfWeek = DayOfWeek.of(currentDayOfWeekIndex + 1);
+                    byDaysNext.add(currentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.US).substring(0, 2).toUpperCase());
+                  }
 
                   ZonedDateTime currentWeek = now
                       .withHour(endDateTime.getHour())
@@ -239,8 +251,8 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                       .withSecond(endDateTime.getSecond())
                       .withNano(endDateTime.getNano())
                       ;
-                  while(currentWeek.isBefore(until)) {
-                    for(String byDay : byDays) {
+                  while(until == null || currentWeek.isBefore(until)) {
+                    for(String byDay : byDaysNext) {
                       String byDayValue = null;
                       switch(byDay) {
                         case "SU":
@@ -272,7 +284,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                           .withSecond(endDateTime.getSecond())
                           .withNano(endDateTime.getNano())
                           .with(TemporalAdjusters.nextOrSame(DayOfWeek.valueOf(byDayValue)));
-                      if(nextGuess.isAfter(until)) {
+                      if(until != null && nextGuess.isAfter(until)) {
                         break;
                       } else {
                         nextEnd = nextGuess;
@@ -300,6 +312,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                               nextEnd = null;
                               break;
                             }
+                            mExceptionFound = mException.find();
                           }
                           if(nextStart != null) {
                             break;
