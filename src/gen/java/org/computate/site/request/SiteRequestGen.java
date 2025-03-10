@@ -1102,6 +1102,81 @@ public abstract class SiteRequestGen<DEV> extends Object {
 		return SiteRequest.staticSearchScopes(siteRequest_, SiteRequest.staticSetScopes(siteRequest_, o)).toString();
 	}
 
+	////////////
+	// groups //
+	////////////
+
+
+	/**	 The entity groups
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> groups = new ArrayList<String>();
+
+	/**	<br> The entity groups
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:groups">Find the entity groups in Solr</a>
+	 * <br>
+	 * @param o is the entity already constructed. 
+	 **/
+	protected abstract void _groups(List<String> o);
+
+	public List<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+	@JsonIgnore
+	public void setGroups(String o) {
+		String l = SiteRequest.staticSetGroups(siteRequest_, o);
+		if(l != null)
+			addGroups(l);
+	}
+	public static String staticSetGroups(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public SiteRequest addGroups(String...objects) {
+		for(String o : objects) {
+			addGroups(o);
+		}
+		return (SiteRequest)this;
+	}
+	public SiteRequest addGroups(String o) {
+		if(o != null)
+			this.groups.add(o);
+		return (SiteRequest)this;
+	}
+	@JsonIgnore
+	public void setGroups(JsonArray objects) {
+		groups.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addGroups(o);
+		}
+	}
+	protected SiteRequest groupsInit() {
+		_groups(groups);
+		return (SiteRequest)this;
+	}
+
+	public static String staticSearchGroups(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrGroups(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqGroups(SiteRequest siteRequest_, String o) {
+		return SiteRequest.staticSearchGroups(siteRequest_, SiteRequest.staticSetGroups(siteRequest_, o)).toString();
+	}
+
 	////////////////
 	// publicRead //
 	////////////////
@@ -1628,6 +1703,7 @@ public abstract class SiteRequestGen<DEV> extends Object {
 				userFullNameInit();
 				userEmailInit();
 				scopesInit();
+				groupsInit();
 				publicReadInit();
 				userResourceInit();
 				siteUser_Init();
@@ -1717,6 +1793,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 				return oSiteRequest.userEmail;
 			case "scopes":
 				return oSiteRequest.scopes;
+			case "groups":
+				return oSiteRequest.groups;
 			case "publicRead":
 				return oSiteRequest.publicRead;
 			case "userResource":
@@ -1804,6 +1882,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSetUserEmail(siteRequest_, o);
 		case "scopes":
 			return SiteRequest.staticSetScopes(siteRequest_, o);
+		case "groups":
+			return SiteRequest.staticSetGroups(siteRequest_, o);
 		case "publicRead":
 			return SiteRequest.staticSetPublicRead(siteRequest_, o);
 		case "userResource":
@@ -1858,6 +1938,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchUserEmail(siteRequest_, (String)o);
 		case "scopes":
 			return SiteRequest.staticSearchScopes(siteRequest_, (String)o);
+		case "groups":
+			return SiteRequest.staticSearchGroups(siteRequest_, (String)o);
 		case "publicRead":
 			return SiteRequest.staticSearchPublicRead(siteRequest_, (Boolean)o);
 		case "userResource":
@@ -1912,6 +1994,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchStrUserEmail(siteRequest_, (String)o);
 		case "scopes":
 			return SiteRequest.staticSearchStrScopes(siteRequest_, (String)o);
+		case "groups":
+			return SiteRequest.staticSearchStrGroups(siteRequest_, (String)o);
 		case "publicRead":
 			return SiteRequest.staticSearchStrPublicRead(siteRequest_, (Boolean)o);
 		case "userResource":
@@ -1966,6 +2050,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return SiteRequest.staticSearchFqUserEmail(siteRequest_, o);
 		case "scopes":
 			return SiteRequest.staticSearchFqScopes(siteRequest_, o);
+		case "groups":
+			return SiteRequest.staticSearchFqGroups(siteRequest_, o);
 		case "publicRead":
 			return SiteRequest.staticSearchFqPublicRead(siteRequest_, o);
 		case "userResource":
@@ -2013,6 +2099,7 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public static final String VAR_userFullName = "userFullName";
 	public static final String VAR_userEmail = "userEmail";
 	public static final String VAR_scopes = "scopes";
+	public static final String VAR_groups = "groups";
 	public static final String VAR_publicRead = "publicRead";
 	public static final String VAR_userResource = "userResource";
 	public static final String VAR_siteUser_ = "siteUser_";
@@ -2043,6 +2130,7 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	public static final String DISPLAY_NAME_userFullName = "";
 	public static final String DISPLAY_NAME_userEmail = "";
 	public static final String DISPLAY_NAME_scopes = "";
+	public static final String DISPLAY_NAME_groups = "";
 	public static final String DISPLAY_NAME_publicRead = "";
 	public static final String DISPLAY_NAME_userResource = "";
 	public static final String DISPLAY_NAME_siteUser_ = "";
@@ -2133,6 +2221,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return DISPLAY_NAME_userEmail;
 		case VAR_scopes:
 			return DISPLAY_NAME_scopes;
+		case VAR_groups:
+			return DISPLAY_NAME_groups;
 		case VAR_publicRead:
 			return DISPLAY_NAME_publicRead;
 		case VAR_userResource:
@@ -2198,6 +2288,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 			return "The user email";
 		case VAR_scopes:
 			return "The user auth scopes for the current request within the SSO realm";
+		case VAR_groups:
+			return "The user groups for the current request within the SSO realm";
 		case VAR_publicRead:
 			return "Whether the search results are public read. ";
 		case VAR_userResource:
@@ -2262,6 +2354,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 		case VAR_userEmail:
 			return "String";
 		case VAR_scopes:
+			return "List";
+		case VAR_groups:
 			return "List";
 		case VAR_publicRead:
 			return "Boolean";
