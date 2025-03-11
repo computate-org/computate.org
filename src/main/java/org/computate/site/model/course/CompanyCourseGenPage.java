@@ -529,7 +529,7 @@ public class CompanyCourseGenPage extends CompanyCourseGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-regular fa-notebook\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-notebook\"></i>");
   }
 
   protected void _pageUriCompanyCourse(Wrap<String> c) {

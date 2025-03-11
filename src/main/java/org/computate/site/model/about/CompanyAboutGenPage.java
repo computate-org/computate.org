@@ -528,7 +528,7 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-solid fa-address-card\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-address-card\"></i>");
   }
 
   protected void _pageUriCompanyAbout(Wrap<String> c) {

@@ -13,7 +13,7 @@ import io.vertx.pgclient.data.Point;
  * Order: 4
  * Description: Take an exciting hands-on course on your own computer with computate
  * AName: a course
- * Icon: <i class="fa-regular fa-notebook"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-notebook"></i>
  * Sort.asc: courseNum
  * 
  * PublicRead: true

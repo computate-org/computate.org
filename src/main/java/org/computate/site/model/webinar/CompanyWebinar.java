@@ -26,7 +26,7 @@ import org.computate.search.tool.SearchTool;
 import org.computate.search.wrap.Wrap;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.search.list.SearchList;
-
+import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
 
 import io.vertx.core.Promise;
@@ -42,7 +42,7 @@ import io.vertx.pgclient.data.Polygon;
  * Description: Join the Computate community for regular weekly webinars
  * AName: a webinar
  * PluralName: webinars
- * Icon: <i class="fa-regular fa-video"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-video"></i>
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/webinar
@@ -186,7 +186,8 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
       promise.complete();
     } else {
       try {
-        ZonedDateTime now = ZonedDateTime.now();
+        ZoneId zoneIdSite = ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE));
+        ZonedDateTime now = ZonedDateTime.now(zoneIdSite);
         String utcDateTimeFormat = "yyyyMMdd'T'HHmmss";
         ZoneId zoneId = ZoneId.of("UTC");
         DateTimeFormatter utcDateTimeFormatter = DateTimeFormatter.ofPattern(utcDateTimeFormat);
@@ -378,7 +379,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
    * Link: true
    * HtmColumn: 2
    * DisplayName: Join the webinar
-   * Icon: <i class="fa-solid fa-video"></i>
+   * Icon: <i class="fa-duotone fa-regular fa-video"></i>
    * Description: Access the webinar links. 
    */
   protected void _joinUrl(Wrap<String> w) {

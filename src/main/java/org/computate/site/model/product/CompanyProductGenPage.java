@@ -529,7 +529,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-regular fa-conveyor-belt\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-conveyor-belt\"></i>");
   }
 
   protected void _pageUriCompanyProduct(Wrap<String> c) {

@@ -10,7 +10,7 @@ import io.vertx.pgclient.data.Point;
  * Description: See computate use cases for real organizations. 
  * AName: a use case
  * PluralName: use cases
- * Icon: <i class="fa-solid fa-file-invoice"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-file-invoice"></i>
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/use-case

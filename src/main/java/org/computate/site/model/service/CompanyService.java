@@ -10,7 +10,7 @@ import io.vertx.pgclient.data.Point;
  * Description: See the services provided by computate that will help you build your own data-driven platforms
  * AName: a service
  * PluralName: services
- * Icon: <i class="fa-regular fa-conveyor-belt"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-conveyor-belt"></i>
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/service

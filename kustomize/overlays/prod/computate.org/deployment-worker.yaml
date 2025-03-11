@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: computateorg
-    app.kubernetes.io/instance: computateorg
-    app.kubernetes.io/name: computateorg
-    deployment: computateorg
-  name: computateorg
+    app: computateorg-worker
+    app.kubernetes.io/instance: computateorg-worker
+    app.kubernetes.io/name: computateorg-worker
+    deployment: computateorg-worker
+  name: computateorg-worker
   namespace: computateorg
 spec:
   progressDeadlineSeconds: 600
@@ -14,23 +14,25 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: computateorg
-      app.kubernetes.io/instance: computateorg
-      app.kubernetes.io/name: computateorg
-      deployment: computateorg
+      app: computateorg-worker
+      app.kubernetes.io/instance: computateorg-worker
+      app.kubernetes.io/name: computateorg-worker
+      deployment: computateorg-worker
   strategy:
     type: Recreate
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: computateorg
-        app.kubernetes.io/instance: computateorg
-        app.kubernetes.io/name: computateorg
-        deployment: computateorg
+        app: computateorg-worker
+        app.kubernetes.io/instance: computateorg-worker
+        app.kubernetes.io/name: computateorg-worker
+        deployment: computateorg-worker
     spec:
       containers:
       - env:
+        - name: ENABLE_DATABASE
+          value: 'true'
         - name: ENABLE_ZOOKEEPER_CLUSTER
           value: 'true'
         - name: CLUSTER_PUBLIC_PORT
@@ -46,7 +48,7 @@ spec:
         - name: SITE_HOST_NAME
           value: computateorg
         - name: SITE_NAME
-          value: computate.org
+          value: computate.org-worker
         - name: SITE_BASE_URL
           value: https://www.computate.org
         - name: SITE_PUBLIC_URL
@@ -56,7 +58,7 @@ spec:
         - name: SSL_VERIFY
           value: "true"
         - name: SITE_INSTANCES
-          value: "4"
+          value: "1"
         - name: WORKER_POOL_SIZE
           value: "2"
         - name: VERTX_MAX_EVENT_LOOP_EXECUTE_TIME
@@ -113,7 +115,7 @@ spec:
         - name: ENABLE_OPEN_TELEMETRY
           value: "false"
         - name: ENABLE_WORKER_VERTICLE
-          value: "false"
+          value: "true"
         - name: ENABLE_IMPORT_DATA
           value: "true"
         - name: DOWNLOAD_PATH

@@ -528,7 +528,7 @@ public class CompanyResearchGenPage extends CompanyResearchGenPageGen<PageLayout
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-duotone fa-solid fa-school\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-school\"></i>");
   }
 
   protected void _pageUriCompanyResearch(Wrap<String> c) {

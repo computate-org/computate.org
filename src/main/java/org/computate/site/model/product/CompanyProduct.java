@@ -15,7 +15,7 @@ import io.vertx.pgclient.data.Point;
  * Order: 5
  * Description: See the computate products that will help you build your own data-driven platforms
  * AName: a product
- * Icon: <i class="fa-regular fa-conveyor-belt"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-conveyor-belt"></i>
  * Sort.asc: productNum
  * 
  * PublicRead: true

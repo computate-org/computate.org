@@ -244,7 +244,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/webinar";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/webinar";
 
-	public static final String Icon = "<i class=\"fa-regular fa-video\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-video\"></i>";
 
 	//////////
 	// name //

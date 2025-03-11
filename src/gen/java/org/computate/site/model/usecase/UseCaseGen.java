@@ -230,7 +230,7 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/use-case";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/use-case";
 
-	public static final String Icon = "<i class=\"fa-solid fa-file-invoice\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-file-invoice\"></i>";
 
 	//////////
 	// name //

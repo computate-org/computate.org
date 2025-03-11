@@ -528,7 +528,7 @@ public class UseCaseGenPage extends UseCaseGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-solid fa-file-invoice\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-file-invoice\"></i>");
   }
 
   protected void _pageUriUseCase(Wrap<String> c) {

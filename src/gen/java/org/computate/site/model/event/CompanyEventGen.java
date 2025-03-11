@@ -253,7 +253,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/event";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/event";
 
-	public static final String Icon = "<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-map-location-dot\"></i>";
 
 	//////////
 	// name //

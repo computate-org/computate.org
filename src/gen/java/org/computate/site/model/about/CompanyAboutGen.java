@@ -224,7 +224,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/about";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/about";
 
-	public static final String Icon = "<i class=\"fa-solid fa-address-card\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-address-card\"></i>";
 
 	//////////
 	// name //

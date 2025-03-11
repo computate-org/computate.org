@@ -10,7 +10,7 @@ import io.vertx.pgclient.data.Point;
  * Description: Read about the computate project related research going on at Red Hat research
  * AName: a research
  * PluralName: research
- * Icon: <i class="fa-duotone fa-solid fa-school"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-school"></i>
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/research

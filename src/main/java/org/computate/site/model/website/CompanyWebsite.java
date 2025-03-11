@@ -10,7 +10,7 @@ import io.vertx.pgclient.data.Point;
  * Description: See the live websites built with computate
  * AName: a website
  * PluralName: websites
- * Icon: <i class="fa-regular fa-globe-pointer"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-globe-pointer"></i>
  * Sort.desc: websiteNum
  * 
  * PublicRead: true

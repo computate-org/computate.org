@@ -529,7 +529,7 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<PageLayout> 
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-regular fa-globe-pointer\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-globe-pointer\"></i>");
   }
 
   protected void _pageUriCompanyWebsite(Wrap<String> c) {

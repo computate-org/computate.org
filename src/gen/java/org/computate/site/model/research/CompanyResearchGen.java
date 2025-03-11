@@ -212,7 +212,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/research/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/research/%s";
 
-	public static final String Icon = "<i class=\"fa-duotone fa-solid fa-school\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-school\"></i>";
 
 	//////////
 	// name //

@@ -13,7 +13,7 @@ import io.vertx.pgclient.data.Point;
  * Description: Learn about our team, company, culture, and values. 
  * AName: an about page
  * PluralName: about
- * Icon: <i class="fa-solid fa-address-card"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-address-card"></i>
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/about

@@ -41,7 +41,7 @@ SITE_LOCALE: en-US
 # A computate specific identifier for the locale and language of the code. 
 SITE_LANG: "{{ SITE_LOCALE | replace('-', '') }}"
 # The timezone of the site. 
-SITE_ZONE: "{{ lookup('env', 'SITE_ZONE') | default('America/New_York', true) }}"
+SITE_ZONE: "{{ lookup('env', 'SITE_ZONE') | default('America/Denver', true) }}"
 # The domain name of the site. 
 DOMAIN_NAME: computate.org
 # The GitHub organization for this project. 

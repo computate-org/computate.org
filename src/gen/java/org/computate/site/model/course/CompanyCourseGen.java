@@ -232,7 +232,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/course";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/course";
 
-	public static final String Icon = "<i class=\"fa-regular fa-notebook\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-notebook\"></i>";
 
 	//////////
 	// name //

@@ -213,7 +213,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/website/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/website/%s";
 
-	public static final String Icon = "<i class=\"fa-regular fa-globe-pointer\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-globe-pointer\"></i>";
 
 	//////////
 	// name //

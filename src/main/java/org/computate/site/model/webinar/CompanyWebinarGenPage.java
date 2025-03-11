@@ -533,7 +533,7 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-regular fa-video\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-video\"></i>");
   }
 
   protected void _pageUriCompanyWebinar(Wrap<String> c) {

@@ -212,7 +212,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/service/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/service/%s";
 
-	public static final String Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-conveyor-belt\"></i>";
 
 	//////////
 	// name //

@@ -531,7 +531,7 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-duotone fa-solid fa-map-location-dot\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-map-location-dot\"></i>");
   }
 
   protected void _pageUriCompanyEvent(Wrap<String> c) {

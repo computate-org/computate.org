@@ -238,7 +238,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/product";
 	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/product";
 
-	public static final String Icon = "<i class=\"fa-regular fa-conveyor-belt\"></i>";
+	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-conveyor-belt\"></i>";
 
 	//////////
 	// name //
