@@ -912,6 +912,10 @@ public abstract class BaseResultGen<DEV> extends Object {
 		return BaseResult.staticSearchDownload(siteRequest_, BaseResult.staticSetDownload(siteRequest_, o)).toString();
 	}
 
+	public String sqlDownload() {
+		return download;
+	}
+
 	///////////////////
 	// objectSuggest //
 	///////////////////
@@ -1474,6 +1478,12 @@ public abstract class BaseResultGen<DEV> extends Object {
 					setDisplayPage((String)val);
 				}
 				saves.add("displayPage");
+				return val;
+			} else if("download".equals(varLower)) {
+				if(val instanceof String) {
+					setDownload((String)val);
+				}
+				saves.add("download");
 				return val;
 			} else if("solrid".equals(varLower)) {
 				if(val instanceof String) {
