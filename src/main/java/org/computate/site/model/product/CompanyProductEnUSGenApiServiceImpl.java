@@ -333,34 +333,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PATCH")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
 							try {
@@ -601,34 +578,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("POST")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
@@ -819,34 +773,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("DELETE")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
 							try {
@@ -1071,34 +1002,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PUT")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -1378,34 +1286,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("GET")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200DownloadCompanyProduct(listCompanyProduct).onSuccess(response -> {
@@ -1623,11 +1508,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResult -> {
-				HttpResponse<Buffer> authorizationDecision = authorizationDecisionResult.result();
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = Optional.ofNullable(authorizationDecision).map(decision -> decision.bodyAsJsonArray().stream().findFirst().map(d -> ((JsonObject)d).getJsonArray("scopes")).orElse(new JsonArray())).orElse(new JsonArray());
-					if(scopes != null) {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200EditPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
@@ -1900,11 +1785,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResult -> {
-				HttpResponse<Buffer> authorizationDecision = authorizationDecisionResult.result();
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = Optional.ofNullable(authorizationDecision).map(decision -> decision.bodyAsJsonArray().stream().findFirst().map(d -> ((JsonObject)d).getJsonArray("scopes")).orElse(new JsonArray())).orElse(new JsonArray());
-					if(scopes != null) {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200UserPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
@@ -2057,34 +1942,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("DELETE")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
 							try {
@@ -2734,6 +2596,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
 			page.persistForClass(CompanyProduct.VAR_title, CompanyProduct.staticSetTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_title)));
 			page.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
+			page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
 			page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

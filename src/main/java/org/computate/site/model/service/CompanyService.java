@@ -2,6 +2,9 @@ package org.computate.site.model.service;
 
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
+
+import java.math.BigDecimal;
+
 import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
@@ -68,6 +71,19 @@ public class CompanyService extends CompanyServiceGen<BaseResult> {
 	 * VarDescription: true
    */
   protected void _description(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: price
+   * Description: The price of the product per developer. 
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   */
+  protected void _price(Wrap<BigDecimal> w) {
   }
 
 	/**

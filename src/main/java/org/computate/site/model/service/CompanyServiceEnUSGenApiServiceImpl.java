@@ -333,34 +333,11 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PATCH")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyServiceList(siteRequest, true, false, true).onSuccess(listCompanyService -> {
 							try {
@@ -601,34 +578,11 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("POST")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
@@ -819,34 +773,11 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onFailure(ex -> {
-				String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(403, "FORBIDDEN",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "403")
-								.put("errorMessage", msg)
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-					)
-				));
-			}).onSuccess(authorizationDecision -> {
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PUT")) {
-						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-						eventHandler.handle(Future.succeededFuture(
-							new ServiceResponse(403, "FORBIDDEN",
-								Buffer.buffer().appendString(
-									new JsonObject()
-										.put("errorCode", "403")
-										.put("errorMessage", msg)
-										.encodePrettily()
-									), MultiMap.caseInsensitiveMultiMap()
-							)
-						));
-					} else {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
@@ -1247,11 +1178,11 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
 					.sendForm(form)
 					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResult -> {
-				HttpResponse<Buffer> authorizationDecision = authorizationDecisionResult.result();
+			.onComplete(authorizationDecisionResponse -> {
 				try {
-					JsonArray scopes = Optional.ofNullable(authorizationDecision).map(decision -> decision.bodyAsJsonArray().stream().findFirst().map(d -> ((JsonObject)d).getJsonArray("scopes")).orElse(new JsonArray())).orElse(new JsonArray());
-					if(scopes != null) {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
 							response200EditPageCompanyService(listCompanyService).onSuccess(response -> {
@@ -1940,10 +1871,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyService.VAR_name, CompanyService.staticSetName(siteRequest2, (String)result.get(CompanyService.VAR_name)));
 			page.persistForClass(CompanyService.VAR_created, CompanyService.staticSetCreated(siteRequest2, (String)result.get(CompanyService.VAR_created)));
 			page.persistForClass(CompanyService.VAR_description, CompanyService.staticSetDescription(siteRequest2, (String)result.get(CompanyService.VAR_description)));
-			page.persistForClass(CompanyService.VAR_pageId, CompanyService.staticSetPageId(siteRequest2, (String)result.get(CompanyService.VAR_pageId)));
+			page.persistForClass(CompanyService.VAR_price, CompanyService.staticSetPrice(siteRequest2, (String)result.get(CompanyService.VAR_price)));
 			page.persistForClass(CompanyService.VAR_archived, CompanyService.staticSetArchived(siteRequest2, (String)result.get(CompanyService.VAR_archived)));
+			page.persistForClass(CompanyService.VAR_pageId, CompanyService.staticSetPageId(siteRequest2, (String)result.get(CompanyService.VAR_pageId)));
 			page.persistForClass(CompanyService.VAR_title, CompanyService.staticSetTitle(siteRequest2, (String)result.get(CompanyService.VAR_title)));
 			page.persistForClass(CompanyService.VAR_displayPage, CompanyService.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyService.VAR_displayPage)));
+			page.persistForClass(CompanyService.VAR_download, CompanyService.staticSetDownload(siteRequest2, (String)result.get(CompanyService.VAR_download)));
 			page.persistForClass(CompanyService.VAR_solrId, CompanyService.staticSetSolrId(siteRequest2, (String)result.get(CompanyService.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

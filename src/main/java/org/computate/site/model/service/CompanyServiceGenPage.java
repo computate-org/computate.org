@@ -2,6 +2,7 @@ package org.computate.site.model.service;
 
 import org.computate.site.model.service.CompanyService;
 import java.lang.String;
+import java.math.BigDecimal;
 import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -31,7 +32,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Arrays;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.util.Objects;

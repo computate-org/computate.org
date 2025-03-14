@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.String;
+import java.math.BigDecimal;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -326,6 +327,83 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 		return description;
 	}
 
+	///////////
+	// price //
+	///////////
+
+
+	/**	 The entity price
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected BigDecimal price;
+
+	/**	<br> The entity price
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&fq=entiteVar_enUS_indexed_string:price">Find the entity price in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _price(Wrap<BigDecimal> w);
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	@JsonIgnore
+	public void setPrice(String o) {
+		this.price = CompanyService.staticSetPrice(siteRequest_, o);
+	}
+	public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
+		o = StringUtils.removeAll(o, "[^\\d\\.]");
+		if(NumberUtils.isParsable(o))
+			return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+		return null;
+	}
+	@JsonIgnore
+	public void setPrice(Double o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Integer o) {
+		setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	@JsonIgnore
+	public void setPrice(Number o) {
+		setPrice(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+	}
+	protected CompanyService priceInit() {
+		Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
+		if(price == null) {
+			_price(priceWrap);
+			Optional.ofNullable(priceWrap.getO()).ifPresent(o -> {
+				setPrice(o);
+			});
+		}
+		return (CompanyService)this;
+	}
+
+	public static Double staticSearchPrice(SiteRequest siteRequest_, BigDecimal o) {
+		return o == null ? null : o.doubleValue();
+	}
+
+	public static String staticSearchStrPrice(SiteRequest siteRequest_, Double o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPrice(SiteRequest siteRequest_, String o) {
+		return CompanyService.staticSearchPrice(siteRequest_, CompanyService.staticSetPrice(siteRequest_, o)).toString();
+	}
+
+	public BigDecimal sqlPrice() {
+		return price;
+	}
+
 	////////////
 	// pageId //
 	////////////
@@ -413,6 +491,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			try {
 				nameInit();
 				descriptionInit();
+				priceInit();
 				pageIdInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -471,6 +550,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				return oCompanyService.name;
 			case "description":
 				return oCompanyService.description;
+			case "price":
+				return oCompanyService.price;
 			case "pageId":
 				return oCompanyService.pageId;
 			default:
@@ -516,6 +597,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return CompanyService.staticSetName(siteRequest_, o);
 		case "description":
 			return CompanyService.staticSetDescription(siteRequest_, o);
+		case "price":
+			return CompanyService.staticSetPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyService.staticSetPageId(siteRequest_, o);
 			default:
@@ -536,6 +619,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return CompanyService.staticSearchName(siteRequest_, (String)o);
 		case "description":
 			return CompanyService.staticSearchDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyService.staticSearchPrice(siteRequest_, (BigDecimal)o);
 		case "pageId":
 			return CompanyService.staticSearchPageId(siteRequest_, (String)o);
 			default:
@@ -556,6 +641,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return CompanyService.staticSearchStrName(siteRequest_, (String)o);
 		case "description":
 			return CompanyService.staticSearchStrDescription(siteRequest_, (String)o);
+		case "price":
+			return CompanyService.staticSearchStrPrice(siteRequest_, (Double)o);
 		case "pageId":
 			return CompanyService.staticSearchStrPageId(siteRequest_, (String)o);
 			default:
@@ -576,6 +663,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return CompanyService.staticSearchFqName(siteRequest_, o);
 		case "description":
 			return CompanyService.staticSearchFqDescription(siteRequest_, o);
+		case "price":
+			return CompanyService.staticSearchFqPrice(siteRequest_, o);
 		case "pageId":
 			return CompanyService.staticSearchFqPageId(siteRequest_, o);
 			default:
@@ -616,6 +705,14 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				}
 				saves.add("description");
 				return val;
+			} else if("price".equals(varLower)) {
+				if(val instanceof String) {
+					setPrice((String)val);
+				} else if(val instanceof Number) {
+					setPrice(new BigDecimal(((Number)val).doubleValue()));
+				}
+				saves.add("price");
+				return val;
 			} else if("pageid".equals(varLower)) {
 				if(val instanceof String) {
 					setPageId((String)val);
@@ -651,6 +748,12 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 					oCompanyService.setDescription(description);
 			}
 
+			if(saves.contains("price")) {
+				Double price = (Double)doc.get("price_docvalues_double");
+				if(price != null)
+					oCompanyService.setPrice(price);
+			}
+
 			if(saves.contains("pageId")) {
 				String pageId = (String)doc.get("pageId_docvalues_string");
 				if(pageId != null)
@@ -668,6 +771,9 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 		if(description != null) {
 			doc.put("description_docvalues_string", description);
 		}
+		if(price != null) {
+			doc.put("price_docvalues_double", price.doubleValue());
+		}
 		if(pageId != null) {
 			doc.put("pageId_docvalues_string", pageId);
 		}
@@ -681,6 +787,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
 			default:
@@ -694,6 +802,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				return "name_docvalues_string";
 			case "description":
 				return "description_docvalues_string";
+			case "price":
+				return "price_docvalues_double";
 			case "pageId":
 				return "pageId_docvalues_string";
 			default:
@@ -707,6 +817,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				return "name";
 			case "description_docvalues_string":
 				return "description";
+			case "price_docvalues_double":
+				return "price";
 			case "pageId_docvalues_string":
 				return "pageId";
 			default:
@@ -741,6 +853,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 
 		oCompanyService.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyService.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyService.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
 		oCompanyService.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
@@ -759,6 +872,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 				apiRequest.addVars("name");
 			if(!Objects.equals(description, original.getDescription()))
 				apiRequest.addVars("description");
+			if(!Objects.equals(price, original.getPrice()) && price != null && original.getPrice() != null && price.compareTo(original.getPrice()) != 0)
+				apiRequest.addVars("price");
 			if(!Objects.equals(pageId, original.getPageId()))
 				apiRequest.addVars("pageId");
 			super.apiRequestBaseResult();
@@ -774,6 +889,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 		sb.append(super.toString());
 		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
@@ -786,6 +902,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	}
 	public static final String VAR_name = "name";
 	public static final String VAR_description = "description";
+	public static final String VAR_price = "price";
 	public static final String VAR_pageId = "pageId";
 
 	public static List<String> varsQForClass() {
@@ -802,6 +919,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	public static List<String> varsFqCompanyService(List<String> vars) {
 		vars.add(VAR_name);
 		vars.add(VAR_description);
+		vars.add(VAR_price);
 		vars.add(VAR_pageId);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
@@ -811,12 +929,14 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 		return CompanyService.varsRangeCompanyService(new ArrayList<String>());
 	}
 	public static List<String> varsRangeCompanyService(List<String> vars) {
+		vars.add(VAR_price);
 		BaseResult.varsRangeBaseResult(vars);
 		return vars;
 	}
 
 	public static final String DISPLAY_NAME_name = "service name";
 	public static final String DISPLAY_NAME_description = "service description";
+	public static final String DISPLAY_NAME_price = "price";
 	public static final String DISPLAY_NAME_pageId = "Page ID";
 
 	@Override
@@ -873,6 +993,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_name;
 		case VAR_description:
 			return DISPLAY_NAME_description;
+		case VAR_price:
+			return DISPLAY_NAME_price;
 		case VAR_pageId:
 			return DISPLAY_NAME_pageId;
 		default:
@@ -886,6 +1008,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return "The service name. ";
 		case VAR_description:
 			return "The service description. ";
+		case VAR_price:
+			return "The price of the product per developer. ";
 		case VAR_pageId:
 			return "The ID for this page. ";
 			default:
@@ -899,6 +1023,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_description:
 			return "String";
+		case VAR_price:
+			return "BigDecimal";
 		case VAR_pageId:
 			return "String";
 			default:
@@ -923,6 +1049,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_description:
 			return 3;
+		case VAR_price:
+			return 3;
 		case VAR_pageId:
 			return 99;
 			default:
@@ -936,6 +1064,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 			return 1;
 		case VAR_description:
 			return 2;
+		case VAR_price:
+			return 3;
 		case VAR_pageId:
 			return 1;
 			default:
