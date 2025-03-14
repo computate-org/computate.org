@@ -14,6 +14,7 @@ import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -236,14 +237,16 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                     until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
                   }
                   String byDayStr = mByDay.group(1);
-                  String[] byDays = byDayStr.split(",");
+                  List<String> byDays = Arrays.asList(byDayStr.split(","));
                   ArrayList<String> byDaysNext = new ArrayList<>();
                   DayOfWeek nowDayOfWeek = now.getDayOfWeek();
                   int nowDayOfWeekIndex = nowDayOfWeek.getValue() - 1;
                   for(int i = 0; i < 7; i++) {
                     int currentDayOfWeekIndex = (nowDayOfWeekIndex + i) % 7;
                     DayOfWeek currentDayOfWeek = DayOfWeek.of(currentDayOfWeekIndex + 1);
-                    byDaysNext.add(currentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.US).substring(0, 2).toUpperCase());
+                    String currentByDay = currentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.US).substring(0, 2).toUpperCase();
+                    if(byDays.contains(currentByDay))
+                      byDaysNext.add(currentByDay);
                   }
 
                   ZonedDateTime currentWeek = now
