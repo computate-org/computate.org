@@ -284,7 +284,7 @@ DATABASE_NAMESPACE: postgres
 # The database secret containing the user password to connect to the database. 
 DATABASE_SECRET: postgres-pguser-smartvillage
 # The PostgreSQL database host name. 
-DATABASE_HOST: "postgres.{{ OPENSHIFT_APPS_DOMAIN }}"
+DATABASE_HOST_NAME: "postgres.{{ OPENSHIFT_APPS_DOMAIN }}"
 # The PostgreSQL database port. 
 DATABASE_PORT: 30432
 # The PostgreSQL database user name of the site. 

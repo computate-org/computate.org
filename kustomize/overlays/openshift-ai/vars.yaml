@@ -317,7 +317,7 @@ ENABLE_DATABASE: true
 # The database secret containing the user password to connect to the database. 
 DATABASE_SECRET: postgres-pguser-smartvillage
 # The PostgreSQL database host name. 
-DATABASE_HOST: "postgresql"
+DATABASE_HOST_NAME: "postgresql"
 # The PostgreSQL database port. 
 DATABASE_PORT: 5432
 # The PostgreSQL database user name of the site. 
