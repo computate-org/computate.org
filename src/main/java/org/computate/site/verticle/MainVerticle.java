@@ -1573,7 +1573,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 								String state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
 								if(state == null)
 									state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
-								if(orderId != null && state != null) {
+								if(orderId != null && "OPEN".equals(state)) {
 									RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
 									Order order = orderResponse.getOrder();
 									String githubU = null;
@@ -1645,87 +1645,94 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																		if(user != null) {
 																			String userId = user.getString("id");
 																			String userEmail = user.getString("email");
-																			webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-																					.putHeader("Authorization", String.format("Bearer %s", authToken))
-																					.putHeader("Content-Type", "application/json")
-																					.putHeader("Content-Length", "0")
-																					.send()
-																					.expecting(HttpResponseExpectation.SC_NO_CONTENT)
-																					.onSuccess(groupUserResponse -> {
-																				try {
-																					DeliveryOptions options = new DeliveryOptions();
-																					String siteName = config().getString(ComputateConfigKeys.ZOOKEEPER_ROOT_PATH);
-																					String emailFrom = config().getString(ComputateConfigKeys.EMAIL_FROM);
-																					String customerId = order.getCustomerId();
-																					String emailTo = userEmail;
-																					String customerName = null;
-																					Payment payment = null;
-																					if(emailTo == null && customerId == null) {
-																						List<Tender> tenders = order.getTenders();
-																						if(tenders != null) {
-																							Tender tender = order.getTenders().get(0);
-																							String paymentId = tender.getPaymentId();
-																							PaymentsApi paymentsApi = squareClient.getPaymentsApi();
-																							payment = paymentsApi.getPayment(paymentId).getPayment();
-																							customerId = payment.getCustomerId();
+																			String userName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+																			JsonArray userGroups = user.getJsonArray("groups");
+																			LOG.info(String.format("user %s group %s in groups: %s", githubUsername, groupName, userGroups));
+																			if(!userGroups.contains(groupName)) {
+																				webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+																						.putHeader("Authorization", String.format("Bearer %s", authToken))
+																						.putHeader("Content-Type", "application/json")
+																						.putHeader("Content-Length", "0")
+																						.send()
+																						.expecting(HttpResponseExpectation.SC_NO_CONTENT)
+																						.onSuccess(groupUserResponse -> {
+																					try {
+																						DeliveryOptions options = new DeliveryOptions();
+																						String siteName = config().getString(ComputateConfigKeys.SITE_NAME);
+																						String emailFrom = config().getString(ComputateConfigKeys.EMAIL_FROM);
+																						String customerId = order.getCustomerId();
+																						String emailTo = userEmail;
+																						String customerName = userName;
+																						Payment payment = null;
+																						if(emailTo == null && customerId == null) {
+																							List<Tender> tenders = order.getTenders();
+																							if(tenders != null) {
+																								Tender tender = order.getTenders().get(0);
+																								String paymentId = tender.getPaymentId();
+																								PaymentsApi paymentsApi = squareClient.getPaymentsApi();
+																								payment = paymentsApi.getPayment(paymentId).getPayment();
+																								customerId = payment.getCustomerId();
+																							}
 																						}
-																					}
-																					if(emailTo == null && customerId != null) {
-																						Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
-																						emailTo = customer.getEmailAddress();
-																						customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
-																					} else if(payment != null) {
-																						emailTo = payment.getBuyerEmailAddress();
-																					}
+																						if(emailTo == null && customerId != null) {
+																							Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
+																							emailTo = customer.getEmailAddress();
+																							customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
+																						} else if(payment != null) {
+																							emailTo = payment.getBuyerEmailAddress();
+																						}
 
-																					String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, name, siteName);
-																					String emailTemplate = (String)result.obtainForClass("emailTemplate");
-																					BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
-																					JsonObject body = new JsonObject();
-																					body.put(ComputateConfigKeys.SITE_BASE_URL, config().getString(ComputateConfigKeys.SITE_BASE_URL));
-																					body.put("siteName", siteName);
-																					body.put("githubUsername", githubUsername);
-																					body.put("orderId", order.getId());
-																					body.put("subject", subject);
-																					body.put("emailTo", emailTo);
-																					body.put("customerName", customerName);
-																					body.put("result", JsonObject.mapFrom(result));
-																					body.put("totalMoney", NumberFormat.getCurrencyInstance().format(total));
-																					body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
-																					body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
+																						String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, name, siteName);
+																						String emailTemplate = (String)result.obtainForClass("emailTemplate");
+																						BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																						BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																						BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																						options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
+																						options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
+																						options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
+																						options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+																						JsonObject body = new JsonObject();
+																						body.put(ComputateConfigKeys.SITE_BASE_URL, config().getString(ComputateConfigKeys.SITE_BASE_URL));
+																						body.put("siteName", siteName);
+																						body.put("githubUsername", githubUsername);
+																						body.put("orderId", order.getId());
+																						body.put("subject", subject);
+																						body.put("emailTo", emailTo);
+																						body.put("customerName", customerName);
+																						body.put("result", JsonObject.mapFrom(result));
+																						body.put("totalMoney", NumberFormat.getCurrencyInstance().format(total));
+																						body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
+																						body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
 
-																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
-																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
-																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
-																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
-																					String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
-																					body.put("createdAt", createdAtStr);
+																						ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
+																						ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
+																						Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
+																						DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
+																						String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
+																						body.put("createdAt", createdAtStr);
 
-																					vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
-																						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-																						handler.response().putHeader("Content-Type", "application/json");
-																						handler.end(buffer);
-																						LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
-																					}).onFailure(ex -> {
-																						LOG.error("Failed to process square webook while adding user to group. ", ex);
+																						vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
+																							Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+																							handler.response().putHeader("Content-Type", "application/json");
+																							handler.end(buffer);
+																							LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
+																						}).onFailure(ex -> {
+																							LOG.error("Failed to process square webook while adding user to group. ", ex);
+																							handler.fail(ex);
+																						});
+																					} catch(Throwable ex) {
+																						LOG.error("Failed to process square webook while querying customer. ", ex);
 																						handler.fail(ex);
-																					});
-																				} catch(Throwable ex) {
-																					LOG.error("Failed to process square webook while querying customer. ", ex);
+																					}
+																				}).onFailure(ex -> {
+																					LOG.error("Failed to process square webook while adding user to group. ", ex);
 																					handler.fail(ex);
-																				}
-																			}).onFailure(ex -> {
-																				LOG.error("Failed to process square webook while adding user to group. ", ex);
-																				handler.fail(ex);
-																			});
+																				});
+																			} else {
+																				LOG.info(String.format("User %s already in group %s", githubUsername, groupName));
+																			}
 																		} else {
-																			Throwable ex = new RuntimeException("Failed to find user. ");
+																			Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", githubUsername));
 																			LOG.error(ex.getMessage(), ex);
 																			handler.fail(ex);
 																		}
@@ -1771,7 +1778,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 										handler.end(buffer);
 									}
 								} else {
-									LOG.info(String.format("Missing orderId %s or state %s", orderId, state));
+									LOG.info(String.format("Missing orderId %s or OPEN state %s", orderId, state));
 									Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 									handler.response().putHeader("Content-Type", "application/json");
 									handler.end(buffer);
