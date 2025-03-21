@@ -1558,7 +1558,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			vertx.eventBus().consumer("square-order", message -> {
 				try {
 					String signature = message.headers().get("x-square-hmacsha256-signature");
-					JsonObject orderBody = (JsonObject)message.body();
+					JsonObject orderBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
 					String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
 					String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
 					if(squareSignatureKey != null && squareNotificationUrl != null) {
