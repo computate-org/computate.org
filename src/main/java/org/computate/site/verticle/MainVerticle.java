@@ -163,6 +163,7 @@ import io.vertx.ext.web.impl.RoutingContextImpl;
 import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.kafka.client.producer.KafkaProducer;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgBuilder;
@@ -751,19 +752,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 							configureHealthChecks().onSuccess(e -> 
 								configureSharedWorkerExecutor().onSuccess(f -> 
 									configureWebsockets().onSuccess(g -> 
-										configureKafka().onSuccess(h -> 
-											configureMqtt().onSuccess(i -> 
-												configureAmqp().onSuccess(j -> 
-													configureRabbitmq().onSuccess(k -> 
-														configureJinjava().onSuccess(l -> 
-															configureSquare().onSuccess(m -> 
-																configureApi().onSuccess(n -> 
-																	configureUi().onSuccess(o -> 
-																		startServer().onSuccess(p -> startPromise.complete())
-																	).onFailure(ex -> startPromise.fail(ex))
-																).onFailure(ex -> startPromise.fail(ex))
-															).onFailure(ex -> startPromise.fail(ex))
-														).onFailure(ex -> startPromise.fail(ex))
+										configureJinjava().onSuccess(l -> 
+											configureSquare().onSuccess(m -> 
+												configureApi().onSuccess(n -> 
+													configureUi().onSuccess(o -> 
+														startServer().onSuccess(p -> startPromise.complete())
 													).onFailure(ex -> startPromise.fail(ex))
 												).onFailure(ex -> startPromise.fail(ex))
 											).onFailure(ex -> startPromise.fail(ex))
@@ -1609,8 +1602,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 										searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
 											if(searchList.size() > 0) {
 												ComputateBaseResult result = searchList.first();
-												String uri = (String)result.obtainForClass("uri");
-												String groupName = uri;
+												String pageId = (String)result.obtainForClass("pageId");
+												String classSimpleName = (String)result.obtainForClass("classSimpleName");
+												String groupName = String.format("%s-%s-GET", classSimpleName, pageId);
 												String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
 												String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
 												Integer authPort = Integer.parseInt(config().getString(ConfigKeys.AUTH_PORT));
