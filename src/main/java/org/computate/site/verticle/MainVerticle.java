@@ -1583,8 +1583,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 								}
 								String name = item.getName();
 								String githubUsername = githubU;
-								LOG.info(String.format("Processing %s order %s for GitHub user %s", state, orderId, githubUsername));
-								if("DRAFT".equals(state) || "OPEN".equals(state)) {
+								LOG.info(String.format("Processing %s %s order %s for GitHub user %s", state, name, orderId, githubUsername));
+								if("OPEN".equals(state)) {
 									if(githubUsername != null) {
 
 										SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
