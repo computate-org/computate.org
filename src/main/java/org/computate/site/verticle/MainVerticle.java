@@ -1800,18 +1800,16 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				router.post("/square/order").handler(BodyHandler.create()).handler(handler -> {
 					try {
 						String signature = handler.request().headers().get("x-square-hmacsha256-signature");
-						JsonObject orderBody = handler.body().asJsonObject();
-
 						JsonObject params = new JsonObject();
 						params.put("body", handler.body().asJsonObject());
 						params.put("path", new JsonObject());
 						params.put("cookie", new JsonObject());
-						params.put("header", new JsonObject().put("x-square-hmacsha256-signature", signature));
+						params.put("header", new JsonObject());
 						params.put("form", new JsonObject());
 						params.put("query", new JsonObject());
 						JsonObject context = new JsonObject().put("params", params).put("user", null);
 						JsonObject json = new JsonObject().put("context", context);
-						vertx.eventBus().publish("square-order", json);
+						vertx.eventBus().publish("square-order", json, new DeliveryOptions().addHeader("x-square-hmacsha256-signature", signature));
 
 						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 						handler.response().putHeader("Content-Type", "application/json");
