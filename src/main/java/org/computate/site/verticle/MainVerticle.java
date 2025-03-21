@@ -1665,8 +1665,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																body.put("customerName", customerName);
 																body.put("result", JsonObject.mapFrom(result));
 																body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
-																body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
-																body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
+																body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
+																body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
 
 																String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
 																body.put("createdAt", createdAtStr);
