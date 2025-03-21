@@ -1592,7 +1592,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
 									SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 									initializeApiService(apiSiteUser);
-									ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
+      						ServiceRequest serviceRequest = new ServiceRequest();
+									serviceRequest.setExtra(new JsonObject());
+									serviceRequest.setHeaders(MultiMap.caseInsensitiveMultiMap());
+									serviceRequest.setParams(new JsonObject());
+									serviceRequest.setUser(new JsonObject());
 									List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
 									SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
 									siteRequest.setPublicRead(true);
