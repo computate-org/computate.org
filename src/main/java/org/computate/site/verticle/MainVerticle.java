@@ -1776,7 +1776,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 					if(orderId != null) {
 						String orderLock = String.format("square-order-", orderId);
 						SharedData sharedData = vertx.sharedData();
-						sharedData.getLockWithTimeout(orderLock, 1000L).onSuccess(lock -> {
+						sharedData.getLockWithTimeout(orderLock, 5000L).onSuccess(lock -> {
 							try {
 								String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
 								String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
