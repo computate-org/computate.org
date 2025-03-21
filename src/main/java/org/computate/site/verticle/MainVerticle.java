@@ -1648,7 +1648,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																			String userName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
 																			JsonArray userGroups = user.getJsonArray("groups");
 																			LOG.info(String.format("user %s group %s in groups: %s", githubUsername, groupName, userGroups));
-																			if(!userGroups.contains(groupName)) {
+																			// if(!userGroups.contains(groupName)) {
 																				webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
 																						.putHeader("Authorization", String.format("Bearer %s", authToken))
 																						.putHeader("Content-Type", "application/json")
@@ -1717,7 +1717,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																							handler.end(buffer);
 																							LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
 																						}).onFailure(ex -> {
-																							LOG.error("Failed to process square webook while adding user to group. ", ex);
+																							LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
 																							handler.fail(ex);
 																						});
 																					} catch(Throwable ex) {
@@ -1728,9 +1728,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																					LOG.error("Failed to process square webook while adding user to group. ", ex);
 																					handler.fail(ex);
 																				});
-																			} else {
-																				LOG.info(String.format("User %s already in group %s", githubUsername, groupName));
-																			}
+																			// } else {
+																			// 	LOG.info(String.format("User %s already in group %s", githubUsername, groupName));
+																			// }
 																		} else {
 																			Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", githubUsername));
 																			LOG.error(ex.getMessage(), ex);
