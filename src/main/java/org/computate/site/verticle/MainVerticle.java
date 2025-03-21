@@ -1572,7 +1572,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 									orderId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
 								String state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
 								if(state == null)
-									state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
+									state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
 								if(orderId != null && state != null) {
 									RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
 									Order order = orderResponse.getOrder();
