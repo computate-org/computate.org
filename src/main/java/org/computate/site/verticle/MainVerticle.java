@@ -1657,7 +1657,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																					Payment payment = null;
 																					if(customerId == null) {
 																						List<Tender> tenders = order.getTenders();
-																						if(tenders == null) {
+																						if(tenders != null) {
 																							Tender tender = order.getTenders().get(0);
 																							String paymentId = tender.getPaymentId();
 																							PaymentsApi paymentsApi = squareClient.getPaymentsApi();
