@@ -1808,10 +1808,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 												vertx.setTimer(30000, tid -> {
 													lock.release();
 													LOG.info(String.format("The orderId %s lock was released", orderId));
-													promise.complete();
 												});
 											}).onFailure(ex -> {
-												promise.fail(ex);
+												message.fail(400, ex.getMessage());
 											});
 										} else {
 											LOG.info(String.format("The orderId %s is not OPEN state %s", orderId, state));
@@ -1832,11 +1831,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 							}
 						}).onFailure(ex -> {
 							LOG.warn(String.format("The orderId %s did not obtain a lock", orderId));
-							promise.complete();
 						});
 					} else {
 						LOG.info("Missing orderId");
-						promise.complete();
 					}
 				} catch(Throwable ex) {
 					LOG.error("Failed to process square webook. ", ex);
