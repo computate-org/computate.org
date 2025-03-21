@@ -1644,6 +1644,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																		JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
 																		if(user != null) {
 																			String userId = user.getString("id");
+																			String userEmail = user.getString("email");
 																			webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
 																					.putHeader("Authorization", String.format("Bearer %s", authToken))
 																					.putHeader("Content-Type", "application/json")
@@ -1656,10 +1657,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																					String siteName = config().getString(ComputateConfigKeys.ZOOKEEPER_ROOT_PATH);
 																					String emailFrom = config().getString(ComputateConfigKeys.EMAIL_FROM);
 																					String customerId = order.getCustomerId();
-																					String emailTo = null;
+																					String emailTo = userEmail;
 																					String customerName = null;
 																					Payment payment = null;
-																					if(customerId == null) {
+																					if(emailTo == null && customerId == null) {
 																						List<Tender> tenders = order.getTenders();
 																						if(tenders != null) {
 																							Tender tender = order.getTenders().get(0);
@@ -1669,7 +1670,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																							customerId = payment.getCustomerId();
 																						}
 																					}
-																					if(customerId != null) {
+																					if(emailTo == null && customerId != null) {
 																						Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
 																						emailTo = customer.getEmailAddress();
 																						customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
