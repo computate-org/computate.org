@@ -1567,8 +1567,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 							if(isFromSquare) {
 								OrdersApi ordersApi = squareClient.getOrdersApi();
 								CustomersApi customersApi = squareClient.getCustomersApi();
-								String orderId = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("order_id");
-								String state = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("state");
+								String orderId = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated").getString("order_id");
+								String state = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated").getString("state");
 								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
 								Order order = orderResponse.getOrder();
 								String githubU = null;
