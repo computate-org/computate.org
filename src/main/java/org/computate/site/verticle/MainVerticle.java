@@ -1775,6 +1775,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 					String signature = message.headers().get("x-square-hmacsha256-signature");
 					JsonObject orderBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
 					String orderId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("order_id")).orElse(null);
+					if(orderId == null)
+						orderId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
 					if(orderId != null) {
 						String orderLock = String.format("square-order-", orderId);
 						SharedData sharedData = vertx.sharedData();
