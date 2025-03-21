@@ -1673,17 +1673,18 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
 																vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
 																	LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
+																	promise.complete();
 																}).onFailure(ex -> {
 																	LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
-																	message.fail(400, ex.getMessage());
+																	promise.fail(ex);
 																});
 															} catch(Throwable ex) {
 																LOG.error("Failed to process square webook while querying customer. ", ex);
-																message.fail(400, ex.getMessage());
+																promise.fail(ex);
 															}
 														}).onFailure(ex -> {
 															LOG.error("Failed to process square webook while adding user to group. ", ex);
-															message.fail(400, ex.getMessage());
+															promise.fail(ex);
 														});
 													// } else {
 													// 	LOG.info(String.format("User %s already in group %s", githubUsername, groupName));
@@ -1691,43 +1692,44 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 												} else {
 													Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", githubUsername));
 													LOG.error(ex.getMessage(), ex);
-													message.fail(400, ex.getMessage());
+													promise.fail(ex);
 												}
 											}).onFailure(ex -> {
 												LOG.error("Failed to process square webook while querying user. ", ex);
-												message.fail(400, ex.getMessage());
+												promise.fail(ex);
 											});
 										} else {
 											Throwable ex = new RuntimeException("Failed to find group. ");
 											LOG.error(ex.getMessage(), ex);
-											message.fail(400, ex.getMessage());
+											promise.fail(ex);
 										}
 									} catch(Throwable ex) {
 										LOG.error("Failed to process square webook while querying group. ", ex);
-										message.fail(400, ex.getMessage());
+										promise.fail(ex);
 									}
 								}).onFailure(ex -> {
 									LOG.error("Failed to process square webook while querying group. ", ex);
-									message.fail(400, ex.getMessage());
+									promise.fail(ex);
 								});
 							} catch(Throwable ex) {
 								LOG.error("Failed to process square webook while querying group. ", ex);
-								message.fail(400, ex.getMessage());
+								promise.fail(ex);
 							}
 						}).onFailure(ex -> {
 							LOG.error("Failed to process square webook. ", ex);
-							message.fail(400, ex.getMessage());
+							promise.fail(ex);
 						});
 					} else {
 						LOG.warn(String.format("Item not found with name %s. ", name));
+						promise.complete();
 					}
 				}).onFailure(ex -> {
 					LOG.error("Failed to process square webook. ", ex);
-					message.fail(400, ex.getMessage());
+					promise.fail(ex);
 				});
 			} else {
-				LOG.info(String.format("Order %s missing name %s or GitHub username %s in state %s", orderId, name, githubUsername, state));
-				Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+				LOG.warn(String.format("Order %s missing name %s or GitHub username %s in state %s", orderId, name, githubUsername, state));
+				promise.complete();
 			}
 		} catch(Exception ex) {
 			LOG.error("The square item failed to process.");
