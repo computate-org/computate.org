@@ -126,6 +126,8 @@ spec:
           value: /en-us/search
         - name: USER_SEARCH_URI
           value: /en-us/user-search
+        - name: SQUARE_WEBHOOK_UNLOCK_MILLIS
+          value: "60000"
         envFrom:
         - secretRef:
             name: computateorg-zookeeper

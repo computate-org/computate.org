@@ -1785,7 +1785,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 					if(orderId != null && "OPEN".equals(state)) {
 						String orderLock = String.format("square-order-", orderId);
 						SharedData sharedData = vertx.sharedData();
-						sharedData.getLockWithTimeout(orderLock, 5000L).onSuccess(lock -> {
+						sharedData.getLock(orderLock).onSuccess(lock -> {
 							try {
 								String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
 								String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
@@ -1810,7 +1810,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 											}));
 										}
 										Future.all(futures).onSuccess(b -> {
-											vertx.setTimer(30000, tid -> {
+											vertx.setTimer(config().getInteger(ConfigKeys.SQUARE_WEBHOOK_UNLOCK_MILLIS, 60000), tid -> {
 												lock.release();
 												LOG.info(String.format("The orderId %s lock was released", orderId));
 											});
