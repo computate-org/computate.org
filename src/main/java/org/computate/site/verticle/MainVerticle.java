@@ -1774,10 +1774,15 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				try {
 					String signature = message.headers().get("x-square-hmacsha256-signature");
 					JsonObject orderBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
-					String orderId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("order_id")).orElse(null);
-					if(orderId == null)
-						orderId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
-					if(orderId != null) {
+					String oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("order_id")).orElse(null);
+					if(oId == null)
+						oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
+					String orderId = oId;
+					String st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
+					if(st == null)
+						st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
+					String state = st;
+					if(orderId != null && "OPEN".equals(state)) {
 						String orderLock = String.format("square-order-", orderId);
 						SharedData sharedData = vertx.sharedData();
 						sharedData.getLockWithTimeout(orderLock, 5000L).onSuccess(lock -> {
@@ -1789,36 +1794,29 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 									if(isFromSquare) {
 										OrdersApi ordersApi = squareClient.getOrdersApi();
 										CustomersApi customersApi = squareClient.getCustomersApi();
-										String state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
-										if(state == null)
-											state = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
-										if("OPEN".equals(state)) {
-											RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
-											Order order = orderResponse.getOrder();
-											String state2 = state;
-											String orderId2 = orderId;
+										RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
+										Order order = orderResponse.getOrder();
+										String state2 = state;
+										String orderId2 = orderId;
 
-											List<Future<String>> futures = new ArrayList<>();
-											for(OrderLineItem item : order.getLineItems()) {
-												futures.add(Future.future(promise1 -> {
-													processSquareItem(customersApi, message, orderBody, order, orderId2, state2, item).onSuccess(a -> {
-														promise1.complete();
-													}).onFailure(ex -> {
-														promise1.fail(ex);
-													});
-												}));
-											}
-											Future.all(futures).onSuccess(b -> {
-												vertx.setTimer(30000, tid -> {
-													lock.release();
-													LOG.info(String.format("The orderId %s lock was released", orderId));
+										List<Future<String>> futures = new ArrayList<>();
+										for(OrderLineItem item : order.getLineItems()) {
+											futures.add(Future.future(promise1 -> {
+												processSquareItem(customersApi, message, orderBody, order, orderId2, state2, item).onSuccess(a -> {
+													promise1.complete();
+												}).onFailure(ex -> {
+													promise1.fail(ex);
 												});
-											}).onFailure(ex -> {
-												message.fail(400, ex.getMessage());
-											});
-										} else {
-											LOG.info(String.format("The orderId %s is not OPEN state %s", orderId, state));
+											}));
 										}
+										Future.all(futures).onSuccess(b -> {
+											vertx.setTimer(30000, tid -> {
+												lock.release();
+												LOG.info(String.format("The orderId %s lock was released", orderId));
+											});
+										}).onFailure(ex -> {
+											message.fail(400, ex.getMessage());
+										});
 									} else {
 										Throwable ex = new RuntimeException("Webhook is not from Square. ");
 										LOG.error("Webhook is not from Square. ", ex);
@@ -1837,7 +1835,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 							LOG.warn(String.format("The orderId %s did not obtain a lock", orderId));
 						});
 					} else {
-						LOG.info("Missing orderId");
+						LOG.info("Missing orderId %s or OPEN state %s", orderId, state);
 					}
 				} catch(Throwable ex) {
 					LOG.error("Failed to process square webook. ", ex);
