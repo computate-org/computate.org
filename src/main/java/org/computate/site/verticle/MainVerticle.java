@@ -1592,6 +1592,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 										ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
 										List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
 										SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
+										siteRequest.setPublicRead(true);
 
 										SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
 										searchList.setStore(true);
