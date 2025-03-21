@@ -1764,12 +1764,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 											handler.fail(ex);
 										});
 									} else {
-										LOG.warn(String.format("GitHub username modifier not found order %s for %s. ", orderId, name));
-										Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-										handler.response().putHeader("Content-Type", "application/json");
-										handler.end(buffer);
-									}
-									} else {
 										LOG.info(String.format("Order %s missing name %s or GitHub username %s in state %s", orderId, name, githubUsername, state));
 										Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
 										handler.response().putHeader("Content-Type", "application/json");
