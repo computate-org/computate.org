@@ -1806,9 +1806,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 						params.put("body", handler.body().asJsonObject());
 						params.put("path", new JsonObject());
 						params.put("cookie", new JsonObject());
-						params.put("header", handler.request().headers());
+						params.put("header", new JsonObject().put("x-square-hmacsha256-signature", signature));
 						params.put("form", new JsonObject());
-						JsonObject query = new JsonObject();
 						params.put("query", new JsonObject());
 						JsonObject context = new JsonObject().put("params", params).put("user", null);
 						JsonObject json = new JsonObject().put("context", context);
