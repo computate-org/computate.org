@@ -1592,13 +1592,17 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
 									SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 									initializeApiService(apiSiteUser);
-      						ServiceRequest serviceRequest = new ServiceRequest();
-									serviceRequest.setExtra(new JsonObject());
-									serviceRequest.setHeaders(MultiMap.caseInsensitiveMultiMap());
-									serviceRequest.setParams(new JsonObject());
-									serviceRequest.setUser(new JsonObject());
 									List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
-									SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
+									SiteRequest siteRequest = new SiteRequest();
+									siteRequest.setWebClient(this.webClient);
+									siteRequest.setJsonObject(orderBody);
+									siteRequest.setUserPrincipal(new JsonObject());
+									siteRequest.setUser(null);
+									siteRequest.setConfig(config());
+									siteRequest.setServiceRequest(null);
+									siteRequest.setI18n(this.i18n);
+									siteRequest.setSiteRequest_(siteRequest);
+									siteRequest.initDeepForClass();
 									siteRequest.setPublicRead(true);
 
 									SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
@@ -1694,6 +1698,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																					options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
 																					options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
 																					options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+
+																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
+																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
+																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
+																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
 																					JsonObject body = new JsonObject();
 																					body.put(ComputateConfigKeys.SITE_BASE_URL, config().getString(ComputateConfigKeys.SITE_BASE_URL));
 																					body.put("siteName", siteName);
@@ -1703,14 +1712,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																					body.put("emailTo", emailTo);
 																					body.put("customerName", customerName);
 																					body.put("result", JsonObject.mapFrom(result));
-																					body.put("totalMoney", NumberFormat.getCurrencyInstance().format(total));
+																					body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
 																					body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
 																					body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
 
-																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
-																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
-																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
-																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
 																					String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
 																					body.put("createdAt", createdAtStr);
 
