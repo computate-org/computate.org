@@ -128,6 +128,8 @@ spec:
           value: /en-us/user-search
         - name: SQUARE_WEBHOOK_UNLOCK_MILLIS
           value: "60000"
+        - name: SQUARE_WEBHOOK_TIMEOUT_MILLIS
+          value: "2000"
         envFrom:
         - secretRef:
             name: computateorg-zookeeper

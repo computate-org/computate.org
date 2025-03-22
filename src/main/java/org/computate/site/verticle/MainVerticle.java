@@ -1835,7 +1835,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 							LOG.warn(String.format("The orderId %s did not obtain a lock", orderId));
 						});
 					} else {
-						LOG.info("Missing orderId %s or OPEN state %s", orderId, state);
+						LOG.info(String.format("Missing orderId %s or OPEN state %s", orderId, state));
 					}
 				} catch(Throwable ex) {
 					LOG.error("Failed to process square webook. ", ex);
