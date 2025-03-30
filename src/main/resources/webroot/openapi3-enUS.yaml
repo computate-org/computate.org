@@ -9686,6 +9686,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
     PATCHCompanyServiceRequest:
@@ -9705,6 +9707,13 @@ components:
             removeDescription:
               type: string
             removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
               type: string
             setPageId:
               type: string
@@ -9731,6 +9740,13 @@ components:
               type: string
             removeAllDescription:
               type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
             setPageId:
               type: string
               nullable: true
@@ -9746,6 +9762,8 @@ components:
               type: string
             description:
               type: string
+            price:
+              type: string
             pageId:
               type: string
     POSTCompanyServiceResponse:
@@ -9755,6 +9773,8 @@ components:
             name:
               type: string
             description:
+              type: string
+            price:
               type: string
             pageId:
               type: string
@@ -9771,6 +9791,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
     PUTImportCompanyServiceResponse:
@@ -9781,6 +9803,8 @@ components:
                     type: string
                   description:
                     type: string
+                  price:
+                    type: string
                   pageId:
                     type: string
     GETCompanyServiceResponse:
@@ -9790,6 +9814,8 @@ components:
             name:
               type: string
             description:
+              type: string
+            price:
               type: string
             pageId:
               type: string
