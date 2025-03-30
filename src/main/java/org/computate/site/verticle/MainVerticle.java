@@ -1986,12 +1986,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				ctx.end();
 			});
 
-			router.get("/en-us/view/webinar/smart-aquaculture-webinar").handler(ctx -> {
-				ctx.response().putHeader("location", "/en-us/view/webinar/computate-ai-developer-webinar");
-				ctx.response().setStatusCode(302);
-				ctx.end();
-			});
-
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
 			SiteRoutes.routes(router, oauth2AuthHandler, config(), webClient, apiSiteUser);
