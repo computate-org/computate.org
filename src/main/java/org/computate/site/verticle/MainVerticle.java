@@ -1975,13 +1975,19 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			});
 
 			router.get("/hackathons").handler(ctx -> {
-				ctx.response().putHeader("location", "/en-us/article/hackathons");
+				ctx.response().putHeader("location", "/en-us/view/article/hackathons");
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});
 
 			router.get("/websites").handler(ctx -> {
-				ctx.response().putHeader("location", "/en-us/article/websites");
+				ctx.response().putHeader("location", "/en-us/view/article/websites");
+				ctx.response().setStatusCode(302);
+				ctx.end();
+			});
+
+			router.get("/en-us/view/webinar/smart-aquaculture-webinar").handler(ctx -> {
+				ctx.response().putHeader("location", "/en-us/view/webinar/computate-ai-developer-webinar");
 				ctx.response().setStatusCode(302);
 				ctx.end();
 			});

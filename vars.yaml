@@ -568,9 +568,11 @@ WRITE_COMMENTS: true
 
 SITE_REDIRECTS:
   - src: /hackathons
-    dest: /en-us/article/hackathons
+    dest: /en-us/view/article/hackathons
   - src: /websites
-    dest: /en-us/article/websites
+    dest: /en-us/view/article/websites
+  - src: /en-us/view/webinar/smart-aquaculture-webinar
+    dest: /en-us/view/webinar/computate-ai-developer-webinar
 
 #########
 # Email #
