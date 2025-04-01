@@ -227,26 +227,34 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
               Matcher mRule = Pattern.compile("^RRULE:(.*)", Pattern.MULTILINE).matcher(eventStr);
               if(mRule.find()) {
                 String ruleStr = mRule.group(1);
-                if(ruleStr.contains("FREQ=WEEKLY") && ruleStr.contains("BYDAY=")) {
-                  Matcher mByDay = Pattern.compile("\\;BYDAY=([^\\;\\n]+)", Pattern.MULTILINE).matcher(ruleStr);
-                  mByDay.find();
-                  if(ruleStr.contains("UNTIL=")) {
-                    Matcher mUntil = Pattern.compile("\\;UNTIL=([^\\;\\n]+)Z", Pattern.MULTILINE).matcher(ruleStr);
-                    mUntil.find();
-                    String untilStr = mUntil.group(1);
-                    until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
-                  }
-                  String byDayStr = mByDay.group(1);
-                  List<String> byDays = Arrays.asList(byDayStr.split(","));
-                  ArrayList<String> byDaysNext = new ArrayList<>();
-                  DayOfWeek nowDayOfWeek = now.getDayOfWeek();
-                  int nowDayOfWeekIndex = nowDayOfWeek.getValue() - 1;
-                  for(int i = 0; i < 7; i++) {
-                    int currentDayOfWeekIndex = (nowDayOfWeekIndex + i) % 7;
-                    DayOfWeek currentDayOfWeek = DayOfWeek.of(currentDayOfWeekIndex + 1);
+                ArrayList<String> byDaysNext = new ArrayList<>();
+                if(ruleStr.contains("FREQ=WEEKLY")) {
+                  if(ruleStr.contains("BYDAY=")) {
+                    Matcher mByDay = Pattern.compile("\\;BYDAY=([^\\;\\n]+)", Pattern.MULTILINE).matcher(ruleStr);
+                    mByDay.find();
+                    if(ruleStr.contains("UNTIL=")) {
+                      Matcher mUntil = Pattern.compile("\\;UNTIL=([^\\;\\n]+)Z", Pattern.MULTILINE).matcher(ruleStr);
+                      mUntil.find();
+                      String untilStr = mUntil.group(1);
+                      until = ZonedDateTime.parse(untilStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of("UTC"))).withZoneSameInstant(ZoneId.of(startZoneId));
+                    }
+                    String byDayStr = mByDay.group(1);
+                    List<String> byDays = Arrays.asList(byDayStr.split(","));
+                    DayOfWeek nowDayOfWeek = now.getDayOfWeek();
+                    int nowDayOfWeekIndex = nowDayOfWeek.getValue() - 1;
+                    for(int i = 0; i < 7; i++) {
+                      int currentDayOfWeekIndex = (nowDayOfWeekIndex + i) % 7;
+                      DayOfWeek currentDayOfWeek = DayOfWeek.of(currentDayOfWeekIndex + 1);
+                      String currentByDay = currentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.US).substring(0, 2).toUpperCase();
+                      if(byDays.contains(currentByDay))
+                        byDaysNext.add(currentByDay);
+                    }
+                  } else {
+                    DayOfWeek startDayOfWeek = startDateTime.getDayOfWeek();
+                    int startDayOfWeekIndex = startDayOfWeek.getValue() - 1;
+                    DayOfWeek currentDayOfWeek = DayOfWeek.of(startDayOfWeekIndex + 1);
                     String currentByDay = currentDayOfWeek.getDisplayName(TextStyle.FULL, Locale.US).substring(0, 2).toUpperCase();
-                    if(byDays.contains(currentByDay))
-                      byDaysNext.add(currentByDay);
+                    byDaysNext.add(currentByDay);
                   }
 
                   ZonedDateTime currentWeek = now
@@ -305,7 +313,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                         } else {
                           Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
                           boolean mExceptionFound = mException.find();
-                          while (mExceptionFound) {
+                          while(mExceptionFound) {
                             String exceptionZoneId = mException.group(1);
                             String exceptionDateStr = mException.group(2);
                             ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
@@ -339,8 +347,10 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
               }
 
               if(nextStart != null) {
-                nextWebinar = nextStart;
-                break;
+                if(nextWebinar == null || nextWebinar.compareTo(nextStart) > 0)
+                  nextWebinar = nextStart;
+                mFound = mEvent.find();
+                continue;
               } else {
                 mFound = mEvent.find();
                 continue;
