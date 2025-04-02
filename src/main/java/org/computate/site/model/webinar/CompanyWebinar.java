@@ -206,6 +206,8 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
             String icalStr = response.body().toString();
             Matcher mEvent = Pattern.compile("^BEGIN:VEVENT($[\\w\\W]+?)^END:VEVENT$", Pattern.MULTILINE).matcher(icalStr);
             boolean mFound = mEvent.find();
+            List<String> nextWebinarsName = new ArrayList<>();
+            List<String> nextWebinarsDescription = new ArrayList<>();
             while (mFound) {
               String eventStr = mEvent.group(1);
 
@@ -220,6 +222,11 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
               String endZoneId = mEnd.group(1);
               String endDateStr = mEnd.group(2);
               ZonedDateTime endDateTime = ZonedDateTime.parse(endDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(endZoneId)));
+
+              Matcher mDescription = Pattern.compile("^DESCRIPTION:(.*)", Pattern.MULTILINE).matcher(eventStr);
+              String description = null;
+              if(mEnd.find())
+                description = mDescription.group(1);
 
               ZonedDateTime nextStart = null;
               ZonedDateTime nextEnd = null;
@@ -300,7 +307,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                         break;
                       } else {
                         nextEnd = nextGuess;
-                        nextStart = nextGuess
+                        ZonedDateTime nextStart2 = nextGuess
                             .withHour(startDateTime.getHour())
                             .withMinute(startDateTime.getMinute())
                             .withSecond(startDateTime.getSecond())
@@ -309,6 +316,8 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                         if(nextGuess.isBefore(now)) {
                           nextEnd = null;
                           nextStart = null;
+                          // nextWebinarsBegin.add(nextStart2);
+                          nextWebinarsDescription.add(description);
                           continue;
                         } else {
                           Matcher mException = Pattern.compile("^EXDATE;TZID=(.*):(.*)", Pattern.MULTILINE).matcher(eventStr);
@@ -317,17 +326,22 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                             String exceptionZoneId = mException.group(1);
                             String exceptionDateStr = mException.group(2);
                             ZonedDateTime exceptionDateTime = ZonedDateTime.parse(exceptionDateStr, ComputateZonedDateTimeSerializer.ICAL_FORMATTER.withZone(ZoneId.of(exceptionZoneId)));
-                            if(exceptionDateTime.isEqual(nextStart)
+                            if(exceptionDateTime.isEqual(nextStart2)
                                 || exceptionDateTime.isEqual(nextEnd)
-                                || exceptionDateTime.isAfter(nextStart) && exceptionDateTime.isBefore(nextEnd)) {
-                              nextStart = null;
+                                || exceptionDateTime.isAfter(nextStart2) && exceptionDateTime.isBefore(nextEnd)) {
+                              nextStart2 = null;
                               nextEnd = null;
                               break;
                             }
                             mExceptionFound = mException.find();
                           }
-                          if(nextStart != null) {
-                            break;
+                          if(nextStart2 != null) {
+                            if(nextStart == null)
+                              nextStart = nextStart2;
+                            // nextWebinarsBegin.add(nextStart2);
+                            nextWebinarsDescription.add(description);
+                          } else {
+                            nextStart = null;
                           }
                         }
                       }
@@ -385,6 +399,16 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 * Facet: true
 	 */
 	protected void _nextWebinar(Wrap<ZonedDateTime> w) {}
+
+	// /**
+	//  * {@inheritDoc}
+	//  * DocValues: true
+	//  * Modify: false
+	//  * DisplayName.enUS: next webinars begin
+	//  * FormatHtm: MMM d, yyyy h:mm:ss a
+	//  * Description: The start date time of the next webinars for the week. 
+	//  */
+	// protected void _nextWebinarsBegin(List<ZonedDateTime> w) {}
 
   /**
    * {@inheritDoc}
