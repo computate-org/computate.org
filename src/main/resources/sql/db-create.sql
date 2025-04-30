@@ -1,12 +1,12 @@
 
 CREATE TABLE IF NOT EXISTS SiteUser();
+ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS created timestamp with time zone;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS archived boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS sessionId text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userKey bigint;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS objectTitle text;
-ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS pk bigserial primary key;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS displayPage text;
-ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS created timestamp with time zone;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userId text UNIQUE;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userName text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userEmail text;
@@ -18,13 +18,13 @@ ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS awesomeEffect boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS displayName text;
 
 CREATE TABLE IF NOT EXISTS CompanyWebinar();
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pk bigserial primary key;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS created timestamp with time zone;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS archived boolean;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS sessionId text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS userKey bigint;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS objectTitle text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pk bigserial primary key;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS displayPage text;
-ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS created timestamp with time zone;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS name text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS description text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pageId text UNIQUE;

@@ -2258,11 +2258,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
 			page.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, (String)result.get(CompanyCourse.VAR_name)));
-			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created)));
 			page.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
+			page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created)));
 			page.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, (String)result.get(CompanyCourse.VAR_price)));
-			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
 			page.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
+			page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
 			page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyCourse.VAR_emailTemplate)));
 			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
 			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
