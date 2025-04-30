@@ -138,7 +138,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    Integer varsFqCount = 0;
+    varsFqCount = 0;
     for(String var : CompanyProduct.varsFqForClass()) {
       String varIndexed = CompanyProduct.varIndexedCompanyProduct(var);
       String varStored = CompanyProduct.varStoredCompanyProduct(var);
@@ -492,8 +492,8 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getTitle() != null)
-      c.o(result.getTitle());
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
     else if(result != null)
       c.o("products");
     else if(searchListCompanyProduct_ == null || resultCount == 0)

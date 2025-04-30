@@ -5,6 +5,7 @@ import java.lang.String;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.List;
 import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -26,7 +27,6 @@ import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -137,7 +137,7 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
   @Override
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
-    Integer varsFqCount = 0;
+    varsFqCount = 0;
     for(String var : CompanyWebinar.varsFqForClass()) {
       String varIndexed = CompanyWebinar.varIndexedCompanyWebinar(var);
       String varStored = CompanyWebinar.varStoredCompanyWebinar(var);
@@ -496,8 +496,8 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
 
   @Override
   protected void _pageTitle(Wrap<String> c) {
-    if(result != null && result.getTitle() != null)
-      c.o(result.getTitle());
+    if(result != null && result.getObjectTitle() != null)
+      c.o(result.getObjectTitle());
     else if(result != null)
       c.o("webinars");
     else if(searchListCompanyWebinar_ == null || resultCount == 0)

@@ -4,6 +4,7 @@ package org.computate.site.verticle;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
@@ -103,6 +104,7 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.predicate.ResponsePredicate;
 import io.vertx.ext.web.client.WebClientOptions;
 import io.vertx.kafka.client.producer.KafkaProducer;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.amqp.AmqpClient;
 import io.vertx.amqp.AmqpClientOptions;
@@ -423,6 +425,9 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 					mqttClient = MqttClient.create(vertx);
 					mqttClient.connect(Integer.parseInt(config().getString(ConfigKeys.MQTT_PORT)), config().getString(ConfigKeys.MQTT_HOST_NAME)).onSuccess(mqttConnection -> {
 						try {
+							mqttClient.publishHandler(message -> {
+								LOG.info(String.format("MQTT: %s", message.payload().toString(Charset.defaultCharset())));
+							}).subscribe("workbench-user1", MqttQoS.EXACTLY_ONCE.value());
 							LOG.info("The MQTT client was initialized successfully.");
 							promise.complete(mqttClient);
 						} catch(Exception ex) {
@@ -590,16 +595,16 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
 
-			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, "pageId", "userPage", null).onSuccess(q1 -> {
-				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, "pageId", "userPage", null).onSuccess(q2 -> {
-					apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, "pageId", "userPage", null).onSuccess(q3 -> {
-						apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, "pageId", "userPage", null).onSuccess(q4 -> {
+			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, "pageId", "userPage", "download").onSuccess(q1 -> {
+				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, "pageId", "userPage", "download").onSuccess(q2 -> {
+					apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, "pageId", "userPage", "download").onSuccess(q3 -> {
+						apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, "pageId", "userPage", "download").onSuccess(q4 -> {
 							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, "pageId", "userPage", "downloadUrl").onSuccess(q5 -> {
-								apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, "pageId", "userPage", null).onSuccess(q6 -> {
-									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, "pageId", "userPage", null).onSuccess(q7 -> {
-										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, "pageId", "userPage", null).onSuccess(q8 -> {
-											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, "pageId", "userPage", null).onSuccess(q9 -> {
-												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, "pageId", "userPage", null).onSuccess(q10 -> {
+								apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, "pageId", "userPage", "download").onSuccess(q6 -> {
+									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, "pageId", "userPage", "download").onSuccess(q7 -> {
+										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, "pageId", "userPage", "download").onSuccess(q8 -> {
+											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, "pageId", "userPage", "download").onSuccess(q9 -> {
+												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, "pageId", "userPage", "download").onSuccess(q10 -> {
 													LOG.info("data import complete");
 													promise.complete();
 												}).onFailure(ex -> promise.fail(ex));

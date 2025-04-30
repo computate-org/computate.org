@@ -118,7 +118,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void searchCompanyResearch(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, false, true, false).onSuccess(listCompanyResearch -> {
 							response200SearchCompanyResearch(listCompanyResearch).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -244,7 +245,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void getCompanyResearch(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, false, true, false).onSuccess(listCompanyResearch -> {
 							response200GETCompanyResearch(listCompanyResearch).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -309,36 +311,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	@Override
 	public void patchCompanyResearch(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("patchCompanyResearch started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, pageId, "PATCH"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, true, false, true).onSuccess(listCompanyResearch -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -349,7 +323,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyResearch.first());
-								apiRequest.setId(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPageId()).orElse(null));
+								apiRequest.setId(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 								eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHCompanyResearch(apiRequest, listCompanyResearch).onSuccess(e -> {
@@ -372,12 +346,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							LOG.error(String.format("patchCompanyResearch failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("patchCompanyResearch failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -410,6 +378,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		SiteRequest siteRequest = listCompanyResearch.getSiteRequest_(SiteRequest.class);
 		listCompanyResearch.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			siteRequest2.setScopes(siteRequest.getScopes());
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			JsonObject jsonObject = JsonObject.mapFrom(o);
@@ -449,7 +418,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void patchCompanyResearchFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
@@ -469,7 +439,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setId(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPageId()).orElse(null));
+							apiRequest.setId(Optional.ofNullable(listCompanyResearch.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 							JsonObject jsonObject = JsonObject.mapFrom(o);
 							CompanyResearch o2 = jsonObject.mapTo(CompanyResearch.class);
 							o2.setSiteRequest_(siteRequest);
@@ -499,7 +469,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public Future<CompanyResearch> patchCompanyResearchFuture(CompanyResearch o, Boolean pageId) {
+	public Future<CompanyResearch> patchCompanyResearchFuture(CompanyResearch o, Boolean inheritPrimaryKey) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<CompanyResearch> promise = Promise.promise();
 
@@ -554,36 +524,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	@Override
 	public void postCompanyResearch(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("postCompanyResearch started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, pageId, "POST"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
 						apiRequest.setNumFound(1L);
@@ -594,7 +536,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
-						params.put("cookie", new JsonObject());
+						params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 						params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 						params.put("form", new JsonObject());
 						JsonObject query = new JsonObject();
@@ -618,12 +560,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							LOG.error(String.format("postCompanyResearch failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("postCompanyResearch failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -652,7 +588,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void postCompanyResearchFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -749,36 +686,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	@Override
 	public void putimportCompanyResearch(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("putimportCompanyResearch started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, pageId, "PUT"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 						apiRequest.setRows(Long.valueOf(jsonArray.size()));
@@ -804,12 +713,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							LOG.error(String.format("putimportCompanyResearch failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("putimportCompanyResearch failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -846,7 +749,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					JsonObject params = new JsonObject();
 					params.put("body", obj);
 					params.put("path", new JsonObject());
-					params.put("cookie", new JsonObject());
+					params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 					params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 					params.put("form", new JsonObject());
 					JsonObject query = new JsonObject();
@@ -885,7 +788,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void putimportCompanyResearchFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -1033,7 +937,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void searchpageCompanyResearch(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, false, true, false).onSuccess(listCompanyResearch -> {
 							response200SearchPageCompanyResearch(listCompanyResearch).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1154,36 +1059,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void editpageCompanyResearch(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyResearch.CLASS_SIMPLE_NAME, pageId, "GET"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, false, true, false).onSuccess(listCompanyResearch -> {
 							response200EditPageCompanyResearch(listCompanyResearch).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1196,12 +1073,6 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 							LOG.error(String.format("editpageCompanyResearch failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("editpageCompanyResearch failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1310,7 +1181,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 
 	@Override
 	public void displaypageCompanyResearch(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyResearchList(siteRequest, false, true, false).onSuccess(listCompanyResearch -> {
 							response200DisplayPageCompanyResearch(listCompanyResearch).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1826,7 +1698,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
+				String query = String.format("filter(%s:%s)", CompanyResearch.VAR_solrId, o.obtainForClass(CompanyResearch.VAR_solrId));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1873,9 +1745,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, (String)result.get(CompanyResearch.VAR_description)));
 			page.persistForClass(CompanyResearch.VAR_pageId, CompanyResearch.staticSetPageId(siteRequest2, (String)result.get(CompanyResearch.VAR_pageId)));
 			page.persistForClass(CompanyResearch.VAR_archived, CompanyResearch.staticSetArchived(siteRequest2, (String)result.get(CompanyResearch.VAR_archived)));
-			page.persistForClass(CompanyResearch.VAR_title, CompanyResearch.staticSetTitle(siteRequest2, (String)result.get(CompanyResearch.VAR_title)));
+			page.persistForClass(CompanyResearch.VAR_objectTitle, CompanyResearch.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyResearch.VAR_objectTitle)));
 			page.persistForClass(CompanyResearch.VAR_displayPage, CompanyResearch.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyResearch.VAR_displayPage)));
-			page.persistForClass(CompanyResearch.VAR_download, CompanyResearch.staticSetDownload(siteRequest2, (String)result.get(CompanyResearch.VAR_download)));
 			page.persistForClass(CompanyResearch.VAR_solrId, CompanyResearch.staticSetSolrId(siteRequest2, (String)result.get(CompanyResearch.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

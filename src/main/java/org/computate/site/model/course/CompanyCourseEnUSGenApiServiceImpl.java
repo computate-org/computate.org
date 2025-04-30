@@ -118,7 +118,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void searchCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200SearchCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -244,7 +245,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void getCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200GETCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -309,36 +311,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	@Override
 	public void patchCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("patchCompanyCourse started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "PATCH"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -349,7 +323,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyCourse.first());
-								apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId()).orElse(null));
+								apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 								eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHCompanyCourse(apiRequest, listCompanyCourse).onSuccess(e -> {
@@ -372,12 +346,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("patchCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("patchCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -410,6 +378,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
 		listCompanyCourse.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			siteRequest2.setScopes(siteRequest.getScopes());
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			JsonObject jsonObject = JsonObject.mapFrom(o);
@@ -449,7 +418,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void patchCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
@@ -469,7 +439,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId()).orElse(null));
+							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 							JsonObject jsonObject = JsonObject.mapFrom(o);
 							CompanyCourse o2 = jsonObject.mapTo(CompanyCourse.class);
 							o2.setSiteRequest_(siteRequest);
@@ -499,7 +469,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		});
 	}
 
-	public Future<CompanyCourse> patchCompanyCourseFuture(CompanyCourse o, Boolean pageId) {
+	public Future<CompanyCourse> patchCompanyCourseFuture(CompanyCourse o, Boolean inheritPrimaryKey) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<CompanyCourse> promise = Promise.promise();
 
@@ -554,36 +524,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	@Override
 	public void postCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("postCompanyCourse started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "POST"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
 						apiRequest.setNumFound(1L);
@@ -594,7 +536,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
-						params.put("cookie", new JsonObject());
+						params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 						params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 						params.put("form", new JsonObject());
 						JsonObject query = new JsonObject();
@@ -618,12 +560,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("postCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("postCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -652,7 +588,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void postCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -749,36 +686,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	@Override
 	public void deleteCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("deleteCompanyCourse started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "DELETE"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -811,12 +720,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("deleteCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("deleteCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -849,6 +752,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
 		listCompanyCourse.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			siteRequest2.setScopes(siteRequest.getScopes());
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			JsonObject jsonObject = JsonObject.mapFrom(o);
@@ -888,7 +792,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void deleteCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
@@ -908,7 +813,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId()).orElse(null));
+							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 							deleteCompanyCourseFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -978,36 +883,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	@Override
 	public void putimportCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("putimportCompanyCourse started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "PUT"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 						apiRequest.setRows(Long.valueOf(jsonArray.size()));
@@ -1033,12 +910,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("putimportCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("putimportCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1075,7 +946,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					JsonObject params = new JsonObject();
 					params.put("body", obj);
 					params.put("path", new JsonObject());
-					params.put("cookie", new JsonObject());
+					params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 					params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 					params.put("form", new JsonObject());
 					JsonObject query = new JsonObject();
@@ -1114,7 +985,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void putimportCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -1262,7 +1134,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void searchpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1383,36 +1256,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void editpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "GET"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200EditPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1425,12 +1270,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("editpageCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("editpageCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1539,7 +1378,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void displaypageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200DisplayPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1660,36 +1500,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void userpageCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "GET"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
 							response200UserPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1702,12 +1514,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("userpageCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("userpageCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1817,36 +1623,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 	@Override
 	public void deletefilterCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("deletefilterCompanyCourse started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_SIMPLE_NAME, pageId, "DELETE"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -1879,12 +1657,6 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("deletefilterCompanyCourse failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1917,6 +1689,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
 		listCompanyCourse.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			siteRequest2.setScopes(siteRequest.getScopes());
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			JsonObject jsonObject = JsonObject.mapFrom(o);
@@ -1956,7 +1729,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 
 	@Override
 	public void deletefilterCompanyCourseFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
@@ -1976,7 +1750,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId()).orElse(null));
+							apiRequest.setId(Optional.ofNullable(listCompanyCourse.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 							deletefilterCompanyCourseFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -2441,7 +2215,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
+				String query = String.format("filter(%s:%s)", CompanyCourse.VAR_solrId, o.obtainForClass(CompanyCourse.VAR_solrId));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -2493,10 +2267,9 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
 			page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
 			page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, (String)result.get(CompanyCourse.VAR_courseNum)));
-			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_title)));
+			page.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
 			page.persistForClass(CompanyCourse.VAR_title, CompanyCourse.staticSetTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_title)));
 			page.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
-			page.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
 			page.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

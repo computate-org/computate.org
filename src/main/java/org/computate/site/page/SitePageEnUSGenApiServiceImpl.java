@@ -118,7 +118,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void searchSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200SearchSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -244,7 +245,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void getSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200GETSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -309,36 +311,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void patchSitePage(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("patchSitePage started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "PATCH"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, true, false, true).onSuccess(listSitePage -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -349,7 +323,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listSitePage.first());
-								apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId()).orElse(null));
+								apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 								eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHSitePage(apiRequest, listSitePage).onSuccess(e -> {
@@ -372,12 +346,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							LOG.error(String.format("patchSitePage failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("patchSitePage failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -410,6 +378,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		SiteRequest siteRequest = listSitePage.getSiteRequest_(SiteRequest.class);
 		listSitePage.getList().forEach(o -> {
 			SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+			siteRequest2.setScopes(siteRequest.getScopes());
 			o.setSiteRequest_(siteRequest2);
 			siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
 			JsonObject jsonObject = JsonObject.mapFrom(o);
@@ -449,7 +418,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void patchSitePageFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
@@ -469,7 +439,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							}
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
-							apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId()).orElse(null));
+							apiRequest.setId(Optional.ofNullable(listSitePage.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
 							JsonObject jsonObject = JsonObject.mapFrom(o);
 							SitePage o2 = jsonObject.mapTo(SitePage.class);
 							o2.setSiteRequest_(siteRequest);
@@ -499,7 +469,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public Future<SitePage> patchSitePageFuture(SitePage o, Boolean pageId) {
+	public Future<SitePage> patchSitePageFuture(SitePage o, Boolean inheritPrimaryKey) {
 		SiteRequest siteRequest = o.getSiteRequest_();
 		Promise<SitePage> promise = Promise.promise();
 
@@ -554,36 +524,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void postSitePage(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("postSitePage started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "POST"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
 						apiRequest.setNumFound(1L);
@@ -594,7 +536,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						JsonObject params = new JsonObject();
 						params.put("body", siteRequest.getJsonObject());
 						params.put("path", new JsonObject());
-						params.put("cookie", new JsonObject());
+						params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 						params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 						params.put("form", new JsonObject());
 						JsonObject query = new JsonObject();
@@ -618,12 +560,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							LOG.error(String.format("postSitePage failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("postSitePage failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -652,7 +588,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void postSitePageFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -749,36 +686,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	@Override
 	public void putimportSitePage(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		LOG.debug(String.format("putimportSitePage started. "));
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "PUT"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 						apiRequest.setRows(Long.valueOf(jsonArray.size()));
@@ -804,12 +713,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							LOG.error(String.format("putimportSitePage failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("putimportSitePage failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -846,7 +749,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					JsonObject params = new JsonObject();
 					params.put("body", obj);
 					params.put("path", new JsonObject());
-					params.put("cookie", new JsonObject());
+					params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
 					params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
 					params.put("form", new JsonObject());
 					JsonObject query = new JsonObject();
@@ -885,7 +788,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void putimportSitePageFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
 				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
@@ -1033,7 +937,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void searchpageSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200SearchPageSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1154,36 +1059,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void editpageSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
-			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-			MultiMap form = MultiMap.caseInsensitiveMultiMap();
-			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
-			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "GET"));
-			webClient.post(
-					config.getInteger(ComputateConfigKeys.AUTH_PORT)
-					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
-					)
-					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-					.putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-					.sendForm(form)
-					.expecting(HttpResponseExpectation.SC_OK)
-			.onComplete(authorizationDecisionResponse -> {
-				try {
-					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					{
-						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200EditPageSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1196,12 +1073,6 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							LOG.error(String.format("editpageSitePage failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
-					}
-				} catch(Exception ex) {
-					LOG.error(String.format("editpageSitePage failed. "), ex);
-					error(null, eventHandler, ex);
-				}
-			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1310,7 +1181,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 	@Override
 	public void displaypageSitePage(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", true).onSuccess(siteRequest -> {
+		Boolean classPublicRead = true;
+		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchSitePageList(siteRequest, false, true, false).onSuccess(listSitePage -> {
 							response200DisplayPageSitePage(listSitePage).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1828,7 +1700,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				JsonObject json = new JsonObject();
 				JsonObject delete = new JsonObject();
 				json.put("delete", delete);
-				String query = String.format("filter(pageId_docvalues_string:%s)", o.obtainForClass("pageId"));
+				String query = String.format("filter(%s:%s)", SitePage.VAR_solrId, o.obtainForClass(SitePage.VAR_solrId));
 				delete.put("query", query);
 				String solrUsername = siteRequest.getConfig().getString(ConfigKeys.SOLR_USERNAME);
 				String solrPassword = siteRequest.getConfig().getString(ConfigKeys.SOLR_PASSWORD);
@@ -1872,11 +1744,10 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 
 			page.persistForClass(SitePage.VAR_created, SitePage.staticSetCreated(siteRequest2, (String)result.get(SitePage.VAR_created)));
 			page.persistForClass(SitePage.VAR_archived, SitePage.staticSetArchived(siteRequest2, (String)result.get(SitePage.VAR_archived)));
-			page.persistForClass(SitePage.VAR_title, SitePage.staticSetTitle(siteRequest2, (String)result.get(SitePage.VAR_title)));
+			page.persistForClass(SitePage.VAR_objectTitle, SitePage.staticSetObjectTitle(siteRequest2, (String)result.get(SitePage.VAR_objectTitle)));
 			page.persistForClass(SitePage.VAR_displayPage, SitePage.staticSetDisplayPage(siteRequest2, (String)result.get(SitePage.VAR_displayPage)));
 			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
 			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
-			page.persistForClass(SitePage.VAR_download, SitePage.staticSetDownload(siteRequest2, (String)result.get(SitePage.VAR_download)));
 			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
 			page.persistForClass(SitePage.VAR_author, SitePage.staticSetAuthor(siteRequest2, (String)result.get(SitePage.VAR_author)));
 			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, (String)result.get(SitePage.VAR_pageId)));

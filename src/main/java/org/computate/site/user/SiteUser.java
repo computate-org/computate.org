@@ -17,9 +17,6 @@ import org.computate.site.request.SiteRequest;
  * Keyword: classSimpleNameSiteUser
  * Filter: userId
  * AuthUser: true
- * AuthDefaultClient:
- *   GET:
- *   PATCH:
  * 
  * SearchPageUri: /en-us/search/user
  * EditPageUri: /en-us/edit/user/{userId}

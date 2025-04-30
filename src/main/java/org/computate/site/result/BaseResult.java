@@ -144,7 +144,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * Description: The title of this page. 
 	 * VarTitle: true
 	 */
-	protected void _title(Wrap<String> w) {
+	protected void _objectTitle(Wrap<String> w) {
 		w.o(String.format("%s — %s", classNameAdjectiveSingularForClass(), nameForClass()));
 	}
 
@@ -204,7 +204,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 
 	/**
 	 * {@inheritDoc}
-	 * Persist: true
 	 * DocValues: true
 	 * Facet: true
 	 * DisplayName: download
@@ -259,6 +258,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 */
 	protected void _solrId(Wrap<String> w) {
 		String objectId = idForClass();
-		w.o(String.format("%s_%s", getClass().getSimpleName(), objectId));
+		w.o(String.format("%s_%s_%s", getSiteRequest_().getConfig().getString(ComputateConfigKeys.SOLR_COLLECTION), getClass().getSimpleName(), objectId));
 	}
 }

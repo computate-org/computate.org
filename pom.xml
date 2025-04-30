@@ -126,6 +126,14 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-bom</artifactId>
+				<version>${camel.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -188,6 +196,40 @@
 			<groupId>com.ongres.scram</groupId>
 			<artifactId>client</artifactId>
 			<version>${ongres-scram.version}</version>
+		</dependency>
+
+		<!-- ################# -->
+		<!-- Flying Saucer PDF -->
+		<!-- ################# -->
+
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-core</artifactId>
+			<version>${flying-saucer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-swt</artifactId>
+			<version>${flying-saucer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
+			<version>${flying-saucer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.librepdf</groupId>
+			<artifactId>openpdf</artifactId>
+			<version>${openpdf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-asian</artifactId>
+			<version>${itext-asian.version}</version>
 		</dependency>
 
 		<!-- ###### -->
@@ -346,6 +388,15 @@
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-opentracing</artifactId>
 		</dependency>
+		
+		<!-- ########## -->
+		<!-- jfreechart -->
+		<!-- ########## -->
+		<dependency>
+			<groupId>org.jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>${jfreechart.version}</version>
+		</dependency>
 
 		<!-- markdown -->
 
@@ -444,6 +495,52 @@
 			<version>${square.version}</version>
 		</dependency>
 
+		<!-- ##### -->
+		<!-- Camel -->
+		<!-- ##### -->
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-activemq</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-vertx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-vertx-kafka</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.kafka</groupId>
+					<artifactId>kafka-clients</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-vertx-http</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core-languages</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jbpm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-http</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>

@@ -189,7 +189,7 @@ public class CompanyEvent extends CompanyEventGen<BaseResult> {
    * Description: The titles of each location Paths. 
    */
   protected void _locationTitles(List<String> l) {
-    l.add(title);
+    l.add(objectTitle);
   }
 
   /**

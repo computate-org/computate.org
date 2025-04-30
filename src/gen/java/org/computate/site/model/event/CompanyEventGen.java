@@ -145,6 +145,9 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>Order: 6</h2>
  * <p>This class contains a comment <b>"Order: 6"</b>, which means this class will be sorted by the given number 6 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
+ * <h2>SqlOrder: 6</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 6"</b>, which means this class will be sorted by the given number 6 ascending when SQL code to create and drop the tables is generated. 
+ * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
@@ -406,6 +409,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public void setStartDateTime(String o) {
 		this.startDateTime = CompanyEvent.staticSetStartDateTime(siteRequest_, o);
 	}
+	@JsonIgnore
+	public void setStartDateTime(Date o) {
+		this.startDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
 	public static ZonedDateTime staticSetStartDateTime(SiteRequest siteRequest_, String o) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
@@ -415,10 +422,6 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
 			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
-	}
-	@JsonIgnore
-	public void setStartDateTime(Date o) {
-		this.startDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	protected CompanyEvent startDateTimeInit() {
 		Wrap<ZonedDateTime> startDateTimeWrap = new Wrap<ZonedDateTime>().var("startDateTime");
@@ -486,6 +489,10 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public void setEndDateTime(String o) {
 		this.endDateTime = CompanyEvent.staticSetEndDateTime(siteRequest_, o);
 	}
+	@JsonIgnore
+	public void setEndDateTime(Date o) {
+		this.endDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+	}
 	public static ZonedDateTime staticSetEndDateTime(SiteRequest siteRequest_, String o) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
@@ -495,10 +502,6 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
 			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
-	}
-	@JsonIgnore
-	public void setEndDateTime(Date o) {
-		this.endDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
 	}
 	protected CompanyEvent endDateTimeInit() {
 		Wrap<ZonedDateTime> endDateTimeWrap = new Wrap<ZonedDateTime>().var("endDateTime");
@@ -1557,20 +1560,29 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 			if(saves.contains("locationColors")) {
 				List<String> locationColors = (List<String>)doc.get("locationColors_indexedstored_strings");
-				if(locationColors != null)
-					oCompanyEvent.locationColors.addAll(locationColors);
+				if(locationColors != null) {
+					locationColors.stream().forEach( v -> {
+						oCompanyEvent.locationColors.add(CompanyEvent.staticSetLocationColors(siteRequest_, v));
+					});
+				}
 			}
 
 			if(saves.contains("locationTitles")) {
 				List<String> locationTitles = (List<String>)doc.get("locationTitles_indexedstored_strings");
-				if(locationTitles != null)
-					oCompanyEvent.locationTitles.addAll(locationTitles);
+				if(locationTitles != null) {
+					locationTitles.stream().forEach( v -> {
+						oCompanyEvent.locationTitles.add(CompanyEvent.staticSetLocationTitles(siteRequest_, v));
+					});
+				}
 			}
 
 			if(saves.contains("locationLinks")) {
 				List<String> locationLinks = (List<String>)doc.get("locationLinks_indexedstored_strings");
-				if(locationLinks != null)
-					oCompanyEvent.locationLinks.addAll(locationLinks);
+				if(locationLinks != null) {
+					locationLinks.stream().forEach( v -> {
+						oCompanyEvent.locationLinks.add(CompanyEvent.staticSetLocationLinks(siteRequest_, v));
+					});
+				}
 			}
 		}
 
@@ -1609,21 +1621,21 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 			JsonArray l = new JsonArray();
 			doc.put("locationColors_indexedstored_strings", l);
 			for(String o : locationColors) {
-				l.add(o);
+				l.add(CompanyEvent.staticSearchLocationColors(siteRequest_, o));
 			}
 		}
 		if(locationTitles != null) {
 			JsonArray l = new JsonArray();
 			doc.put("locationTitles_indexedstored_strings", l);
 			for(String o : locationTitles) {
-				l.add(o);
+				l.add(CompanyEvent.staticSearchLocationTitles(siteRequest_, o));
 			}
 		}
 		if(locationLinks != null) {
 			JsonArray l = new JsonArray();
 			doc.put("locationLinks_indexedstored_strings", l);
 			for(String o : locationLinks) {
-				l.add(o);
+				l.add(CompanyEvent.staticSearchLocationLinks(siteRequest_, o));
 			}
 		}
 		super.indexBaseResult(doc);
@@ -1905,7 +1917,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	@Override
 	public String titleForClass() {
-		return title;
+		return objectTitle;
 	}
 
 	@Override

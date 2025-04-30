@@ -122,6 +122,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>Order: 3</h2>
  * <p>This class contains a comment <b>"Order: 3"</b>, which means this class will be sorted by the given number 3 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
+ * <h2>SqlOrder: 3</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 3"</b>, which means this class will be sorted by the given number 3 ascending when SQL code to create and drop the tables is generated. 
+ * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>
  * <p>This class contains a comment <b>"Page: true"</b>, which means this class will have webpage code generated for these objects. 
@@ -939,7 +942,7 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 
 	@Override
 	public String titleForClass() {
-		return title;
+		return objectTitle;
 	}
 
 	@Override

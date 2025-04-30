@@ -247,6 +247,15 @@ paths:
       summary: >+
       tags:
         - about
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -499,10 +508,6 @@ paths:
     get:
       operationId: editpageCompanyAbout
       x-vertx-event-bus: computate.org-enUS-CompanyAbout
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -979,6 +984,15 @@ paths:
       summary: >+
       tags:
         - courses
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -1231,10 +1245,6 @@ paths:
     get:
       operationId: editpageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1471,10 +1481,6 @@ paths:
     get:
       operationId: userpageCompanyCourse
       x-vertx-event-bus: computate.org-enUS-CompanyCourse
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -1745,6 +1751,15 @@ paths:
       summary: >+
       tags:
         - events
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -1997,10 +2012,6 @@ paths:
     get:
       operationId: editpageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2237,10 +2248,6 @@ paths:
     get:
       operationId: userpageCompanyEvent
       x-vertx-event-bus: computate.org-enUS-CompanyEvent
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2511,6 +2518,15 @@ paths:
       summary: >+
       tags:
         - products
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -2763,10 +2779,6 @@ paths:
     get:
       operationId: downloadCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -2797,10 +2809,6 @@ paths:
     get:
       operationId: editpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3037,10 +3045,6 @@ paths:
     get:
       operationId: userpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3311,6 +3315,15 @@ paths:
       summary: >+
       tags:
         - research
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -3417,10 +3430,6 @@ paths:
     get:
       operationId: editpageCompanyResearch
       x-vertx-event-bus: computate.org-enUS-CompanyResearch
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -3897,6 +3906,15 @@ paths:
       summary: >+
       tags:
         - services
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -4003,10 +4021,6 @@ paths:
     get:
       operationId: editpageCompanyService
       x-vertx-event-bus: computate.org-enUS-CompanyService
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4483,6 +4497,15 @@ paths:
       summary: >+
       tags:
         - use cases
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -4735,10 +4758,6 @@ paths:
     get:
       operationId: editpageUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -4975,10 +4994,6 @@ paths:
     get:
       operationId: userpageUseCase
       x-vertx-event-bus: computate.org-enUS-UseCase
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -5249,6 +5264,15 @@ paths:
       summary: >+
       tags:
         - webinars
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -5501,10 +5525,6 @@ paths:
     get:
       operationId: editpageCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -5535,10 +5555,6 @@ paths:
     get:
       operationId: userpageCompanyWebinar
       x-vertx-event-bus: computate.org-enUS-CompanyWebinar
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6015,6 +6031,15 @@ paths:
       summary: >+
       tags:
         - websites
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -6121,10 +6146,6 @@ paths:
     get:
       operationId: editpageCompanyWebsite
       x-vertx-event-bus: computate.org-enUS-CompanyWebsite
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -6601,6 +6622,15 @@ paths:
       summary: >+
       tags:
         - articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -6707,10 +6737,6 @@ paths:
     get:
       operationId: editpageSitePage
       x-vertx-event-bus: computate.org-enUS-SitePage
-      security:
-        - openIdConnect:
-          - openid
-          - profile
       description: >+
       summary: >+
       tags:
@@ -7191,6 +7217,15 @@ paths:
       summary: >+
       tags:
         - site users
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -10057,6 +10092,10 @@ components:
                     type: string
                   nextWebinar:
                     type: string
+                  nextWebinarsBegin:
+                    type: array
+                    items:
+                      type: string
                   joinUrl:
                     type: string
     PATCHCompanyWebinarRequest:
@@ -10133,6 +10172,23 @@ components:
               type: string
             removeAllNextWebinar:
               type: string
+            setNextWebinarsBegin:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeNextWebinarsBegin:
+              type: string
+            removeAllNextWebinarsBegin:
+              type: array
+              items:
+                type: string
+            addNextWebinarsBegin:
+              type: string
+            addAllNextWebinarsBegin:
+              type: array
+              items:
+                type: string
             setJoinUrl:
               type: string
               nullable: true
@@ -10214,6 +10270,23 @@ components:
               type: string
             removeAllNextWebinar:
               type: string
+            setNextWebinarsBegin:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeNextWebinarsBegin:
+              type: string
+            removeAllNextWebinarsBegin:
+              type: array
+              items:
+                type: string
+            addNextWebinarsBegin:
+              type: string
+            addAllNextWebinarsBegin:
+              type: array
+              items:
+                type: string
             setJoinUrl:
               type: string
               nullable: true
@@ -10245,6 +10318,10 @@ components:
               type: string
             nextWebinar:
               type: string
+            nextWebinarsBegin:
+              type: array
+              items:
+                type: string
             joinUrl:
               type: string
     POSTCompanyWebinarResponse:
@@ -10271,6 +10348,10 @@ components:
               type: string
             nextWebinar:
               type: string
+            nextWebinarsBegin:
+              type: array
+              items:
+                type: string
             joinUrl:
               type: string
     DELETEFilterCompanyWebinarResponse:
@@ -10297,6 +10378,10 @@ components:
               type: string
             nextWebinar:
               type: string
+            nextWebinarsBegin:
+              type: array
+              items:
+                type: string
             joinUrl:
               type: string
     PUTImportCompanyWebinarRequest:
@@ -10328,6 +10413,10 @@ components:
                     type: string
                   nextWebinar:
                     type: string
+                  nextWebinarsBegin:
+                    type: array
+                    items:
+                      type: string
                   joinUrl:
                     type: string
     PUTImportCompanyWebinarResponse:
@@ -10354,6 +10443,10 @@ components:
                     type: string
                   nextWebinar:
                     type: string
+                  nextWebinarsBegin:
+                    type: array
+                    items:
+                      type: string
                   joinUrl:
                     type: string
     GETCompanyWebinarResponse:
@@ -10380,6 +10473,10 @@ components:
               type: string
             nextWebinar:
               type: string
+            nextWebinarsBegin:
+              type: array
+              items:
+                type: string
             joinUrl:
               type: string
     DELETECompanyWebinarResponse:
@@ -10406,6 +10503,10 @@ components:
               type: string
             nextWebinar:
               type: string
+            nextWebinarsBegin:
+              type: array
+              items:
+                type: string
             joinUrl:
               type: string
     EditPageCompanyWebinarResponse:
@@ -10608,8 +10709,6 @@ components:
                     type: string
                   siteName:
                     type: string
-                  siteDisplayName:
-                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -10628,8 +10727,6 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  name:
-                    type: string
                   author:
                     type: string
                   pageId:
@@ -10645,6 +10742,10 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
+                    type: string
+                  siteDisplayName:
+                    type: string
+                  name:
                     type: string
     PATCHSitePageRequest:
       allOf:
@@ -10671,13 +10772,6 @@ components:
               type: string
             removeAllSiteName:
               type: string
-            setSiteDisplayName:
-              type: string
-              nullable: true
-            removeSiteDisplayName:
-              type: string
-            removeAllSiteDisplayName:
-              type: string
             setSitePublicUrl:
               type: string
               nullable: true
@@ -10741,13 +10835,6 @@ components:
               type: string
             removeAllLessonNum:
               type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
-              type: string
             setAuthor:
               type: string
               nullable: true
@@ -10803,6 +10890,20 @@ components:
             removePageImageType:
               type: string
             removeAllPageImageType:
+              type: string
+            setSiteDisplayName:
+              type: string
+              nullable: true
+            removeSiteDisplayName:
+              type: string
+            removeAllSiteDisplayName:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
               type: string
     PATCHSitePageResponse:
       allOf:
@@ -10829,13 +10930,6 @@ components:
               type: string
             removeAllSiteName:
               type: string
-            setSiteDisplayName:
-              type: string
-              nullable: true
-            removeSiteDisplayName:
-              type: string
-            removeAllSiteDisplayName:
-              type: string
             setSitePublicUrl:
               type: string
               nullable: true
@@ -10899,13 +10993,6 @@ components:
               type: string
             removeAllLessonNum:
               type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
-              type: string
             setAuthor:
               type: string
               nullable: true
@@ -10962,6 +11049,20 @@ components:
               type: string
             removeAllPageImageType:
               type: string
+            setSiteDisplayName:
+              type: string
+              nullable: true
+            removeSiteDisplayName:
+              type: string
+            removeAllSiteDisplayName:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
     POSTSitePageRequest:
       allOf:
         - type: object
@@ -10971,8 +11072,6 @@ components:
             githubOrg:
               type: string
             siteName:
-              type: string
-            siteDisplayName:
               type: string
             sitePublicUrl:
               type: string
@@ -10992,8 +11091,6 @@ components:
               type: string
             lessonNum:
               type: string
-            name:
-              type: string
             author:
               type: string
             pageId:
@@ -11009,6 +11106,10 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
+              type: string
+            siteDisplayName:
+              type: string
+            name:
               type: string
     POSTSitePageResponse:
       allOf:
@@ -11020,8 +11121,6 @@ components:
               type: string
             siteName:
               type: string
-            siteDisplayName:
-              type: string
             sitePublicUrl:
               type: string
             mailingListUrl:
@@ -11040,8 +11139,6 @@ components:
               type: string
             lessonNum:
               type: string
-            name:
-              type: string
             author:
               type: string
             pageId:
@@ -11057,6 +11154,10 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
+              type: string
+            siteDisplayName:
+              type: string
+            name:
               type: string
     PUTImportSitePageRequest:
       allOf:
@@ -11073,8 +11174,6 @@ components:
                     type: string
                   siteName:
                     type: string
-                  siteDisplayName:
-                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -11093,8 +11192,6 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  name:
-                    type: string
                   author:
                     type: string
                   pageId:
@@ -11110,6 +11207,10 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
+                    type: string
+                  siteDisplayName:
+                    type: string
+                  name:
                     type: string
     PUTImportSitePageResponse:
       allOf:
@@ -11121,8 +11222,6 @@ components:
                     type: string
                   siteName:
                     type: string
-                  siteDisplayName:
-                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -11141,8 +11240,6 @@ components:
                     type: string
                   lessonNum:
                     type: string
-                  name:
-                    type: string
                   author:
                     type: string
                   pageId:
@@ -11159,6 +11256,10 @@ components:
                     type: string
                   pageImageType:
                     type: string
+                  siteDisplayName:
+                    type: string
+                  name:
+                    type: string
     GETSitePageResponse:
       allOf:
         - type: object
@@ -11168,8 +11269,6 @@ components:
             githubOrg:
               type: string
             siteName:
-              type: string
-            siteDisplayName:
               type: string
             sitePublicUrl:
               type: string
@@ -11189,8 +11288,6 @@ components:
               type: string
             lessonNum:
               type: string
-            name:
-              type: string
             author:
               type: string
             pageId:
@@ -11206,6 +11303,10 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
+              type: string
+            siteDisplayName:
+              type: string
+            name:
               type: string
     EditPageSitePageResponse:
       allOf:

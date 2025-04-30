@@ -15,6 +15,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -316,7 +317,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                         if(nextGuess.isBefore(now)) {
                           nextEnd = null;
                           nextStart = null;
-                          // nextWebinarsBegin.add(nextStart2);
+                          nextWebinarsBegin.add(nextStart2);
                           nextWebinarsDescription.add(description);
                           continue;
                         } else {
@@ -338,7 +339,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                           if(nextStart2 != null) {
                             if(nextStart == null)
                               nextStart = nextStart2;
-                            // nextWebinarsBegin.add(nextStart2);
+                            nextWebinarsBegin.add(nextStart2);
                             nextWebinarsDescription.add(description);
                           } else {
                             nextStart = null;
@@ -370,6 +371,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                 continue;
               }
             }
+            Collections.sort(nextWebinarsBegin);
             promise.complete();
           } catch(Throwable ex) {
             LOG.error(String.format(caldavFail_enUS, icalUrl), ex);
@@ -400,15 +402,16 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 	 */
 	protected void _nextWebinar(Wrap<ZonedDateTime> w) {}
 
-	// /**
-	//  * {@inheritDoc}
-	//  * DocValues: true
-	//  * Modify: false
-	//  * DisplayName.enUS: next webinars begin
-	//  * FormatHtm: MMM d, yyyy h:mm:ss a
-	//  * Description: The start date time of the next webinars for the week. 
-	//  */
-	// protected void _nextWebinarsBegin(List<ZonedDateTime> w) {}
+	/**
+	 * {@inheritDoc}
+	 * Stored: true
+	 * Indexed: true
+	 * Modify: false
+	 * DisplayName.enUS: next webinars begin
+	 * FormatHtm: MMM d, yyyy h:mm:ss a
+	 * Description: The start date time of the next webinars for the week. 
+	 */
+	protected void _nextWebinarsBegin(List<ZonedDateTime> w) {}
 
   /**
    * {@inheritDoc}

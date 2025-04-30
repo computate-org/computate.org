@@ -52,8 +52,6 @@ import org.computate.search.response.solr.SolrResponse;
  * </li><li>You can add a class comment "Rows: 100" if you wish the SiteUser API to return more or less than 10 records by default. 
  * In this case, the API will return 100 records from the API instead of 10 by default. 
  * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
- * </li><li>You can add a class comment "SqlOrder: " followed by an Integer to sort this class compared when generating the SQL code to create and drop tables. 
- * The Order comment allows you do define which order the SQL code is generated. 
  * </li>
  * <h3>About the SiteUser class and it's generated class SiteUserGen&lt;BaseModel&gt;: </h3>extends SiteUserGen
  * <p>
@@ -106,6 +104,9 @@ import org.computate.search.response.solr.SolrResponse;
  * <h2>Rows: null</h2>
  * <h2>Order: 1</h2>
  * <p>This class contains a comment <b>"Order: 1"</b>, which means this class will be sorted by the given number 1 ascending when code that relates to multiple classes at the same time is generated. 
+ * </p>
+ * <h2>SqlOrder: 1</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 1"</b>, which means this class will be sorted by the given number 1 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <p>This class contains a comment <b>"Model: true"</b>, which means this class will be stored in the database. 
@@ -212,7 +213,6 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	 */
 	@JsonProperty
 	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
-	@JsonSerialize(contentUsing = ToStringSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	protected List<Long> userKeys = new ArrayList<Long>();
 
@@ -1177,8 +1177,11 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 
 			if(saves.contains("userKeys")) {
 				List<Long> userKeys = (List<Long>)doc.get("userKeys_docvalues_longs");
-				if(userKeys != null)
-					oSiteUser.userKeys.addAll(userKeys);
+				if(userKeys != null) {
+					userKeys.stream().forEach( v -> {
+						oSiteUser.userKeys.add(v);
+					});
+				}
 			}
 
 			if(saves.contains("userId")) {
@@ -1244,7 +1247,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			JsonArray l = new JsonArray();
 			doc.put("userKeys_docvalues_longs", l);
 			for(Long o : userKeys) {
-				l.add(o);
+				l.add(SiteUser.staticSearchUserKeys(siteRequest_, o));
 			}
 		}
 		if(userId != null) {
@@ -1512,7 +1515,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 
 	@Override
 	public String titleForClass() {
-		return title;
+		return objectTitle;
 	}
 
 	@Override

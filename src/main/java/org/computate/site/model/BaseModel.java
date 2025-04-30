@@ -176,7 +176,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * Description: The title of this page. 
 	 * VarTitle: true
 	 */
-	protected void _title(Wrap<String> w) {
+	protected void _objectTitle(Wrap<String> w) {
 		w.o(String.format("%s — %s", classNameAdjectiveSingularForClass(), nameForClass()));
 	}
 
@@ -290,6 +290,6 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 */
 	protected void _solrId(Wrap<String> w) {
 		if(pk != null)
-			w.o(getClass().getSimpleName() + "_" + pk.toString());
+			w.o(String.format("%s_%s_%s", getSiteRequest_().getConfig().getString(ComputateConfigKeys.SOLR_COLLECTION), getClass().getSimpleName(), pk.toString()));
 	}
 }
