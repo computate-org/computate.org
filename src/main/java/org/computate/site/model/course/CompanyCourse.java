@@ -57,6 +57,7 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
    * Facet: true
    * Required: true
 	 * HtmColumn: 1
+	 * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }
@@ -158,17 +159,5 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 * Description: The course number for this page. 
 	 */
 	protected void _courseNum(Wrap<Integer> w) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: title
-	 * Description: The title of this page. 
-	 * VarTitle: true
-	 */
-	protected void _title(Wrap<String> w) {
-		w.o(String.format("%s — %s", NameAdjectiveSingular_enUS, name));
 	}
 }

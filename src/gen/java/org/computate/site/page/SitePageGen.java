@@ -48,9 +48,6 @@ import io.vertx.core.json.JsonObject;
  * <ol>
 <h3>Suggestions that can generate more code for you: </h3> * </ol>
  * <li>You can add a class comment "{@inheritDoc}" if you wish to inherit the helpful inherited class comments from class SitePageGen into the class SitePage. 
- * </li><li>You can add a class comment "Rows: 100" if you wish the SitePage API to return more or less than 10 records by default. 
- * In this case, the API will return 100 records from the API instead of 10 by default. 
- * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
  * </li><li>You can add a class comment "Model: true" if you wish to persist these SitePage objects in a relational PostgreSQL database transactionally in the RESTful API. 
  * The code to persist and query the SitePageGen data in the database will then be automatically generated. 
  * </li>
@@ -111,7 +108,10 @@ import io.vertx.core.json.JsonObject;
  * <h2>{@inheritDoc}</h2>
  * <p>By adding a class comment "{@inheritDoc}", the SitePage class will inherit the helpful inherited class comments from the super class SitePageGen. 
  * </p>
- * <h2>Rows: null</h2>
+ * <h2>Rows: 100</h2>
+ * <p>This class contains a comment <b>"Rows: 100"</b>, which means the SitePage API will return a default of 100 records instead of 10 by default. 
+ * Each API has built in pagination of the search records to ensure a user can query all the data a page at a time without running the application out of memory. 
+ * </p>
  * <h2>Order: 4</h2>
  * <p>This class contains a comment <b>"Order: 4"</b>, which means this class will be sorted by the given number 4 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
@@ -218,6 +218,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/article/%s";
 
 	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-newspaper\"></i>";
+	public static final Integer Rows = 100;
 
 	/////////////
 	// article //

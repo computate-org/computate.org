@@ -714,62 +714,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return courseNum;
 	}
 
-	///////////
-	// title //
-	///////////
-
-
-	/**	 The entity title
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String title;
-
-	/**	<br> The entity title
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:title">Find the entity title in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _title(Wrap<String> w);
-
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String o) {
-		this.title = CompanyCourse.staticSetTitle(siteRequest_, o);
-	}
-	public static String staticSetTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyCourse titleInit() {
-		Wrap<String> titleWrap = new Wrap<String>().var("title");
-		if(title == null) {
-			_title(titleWrap);
-			Optional.ofNullable(titleWrap.getO()).ifPresent(o -> {
-				setTitle(o);
-			});
-		}
-		return (CompanyCourse)this;
-	}
-
-	public static String staticSearchTitle(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrTitle(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqTitle(SiteRequest siteRequest_, String o) {
-		return CompanyCourse.staticSearchTitle(siteRequest_, CompanyCourse.staticSetTitle(siteRequest_, o)).toString();
-	}
-
-	public String sqlTitle() {
-		return title;
-	}
-
 	//////////////
 	// initDeep //
 	//////////////
@@ -807,7 +751,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				storeUrlInit();
 				downloadUriInit();
 				courseNumInit();
-				titleInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -877,8 +820,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return oCompanyCourse.downloadUri;
 			case "courseNum":
 				return oCompanyCourse.courseNum;
-			case "title":
-				return oCompanyCourse.title;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -934,8 +875,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSetDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSetCourseNum(siteRequest_, o);
-		case "title":
-			return CompanyCourse.staticSetTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -966,8 +905,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
-		case "title":
-			return CompanyCourse.staticSearchTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -998,8 +935,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
-		case "title":
-			return CompanyCourse.staticSearchStrTitle(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1030,8 +965,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
-		case "title":
-			return CompanyCourse.staticSearchFqTitle(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1110,12 +1043,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("courseNum");
 				return val;
-			} else if("title".equals(varLower)) {
-				if(val instanceof String) {
-					setTitle((String)val);
-				}
-				saves.add("title");
-				return val;
 		} else {
 			return super.persistBaseResult(var, val);
 		}
@@ -1180,12 +1107,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				if(courseNum != null)
 					oCompanyCourse.setCourseNum(courseNum);
 			}
-
-			if(saves.contains("title")) {
-				String title = (String)doc.get("title_docvalues_string");
-				if(title != null)
-					oCompanyCourse.setTitle(title);
-			}
 		}
 
 		super.populateBaseResult(doc);
@@ -1216,9 +1137,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(courseNum != null) {
 			doc.put("courseNum_docvalues_int", courseNum);
 		}
-		if(title != null) {
-			doc.put("title_docvalues_string", title);
-		}
 		super.indexBaseResult(doc);
 
 	}
@@ -1241,8 +1159,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
@@ -1266,8 +1182,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
-			case "title":
-				return "title_docvalues_string";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
@@ -1291,8 +1205,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri";
 			case "courseNum_docvalues_int":
 				return "courseNum";
-			case "title_docvalues_string":
-				return "title";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
@@ -1331,7 +1243,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
-		oCompanyCourse.setTitle(Optional.ofNullable(doc.get("title_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1361,8 +1272,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				apiRequest.addVars("downloadUri");
 			if(!Objects.equals(courseNum, original.getCourseNum()))
 				apiRequest.addVars("courseNum");
-			if(!Objects.equals(title, original.getTitle()))
-				apiRequest.addVars("title");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1382,7 +1291,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(title).map(v -> "title: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1400,7 +1308,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_downloadUri = "downloadUri";
 	public static final String VAR_courseNum = "courseNum";
-	public static final String VAR_title = "title";
 
 	public static List<String> varsQForClass() {
 		return CompanyCourse.varsQCompanyCourse(new ArrayList<String>());
@@ -1444,7 +1351,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_downloadUri = "download URI";
 	public static final String DISPLAY_NAME_courseNum = "Course Number";
-	public static final String DISPLAY_NAME_title = "title";
 
 	@Override
 	public String idForClass() {
@@ -1453,12 +1359,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	@Override
 	public String titleForClass() {
-		return title;
+		return objectTitle;
 	}
 
 	@Override
 	public String nameForClass() {
-		return null;
+		return name;
 	}
 
 	@Override
@@ -1512,8 +1418,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_downloadUri;
 		case VAR_courseNum:
 			return DISPLAY_NAME_courseNum;
-		case VAR_title:
-			return DISPLAY_NAME_title;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
@@ -1537,8 +1441,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "The download relative URI for this page. ";
 		case VAR_courseNum:
 			return "The course number for this page. ";
-		case VAR_title:
-			return "The title of this page. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
@@ -1562,8 +1464,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_courseNum:
 			return "Integer";
-		case VAR_title:
-			return "String";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
 		}

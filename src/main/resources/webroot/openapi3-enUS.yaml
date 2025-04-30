@@ -6446,7 +6446,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 100
             minimum: 0
         - in: query
           name: facet
@@ -6831,7 +6831,7 @@ paths:
           required: false
           schema:
             type: integer
-            default: 10
+            default: 100
             minimum: 0
         - in: query
           name: facet
@@ -8356,8 +8356,6 @@ components:
                     type: string
                   courseNum:
                     type: string
-                  title:
-                    type: string
     PATCHCompanyCourseRequest:
       allOf:
         - type: object
@@ -8424,13 +8422,6 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
-              type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
               type: string
     PATCHCompanyCourseResponse:
       allOf:
@@ -8499,13 +8490,6 @@ components:
               type: string
             removeAllCourseNum:
               type: string
-            setTitle:
-              type: string
-              nullable: true
-            removeTitle:
-              type: string
-            removeAllTitle:
-              type: string
     POSTCompanyCourseRequest:
       allOf:
         - type: object
@@ -8527,8 +8511,6 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            title:
               type: string
     POSTCompanyCourseResponse:
       allOf:
@@ -8552,8 +8534,6 @@ components:
               type: string
             courseNum:
               type: string
-            title:
-              type: string
     DELETEFilterCompanyCourseResponse:
       allOf:
         - type: object
@@ -8575,8 +8555,6 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            title:
               type: string
     PUTImportCompanyCourseRequest:
       allOf:
@@ -8605,8 +8583,6 @@ components:
                     type: string
                   courseNum:
                     type: string
-                  title:
-                    type: string
     PUTImportCompanyCourseResponse:
       allOf:
         - type: object
@@ -8628,8 +8604,6 @@ components:
                   downloadUri:
                     type: string
                   courseNum:
-                    type: string
-                  title:
                     type: string
     GETCompanyCourseResponse:
       allOf:
@@ -8653,8 +8627,6 @@ components:
               type: string
             courseNum:
               type: string
-            title:
-              type: string
     DELETECompanyCourseResponse:
       allOf:
         - type: object
@@ -8676,8 +8648,6 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            title:
               type: string
     EditPageCompanyCourseResponse:
       allOf:
@@ -10709,6 +10679,8 @@ components:
                     type: string
                   siteName:
                     type: string
+                  siteDisplayName:
+                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -10727,6 +10699,8 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  name:
+                    type: string
                   author:
                     type: string
                   pageId:
@@ -10742,10 +10716,6 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
-                    type: string
-                  siteDisplayName:
-                    type: string
-                  name:
                     type: string
     PATCHSitePageRequest:
       allOf:
@@ -10772,6 +10742,13 @@ components:
               type: string
             removeAllSiteName:
               type: string
+            setSiteDisplayName:
+              type: string
+              nullable: true
+            removeSiteDisplayName:
+              type: string
+            removeAllSiteDisplayName:
+              type: string
             setSitePublicUrl:
               type: string
               nullable: true
@@ -10835,6 +10812,13 @@ components:
               type: string
             removeAllLessonNum:
               type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
             setAuthor:
               type: string
               nullable: true
@@ -10890,20 +10874,6 @@ components:
             removePageImageType:
               type: string
             removeAllPageImageType:
-              type: string
-            setSiteDisplayName:
-              type: string
-              nullable: true
-            removeSiteDisplayName:
-              type: string
-            removeAllSiteDisplayName:
-              type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
               type: string
     PATCHSitePageResponse:
       allOf:
@@ -10930,6 +10900,13 @@ components:
               type: string
             removeAllSiteName:
               type: string
+            setSiteDisplayName:
+              type: string
+              nullable: true
+            removeSiteDisplayName:
+              type: string
+            removeAllSiteDisplayName:
+              type: string
             setSitePublicUrl:
               type: string
               nullable: true
@@ -10993,6 +10970,13 @@ components:
               type: string
             removeAllLessonNum:
               type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
             setAuthor:
               type: string
               nullable: true
@@ -11049,20 +11033,6 @@ components:
               type: string
             removeAllPageImageType:
               type: string
-            setSiteDisplayName:
-              type: string
-              nullable: true
-            removeSiteDisplayName:
-              type: string
-            removeAllSiteDisplayName:
-              type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
-              type: string
     POSTSitePageRequest:
       allOf:
         - type: object
@@ -11072,6 +11042,8 @@ components:
             githubOrg:
               type: string
             siteName:
+              type: string
+            siteDisplayName:
               type: string
             sitePublicUrl:
               type: string
@@ -11091,6 +11063,8 @@ components:
               type: string
             lessonNum:
               type: string
+            name:
+              type: string
             author:
               type: string
             pageId:
@@ -11106,10 +11080,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            siteDisplayName:
-              type: string
-            name:
               type: string
     POSTSitePageResponse:
       allOf:
@@ -11121,6 +11091,8 @@ components:
               type: string
             siteName:
               type: string
+            siteDisplayName:
+              type: string
             sitePublicUrl:
               type: string
             mailingListUrl:
@@ -11139,6 +11111,8 @@ components:
               type: string
             lessonNum:
               type: string
+            name:
+              type: string
             author:
               type: string
             pageId:
@@ -11154,10 +11128,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            siteDisplayName:
-              type: string
-            name:
               type: string
     PUTImportSitePageRequest:
       allOf:
@@ -11174,6 +11144,8 @@ components:
                     type: string
                   siteName:
                     type: string
+                  siteDisplayName:
+                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -11192,6 +11164,8 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  name:
+                    type: string
                   author:
                     type: string
                   pageId:
@@ -11207,10 +11181,6 @@ components:
                   pageImageHeight:
                     type: string
                   pageImageType:
-                    type: string
-                  siteDisplayName:
-                    type: string
-                  name:
                     type: string
     PUTImportSitePageResponse:
       allOf:
@@ -11222,6 +11192,8 @@ components:
                     type: string
                   siteName:
                     type: string
+                  siteDisplayName:
+                    type: string
                   sitePublicUrl:
                     type: string
                   mailingListUrl:
@@ -11240,6 +11212,8 @@ components:
                     type: string
                   lessonNum:
                     type: string
+                  name:
+                    type: string
                   author:
                     type: string
                   pageId:
@@ -11256,10 +11230,6 @@ components:
                     type: string
                   pageImageType:
                     type: string
-                  siteDisplayName:
-                    type: string
-                  name:
-                    type: string
     GETSitePageResponse:
       allOf:
         - type: object
@@ -11269,6 +11239,8 @@ components:
             githubOrg:
               type: string
             siteName:
+              type: string
+            siteDisplayName:
               type: string
             sitePublicUrl:
               type: string
@@ -11288,6 +11260,8 @@ components:
               type: string
             lessonNum:
               type: string
+            name:
+              type: string
             author:
               type: string
             pageId:
@@ -11303,10 +11277,6 @@ components:
             pageImageHeight:
               type: string
             pageImageType:
-              type: string
-            siteDisplayName:
-              type: string
-            name:
               type: string
     EditPageSitePageResponse:
       allOf:

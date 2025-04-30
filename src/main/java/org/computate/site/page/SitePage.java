@@ -35,6 +35,7 @@ import io.vertx.core.Promise;
  * Icon: <i class="fa-duotone fa-regular fa-newspaper"></i>
  * Sort.desc: courseNum
  * Sort.desc: lessonNum
+ * Rows: 100
  * 
  * PublicRead: true
  * SearchPageUri: /en-us/search/article
