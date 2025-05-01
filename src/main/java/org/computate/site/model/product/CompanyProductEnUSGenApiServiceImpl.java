@@ -421,7 +421,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
-				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
 				searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
@@ -591,7 +590,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
-				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
 				apiRequest.setRows(1L);
 				apiRequest.setNumFound(1L);
@@ -795,7 +793,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
-				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
 				searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
@@ -988,7 +985,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
-				siteRequest.addScopes("GET");
 				ApiRequest apiRequest = new ApiRequest();
 				apiRequest.setRows(1L);
 				apiRequest.setNumFound(1L);
@@ -1134,8 +1130,38 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 	@Override
 	public void downloadCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		Boolean classPublicRead = true;
+		Boolean classPublicRead = false;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, pageId, "GET"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200DownloadCompanyProduct(listCompanyProduct).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1148,6 +1174,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("downloadCompanyProduct failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("downloadCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1179,17 +1211,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
 			CompanyProduct o = listCompanyProduct.getList().stream().findFirst().orElse(null);
-			String uri = siteRequest.getServiceRequest().getExtra().getString("uri");
-			String downloadPath = String.format("%s%s.zip", config.getString(ConfigKeys.DOWNLOAD_PATH), uri);
-			vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
-				MultiMap headers = MultiMap.caseInsensitiveMultiMap()
-						.add("Content-Type", "application/zip")
-						.add("Content-Disposition", "attachment; filename=\"" + o.getPageId() + ".zip\"");
-				promise.complete(new ServiceResponse(200, "OK", buffer, headers));
-			}).onFailure(ex -> {
-				LOG.error(String.format("Failed to find download %s", downloadPath), ex);
-				promise.fail(ex);
-			});
+			if(o == null) {
+				promise.complete(new ServiceResponse(403, "FORBIDDEN", Buffer.buffer(), null));
+			} else {
+				String uri = siteRequest.getServiceRequest().getExtra().getString("uri");
+				String downloadPath = String.format("%s%s.zip", config.getString(ConfigKeys.DOWNLOAD_PATH), uri);
+				vertx.fileSystem().readFile(downloadPath).onSuccess(buffer -> {
+					MultiMap headers = MultiMap.caseInsensitiveMultiMap()
+							.add("Content-Type", "application/zip")
+							.add("Content-Disposition", "attachment; filename=\"" + o.getPageId() + ".zip\"");
+					promise.complete(new ServiceResponse(200, "OK", buffer, headers));
+				}).onFailure(ex -> {
+					LOG.error(String.format("Failed to find download %s", downloadPath), ex);
+					promise.fail(ex);
+				});
+			}
 		} catch(Exception ex) {
 			LOG.error(String.format("response200DownloadCompanyProduct failed. "), ex);
 			promise.fail(ex);
@@ -1325,6 +1361,36 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	public void editpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, pageId, "GET"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200EditPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1337,6 +1403,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("editpageCompanyProduct failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("editpageCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1569,6 +1641,36 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	public void userpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_SIMPLE_NAME, pageId, "GET"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					{
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
 							response200UserPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
 								eventHandler.handle(Future.succeededFuture(response));
@@ -1581,6 +1683,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("userpageCompanyProduct failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("userpageCompanyProduct failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1799,7 +1907,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
-				siteRequest.addScopes("GET");
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
 				searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
