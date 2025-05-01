@@ -116,6 +116,7 @@ import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.eventbus.EventBusOptions;
+import io.vertx.core.eventbus.Message;
 import io.vertx.core.http.Cookie;
 import io.vertx.core.http.HttpClientOptions;
 import io.vertx.core.http.HttpHeaders;
@@ -126,6 +127,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.JksOptions;
 import io.vertx.core.net.PemKeyCertOptions;
+import io.vertx.core.shareddata.SharedData;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.core.spi.cluster.NodeInfo;
 import io.opentelemetry.api.trace.Tracer;
@@ -164,6 +166,7 @@ import io.vertx.ext.web.openapi.RouterBuilder;
 import io.vertx.ext.web.sstore.LocalSessionStore;
 import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.kafka.client.consumer.KafkaConsumer;
+import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgBuilder;
@@ -391,7 +394,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			apiCompanyWebsite.setConfig(config);
 			apiCompanyWebsite.setWebClient(webClient);
 			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
-				apiSiteUser.authorizeClientData(authToken, SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_CLIENT), new String[] { "GET", "PATCH" }).onSuccess(q1 -> {
 					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
 							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 							.onSuccess(q2 -> {
@@ -424,7 +426,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 																.onSuccess(q11 -> {
 															LOG.info("authorize data complete");
 															promise.complete();
-														}).onFailure(ex -> promise.fail(ex));
 													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));
@@ -861,7 +862,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				kafkaConfig.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 				kafkaConfig.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 				kafkaConfig.put("auto.offset.reset", "earliest");
-				kafkaConfig.put("enable.auto.commit", "false");
+				kafkaConfig.put("enable.auto.commit", "true");
 				Optional.ofNullable(config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_TYPE)).ifPresent(keystoreType -> {
 					kafkaConfig.put("ssl.keystore.type", keystoreType);
 					kafkaConfig.put("ssl.keystore.location", config().getString(ConfigKeys.KAFKA_SSL_KEYSTORE_LOCATION));
@@ -1531,6 +1532,219 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		return promise.future();
 	}
 
+	public Future<Void> processSquareItem(CustomersApi customersApi, Message<Object> message, JsonObject orderBody, Order order, String orderId, String state, OrderLineItem item) {
+		Promise<Void> promise = Promise.promise();
+		try {
+			String githubU = null;
+			if(item.getModifiers() != null) {
+				for(OrderLineItemModifier modifier : item.getModifiers()) {
+					String modifierName = modifier.getName();
+					Matcher m = Pattern.compile("GitHub username lowercase: (.*)", Pattern.MULTILINE).matcher(modifierName);
+					if (m.find())
+						githubU = m.group(1).trim();
+				}
+			}
+			String name = item.getName();
+			String githubUsername = githubU;
+			if(name != null && githubUsername != null) {
+				LOG.info(String.format("Processing %s %s order %s for GitHub user %s", state, name, orderId, githubUsername));
+
+				SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
+				initializeApiService(apiSiteUser);
+				List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
+				SiteRequest siteRequest = new SiteRequest();
+				siteRequest.setWebClient(this.webClient);
+				siteRequest.setJsonObject(orderBody);
+				siteRequest.setUserPrincipal(new JsonObject());
+				siteRequest.setUser(null);
+				siteRequest.setConfig(config());
+				siteRequest.setServiceRequest(null);
+				siteRequest.setI18n(this.i18n);
+				siteRequest.setSiteRequest_(siteRequest);
+				siteRequest.initDeepForClass();
+				siteRequest.setPublicRead(true);
+
+				SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
+				searchList.setStore(true);
+				searchList.q("*:*");
+				searchList.setSiteRequest_(siteRequest);
+				searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
+				searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
+				searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+					if(searchList.size() > 0) {
+						ComputateBaseResult result = searchList.first();
+						String pageId = (String)result.obtainForClass("pageId");
+						String classSimpleName = (String)result.obtainForClass("classSimpleName");
+						String groupName = String.format("%s-%s-GET", classSimpleName, pageId);
+						String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+						String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+						Integer authPort = Integer.parseInt(config().getString(ConfigKeys.AUTH_PORT));
+						String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
+						Boolean authSsl = Boolean.valueOf(config().getString(ConfigKeys.AUTH_SSL));
+						String authRealm = config().getString(ConfigKeys.AUTH_REALM);
+						webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+								.sendForm(MultiMap.caseInsensitiveMultiMap()
+										.add("username", authAdminUsername)
+										.add("password", authAdminPassword)
+										.add("grant_type", "password")
+										.add("client_id", "admin-cli")
+										)
+								.expecting(HttpResponseExpectation.SC_OK)
+										.onSuccess(tokenResponse -> {
+							try {
+								String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+								webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+								.send()
+								.expecting(HttpResponseExpectation.SC_OK)
+								.onSuccess(groupResponse -> {
+									try {
+										JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+										JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+										if(group != null) {
+											String groupId = group.getString("id");
+											webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+											.send()
+											.expecting(HttpResponseExpectation.SC_OK)
+											.onSuccess(userResponse -> {
+												JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+												JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+												if(user != null) {
+													String userId = user.getString("id");
+													String userEmail = user.getString("email");
+													String userName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+													JsonArray userGroups = user.getJsonArray("groups");
+													LOG.info(String.format("user %s group %s in groups: %s", githubUsername, groupName, userGroups));
+													// if(!userGroups.contains(groupName)) {
+														webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+																.putHeader("Authorization", String.format("Bearer %s", authToken))
+																.putHeader("Content-Type", "application/json")
+																.putHeader("Content-Length", "0")
+																.send()
+																.expecting(HttpResponseExpectation.SC_NO_CONTENT)
+																.onSuccess(groupUserResponse -> {
+															try {
+																DeliveryOptions options = new DeliveryOptions();
+																String siteName = config().getString(ComputateConfigKeys.SITE_NAME);
+																String emailFrom = config().getString(ComputateConfigKeys.EMAIL_FROM);
+																String customerId = order.getCustomerId();
+																String emailTo = userEmail;
+																String customerName = userName;
+																Payment payment = null;
+																if(emailTo == null && customerId == null) {
+																	List<Tender> tenders = order.getTenders();
+																	if(tenders != null) {
+																		Tender tender = order.getTenders().get(0);
+																		String paymentId = tender.getPaymentId();
+																		PaymentsApi paymentsApi = squareClient.getPaymentsApi();
+																		payment = paymentsApi.getPayment(paymentId).getPayment();
+																		customerId = payment.getCustomerId();
+																	}
+																}
+																if(emailTo == null && customerId != null) {
+																	Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
+																	emailTo = customer.getEmailAddress();
+																	customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
+																} else if(payment != null) {
+																	emailTo = payment.getBuyerEmailAddress();
+																}
+
+																String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, name, siteName);
+																String emailTemplate = (String)result.obtainForClass("emailTemplate");
+																BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
+																options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
+																options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
+																options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
+																options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+
+																ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
+																ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
+																Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
+																DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
+																JsonObject body = new JsonObject();
+																body.put(ComputateConfigKeys.SITE_BASE_URL, config().getString(ComputateConfigKeys.SITE_BASE_URL));
+																body.put("siteName", siteName);
+																body.put("githubUsername", githubUsername);
+																body.put("orderId", order.getId());
+																body.put("subject", subject);
+																body.put("emailTo", emailTo);
+																body.put("customerName", customerName);
+																body.put("result", JsonObject.mapFrom(result));
+																body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
+																body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
+																body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
+
+																String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
+																body.put("createdAt", createdAtStr);
+
+																vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
+																	LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
+																	promise.complete();
+																}).onFailure(ex -> {
+																	LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
+																	promise.fail(ex);
+																});
+															} catch(Throwable ex) {
+																LOG.error("Failed to process square webook while querying customer. ", ex);
+																promise.fail(ex);
+															}
+														}).onFailure(ex -> {
+															LOG.error("Failed to process square webook while adding user to group. ", ex);
+															promise.fail(ex);
+														});
+													// } else {
+													// 	LOG.info(String.format("User %s already in group %s", githubUsername, groupName));
+													// }
+												} else {
+													Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", githubUsername));
+													LOG.error(ex.getMessage(), ex);
+													promise.fail(ex);
+												}
+											}).onFailure(ex -> {
+												LOG.error("Failed to process square webook while querying user. ", ex);
+												promise.fail(ex);
+											});
+										} else {
+											Throwable ex = new RuntimeException("Failed to find group. ");
+											LOG.error(ex.getMessage(), ex);
+											promise.fail(ex);
+										}
+									} catch(Throwable ex) {
+										LOG.error("Failed to process square webook while querying group. ", ex);
+										promise.fail(ex);
+									}
+								}).onFailure(ex -> {
+									LOG.error("Failed to process square webook while querying group. ", ex);
+									promise.fail(ex);
+								});
+							} catch(Throwable ex) {
+								LOG.error("Failed to process square webook while querying group. ", ex);
+								promise.fail(ex);
+							}
+						}).onFailure(ex -> {
+							LOG.error("Failed to process square webook. ", ex);
+							promise.fail(ex);
+						});
+					} else {
+						LOG.warn(String.format("Item not found with name %s. ", name));
+						promise.complete();
+					}
+				}).onFailure(ex -> {
+					LOG.error("Failed to process square webook. ", ex);
+					promise.fail(ex);
+				});
+			} else {
+				LOG.warn(String.format("Order %s missing name %s or GitHub username %s in state %s", orderId, name, githubUsername, state));
+				promise.complete();
+			}
+		} catch(Exception ex) {
+			LOG.error("The square item failed to process.");
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
 	/**
 	 */
 	public Future<Void> configureUi() {
@@ -1563,229 +1777,96 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				}
 			});
 
+			vertx.eventBus().consumer("square-order", message -> {
+				try {
+					String signature = message.headers().get("x-square-hmacsha256-signature");
+					JsonObject orderBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
+					String oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("order_id")).orElse(null);
+					if(oId == null)
+						oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
+					String orderId = oId;
+					String st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
+					if(st == null)
+						st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
+					String state = st;
+					if(orderId != null && "OPEN".equals(state)) {
+						String orderLock = String.format("square-order-", orderId);
+						SharedData sharedData = vertx.sharedData();
+						sharedData.getLockWithTimeout(orderLock, config().getLong(ConfigKeys.SQUARE_WEBHOOK_TIMEOUT_MILLIS, 3000L)).onSuccess(lock -> {
+							try {
+								String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
+								String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
+								if(squareSignatureKey != null && squareNotificationUrl != null) {
+									Boolean isFromSquare = WebhooksHelper.isValidWebhookEventSignature(orderBody.encode(), signature, squareSignatureKey, squareNotificationUrl);
+									if(isFromSquare) {
+										OrdersApi ordersApi = squareClient.getOrdersApi();
+										CustomersApi customersApi = squareClient.getCustomersApi();
+										RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
+										Order order = orderResponse.getOrder();
+										String state2 = state;
+										String orderId2 = orderId;
+
+										List<Future<String>> futures = new ArrayList<>();
+										for(OrderLineItem item : order.getLineItems()) {
+											futures.add(Future.future(promise1 -> {
+												processSquareItem(customersApi, message, orderBody, order, orderId2, state2, item).onSuccess(a -> {
+													promise1.complete();
+												}).onFailure(ex -> {
+													promise1.fail(ex);
+												});
+											}));
+										}
+										Future.all(futures).onSuccess(b -> {
+											vertx.setTimer(config().getInteger(ConfigKeys.SQUARE_WEBHOOK_UNLOCK_MILLIS, 60000), tid -> {
+												lock.release();
+												LOG.info(String.format("The orderId %s lock was released", orderId));
+											});
+										}).onFailure(ex -> {
+											message.fail(400, ex.getMessage());
+										});
+									} else {
+										Throwable ex = new RuntimeException("Webhook is not from Square. ");
+										LOG.error("Webhook is not from Square. ", ex);
+										message.fail(400, ex.getMessage());
+									}
+								} else {
+									Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
+									LOG.error("Missing Square Signature Key and Notification URL. ", ex);
+									message.fail(400, ex.getMessage());
+								}
+							} catch(Throwable ex) {
+								LOG.error("Failed to process square webook. ", ex);
+								message.fail(400, ex.getMessage());
+							}
+						}).onFailure(ex -> {
+							LOG.warn(String.format("The orderId %s did not obtain a lock", orderId));
+						});
+					} else {
+						LOG.info(String.format("Missing orderId %s or OPEN state %s", orderId, state));
+					}
+				} catch(Throwable ex) {
+					LOG.error("Failed to process square webook. ", ex);
+					message.fail(400, ex.getMessage());
+				}
+			});
 			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_SQUARE))) {
 				router.post("/square/order").handler(BodyHandler.create()).handler(handler -> {
 					try {
 						String signature = handler.request().headers().get("x-square-hmacsha256-signature");
-						JsonObject orderBody = handler.body().asJsonObject();
-						String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
-						String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
-						if(squareSignatureKey != null && squareNotificationUrl != null) {
-							Boolean isFromSquare = WebhooksHelper.isValidWebhookEventSignature(orderBody.encode(), signature, squareSignatureKey, squareNotificationUrl);
-							if(isFromSquare) {
-								OrdersApi ordersApi = squareClient.getOrdersApi();
-								CustomersApi customersApi = squareClient.getCustomersApi();
-								String orderId = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("order_id");
-								String state = orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created").getString("state");
-								RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
-								Order order = orderResponse.getOrder();
-								String githubU = null;
-								OrderLineItem item = order.getLineItems().get(0);
-								if(item.getModifiers() != null) {
-									for(OrderLineItemModifier modifier : item.getModifiers()) {
-										String modifierName = modifier.getName();
-										Matcher m = Pattern.compile("GitHub username lowercase: (.*)", Pattern.MULTILINE).matcher(modifierName);
-										if (m.find())
-											githubU = m.group(1).trim();
-									}
-								}
-								String name = item.getName();
-								String githubUsername = githubU;
-								LOG.info(String.format("Processing %s order %s for GitHub user %s", state, orderId, githubUsername));
-								if("OPEN".equals(state)) {
-									if(githubUsername != null) {
+						JsonObject params = new JsonObject();
+						params.put("body", handler.body().asJsonObject());
+						params.put("path", new JsonObject());
+						params.put("cookie", new JsonObject());
+						params.put("header", new JsonObject());
+						params.put("form", new JsonObject());
+						params.put("query", new JsonObject());
+						JsonObject context = new JsonObject().put("params", params).put("user", null);
+						JsonObject json = new JsonObject().put("context", context);
+						vertx.eventBus().publish("square-order", json, new DeliveryOptions().addHeader("x-square-hmacsha256-signature", signature));
 
-										SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
-										initializeApiService(apiSiteUser);
-										ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
-										List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
-										SiteRequest siteRequest = apiSiteUser.generateSiteRequest(null, config(), serviceRequest, SiteRequest.class);
-
-										SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
-										searchList.setStore(true);
-										searchList.q("*:*");
-										searchList.setSiteRequest_(siteRequest);
-										searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
-										searchList.fq(String.format("name_docvalues_string:\"" + name + "\""));
-										searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
-											if(searchList.size() > 0) {
-												ComputateBaseResult result = searchList.first();
-												String uri = (String)result.obtainForClass("uri");
-												String groupName = uri;
-												String authAdminUsername = config().getString(ConfigKeys.AUTH_ADMIN_USERNAME);
-												String authAdminPassword = config().getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
-												Integer authPort = Integer.parseInt(config().getString(ConfigKeys.AUTH_PORT));
-												String authHostName = config().getString(ConfigKeys.AUTH_HOST_NAME);
-												Boolean authSsl = Boolean.valueOf(config().getString(ConfigKeys.AUTH_SSL));
-												String authRealm = config().getString(ConfigKeys.AUTH_REALM);
-												webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
-														.sendForm(MultiMap.caseInsensitiveMultiMap()
-																.add("username", authAdminUsername)
-																.add("password", authAdminPassword)
-																.add("grant_type", "password")
-																.add("client_id", "admin-cli")
-																)
-														.expecting(HttpResponseExpectation.SC_OK)
-																.onSuccess(tokenResponse -> {
-													try {
-														String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
-														webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-														.send()
-														.expecting(HttpResponseExpectation.SC_OK)
-														.onSuccess(groupResponse -> {
-															try {
-																JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
-																JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-																if(group != null) {
-																	String groupId = group.getString("id");
-																	webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(githubUsername, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-																	.send()
-																	.expecting(HttpResponseExpectation.SC_OK)
-																	.onSuccess(userResponse -> {
-																		JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
-																		JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-																		if(user != null) {
-																			String userId = user.getString("id");
-																			webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-																					.putHeader("Authorization", String.format("Bearer %s", authToken))
-																					.putHeader("Content-Type", "application/json")
-																					.putHeader("Content-Length", "0")
-																					.send()
-																					.expecting(HttpResponseExpectation.SC_NO_CONTENT)
-																					.onSuccess(groupUserResponse -> {
-																				try {
-																					DeliveryOptions options = new DeliveryOptions();
-																					String siteName = config().getString(ComputateConfigKeys.ZOOKEEPER_ROOT_PATH);
-																					String emailFrom = config().getString(ComputateConfigKeys.EMAIL_FROM);
-																					String customerId = order.getCustomerId();
-																					String emailTo = null;
-																					String customerName = null;
-																					Payment payment = null;
-																					if(customerId == null) {
-																						List<Tender> tenders = order.getTenders();
-																						if(tenders == null) {
-																							Tender tender = order.getTenders().get(0);
-																							String paymentId = tender.getPaymentId();
-																							PaymentsApi paymentsApi = squareClient.getPaymentsApi();
-																							payment = paymentsApi.getPayment(paymentId).getPayment();
-																							customerId = payment.getCustomerId();
-																						}
-																					}
-																					if(customerId != null) {
-																						Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
-																						emailTo = customer.getEmailAddress();
-																						customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
-																					} else if(payment != null) {
-																						emailTo = payment.getBuyerEmailAddress();
-																					}
-
-																					String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, name, siteName);
-																					String emailTemplate = (String)result.obtainForClass("emailTemplate");
-																					BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
-																					options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
-																					JsonObject body = new JsonObject();
-																					body.put(ComputateConfigKeys.SITE_BASE_URL, config().getString(ComputateConfigKeys.SITE_BASE_URL));
-																					body.put("siteName", siteName);
-																					body.put("githubUsername", githubUsername);
-																					body.put("orderId", order.getId());
-																					body.put("subject", subject);
-																					body.put("emailTo", emailTo);
-																					body.put("customerName", customerName);
-																					body.put("result", JsonObject.mapFrom(result));
-																					body.put("totalMoney", NumberFormat.getCurrencyInstance().format(total));
-																					body.put("totalTax", NumberFormat.getCurrencyInstance().format(totalTax));
-																					body.put("netAmountDue", NumberFormat.getCurrencyInstance().format(netAmountDue));
-
-																					ZoneId zoneId = ZoneId.of(config().getString(ComputateConfigKeys.SITE_ZONE));
-																					ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
-																					Locale locale = Locale.forLanguageTag(config().getString(ComputateConfigKeys.SITE_LOCALE));
-																					DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
-																					String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
-																					body.put("createdAt", createdAtStr);
-
-																					vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
-																						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-																						handler.response().putHeader("Content-Type", "application/json");
-																						handler.end(buffer);
-																						LOG.info(String.format("Successfully granted %s access to %s", githubUsername, name));
-																					}).onFailure(ex -> {
-																						LOG.error("Failed to process square webook while adding user to group. ", ex);
-																						handler.fail(ex);
-																					});
-																				} catch(Throwable ex) {
-																					LOG.error("Failed to process square webook while querying customer. ", ex);
-																					handler.fail(ex);
-																				}
-																			}).onFailure(ex -> {
-																				LOG.error("Failed to process square webook while adding user to group. ", ex);
-																				handler.fail(ex);
-																			});
-																		} else {
-																			Throwable ex = new RuntimeException("Failed to find user. ");
-																			LOG.error(ex.getMessage(), ex);
-																			handler.fail(ex);
-																		}
-																	}).onFailure(ex -> {
-																		LOG.error("Failed to process square webook while querying user. ", ex);
-																		handler.fail(ex);
-																	});
-																} else {
-																	Throwable ex = new RuntimeException("Failed to find group. ");
-																	LOG.error(ex.getMessage(), ex);
-																	handler.fail(ex);
-																}
-															} catch(Throwable ex) {
-																LOG.error("Failed to process square webook while querying group. ", ex);
-																handler.fail(ex);
-															}
-														}).onFailure(ex -> {
-															LOG.error("Failed to process square webook while querying group. ", ex);
-															handler.fail(ex);
-														});
-													} catch(Throwable ex) {
-														LOG.error("Failed to process square webook while querying group. ", ex);
-														handler.fail(ex);
-													}
-												}).onFailure(ex -> {
-													LOG.error("Failed to process square webook. ", ex);
-													handler.fail(ex);
-												});
-											} else {
-												LOG.warn(String.format("Item not found with name %s. ", name));
-												Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-												handler.response().putHeader("Content-Type", "application/json");
-												handler.end(buffer);
-											}
-										}).onFailure(ex -> {
-											LOG.error("Failed to process square webook. ", ex);
-											handler.fail(ex);
-										});
-									} else {
-										LOG.warn(String.format("GitHub username modifier not found order %s for %s. ", orderId, name));
-										Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-										handler.response().putHeader("Content-Type", "application/json");
-										handler.end(buffer);
-									}
-								} else {
-									Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-									handler.response().putHeader("Content-Type", "application/json");
-									handler.end(buffer);
-								}
-							} else {
-								Throwable ex = new RuntimeException("Webhook is not from Square. ");
-								LOG.error("Webhook is not from Square. ", ex);
-								handler.fail(ex);
-							}
-						} else {
-							Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
-							LOG.error("Missing Square Signature Key and Notification URL. ", ex);
-							handler.fail(ex);
-						}
+						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
+						handler.response().putHeader("Content-Type", "application/json");
+						handler.end(buffer);
 					} catch(Throwable ex) {
 						LOG.error("Failed to process square webook. ", ex);
 						handler.fail(ex);
