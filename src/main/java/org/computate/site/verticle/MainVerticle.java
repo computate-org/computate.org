@@ -556,7 +556,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 									workerVerticle.setSdkMeterProvider(sdkMeterProvider);
 									return workerVerticle;
 								}
-							}, deploymentOptions));
+							}, workerVerticleDeploymentOptions));
 				}
 				if(Boolean.valueOf(config.getString(ConfigKeys.ENABLE_EMAIL))) {
 					futures.add(vertx.deployVerticle(EmailVerticle.class, emailVerticleDeploymentOptions));
