@@ -164,7 +164,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 *   dark: Dark
 	 */
 	protected void _siteTheme(Wrap<String> w) {
-		w.o("light");
+		w.o("dark");
 	}
 
 	/**
