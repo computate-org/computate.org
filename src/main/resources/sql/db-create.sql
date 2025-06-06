@@ -16,6 +16,9 @@ ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS userFullName text;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS seeArchived boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS awesomeEffect boolean;
 ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS displayName text;
+ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS siteFontSize text;
+ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS siteTheme text;
+ALTER TABLE SiteUser ADD COLUMN IF NOT EXISTS webComponentsTheme text;
 
 CREATE TABLE IF NOT EXISTS CompanyWebinar();
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS pk bigserial primary key;

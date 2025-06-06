@@ -180,6 +180,7 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current research";
 	public static final String AllName_enUS = "all research";
 	public static final String SearchAllNameBy_enUS = "search research by ";
+	public static final String SearchAllName_enUS = "search research";
 	public static final String Title_enUS = "research";
 	public static final String ThePluralName_enUS = "the research";
 	public static final String NoNameFound_enUS = "no research found";
@@ -510,19 +511,19 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyResearch(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyResearch o) {
+		return staticSetCompanyResearch(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyResearch(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyResearch(String entityVar, SiteRequest siteRequest_, String v, CompanyResearch o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyResearch.staticSetName(siteRequest_, o);
+			return CompanyResearch.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyResearch.staticSetDescription(siteRequest_, o);
+			return CompanyResearch.staticSetDescription(siteRequest_, v);
 		case "pageId":
-			return CompanyResearch.staticSetPageId(siteRequest_, o);
+			return CompanyResearch.staticSetPageId(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -884,6 +885,8 @@ public abstract class CompanyResearchGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyResearch(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The research name. ";

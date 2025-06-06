@@ -231,13 +231,13 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyWebinarPage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
+		return staticSetCompanyWebinarPage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
 		switch(entityVar) {
 			default:
-				return CompanyWebinarGenPage.staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+				return CompanyWebinarGenPage.staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -353,6 +353,8 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 	}
 
 	public static String descriptionCompanyWebinarPage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return CompanyWebinarGenPage.descriptionCompanyWebinarGenPage(var);

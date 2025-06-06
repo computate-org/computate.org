@@ -201,6 +201,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public static final String NameActual_enUS = "current webinar";
 	public static final String AllName_enUS = "all webinars";
 	public static final String SearchAllNameBy_enUS = "search webinars by ";
+	public static final String SearchAllName_enUS = "search webinars";
 	public static final String Title_enUS = "webinars";
 	public static final String ThePluralName_enUS = "the webinars";
 	public static final String NoNameFound_enUS = "no webinar found";
@@ -788,21 +789,22 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	@JsonIgnore
 	public void setNextWebinar(String o) {
-		this.nextWebinar = CompanyWebinar.staticSetNextWebinar(siteRequest_, o);
+		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+		this.nextWebinar = CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId);
 	}
 	@JsonIgnore
 	public void setNextWebinar(Date o) {
 		this.nextWebinar = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public static ZonedDateTime staticSetNextWebinar(SiteRequest siteRequest_, String o) {
+	public static ZonedDateTime staticSetNextWebinar(SiteRequest siteRequest_, String o, ZoneId zoneId) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
 		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
 		else if(StringUtils.contains(o, "T"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
 	}
 	protected CompanyWebinar nextWebinarInit() {
 		Wrap<ZonedDateTime> nextWebinarWrap = new Wrap<ZonedDateTime>().var("nextWebinar");
@@ -820,11 +822,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	}
 
 	public static String staticSearchStrNextWebinar(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o));
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId));
 	}
 
 	public static String staticSearchFqNextWebinar(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o)).toString();
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId)).toString();
 	}
 
 	///////////////////////
@@ -857,15 +861,15 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	public void setNextWebinarsBegin(List<ZonedDateTime> nextWebinarsBegin) {
 		this.nextWebinarsBegin = nextWebinarsBegin;
 	}
-	public static ZonedDateTime staticSetNextWebinarsBegin(SiteRequest siteRequest_, String o) {
+	public static ZonedDateTime staticSetNextWebinarsBegin(SiteRequest siteRequest_, String o, ZoneId zoneId) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
 		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
 		else if(StringUtils.contains(o, "T"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
 	}
 	public CompanyWebinar addNextWebinarsBegin(ZonedDateTime...objects) {
 		for(ZonedDateTime o : objects) {
@@ -890,7 +894,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	}
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	public CompanyWebinar addNextWebinarsBegin(String o) {
-		ZonedDateTime p = CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o);
+		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+		ZonedDateTime p = CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId);
 		addNextWebinarsBegin(p);
 		return (CompanyWebinar)this;
 	}
@@ -914,11 +919,13 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	}
 
 	public static String staticSearchStrNextWebinarsBegin(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o));
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId));
 	}
 
 	public static String staticSearchFqNextWebinarsBegin(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o)).toString();
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId)).toString();
 	}
 
 	/////////////
@@ -1140,37 +1147,35 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyWebinar(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
+		return staticSetCompanyWebinar(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyWebinar(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyWebinar(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyWebinar.staticSetName(siteRequest_, o);
+			return CompanyWebinar.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyWebinar.staticSetDescription(siteRequest_, o);
+			return CompanyWebinar.staticSetDescription(siteRequest_, v);
 		case "pageId":
-			return CompanyWebinar.staticSetPageId(siteRequest_, o);
+			return CompanyWebinar.staticSetPageId(siteRequest_, v);
 		case "joinUri":
-			return CompanyWebinar.staticSetJoinUri(siteRequest_, o);
+			return CompanyWebinar.staticSetJoinUri(siteRequest_, v);
 		case "webinarUrlAmericas":
-			return CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o);
+			return CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, v);
 		case "webinarUrlApac":
-			return CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, o);
+			return CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, v);
 		case "webinarUrlEmea":
-			return CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o);
+			return CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, v);
 		case "icalUrl":
-			return CompanyWebinar.staticSetIcalUrl(siteRequest_, o);
+			return CompanyWebinar.staticSetIcalUrl(siteRequest_, v);
 		case "caldav":
-			return CompanyWebinar.staticSetCaldav(siteRequest_, o);
+			return CompanyWebinar.staticSetCaldav(siteRequest_, v);
 		case "nextWebinar":
-			return CompanyWebinar.staticSetNextWebinar(siteRequest_, o);
 		case "nextWebinarsBegin":
-			return CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o);
 		case "joinUrl":
-			return CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
+			return CompanyWebinar.staticSetJoinUrl(siteRequest_, v);
 			default:
-				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
+				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1431,8 +1436,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 			if(saves.contains("nextWebinarsBegin")) {
 				List<String> nextWebinarsBegin = (List<String>)doc.get("nextWebinarsBegin_indexedstored_dates");
 				if(nextWebinarsBegin != null) {
+					ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
 					nextWebinarsBegin.stream().forEach( v -> {
-						oCompanyWebinar.nextWebinarsBegin.add(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, v));
+						oCompanyWebinar.nextWebinarsBegin.add(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, v, zoneId));
 					});
 				}
 			}
@@ -1610,8 +1616,9 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		oCompanyWebinar.setWebinarUrlEmea(Optional.ofNullable(doc.get("webinarUrlEmea_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setIcalUrl(Optional.ofNullable(doc.get("icalUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyWebinar.setNextWebinar(Optional.ofNullable(doc.get("nextWebinar_docvalues_date")).map(v -> v.toString()).orElse(null));
+		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
 		Optional.ofNullable((List<?>)doc.get("nextWebinarsBegin_indexedstored_dates")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
-			oCompanyWebinar.addNextWebinarsBegin(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest, v.toString()));
+			oCompanyWebinar.addNextWebinarsBegin(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest, v.toString(), zoneId));
 		});
 		oCompanyWebinar.setJoinUrl(Optional.ofNullable(doc.get("joinUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 
@@ -1822,6 +1829,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	}
 
 	public static String descriptionCompanyWebinar(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The name of this webinar";

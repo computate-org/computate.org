@@ -43,6 +43,7 @@ import java.util.HashMap;
 import org.computate.search.tool.TimeTool;
 import org.computate.search.tool.SearchTool;
 import java.time.ZoneId;
+import io.vertx.pgclient.data.Point;
 
 
 /**
@@ -61,17 +62,17 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   @Override
   protected void _pageResponse(Wrap<String> w) {
     if(searchListCompanyProduct_ != null)
-      w.o(JsonObject.mapFrom(searchListCompanyProduct_.getResponse()).toString());
+      w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
   }
 
   @Override
   protected void _stats(Wrap<SolrResponse.Stats> w) {
-    w.o(searchListCompanyProduct_.getResponse().getStats());
+    w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getStats()).orElse(null));
   }
 
   @Override
   protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-    w.o(searchListCompanyProduct_.getResponse().getFacetCounts());
+    w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
   }
 
   @Override
@@ -79,7 +80,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     JsonArray pages = new JsonArray();
     Long start = searchListCompanyProduct_.getStart().longValue();
     Long rows = searchListCompanyProduct_.getRows().longValue();
-    Long foundNum = searchListCompanyProduct_.getResponse().getResponse().getNumFound().longValue();
+    Long foundNum = Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyProduct_.getList().size()));
     Long startNum = start + 1L;
     Long endNum = start + rows;
     Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -232,7 +233,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     JsonObject params = serviceRequest.getParams();
 
     JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-    Long num = searchListCompanyProduct_.getResponse().getResponse().getNumFound().longValue();
+    Long num = Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyProduct_.getList().size()));
     String q = "*:*";
     String q1 = "objectText";
     String q2 = "";

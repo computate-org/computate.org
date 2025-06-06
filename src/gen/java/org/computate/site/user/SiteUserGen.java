@@ -175,6 +175,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String NameActual_enUS = "current site user";
 	public static final String AllName_enUS = "all site users";
 	public static final String SearchAllNameBy_enUS = "search site users by ";
+	public static final String SearchAllName_enUS = "search site users";
 	public static final String Title_enUS = "site users";
 	public static final String ThePluralName_enUS = "the site users";
 	public static final String NoNameFound_enUS = "no site user found";
@@ -801,6 +802,174 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		return displayName;
 	}
 
+	//////////////////
+	// siteFontSize //
+	//////////////////
+
+
+	/**	 The entity siteFontSize
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String siteFontSize;
+
+	/**	<br> The entity siteFontSize
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUser&fq=entiteVar_enUS_indexed_string:siteFontSize">Find the entity siteFontSize in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _siteFontSize(Wrap<String> w);
+
+	public String getSiteFontSize() {
+		return siteFontSize;
+	}
+	public void setSiteFontSize(String o) {
+		this.siteFontSize = SiteUser.staticSetSiteFontSize(siteRequest_, o);
+	}
+	public static String staticSetSiteFontSize(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser siteFontSizeInit() {
+		Wrap<String> siteFontSizeWrap = new Wrap<String>().var("siteFontSize");
+		if(siteFontSize == null) {
+			_siteFontSize(siteFontSizeWrap);
+			Optional.ofNullable(siteFontSizeWrap.getO()).ifPresent(o -> {
+				setSiteFontSize(o);
+			});
+		}
+		return (SiteUser)this;
+	}
+
+	public static String staticSearchSiteFontSize(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrSiteFontSize(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqSiteFontSize(SiteRequest siteRequest_, String o) {
+		return SiteUser.staticSearchSiteFontSize(siteRequest_, SiteUser.staticSetSiteFontSize(siteRequest_, o)).toString();
+	}
+
+	public String sqlSiteFontSize() {
+		return siteFontSize;
+	}
+
+	///////////////
+	// siteTheme //
+	///////////////
+
+
+	/**	 The entity siteTheme
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String siteTheme;
+
+	/**	<br> The entity siteTheme
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUser&fq=entiteVar_enUS_indexed_string:siteTheme">Find the entity siteTheme in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _siteTheme(Wrap<String> w);
+
+	public String getSiteTheme() {
+		return siteTheme;
+	}
+	public void setSiteTheme(String o) {
+		this.siteTheme = SiteUser.staticSetSiteTheme(siteRequest_, o);
+	}
+	public static String staticSetSiteTheme(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser siteThemeInit() {
+		Wrap<String> siteThemeWrap = new Wrap<String>().var("siteTheme");
+		if(siteTheme == null) {
+			_siteTheme(siteThemeWrap);
+			Optional.ofNullable(siteThemeWrap.getO()).ifPresent(o -> {
+				setSiteTheme(o);
+			});
+		}
+		return (SiteUser)this;
+	}
+
+	public static String staticSearchSiteTheme(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrSiteTheme(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqSiteTheme(SiteRequest siteRequest_, String o) {
+		return SiteUser.staticSearchSiteTheme(siteRequest_, SiteUser.staticSetSiteTheme(siteRequest_, o)).toString();
+	}
+
+	public String sqlSiteTheme() {
+		return siteTheme;
+	}
+
+	////////////////////////
+	// webComponentsTheme //
+	////////////////////////
+
+
+	/**	 The entity webComponentsTheme
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String webComponentsTheme;
+
+	/**	<br> The entity webComponentsTheme
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.user.SiteUser&fq=entiteVar_enUS_indexed_string:webComponentsTheme">Find the entity webComponentsTheme in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _webComponentsTheme(Wrap<String> w);
+
+	public String getWebComponentsTheme() {
+		return webComponentsTheme;
+	}
+	public void setWebComponentsTheme(String o) {
+		this.webComponentsTheme = SiteUser.staticSetWebComponentsTheme(siteRequest_, o);
+	}
+	public static String staticSetWebComponentsTheme(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected SiteUser webComponentsThemeInit() {
+		Wrap<String> webComponentsThemeWrap = new Wrap<String>().var("webComponentsTheme");
+		if(webComponentsTheme == null) {
+			_webComponentsTheme(webComponentsThemeWrap);
+			Optional.ofNullable(webComponentsThemeWrap.getO()).ifPresent(o -> {
+				setWebComponentsTheme(o);
+			});
+		}
+		return (SiteUser)this;
+	}
+
+	public static String staticSearchWebComponentsTheme(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrWebComponentsTheme(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqWebComponentsTheme(SiteRequest siteRequest_, String o) {
+		return SiteUser.staticSearchWebComponentsTheme(siteRequest_, SiteUser.staticSetWebComponentsTheme(siteRequest_, o)).toString();
+	}
+
+	public String sqlWebComponentsTheme() {
+		return webComponentsTheme;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -840,6 +1009,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				seeArchivedInit();
 				awesomeEffectInit();
 				displayNameInit();
+				siteFontSizeInit();
+				siteThemeInit();
+				webComponentsThemeInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -913,6 +1085,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				return oSiteUser.awesomeEffect;
 			case "displayName":
 				return oSiteUser.displayName;
+			case "siteFontSize":
+				return oSiteUser.siteFontSize;
+			case "siteTheme":
+				return oSiteUser.siteTheme;
+			case "webComponentsTheme":
+				return oSiteUser.webComponentsTheme;
 			default:
 				return super.obtainBaseModel(var);
 		}
@@ -947,33 +1125,39 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetSiteUser(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SiteUser o) {
+		return staticSetSiteUser(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetSiteUser(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetSiteUser(String entityVar, SiteRequest siteRequest_, String v, SiteUser o) {
 		switch(entityVar) {
 		case "userKeys":
-			return SiteUser.staticSetUserKeys(siteRequest_, o);
+			return SiteUser.staticSetUserKeys(siteRequest_, v);
 		case "userId":
-			return SiteUser.staticSetUserId(siteRequest_, o);
+			return SiteUser.staticSetUserId(siteRequest_, v);
 		case "userName":
-			return SiteUser.staticSetUserName(siteRequest_, o);
+			return SiteUser.staticSetUserName(siteRequest_, v);
 		case "userEmail":
-			return SiteUser.staticSetUserEmail(siteRequest_, o);
+			return SiteUser.staticSetUserEmail(siteRequest_, v);
 		case "userFirstName":
-			return SiteUser.staticSetUserFirstName(siteRequest_, o);
+			return SiteUser.staticSetUserFirstName(siteRequest_, v);
 		case "userLastName":
-			return SiteUser.staticSetUserLastName(siteRequest_, o);
+			return SiteUser.staticSetUserLastName(siteRequest_, v);
 		case "userFullName":
-			return SiteUser.staticSetUserFullName(siteRequest_, o);
+			return SiteUser.staticSetUserFullName(siteRequest_, v);
 		case "seeArchived":
-			return SiteUser.staticSetSeeArchived(siteRequest_, o);
+			return SiteUser.staticSetSeeArchived(siteRequest_, v);
 		case "awesomeEffect":
-			return SiteUser.staticSetAwesomeEffect(siteRequest_, o);
+			return SiteUser.staticSetAwesomeEffect(siteRequest_, v);
 		case "displayName":
-			return SiteUser.staticSetDisplayName(siteRequest_, o);
+			return SiteUser.staticSetDisplayName(siteRequest_, v);
+		case "siteFontSize":
+			return SiteUser.staticSetSiteFontSize(siteRequest_, v);
+		case "siteTheme":
+			return SiteUser.staticSetSiteTheme(siteRequest_, v);
+		case "webComponentsTheme":
+			return SiteUser.staticSetWebComponentsTheme(siteRequest_, v);
 			default:
-				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, o);
+				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1006,6 +1190,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return SiteUser.staticSearchAwesomeEffect(siteRequest_, (Boolean)o);
 		case "displayName":
 			return SiteUser.staticSearchDisplayName(siteRequest_, (String)o);
+		case "siteFontSize":
+			return SiteUser.staticSearchSiteFontSize(siteRequest_, (String)o);
+		case "siteTheme":
+			return SiteUser.staticSearchSiteTheme(siteRequest_, (String)o);
+		case "webComponentsTheme":
+			return SiteUser.staticSearchWebComponentsTheme(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1040,6 +1230,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return SiteUser.staticSearchStrAwesomeEffect(siteRequest_, (Boolean)o);
 		case "displayName":
 			return SiteUser.staticSearchStrDisplayName(siteRequest_, (String)o);
+		case "siteFontSize":
+			return SiteUser.staticSearchStrSiteFontSize(siteRequest_, (String)o);
+		case "siteTheme":
+			return SiteUser.staticSearchStrSiteTheme(siteRequest_, (String)o);
+		case "webComponentsTheme":
+			return SiteUser.staticSearchStrWebComponentsTheme(siteRequest_, (String)o);
 			default:
 				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1074,6 +1270,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return SiteUser.staticSearchFqAwesomeEffect(siteRequest_, o);
 		case "displayName":
 			return SiteUser.staticSearchFqDisplayName(siteRequest_, o);
+		case "siteFontSize":
+			return SiteUser.staticSearchFqSiteFontSize(siteRequest_, o);
+		case "siteTheme":
+			return SiteUser.staticSearchFqSiteTheme(siteRequest_, o);
+		case "webComponentsTheme":
+			return SiteUser.staticSearchFqWebComponentsTheme(siteRequest_, o);
 			default:
 				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
 		}
@@ -1158,6 +1360,24 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				}
 				saves.add("displayName");
 				return val;
+			} else if("sitefontsize".equals(varLower)) {
+				if(val instanceof String) {
+					setSiteFontSize((String)val);
+				}
+				saves.add("siteFontSize");
+				return val;
+			} else if("sitetheme".equals(varLower)) {
+				if(val instanceof String) {
+					setSiteTheme((String)val);
+				}
+				saves.add("siteTheme");
+				return val;
+			} else if("webcomponentstheme".equals(varLower)) {
+				if(val instanceof String) {
+					setWebComponentsTheme((String)val);
+				}
+				saves.add("webComponentsTheme");
+				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -1237,6 +1457,24 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				if(displayName != null)
 					oSiteUser.setDisplayName(displayName);
 			}
+
+			if(saves.contains("siteFontSize")) {
+				String siteFontSize = (String)doc.get("siteFontSize_docvalues_string");
+				if(siteFontSize != null)
+					oSiteUser.setSiteFontSize(siteFontSize);
+			}
+
+			if(saves.contains("siteTheme")) {
+				String siteTheme = (String)doc.get("siteTheme_docvalues_string");
+				if(siteTheme != null)
+					oSiteUser.setSiteTheme(siteTheme);
+			}
+
+			if(saves.contains("webComponentsTheme")) {
+				String webComponentsTheme = (String)doc.get("webComponentsTheme_docvalues_string");
+				if(webComponentsTheme != null)
+					oSiteUser.setWebComponentsTheme(webComponentsTheme);
+			}
 		}
 
 		super.populateBaseModel(doc);
@@ -1277,6 +1515,15 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		if(displayName != null) {
 			doc.put("displayName_docvalues_string", displayName);
 		}
+		if(siteFontSize != null) {
+			doc.put("siteFontSize_docvalues_string", siteFontSize);
+		}
+		if(siteTheme != null) {
+			doc.put("siteTheme_docvalues_string", siteTheme);
+		}
+		if(webComponentsTheme != null) {
+			doc.put("webComponentsTheme_docvalues_string", webComponentsTheme);
+		}
 		super.indexBaseModel(doc);
 
 	}
@@ -1303,6 +1550,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				return "awesomeEffect_docvalues_boolean";
 			case "displayName":
 				return "displayName_docvalues_string";
+			case "siteFontSize":
+				return "siteFontSize_docvalues_string";
+			case "siteTheme":
+				return "siteTheme_docvalues_string";
+			case "webComponentsTheme":
+				return "webComponentsTheme_docvalues_string";
 			default:
 				return BaseModel.varStoredBaseModel(entityVar);
 		}
@@ -1330,6 +1583,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				return "awesomeEffect_docvalues_boolean";
 			case "displayName":
 				return "displayName_docvalues_string";
+			case "siteFontSize":
+				return "siteFontSize_docvalues_string";
+			case "siteTheme":
+				return "siteTheme_docvalues_string";
+			case "webComponentsTheme":
+				return "webComponentsTheme_docvalues_string";
 			default:
 				return BaseModel.varIndexedBaseModel(entityVar);
 		}
@@ -1357,6 +1616,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				return "awesomeEffect";
 			case "displayName_docvalues_string":
 				return "displayName";
+			case "siteFontSize_docvalues_string":
+				return "siteFontSize";
+			case "siteTheme_docvalues_string":
+				return "siteTheme";
+			case "webComponentsTheme_docvalues_string":
+				return "webComponentsTheme";
 			default:
 				return BaseModel.searchVarBaseModel(searchVar);
 		}
@@ -1399,6 +1664,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		oSiteUser.setSeeArchived(Optional.ofNullable(doc.get("seeArchived_docvalues_boolean")).map(v -> v.toString()).orElse(null));
 		oSiteUser.setAwesomeEffect(Optional.ofNullable(doc.get("awesomeEffect_docvalues_boolean")).map(v -> v.toString()).orElse(null));
 		oSiteUser.setDisplayName(Optional.ofNullable(doc.get("displayName_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oSiteUser.setSiteFontSize(Optional.ofNullable(doc.get("siteFontSize_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oSiteUser.setSiteTheme(Optional.ofNullable(doc.get("siteTheme_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oSiteUser.setWebComponentsTheme(Optional.ofNullable(doc.get("webComponentsTheme_docvalues_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseModel(doc);
 	}
@@ -1432,6 +1700,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 				apiRequest.addVars("awesomeEffect");
 			if(!Objects.equals(displayName, original.getDisplayName()))
 				apiRequest.addVars("displayName");
+			if(!Objects.equals(siteFontSize, original.getSiteFontSize()))
+				apiRequest.addVars("siteFontSize");
+			if(!Objects.equals(siteTheme, original.getSiteTheme()))
+				apiRequest.addVars("siteTheme");
+			if(!Objects.equals(webComponentsTheme, original.getWebComponentsTheme()))
+				apiRequest.addVars("webComponentsTheme");
 			super.apiRequestBaseModel();
 		}
 	}
@@ -1453,6 +1727,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		sb.append(Optional.ofNullable(seeArchived).map(v -> "seeArchived: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(awesomeEffect).map(v -> "awesomeEffect: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(displayName).map(v -> "displayName: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(siteFontSize).map(v -> "siteFontSize: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(siteTheme).map(v -> "siteTheme: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(webComponentsTheme).map(v -> "webComponentsTheme: \"" + v + "\"\n" ).orElse(""));
 		return sb.toString();
 	}
 
@@ -1472,6 +1749,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String VAR_seeArchived = "seeArchived";
 	public static final String VAR_awesomeEffect = "awesomeEffect";
 	public static final String VAR_displayName = "displayName";
+	public static final String VAR_siteFontSize = "siteFontSize";
+	public static final String VAR_siteTheme = "siteTheme";
+	public static final String VAR_webComponentsTheme = "webComponentsTheme";
 
 	public static List<String> varsQForClass() {
 		return SiteUser.varsQSiteUser(new ArrayList<String>());
@@ -1507,6 +1787,9 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_seeArchived = "see archived";
 	public static final String DISPLAY_NAME_awesomeEffect = "awesome effect (requires refresh)";
 	public static final String DISPLAY_NAME_displayName = "";
+	public static final String DISPLAY_NAME_siteFontSize = "font size";
+	public static final String DISPLAY_NAME_siteTheme = "site theme";
+	public static final String DISPLAY_NAME_webComponentsTheme = "web components theme";
 
 	@Override
 	public String idForClass() {
@@ -1578,12 +1861,20 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return DISPLAY_NAME_awesomeEffect;
 		case VAR_displayName:
 			return DISPLAY_NAME_displayName;
+		case VAR_siteFontSize:
+			return DISPLAY_NAME_siteFontSize;
+		case VAR_siteTheme:
+			return DISPLAY_NAME_siteTheme;
+		case VAR_webComponentsTheme:
+			return DISPLAY_NAME_webComponentsTheme;
 		default:
 			return BaseModel.displayNameBaseModel(var);
 		}
 	}
 
 	public static String descriptionSiteUser(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_userKeys:
 			return "User keys that relate to this user";
@@ -1605,6 +1896,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return "an awesome effect for the entire site";
 		case VAR_displayName:
 			return "The display name for this user";
+		case VAR_siteFontSize:
+			return "The default font size for the site (small, medium, large). ";
+		case VAR_siteTheme:
+			return "The site theme, either light or dark. ";
+		case VAR_webComponentsTheme:
+			return "The web components theme for the site. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}
@@ -1632,6 +1929,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return "Boolean";
 		case VAR_displayName:
 			return "String";
+		case VAR_siteFontSize:
+			return "String";
+		case VAR_siteTheme:
+			return "String";
+		case VAR_webComponentsTheme:
+			return "String";
 			default:
 				return BaseModel.classSimpleNameBaseModel(var);
 		}
@@ -1654,6 +1957,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return 4;
 		case VAR_awesomeEffect:
 			return 4;
+		case VAR_siteFontSize:
+			return 4;
+		case VAR_siteTheme:
+			return 4;
+		case VAR_webComponentsTheme:
+			return 4;
 			default:
 				return BaseModel.htmRowBaseModel(var);
 		}
@@ -1665,6 +1974,12 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 			return 1;
 		case VAR_awesomeEffect:
 			return 2;
+		case VAR_siteFontSize:
+			return 1;
+		case VAR_siteTheme:
+			return 2;
+		case VAR_webComponentsTheme:
+			return 3;
 			default:
 				return BaseModel.htmCellBaseModel(var);
 		}

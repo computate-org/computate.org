@@ -229,13 +229,13 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyEventPage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyEventPage o) {
+		return staticSetCompanyEventPage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyEventPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyEventPage(String entityVar, SiteRequest siteRequest_, String v, CompanyEventPage o) {
 		switch(entityVar) {
 			default:
-				return CompanyEventGenPage.staticSetCompanyEventGenPage(entityVar,  siteRequest_, o);
+				return CompanyEventGenPage.staticSetCompanyEventGenPage(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -351,6 +351,8 @@ public abstract class CompanyEventPageGen<DEV> extends CompanyEventGenPage {
 	}
 
 	public static String descriptionCompanyEventPage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return CompanyEventGenPage.descriptionCompanyEventGenPage(var);

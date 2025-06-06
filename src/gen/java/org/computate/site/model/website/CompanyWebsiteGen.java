@@ -181,6 +181,7 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current website";
 	public static final String AllName_enUS = "all websites";
 	public static final String SearchAllNameBy_enUS = "search websites by ";
+	public static final String SearchAllName_enUS = "search websites";
 	public static final String Title_enUS = "websites";
 	public static final String ThePluralName_enUS = "the websites";
 	public static final String NoNameFound_enUS = "no website found";
@@ -578,21 +579,21 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyWebsite(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
+		return staticSetCompanyWebsite(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyWebsite(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyWebsite(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyWebsite.staticSetName(siteRequest_, o);
+			return CompanyWebsite.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyWebsite.staticSetDescription(siteRequest_, o);
+			return CompanyWebsite.staticSetDescription(siteRequest_, v);
 		case "pageId":
-			return CompanyWebsite.staticSetPageId(siteRequest_, o);
+			return CompanyWebsite.staticSetPageId(siteRequest_, v);
 		case "websiteNum":
-			return CompanyWebsite.staticSetWebsiteNum(siteRequest_, o);
+			return CompanyWebsite.staticSetWebsiteNum(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -993,6 +994,8 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyWebsite(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The service name. ";

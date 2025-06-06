@@ -571,21 +571,21 @@ public abstract class CompanyEventGenPageGen<DEV> extends PageLayout {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyEventGenPage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyEventGenPage o) {
+		return staticSetCompanyEventGenPage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyEventGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyEventGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyEventGenPage o) {
 		switch(entityVar) {
 		case "listCompanyEvent":
-			return CompanyEventGenPage.staticSetListCompanyEvent(siteRequest_, o);
+			return CompanyEventGenPage.staticSetListCompanyEvent(siteRequest_, v);
 		case "resultCount":
-			return CompanyEventGenPage.staticSetResultCount(siteRequest_, o);
+			return CompanyEventGenPage.staticSetResultCount(siteRequest_, v);
 		case "solrId":
-			return CompanyEventGenPage.staticSetSolrId(siteRequest_, o);
+			return CompanyEventGenPage.staticSetSolrId(siteRequest_, v);
 		case "pageUriCompanyEvent":
-			return CompanyEventGenPage.staticSetPageUriCompanyEvent(siteRequest_, o);
+			return CompanyEventGenPage.staticSetPageUriCompanyEvent(siteRequest_, v);
 			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -749,6 +749,8 @@ public abstract class CompanyEventGenPageGen<DEV> extends PageLayout {
 	}
 
 	public static String descriptionCompanyEventGenPage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return PageLayout.descriptionPageLayout(var);

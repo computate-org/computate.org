@@ -194,6 +194,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current product";
 	public static final String AllName_enUS = "all products";
 	public static final String SearchAllNameBy_enUS = "search products by ";
+	public static final String SearchAllName_enUS = "search products";
 	public static final String Title_enUS = "products";
 	public static final String ThePluralName_enUS = "the products";
 	public static final String NoNameFound_enUS = "no product found";
@@ -860,29 +861,29 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyProduct(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyProduct o) {
+		return staticSetCompanyProduct(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyProduct(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyProduct(String entityVar, SiteRequest siteRequest_, String v, CompanyProduct o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyProduct.staticSetName(siteRequest_, o);
+			return CompanyProduct.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyProduct.staticSetDescription(siteRequest_, o);
+			return CompanyProduct.staticSetDescription(siteRequest_, v);
 		case "price":
-			return CompanyProduct.staticSetPrice(siteRequest_, o);
+			return CompanyProduct.staticSetPrice(siteRequest_, v);
 		case "pageId":
-			return CompanyProduct.staticSetPageId(siteRequest_, o);
+			return CompanyProduct.staticSetPageId(siteRequest_, v);
 		case "emailTemplate":
-			return CompanyProduct.staticSetEmailTemplate(siteRequest_, o);
+			return CompanyProduct.staticSetEmailTemplate(siteRequest_, v);
 		case "storeUrl":
-			return CompanyProduct.staticSetStoreUrl(siteRequest_, o);
+			return CompanyProduct.staticSetStoreUrl(siteRequest_, v);
 		case "downloadUrl":
-			return CompanyProduct.staticSetDownloadUrl(siteRequest_, o);
+			return CompanyProduct.staticSetDownloadUrl(siteRequest_, v);
 		case "productNum":
-			return CompanyProduct.staticSetProductNum(siteRequest_, o);
+			return CompanyProduct.staticSetProductNum(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1430,6 +1431,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyProduct(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The product name. ";

@@ -198,6 +198,27 @@ public class PageLayout extends PageLayoutGen<Object> {
 	}
 
 	/**
+	 * Description: The user's default font size. 
+	 */
+	protected void _userFontSize(Wrap<String> w) {
+		w.o(Optional.ofNullable(siteRequest_.getSiteUser_()).map(user -> user.getSiteFontSize()).orElse("m"));
+	}
+
+	/**
+	 * Description: The user's web components theme
+	 */
+	protected void _userWebComponentsTheme(Wrap<String> w) {
+		w.o(Optional.ofNullable(siteRequest_.getSiteUser_()).map(user -> user.getWebComponentsTheme()).orElse("default"));
+	}
+
+	/**
+	 * Description: The user's siteTheme
+	 */
+	protected void _userSiteTheme(Wrap<String> w) {
+		w.o(Optional.ofNullable(siteRequest_.getSiteUser_()).map(user -> user.getSiteTheme()).orElse("light"));
+	}
+
+	/**
 	 * Description: The user's awesome effect setting
 	 */
 	protected void _userAwesomeEffect(Wrap<Boolean> w) {

@@ -84,7 +84,7 @@ spec:
         - name: STATIC_BASE_URL
           value: https://computate.neocities.org
         - name: SITE_LOGO_URI
-          value: /svg/computate-keys.svg
+          value: /svg/logo-dark.svg
         - name: DYNAMIC_PAGE_PATHS
           value: '["en-us/article"]'
         - name: FONTAWESOME_STYLE

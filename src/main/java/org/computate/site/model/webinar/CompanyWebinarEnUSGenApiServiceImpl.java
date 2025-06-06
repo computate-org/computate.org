@@ -193,7 +193,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			response200Search(listCompanyWebinar.getRequest(), listCompanyWebinar.getResponse(), json);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -292,7 +292,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = JsonObject.mapFrom(listCompanyWebinar.getList().stream().findFirst().orElse(null));
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -313,6 +313,48 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		LOG.debug(String.format("patchCompanyWebinar started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, pageId, "PATCH"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -324,7 +366,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyWebinar.first());
 								apiRequest.setId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-								apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+								apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 								eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
 
 								listPATCHCompanyWebinar(apiRequest, listCompanyWebinar).onSuccess(e -> {
@@ -347,6 +389,12 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("patchCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("patchCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -424,6 +472,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 					try {
 						CompanyWebinar o = listCompanyWebinar.first();
@@ -440,7 +493,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
 							apiRequest.setId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-							apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+							apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 							JsonObject jsonObject = JsonObject.mapFrom(o);
 							CompanyWebinar o2 = jsonObject.mapTo(CompanyWebinar.class);
 							o2.setSiteRequest_(siteRequest);
@@ -539,7 +592,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> solrIds = Optional.ofNullable(apiRequest).map(r -> r.getSolrIds()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
@@ -712,7 +765,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -733,6 +786,48 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		LOG.debug(String.format("postCompanyWebinar started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, pageId, "POST"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
 						apiRequest.setNumFound(1L);
@@ -761,13 +856,19 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						eventBus.request(CompanyWebinar.getClassApiAddress(), json, new DeliveryOptions().addHeader("action", "postCompanyWebinarFuture")).onSuccess(a -> {
 							JsonObject responseMessage = (JsonObject)a.body();
 							JsonObject responseBody = new JsonObject(Buffer.buffer(JsonUtil.BASE64_DECODER.decode(responseMessage.getString("payload"))));
-							apiRequest.setPk(Long.parseLong(responseBody.getString("pk")));
+							apiRequest.setSolrId(responseBody.getString(CompanyWebinar.VAR_solrId));
 							eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(responseBody.encodePrettily()))));
 							LOG.debug(String.format("postCompanyWebinar succeeded. "));
 						}).onFailure(ex -> {
 							LOG.error(String.format("postCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("postCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -928,7 +1029,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> solrIds = Optional.ofNullable(apiRequest).map(r -> r.getSolrIds()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
@@ -1132,7 +1233,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = JsonObject.mapFrom(o);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -1153,6 +1254,48 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		LOG.debug(String.format("deleteCompanyWebinar started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -1163,7 +1306,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyWebinar.first());
-								apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+								apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 								eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
 
 								listDELETECompanyWebinar(apiRequest, listCompanyWebinar).onSuccess(e -> {
@@ -1186,6 +1329,12 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("deleteCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deleteCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1263,6 +1412,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 					try {
 						CompanyWebinar o = listCompanyWebinar.first();
@@ -1279,7 +1433,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
 							apiRequest.setId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-							apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+							apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 							deleteCompanyWebinarFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -1371,7 +1525,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> solrIds = Optional.ofNullable(apiRequest).map(r -> r.getSolrIds()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
@@ -1429,7 +1583,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -1450,6 +1604,48 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		LOG.debug(String.format("putimportCompanyWebinar started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, pageId, "PUT"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 						apiRequest.setRows(Long.valueOf(jsonArray.size()));
@@ -1475,6 +1671,12 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("putimportCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1593,7 +1795,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 											JsonArray bodyVals = (JsonArray)bodyVal;
 											Object valsObj = o.obtainForClass(f);
 											Collection<?> vals = valsObj instanceof JsonArray ? ((JsonArray)valsObj).getList() : (Collection<?>)valsObj;
-											if(bodyVals.size() == vals.size()) {
+											if(vals != null && bodyVals.size() == vals.size()) {
 												Boolean match = true;
 												for(Object val : vals) {
 													if(val != null) {
@@ -1609,7 +1811,8 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 												vals.clear();
 												body2.put("set" + StringUtils.capitalize(f), bodyVal);
 											} else {
-												vals.clear();
+												if(vals != null)
+													vals.clear();
 												body2.put("set" + StringUtils.capitalize(f), bodyVal);
 											}
 										} else {
@@ -1627,8 +1830,8 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 									}
 									if(result.size() >= 1) {
 										apiRequest.setOriginal(o);
-										apiRequest.setId(o.getPageId());
-										apiRequest.setPk(o.getPk());
+										apiRequest.setId(Optional.ofNullable(o.getPageId()).map(v -> v.toString()).orElse(null));
+										apiRequest.setSolrId(o.getSolrId());
 									}
 									siteRequest.setJsonObject(body2);
 									patchCompanyWebinarFuture(o, true).onSuccess(b -> {
@@ -1699,7 +1902,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -2288,6 +2491,48 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		LOG.debug(String.format("deletefilterCompanyWebinar started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyWebinar.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -2298,7 +2543,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 								siteRequest.setApiRequest_(apiRequest);
 								if(apiRequest.getNumFound() == 1L)
 									apiRequest.setOriginal(listCompanyWebinar.first());
-								apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+								apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 								eventBus.publish("websocketCompanyWebinar", JsonObject.mapFrom(apiRequest).toString());
 
 								listDELETEFilterCompanyWebinar(apiRequest, listCompanyWebinar).onSuccess(e -> {
@@ -2321,6 +2566,12 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("deletefilterCompanyWebinar failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deletefilterCompanyWebinar failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -2398,6 +2649,11 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyWebinarList(siteRequest, false, true, true).onSuccess(listCompanyWebinar -> {
 					try {
 						CompanyWebinar o = listCompanyWebinar.first();
@@ -2414,7 +2670,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							if(apiRequest.getNumFound() == 1L)
 								apiRequest.setOriginal(o);
 							apiRequest.setId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
-							apiRequest.setPk(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getPk()).orElse(null));
+							apiRequest.setSolrId(Optional.ofNullable(listCompanyWebinar.first()).map(o2 -> o2.getSolrId()).orElse(null));
 							deletefilterCompanyWebinarFuture(o).onSuccess(o2 -> {
 								eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
 							}).onFailure(ex -> {
@@ -2506,7 +2762,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		try {
 			SiteRequest siteRequest = o.getSiteRequest_();
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> solrIds = Optional.ofNullable(apiRequest).map(r -> r.getSolrIds()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Integer num = 1;
@@ -2564,7 +2820,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "webinar", pageId);
+				String m = String.format("%s %s not found", "webinar", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -2945,7 +3201,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 	public Future<Void> relateCompanyWebinar(CompanyWebinar o) {
 		Promise<Void> promise = Promise.promise();
-			promise.complete();
+		promise.complete();
 		return promise.future();
 	}
 
@@ -3041,14 +3297,14 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		SiteRequest siteRequest = o.getSiteRequest_();
 		try {
 			ApiRequest apiRequest = siteRequest.getApiRequest_();
-			List<Long> pks = Optional.ofNullable(apiRequest).map(r -> r.getPks()).orElse(new ArrayList<>());
+			List<String> solrIds = Optional.ofNullable(apiRequest).map(r -> r.getSolrIds()).orElse(new ArrayList<>());
 			List<String> classes = Optional.ofNullable(apiRequest).map(r -> r.getClasses()).orElse(new ArrayList<>());
 			Boolean refresh = !"false".equals(siteRequest.getRequestVars().get("refresh"));
 			if(refresh && !Optional.ofNullable(siteRequest.getJsonObject()).map(JsonObject::isEmpty).orElse(true)) {
 				List<Future> futures = new ArrayList<>();
 
-				for(int i=0; i < pks.size(); i++) {
-					Long pk2 = pks.get(i);
+				for(int i=0; i < solrIds.size(); i++) {
+					String solrId2 = solrIds.get(i);
 					String classSimpleName2 = classes.get(i);
 				}
 
@@ -3109,7 +3365,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 			page.persistForClass(CompanyWebinar.VAR_name, CompanyWebinar.staticSetName(siteRequest2, (String)result.get(CompanyWebinar.VAR_name)));
 			page.persistForClass(CompanyWebinar.VAR_description, CompanyWebinar.staticSetDescription(siteRequest2, (String)result.get(CompanyWebinar.VAR_description)));
-			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, (String)result.get(CompanyWebinar.VAR_created)));
+			page.persistForClass(CompanyWebinar.VAR_created, CompanyWebinar.staticSetCreated(siteRequest2, (String)result.get(CompanyWebinar.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
 			page.persistForClass(CompanyWebinar.VAR_pageId, CompanyWebinar.staticSetPageId(siteRequest2, (String)result.get(CompanyWebinar.VAR_pageId)));
 			page.persistForClass(CompanyWebinar.VAR_joinUri, CompanyWebinar.staticSetJoinUri(siteRequest2, (String)result.get(CompanyWebinar.VAR_joinUri)));
 			page.persistForClass(CompanyWebinar.VAR_archived, CompanyWebinar.staticSetArchived(siteRequest2, (String)result.get(CompanyWebinar.VAR_archived)));

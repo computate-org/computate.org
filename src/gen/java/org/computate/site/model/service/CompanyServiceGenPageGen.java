@@ -571,21 +571,21 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyServiceGenPage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyServiceGenPage o) {
+		return staticSetCompanyServiceGenPage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyServiceGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyServiceGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyServiceGenPage o) {
 		switch(entityVar) {
 		case "listCompanyService":
-			return CompanyServiceGenPage.staticSetListCompanyService(siteRequest_, o);
+			return CompanyServiceGenPage.staticSetListCompanyService(siteRequest_, v);
 		case "resultCount":
-			return CompanyServiceGenPage.staticSetResultCount(siteRequest_, o);
+			return CompanyServiceGenPage.staticSetResultCount(siteRequest_, v);
 		case "solrId":
-			return CompanyServiceGenPage.staticSetSolrId(siteRequest_, o);
+			return CompanyServiceGenPage.staticSetSolrId(siteRequest_, v);
 		case "pageUriCompanyService":
-			return CompanyServiceGenPage.staticSetPageUriCompanyService(siteRequest_, o);
+			return CompanyServiceGenPage.staticSetPageUriCompanyService(siteRequest_, v);
 			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -749,6 +749,8 @@ public abstract class CompanyServiceGenPageGen<DEV> extends PageLayout {
 	}
 
 	public static String descriptionCompanyServiceGenPage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return PageLayout.descriptionPageLayout(var);

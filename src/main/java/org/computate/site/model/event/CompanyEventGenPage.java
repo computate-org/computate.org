@@ -61,17 +61,17 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
   @Override
   protected void _pageResponse(Wrap<String> w) {
     if(searchListCompanyEvent_ != null)
-      w.o(JsonObject.mapFrom(searchListCompanyEvent_.getResponse()).toString());
+      w.o(Optional.ofNullable(searchListCompanyEvent_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
   }
 
   @Override
   protected void _stats(Wrap<SolrResponse.Stats> w) {
-    w.o(searchListCompanyEvent_.getResponse().getStats());
+    w.o(Optional.ofNullable(searchListCompanyEvent_.getResponse()).map(response -> response.getStats()).orElse(null));
   }
 
   @Override
   protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-    w.o(searchListCompanyEvent_.getResponse().getFacetCounts());
+    w.o(Optional.ofNullable(searchListCompanyEvent_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
   }
 
   @Override
@@ -79,7 +79,7 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
     JsonArray pages = new JsonArray();
     Long start = searchListCompanyEvent_.getStart().longValue();
     Long rows = searchListCompanyEvent_.getRows().longValue();
-    Long foundNum = searchListCompanyEvent_.getResponse().getResponse().getNumFound().longValue();
+    Long foundNum = Optional.ofNullable(searchListCompanyEvent_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyEvent_.getList().size()));
     Long startNum = start + 1L;
     Long endNum = start + rows;
     Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -232,7 +232,7 @@ public class CompanyEventGenPage extends CompanyEventGenPageGen<PageLayout> {
     JsonObject params = serviceRequest.getParams();
 
     JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-    Long num = searchListCompanyEvent_.getResponse().getResponse().getNumFound().longValue();
+    Long num = Optional.ofNullable(searchListCompanyEvent_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyEvent_.getList().size()));
     String q = "*:*";
     String q1 = "objectText";
     String q2 = "";

@@ -186,6 +186,7 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current about page";
 	public static final String AllName_enUS = "all about";
 	public static final String SearchAllNameBy_enUS = "search about by ";
+	public static final String SearchAllName_enUS = "search about";
 	public static final String Title_enUS = "about";
 	public static final String ThePluralName_enUS = "the about";
 	public static final String NoNameFound_enUS = "no about page found";
@@ -522,19 +523,19 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyAbout(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAbout o) {
+		return staticSetCompanyAbout(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyAbout(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyAbout(String entityVar, SiteRequest siteRequest_, String v, CompanyAbout o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyAbout.staticSetName(siteRequest_, o);
+			return CompanyAbout.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyAbout.staticSetDescription(siteRequest_, o);
+			return CompanyAbout.staticSetDescription(siteRequest_, v);
 		case "pageId":
-			return CompanyAbout.staticSetPageId(siteRequest_, o);
+			return CompanyAbout.staticSetPageId(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -896,6 +897,8 @@ public abstract class CompanyAboutGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyAbout(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The about name. ";

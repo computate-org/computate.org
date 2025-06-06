@@ -571,21 +571,21 @@ public abstract class CompanyAboutGenPageGen<DEV> extends PageLayout {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyAboutGenPage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
+		return staticSetCompanyAboutGenPage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
 		switch(entityVar) {
 		case "listCompanyAbout":
-			return CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, o);
+			return CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, v);
 		case "resultCount":
-			return CompanyAboutGenPage.staticSetResultCount(siteRequest_, o);
+			return CompanyAboutGenPage.staticSetResultCount(siteRequest_, v);
 		case "solrId":
-			return CompanyAboutGenPage.staticSetSolrId(siteRequest_, o);
+			return CompanyAboutGenPage.staticSetSolrId(siteRequest_, v);
 		case "pageUriCompanyAbout":
-			return CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, o);
+			return CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, v);
 			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, o);
+				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -749,6 +749,8 @@ public abstract class CompanyAboutGenPageGen<DEV> extends PageLayout {
 	}
 
 	public static String descriptionCompanyAboutGenPage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return PageLayout.descriptionPageLayout(var);

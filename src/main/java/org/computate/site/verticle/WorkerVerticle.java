@@ -209,8 +209,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 									configureMqtt().onSuccess(g -> 
 										configureAmqp().onSuccess(h -> 
 											configureRabbitmq().onSuccess(i -> 
-												importData().onSuccess(j -> 
-													startPromise.complete()
+												MainVerticle.authorizeData(vertx, config(), webClient).onComplete(j -> 
+													importData().onSuccess(k -> 
+														startPromise.complete()
+													).onFailure(ex -> startPromise.fail(ex))
 												).onFailure(ex -> startPromise.fail(ex))
 											).onFailure(ex -> startPromise.fail(ex))
 										).onFailure(ex -> startPromise.fail(ex))

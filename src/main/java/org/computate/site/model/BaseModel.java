@@ -1,6 +1,7 @@
 
 package org.computate.site.model;
 
+import java.net.URLEncoder;
 import java.text.Normalizer;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -21,7 +22,7 @@ import org.computate.vertx.model.base.ComputateBaseModel;
  * Model: true
  * Keyword: classSimpleNameBaseModel
  * Description: A reusable base class for all database model classes
- * Order: 1
+ * Order: 0
  */
 public class BaseModel extends BaseModelGen<Object> implements ComputateBaseModel {
 
@@ -41,6 +42,8 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * HtmRowTitle: primary key, ID, created, modified, archive details
 	 * HtmRow: 1
 	 * HtmCell: 1
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: primary key
 	 * Description: The primary key of this object in the database
 	 * Facet: true
@@ -55,6 +58,8 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * VarCreated: true
 	 * HtmRow: 1
 	 * HtmCell: 3
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: created
 	 * FormatHtm: MMM d, yyyy h:mm:ss a
 	 * Description: A created timestamp for this record in the database
@@ -69,6 +74,8 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * VarModified: true
 	 * HtmRow: 1
 	 * HtmCell: 4
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: modified
 	 * Description: A modified timestamp for this record in the database
 	 * Facet: true
@@ -84,6 +91,8 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	 * Facet: true
 	 * HtmRow: 2
 	 * HtmCell: 1
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: archive
 	 * Description: For archiving this record
 	 */
@@ -193,11 +202,11 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	protected void _displayPage(Wrap<String> w) {
 		String f = classStringFormatUrlDisplayPageForClass();
 		if(f != null) {
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 		} else {
 			f = classStringFormatUrlEditPageForClass();
 			if(f != null) {
-				w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+				w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 			}
 		}
 	}
@@ -216,7 +225,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	protected void _editPage(Wrap<String> w) {
 		String f = classStringFormatUrlEditPageForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -231,7 +240,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	protected void _userPage(Wrap<String> w) {
 		String f = classStringFormatUrlUserPageForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -246,7 +255,7 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	protected void _download(Wrap<String> w) {
 		String f = classStringFormatUrlDownloadForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -291,5 +300,14 @@ public class BaseModel extends BaseModelGen<Object> implements ComputateBaseMode
 	protected void _solrId(Wrap<String> w) {
 		if(pk != null)
 			w.o(String.format("%s_%s_%s", getSiteRequest_().getConfig().getString(ComputateConfigKeys.SOLR_COLLECTION), getClass().getSimpleName(), pk.toString()));
+	}
+
+	public static String urlEncode(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch(Throwable ex) {
+			ExceptionUtils.rethrow(ex);
+			return null;
+		}
 	}
 }

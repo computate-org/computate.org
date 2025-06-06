@@ -181,6 +181,7 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current service";
 	public static final String AllName_enUS = "all services";
 	public static final String SearchAllNameBy_enUS = "search services by ";
+	public static final String SearchAllName_enUS = "search services";
 	public static final String Title_enUS = "services";
 	public static final String ThePluralName_enUS = "the services";
 	public static final String NoNameFound_enUS = "no service found";
@@ -591,21 +592,21 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyService(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyService o) {
+		return staticSetCompanyService(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyService(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyService(String entityVar, SiteRequest siteRequest_, String v, CompanyService o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyService.staticSetName(siteRequest_, o);
+			return CompanyService.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyService.staticSetDescription(siteRequest_, o);
+			return CompanyService.staticSetDescription(siteRequest_, v);
 		case "price":
-			return CompanyService.staticSetPrice(siteRequest_, o);
+			return CompanyService.staticSetPrice(siteRequest_, v);
 		case "pageId":
-			return CompanyService.staticSetPageId(siteRequest_, o);
+			return CompanyService.staticSetPageId(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1006,6 +1007,8 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyService(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The service name. ";

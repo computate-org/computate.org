@@ -229,13 +229,13 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetUseCasePage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, UseCasePage o) {
+		return staticSetUseCasePage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetUseCasePage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetUseCasePage(String entityVar, SiteRequest siteRequest_, String v, UseCasePage o) {
 		switch(entityVar) {
 			default:
-				return UseCaseGenPage.staticSetUseCaseGenPage(entityVar,  siteRequest_, o);
+				return UseCaseGenPage.staticSetUseCaseGenPage(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -351,6 +351,8 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 	}
 
 	public static String descriptionUseCasePage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return UseCaseGenPage.descriptionUseCaseGenPage(var);

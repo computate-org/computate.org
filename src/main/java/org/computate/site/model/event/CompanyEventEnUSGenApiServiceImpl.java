@@ -193,7 +193,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			response200Search(listCompanyEvent.getRequest(), listCompanyEvent.getResponse(), json);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -292,7 +292,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = JsonObject.mapFrom(listCompanyEvent.getList().stream().findFirst().orElse(null));
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -313,6 +313,48 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		LOG.debug(String.format("patchCompanyEvent started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "PATCH"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyEventList(siteRequest, true, false, true).onSuccess(listCompanyEvent -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -346,6 +388,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							LOG.error(String.format("patchCompanyEvent failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("patchCompanyEvent failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -423,6 +471,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyEventList(siteRequest, false, true, true).onSuccess(listCompanyEvent -> {
 					try {
 						CompanyEvent o = listCompanyEvent.first();
@@ -504,7 +557,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -525,6 +578,48 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		LOG.debug(String.format("postCompanyEvent started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "POST"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						ApiRequest apiRequest = new ApiRequest();
 						apiRequest.setRows(1L);
 						apiRequest.setNumFound(1L);
@@ -559,6 +654,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							LOG.error(String.format("postCompanyEvent failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("postCompanyEvent failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -665,7 +766,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = JsonObject.mapFrom(o);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -686,6 +787,48 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		LOG.debug(String.format("deleteCompanyEvent started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyEventList(siteRequest, true, false, true).onSuccess(listCompanyEvent -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -718,6 +861,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							LOG.error(String.format("deleteCompanyEvent failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deleteCompanyEvent failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -795,6 +944,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyEventList(siteRequest, false, true, true).onSuccess(listCompanyEvent -> {
 					try {
 						CompanyEvent o = listCompanyEvent.first();
@@ -861,7 +1015,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -882,6 +1036,48 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		LOG.debug(String.format("putimportCompanyEvent started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "PUT"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						ApiRequest apiRequest = new ApiRequest();
 						JsonArray jsonArray = Optional.ofNullable(siteRequest.getJsonObject()).map(o -> o.getJsonArray("list")).orElse(new JsonArray());
 						apiRequest.setRows(Long.valueOf(jsonArray.size()));
@@ -907,6 +1103,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							LOG.error(String.format("putimportCompanyEvent failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("putimportCompanyEvent failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1015,7 +1217,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 									JsonArray bodyVals = (JsonArray)bodyVal;
 									Object valsObj = o.obtainForClass(f);
 									Collection<?> vals = valsObj instanceof JsonArray ? ((JsonArray)valsObj).getList() : (Collection<?>)valsObj;
-									if(bodyVals.size() == vals.size()) {
+									if(vals != null && bodyVals.size() == vals.size()) {
 										Boolean match = true;
 										for(Object val : vals) {
 											if(val != null) {
@@ -1031,7 +1233,8 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 										vals.clear();
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 									} else {
-										vals.clear();
+										if(vals != null)
+											vals.clear();
 										body2.put("set" + StringUtils.capitalize(f), bodyVal);
 									}
 								} else {
@@ -1049,7 +1252,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							}
 							if(searchList.size() == 1) {
 								apiRequest.setOriginal(o);
-								apiRequest.setId(o.getPageId());
+								apiRequest.setId(Optional.ofNullable(o.getPageId()).map(v -> v.toString()).orElse(null));
 							}
 							siteRequest.setJsonObject(body2);
 							patchCompanyEventFuture(o2, true).onSuccess(b -> {
@@ -1112,7 +1315,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -1693,6 +1896,48 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		LOG.debug(String.format("deletefilterCompanyEvent started. "));
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			MultiMap form = MultiMap.caseInsensitiveMultiMap();
+			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+			form.add("response_mode", "permissions");
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "GET"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "POST"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "DELETE"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PATCH"));
+			form.add("permission", String.format("%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, "PUT"));
+			if(pageId != null)
+				form.add("permission", String.format("%s-%s#%s", CompanyEvent.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+			webClient.post(
+					config.getInteger(ComputateConfigKeys.AUTH_PORT)
+					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+					, config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+					)
+					.ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+					.putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+					.sendForm(form)
+					.expecting(HttpResponseExpectation.SC_OK)
+			.onComplete(authorizationDecisionResponse -> {
+				try {
+					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+						eventHandler.handle(Future.succeededFuture(
+							new ServiceResponse(403, "FORBIDDEN",
+								Buffer.buffer().appendString(
+									new JsonObject()
+										.put("errorCode", "403")
+										.put("errorMessage", msg)
+										.encodePrettily()
+									), MultiMap.caseInsensitiveMultiMap()
+							)
+						));
+					} else {
+						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+						List<String> scopes2 = siteRequest.getScopes();
 						searchCompanyEventList(siteRequest, true, false, true).onSuccess(listCompanyEvent -> {
 							try {
 								ApiRequest apiRequest = new ApiRequest();
@@ -1725,6 +1970,12 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 							LOG.error(String.format("deletefilterCompanyEvent failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+					}
+				} catch(Exception ex) {
+					LOG.error(String.format("deletefilterCompanyEvent failed. "), ex);
+					error(null, eventHandler, ex);
+				}
+			});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1802,6 +2053,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			try {
 				siteRequest.setJsonObject(body);
 				serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				searchCompanyEventList(siteRequest, false, true, true).onSuccess(listCompanyEvent -> {
 					try {
 						CompanyEvent o = listCompanyEvent.first();
@@ -1868,7 +2124,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-						String m = String.format("%s %s not found", "event", pageId);
+				String m = String.format("%s %s not found", "event", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -2325,11 +2581,11 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
 			page.persistForClass(CompanyEvent.VAR_name, CompanyEvent.staticSetName(siteRequest2, (String)result.get(CompanyEvent.VAR_name)));
-			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, (String)result.get(CompanyEvent.VAR_created)));
+			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, (String)result.get(CompanyEvent.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
 			page.persistForClass(CompanyEvent.VAR_description, CompanyEvent.staticSetDescription(siteRequest2, (String)result.get(CompanyEvent.VAR_description)));
-			page.persistForClass(CompanyEvent.VAR_startDateTime, CompanyEvent.staticSetStartDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_startDateTime)));
+			page.persistForClass(CompanyEvent.VAR_startDateTime, CompanyEvent.staticSetStartDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_startDateTime), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
 			page.persistForClass(CompanyEvent.VAR_archived, CompanyEvent.staticSetArchived(siteRequest2, (String)result.get(CompanyEvent.VAR_archived)));
-			page.persistForClass(CompanyEvent.VAR_endDateTime, CompanyEvent.staticSetEndDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_endDateTime)));
+			page.persistForClass(CompanyEvent.VAR_endDateTime, CompanyEvent.staticSetEndDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_endDateTime), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
 			page.persistForClass(CompanyEvent.VAR_price, CompanyEvent.staticSetPrice(siteRequest2, (String)result.get(CompanyEvent.VAR_price)));
 			page.persistForClass(CompanyEvent.VAR_pageId, CompanyEvent.staticSetPageId(siteRequest2, (String)result.get(CompanyEvent.VAR_pageId)));
 			page.persistForClass(CompanyEvent.VAR_emailTemplate, CompanyEvent.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyEvent.VAR_emailTemplate)));

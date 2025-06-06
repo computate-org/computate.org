@@ -8,7 +8,7 @@ OVERLAY_SITE_PATH: kustomize/overlays/prod
 # The wildcard domain suffix where OpenShift Routes are available by default. 
 OPENSHIFT_APPS_DOMAIN: "{{ lookup('env', 'OPENSHIFT_APPS_DOMAIN') | default('apps-crc.testing', true) }}"
 # Look up the default container namespace to see if using OpenShift AI.
-USING_OPENSHIFT_AI: "{{ lookup('env', 'USING_OPENSHIFT_AI') | default(false, true) | bool }}"
+USING_OPENSHIFT_AI: "{{ lookup('env', 'USING_OPENSHIFT_AI') | default('false', true) | bool }}"
 # The name of the OpenShift AI Workbench. 
 OPENSHIFT_AI_WORKBENCH: "{{ lookup('env', 'OPENSHIFT_AI_WORKBENCH') | default('', true) }}"
 # Whether this workbench is considered an admin workbench. 
@@ -30,12 +30,12 @@ VARS_FILENAME: vars.yaml
 VARS_PATH: "{{ SITE_SRC }}/{{ VARS_FILENAME }}"
 # A shorter name for the application used for database names, collections, and artifact IDs. 
 SITE_SHORT_NAME: "{{ SITE_NAME | replace('-', '') | replace('_', '') | replace('.', '') | lower }}"
-# The namespace in OpenShift where the site will run. 
-SITE_NAMESPACE: "{{ lookup('env', 'SITE_NAMESPACE') | default(SITE_SHORT_NAME, true) }}"
 # A pretty version of the site name. 
 SITE_DISPLAY_NAME: Learn that computer
 # A short description of the site. 
 SITE_DESCRIPTION: "Cloud native web development on your own computer"
+# The site namespace in OpenShift. 
+SITE_NAMESPACE: "{{ lookup('env', 'SITE_NAMESPACE') | default(SITE_SHORT_NAME, true) }}"
 # The main locale of this application. 
 SITE_LOCALE: en-US
 # A computate specific identifier for the locale and language of the code. 
@@ -60,10 +60,12 @@ SITE_BASE_URL: "{{ lookup('env', 'SITE_BASE_URL') | default('http://' + SITE_HOS
 SITE_PUBLIC_URL: "https://www.{{ DOMAIN_NAME }}"
 # The port of the Zookeeper cluster manager. 
 CLUSTER_PORT: "{{ (SITE_PORT | int) + 1 }}"
+# The public port of the Zookeeper cluster manager. 
+CLUSTER_PUBLIC_PORT: "{{ (SITE_PORT | int) + 1 }}"
 # Zookeeper root path to avoid conflicts with other apps using Zookeeper for clustering. 
 ZOOKEEPER_ROOT_PATH: "{{ lookup('env', 'ZOOKEEPER_ROOT_PATH') | default(SITE_NAME, true) }}"
 # Verify SSL connections. 
-SSL_VERIFY: false
+SSL_VERIFY: "{{ lookup('env', 'SSL_VERIFY') | default('false', true) | bool }}"
 # The public search endpoint for searching public items in the site. 
 PUBLIC_SEARCH_URI: "/en-us/search"
 # The user search endpoint for searching public and authorized items in the site. 
@@ -129,8 +131,6 @@ COMPUTATE_SRC: "{{ (PARENT_SRC + '/computate') | realpath }}"
 COMPUTATE_SEARCH_SRC: "{{ (PARENT_SRC + '/computate-search') | realpath }}"
 # The default source code directory for the computate-vertx application. 
 COMPUTATE_VERTX_SRC: "{{ (PARENT_SRC + '/computate-vertx') | realpath }}"
-# The unique ID for solr records in the search engine
-SOLR_ID: "solrId"
 # The paths to the internationalization for this project. 
 I18N_PATHS: ["{{ COMPUTATE_VERTX_SRC }}/src/main/resources/org/computate/i18n/i18n_{{ SITE_LANG }}.yaml"]
 # The Java main class of the site. 
@@ -187,20 +187,26 @@ CONTAINER_URI: "{{ CONTAINER_REGISTRY }}/{{ CONTAINER_ORG }}/{{ CONTAINER_NAME }
 # Static content defaults #
 ###########################
 
-# An optional FontAwesome Pro Kit for additional FontAwesome icons. 
-FONTAWESOME_KIT: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['FONTAWESOME_KIT'] | b64decode }}"
-# A default FontAwesome style. 
-FONTAWESOME_STYLE: "fa-duotone fa-regular "
+WEB_COMPONENTS_SECRET: "font-awesome"
 # Switch between Shoelace "sl-" and Web Awesome "wa-" element prefixes. 
-WEB_COMPONENTS_PREFIX: "wa-"
-# An optional link element to either a Shoelace web components stylesheet or a Web Awesome Backer web components stylesheet. 
-WEB_COMPONENTS_CSS: |-
-  {{ '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/themes/light.css" />' if WEB_COMPONENTS_PREFIX == 'sl-' else (query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_CSS'] | b64decode | default('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/themes/light.css" />')) }}
+WEB_COMPONENTS_PREFIX: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_PREFIX | default('') | b64decode | default('sl-', true) }}"
+# WEB_COMPONENTS_PREFIX: sl-
 # An optional link element to either a Shoelace web components JavaScript or a Web Awesome Backer web components JavaScript. 
-WEB_COMPONENTS_JS: |-
-  {{ '<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/shoelace-autoloader.js"></script>' if WEB_COMPONENTS_PREFIX == 'sl-' else (query('kubernetes.core.k8s', kind='Secret', resource_name='font-awesome', namespace=SITE_NAMESPACE)[0].data['WEB_COMPONENTS_JS'] | b64decode | default('<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/shoelace-autoloader.js"></script>')) }}
+WEB_COMPONENTS_JS: >-
+  {{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_JS | default('') | b64decode | default('<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/shoelace-autoloader.js"></script>', true) }}
+# WEB_COMPONENTS_JS: >-
+#   <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/shoelace-autoloader.js"></script>
+# An optional link element to either a Shoelace web components stylesheet or a Web Awesome Backer web components stylesheet. 
+WEB_COMPONENTS_CSS: >-
+  {{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_CSS | default('') | b64decode| default('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/themes/dark.css" />', true) }}
+# WEB_COMPONENTS_CSS: >-
+#   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.0/cdn/themes/dark.css" />
+# An optional FontAwesome Pro Kit for additional FontAwesome icons. 
+FONTAWESOME_KIT: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.FONTAWESOME_KIT | default('', true) | b64decode | default('', true) }}"
+# A default FontAwesome style. 
+FONTAWESOME_STYLE: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.FONTAWESOME_STYLE | default('', true) | b64decode | default('default', true) }}"
 # Site default theme, light or dark. 
-SITE_THEME: dark
+SITE_THEME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.SITE_THEME | default('', true) | b64decode | default('dark', true) }}"
 # The site logo relative URI
 SITE_LOGO_URI: "/svg/logo-{{ SITE_THEME }}.svg"
 # The name of the repository containing the web static content. 
@@ -214,8 +220,6 @@ STATIC_PATH: "{{ (SITE_SRC + '/../' + SITE_STATIC_NAME + '/' + ('webawesome' if 
 # The path to the template files. 
 TEMPLATE_PATH: "{{ STATIC_PATH }}/templates"
 # The path to the site page templates. 
-DYNAMIC_PAGE_PATHS:
-  - "en-us/article"
 
 ######################
 # Developer defaults #
@@ -244,11 +248,11 @@ SITE_SYSTEMD: "{{ '/usr/lib/systemd/system' if ansible_distribution_file_variety
 #######################
 
 # The name of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_NAME: Google Kubernetes Engine
+SITE_POWERED_BY_NAME: "{{ lookup('env', 'SITE_POWERED_BY_NAME') | default('Red Hat OpenShift Local', true) }}"
 # The URL of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_URL: https://cloud.google.com/kubernetes-engine
+SITE_POWERED_BY_URL: "{{ lookup('env', 'SITE_POWERED_BY_URL') | default('https://developers.redhat.com/products/openshift-local/overview', true) }}"
 # The static path to the logo of the cloud provider where the public site is deployed. 
-SITE_POWERED_BY_IMAGE: '<img class="footer-img" alt="Google Kubernetes Engine" src="{{ STATIC_BASE_URL }}/svg/google-gke.svg"/>'
+SITE_POWERED_BY_IMAGE: "{{ lookup('env', 'SITE_POWERED_BY_IMAGE') | default('<img class=\"footer-img\" alt=\"' + SITE_POWERED_BY_NAME + '\" src=\"' + STATIC_BASE_URL + '/svg/openshift.svg\"/>', true) }}"
 
 ######################
 # Zookeeper defaults #
@@ -270,6 +274,8 @@ ZOOKEEPER_SESSION_TIMEOUT_MILLIS: 5000
 # Solr defaults #
 #################
 
+# The unique ID for solr records in the search engine
+SOLR_ID: "solrId"
 # The namespace in OpenShift where Solr will run. 
 SOLR_NAMESPACE: "{{ lookup('env', 'SOLR_NAMESPACE') | default('solr', true) }}"
 # Whether to use SSL when connecting to Solr. 
@@ -281,7 +287,7 @@ SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('443', true) }}"
 # The solr collection to use for the site. 
 SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
 # The URL to the Solr collection. 
-SOLR_URL: "{{ ('https://' if SOLR_SSL | bool == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT | int == 443 else (':' + SOLR_PORT)) }}/solr/{{ SOLR_COLLECTION }}"
+SOLR_URL: "{{ ('https://' if SOLR_SSL | bool == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT | int == 443 else (':' + (SOLR_PORT | string))) }}/solr/{{ SOLR_COLLECTION }}"
 # The solr pod name to connect and create Solr configsets and collections. 
 SOLR_POD_NAME: "solr-0"
 # The time before committing Solr data in milliseconds. 
@@ -312,14 +318,14 @@ SOLR_URL_COMPUTATE: "{{ ('https://' if SOLR_SSL_COMPUTATE | bool == True else 'h
 ENABLE_DATABASE: true
 # The namespace of the database in OpenShift. 
 DATABASE_NAMESPACE: postgres
-# The PostgreSQL database user name of the site. 
-DATABASE_USERNAME: "{{ lookup('env', 'DATABASE_USERNAME_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
-# The database secret containing the user password to connect to the database. 
-DATABASE_SECRET: "postgres-pguser-{{ DATABASE_USERNAME }}"
 # The PostgreSQL database host name. 
 DATABASE_HOST_NAME: "{{ lookup('env', 'DATABASE_HOST_NAME') | default('postgres.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The PostgreSQL database port. 
 DATABASE_PORT: "{{ lookup('env', 'DATABASE_PORT') | default('30432', true) }}"
+# The PostgreSQL database user name of the site. 
+DATABASE_USERNAME: "{{ lookup('env', 'DATABASE_USERNAME_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
+# The database secret containing the user password to connect to the database. 
+DATABASE_SECRET: "postgres-pguser-{{ DATABASE_USERNAME }}"
 # The PostgreSQL database password of the site. 
 DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE)[0].data.password | b64decode }}"
 # The PostgreSQL database name of the site. 
@@ -354,7 +360,7 @@ AUTH_CLIENT: "{{ lookup('env', 'AUTH_CLIENT_' + SITE_SHORT_NAME) | default(SITE_
 # The Auth openshift secret with the client secret credentials. 
 AUTH_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('keycloak-client-' + AUTH_CLIENT, true) }}"
 # The Auth secret. 
-AUTH_SECRET: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_OPENSHIFT_SECRET, namespace=SITE_NAMESPACE)[0].data.clientSecret | b64decode }}"
+AUTH_SECRET: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=(AUTH_OPENSHIFT_SECRET), namespace=SITE_NAMESPACE)[0].data.clientSecret | b64decode }}"
 # The Auth openshift secret with the admin credentials. 
 AUTH_ADMIN_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_ADMIN_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('keycloak-initial-admin', true) }}"
 # The Auth admin username. 
@@ -372,9 +378,9 @@ AUTH_CALLBACK_URI: /callback
 # The auth logout URI. 
 AUTH_LOGOUT_URI: /logout
 # The Auth scope required to be an admin in the site. 
-AUTH_SCOPE_ADMIN: Admin
+AUTH_SCOPE_ADMIN: "{{ lookup('env', 'AUTH_SCOPE_ADMIN_' + SITE_SHORT_NAME) | default('Admin', true) }}"
 # The Auth scope required to be a super-admin in the site. 
-AUTH_SCOPE_SUPER_ADMIN: SuperAdmin
+AUTH_SCOPE_SUPER_ADMIN: "{{ lookup('env', 'AUTH_SCOPE_SUPER_ADMIN_' + SITE_SHORT_NAME) | default('SuperAdmin', true) }}"
 # Enables authorization fine-grained resource permissions. 
 AUTH_FINE_GRAINED_POLICY_PERMISSIONS: true
 
@@ -387,9 +393,9 @@ ENABLE_FIWARE: true
 # FIWARE Smart Data Model source code directory. 
 SMART_DATA_MODELS_SRC: "{{ (PARENT_SRC + '/smart-data-models') | realpath }}"
 # Map default latitude,longitude. 
-DEFAULT_MAP_LOCATION: "40.82609656742042,14.186226986785329"
+DEFAULT_MAP_LOCATION: '{ "coordinates": [ -86.00911511758058, 30.02832599643655 ], "type": "Point" }'
 # Map default zoom level. 
-DEFAULT_MAP_ZOOM: "17"
+DEFAULT_MAP_ZOOM: "8"
 
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL_FIWARE: "{{ lookup('env', 'SOLR_SSL_FIWARE') | default(SOLR_SSL, true) | bool }}"
@@ -398,7 +404,7 @@ SOLR_HOST_NAME_FIWARE: "{{ lookup('env', 'SOLR_HOST_NAME_FIWARE') | default(SOLR
 # The default port that Solr runs. 
 SOLR_PORT_FIWARE: "{{ lookup('env', 'SOLR_PORT_FIWARE') | default(SOLR_PORT, true) }}"
 # The solr collection to use for the site. 
-SOLR_COLLECTION_FIWARE: "{{ lookup('env', 'SOLR_COLLECTION_FIWARE') | default(SOLR_COLLECTION_COMPUTATE, true) }}"
+SOLR_COLLECTION_FIWARE: "{{ lookup('env', 'SOLR_COLLECTION_FIWARE') | default('fiware', true) }}"
 # The URL to the Solr collection. 
 SOLR_URL_FIWARE: "{{ ('https://' if SOLR_SSL_FIWARE | bool == True else 'http://') + SOLR_HOST_NAME_FIWARE + ('' if SOLR_PORT_FIWARE | int == 443 else (':' + SOLR_PORT_FIWARE)) }}/solr/{{ SOLR_COLLECTION_FIWARE }}"
 
@@ -408,6 +414,8 @@ SOLR_URL_FIWARE: "{{ ('https://' if SOLR_SSL_FIWARE | bool == True else 'http://
 
 # Enable context broker integration in the Fiware enabled Smart Data Model APIs. 
 ENABLE_CONTEXT_BROKER: true
+# Enable sending context broker data. 
+ENABLE_CONTEXT_BROKER_SEND: false
 # The Context Broker namespace. 
 CONTEXT_BROKER_NAMESPACE: "scorpiobroker"
 # Whether to use SSL when connecting to the Context Broker. 
@@ -429,23 +437,6 @@ NGSILD_TENANT: "{{ lookup('env', NGSILD_TENANT_ENV) | default('', true) }}"
 # The default NGSI-LD path
 NGSILD_PATH: "{{ lookup('env', NGSILD_PATH_ENV) | default('', true) }}"
 
-#################
-# iotagent-json #
-#################
-
-# The IoT Agent JSON namespace. 
-IOTAGENT_NAMESPACE: "iotagent"
-# Whether to use SSL when connecting to the IoT Agent JSON. 
-IOTAGENT_SSL: true
-# The host name to connect to the IoT Agent JSON in OpenShift. 
-IOTAGENT_HOST_NAME: "iotagent-json.apps-crc.testing"
-# The HTTP port that the IoT Agent JSON runs. 
-IOTAGENT_HTTP_PORT: 7896
-# The North port that the IoT Agent JSON runs. 
-IOTAGENT_NORTH_PORT: 443
-# The message broker transport type (MQTT or AMQP). 
-IOTAGENT_TRANSPORT: AMQP
-
 ##############
 # Kafka vars #
 ##############
@@ -466,35 +457,34 @@ KAFKA_PORT: 9093
 #############
 
 # Enable MQTT message integration. 
-ENABLE_MQTT: false
-# The namespace in OpenShift where the AMQP message broker will run. 
-MQTT_NAMESPACE: rabbitmq
-# The MQTT port. 
-MQTT_PORT: 5672
+ENABLE_MQTT: "{{ (lookup('env', 'ENABLE_MQTT') | lower) == 'true' }}"
+# The namespace in OpenShift where the MQTT message broker will run. 
+MQTT_NAMESPACE: "{{ lookup('env', 'MQTT_NAMESPACE') | default('amq-broker', true) }}"
+# The MQTT port (default 1883). 
+MQTT_PORT: "{{ lookup('env', 'MQTT_PORT') | default('30083', true) }}"
 # The MQTT host name. 
-MQTT_HOST_NAME: "rabbitmq.{{ MQTT_NAMESPACE }}.svc"
+MQTT_HOST_NAME: "{{ lookup('env', 'MQTT_HOST_NAME') | default('import-broker-mqtt-0-svc.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The MQTT user. 
-MQTT_USERNAME: "user"
+MQTT_USERNAME: "{{ lookup('env', 'MQTT_USERNAME') | default('user', true) }}"
 # The MQTT password. 
-#MQTT_PASSWORD: ""
+MQTT_PASSWORD: "{{ lookup('env', 'MQTT_PASSWORD') | default('password', true) }}"
 
 #############
 # AMQP vars #
 #############
 
 # Enable AMQP message integration. 
-ENABLE_AMQP: false
+ENABLE_AMQP: "{{ (lookup('env', 'ENABLE_AMQP') | lower) == 'true' }}"
 # The namespace in OpenShift where the AMQP message broker will run. 
-AMQP_NAMESPACE: rabbitmq
-# The AMQP port. 
-AMQP_PORT: 5672
+AMQP_NAMESPACE: "{{ lookup('env', 'AMQP_NAMESPACE') | default('amq-broker', true) }}"
+# The AMQP port (default 5672). 
+AMQP_PORT: "{{ lookup('env', 'AMQP_PORT') | default('30072', true) }}"
 # The AMQP host name. 
-AMQP_HOST_NAME: "rabbitmq.{{ AMQP_NAMESPACE }}.svc"
+AMQP_HOST_NAME: "{{ lookup('env', 'AMQP_HOST_NAME') | default('import-broker-AMQP-0-svc.' + OPENSHIFT_APPS_DOMAIN, true) }}"
 # The AMQP user. 
-AMQP_USERNAME: "user"
+AMQP_USERNAME: "{{ lookup('env', 'AMQP_USERNAME') | default('user', true) }}"
 # The AMQP password. 
-AMQP_PASSWORD: ""
-#AMQP_HOST_NAME_PASSWORD: ""
+AMQP_PASSWORD: "{{ lookup('env', 'AMQP_PASSWORD') | default('password', true) }}"
 # The AMQP virtual host. 
 AMQP_VIRTUAL_HOST: "%2F"
 
@@ -503,18 +493,18 @@ AMQP_VIRTUAL_HOST: "%2F"
 #################
 
 # Enable RabbitMQ message integration. 
-ENABLE_RABBITMQ: false
-# The namespace in OpenShift where the AMQP message broker will run. 
-RABBITMQ_NAMESPACE: rabbitmq
-# The AMQP port. 
-RABBITMQ_PORT: 30072
-# The AMQP host name. 
-RABBITMQ_HOST_NAME: "rabbitmq.apps-crc.testing"
-# The AMQP user. 
-RABBITMQ_USERNAME: "user"
-# The AMQP password. 
-RABBITMQ_PASSWORD: ""
-# The AMQP virtual host. 
+ENABLE_RABBITMQ: "{{ (lookup('env', 'ENABLE_RABBITMQ') | lower) == 'true' }}"
+# The namespace in OpenShift where the RabbitMQ message broker will run. 
+RABBITMQ_NAMESPACE: "{{ lookup('env', 'RABBITMQ_NAMESPACE') | default('rabbitmq', true) }}"
+# The RabbitMQ port (default 5672). 
+RABBITMQ_PORT: "{{ lookup('env', 'RABBITMQ_PORT') | default('30072', true) }}"
+# The RabbitMQ host name. 
+RABBITMQ_HOST_NAME: "{{ lookup('env', 'RABBITMQ_HOST_NAME') | default('rabbitmq.' + OPENSHIFT_APPS_DOMAIN, true) }}"
+# The RabbitMQ user. 
+RABBITMQ_USERNAME: "{{ lookup('env', 'RABBITMQ_USERNAME') | default('user', true) }}"
+# The RabbitMQ password. 
+RABBITMQ_PASSWORD: "{{ lookup('env', 'RABBITMQ_PASSWORD') | default('password', true) }}"
+# The RabbitMQ virtual host. 
 RABBITMQ_VIRTUAL_HOST: "/"
 
 ################################

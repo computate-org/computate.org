@@ -189,6 +189,7 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current use case";
 	public static final String AllName_enUS = "all use cases";
 	public static final String SearchAllNameBy_enUS = "search use cases by ";
+	public static final String SearchAllName_enUS = "search use cases";
 	public static final String Title_enUS = "use cases";
 	public static final String ThePluralName_enUS = "the use cases";
 	public static final String NoNameFound_enUS = "no use case found";
@@ -587,21 +588,21 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetUseCase(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, UseCase o) {
+		return staticSetUseCase(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetUseCase(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetUseCase(String entityVar, SiteRequest siteRequest_, String v, UseCase o) {
 		switch(entityVar) {
 		case "name":
-			return UseCase.staticSetName(siteRequest_, o);
+			return UseCase.staticSetName(siteRequest_, v);
 		case "authorName":
-			return UseCase.staticSetAuthorName(siteRequest_, o);
+			return UseCase.staticSetAuthorName(siteRequest_, v);
 		case "description":
-			return UseCase.staticSetDescription(siteRequest_, o);
+			return UseCase.staticSetDescription(siteRequest_, v);
 		case "pageId":
-			return UseCase.staticSetPageId(siteRequest_, o);
+			return UseCase.staticSetPageId(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -999,6 +1000,8 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionUseCase(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The use case name. ";

@@ -212,6 +212,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current event";
 	public static final String AllName_enUS = "all events";
 	public static final String SearchAllNameBy_enUS = "search events by ";
+	public static final String SearchAllName_enUS = "search events";
 	public static final String Title_enUS = "events";
 	public static final String ThePluralName_enUS = "the events";
 	public static final String NoNameFound_enUS = "no event found";
@@ -407,21 +408,22 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	@JsonIgnore
 	public void setStartDateTime(String o) {
-		this.startDateTime = CompanyEvent.staticSetStartDateTime(siteRequest_, o);
+		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+		this.startDateTime = CompanyEvent.staticSetStartDateTime(siteRequest_, o, zoneId);
 	}
 	@JsonIgnore
 	public void setStartDateTime(Date o) {
 		this.startDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public static ZonedDateTime staticSetStartDateTime(SiteRequest siteRequest_, String o) {
+	public static ZonedDateTime staticSetStartDateTime(SiteRequest siteRequest_, String o, ZoneId zoneId) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
 		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
 		else if(StringUtils.contains(o, "T"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
 	}
 	protected CompanyEvent startDateTimeInit() {
 		Wrap<ZonedDateTime> startDateTimeWrap = new Wrap<ZonedDateTime>().var("startDateTime");
@@ -439,11 +441,13 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchStrStartDateTime(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o));
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o, zoneId));
 	}
 
 	public static String staticSearchFqStartDateTime(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o)).toString();
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyEvent.staticSearchStartDateTime(siteRequest_, CompanyEvent.staticSetStartDateTime(siteRequest_, o, zoneId)).toString();
 	}
 
 	public OffsetDateTime sqlStartDateTime() {
@@ -487,21 +491,22 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	/** Example: 2011-12-03T10:15:30+01:00 **/
 	@JsonIgnore
 	public void setEndDateTime(String o) {
-		this.endDateTime = CompanyEvent.staticSetEndDateTime(siteRequest_, o);
+		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+		this.endDateTime = CompanyEvent.staticSetEndDateTime(siteRequest_, o, zoneId);
 	}
 	@JsonIgnore
 	public void setEndDateTime(Date o) {
 		this.endDateTime = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
 	}
-	public static ZonedDateTime staticSetEndDateTime(SiteRequest siteRequest_, String o) {
+	public static ZonedDateTime staticSetEndDateTime(SiteRequest siteRequest_, String o, ZoneId zoneId) {
 		if(StringUtils.endsWith(o, "]"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
 		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
 		else if(StringUtils.contains(o, "T"))
 			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
 		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
 	}
 	protected CompanyEvent endDateTimeInit() {
 		Wrap<ZonedDateTime> endDateTimeWrap = new Wrap<ZonedDateTime>().var("endDateTime");
@@ -519,11 +524,13 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	}
 
 	public static String staticSearchStrEndDateTime(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o));
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o, zoneId));
 	}
 
 	public static String staticSearchFqEndDateTime(SiteRequest siteRequest_, String o) {
-		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o)).toString();
+		ZoneId zoneId = ZoneId.of("UTC");
+		return CompanyEvent.staticSearchEndDateTime(siteRequest_, CompanyEvent.staticSetEndDateTime(siteRequest_, o, zoneId)).toString();
 	}
 
 	public OffsetDateTime sqlEndDateTime() {
@@ -1256,37 +1263,35 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyEvent(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyEvent o) {
+		return staticSetCompanyEvent(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyEvent(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyEvent(String entityVar, SiteRequest siteRequest_, String v, CompanyEvent o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyEvent.staticSetName(siteRequest_, o);
+			return CompanyEvent.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyEvent.staticSetDescription(siteRequest_, o);
+			return CompanyEvent.staticSetDescription(siteRequest_, v);
 		case "startDateTime":
-			return CompanyEvent.staticSetStartDateTime(siteRequest_, o);
 		case "endDateTime":
-			return CompanyEvent.staticSetEndDateTime(siteRequest_, o);
 		case "price":
-			return CompanyEvent.staticSetPrice(siteRequest_, o);
+			return CompanyEvent.staticSetPrice(siteRequest_, v);
 		case "pageId":
-			return CompanyEvent.staticSetPageId(siteRequest_, o);
+			return CompanyEvent.staticSetPageId(siteRequest_, v);
 		case "emailTemplate":
-			return CompanyEvent.staticSetEmailTemplate(siteRequest_, o);
+			return CompanyEvent.staticSetEmailTemplate(siteRequest_, v);
 		case "storeUrl":
-			return CompanyEvent.staticSetStoreUrl(siteRequest_, o);
+			return CompanyEvent.staticSetStoreUrl(siteRequest_, v);
 		case "location":
-			return CompanyEvent.staticSetLocation(siteRequest_, o);
+			return CompanyEvent.staticSetLocation(siteRequest_, v);
 		case "locationColors":
-			return CompanyEvent.staticSetLocationColors(siteRequest_, o);
+			return CompanyEvent.staticSetLocationColors(siteRequest_, v);
 		case "locationTitles":
-			return CompanyEvent.staticSetLocationTitles(siteRequest_, o);
+			return CompanyEvent.staticSetLocationTitles(siteRequest_, v);
 		case "locationLinks":
-			return CompanyEvent.staticSetLocationLinks(siteRequest_, o);
+			return CompanyEvent.staticSetLocationLinks(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1990,6 +1995,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyEvent(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The event name. ";

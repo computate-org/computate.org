@@ -1,6 +1,7 @@
 
 package org.computate.site.result;
 
+import java.net.URLEncoder;
 import java.text.Normalizer;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -22,7 +23,7 @@ import io.vertx.core.Promise;
  * Indexed: true
  * Keyword: classSimpleNameBaseResult
  * Description: A reusable base class for all non-model search classes
- * Order: 2
+ * Order: 0
  * Promise: true
  */
 public class BaseResult extends BaseResultGen<Object> implements ComputateBaseResult {
@@ -43,6 +44,8 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * VarCreated: true
 	 * HtmRow: 1
 	 * HtmCell: 2
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * HtmRowTitle: primary key, ID, created, modified, archive details
 	 * DisplayName.enUS: created
 	 * FormatHtm: MMM d, yyyy h:mm:ss a
@@ -60,6 +63,8 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * VarModified: true
 	 * HtmRow: 1
 	 * HtmCell: 3
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: modified
 	 * Description: A modified timestamp for this record in the database
 	 * Facet: true
@@ -74,6 +79,8 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	 * Persist: true
 	 * HtmRow: 2
 	 * HtmCell: 1
+	 * HidePOST: true
+	 * HidePATCH: true
 	 * DisplayName.enUS: archived
 	 * Description: For archiving this record
 	 */
@@ -161,11 +168,11 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	protected void _displayPage(Wrap<String> w) {
 		String f = classStringFormatUrlDisplayPageForClass();
 		if(f != null) {
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 		} else {
 			f = classStringFormatUrlEditPageForClass();
 			if(f != null) {
-				w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+				w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 			}
 		}
 	}
@@ -184,7 +191,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	protected void _editPage(Wrap<String> w) {
 		String f = classStringFormatUrlEditPageForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -199,7 +206,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	protected void _userPage(Wrap<String> w) {
 		String f = classStringFormatUrlUserPageForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -214,7 +221,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	protected void _download(Wrap<String> w) {
 		String f = classStringFormatUrlDownloadForClass();
 		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), urlEncode(idForClass())));
 	}
 
 	/**
@@ -259,5 +266,14 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	protected void _solrId(Wrap<String> w) {
 		String objectId = idForClass();
 		w.o(String.format("%s_%s_%s", getSiteRequest_().getConfig().getString(ComputateConfigKeys.SOLR_COLLECTION), getClass().getSimpleName(), objectId));
+	}
+
+	public static String urlEncode(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch(Throwable ex) {
+			ExceptionUtils.rethrow(ex);
+			return null;
+		}
 	}
 }

@@ -229,13 +229,13 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyServicePage(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyServicePage o) {
+		return staticSetCompanyServicePage(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyServicePage(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyServicePage(String entityVar, SiteRequest siteRequest_, String v, CompanyServicePage o) {
 		switch(entityVar) {
 			default:
-				return CompanyServiceGenPage.staticSetCompanyServiceGenPage(entityVar,  siteRequest_, o);
+				return CompanyServiceGenPage.staticSetCompanyServiceGenPage(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -351,6 +351,8 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 	}
 
 	public static String descriptionCompanyServicePage(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 			default:
 				return CompanyServiceGenPage.descriptionCompanyServiceGenPage(var);

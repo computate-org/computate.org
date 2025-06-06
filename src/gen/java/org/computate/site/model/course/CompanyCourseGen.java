@@ -191,6 +191,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String NameActual_enUS = "current course";
 	public static final String AllName_enUS = "all courses";
 	public static final String SearchAllNameBy_enUS = "search courses by ";
+	public static final String SearchAllName_enUS = "search courses";
 	public static final String Title_enUS = "courses";
 	public static final String ThePluralName_enUS = "the courses";
 	public static final String NoNameFound_enUS = "no course found";
@@ -854,29 +855,29 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	// staticSet //
 	///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSetCompanyCourse(entityVar,  siteRequest_, o);
+	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyCourse o) {
+		return staticSetCompanyCourse(entityVar,  siteRequest_, v, o);
 	}
-	public static Object staticSetCompanyCourse(String entityVar, SiteRequest siteRequest_, String o) {
+	public static Object staticSetCompanyCourse(String entityVar, SiteRequest siteRequest_, String v, CompanyCourse o) {
 		switch(entityVar) {
 		case "name":
-			return CompanyCourse.staticSetName(siteRequest_, o);
+			return CompanyCourse.staticSetName(siteRequest_, v);
 		case "description":
-			return CompanyCourse.staticSetDescription(siteRequest_, o);
+			return CompanyCourse.staticSetDescription(siteRequest_, v);
 		case "price":
-			return CompanyCourse.staticSetPrice(siteRequest_, o);
+			return CompanyCourse.staticSetPrice(siteRequest_, v);
 		case "pageId":
-			return CompanyCourse.staticSetPageId(siteRequest_, o);
+			return CompanyCourse.staticSetPageId(siteRequest_, v);
 		case "emailTemplate":
-			return CompanyCourse.staticSetEmailTemplate(siteRequest_, o);
+			return CompanyCourse.staticSetEmailTemplate(siteRequest_, v);
 		case "storeUrl":
-			return CompanyCourse.staticSetStoreUrl(siteRequest_, o);
+			return CompanyCourse.staticSetStoreUrl(siteRequest_, v);
 		case "downloadUri":
-			return CompanyCourse.staticSetDownloadUri(siteRequest_, o);
+			return CompanyCourse.staticSetDownloadUri(siteRequest_, v);
 		case "courseNum":
-			return CompanyCourse.staticSetCourseNum(siteRequest_, o);
+			return CompanyCourse.staticSetCourseNum(siteRequest_, v);
 			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, o);
+				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
 	}
 
@@ -1424,6 +1425,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	}
 
 	public static String descriptionCompanyCourse(String var) {
+		if(var == null)
+			return null;
 		switch(var) {
 		case VAR_name:
 			return "The course name. ";

@@ -31,6 +31,8 @@ spec:
     spec:
       containers:
       - env:
+        - name: ENABLE_DATABASE
+          value: 'true'
         - name: ENABLE_ZOOKEEPER_CLUSTER
           value: 'true'
         - name: CLUSTER_PUBLIC_PORT
@@ -113,7 +115,7 @@ spec:
         - name: ENABLE_OPEN_TELEMETRY
           value: "false"
         - name: ENABLE_WORKER_VERTICLE
-          value: "false"
+          value: "true"
         - name: ENABLE_IMPORT_DATA
           value: "true"
         - name: DOWNLOAD_PATH
