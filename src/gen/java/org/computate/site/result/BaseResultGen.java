@@ -2108,8 +2108,6 @@ public abstract class BaseResultGen<DEV> extends Object {
 
 	public static Integer htmColumnBaseResult(String var) {
 		switch(var) {
-		case VAR_editPage:
-			return 99;
 			default:
 				return null;
 		}

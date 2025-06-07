@@ -136,47 +136,6 @@ import io.vertx.core.Future;
 public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 	protected static final Logger LOG = LoggerFactory.getLogger(SitePageGenPage.class);
 
-	/////////////////////////
-	// searchListSitePage_ //
-	/////////////////////////
-
-
-	/**	 The entity searchListSitePage_
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SitePage> searchListSitePage_;
-
-	/**	<br> The entity searchListSitePage_
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePageGenPage&fq=entiteVar_enUS_indexed_string:searchListSitePage_">Find the entity searchListSitePage_ in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _searchListSitePage_(Wrap<SearchList<SitePage>> w);
-
-	public SearchList<SitePage> getSearchListSitePage_() {
-		return searchListSitePage_;
-	}
-
-	public void setSearchListSitePage_(SearchList<SitePage> searchListSitePage_) {
-		this.searchListSitePage_ = searchListSitePage_;
-	}
-	public static SearchList<SitePage> staticSetSearchListSitePage_(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected SitePageGenPage searchListSitePage_Init() {
-		Wrap<SearchList<SitePage>> searchListSitePage_Wrap = new Wrap<SearchList<SitePage>>().var("searchListSitePage_");
-		if(searchListSitePage_ == null) {
-			_searchListSitePage_(searchListSitePage_Wrap);
-			Optional.ofNullable(searchListSitePage_Wrap.getO()).ifPresent(o -> {
-				setSearchListSitePage_(o);
-			});
-		}
-		return (SitePageGenPage)this;
-	}
-
 	//////////////////
 	// listSitePage //
 	//////////////////
@@ -466,7 +425,6 @@ public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 		Future.future(a -> a.complete()).compose(a -> {
 			Promise<Void> promise2 = Promise.promise();
 			try {
-				searchListSitePage_Init();
 				listSitePageInit();
 				resultCountInit();
 				resultInit();
@@ -525,8 +483,6 @@ public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 	public Object obtainSitePageGenPage(String var) {
 		SitePageGenPage oSitePageGenPage = (SitePageGenPage)this;
 		switch(var) {
-			case "searchListSitePage_":
-				return oSitePageGenPage.searchListSitePage_;
 			case "listSitePage":
 				return oSitePageGenPage.listSitePage;
 			case "resultCount":
@@ -667,14 +623,12 @@ public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 
 	public static final String CLASS_SIMPLE_NAME = "SitePageGenPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.page.SitePageGenPage";
-	public static final String VAR_searchListSitePage_ = "searchListSitePage_";
 	public static final String VAR_listSitePage = "listSitePage";
 	public static final String VAR_resultCount = "resultCount";
 	public static final String VAR_result = "result";
 	public static final String VAR_solrId = "solrId";
 	public static final String VAR_pageUriSitePage = "pageUriSitePage";
 
-	public static final String DISPLAY_NAME_searchListSitePage_ = "";
 	public static final String DISPLAY_NAME_listSitePage = "";
 	public static final String DISPLAY_NAME_resultCount = "";
 	public static final String DISPLAY_NAME_result = "";
@@ -731,8 +685,97 @@ public abstract class SitePageGenPageGen<DEV> extends PageLayout {
 	}
 	public static String displayNameSitePageGenPage(String var) {
 		switch(var) {
-		case VAR_searchListSitePage_:
-			return DISPLAY_NAME_searchListSitePage_;
+		case VAR_listSitePage:
+			return DISPLAY_NAME_listSitePage;
+		case VAR_resultCount:
+			return DISPLAY_NAME_resultCount;
+		case VAR_result:
+			return DISPLAY_NAME_result;
+		case VAR_solrId:
+			return DISPLAY_NAME_solrId;
+		case VAR_pageUriSitePage:
+			return DISPLAY_NAME_pageUriSitePage;
+		default:
+			return PageLayout.displayNamePageLayout(var);
+		}
+	}
+
+	public static String descriptionSitePageGenPage(String var) {
+		if(var == null)
+			return null;
+		switch(var) {
+			default:
+				return PageLayout.descriptionPageLayout(var);
+		}
+	}
+
+	public static String classSimpleNameSitePageGenPage(String var) {
+		switch(var) {
+		case VAR_listSitePage:
+			return "JsonArray";
+		case VAR_resultCount:
+			return "Integer";
+		case VAR_result:
+			return "SitePage";
+		case VAR_solrId:
+			return "String";
+		case VAR_pageUriSitePage:
+			return "String";
+			default:
+				return PageLayout.classSimpleNamePageLayout(var);
+		}
+	}
+
+	public static Integer htmColumnSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmColumnPageLayout(var);
+		}
+	}
+
+	public static Integer htmRowSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmRowPageLayout(var);
+		}
+	}
+
+	public static Integer htmCellSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.htmCellPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMinSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMinPageLayout(var);
+		}
+	}
+
+	public static Integer lengthMaxSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.lengthMaxPageLayout(var);
+		}
+	}
+
+	public static Integer maxSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.maxPageLayout(var);
+		}
+	}
+
+	public static Integer minSitePageGenPage(String var) {
+		switch(var) {
+			default:
+				return PageLayout.minPageLayout(var);
+		}
+	}
+}
+rchListSitePage_;
 		case VAR_listSitePage:
 			return DISPLAY_NAME_listSitePage;
 		case VAR_resultCount:

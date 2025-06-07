@@ -180,7 +180,6 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
-	 * HtmColumn: 99
 	 * Facet: true
 	 * DisplayName: edit
 	 * Description: Edit this
