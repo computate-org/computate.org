@@ -78,7 +78,7 @@ USER_SEARCH_URI: "/en-us/user-search"
 # The URL to sign up for the mailing list. 
 MAILING_LIST_URL: https://computate.topicbox.com/groups/computate
 # The email address of the mailing list. 
-MAILING_LIST_EMAIL: computate@computate.topicbox.com
+MAILING_LIST_EMAIL: computate@group.computate.org
 
 ################
 # API defaults #
@@ -595,3 +595,9 @@ USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SRC }}/02-models-summary.ipynb"
 ##########
 SQUARE_ACCESS_TOKEN: UNKNOWN
 
+####################
+# Custom site data #
+####################
+SITE_OS_NAME: Red Hat Enterprise Linux
+SITE_OS_SHORT_NAME: RHEL
+SITE_OS_VERSION: 9.6
