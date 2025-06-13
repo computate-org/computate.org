@@ -8402,6 +8402,14 @@ components:
               items:
                 type: object
                 properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price:
+                    type: string
+                  pageId:
+                    type: string
                   emailTemplate:
                     type: string
                   displayPage:
@@ -8412,18 +8420,38 @@ components:
                     type: string
                   courseNum:
                     type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: string
-                  pageId:
-                    type: string
     PATCHCompanyCourseRequest:
       allOf:
         - type: object
           properties:
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -8458,39 +8486,39 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
-              type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
-              type: string
-            setDescription:
-              type: string
-              nullable: true
-            removeDescription:
-              type: string
-            removeAllDescription:
-              type: string
-            setPrice:
-              type: string
-              nullable: true
-            removePrice:
-              type: string
-            removeAllPrice:
-              type: string
-            setPageId:
-              type: string
-              nullable: true
-            removePageId:
-              type: string
-            removeAllPageId:
               type: string
     PATCHCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -8526,38 +8554,18 @@ components:
               type: string
             removeAllCourseNum:
               type: string
-            setName:
-              type: string
-              nullable: true
-            removeName:
-              type: string
-            removeAllName:
-              type: string
-            setDescription:
-              type: string
-              nullable: true
-            removeDescription:
-              type: string
-            removeAllDescription:
-              type: string
-            setPrice:
-              type: string
-              nullable: true
-            removePrice:
-              type: string
-            removeAllPrice:
-              type: string
-            setPageId:
-              type: string
-              nullable: true
-            removePageId:
-              type: string
-            removeAllPageId:
-              type: string
     POSTCompanyCourseRequest:
       allOf:
         - type: object
           properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
             emailTemplate:
               type: string
             displayPage:
@@ -8567,19 +8575,19 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            name:
-              type: string
-            description:
-              type: string
-            price:
-              type: string
-            pageId:
               type: string
     POSTCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
             emailTemplate:
               type: string
             displayPage:
@@ -8589,19 +8597,19 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            name:
-              type: string
-            description:
-              type: string
-            price:
-              type: string
-            pageId:
               type: string
     DELETEFilterCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
             emailTemplate:
               type: string
             displayPage:
@@ -8611,14 +8619,6 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            name:
-              type: string
-            description:
-              type: string
-            price:
-              type: string
-            pageId:
               type: string
     PUTImportCompanyCourseRequest:
       allOf:
@@ -8629,6 +8629,14 @@ components:
               items:
                 type: object
                 properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price:
+                    type: string
+                  pageId:
+                    type: string
                   emailTemplate:
                     type: string
                   displayPage:
@@ -8638,19 +8646,19 @@ components:
                   downloadUri:
                     type: string
                   courseNum:
-                    type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: string
-                  pageId:
                     type: string
     PUTImportCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  price:
+                    type: string
+                  pageId:
+                    type: string
                   emailTemplate:
                     type: string
                   displayPage:
@@ -8661,18 +8669,18 @@ components:
                     type: string
                   courseNum:
                     type: string
-                  name:
-                    type: string
-                  description:
-                    type: string
-                  price:
-                    type: string
-                  pageId:
-                    type: string
     GETCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
             emailTemplate:
               type: string
             displayPage:
@@ -8682,19 +8690,19 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            name:
-              type: string
-            description:
-              type: string
-            price:
-              type: string
-            pageId:
               type: string
     DELETECompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            name:
+              type: string
+            description:
+              type: string
+            price:
+              type: string
+            pageId:
+              type: string
             emailTemplate:
               type: string
             displayPage:
@@ -8704,14 +8712,6 @@ components:
             downloadUri:
               type: string
             courseNum:
-              type: string
-            name:
-              type: string
-            description:
-              type: string
-            price:
-              type: string
-            pageId:
               type: string
     EditPageCompanyCourseResponse:
       allOf:
@@ -10765,7 +10765,11 @@ components:
                     type: string
                   name:
                     type: string
-                  author:
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
                     type: string
                   pageId:
                     type: string
@@ -10781,6 +10785,18 @@ components:
                     type: string
                   pageImageType:
                     type: string
+                  pageImageAlt:
+                    type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     PATCHSitePageRequest:
       allOf:
         - type: object
@@ -10883,12 +10899,26 @@ components:
               type: string
             removeAllName:
               type: string
-            setAuthor:
+            setDescription:
               type: string
               nullable: true
-            removeAuthor:
+            removeDescription:
               type: string
-            removeAllAuthor:
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
               type: string
             setPageId:
               type: string
@@ -10939,6 +10969,45 @@ components:
               type: string
             removeAllPageImageType:
               type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     PATCHSitePageResponse:
       allOf:
         - type: object
@@ -11041,12 +11110,26 @@ components:
               type: string
             removeAllName:
               type: string
-            setAuthor:
+            setDescription:
               type: string
               nullable: true
-            removeAuthor:
+            removeDescription:
               type: string
-            removeAllAuthor:
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
               type: string
             setPageId:
               type: string
@@ -11097,6 +11180,45 @@ components:
               type: string
             removeAllPageImageType:
               type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     POSTSitePageRequest:
       allOf:
         - type: object
@@ -11129,7 +11251,11 @@ components:
               type: string
             name:
               type: string
-            author:
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
               type: string
             pageId:
               type: string
@@ -11145,6 +11271,18 @@ components:
               type: string
             pageImageType:
               type: string
+            pageImageAlt:
+              type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     POSTSitePageResponse:
       allOf:
         - type: object
@@ -11177,7 +11315,11 @@ components:
               type: string
             name:
               type: string
-            author:
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
               type: string
             pageId:
               type: string
@@ -11193,6 +11335,18 @@ components:
               type: string
             pageImageType:
               type: string
+            pageImageAlt:
+              type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     PUTImportSitePageRequest:
       allOf:
         - type: object
@@ -11230,7 +11384,11 @@ components:
                     type: string
                   name:
                     type: string
-                  author:
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
                     type: string
                   pageId:
                     type: string
@@ -11246,6 +11404,18 @@ components:
                     type: string
                   pageImageType:
                     type: string
+                  pageImageAlt:
+                    type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     PUTImportSitePageResponse:
       allOf:
         - type: object
@@ -11278,7 +11448,11 @@ components:
                     type: string
                   name:
                     type: string
-                  author:
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
                     type: string
                   pageId:
                     type: string
@@ -11294,6 +11468,18 @@ components:
                     type: string
                   pageImageType:
                     type: string
+                  pageImageAlt:
+                    type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     GETSitePageResponse:
       allOf:
         - type: object
@@ -11326,7 +11512,11 @@ components:
               type: string
             name:
               type: string
-            author:
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
               type: string
             pageId:
               type: string
@@ -11342,6 +11532,18 @@ components:
               type: string
             pageImageType:
               type: string
+            pageImageAlt:
+              type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     EditPageSitePageResponse:
       allOf:
         - type: string
