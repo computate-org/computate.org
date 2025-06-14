@@ -1,12 +1,23 @@
 package org.computate.site.model.course;
 
 import org.computate.site.model.BaseModel;
+import org.computate.site.page.SitePage;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.search.list.SearchList;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
+import org.computate.search.tool.SearchTool;
 import org.computate.search.wrap.Wrap;
+
+import io.vertx.core.Promise;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.data.Point;
 
 /**
@@ -160,4 +171,57 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 */
 	protected void _courseNum(Wrap<Integer> w) {
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: related article IDs
+	 * Description: The related article IDs comma-separated. 
+	 */
+	protected void _relatedArticleIds(Wrap<String> w) {
+	}
+
+	/**
+	 * Ignore: true
+	 */
+	protected void _relatedArticleSearch(Promise<SearchList<SitePage>> promise) {
+		SearchList<SitePage> l = new SearchList<>();
+		if(relatedArticleIds != null) {
+			List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+			l.setC(SitePage.class);
+			l.q("*:*");
+			l.fq(String.format("pageId_docvalues_string:" + list.stream()
+					.map(id -> SearchTool.escapeQueryChars(id))
+					.collect(Collectors.joining(" OR ", "(", ")"))
+					));
+			l.setStore(true);
+		}
+		promise.complete(l);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * Stored: true
+	 * DisplayName: related articles
+	 * Description: A JSON array of related articles. 
+	 */
+  protected void _relatedArticles(Wrap<JsonArray> w) {
+    JsonArray array = new JsonArray();
+    relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
+        JsonObject obj = JsonObject.mapFrom(relatedArticle);
+				obj.remove(SitePage.VAR_relatedArticles);
+				obj.remove(SitePage.VAR_relatedArticleIds);
+				JsonObject obj2 = new JsonObject();
+				obj2.put(SitePage.VAR_pageId, obj.getString(SitePage.VAR_pageId));
+				obj2.put(SitePage.VAR_name, obj.getString(SitePage.VAR_name));
+				obj2.put(SitePage.VAR_pageImageUri, obj.getString(SitePage.VAR_pageImageUri));
+				obj2.put(SitePage.VAR_pageImageWidth, obj.getString(SitePage.VAR_pageImageWidth));
+				obj2.put(SitePage.VAR_pageImageHeight, obj.getString(SitePage.VAR_pageImageHeight));
+				obj2.put(SitePage.VAR_pageImageAlt, obj.getString(SitePage.VAR_pageImageAlt));
+				obj2.put(SitePage.VAR_displayPage, obj.getString(SitePage.VAR_displayPage));
+        array.add(obj2);
+    });
+    w.o(array);
+  }
 }

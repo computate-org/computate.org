@@ -8402,6 +8402,14 @@ components:
               items:
                 type: object
                 properties:
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8420,10 +8428,37 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  relatedArticleIds:
+                    type: string
     PATCHCompanyCourseRequest:
       allOf:
         - type: object
           properties:
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             setName:
               type: string
               nullable: true
@@ -8486,11 +8521,43 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
               type: string
     PATCHCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             setName:
               type: string
               nullable: true
@@ -8554,10 +8621,25 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
     POSTCompanyCourseRequest:
       allOf:
         - type: object
           properties:
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             name:
               type: string
             description:
@@ -8575,11 +8657,21 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            relatedArticleIds:
               type: string
     POSTCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             name:
               type: string
             description:
@@ -8597,11 +8689,21 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            relatedArticleIds:
               type: string
     DELETEFilterCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             name:
               type: string
             description:
@@ -8619,6 +8721,8 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            relatedArticleIds:
               type: string
     PUTImportCompanyCourseRequest:
       allOf:
@@ -8629,6 +8733,14 @@ components:
               items:
                 type: object
                 properties:
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8646,11 +8758,21 @@ components:
                   downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  relatedArticleIds:
                     type: string
     PUTImportCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8669,10 +8791,20 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  relatedArticleIds:
+                    type: string
     GETCompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             name:
               type: string
             description:
@@ -8690,11 +8822,21 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            relatedArticleIds:
               type: string
     DELETECompanyCourseResponse:
       allOf:
         - type: object
           properties:
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
             name:
               type: string
             description:
@@ -8712,6 +8854,8 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            relatedArticleIds:
               type: string
     EditPageCompanyCourseResponse:
       allOf:

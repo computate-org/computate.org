@@ -36,10 +36,13 @@ import java.util.Map;
 import java.lang.String;
 import java.math.BigDecimal;
 import java.lang.Integer;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.site.page.SitePage;
+import io.vertx.core.json.JsonArray;
+import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
-import io.vertx.core.json.JsonArray;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 import io.vertx.core.json.JsonObject;
@@ -715,6 +718,174 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return courseNum;
 	}
 
+	///////////////////////
+	// relatedArticleIds //
+	///////////////////////
+
+
+	/**	 The entity relatedArticleIds
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String relatedArticleIds;
+
+	/**	<br> The entity relatedArticleIds
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _relatedArticleIds(Wrap<String> w);
+
+	public String getRelatedArticleIds() {
+		return relatedArticleIds;
+	}
+	public void setRelatedArticleIds(String o) {
+		this.relatedArticleIds = CompanyCourse.staticSetRelatedArticleIds(siteRequest_, o);
+	}
+	public static String staticSetRelatedArticleIds(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyCourse relatedArticleIdsInit() {
+		Wrap<String> relatedArticleIdsWrap = new Wrap<String>().var("relatedArticleIds");
+		if(relatedArticleIds == null) {
+			_relatedArticleIds(relatedArticleIdsWrap);
+			Optional.ofNullable(relatedArticleIdsWrap.getO()).ifPresent(o -> {
+				setRelatedArticleIds(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchRelatedArticleIds(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrRelatedArticleIds(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRelatedArticleIds(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchRelatedArticleIds(siteRequest_, CompanyCourse.staticSetRelatedArticleIds(siteRequest_, o)).toString();
+	}
+
+	public String sqlRelatedArticleIds() {
+		return relatedArticleIds;
+	}
+
+	//////////////////////////
+	// relatedArticleSearch //
+	//////////////////////////
+
+
+	/**	 The entity relatedArticleSearch
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonIgnore
+	@JsonInclude(Include.NON_NULL)
+	protected SearchList<SitePage> relatedArticleSearch;
+
+	/**	<br> The entity relatedArticleSearch
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
+	 * <br>
+	 * @param promise is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _relatedArticleSearch(Promise<SearchList<SitePage>> promise);
+
+	public SearchList<SitePage> getRelatedArticleSearch() {
+		return relatedArticleSearch;
+	}
+
+	public void setRelatedArticleSearch(SearchList<SitePage> relatedArticleSearch) {
+		this.relatedArticleSearch = relatedArticleSearch;
+	}
+	public static SearchList<SitePage> staticSetRelatedArticleSearch(SiteRequest siteRequest_, String o) {
+		return null;
+	}
+	protected Future<SearchList<SitePage>> relatedArticleSearchPromise() {
+		Promise<SearchList<SitePage>> promise = Promise.promise();
+		Promise<SearchList<SitePage>> promise2 = Promise.promise();
+		_relatedArticleSearch(promise2);
+		promise2.future().onSuccess(o -> {
+			if(o != null && relatedArticleSearch == null) {
+				o.promiseDeepForClass(siteRequest_).onSuccess(a -> {
+					setRelatedArticleSearch(o);
+					promise.complete(o);
+				}).onFailure(ex -> {
+					promise.fail(ex);
+				});
+			} else {
+				promise.complete(o);
+			}
+		}).onFailure(ex -> {
+			promise.fail(ex);
+		});
+		return promise.future();
+	}
+
+	/////////////////////
+	// relatedArticles //
+	/////////////////////
+
+
+	/**	 The entity relatedArticles
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonDeserialize(using = JsonArrayDeserializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected JsonArray relatedArticles;
+
+	/**	<br> The entity relatedArticles
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _relatedArticles(Wrap<JsonArray> w);
+
+	public JsonArray getRelatedArticles() {
+		return relatedArticles;
+	}
+
+	public void setRelatedArticles(JsonArray relatedArticles) {
+		this.relatedArticles = relatedArticles;
+	}
+	@JsonIgnore
+	public void setRelatedArticles(String o) {
+		this.relatedArticles = CompanyCourse.staticSetRelatedArticles(siteRequest_, o);
+	}
+	public static JsonArray staticSetRelatedArticles(SiteRequest siteRequest_, String o) {
+		if(o != null) {
+				return new JsonArray(o);
+		}
+		return null;
+	}
+	protected CompanyCourse relatedArticlesInit() {
+		Wrap<JsonArray> relatedArticlesWrap = new Wrap<JsonArray>().var("relatedArticles");
+		if(relatedArticles == null) {
+			_relatedArticles(relatedArticlesWrap);
+			Optional.ofNullable(relatedArticlesWrap.getO()).ifPresent(o -> {
+				setRelatedArticles(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchRelatedArticles(SiteRequest siteRequest_, JsonArray o) {
+		return o.toString();
+	}
+
+	public static String staticSearchStrRelatedArticles(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqRelatedArticles(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchRelatedArticles(siteRequest_, CompanyCourse.staticSetRelatedArticles(siteRequest_, o)).toString();
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -752,6 +923,24 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				storeUrlInit();
 				downloadUriInit();
 				courseNumInit();
+				relatedArticleIdsInit();
+				promise2.complete();
+			} catch(Exception ex) {
+				promise2.fail(ex);
+			}
+			return promise2.future();
+		}).compose(a -> {
+			Promise<Void> promise2 = Promise.promise();
+			relatedArticleSearchPromise().onSuccess(relatedArticleSearch -> {
+				promise2.complete();
+			}).onFailure(ex -> {
+				promise2.fail(ex);
+			});
+			return promise2.future();
+		}).compose(a -> {
+			Promise<Void> promise2 = Promise.promise();
+			try {
+				relatedArticlesInit();
 				promise2.complete();
 			} catch(Exception ex) {
 				promise2.fail(ex);
@@ -775,6 +964,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	public void siteRequestCompanyCourse(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
+		if(relatedArticleSearch != null)
+			relatedArticleSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -821,6 +1012,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return oCompanyCourse.downloadUri;
 			case "courseNum":
 				return oCompanyCourse.courseNum;
+			case "relatedArticleIds":
+				return oCompanyCourse.relatedArticleIds;
+			case "relatedArticleSearch":
+				return oCompanyCourse.relatedArticleSearch;
+			case "relatedArticles":
+				return oCompanyCourse.relatedArticles;
 			default:
 				return super.obtainBaseResult(var);
 		}
@@ -876,6 +1073,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSetDownloadUri(siteRequest_, v);
 		case "courseNum":
 			return CompanyCourse.staticSetCourseNum(siteRequest_, v);
+		case "relatedArticleIds":
+			return CompanyCourse.staticSetRelatedArticleIds(siteRequest_, v);
+		case "relatedArticles":
+			return CompanyCourse.staticSetRelatedArticles(siteRequest_, v);
 			default:
 				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
 		}
@@ -906,6 +1107,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
+		case "relatedArticleIds":
+			return CompanyCourse.staticSearchRelatedArticleIds(siteRequest_, (String)o);
+		case "relatedArticles":
+			return CompanyCourse.staticSearchRelatedArticles(siteRequest_, (JsonArray)o);
 			default:
 				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -936,6 +1141,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+		case "relatedArticleIds":
+			return CompanyCourse.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
+		case "relatedArticles":
+			return CompanyCourse.staticSearchStrRelatedArticles(siteRequest_, (String)o);
 			default:
 				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -966,6 +1175,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
+		case "relatedArticleIds":
+			return CompanyCourse.staticSearchFqRelatedArticleIds(siteRequest_, o);
+		case "relatedArticles":
+			return CompanyCourse.staticSearchFqRelatedArticles(siteRequest_, o);
 			default:
 				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
 		}
@@ -1044,6 +1257,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("courseNum");
 				return val;
+			} else if("relatedarticleids".equals(varLower)) {
+				if(val instanceof String) {
+					setRelatedArticleIds((String)val);
+				}
+				saves.add("relatedArticleIds");
+				return val;
 		} else {
 			return super.persistBaseResult(var, val);
 		}
@@ -1108,6 +1327,18 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				if(courseNum != null)
 					oCompanyCourse.setCourseNum(courseNum);
 			}
+
+			if(saves.contains("relatedArticleIds")) {
+				String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
+				if(relatedArticleIds != null)
+					oCompanyCourse.setRelatedArticleIds(relatedArticleIds);
+			}
+
+			if(saves.contains("relatedArticles")) {
+				String relatedArticles = (String)doc.get("relatedArticles_stored_string");
+				if(relatedArticles != null)
+					oCompanyCourse.setRelatedArticles(relatedArticles);
+			}
 		}
 
 		super.populateBaseResult(doc);
@@ -1138,6 +1369,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(courseNum != null) {
 			doc.put("courseNum_docvalues_int", courseNum);
 		}
+		if(relatedArticleIds != null) {
+			doc.put("relatedArticleIds_docvalues_string", relatedArticleIds);
+		}
+		if(relatedArticles != null) {
+			doc.put("relatedArticles_stored_string", relatedArticles.toString());
+		}
 		super.indexBaseResult(doc);
 
 	}
@@ -1160,6 +1397,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "relatedArticleIds":
+				return "relatedArticleIds_docvalues_string";
+			case "relatedArticles":
+				return "relatedArticles_stored_string";
 			default:
 				return BaseResult.varStoredBaseResult(entityVar);
 		}
@@ -1183,6 +1424,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "relatedArticleIds":
+				return "relatedArticleIds_docvalues_string";
 			default:
 				return BaseResult.varIndexedBaseResult(entityVar);
 		}
@@ -1206,6 +1449,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri";
 			case "courseNum_docvalues_int":
 				return "courseNum";
+			case "relatedArticleIds_docvalues_string":
+				return "relatedArticleIds";
 			default:
 				return BaseResult.searchVarBaseResult(searchVar);
 		}
@@ -1244,6 +1489,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
 		super.storeBaseResult(doc);
 	}
@@ -1273,6 +1520,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				apiRequest.addVars("downloadUri");
 			if(!Objects.equals(courseNum, original.getCourseNum()))
 				apiRequest.addVars("courseNum");
+			if(!Objects.equals(relatedArticleIds, original.getRelatedArticleIds()))
+				apiRequest.addVars("relatedArticleIds");
+			if(!Objects.equals(relatedArticles, original.getRelatedArticles()))
+				apiRequest.addVars("relatedArticles");
 			super.apiRequestBaseResult();
 		}
 	}
@@ -1292,6 +1543,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(relatedArticleIds).map(v -> "relatedArticleIds: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(relatedArticles).map(v -> "relatedArticles: " + v + "\n").orElse(""));
 		return sb.toString();
 	}
 
@@ -1309,6 +1562,9 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_downloadUri = "downloadUri";
 	public static final String VAR_courseNum = "courseNum";
+	public static final String VAR_relatedArticleIds = "relatedArticleIds";
+	public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
+	public static final String VAR_relatedArticles = "relatedArticles";
 
 	public static List<String> varsQForClass() {
 		return CompanyCourse.varsQCompanyCourse(new ArrayList<String>());
@@ -1352,6 +1608,9 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_downloadUri = "download URI";
 	public static final String DISPLAY_NAME_courseNum = "Course Number";
+	public static final String DISPLAY_NAME_relatedArticleIds = "related article IDs";
+	public static final String DISPLAY_NAME_relatedArticleSearch = "";
+	public static final String DISPLAY_NAME_relatedArticles = "related articles";
 
 	@Override
 	public String idForClass() {
@@ -1419,6 +1678,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_downloadUri;
 		case VAR_courseNum:
 			return DISPLAY_NAME_courseNum;
+		case VAR_relatedArticleIds:
+			return DISPLAY_NAME_relatedArticleIds;
+		case VAR_relatedArticleSearch:
+			return DISPLAY_NAME_relatedArticleSearch;
+		case VAR_relatedArticles:
+			return DISPLAY_NAME_relatedArticles;
 		default:
 			return BaseResult.displayNameBaseResult(var);
 		}
@@ -1444,6 +1709,10 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "The download relative URI for this page. ";
 		case VAR_courseNum:
 			return "The course number for this page. ";
+		case VAR_relatedArticleIds:
+			return "The related article IDs comma-separated. ";
+		case VAR_relatedArticles:
+			return "A JSON array of related articles. ";
 			default:
 				return BaseResult.descriptionBaseResult(var);
 		}
@@ -1467,6 +1736,12 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_courseNum:
 			return "Integer";
+		case VAR_relatedArticleIds:
+			return "String";
+		case VAR_relatedArticleSearch:
+			return "SearchList";
+		case VAR_relatedArticles:
+			return "JsonArray";
 			default:
 				return BaseResult.classSimpleNameBaseResult(var);
 		}

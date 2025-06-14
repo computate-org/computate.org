@@ -1924,8 +1924,8 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 			page.setSiteRequest_((SiteRequest)siteRequest);
 
 			page.persistForClass(CompanyResearch.VAR_name, CompanyResearch.staticSetName(siteRequest2, (String)result.get(CompanyResearch.VAR_name)));
-			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, (String)result.get(CompanyResearch.VAR_description)));
 			page.persistForClass(CompanyResearch.VAR_created, CompanyResearch.staticSetCreated(siteRequest2, (String)result.get(CompanyResearch.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, (String)result.get(CompanyResearch.VAR_description)));
 			page.persistForClass(CompanyResearch.VAR_pageId, CompanyResearch.staticSetPageId(siteRequest2, (String)result.get(CompanyResearch.VAR_pageId)));
 			page.persistForClass(CompanyResearch.VAR_archived, CompanyResearch.staticSetArchived(siteRequest2, (String)result.get(CompanyResearch.VAR_archived)));
 			page.persistForClass(CompanyResearch.VAR_objectTitle, CompanyResearch.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyResearch.VAR_objectTitle)));
