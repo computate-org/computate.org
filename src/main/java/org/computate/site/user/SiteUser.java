@@ -115,8 +115,9 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * Persist: true
 	 * HtmRow: 4
 	 * HtmCell: 2
-	 * DisplayName: awesome effect (requires refresh)
+	 * DisplayName: awesome effect
 	 * Description: an awesome effect for the entire site
+	 * Refresh: true
 	 */
 	protected void _awesomeEffect(Wrap<Boolean> w) {
 		w.o(false);
@@ -139,7 +140,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * HtmRow: 4
 	 * HtmCell: 1
 	 * DisplayName: font size
-	 * Description: The default font size for the site (small, medium, large). 
+	 * Description: The default font size for the site
 	 * Refresh: true
 	 * Radio:
 	 *   s: small
@@ -157,7 +158,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * HtmRow: 4
 	 * HtmCell: 2
 	 * DisplayName: site theme
-	 * Description: The site theme, either light or dark. 
+	 * Description: The site theme, either light or dark
 	 * Refresh: true
 	 * Radio:
 	 *   light: Light
@@ -174,7 +175,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * HtmRow: 4
 	 * HtmCell: 3
 	 * DisplayName: web components theme
-	 * Description: The web components theme for the site. 
+	 * Description: The web components theme for the site
 	 * Refresh: true
 	 * Radio:
 	 *   default: Default — "Your trusty companion, like a perfectly broken-in pair of jeans."
