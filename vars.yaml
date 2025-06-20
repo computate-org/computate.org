@@ -601,3 +601,26 @@ SQUARE_ACCESS_TOKEN: UNKNOWN
 SITE_OS_NAME: Red Hat Enterprise Linux
 SITE_OS_SHORT_NAME: RHEL
 SITE_OS_VERSION: 9.6
+
+SITE_CONNECTIONS_CLUSTER: |-5
+            <!-- <wa-card style="max-width: fit-content; margin: 0 auto;"> -->
+            <div class="wa-cluster " style="justify-content: center;">
+              <!-- <wa-button class="tile no-padding " variant="brand"> -->
+                <wa-icon-button style="font-size: var(--wa-font-size-2xl); color: inherit;" name="youtube" family="brands" label="Follow us on Youtube" href="https://www.youtube.com/channel/UC3ryOB2snhO7fItkx6dGx2Q/" target="_blank"></wa-icon-button>
+                <!-- <div class="wa-body-s">Youtube</div> -->
+              <!-- </wa-button> -->
+              <!-- <wa-button class="tile no-padding " variant="brand"> -->
+                <wa-icon-button style="font-size: var(--wa-font-size-2xl); color: inherit;" name="github" family="brands" label="View our source code on GitHub" href="https://github.com/\{\{ GITHUB_ORG \}\}/\{\{ SITE_NAME \}\}" target="_blank"></wa-icon-button>
+                <!-- <div class="wa-caption-s">GitHub</div> -->
+              <!-- </wa-button> -->
+              <!-- <wa-button class="tile no-padding " variant="brand"> -->
+                <wa-icon-button style="font-size: var(--wa-font-size-2xl); color: inherit;" name="linkedin" family="brands" label="Share on LinkedIn" href="https://www.linkedin.com/company/computate/" target="_blank"></wa-icon-button>
+                <!-- <div class="wa-caption-s">LinkedIn</div> -->
+              <!-- </wa-button> -->
+              <!-- <wa-button class="tile no-padding " variant="brand"> -->
+                <wa-icon-button style="font-size: var(--wa-font-size-2xl); color: inherit;" name="envelope-open" label="Share with email" href="mailto:\{\{ MAILING_LIST_EMAIL \}\}" target="_blank"></wa-icon-button>
+                <!-- <div class="wa-caption-s">email</div> -->
+              <!-- </wa-button> -->
+            </div>
+            <!-- </wa-card> -->
+
