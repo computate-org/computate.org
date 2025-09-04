@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: solr-setup-tasks
+  namespace: computateorg
+data:
+  main.yaml: |
+    ---
+    - name: >-
+        Create computateorg collection: 
+        SOLR_AUTH_TYPE=basic 
+        SOLR_AUTHENTICATION_OPTS="-Dbasicauth=admin:$(cat /opt/bitnami/solr/secrets/pass/password)" 
+        /opt/bitnami/solr/bin/solr create_collection --solr-url http://localhost:8983 -c computateorg -n computate'
+      kubernetes.core.k8s_exec:
+        namespace: solr
+        pod: solr-0
+        command: >-
+          bash -c '
+          SOLR_AUTH_TYPE=basic
+          SOLR_AUTHENTICATION_OPTS="-Dbasicauth=admin:$(cat /opt/bitnami/solr/secrets/pass/password)" 
+          /opt/bitnami/solr/bin/solr create_collection --solr-url http://localhost:8983 -c computateorg -n computate
+          '
+      register: create_computateorg_collection
+      ignore_errors: true
+    - name: Debug create_computateorg_collection
+      debug:
+        var: create_computateorg_collection
+    - name: Test create computateorg collection success
+      fail:
+        msg: "{{ command_status }}"
+      when: create_computateorg_collection.failed and create_computateorg_collection is not search("already exists")
