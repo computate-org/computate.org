@@ -20,6 +20,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -199,6 +211,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -256,6 +280,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -287,6 +323,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -361,6 +409,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -415,6 +475,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -445,6 +517,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -525,12 +609,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -552,6 +688,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -582,6 +730,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -758,6 +918,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -940,6 +1112,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -997,6 +1181,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -1028,6 +1224,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -1102,6 +1310,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -1156,6 +1376,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -1186,6 +1418,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -1266,12 +1510,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -1293,6 +1589,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -1472,6 +1780,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -1506,6 +1826,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -1533,6 +1865,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -1715,6 +2059,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -1772,6 +2128,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -1803,6 +2171,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -1877,6 +2257,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -1931,6 +2323,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -1961,6 +2365,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -2041,12 +2457,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -2068,6 +2536,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -2247,6 +2727,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -2281,6 +2773,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -2308,6 +2812,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -2490,6 +3006,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -2547,6 +3075,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -2578,6 +3118,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -2652,6 +3204,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -2706,6 +3270,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -2736,6 +3312,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -2816,6 +3404,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -2850,12 +3450,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -2877,6 +3529,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -3056,6 +3720,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -3090,6 +3766,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -3117,6 +3805,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -3299,6 +3999,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -3356,6 +4068,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -3388,6 +4112,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -3445,6 +4181,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -3479,12 +4227,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -3506,6 +4306,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -3685,6 +4497,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -3712,6 +4536,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -3894,6 +4730,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -3951,6 +4799,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -3983,6 +4843,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -4040,6 +4912,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -4074,12 +4958,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -4101,6 +5037,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -4280,6 +5228,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -4307,6 +5267,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -4489,6 +5461,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -4546,6 +5530,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -4577,6 +5573,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -4651,6 +5659,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -4705,6 +5725,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -4735,6 +5767,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -4815,12 +5859,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -4842,6 +5938,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5021,6 +6129,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -5055,6 +6175,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -5082,6 +6214,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5264,6 +6408,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -5321,6 +6477,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -5352,6 +6520,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5426,6 +6606,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -5480,6 +6672,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -5510,6 +6714,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5590,12 +6806,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -5621,6 +6889,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5651,6 +6931,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -5830,6 +7122,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -5857,6 +7161,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -6039,6 +7355,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -6096,6 +7424,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -6128,6 +7468,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -6185,6 +7537,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -6219,12 +7583,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -6246,6 +7662,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -6425,6 +7853,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -6452,6 +7892,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -6634,6 +8086,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -6691,6 +8155,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -6723,6 +8199,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -6780,6 +8268,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -6814,12 +8314,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -6841,6 +8393,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -7020,6 +8584,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: pageId
           in: path
           description: >+
@@ -7051,6 +8627,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -7233,6 +8821,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - in: query
           name: q
           description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
@@ -7290,6 +8890,18 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
       requestBody:
         description: >+
         required: true
@@ -7325,12 +8937,64 @@ paths:
           in: cookie
           schema:
             type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
         - name: userId
           in: path
           description: >+
           required: true
           schema:
             type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -7356,6 +9020,18 @@ paths:
           schema:
             type: string
         - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
           in: cookie
           schema:
             type: string
@@ -8402,14 +10078,6 @@ components:
               items:
                 type: object
                 properties:
-                  relatedArticles:
-                    type: array
-                    items:
-                      anyOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8430,35 +10098,18 @@ components:
                     type: string
                   relatedArticleIds:
                     type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     PATCHCompanyCourseRequest:
       allOf:
         - type: object
           properties:
-            setRelatedArticles:
-              type: array
-              nullable: true
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
-            removeRelatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
-            removeAllRelatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             setName:
               type: string
               nullable: true
@@ -8529,35 +10180,35 @@ components:
               type: string
             removeAllRelatedArticleIds:
               type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     PATCHCompanyCourseResponse:
       allOf:
         - type: object
           properties:
-            setRelatedArticles:
-              type: array
-              nullable: true
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
-            removeRelatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
-            removeAllRelatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             setName:
               type: string
               nullable: true
@@ -8628,18 +10279,35 @@ components:
               type: string
             removeAllRelatedArticleIds:
               type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     POSTCompanyCourseRequest:
       allOf:
         - type: object
           properties:
-            relatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             name:
               type: string
             description:
@@ -8660,18 +10328,18 @@ components:
               type: string
             relatedArticleIds:
               type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     POSTCompanyCourseResponse:
       allOf:
         - type: object
           properties:
-            relatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             name:
               type: string
             description:
@@ -8692,18 +10360,18 @@ components:
               type: string
             relatedArticleIds:
               type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     DELETEFilterCompanyCourseResponse:
       allOf:
         - type: object
           properties:
-            relatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             name:
               type: string
             description:
@@ -8724,6 +10392,14 @@ components:
               type: string
             relatedArticleIds:
               type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     PUTImportCompanyCourseRequest:
       allOf:
         - type: object
@@ -8733,14 +10409,6 @@ components:
               items:
                 type: object
                 properties:
-                  relatedArticles:
-                    type: array
-                    items:
-                      anyOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8761,18 +10429,18 @@ components:
                     type: string
                   relatedArticleIds:
                     type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     PUTImportCompanyCourseResponse:
       allOf:
         - type: object
           properties:
-                  relatedArticles:
-                    type: array
-                    items:
-                      anyOf:
-                        - type: string
-                        - type: number
-                        - type: string
-                        - type: boolean
                   name:
                     type: string
                   description:
@@ -8793,18 +10461,18 @@ components:
                     type: string
                   relatedArticleIds:
                     type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
     GETCompanyCourseResponse:
       allOf:
         - type: object
           properties:
-            relatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             name:
               type: string
             description:
@@ -8825,18 +10493,18 @@ components:
               type: string
             relatedArticleIds:
               type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     DELETECompanyCourseResponse:
       allOf:
         - type: object
           properties:
-            relatedArticles:
-              type: array
-              items:
-                anyOf:
-                  - type: string
-                  - type: number
-                  - type: string
-                  - type: boolean
             name:
               type: string
             description:
@@ -8857,6 +10525,14 @@ components:
               type: string
             relatedArticleIds:
               type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
     EditPageCompanyCourseResponse:
       allOf:
         - type: string

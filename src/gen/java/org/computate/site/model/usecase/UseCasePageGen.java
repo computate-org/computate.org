@@ -293,6 +293,7 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
 
 	public static final String CLASS_SIMPLE_NAME = "UseCasePage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.usecase.UseCasePage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

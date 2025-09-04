@@ -394,35 +394,35 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			apiCompanyWebsite.setConfig(config);
 			apiCompanyWebsite.setWebClient(webClient);
 			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
-					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 							.onSuccess(q2 -> {
-						apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-								.compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+						apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+								.compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 								.onSuccess(q3 -> {
-							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-									.compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+							apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+									.compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 									.onSuccess(q4 -> {
-								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-										.compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+								apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+										.compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 										.onSuccess(q5 -> {
-									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-											.compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+									apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+											.compose(q6 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 											.onSuccess(q6 -> {
-										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-												.compose(q7 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+										apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+												.compose(q7 -> apiCompanyEvent.authorizeGroupData(authToken, CompanyEvent.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 												.onSuccess(q7 -> {
-											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-													.compose(q8 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+											apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+													.compose(q8 -> apiCompanyWebinar.authorizeGroupData(authToken, CompanyWebinar.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 													.onSuccess(q8 -> {
-												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-														.compose(q9 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+												apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+														.compose(q9 -> apiCompanyService.authorizeGroupData(authToken, CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 														.onSuccess(q9 -> {
-													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-															.compose(q10 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+													apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+															.compose(q10 -> apiCompanyResearch.authorizeGroupData(authToken, CompanyResearch.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 															.onSuccess(q10 -> {
-														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_SIMPLE_NAME, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																.onSuccess(q11 -> {
 															LOG.info("authorize data complete");
 															promise.complete();
@@ -626,8 +626,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			ClusterManager clusterManager = null;
 			if(enableZookeeperCluster) {
 				JsonObject zkConfig = new JsonObject();
-				String hostname = config.getString(ConfigKeys.HOSTNAME);
-				String openshiftService = config.getString(ConfigKeys.OPENSHIFT_SERVICE);
 				String zookeeperHostName = config.getString(ConfigKeys.ZOOKEEPER_HOST_NAME);
 				Integer zookeeperPort = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_PORT));
 				String zookeeperHosts = Optional.ofNullable(config.getString(ConfigKeys.ZOOKEEPER_HOSTS)).orElse(zookeeperHostName + ":" + zookeeperPort);
@@ -653,14 +651,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				);
 				clusterManager = new ZookeeperClusterManager(zkConfig);
 	
-				if(clusterHostName == null) {
-					clusterHostName = hostname;
-				}
-				if(clusterPublicHostName == null) {
-					if(hostname != null && openshiftService != null) {
-						clusterPublicHostName = hostname + "." + openshiftService;
-					}
-				}
 				if(clusterHostName != null) {
 					LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_HOST_NAME, clusterHostName));
 					eventBusOptions.setHost(clusterHostName);
@@ -1470,13 +1460,14 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authResources = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
-			List<String> publicResources = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
+			List<String> authClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
+			List<String> authResources = Arrays.asList("COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE");
+			List<String> publicClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
 			registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
-			apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources);
-			apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicResources);
+			apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources, authClassSimpleNames);
+			apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicClassSimpleNames);
 
 			CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
 			initializeApiService(apiCompanyAbout);
@@ -1760,23 +1751,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			}
 			router.route("/static/*").handler(staticHandler);
 
-			router.get("/").handler(handler -> {
-				try {
-					String siteTemplatePath = config().getString(ConfigKeys.TEMPLATE_PATH);
-					String pageTemplateUri = "/en-us/HomePage.htm";
-					Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-					String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-					JsonObject ctx = ConfigKeys.getPageContext(config());
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					handler.response().putHeader("Content-Type", "text/html");
-					handler.end(buffer);
-				} catch(Exception ex) {
-					LOG.error("Failed to load page. ", ex);
-					handler.fail(ex);
-				}
-			});
-
 			vertx.eventBus().consumer("square-order", message -> {
 				try {
 					String signature = message.headers().get("x-square-hmacsha256-signature");
@@ -1995,7 +1969,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
-			SiteRoutes.routes(router, oauth2AuthHandler, config(), webClient, apiSiteUser);
+			SiteRoutes.routes(router, oauth2AuthHandler, config(), webClient, jinjava, apiSiteUser);
 
 			LOG.info("The UI was configured properly.");
 			promise.complete();

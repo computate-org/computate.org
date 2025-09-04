@@ -1848,6 +1848,7 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyEvent";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.event.CompanyEvent";
+	public static final String CLASS_AUTH_RESOURCE = "COMPANYEVENT";
 	public static final String CLASS_API_ADDRESS_CompanyEvent = "computate.org-enUS-CompanyEvent";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyEvent;

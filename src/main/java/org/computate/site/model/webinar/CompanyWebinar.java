@@ -415,6 +415,7 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
 
   /**
    * {@inheritDoc}
+   * Persist: true
    * DocValues: true
    * Link: true
    * HtmColumn: 2

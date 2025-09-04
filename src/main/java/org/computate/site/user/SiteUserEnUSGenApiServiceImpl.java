@@ -121,19 +121,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+			String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
 			if(userId != null)
-				form.add("permission", String.format("%s-%s#%s", SiteUser.CLASS_SIMPLE_NAME, userId, "GET"));
+				form.add("permission", String.format("%s#%s", userId, "GET"));
 			siteRequest.setPublicRead(classPublicRead);
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -286,19 +287,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+			String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
 			if(userId != null)
-				form.add("permission", String.format("%s-%s#%s", SiteUser.CLASS_SIMPLE_NAME, userId, "PATCH"));
+				form.add("permission", String.format("%s#%s", userId, "PATCH"));
 			siteRequest.setPublicRead(classPublicRead);
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -616,7 +618,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bParams.add(o2.sqlUserEmail());
 						break;
 					case "setArchived":
-							o2.setArchived(jsonObject.getBoolean(entityVar));
+							o2.setArchived(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
 							bSql.append(SiteUser.VAR_archived + "=$" + num);
@@ -648,7 +650,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bParams.add(o2.sqlUserFullName());
 						break;
 					case "setSeeArchived":
-							o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+							o2.setSeeArchived(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
 							bSql.append(SiteUser.VAR_seeArchived + "=$" + num);
@@ -664,7 +666,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bParams.add(o2.sqlSessionId());
 						break;
 					case "setAwesomeEffect":
-							o2.setAwesomeEffect(jsonObject.getBoolean(entityVar));
+							o2.setAwesomeEffect(jsonObject.getString(entityVar));
 							if(bParams.size() > 0)
 								bSql.append(", ");
 							bSql.append(SiteUser.VAR_awesomeEffect + "=$" + num);
@@ -794,19 +796,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+			String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
 			if(userId != null)
-				form.add("permission", String.format("%s-%s#%s", SiteUser.CLASS_SIMPLE_NAME, userId, "POST"));
+				form.add("permission", String.format("%s#%s", userId, "POST"));
 			siteRequest.setPublicRead(classPublicRead);
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -823,7 +826,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
 					scopes.add("GET");
 					scopes.add("PATCH");
-					if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("POST")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -910,6 +913,11 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				ApiRequest apiRequest = new ApiRequest();
 				apiRequest.setRows(1L);
 				apiRequest.setNumFound(1L);
@@ -1005,7 +1013,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						promise2.complete(siteUser);
 					} catch(Exception ex) {
 						LOG.error(String.format("postSiteUserFuture failed. "), ex);
-						promise.fail(ex);
+						promise2.fail(ex);
 					}
 				}).onFailure(ex -> {
 					promise2.fail(ex);
@@ -1118,7 +1126,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bParams.add(o2.sqlUserEmail());
 						break;
 					case SiteUser.VAR_archived:
-						o2.setArchived(jsonObject.getBoolean(entityVar));
+						o2.setArchived(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
@@ -1154,7 +1162,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bParams.add(o2.sqlUserFullName());
 						break;
 					case SiteUser.VAR_seeArchived:
-						o2.setSeeArchived(jsonObject.getBoolean(entityVar));
+						o2.setSeeArchived(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
@@ -1172,7 +1180,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bParams.add(o2.sqlSessionId());
 						break;
 					case SiteUser.VAR_awesomeEffect:
-						o2.setAwesomeEffect(jsonObject.getBoolean(entityVar));
+						o2.setAwesomeEffect(jsonObject.getString(entityVar));
 						if(bParams.size() > 0) {
 							bSql.append(", ");
 						}
@@ -1308,19 +1316,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+			String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
 			if(userId != null)
-				form.add("permission", String.format("%s-%s#%s", SiteUser.CLASS_SIMPLE_NAME, userId, "GET"));
+				form.add("permission", String.format("%s#%s", userId, "GET"));
 			siteRequest.setPublicRead(classPublicRead);
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -1382,7 +1391,8 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void searchpageSiteUserPageInit(SiteUserPage page, SearchList<SiteUser> listSiteUser) {
+	public void searchpageSiteUserPageInit(SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateSearchPageSiteUser(ServiceRequest serviceRequest) {
@@ -1411,9 +1421,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					searchpageSiteUserPageInit(page, listSiteUser, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200SearchPageSiteUser failed. "), ex);
 					promise.fail(ex);
@@ -1469,19 +1485,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
+			String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SiteUser.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
 			if(userId != null)
-				form.add("permission", String.format("%s-%s#%s", SiteUser.CLASS_SIMPLE_NAME, userId, "GET"));
+				form.add("permission", String.format("%s#%s", userId, "GET"));
 			siteRequest.setPublicRead(classPublicRead);
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
@@ -1543,7 +1560,8 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void editpageSiteUserPageInit(SiteUserPage page, SearchList<SiteUser> listSiteUser) {
+	public void editpageSiteUserPageInit(SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateEditPageSiteUser(ServiceRequest serviceRequest) {
@@ -1572,9 +1590,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					editpageSiteUserPageInit(page, listSiteUser, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200EditPageSiteUser failed. "), ex);
 					promise.fail(ex);
@@ -1903,7 +1927,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						max = max.plus(2, ChronoUnit.DAYS);
 					}
 					Duration duration = Duration.between(min, max);
-					String gap = "DAY";
+					String gap = "HOUR";
 					if(duration.toDays() >= 365)
 						gap = "YEAR";
 					else if(duration.toDays() >= 28)
@@ -1953,7 +1977,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			SiteRequest siteRequest = o.getSiteRequest_();
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT * FROM SiteUser WHERE pk=$1")
+			sqlConnection.preparedQuery("SELECT userId, created, userName, userEmail, archived, userFirstName, userLastName, userFullName, seeArchived, sessionId, awesomeEffect, userKey, displayName, siteFontSize, siteTheme, objectTitle, webComponentsTheme, displayPage FROM SiteUser WHERE pk=$1")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(pk)
 					).onSuccess(result -> {

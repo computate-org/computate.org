@@ -1303,6 +1303,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyProduct";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProduct";
+	public static final String CLASS_AUTH_RESOURCE = "COMPANYPRODUCT";
 	public static final String CLASS_API_ADDRESS_CompanyProduct = "computate.org-enUS-CompanyProduct";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyProduct;

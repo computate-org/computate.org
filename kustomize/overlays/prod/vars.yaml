@@ -36,7 +36,7 @@ SITE_REPO_HTTPS: "{{ SITE_REPO | replace('git@github.com:', 'https://github.com/
 # The port of the site. 
 SITE_PORT: 10200
 # The host name of the site. 
-SITE_HOST_NAME: "www.computate.org"
+SITE_HOST_NAME: "computate.org"
 # The base URL of the site. 
 SITE_BASE_URL: "http://{{ SITE_HOST_NAME }}"
 # The public facing URL for the site. 
@@ -198,7 +198,7 @@ DEVELOPER_NAME: Christopher Tate
 # The software organization name. 
 DEVELOPER_ORG_NAME: computate.org
 # The software organization URL. 
-DEVELOPER_ORG_URL: https://www.computate.org/
+DEVELOPER_ORG_URL: https://computate.org/
 
 ####################
 # Service defaults #

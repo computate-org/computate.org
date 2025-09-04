@@ -210,6 +210,11 @@ public class SiteUserGenPage extends SiteUserGenPageGen<PageLayout> {
       if(defaultPivotVars.contains(var)) {
         json.put("pivot", true);
       }
+      if(defaultSortVars.contains(String.format("%s asc", var))) {
+        json.put("sort", "asc");
+      } else if(defaultSortVars.contains(String.format("%s desc", var))) {
+        json.put("sort", "desc");
+      }
       vars.put(var, json);
     }
   }
@@ -345,7 +350,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultRangeGap(Wrap<String> w) {
-    w.o(Optional.ofNullable(rangeGap).orElse(Optional.ofNullable(defaultRangeStats).map(s -> s.getString("defaultRangeGap")).orElse("+1DAY")));
+    w.o(Optional.ofNullable(rangeGap).orElse(Optional.ofNullable(defaultRangeStats).map(s -> s.getString("defaultRangeGap")).orElse("+1HOUR")));
   }
 
   @Override
@@ -535,7 +540,7 @@ public class SiteUserGenPage extends SiteUserGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-duotone fa-regular fa-user-gear\"></i>");
+      c.o("<i class=\"fa-regular fa-user-gear\"></i>");
   }
 
   protected void _pageUriSiteUser(Wrap<String> c) {

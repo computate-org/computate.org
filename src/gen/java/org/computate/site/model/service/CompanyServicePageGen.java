@@ -293,6 +293,7 @@ public abstract class CompanyServicePageGen<DEV> extends CompanyServiceGenPage {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyServicePage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.service.CompanyServicePage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

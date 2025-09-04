@@ -293,6 +293,7 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyProductPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProductPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

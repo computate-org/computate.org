@@ -5,4 +5,4 @@ metadata:
   namespace: computateorg
 spec:
   domains:
-    - www.computate.org
+    - computate.org

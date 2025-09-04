@@ -738,6 +738,7 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarGenPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarGenPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 	public static final String VAR_searchListCompanyWebinar_ = "searchListCompanyWebinar_";
 	public static final String VAR_listCompanyWebinar = "listCompanyWebinar";
 	public static final String VAR_resultCount = "resultCount";

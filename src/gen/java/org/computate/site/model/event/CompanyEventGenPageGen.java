@@ -667,6 +667,7 @@ public abstract class CompanyEventGenPageGen<DEV> extends PageLayout {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyEventGenPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.event.CompanyEventGenPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 	public static final String VAR_searchListCompanyEvent_ = "searchListCompanyEvent_";
 	public static final String VAR_listCompanyEvent = "listCompanyEvent";
 	public static final String VAR_resultCount = "resultCount";

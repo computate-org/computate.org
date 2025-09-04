@@ -667,6 +667,7 @@ public abstract class CompanyResearchGenPageGen<DEV> extends PageLayout {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyResearchGenPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.research.CompanyResearchGenPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 	public static final String VAR_searchListCompanyResearch_ = "searchListCompanyResearch_";
 	public static final String VAR_listCompanyResearch = "listCompanyResearch";
 	public static final String VAR_resultCount = "resultCount";

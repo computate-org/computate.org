@@ -36,3 +36,4 @@ ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlAmericas text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlApac text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS webinarUrlEmea text;
 ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS icalUrl text;
+ALTER TABLE CompanyWebinar ADD COLUMN IF NOT EXISTS joinUrl text;

@@ -667,6 +667,7 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 
 	public static final String CLASS_SIMPLE_NAME = "UseCaseGenPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.usecase.UseCaseGenPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 	public static final String VAR_searchListUseCase_ = "searchListUseCase_";
 	public static final String VAR_listUseCase = "listUseCase";
 	public static final String VAR_resultCount = "resultCount";

@@ -3,11 +3,14 @@ package org.computate.site.model.product;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgPool;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
+import org.computate.vertx.search.list.SearchList;
+
 import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.mqtt.MqttClient;
 import io.vertx.amqp.AmqpSender;
@@ -18,4 +21,10 @@ import com.hubspot.jinjava.Jinjava;
  * Translate: false
  **/
 public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiServiceImpl {
+
+  @Override
+  public void userpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct,
+      Promise<Void> promise) {
+    super.userpageCompanyProductPageInit(page, listCompanyProduct, promise);
+  }
 }

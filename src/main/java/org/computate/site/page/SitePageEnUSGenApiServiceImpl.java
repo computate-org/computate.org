@@ -314,19 +314,20 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String SITEPAGE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEPAGE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "PATCH"));
+				form.add("permission", String.format("%s#%s", pageId, "PATCH"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -340,7 +341,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("PATCH")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -579,19 +580,20 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String SITEPAGE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEPAGE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "POST"));
+				form.add("permission", String.format("%s#%s", pageId, "POST"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -605,7 +607,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("POST")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -793,19 +795,20 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String SITEPAGE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEPAGE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "PUT"));
+				form.add("permission", String.format("%s#%s", pageId, "PUT"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -819,7 +822,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("PUT")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -1134,7 +1137,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void searchpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage) {
+	public void searchpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateSearchPageSitePage(ServiceRequest serviceRequest) {
@@ -1161,9 +1165,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					searchpageSitePagePageInit(page, listSitePage, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200SearchPageSitePage failed. "), ex);
 					promise.fail(ex);
@@ -1219,19 +1229,20 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String SITEPAGE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEPAGE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", SitePage.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", SitePage.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", SitePage.CLASS_SIMPLE_NAME, pageId, "GET"));
+				form.add("permission", String.format("%s#%s", pageId, "GET"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1292,7 +1303,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void editpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage) {
+	public void editpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateEditPageSitePage(ServiceRequest serviceRequest) {
@@ -1319,9 +1331,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					editpageSitePagePageInit(page, listSitePage, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200EditPageSitePage failed. "), ex);
 					promise.fail(ex);
@@ -1414,7 +1432,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void displaypageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage) {
+	public void displaypageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateDisplayPageSitePage(ServiceRequest serviceRequest) {
@@ -1441,9 +1460,15 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					displaypageSitePagePageInit(page, listSitePage, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200DisplayPageSitePage failed. "), ex);
 					promise.fail(ex);
@@ -1753,7 +1778,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						max = max.plus(2, ChronoUnit.DAYS);
 					}
 					Duration duration = Duration.between(min, max);
-					String gap = "DAY";
+					String gap = "HOUR";
 					if(duration.toDays() >= 365)
 						gap = "YEAR";
 					else if(duration.toDays() >= 28)
@@ -1951,6 +1976,8 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, (String)result.get(SitePage.VAR_h2)));
 			page.persistForClass(SitePage.VAR_pageImageUri, SitePage.staticSetPageImageUri(siteRequest2, (String)result.get(SitePage.VAR_pageImageUri)));
 			page.persistForClass(SitePage.VAR_pageImageAlt, SitePage.staticSetPageImageAlt(siteRequest2, (String)result.get(SitePage.VAR_pageImageAlt)));
+			page.persistForClass(SitePage.VAR_labelsString, SitePage.staticSetLabelsString(siteRequest2, (String)result.get(SitePage.VAR_labelsString)));
+			page.persistForClass(SitePage.VAR_labels, SitePage.staticSetLabels(siteRequest2, (String)result.get(SitePage.VAR_labels)));
 			page.persistForClass(SitePage.VAR_relatedArticleIds, SitePage.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SitePage.VAR_relatedArticleIds)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

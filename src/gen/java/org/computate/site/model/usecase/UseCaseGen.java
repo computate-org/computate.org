@@ -894,6 +894,7 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
 
 	public static final String CLASS_SIMPLE_NAME = "UseCase";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.usecase.UseCase";
+	public static final String CLASS_AUTH_RESOURCE = "USECASE";
 	public static final String CLASS_API_ADDRESS_UseCase = "computate.org-enUS-UseCase";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_UseCase;

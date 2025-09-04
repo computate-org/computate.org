@@ -36,9 +36,9 @@ import java.util.Map;
 import java.lang.Boolean;
 import java.lang.String;
 import java.lang.Integer;
+import io.vertx.core.json.JsonArray;
 import org.computate.vertx.search.list.SearchList;
 import org.computate.site.page.SitePage;
-import io.vertx.core.json.JsonArray;
 import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
@@ -1605,6 +1605,141 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 		return pageImageAlt;
 	}
 
+	//////////////////
+	// labelsString //
+	//////////////////
+
+
+	/**	 The entity labelsString
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String labelsString;
+
+	/**	<br> The entity labelsString
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePage&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _labelsString(Wrap<String> w);
+
+	public String getLabelsString() {
+		return labelsString;
+	}
+	public void setLabelsString(String o) {
+		this.labelsString = SitePage.staticSetLabelsString(siteRequest_, o);
+	}
+	public static String staticSetLabelsString(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected SitePage labelsStringInit() {
+		Wrap<String> labelsStringWrap = new Wrap<String>().var("labelsString");
+		if(labelsString == null) {
+			_labelsString(labelsStringWrap);
+			Optional.ofNullable(labelsStringWrap.getO()).ifPresent(o -> {
+				setLabelsString(o);
+			});
+		}
+		return (SitePage)this;
+	}
+
+	public static String staticSearchLabelsString(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrLabelsString(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLabelsString(SiteRequest siteRequest_, String o) {
+		return SitePage.staticSearchLabelsString(siteRequest_, SitePage.staticSetLabelsString(siteRequest_, o)).toString();
+	}
+
+	public String sqlLabelsString() {
+		return labelsString;
+	}
+
+	////////////
+	// labels //
+	////////////
+
+
+	/**	 The entity labels
+	 *	 It is constructed before being initialized with the constructor by default. 
+	 */
+	@JsonProperty
+	@JsonFormat(shape = JsonFormat.Shape.ARRAY)
+	@JsonInclude(Include.NON_NULL)
+	protected List<String> labels = new ArrayList<String>();
+
+	/**	<br> The entity labels
+	 *  It is constructed before being initialized with the constructor by default. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePage&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
+	 * <br>
+	 * @param l is the entity already constructed. 
+	 **/
+	protected abstract void _labels(List<String> l);
+
+	public List<String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<String> labels) {
+		this.labels = labels;
+	}
+	@JsonIgnore
+	public void setLabels(String o) {
+		String l = SitePage.staticSetLabels(siteRequest_, o);
+		if(l != null)
+			addLabels(l);
+	}
+	public static String staticSetLabels(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	public SitePage addLabels(String...objects) {
+		for(String o : objects) {
+			addLabels(o);
+		}
+		return (SitePage)this;
+	}
+	public SitePage addLabels(String o) {
+		if(o != null)
+			this.labels.add(o);
+		return (SitePage)this;
+	}
+	@JsonIgnore
+	public void setLabels(JsonArray objects) {
+		labels.clear();
+		if(objects == null)
+			return;
+		for(int i = 0; i < objects.size(); i++) {
+			String o = objects.getString(i);
+			addLabels(o);
+		}
+	}
+	protected SitePage labelsInit() {
+		_labels(labels);
+		return (SitePage)this;
+	}
+
+	public static String staticSearchLabels(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrLabels(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqLabels(SiteRequest siteRequest_, String o) {
+		return SitePage.staticSearchLabels(siteRequest_, SitePage.staticSetLabels(siteRequest_, o)).toString();
+	}
+
+	public String[] sqlLabels() {
+		return labels.stream().map(v -> (String)v).toArray(String[]::new);
+	}
+
 	///////////////////////
 	// relatedArticleIds //
 	///////////////////////
@@ -1827,6 +1962,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				pageImageHeightInit();
 				pageImageTypeInit();
 				pageImageAltInit();
+				labelsStringInit();
+				labelsInit();
 				relatedArticleIdsInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -1868,8 +2005,6 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
 	public void siteRequestSitePage(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
-		if(relatedArticleSearch != null)
-			relatedArticleSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -1950,6 +2085,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				return oSitePage.pageImageType;
 			case "pageImageAlt":
 				return oSitePage.pageImageAlt;
+			case "labelsString":
+				return oSitePage.labelsString;
+			case "labels":
+				return oSitePage.labels;
 			case "relatedArticleIds":
 				return oSitePage.relatedArticleIds;
 			case "relatedArticleSearch":
@@ -2045,6 +2184,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return SitePage.staticSetPageImageType(siteRequest_, v);
 		case "pageImageAlt":
 			return SitePage.staticSetPageImageAlt(siteRequest_, v);
+		case "labelsString":
+			return SitePage.staticSetLabelsString(siteRequest_, v);
+		case "labels":
+			return SitePage.staticSetLabels(siteRequest_, v);
 		case "relatedArticleIds":
 			return SitePage.staticSetRelatedArticleIds(siteRequest_, v);
 		case "relatedArticles":
@@ -2113,6 +2256,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return SitePage.staticSearchPageImageType(siteRequest_, (String)o);
 		case "pageImageAlt":
 			return SitePage.staticSearchPageImageAlt(siteRequest_, (String)o);
+		case "labelsString":
+			return SitePage.staticSearchLabelsString(siteRequest_, (String)o);
+		case "labels":
+			return SitePage.staticSearchLabels(siteRequest_, (String)o);
 		case "relatedArticleIds":
 			return SitePage.staticSearchRelatedArticleIds(siteRequest_, (String)o);
 		case "relatedArticles":
@@ -2181,6 +2328,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return SitePage.staticSearchStrPageImageType(siteRequest_, (String)o);
 		case "pageImageAlt":
 			return SitePage.staticSearchStrPageImageAlt(siteRequest_, (String)o);
+		case "labelsString":
+			return SitePage.staticSearchStrLabelsString(siteRequest_, (String)o);
+		case "labels":
+			return SitePage.staticSearchStrLabels(siteRequest_, (String)o);
 		case "relatedArticleIds":
 			return SitePage.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
 		case "relatedArticles":
@@ -2249,6 +2400,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return SitePage.staticSearchFqPageImageType(siteRequest_, o);
 		case "pageImageAlt":
 			return SitePage.staticSearchFqPageImageAlt(siteRequest_, o);
+		case "labelsString":
+			return SitePage.staticSearchFqLabelsString(siteRequest_, o);
+		case "labels":
+			return SitePage.staticSearchFqLabels(siteRequest_, o);
 		case "relatedArticleIds":
 			return SitePage.staticSearchFqRelatedArticleIds(siteRequest_, o);
 		case "relatedArticles":
@@ -2348,6 +2503,24 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 					setPageImageAlt((String)val);
 				}
 				saves.add("pageImageAlt");
+				return val;
+			} else if("labelsstring".equals(varLower)) {
+				if(val instanceof String) {
+					setLabelsString((String)val);
+				}
+				saves.add("labelsString");
+				return val;
+			} else if("labels".equals(varLower)) {
+				if(val instanceof List<?>) {
+					((List<String>)val).stream().forEach(v -> addLabels(v));
+				} else if(val instanceof String[]) {
+					Arrays.asList((String[])val).stream().forEach(v -> addLabels((String)v));
+				} else if(val instanceof JsonArray) {
+					((JsonArray)val).stream().forEach(v -> addLabels(staticSetLabels(siteRequest_, v.toString())));
+				}
+				if(!saves.contains("labels")) {
+					saves.add("labels");
+				}
 				return val;
 			} else if("relatedarticleids".equals(varLower)) {
 				if(val instanceof String) {
@@ -2456,6 +2629,21 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 					oSitePage.setPageImageAlt(pageImageAlt);
 			}
 
+			if(saves.contains("labelsString")) {
+				String labelsString = (String)doc.get("labelsString_docvalues_string");
+				if(labelsString != null)
+					oSitePage.setLabelsString(labelsString);
+			}
+
+			if(saves.contains("labels")) {
+				List<String> labels = (List<String>)doc.get("labels_docvalues_strings");
+				if(labels != null) {
+					labels.stream().forEach( v -> {
+						oSitePage.labels.add(SitePage.staticSetLabels(siteRequest_, v));
+					});
+				}
+			}
+
 			if(saves.contains("relatedArticleIds")) {
 				String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
 				if(relatedArticleIds != null)
@@ -2515,6 +2703,16 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 		if(pageImageAlt != null) {
 			doc.put("pageImageAlt_docvalues_string", pageImageAlt);
 		}
+		if(labelsString != null) {
+			doc.put("labelsString_docvalues_string", labelsString);
+		}
+		if(labels != null) {
+			JsonArray l = new JsonArray();
+			doc.put("labels_docvalues_strings", l);
+			for(String o : labels) {
+				l.add(SitePage.staticSearchLabels(siteRequest_, o));
+			}
+		}
 		if(relatedArticleIds != null) {
 			doc.put("relatedArticleIds_docvalues_string", relatedArticleIds);
 		}
@@ -2555,6 +2753,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				return "pageImageType_docvalues_string";
 			case "pageImageAlt":
 				return "pageImageAlt_docvalues_string";
+			case "labelsString":
+				return "labelsString_docvalues_string";
+			case "labels":
+				return "labels_docvalues_strings";
 			case "relatedArticleIds":
 				return "relatedArticleIds_docvalues_string";
 			case "relatedArticles":
@@ -2594,6 +2796,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				return "pageImageType_docvalues_string";
 			case "pageImageAlt":
 				return "pageImageAlt_docvalues_string";
+			case "labelsString":
+				return "labelsString_docvalues_string";
+			case "labels":
+				return "labels_docvalues_strings";
 			case "relatedArticleIds":
 				return "relatedArticleIds_docvalues_string";
 			default:
@@ -2631,6 +2837,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				return "pageImageType";
 			case "pageImageAlt_docvalues_string":
 				return "pageImageAlt";
+			case "labelsString_docvalues_string":
+				return "labelsString";
+			case "labels_docvalues_strings":
+				return "labels";
 			case "relatedArticleIds_docvalues_string":
 				return "relatedArticleIds";
 			default:
@@ -2677,6 +2887,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 		oSitePage.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
 		oSitePage.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oSitePage.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oSitePage.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
+		Optional.ofNullable((List<?>)doc.get("labels_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+			oSitePage.addLabels(SitePage.staticSetLabels(siteRequest, v.toString()));
+		});
 		oSitePage.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oSitePage.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
@@ -2720,6 +2934,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 				apiRequest.addVars("pageImageType");
 			if(!Objects.equals(pageImageAlt, original.getPageImageAlt()))
 				apiRequest.addVars("pageImageAlt");
+			if(!Objects.equals(labelsString, original.getLabelsString()))
+				apiRequest.addVars("labelsString");
+			if(!Objects.equals(labels, original.getLabels()))
+				apiRequest.addVars("labels");
 			if(!Objects.equals(relatedArticleIds, original.getRelatedArticleIds()))
 				apiRequest.addVars("relatedArticleIds");
 			if(!Objects.equals(relatedArticles, original.getRelatedArticles()))
@@ -2749,6 +2967,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(pageImageType).map(v -> "pageImageType: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(pageImageAlt).map(v -> "pageImageAlt: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(labelsString).map(v -> "labelsString: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(labels).map(v -> "labels: " + v + "\n").orElse(""));
 		sb.append(Optional.ofNullable(relatedArticleIds).map(v -> "relatedArticleIds: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(relatedArticles).map(v -> "relatedArticles: " + v + "\n").orElse(""));
 		return sb.toString();
@@ -2756,6 +2976,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
 	public static final String CLASS_SIMPLE_NAME = "SitePage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.page.SitePage";
+	public static final String CLASS_AUTH_RESOURCE = "SITEPAGE";
 	public static final String CLASS_API_ADDRESS_SitePage = "computate.org-enUS-SitePage";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_SitePage;
@@ -2785,6 +3006,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String VAR_pageImageHeight = "pageImageHeight";
 	public static final String VAR_pageImageType = "pageImageType";
 	public static final String VAR_pageImageAlt = "pageImageAlt";
+	public static final String VAR_labelsString = "labelsString";
+	public static final String VAR_labels = "labels";
 	public static final String VAR_relatedArticleIds = "relatedArticleIds";
 	public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
 	public static final String VAR_relatedArticles = "relatedArticles";
@@ -2846,6 +3069,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_pageImageHeight = "";
 	public static final String DISPLAY_NAME_pageImageType = "";
 	public static final String DISPLAY_NAME_pageImageAlt = "";
+	public static final String DISPLAY_NAME_labelsString = "labels string";
+	public static final String DISPLAY_NAME_labels = "labels";
 	public static final String DISPLAY_NAME_relatedArticleIds = "related article IDs";
 	public static final String DISPLAY_NAME_relatedArticleSearch = "";
 	public static final String DISPLAY_NAME_relatedArticles = "related articles";
@@ -2950,6 +3175,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_pageImageType;
 		case VAR_pageImageAlt:
 			return DISPLAY_NAME_pageImageAlt;
+		case VAR_labelsString:
+			return DISPLAY_NAME_labelsString;
+		case VAR_labels:
+			return DISPLAY_NAME_labels;
 		case VAR_relatedArticleIds:
 			return DISPLAY_NAME_relatedArticleIds;
 		case VAR_relatedArticleSearch:
@@ -2993,6 +3222,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return "The image height";
 		case VAR_pageImageAlt:
 			return "The image accessibility text. ";
+		case VAR_labelsString:
+			return "The labels String for this article comma-separated. ";
+		case VAR_labels:
+			return "The labels for this article. ";
 		case VAR_relatedArticleIds:
 			return "The related article IDs comma-separated. ";
 		case VAR_relatedArticles:
@@ -3054,6 +3287,10 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_pageImageAlt:
 			return "String";
+		case VAR_labelsString:
+			return "String";
+		case VAR_labels:
+			return "List";
 		case VAR_relatedArticleIds:
 			return "String";
 		case VAR_relatedArticleSearch:

@@ -293,6 +293,7 @@ public abstract class CompanyWebsitePageGen<DEV> extends CompanyWebsiteGenPage {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebsitePage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.website.CompanyWebsitePage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

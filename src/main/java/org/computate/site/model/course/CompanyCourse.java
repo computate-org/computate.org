@@ -1,17 +1,26 @@
 package org.computate.site.model.course;
 
+import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
 import org.computate.site.page.SitePage;
 import org.computate.site.result.BaseResult;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.search.list.SearchList;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.tool.SearchTool;
 import org.computate.search.wrap.Wrap;
 
@@ -171,6 +180,62 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
 	 */
 	protected void _courseNum(Wrap<Integer> w) {
 	}
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRow: 4
+   * HtmCell: 1
+   * Facet: true
+   * DisplayName: imageUri
+   * Description: The page image URI
+   */
+  protected void _pageImageUri(Wrap<String> w) {
+  }
+  
+  /**
+   * DocValues: true
+   * Description: The image width
+   */
+  protected void _pageImageWidth(Wrap<Integer> w) {
+    if(pageImageUri != null) {
+      Path path = Paths.get(siteRequest_.getConfig().getString(ConfigKeys.STATIC_PATH), pageImageUri);
+      File file = path.toFile();
+      if(file.exists()) {
+        try {
+          BufferedImage img = ImageIO.read(file);
+          w.o(img.getWidth());
+          setPageImageHeight(img.getHeight());
+          setPageImageType(Files.probeContentType(path));
+        } catch (Exception ex) {
+          ExceptionUtils.rethrow(ex);
+        }
+      }
+    }
+  }
+
+  /**
+   * DocValues: true
+   * Description: The image height
+   */
+  protected void _pageImageHeight(Wrap<Integer> c) {
+  }
+
+  /**
+   * DocValues: true
+   * Description: The image height
+   */
+  protected void _pageImageType(Wrap<String> c) {
+  }
+
+  /**
+   * Persist: true
+   * DocValues: true
+   * Description: The image accessibility text. 
+   */
+  protected void _pageImageAlt(Wrap<String> c) {
+  }
 
 	/**
 	 * {@inheritDoc}

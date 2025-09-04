@@ -718,6 +718,290 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		return courseNum;
 	}
 
+	//////////////////
+	// pageImageUri //
+	//////////////////
+
+
+	/**	 The entity pageImageUri
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String pageImageUri;
+
+	/**	<br> The entity pageImageUri
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageImageUri(Wrap<String> w);
+
+	public String getPageImageUri() {
+		return pageImageUri;
+	}
+	public void setPageImageUri(String o) {
+		this.pageImageUri = CompanyCourse.staticSetPageImageUri(siteRequest_, o);
+	}
+	public static String staticSetPageImageUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyCourse pageImageUriInit() {
+		Wrap<String> pageImageUriWrap = new Wrap<String>().var("pageImageUri");
+		if(pageImageUri == null) {
+			_pageImageUri(pageImageUriWrap);
+			Optional.ofNullable(pageImageUriWrap.getO()).ifPresent(o -> {
+				setPageImageUri(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchPageImageUri(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageImageUri(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageImageUri(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchPageImageUri(siteRequest_, CompanyCourse.staticSetPageImageUri(siteRequest_, o)).toString();
+	}
+
+	public String sqlPageImageUri() {
+		return pageImageUri;
+	}
+
+	////////////////////
+	// pageImageWidth //
+	////////////////////
+
+
+	/**	 The entity pageImageWidth
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer pageImageWidth;
+
+	/**	<br> The entity pageImageWidth
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
+	 * <br>
+	 * @param w is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageImageWidth(Wrap<Integer> w);
+
+	public Integer getPageImageWidth() {
+		return pageImageWidth;
+	}
+
+	public void setPageImageWidth(Integer pageImageWidth) {
+		this.pageImageWidth = pageImageWidth;
+	}
+	@JsonIgnore
+	public void setPageImageWidth(String o) {
+		this.pageImageWidth = CompanyCourse.staticSetPageImageWidth(siteRequest_, o);
+	}
+	public static Integer staticSetPageImageWidth(SiteRequest siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
+	}
+	protected CompanyCourse pageImageWidthInit() {
+		Wrap<Integer> pageImageWidthWrap = new Wrap<Integer>().var("pageImageWidth");
+		if(pageImageWidth == null) {
+			_pageImageWidth(pageImageWidthWrap);
+			Optional.ofNullable(pageImageWidthWrap.getO()).ifPresent(o -> {
+				setPageImageWidth(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static Integer staticSearchPageImageWidth(SiteRequest siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageImageWidth(SiteRequest siteRequest_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageImageWidth(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchPageImageWidth(siteRequest_, CompanyCourse.staticSetPageImageWidth(siteRequest_, o)).toString();
+	}
+
+	/////////////////////
+	// pageImageHeight //
+	/////////////////////
+
+
+	/**	 The entity pageImageHeight
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonSerialize(using = ToStringSerializer.class)
+	@JsonInclude(Include.NON_NULL)
+	protected Integer pageImageHeight;
+
+	/**	<br> The entity pageImageHeight
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
+	 * <br>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageImageHeight(Wrap<Integer> c);
+
+	public Integer getPageImageHeight() {
+		return pageImageHeight;
+	}
+
+	public void setPageImageHeight(Integer pageImageHeight) {
+		this.pageImageHeight = pageImageHeight;
+	}
+	@JsonIgnore
+	public void setPageImageHeight(String o) {
+		this.pageImageHeight = CompanyCourse.staticSetPageImageHeight(siteRequest_, o);
+	}
+	public static Integer staticSetPageImageHeight(SiteRequest siteRequest_, String o) {
+		if(NumberUtils.isParsable(o))
+			return Integer.parseInt(o);
+		return null;
+	}
+	protected CompanyCourse pageImageHeightInit() {
+		Wrap<Integer> pageImageHeightWrap = new Wrap<Integer>().var("pageImageHeight");
+		if(pageImageHeight == null) {
+			_pageImageHeight(pageImageHeightWrap);
+			Optional.ofNullable(pageImageHeightWrap.getO()).ifPresent(o -> {
+				setPageImageHeight(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static Integer staticSearchPageImageHeight(SiteRequest siteRequest_, Integer o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageImageHeight(SiteRequest siteRequest_, Integer o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageImageHeight(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchPageImageHeight(siteRequest_, CompanyCourse.staticSetPageImageHeight(siteRequest_, o)).toString();
+	}
+
+	///////////////////
+	// pageImageType //
+	///////////////////
+
+
+	/**	 The entity pageImageType
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String pageImageType;
+
+	/**	<br> The entity pageImageType
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
+	 * <br>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageImageType(Wrap<String> c);
+
+	public String getPageImageType() {
+		return pageImageType;
+	}
+	public void setPageImageType(String o) {
+		this.pageImageType = CompanyCourse.staticSetPageImageType(siteRequest_, o);
+	}
+	public static String staticSetPageImageType(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyCourse pageImageTypeInit() {
+		Wrap<String> pageImageTypeWrap = new Wrap<String>().var("pageImageType");
+		if(pageImageType == null) {
+			_pageImageType(pageImageTypeWrap);
+			Optional.ofNullable(pageImageTypeWrap.getO()).ifPresent(o -> {
+				setPageImageType(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchPageImageType(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageImageType(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageImageType(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchPageImageType(siteRequest_, CompanyCourse.staticSetPageImageType(siteRequest_, o)).toString();
+	}
+
+	//////////////////
+	// pageImageAlt //
+	//////////////////
+
+
+	/**	 The entity pageImageAlt
+	 *	 is defined as null before being initialized. 
+	 */
+	@JsonProperty
+	@JsonInclude(Include.NON_NULL)
+	protected String pageImageAlt;
+
+	/**	<br> The entity pageImageAlt
+	 *  is defined as null before being initialized. 
+	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
+	 * <br>
+	 * @param c is for wrapping a value to assign to this entity during initialization. 
+	 **/
+	protected abstract void _pageImageAlt(Wrap<String> c);
+
+	public String getPageImageAlt() {
+		return pageImageAlt;
+	}
+	public void setPageImageAlt(String o) {
+		this.pageImageAlt = CompanyCourse.staticSetPageImageAlt(siteRequest_, o);
+	}
+	public static String staticSetPageImageAlt(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+	protected CompanyCourse pageImageAltInit() {
+		Wrap<String> pageImageAltWrap = new Wrap<String>().var("pageImageAlt");
+		if(pageImageAlt == null) {
+			_pageImageAlt(pageImageAltWrap);
+			Optional.ofNullable(pageImageAltWrap.getO()).ifPresent(o -> {
+				setPageImageAlt(o);
+			});
+		}
+		return (CompanyCourse)this;
+	}
+
+	public static String staticSearchPageImageAlt(SiteRequest siteRequest_, String o) {
+		return o;
+	}
+
+	public static String staticSearchStrPageImageAlt(SiteRequest siteRequest_, String o) {
+		return o == null ? null : o.toString();
+	}
+
+	public static String staticSearchFqPageImageAlt(SiteRequest siteRequest_, String o) {
+		return CompanyCourse.staticSearchPageImageAlt(siteRequest_, CompanyCourse.staticSetPageImageAlt(siteRequest_, o)).toString();
+	}
+
+	public String sqlPageImageAlt() {
+		return pageImageAlt;
+	}
+
 	///////////////////////
 	// relatedArticleIds //
 	///////////////////////
@@ -923,6 +1207,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				storeUrlInit();
 				downloadUriInit();
 				courseNumInit();
+				pageImageUriInit();
+				pageImageWidthInit();
+				pageImageHeightInit();
+				pageImageTypeInit();
+				pageImageAltInit();
 				relatedArticleIdsInit();
 				promise2.complete();
 			} catch(Exception ex) {
@@ -964,8 +1253,6 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	public void siteRequestCompanyCourse(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
-		if(relatedArticleSearch != null)
-			relatedArticleSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -1012,6 +1299,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return oCompanyCourse.downloadUri;
 			case "courseNum":
 				return oCompanyCourse.courseNum;
+			case "pageImageUri":
+				return oCompanyCourse.pageImageUri;
+			case "pageImageWidth":
+				return oCompanyCourse.pageImageWidth;
+			case "pageImageHeight":
+				return oCompanyCourse.pageImageHeight;
+			case "pageImageType":
+				return oCompanyCourse.pageImageType;
+			case "pageImageAlt":
+				return oCompanyCourse.pageImageAlt;
 			case "relatedArticleIds":
 				return oCompanyCourse.relatedArticleIds;
 			case "relatedArticleSearch":
@@ -1073,6 +1370,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSetDownloadUri(siteRequest_, v);
 		case "courseNum":
 			return CompanyCourse.staticSetCourseNum(siteRequest_, v);
+		case "pageImageUri":
+			return CompanyCourse.staticSetPageImageUri(siteRequest_, v);
+		case "pageImageWidth":
+			return CompanyCourse.staticSetPageImageWidth(siteRequest_, v);
+		case "pageImageHeight":
+			return CompanyCourse.staticSetPageImageHeight(siteRequest_, v);
+		case "pageImageType":
+			return CompanyCourse.staticSetPageImageType(siteRequest_, v);
+		case "pageImageAlt":
+			return CompanyCourse.staticSetPageImageAlt(siteRequest_, v);
 		case "relatedArticleIds":
 			return CompanyCourse.staticSetRelatedArticleIds(siteRequest_, v);
 		case "relatedArticles":
@@ -1107,6 +1414,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchCourseNum(siteRequest_, (Integer)o);
+		case "pageImageUri":
+			return CompanyCourse.staticSearchPageImageUri(siteRequest_, (String)o);
+		case "pageImageWidth":
+			return CompanyCourse.staticSearchPageImageWidth(siteRequest_, (Integer)o);
+		case "pageImageHeight":
+			return CompanyCourse.staticSearchPageImageHeight(siteRequest_, (Integer)o);
+		case "pageImageType":
+			return CompanyCourse.staticSearchPageImageType(siteRequest_, (String)o);
+		case "pageImageAlt":
+			return CompanyCourse.staticSearchPageImageAlt(siteRequest_, (String)o);
 		case "relatedArticleIds":
 			return CompanyCourse.staticSearchRelatedArticleIds(siteRequest_, (String)o);
 		case "relatedArticles":
@@ -1141,6 +1458,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchStrDownloadUri(siteRequest_, (String)o);
 		case "courseNum":
 			return CompanyCourse.staticSearchStrCourseNum(siteRequest_, (Integer)o);
+		case "pageImageUri":
+			return CompanyCourse.staticSearchStrPageImageUri(siteRequest_, (String)o);
+		case "pageImageWidth":
+			return CompanyCourse.staticSearchStrPageImageWidth(siteRequest_, (Integer)o);
+		case "pageImageHeight":
+			return CompanyCourse.staticSearchStrPageImageHeight(siteRequest_, (Integer)o);
+		case "pageImageType":
+			return CompanyCourse.staticSearchStrPageImageType(siteRequest_, (String)o);
+		case "pageImageAlt":
+			return CompanyCourse.staticSearchStrPageImageAlt(siteRequest_, (String)o);
 		case "relatedArticleIds":
 			return CompanyCourse.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
 		case "relatedArticles":
@@ -1175,6 +1502,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return CompanyCourse.staticSearchFqDownloadUri(siteRequest_, o);
 		case "courseNum":
 			return CompanyCourse.staticSearchFqCourseNum(siteRequest_, o);
+		case "pageImageUri":
+			return CompanyCourse.staticSearchFqPageImageUri(siteRequest_, o);
+		case "pageImageWidth":
+			return CompanyCourse.staticSearchFqPageImageWidth(siteRequest_, o);
+		case "pageImageHeight":
+			return CompanyCourse.staticSearchFqPageImageHeight(siteRequest_, o);
+		case "pageImageType":
+			return CompanyCourse.staticSearchFqPageImageType(siteRequest_, o);
+		case "pageImageAlt":
+			return CompanyCourse.staticSearchFqPageImageAlt(siteRequest_, o);
 		case "relatedArticleIds":
 			return CompanyCourse.staticSearchFqRelatedArticleIds(siteRequest_, o);
 		case "relatedArticles":
@@ -1257,6 +1594,18 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				}
 				saves.add("courseNum");
 				return val;
+			} else if("pageimageuri".equals(varLower)) {
+				if(val instanceof String) {
+					setPageImageUri((String)val);
+				}
+				saves.add("pageImageUri");
+				return val;
+			} else if("pageimagealt".equals(varLower)) {
+				if(val instanceof String) {
+					setPageImageAlt((String)val);
+				}
+				saves.add("pageImageAlt");
+				return val;
 			} else if("relatedarticleids".equals(varLower)) {
 				if(val instanceof String) {
 					setRelatedArticleIds((String)val);
@@ -1328,6 +1677,36 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 					oCompanyCourse.setCourseNum(courseNum);
 			}
 
+			if(saves.contains("pageImageUri")) {
+				String pageImageUri = (String)doc.get("pageImageUri_docvalues_string");
+				if(pageImageUri != null)
+					oCompanyCourse.setPageImageUri(pageImageUri);
+			}
+
+			if(saves.contains("pageImageWidth")) {
+				Integer pageImageWidth = (Integer)doc.get("pageImageWidth_docvalues_int");
+				if(pageImageWidth != null)
+					oCompanyCourse.setPageImageWidth(pageImageWidth);
+			}
+
+			if(saves.contains("pageImageHeight")) {
+				Integer pageImageHeight = (Integer)doc.get("pageImageHeight_docvalues_int");
+				if(pageImageHeight != null)
+					oCompanyCourse.setPageImageHeight(pageImageHeight);
+			}
+
+			if(saves.contains("pageImageType")) {
+				String pageImageType = (String)doc.get("pageImageType_docvalues_string");
+				if(pageImageType != null)
+					oCompanyCourse.setPageImageType(pageImageType);
+			}
+
+			if(saves.contains("pageImageAlt")) {
+				String pageImageAlt = (String)doc.get("pageImageAlt_docvalues_string");
+				if(pageImageAlt != null)
+					oCompanyCourse.setPageImageAlt(pageImageAlt);
+			}
+
 			if(saves.contains("relatedArticleIds")) {
 				String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
 				if(relatedArticleIds != null)
@@ -1369,6 +1748,21 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		if(courseNum != null) {
 			doc.put("courseNum_docvalues_int", courseNum);
 		}
+		if(pageImageUri != null) {
+			doc.put("pageImageUri_docvalues_string", pageImageUri);
+		}
+		if(pageImageWidth != null) {
+			doc.put("pageImageWidth_docvalues_int", pageImageWidth);
+		}
+		if(pageImageHeight != null) {
+			doc.put("pageImageHeight_docvalues_int", pageImageHeight);
+		}
+		if(pageImageType != null) {
+			doc.put("pageImageType_docvalues_string", pageImageType);
+		}
+		if(pageImageAlt != null) {
+			doc.put("pageImageAlt_docvalues_string", pageImageAlt);
+		}
 		if(relatedArticleIds != null) {
 			doc.put("relatedArticleIds_docvalues_string", relatedArticleIds);
 		}
@@ -1397,6 +1791,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "pageImageUri":
+				return "pageImageUri_docvalues_string";
+			case "pageImageWidth":
+				return "pageImageWidth_docvalues_int";
+			case "pageImageHeight":
+				return "pageImageHeight_docvalues_int";
+			case "pageImageType":
+				return "pageImageType_docvalues_string";
+			case "pageImageAlt":
+				return "pageImageAlt_docvalues_string";
 			case "relatedArticleIds":
 				return "relatedArticleIds_docvalues_string";
 			case "relatedArticles":
@@ -1424,6 +1828,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri_docvalues_string";
 			case "courseNum":
 				return "courseNum_docvalues_int";
+			case "pageImageUri":
+				return "pageImageUri_docvalues_string";
+			case "pageImageWidth":
+				return "pageImageWidth_docvalues_int";
+			case "pageImageHeight":
+				return "pageImageHeight_docvalues_int";
+			case "pageImageType":
+				return "pageImageType_docvalues_string";
+			case "pageImageAlt":
+				return "pageImageAlt_docvalues_string";
 			case "relatedArticleIds":
 				return "relatedArticleIds_docvalues_string";
 			default:
@@ -1449,6 +1863,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				return "downloadUri";
 			case "courseNum_docvalues_int":
 				return "courseNum";
+			case "pageImageUri_docvalues_string":
+				return "pageImageUri";
+			case "pageImageWidth_docvalues_int":
+				return "pageImageWidth";
+			case "pageImageHeight_docvalues_int":
+				return "pageImageHeight";
+			case "pageImageType_docvalues_string":
+				return "pageImageType";
+			case "pageImageAlt_docvalues_string":
+				return "pageImageAlt";
 			case "relatedArticleIds_docvalues_string":
 				return "relatedArticleIds";
 			default:
@@ -1489,6 +1913,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setDownloadUri(Optional.ofNullable(doc.get("downloadUri_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
+		oCompanyCourse.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
 		oCompanyCourse.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
@@ -1520,6 +1949,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 				apiRequest.addVars("downloadUri");
 			if(!Objects.equals(courseNum, original.getCourseNum()))
 				apiRequest.addVars("courseNum");
+			if(!Objects.equals(pageImageUri, original.getPageImageUri()))
+				apiRequest.addVars("pageImageUri");
+			if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
+				apiRequest.addVars("pageImageWidth");
+			if(!Objects.equals(pageImageHeight, original.getPageImageHeight()))
+				apiRequest.addVars("pageImageHeight");
+			if(!Objects.equals(pageImageType, original.getPageImageType()))
+				apiRequest.addVars("pageImageType");
+			if(!Objects.equals(pageImageAlt, original.getPageImageAlt()))
+				apiRequest.addVars("pageImageAlt");
 			if(!Objects.equals(relatedArticleIds, original.getRelatedArticleIds()))
 				apiRequest.addVars("relatedArticleIds");
 			if(!Objects.equals(relatedArticles, original.getRelatedArticles()))
@@ -1543,6 +1982,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(downloadUri).map(v -> "downloadUri: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
+		sb.append(Optional.ofNullable(pageImageType).map(v -> "pageImageType: \"" + v + "\"\n" ).orElse(""));
+		sb.append(Optional.ofNullable(pageImageAlt).map(v -> "pageImageAlt: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(relatedArticleIds).map(v -> "relatedArticleIds: \"" + v + "\"\n" ).orElse(""));
 		sb.append(Optional.ofNullable(relatedArticles).map(v -> "relatedArticles: " + v + "\n").orElse(""));
 		return sb.toString();
@@ -1550,6 +1994,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyCourse";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.course.CompanyCourse";
+	public static final String CLASS_AUTH_RESOURCE = "COMPANYCOURSE";
 	public static final String CLASS_API_ADDRESS_CompanyCourse = "computate.org-enUS-CompanyCourse";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyCourse;
@@ -1562,6 +2007,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String VAR_storeUrl = "storeUrl";
 	public static final String VAR_downloadUri = "downloadUri";
 	public static final String VAR_courseNum = "courseNum";
+	public static final String VAR_pageImageUri = "pageImageUri";
+	public static final String VAR_pageImageWidth = "pageImageWidth";
+	public static final String VAR_pageImageHeight = "pageImageHeight";
+	public static final String VAR_pageImageType = "pageImageType";
+	public static final String VAR_pageImageAlt = "pageImageAlt";
 	public static final String VAR_relatedArticleIds = "relatedArticleIds";
 	public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
 	public static final String VAR_relatedArticles = "relatedArticles";
@@ -1586,6 +2036,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		vars.add(VAR_storeUrl);
 		vars.add(VAR_downloadUri);
 		vars.add(VAR_courseNum);
+		vars.add(VAR_pageImageUri);
 		BaseResult.varsFqBaseResult(vars);
 		return vars;
 	}
@@ -1608,6 +2059,11 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_storeUrl = "store URL";
 	public static final String DISPLAY_NAME_downloadUri = "download URI";
 	public static final String DISPLAY_NAME_courseNum = "Course Number";
+	public static final String DISPLAY_NAME_pageImageUri = "imageUri";
+	public static final String DISPLAY_NAME_pageImageWidth = "";
+	public static final String DISPLAY_NAME_pageImageHeight = "";
+	public static final String DISPLAY_NAME_pageImageType = "";
+	public static final String DISPLAY_NAME_pageImageAlt = "";
 	public static final String DISPLAY_NAME_relatedArticleIds = "related article IDs";
 	public static final String DISPLAY_NAME_relatedArticleSearch = "";
 	public static final String DISPLAY_NAME_relatedArticles = "related articles";
@@ -1678,6 +2134,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return DISPLAY_NAME_downloadUri;
 		case VAR_courseNum:
 			return DISPLAY_NAME_courseNum;
+		case VAR_pageImageUri:
+			return DISPLAY_NAME_pageImageUri;
+		case VAR_pageImageWidth:
+			return DISPLAY_NAME_pageImageWidth;
+		case VAR_pageImageHeight:
+			return DISPLAY_NAME_pageImageHeight;
+		case VAR_pageImageType:
+			return DISPLAY_NAME_pageImageType;
+		case VAR_pageImageAlt:
+			return DISPLAY_NAME_pageImageAlt;
 		case VAR_relatedArticleIds:
 			return DISPLAY_NAME_relatedArticleIds;
 		case VAR_relatedArticleSearch:
@@ -1709,6 +2175,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "The download relative URI for this page. ";
 		case VAR_courseNum:
 			return "The course number for this page. ";
+		case VAR_pageImageUri:
+			return "The page image URI";
+		case VAR_pageImageWidth:
+			return "The image width";
+		case VAR_pageImageHeight:
+			return "The image height";
+		case VAR_pageImageType:
+			return "The image height";
+		case VAR_pageImageAlt:
+			return "The image accessibility text. ";
 		case VAR_relatedArticleIds:
 			return "The related article IDs comma-separated. ";
 		case VAR_relatedArticles:
@@ -1736,6 +2212,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return "String";
 		case VAR_courseNum:
 			return "Integer";
+		case VAR_pageImageUri:
+			return "String";
+		case VAR_pageImageWidth:
+			return "Integer";
+		case VAR_pageImageHeight:
+			return "Integer";
+		case VAR_pageImageType:
+			return "String";
+		case VAR_pageImageAlt:
+			return "String";
 		case VAR_relatedArticleIds:
 			return "String";
 		case VAR_relatedArticleSearch:
@@ -1768,6 +2254,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 			return 3;
 		case VAR_pageId:
 			return 99;
+		case VAR_pageImageUri:
+			return 4;
 			default:
 				return BaseResult.htmRowBaseResult(var);
 		}
@@ -1782,6 +2270,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 		case VAR_price:
 			return 3;
 		case VAR_pageId:
+			return 1;
+		case VAR_pageImageUri:
 			return 1;
 			default:
 				return BaseResult.htmCellBaseResult(var);

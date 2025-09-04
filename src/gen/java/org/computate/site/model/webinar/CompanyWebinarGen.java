@@ -980,6 +980,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 		return CompanyWebinar.staticSearchJoinUrl(siteRequest_, CompanyWebinar.staticSetJoinUrl(siteRequest_, o)).toString();
 	}
 
+	public String sqlJoinUrl() {
+		return joinUrl;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -1362,6 +1366,12 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 				}
 				saves.add("icalUrl");
 				return val;
+			} else if("joinurl".equals(varLower)) {
+				if(val instanceof String) {
+					setJoinUrl((String)val);
+				}
+				saves.add("joinUrl");
+				return val;
 		} else {
 			return super.persistBaseModel(var, val);
 		}
@@ -1685,6 +1695,7 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinar";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinar";
+	public static final String CLASS_AUTH_RESOURCE = "COMPANYWEBINAR";
 	public static final String CLASS_API_ADDRESS_CompanyWebinar = "computate.org-enUS-CompanyWebinar";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_CompanyWebinar;

@@ -4,6 +4,7 @@ import org.computate.site.page.SitePage;
 import java.lang.Boolean;
 import java.lang.String;
 import java.lang.Integer;
+import java.util.List;
 import org.computate.vertx.search.list.SearchList;
 import io.vertx.core.json.JsonArray;
 import org.computate.site.page.PageLayout;
@@ -28,7 +29,6 @@ import java.net.URLDecoder;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -211,6 +211,11 @@ public class SitePageGenPage extends SitePageGenPageGen<PageLayout> {
       if(defaultPivotVars.contains(var)) {
         json.put("pivot", true);
       }
+      if(defaultSortVars.contains(String.format("%s asc", var))) {
+        json.put("sort", "asc");
+      } else if(defaultSortVars.contains(String.format("%s desc", var))) {
+        json.put("sort", "desc");
+      }
       vars.put(var, json);
     }
   }
@@ -346,7 +351,7 @@ public class SitePageGenPage extends SitePageGenPageGen<PageLayout> {
 
   @Override
   protected void _defaultRangeGap(Wrap<String> w) {
-    w.o(Optional.ofNullable(rangeGap).orElse(Optional.ofNullable(defaultRangeStats).map(s -> s.getString("defaultRangeGap")).orElse("+1DAY")));
+    w.o(Optional.ofNullable(rangeGap).orElse(Optional.ofNullable(defaultRangeStats).map(s -> s.getString("defaultRangeGap")).orElse("+1HOUR")));
   }
 
   @Override

@@ -293,6 +293,7 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyResearchPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.research.CompanyResearchPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

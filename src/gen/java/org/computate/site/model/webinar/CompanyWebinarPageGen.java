@@ -295,6 +295,7 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
 
 	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarPage";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarPage";
+	public static final String CLASS_AUTH_RESOURCE = "";
 
 
 	@Override

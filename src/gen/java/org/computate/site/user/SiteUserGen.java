@@ -202,7 +202,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/user/%s";
 	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/user/%s";
 
-	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-user-gear\"></i>";
+	public static final String Icon = "<i class=\"fa-regular fa-user-gear\"></i>";
 
 	//////////////
 	// userKeys //
@@ -1735,6 +1735,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 
 	public static final String CLASS_SIMPLE_NAME = "SiteUser";
 	public static final String CLASS_CANONICAL_NAME = "org.computate.site.user.SiteUser";
+	public static final String CLASS_AUTH_RESOURCE = "SITEUSER";
 	public static final String CLASS_API_ADDRESS_SiteUser = "computate.org-enUS-SiteUser";
 	public static String getClassApiAddress() {
 		return CLASS_API_ADDRESS_SiteUser;
@@ -1785,7 +1786,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_userLastName = "";
 	public static final String DISPLAY_NAME_userFullName = "";
 	public static final String DISPLAY_NAME_seeArchived = "see archived";
-	public static final String DISPLAY_NAME_awesomeEffect = "awesome effect";
+	public static final String DISPLAY_NAME_awesomeEffect = "awesome effect (requires refresh)";
 	public static final String DISPLAY_NAME_displayName = "";
 	public static final String DISPLAY_NAME_siteFontSize = "font size";
 	public static final String DISPLAY_NAME_siteTheme = "site theme";
@@ -1897,11 +1898,11 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		case VAR_displayName:
 			return "The display name for this user";
 		case VAR_siteFontSize:
-			return "The default font size for the site";
+			return "The default font size for the site (small, medium, large). ";
 		case VAR_siteTheme:
-			return "The site theme, either light or dark";
+			return "The site theme, either light or dark. ";
 		case VAR_webComponentsTheme:
-			return "The web components theme for the site";
+			return "The web components theme for the site. ";
 			default:
 				return BaseModel.descriptionBaseModel(var);
 		}

@@ -314,19 +314,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "PATCH"));
+				form.add("permission", String.format("%s#%s", pageId, "PATCH"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -340,7 +341,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("PATCH")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -579,19 +580,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "POST"));
+				form.add("permission", String.format("%s#%s", pageId, "POST"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -605,7 +607,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("POST")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -691,6 +693,11 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				ApiRequest apiRequest = new ApiRequest();
 				apiRequest.setRows(1L);
 				apiRequest.setNumFound(1L);
@@ -788,19 +795,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+				form.add("permission", String.format("%s#%s", pageId, "DELETE"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -814,7 +822,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("DELETE")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -1037,19 +1045,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "PUT"));
+				form.add("permission", String.format("%s#%s", pageId, "PUT"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1063,7 +1072,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("PUT")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -1187,6 +1196,11 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			try {
+				Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+					scopes.stream().map(v -> v.toString()).forEach(scope -> {
+						siteRequest.addScopes(scope);
+					});
+				});
 				ApiRequest apiRequest = new ApiRequest();
 				apiRequest.setRows(1L);
 				apiRequest.setNumFound(1L);
@@ -1373,7 +1387,8 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void searchpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase) {
+	public void searchpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateSearchPageUseCase(ServiceRequest serviceRequest) {
@@ -1400,9 +1415,15 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					searchpageUseCasePageInit(page, listUseCase, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200SearchPageUseCase failed. "), ex);
 					promise.fail(ex);
@@ -1458,19 +1479,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "GET"));
+				form.add("permission", String.format("%s#%s", pageId, "GET"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1531,7 +1553,8 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void editpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase) {
+	public void editpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateEditPageUseCase(ServiceRequest serviceRequest) {
@@ -1558,9 +1581,15 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					editpageUseCasePageInit(page, listUseCase, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200EditPageUseCase failed. "), ex);
 					promise.fail(ex);
@@ -1653,7 +1682,8 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void displaypageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase) {
+	public void displaypageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateDisplayPageUseCase(ServiceRequest serviceRequest) {
@@ -1680,9 +1710,15 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					displaypageUseCasePageInit(page, listUseCase, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200DisplayPageUseCase failed. "), ex);
 					promise.fail(ex);
@@ -1738,19 +1774,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "GET"));
+				form.add("permission", String.format("%s#%s", pageId, "GET"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1811,7 +1848,8 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void userpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase) {
+	public void userpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+		promise.complete();
 	}
 
 	public String templateUserPageUseCase(ServiceRequest serviceRequest) {
@@ -1838,9 +1876,15 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
-					String renderedTemplate = jinjava.render(template, ctx.getMap());
-					Buffer buffer = Buffer.buffer(renderedTemplate);
-					promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					Promise<Void> promise1 = Promise.promise();
+					userpageUseCasePageInit(page, listUseCase, promise1);
+					promise1.future().onSuccess(b -> {
+						String renderedTemplate = jinjava.render(template, ctx.getMap());
+						Buffer buffer = Buffer.buffer(renderedTemplate);
+						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+					}).onFailure(ex -> {
+						promise.fail(ex);
+					});
 				} catch(Exception ex) {
 					LOG.error(String.format("response200UserPageUseCase failed. "), ex);
 					promise.fail(ex);
@@ -1897,19 +1941,20 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 			String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+			String USECASE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("USECASE");
 			MultiMap form = MultiMap.caseInsensitiveMultiMap();
 			form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
 			form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
 			form.add("response_mode", "permissions");
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "GET"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "POST"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "DELETE"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PATCH"));
-			form.add("permission", String.format("%s#%s", UseCase.CLASS_SIMPLE_NAME, "PUT"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "GET"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "POST"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "DELETE"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PATCH"));
+			form.add("permission", String.format("%s#%s", UseCase.CLASS_AUTH_RESOURCE, "PUT"));
 			if(pageId != null)
-				form.add("permission", String.format("%s-%s#%s", UseCase.CLASS_SIMPLE_NAME, pageId, "DELETE"));
+				form.add("permission", String.format("%s#%s", pageId, "DELETE"));
 			webClient.post(
 					config.getInteger(ComputateConfigKeys.AUTH_PORT)
 					, config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1923,7 +1968,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
+					if(authorizationDecisionResponse.failed() && !scopes.contains("DELETE")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
 							new ServiceResponse(403, "FORBIDDEN",
@@ -2397,7 +2442,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 						max = max.plus(2, ChronoUnit.DAYS);
 					}
 					Duration duration = Duration.between(min, max);
-					String gap = "DAY";
+					String gap = "HOUR";
 					if(duration.toDays() >= 365)
 						gap = "YEAR";
 					else if(duration.toDays() >= 28)
