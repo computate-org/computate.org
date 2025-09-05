@@ -93,13 +93,6 @@ spec:
           value: <script src="https://kit.fontawesome.com/59d19567d5.js" crossorigin="anonymous"></script>
         - name: WEB_COMPONENTS_PREFIX
           value: wa-
-        - name: WEB_COMPONENTS_CSS
-          value: <link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.10/dist/styles/themes/default.css"
-            /><link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.10/dist/styles/webawesome.css"
-            /><link rel="stylesheet" href="https://early.webawesome.com/webawesome@3.0.0-alpha.10/dist/styles/themes/glossy.css"
-            />
-        - name: WEB_COMPONENTS_JS
-          value: <script type="module" src="https://early.webawesome.com/webawesome@3.0.0-alpha.10/dist/webawesome.loader.js"></script>
         - name: SITE_THEME
           value: dark
         - name: SITE_POWERED_BY_NAME
