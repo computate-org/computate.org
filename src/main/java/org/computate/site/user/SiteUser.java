@@ -5,6 +5,7 @@ import java.util.List;
 import org.computate.search.wrap.Wrap;
 import org.computate.vertx.model.user.ComputateSiteUser;
 import org.computate.vertx.request.ComputateSiteRequest;
+import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
 import org.computate.site.request.SiteRequest;
 
@@ -12,7 +13,7 @@ import org.computate.site.request.SiteRequest;
  * Order: 1
  * Description: A user record for each site user
  * AName: a site user
- * Icon: <i class="fa-regular fa-user-gear"></i>
+ * Icon: <i class="fa-duotone fa-regular fa-user-gear"></i>
  * 
  * Keyword: classSimpleNameSiteUser
  * Filter: userId
@@ -141,6 +142,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DisplayName: font size
 	 * Description: The default font size for the site (small, medium, large). 
 	 * Refresh: true
+   * Cookie: SITE_FONT_SIZE
 	 * Radio:
 	 *   s: small
 	 *   m: medium
@@ -159,6 +161,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DisplayName: site theme
 	 * Description: The site theme, either light or dark. 
 	 * Refresh: true
+   * Cookie: SITE_THEME
 	 * Radio:
 	 *   light: Light
 	 *   dark: Dark
@@ -176,6 +179,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DisplayName: web components theme
 	 * Description: The web components theme for the site. 
 	 * Refresh: true
+   * Cookie: WEB_COMPONENTS_THEME
 	 * Radio:
 	 *   default: Default — "Your trusty companion, like a perfectly broken-in pair of jeans."
 	 *   classic: Classic — "Timeless elegance that never goes out of style."
@@ -190,7 +194,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 *   tailspin: Tailspin — "Like a bird in flight, guiding you from there to here."
 	 */
 	protected void _webComponentsTheme(Wrap<String> w) {
-		w.o("tailspin");
+		w.o(siteRequest_.getConfig().getString(ConfigKeys.WEB_COMPONENTS_THEME));
 	}
 
 	/**
