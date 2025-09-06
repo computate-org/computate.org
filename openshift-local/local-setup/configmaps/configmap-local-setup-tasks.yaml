@@ -59,6 +59,12 @@ data:
         definition: "{{ lookup('template', 'email-smtp-secret.yaml') }}"
         validate_certs: false
       when: query('kubernetes.core.k8s', kind='Secret', resource_name=EMAIL_SECRET, namespace=SITE_NAMESPACE) | length == 0
+    - name: "Create a {{ AUTHORIZE_NET_SECRET }} secret in namespace {{ SITE_NAMESPACE }}"
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'authorize-net-secret.yaml') }}"
+        validate_certs: false
+      when: query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | length == 0
     - name: "Create a site secret in namespace {{ SITE_NAMESPACE }}"
       kubernetes.core.k8s:
         state: present

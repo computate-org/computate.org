@@ -583,10 +583,18 @@ DOWNLOAD_PATH: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}-downloads
 USE_CASE_SRC: "{{ PARENT_SRC }}/courses/computate-smart-website-builder/use-cases/online-business-use-case"
 USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SRC }}/02-models-summary.ipynb"
 
-##########
-# Square #
-##########
-SQUARE_ACCESS_TOKEN: UNKNOWN
+#################
+# authorize.net #
+#################
+
+ENABLE_AUTHORIZE_NET: "true"
+AUTHORIZE_NET_SECRET: "local-authorize-net"
+AUTHORIZE_NET_URL: ""
+AUTHORIZE_NET_API_LOGIN_ID: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_API_LOGIN_ID | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_TRANSACTION_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_TRANSACTION_KEY | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_NOTIFICATION_URL: ""
+AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS: "60000"
+AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS: "2000"
 
 ####################
 # Custom site data #

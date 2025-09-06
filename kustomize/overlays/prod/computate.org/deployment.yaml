@@ -93,6 +93,8 @@ spec:
           value: <script src="https://kit.fontawesome.com/59d19567d5.js" crossorigin="anonymous"></script>
         - name: WEB_COMPONENTS_PREFIX
           value: wa-
+        - name: WEB_COMPONENTS_THEME
+          value: active
         - name: SITE_THEME
           value: dark
         - name: SITE_POWERED_BY_NAME

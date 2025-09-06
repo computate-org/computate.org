@@ -749,7 +749,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 												configureAmqp().onSuccess(j -> 
 													configureRabbitmq().onSuccess(k -> 
 														configureJinjava().onSuccess(l -> 
-															configureSquare().onSuccess(m -> 
+															configureAuthorizeNet().onSuccess(m -> 
 																configureApi().onSuccess(n -> 
 																	configureUi().onSuccess(o -> 
 																		startServer().onSuccess(p -> startPromise.complete())
@@ -1407,6 +1407,37 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		return promise.future();
 	}
 
+	/**
+	 * Configure authorize.net webhooks
+	 **/
+	public Future<Void> configureAuthorizeNet() {
+		Promise<Void> promise = Promise.promise();
+		try {
+			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_AUTHORIZE_NET))) {
+				String authorizeApiLoginId = config().getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
+				String authorizeTransactionKey = config().getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
+				String authorizeNotificationUrl = config().getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
+				if(authorizeApiLoginId == null || authorizeTransactionKey == null || authorizeNotificationUrl == null) {
+					promise.complete();
+				} else {
+					// squareClient = new SquareClient.Builder()
+					// 		.bearerAuthCredentials(new BearerAuthModel.Builder(squareAccessToken).build())
+					// 		.environment(Environment.PRODUCTION)
+					// 		.build();
+					LOG.info("Configure authorize.net succeeded.");
+					promise.complete();
+				}
+			} else {
+				LOG.info("Configuring authorize.net is disabled.");
+				promise.complete();
+			}
+		} catch (Exception ex) {
+			LOG.error("Configure authorize.net failed.", ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+	}
+
 	/**	
 	 * Configure square webhooks
 	 **/
@@ -1751,103 +1782,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			}
 			router.route("/static/*").handler(staticHandler);
 
-			vertx.eventBus().consumer("square-order", message -> {
-				try {
-					String signature = message.headers().get("x-square-hmacsha256-signature");
-					JsonObject orderBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
-					String oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("order_id")).orElse(null);
-					if(oId == null)
-						oId = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("order_id")).orElse(null);
-					String orderId = oId;
-					String st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_created")).map(c -> c.getString("state")).orElse(null);
-					if(st == null)
-						st = Optional.ofNullable(orderBody.getJsonObject("data").getJsonObject("object").getJsonObject("order_updated")).map(c -> c.getString("state")).orElse(null);
-					String state = st;
-					if(orderId != null && "OPEN".equals(state)) {
-						String orderLock = String.format("square-order-", orderId);
-						SharedData sharedData = vertx.sharedData();
-						sharedData.getLockWithTimeout(orderLock, config().getLong(ConfigKeys.SQUARE_WEBHOOK_TIMEOUT_MILLIS, 3000L)).onSuccess(lock -> {
-							try {
-								String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
-								String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
-								if(squareSignatureKey != null && squareNotificationUrl != null) {
-									Boolean isFromSquare = WebhooksHelper.isValidWebhookEventSignature(orderBody.encode(), signature, squareSignatureKey, squareNotificationUrl);
-									if(isFromSquare) {
-										OrdersApi ordersApi = squareClient.getOrdersApi();
-										CustomersApi customersApi = squareClient.getCustomersApi();
-										RetrieveOrderResponse orderResponse = ordersApi.retrieveOrder(orderId);
-										Order order = orderResponse.getOrder();
-										String state2 = state;
-										String orderId2 = orderId;
-
-										List<Future<String>> futures = new ArrayList<>();
-										for(OrderLineItem item : order.getLineItems()) {
-											futures.add(Future.future(promise1 -> {
-												processSquareItem(customersApi, message, orderBody, order, orderId2, state2, item).onSuccess(a -> {
-													promise1.complete();
-												}).onFailure(ex -> {
-													promise1.fail(ex);
-												});
-											}));
-										}
-										Future.all(futures).onSuccess(b -> {
-											vertx.setTimer(config().getInteger(ConfigKeys.SQUARE_WEBHOOK_UNLOCK_MILLIS, 60000), tid -> {
-												lock.release();
-												LOG.info(String.format("The orderId %s lock was released", orderId));
-											});
-										}).onFailure(ex -> {
-											message.fail(400, ex.getMessage());
-										});
-									} else {
-										Throwable ex = new RuntimeException("Webhook is not from Square. ");
-										LOG.error("Webhook is not from Square. ", ex);
-										message.fail(400, ex.getMessage());
-									}
-								} else {
-									Throwable ex = new RuntimeException("Missing Square Signature Key and Notification URL. ");
-									LOG.error("Missing Square Signature Key and Notification URL. ", ex);
-									message.fail(400, ex.getMessage());
-								}
-							} catch(Throwable ex) {
-								LOG.error("Failed to process square webook. ", ex);
-								message.fail(400, ex.getMessage());
-							}
-						}).onFailure(ex -> {
-							LOG.warn(String.format("The orderId %s did not obtain a lock", orderId));
-						});
-					} else {
-						LOG.info(String.format("Missing orderId %s or OPEN state %s", orderId, state));
-					}
-				} catch(Throwable ex) {
-					LOG.error("Failed to process square webook. ", ex);
-					message.fail(400, ex.getMessage());
-				}
-			});
-			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_SQUARE))) {
-				router.post("/square/order").handler(BodyHandler.create()).handler(handler -> {
-					try {
-						String signature = handler.request().headers().get("x-square-hmacsha256-signature");
-						JsonObject params = new JsonObject();
-						params.put("body", handler.body().asJsonObject());
-						params.put("path", new JsonObject());
-						params.put("cookie", new JsonObject());
-						params.put("header", new JsonObject());
-						params.put("form", new JsonObject());
-						params.put("query", new JsonObject());
-						JsonObject context = new JsonObject().put("params", params).put("user", null);
-						JsonObject json = new JsonObject().put("context", context);
-						vertx.eventBus().publish("square-order", json, new DeliveryOptions().addHeader("x-square-hmacsha256-signature", signature));
-
-						Buffer buffer = Buffer.buffer(new JsonObject().encodePrettily());
-						handler.response().putHeader("Content-Type", "application/json");
-						handler.end(buffer);
-					} catch(Throwable ex) {
-						LOG.error("Failed to process square webook. ", ex);
-						handler.fail(ex);
-					}
-				});
-			}
-
 			router.getWithRegex("\\/en-us/download(?<uri>.*)").handler(oauth2AuthHandler).handler(handler -> {
 				String originalUri = handler.pathParam("uri");
 				SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
@@ -1969,7 +1903,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
-			SiteRoutes.routes(router, oauth2AuthHandler, config(), webClient, jinjava, apiSiteUser);
+			SiteRoutes.routes(vertx, router, oauth2AuthHandler, config(), webClient, jinjava, apiSiteUser);
 
 			LOG.info("The UI was configured properly.");
 			promise.complete();
