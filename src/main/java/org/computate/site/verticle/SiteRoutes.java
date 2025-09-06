@@ -211,9 +211,9 @@ public class SiteRoutes {
         router.post("/authorize/webhook").handler(BodyHandler.create()).handler(handler -> {
           try {
             String bodyStr = handler.body().asString();
-            String signature = handler.request().headers().get("X-ANET-Signature");
-            String authorizeTransactionKey = config.getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
-            HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeTransactionKey);
+            String signature = Optional.ofNullable(handler.request().headers().get("X-ANET-Signature")).map(s -> StringUtils.substringAfter(s, "sha512=")).orElse(null);
+            String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
+            HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeSignatureKey);
             String generatedSignature = hmacUtils.hmacHex(bodyStr);
             if(generatedSignature.equalsIgnoreCase(signature)) {
               JsonObject body = handler.body().asJsonObject();

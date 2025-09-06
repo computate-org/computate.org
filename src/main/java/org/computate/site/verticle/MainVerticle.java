@@ -1416,14 +1416,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_AUTHORIZE_NET))) {
 				String authorizeApiLoginId = config().getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
 				String authorizeTransactionKey = config().getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
+				String authorizeSignatureKey = config().getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
 				String authorizeNotificationUrl = config().getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
 				if(authorizeApiLoginId == null || authorizeTransactionKey == null || authorizeNotificationUrl == null) {
 					promise.complete();
 				} else {
-					// squareClient = new SquareClient.Builder()
-					// 		.bearerAuthCredentials(new BearerAuthModel.Builder(squareAccessToken).build())
-					// 		.environment(Environment.PRODUCTION)
-					// 		.build();
 					LOG.info("Configure authorize.net succeeded.");
 					promise.complete();
 				}
