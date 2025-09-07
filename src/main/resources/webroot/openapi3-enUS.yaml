@@ -9224,7 +9224,7 @@ components:
   securitySchemes:
     openIdConnect:
       type: openIdConnect
-      openIdConnectUrl: https://keycloak.apps-crc.testing/realms/COMPUTATE.ORG/.well-known/openid-configuration
+      openIdConnectUrl: https://keycloak.apps-crc.testing/realms/COMPUTATEORG/.well-known/openid-configuration
   requestBodies:
     SearchCompanyAboutResponse:
       content:
@@ -10096,6 +10096,16 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
                   relatedArticleIds:
                     type: string
                   relatedArticles:
@@ -10172,6 +10182,41 @@ components:
             removeCourseNum:
               type: string
             removeAllCourseNum:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
               type: string
             setRelatedArticleIds:
               type: string
@@ -10272,6 +10317,41 @@ components:
               type: string
             removeAllCourseNum:
               type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
             setRelatedArticleIds:
               type: string
               nullable: true
@@ -10326,6 +10406,16 @@ components:
               type: string
             courseNum:
               type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -10358,6 +10448,16 @@ components:
               type: string
             courseNum:
               type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -10389,6 +10489,16 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
               type: string
             relatedArticleIds:
               type: string
@@ -10427,6 +10537,16 @@ components:
                     type: string
                   courseNum:
                     type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
                   relatedArticleIds:
                     type: string
                   relatedArticles:
@@ -10458,6 +10578,16 @@ components:
                   downloadUri:
                     type: string
                   courseNum:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
                     type: string
                   relatedArticleIds:
                     type: string
@@ -10491,6 +10621,16 @@ components:
               type: string
             courseNum:
               type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -10522,6 +10662,16 @@ components:
             downloadUri:
               type: string
             courseNum:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
               type: string
             relatedArticleIds:
               type: string
@@ -12607,6 +12757,12 @@ components:
                     type: string
                   pageImageAlt:
                     type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
                   relatedArticleIds:
                     type: string
                   relatedArticles:
@@ -12796,6 +12952,30 @@ components:
               type: string
             removeAllPageImageAlt:
               type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
             setRelatedArticleIds:
               type: string
               nullable: true
@@ -13007,6 +13187,30 @@ components:
               type: string
             removeAllPageImageAlt:
               type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
             setRelatedArticleIds:
               type: string
               nullable: true
@@ -13093,6 +13297,12 @@ components:
               type: string
             pageImageAlt:
               type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -13157,6 +13367,12 @@ components:
               type: string
             pageImageAlt:
               type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -13226,6 +13442,12 @@ components:
                     type: string
                   pageImageAlt:
                     type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
                   relatedArticleIds:
                     type: string
                   relatedArticles:
@@ -13290,6 +13512,12 @@ components:
                     type: string
                   pageImageAlt:
                     type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
                   relatedArticleIds:
                     type: string
                   relatedArticles:
@@ -13354,6 +13582,12 @@ components:
               type: string
             pageImageAlt:
               type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
             relatedArticleIds:
               type: string
             relatedArticles:
@@ -13418,6 +13652,8 @@ components:
                   siteTheme:
                     type: string
                   webComponentsTheme:
+                    type: string
+                  customerProfileId:
                     type: string
     PATCHSiteUserRequest:
       allOf:
@@ -13524,6 +13760,13 @@ components:
               type: string
             removeAllWebComponentsTheme:
               type: string
+            setCustomerProfileId:
+              type: string
+              nullable: true
+            removeCustomerProfileId:
+              type: string
+            removeAllCustomerProfileId:
+              type: string
     PATCHSiteUserResponse:
       allOf:
         - type: object
@@ -13629,6 +13872,13 @@ components:
               type: string
             removeAllWebComponentsTheme:
               type: string
+            setCustomerProfileId:
+              type: string
+              nullable: true
+            removeCustomerProfileId:
+              type: string
+            removeAllCustomerProfileId:
+              type: string
     POSTSiteUserRequest:
       allOf:
         - type: object
@@ -13661,6 +13911,8 @@ components:
               type: string
             webComponentsTheme:
               type: string
+            customerProfileId:
+              type: string
     POSTSiteUserResponse:
       allOf:
         - type: object
@@ -13692,6 +13944,8 @@ components:
             siteTheme:
               type: string
             webComponentsTheme:
+              type: string
+            customerProfileId:
               type: string
     EditPageSiteUserResponse:
       allOf:

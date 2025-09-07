@@ -56,7 +56,7 @@ public class SiteRoutes {
 
     router.get("/").handler(eventHandler -> {
       ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(eventHandler);
-      apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture", false).onSuccess(siteRequest -> {
+      apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "postSiteUserFuture", "patchSiteUserFuture", false).onSuccess(siteRequest -> {
         siteRequest.addScopes("GET");
         facetAll(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(facetResponse -> {
           searchFreeCourses(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(topCourses -> {
@@ -213,6 +213,7 @@ public class SiteRoutes {
             String bodyStr = handler.body().asString();
             String signature = Optional.ofNullable(handler.request().headers().get("X-ANET-Signature")).map(s -> StringUtils.substringAfter(s, "sha512=")).orElse(null);
             String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
+            String authorizePublicClientKey = config.getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
             HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeSignatureKey);
             String generatedSignature = hmacUtils.hmacHex(bodyStr);
             if(generatedSignature.equalsIgnoreCase(signature)) {

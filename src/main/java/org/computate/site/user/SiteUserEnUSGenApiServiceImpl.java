@@ -518,7 +518,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 										if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 											o2.apiRequestSiteUser();
-											if(apiRequest.getVars().size() > 0)
+											if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 												eventBus.publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
 										}
 									}
@@ -728,6 +728,14 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							bSql.append(SiteUser.VAR_displayPage + "=$" + num);
 							num++;
 							bParams.add(o2.sqlDisplayPage());
+						break;
+					case "setCustomerProfileId":
+							o2.setCustomerProfileId(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_customerProfileId + "=$" + num);
+							num++;
+							bParams.add(o2.sqlCustomerProfileId());
 						break;
 				}
 			}
@@ -1250,6 +1258,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_displayPage + "=$" + num);
 						num++;
 						bParams.add(o2.sqlDisplayPage());
+						break;
+					case SiteUser.VAR_customerProfileId:
+						o2.setCustomerProfileId(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_customerProfileId + "=$" + num);
+						num++;
+						bParams.add(o2.sqlCustomerProfileId());
 						break;
 					}
 				}
@@ -1977,7 +1994,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			SiteRequest siteRequest = o.getSiteRequest_();
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT userId, created, userName, userEmail, archived, userFirstName, userLastName, userFullName, seeArchived, sessionId, awesomeEffect, userKey, displayName, siteFontSize, siteTheme, objectTitle, webComponentsTheme, displayPage FROM SiteUser WHERE pk=$1")
+			sqlConnection.preparedQuery("SELECT userId, created, userName, userEmail, archived, userFirstName, userLastName, userFullName, seeArchived, sessionId, awesomeEffect, userKey, displayName, siteFontSize, siteTheme, objectTitle, webComponentsTheme, displayPage, customerProfileId FROM SiteUser WHERE pk=$1")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(pk)
 					).onSuccess(result -> {
@@ -2165,6 +2182,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SiteUser.VAR_objectTitle, SiteUser.staticSetObjectTitle(siteRequest2, (String)result.get(SiteUser.VAR_objectTitle)));
 			page.persistForClass(SiteUser.VAR_webComponentsTheme, SiteUser.staticSetWebComponentsTheme(siteRequest2, (String)result.get(SiteUser.VAR_webComponentsTheme)));
 			page.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
+			page.persistForClass(SiteUser.VAR_customerProfileId, SiteUser.staticSetCustomerProfileId(siteRequest2, (String)result.get(SiteUser.VAR_customerProfileId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

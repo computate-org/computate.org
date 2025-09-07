@@ -198,6 +198,16 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * DisplayName: customer profile ID
+	 * Description: Authorize.net customer profile ID. 
+	 */
+	protected void _customerProfileId(Wrap<String> w) {
+	}
+
+	/**
 	 * Description: An implementation for the interface to set the request object
 	 */
 	@Override

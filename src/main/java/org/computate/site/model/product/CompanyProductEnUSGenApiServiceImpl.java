@@ -534,7 +534,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestCompanyProduct();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketCompanyProduct", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1495,7 +1495,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public void searchpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
+	public void searchpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1524,7 +1524,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageCompanyProductPageInit(page, listCompanyProduct, promise1);
+					searchpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1661,7 +1661,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public void editpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
+	public void editpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1690,7 +1690,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageCompanyProductPageInit(page, listCompanyProduct, promise1);
+					editpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1790,7 +1790,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public void displaypageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
+	public void displaypageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1819,7 +1819,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageCompanyProductPageInit(page, listCompanyProduct, promise1);
+					displaypageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1956,7 +1956,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		});
 	}
 
-	public void userpageCompanyProductPageInit(CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
+	public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1985,7 +1985,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					userpageCompanyProductPageInit(page, listCompanyProduct, promise1);
+					userpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

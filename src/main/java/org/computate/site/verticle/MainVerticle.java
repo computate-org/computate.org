@@ -1417,6 +1417,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				String authorizeApiLoginId = config().getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
 				String authorizeTransactionKey = config().getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
 				String authorizeSignatureKey = config().getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
+				String authorizePublicClientKey = config().getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
 				String authorizeNotificationUrl = config().getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
 				if(authorizeApiLoginId == null || authorizeTransactionKey == null || authorizeNotificationUrl == null) {
 					promise.complete();
@@ -1784,7 +1785,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 				SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 				initializeApiService(apiSiteUser);
 				ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(handler);
-				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_ComputateSiteUser, "postSiteUserFuture", "patchSiteUserFuture", false).onSuccess(siteRequest -> {
+				apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "postSiteUserFuture", "patchSiteUserFuture", false).onSuccess(siteRequest -> {
 					try {
 
 						String uri = handler.pathParam("uri");
