@@ -213,7 +213,6 @@ public class SiteRoutes {
             String bodyStr = handler.body().asString();
             String signature = Optional.ofNullable(handler.request().headers().get("X-ANET-Signature")).map(s -> StringUtils.substringAfter(s, "sha512=")).orElse(null);
             String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
-            String authorizePublicClientKey = config.getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
             HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeSignatureKey);
             String generatedSignature = hmacUtils.hmacHex(bodyStr);
             if(generatedSignature.equalsIgnoreCase(signature)) {
@@ -228,8 +227,12 @@ public class SiteRoutes {
               JsonObject context = new JsonObject().put("params", params).put("user", null);
               JsonObject json = new JsonObject().put("context", context);
               vertx.eventBus().publish("authorize-order", json, new DeliveryOptions().addHeader("X-ANET-Signature", signature));
+              handler.response().putHeader("Content-Type", "application/json");
+              handler.end(new JsonObject().toBuffer());
             } else {
               LOG.warn(String.format("Invalid authorize.net webhook with header X-ANET-Signature: %s\n%s", signature, bodyStr));
+              handler.response().putHeader("Content-Type", "application/json");
+              handler.end(new JsonObject().toBuffer());
             }
           } catch(Throwable ex) {
             LOG.error("Failed to process authorize.net webook. ", ex);
