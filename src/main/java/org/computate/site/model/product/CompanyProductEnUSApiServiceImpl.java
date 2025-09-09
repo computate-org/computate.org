@@ -149,21 +149,23 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
   
             // Removed transaction fee
-            //transactionRequest.setAmount(amount.multiply(BigDecimal.valueOf(1.00)).setScale(1, RoundingMode.CEILING));
             transactionRequest.setAmount(companyProduct.getPrice());
   
             ArrayOfLineItem lineItems = new ArrayOfLineItem();
             LineItemType lineItem = new LineItemType();
-            DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM yyyy", Locale.US);
+            lineItem.setItemId(StringUtils.truncate(companyProduct.getPageId(), 31));
+            lineItem.setDescription(StringUtils.truncate(companyProduct.getDescription(), 255));
+            lineItem.setName(StringUtils.truncate(companyProduct.getName(), 31));
+            lineItem.setTotalAmount(companyProduct.getPrice());
+            DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
             LocalDate now = LocalDate.now();
-            // Integer paymentDay = siteConfig.getPaymentDay();
             LocalDate chargeEndDate = LocalDate.now();
-            // LocalDate chargeEndDate = LocalDate.now().getDayOfMonth() <= paymentDay ? now.withDayOfMonth(paymentDay) : now.plusMonths(1).withDayOfMonth(paymentDay);
             CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
             profile.setCustomerProfileId(customerProfileId);
             transactionRequest.setProfile(profile);
+            transactionRequest.setLineItems(lineItems);
             OrderType order = new OrderType();
-            order.setDescription(StringUtils.truncate(String.format("%s<%s> payment for $%s %s %s", siteUser.getUserFullName(), siteUser.getUserEmail(), companyProduct.getPrice(), companyProduct.getName(), fd.format(chargeEndDate)), 255));
+            order.setDescription(StringUtils.truncate(String.format("%s $%s payment from %s %s on %s", companyProduct.getName(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
             transactionRequest.setOrder(order);
             hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
   
