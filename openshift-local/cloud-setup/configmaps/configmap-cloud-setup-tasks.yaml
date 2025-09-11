@@ -20,7 +20,7 @@ data:
         realm: "{{ AUTH_REALM }}"
         enabled: true
         displayName: "{{ AUTH_REALM }}"
-        registrationAllowed: false
+        registrationAllowed: true
         resetPasswordAllowed: true
         editUsernameAllowed: false
         rememberMe: true
