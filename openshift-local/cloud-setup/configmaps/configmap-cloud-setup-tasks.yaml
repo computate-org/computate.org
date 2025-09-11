@@ -133,6 +133,32 @@ data:
             protocol: openid-connect
             protocolMapper: oidc-group-membership-mapper
 
+    - name: "Configure keycloak client scope customerProfileId"
+      community.general.keycloak_clientscope:
+        validate_certs: false
+        auth_client_id: admin-cli
+        auth_keycloak_url: "{{ AUTH_URL }}"
+        auth_realm: master
+        auth_username: "{{ AUTH_ADMIN_USERNAME }}"
+        auth_password: "{{ AUTH_ADMIN_PASSWORD }}"
+        state: present
+        id: "{{ AUTH_REALM }}-customerProfileId"
+        realm: "{{ AUTH_REALM }}"
+        name: "customerProfileId"
+        description: A customerProfileId client scope
+        protocol: openid-connect
+        attributes:
+          include.in.token.scope: 'true'
+        protocolMappers:
+          - config:
+              access.token.claim: 'true'
+              id.token.claim: 'false'
+              userinfo.token.claim: "true"
+            id: "{{ AUTH_REALM }}-customerProfileId"
+            name: "customerProfileId"
+            protocol: openid-connect
+            protocolMapper: oidc-audience-mapper
+
     - name: "Disable RSA-OAEP key component from {{ AUTH_REALM }}"
       community.general.keycloak_component:
         validate_certs: false
@@ -170,6 +196,7 @@ data:
         defaultClientScopes:
           - openid
           - profile
+          - customerProfileId
           - "{{ AUTH_CLIENT }}"
         authorizationSettings:
           decisionStrategy: AFFIRMATIVE
