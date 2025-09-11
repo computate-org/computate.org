@@ -48,6 +48,8 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
   @Override
   public void userDefine(Promise<Boolean> promise, ComputateSiteRequest siteRequest, JsonObject jsonObject, Boolean patch) {
     try {
+      JsonObject attributes = siteRequest.getUser().attributes();
+      JsonObject accessToken = attributes.getJsonObject("accessToken");
       String sessionIdBefore = siteRequest.getSessionIdBefore();
       String sessionId = siteRequest.getSessionId();
 
@@ -82,11 +84,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
       if(Optional.ofNullable(siteRequest.getServiceRequest()).map(serviceRequest -> serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() == 0L
           && StringUtils.isNotBlank(authorizeEnvironment) && authorizeApiLoginId != null && authorizeTransactionKey != null) {
-        String customerProfileId1 = null;
-        if(patch)
-          customerProfileId1 = jsonObject.getString("setCustomerProfileId");
-        else
-          customerProfileId1 = jsonObject.getString("customerProfileId");
+        String customerProfileId1 = accessToken.getString("customerProfileId");
   
         if(customerProfileId1 == null) {
           String customerProfileId2 = customerProfileId1;
@@ -206,76 +204,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
           });
         }
         else {
-          String customerProfileId = customerProfileId1;
-          String authAdminUsername = config.getString(ComputateConfigKeys.AUTH_ADMIN_USERNAME);
-          String authAdminPassword = config.getString(ComputateConfigKeys.AUTH_ADMIN_PASSWORD);
-          Integer authPort = Integer.parseInt(config.getString(ComputateConfigKeys.AUTH_PORT));
-          String authHostName = config.getString(ComputateConfigKeys.AUTH_HOST_NAME);
-          Boolean authSsl = Boolean.parseBoolean(config.getString(ComputateConfigKeys.AUTH_SSL));
-          String authRealm = config.getString(ComputateConfigKeys.AUTH_REALM);
-          webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
-              .sendForm(MultiMap.caseInsensitiveMultiMap()
-                  .add("username", authAdminUsername)
-                  .add("password", authAdminPassword)
-                  .add("grant_type", "password")
-                  .add("client_id", "admin-cli")
-                  )
-              .expecting(HttpResponseExpectation.SC_OK)
-                  .onSuccess(tokenResponse -> {
-            try {
-              String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
-              webClient.get(authPort, authHostName
-                  , String.format("/admin/realms/%s/users?exact=true&first=0&max=1&search=%s"
-                  , authRealm
-                  , URLEncoder.encode(siteRequest.getUserName(), "UTF-8")
-                  )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-              .send()
-              .expecting(HttpResponseExpectation.SC_OK)
-              .onSuccess(userResponse -> {
-                try {
-                  JsonArray users = userResponse.bodyAsJsonArray();
-                  JsonObject userObject = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-                  if(userObject != null) {
-                    String userId = userObject.getString("id");
-                    JsonObject newUserObject = userObject.copy();
-                    JsonObject newAttibutes = Optional.ofNullable(newUserObject.getJsonObject("attributes")).map(a -> a.copy()).orElse(new JsonObject());
-                    newAttibutes.put("customerProfileId", new JsonArray().add(customerProfileId));
-                    newUserObject.put("attributes", newAttibutes);
-                    webClient.put(authPort, authHostName
-                        , String.format("/admin/realms/%s/users/%s"
-                        , authRealm
-                        , URLEncoder.encode(userId, "UTF-8")
-                        )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-                    .sendJsonObject(newUserObject)
-                    .expecting(HttpResponseExpectation.SC_NO_CONTENT)
-                    .onSuccess(groupResponse -> {
-                      promise.complete(false);
-                    }).onFailure(ex -> {
-                      LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
-                      promise.fail(ex);
-                    });
-                  } else {
-                    Exception ex = new RuntimeException(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")));
-                    LOG.error(ex.getMessage(), ex);
-                    promise.fail(ex);
-                  }
-                } catch(Throwable ex) {
-                  LOG.error(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")), ex);
-                  promise.fail(ex);
-                }
-              }).onFailure(ex -> {
-                LOG.error(String.format("Failed to query user by id: %s", siteRequest.getUserName()), ex);
-                LOG.error("Failed to render page. ", ex);
-                promise.fail(ex);
-              });
-            } catch(Throwable ex) {
-              LOG.error(String.format("Failed preparing to query user by id: %s", siteRequest.getUserName()), ex);
-              promise.fail(ex);
-            }
-          }).onFailure(ex -> {
-            LOG.error("Failed to query admin access token. ", ex);
-            promise.fail(ex);
-          });
+          promise.complete(false);
         }
       }
       else {
