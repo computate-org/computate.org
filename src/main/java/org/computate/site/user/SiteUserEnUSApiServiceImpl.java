@@ -161,24 +161,32 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
               .expecting(HttpResponseExpectation.SC_OK)
               .onSuccess(userResponse -> {
                 try {
-                  JsonObject userObject = userResponse.bodyAsJsonObject();
-                  String userId = userObject.getString("id");
-                  webClient.put(authPort, authHostName
-                      , String.format("/admin/realms/%s/users/%s"
-                      , authRealm
-                      , URLEncoder.encode(userId, "UTF-8")
-                      )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-                  .sendJsonObject(new JsonObject()
-                      .put("attributes", new JsonObject()
-                        .put("customerProfileId", customerProfileId)
-                      ))
-                  .expecting(HttpResponseExpectation.SC_OK)
-                  .onSuccess(groupResponse -> {
-                    promise.complete(false);
-                  }).onFailure(ex -> {
-                    LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
+                  JsonArray users = userResponse.bodyAsJsonArray();
+                  JsonObject userObject = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+                  if(userObject != null) {
+                    String userId = userObject.getString("id");
+                    JsonObject newUserObject = userObject.copy();
+                    JsonObject newAttibutes = Optional.ofNullable(newUserObject.getJsonObject("attributes")).map(a -> a.copy()).orElse(new JsonObject());
+                    newAttibutes.put("customerProfileId", new JsonArray().add(customerProfileId));
+                    newUserObject.put("attributes", newAttibutes);
+                    webClient.put(authPort, authHostName
+                        , String.format("/admin/realms/%s/users/%s"
+                        , authRealm
+                        , URLEncoder.encode(userId, "UTF-8")
+                        )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                    .sendJsonObject(newUserObject)
+                    .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                    .onSuccess(groupResponse -> {
+                      promise.complete(false);
+                    }).onFailure(ex -> {
+                      LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
+                      promise.fail(ex);
+                    });
+                  } else {
+                    Exception ex = new RuntimeException(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")));
+                    LOG.error(ex.getMessage(), ex);
                     promise.fail(ex);
-                  });
+                  }
                 } catch(Throwable ex) {
                   LOG.error(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")), ex);
                   promise.fail(ex);
@@ -225,24 +233,32 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
               .expecting(HttpResponseExpectation.SC_OK)
               .onSuccess(userResponse -> {
                 try {
-                  JsonObject userObject = userResponse.bodyAsJsonObject();
-                  String userId = userObject.getString("id");
-                  webClient.put(authPort, authHostName
-                      , String.format("/admin/realms/%s/users/%s"
-                      , authRealm
-                      , URLEncoder.encode(userId, "UTF-8")
-                      )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-                  .sendJsonObject(new JsonObject()
-                      .put("attributes", new JsonObject()
-                        .put("customerProfileId", customerProfileId)
-                      ))
-                  .expecting(HttpResponseExpectation.SC_OK)
-                  .onSuccess(groupResponse -> {
-                    promise.complete(false);
-                  }).onFailure(ex -> {
-                    LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
+                  JsonArray users = userResponse.bodyAsJsonArray();
+                  JsonObject userObject = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+                  if(userObject != null) {
+                    String userId = userObject.getString("id");
+                    JsonObject newUserObject = userObject.copy();
+                    JsonObject newAttibutes = Optional.ofNullable(newUserObject.getJsonObject("attributes")).map(a -> a.copy()).orElse(new JsonObject());
+                    newAttibutes.put("customerProfileId", new JsonArray().add(customerProfileId));
+                    newUserObject.put("attributes", newAttibutes);
+                    webClient.put(authPort, authHostName
+                        , String.format("/admin/realms/%s/users/%s"
+                        , authRealm
+                        , URLEncoder.encode(userId, "UTF-8")
+                        )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                    .sendJsonObject(newUserObject)
+                    .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                    .onSuccess(groupResponse -> {
+                      promise.complete(false);
+                    }).onFailure(ex -> {
+                      LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
+                      promise.fail(ex);
+                    });
+                  } else {
+                    Exception ex = new RuntimeException(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")));
+                    LOG.error(ex.getMessage(), ex);
                     promise.fail(ex);
-                  });
+                  }
                 } catch(Throwable ex) {
                   LOG.error(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")), ex);
                   promise.fail(ex);

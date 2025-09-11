@@ -70,6 +70,20 @@ data:
     #    loginWithEmailAllowed: false
     #    browserFlow: browser-PATCH
 
+    - name: Enable Unmanaged Attributes
+      community.general.keycloak_userprofile:
+        validate_certs: false
+        auth_client_id: admin-cli
+        auth_keycloak_url: "{{ AUTH_URL }}"
+        auth_realm: master
+        auth_username: "{{ AUTH_ADMIN_USERNAME }}"
+        auth_password: "{{ AUTH_ADMIN_PASSWORD }}"
+        state: present
+        parent_id: master
+        config:
+          kc_user_profile_config:
+            - unmanagedAttributePolicy: ENABLED
+
     - name: "Configure keycloak client scope openid"
       community.general.keycloak_clientscope:
         validate_certs: false
@@ -149,15 +163,21 @@ data:
         protocol: openid-connect
         attributes:
           include.in.token.scope: 'true'
+          display.on.consent.screen: 'true'
         protocolMappers:
           - config:
+              introspection.token.claim: 'true'
               access.token.claim: 'true'
-              id.token.claim: 'false'
-              userinfo.token.claim: "true"
+              id.token.claim: 'true'
+              userinfo.token.claim: 'true'
+              lightweight.claim: 'false'
+              claim.name: customerProfileId
+              jsonType.label: String
+              user.attribute: customerProfileId
             id: "{{ AUTH_REALM }}-customerProfileId"
-            name: "customerProfileId"
+            name: customerProfileId
             protocol: openid-connect
-            protocolMapper: oidc-audience-mapper
+            protocolMapper: oidc-usermodel-attribute-mapper
 
     - name: "Disable RSA-OAEP key component from {{ AUTH_REALM }}"
       community.general.keycloak_component:
