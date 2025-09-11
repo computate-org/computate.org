@@ -79,10 +79,80 @@ data:
         auth_username: "{{ AUTH_ADMIN_USERNAME }}"
         auth_password: "{{ AUTH_ADMIN_PASSWORD }}"
         state: present
-        parent_id: master
+        parent_id: "{{ AUTH_REALM }}"
         config:
           kc_user_profile_config:
             - unmanagedAttributePolicy: ENABLED
+              attributes:
+                - name: username
+                  displayName: ${username}
+                  validations:
+                    length:
+                      min: 3
+                      max: 255
+                    username_prohibited_characters: {}
+                    up_username_not_idn_homograph: {}
+                  annotations: {}
+                  permissions:
+                    view:
+                      - admin
+                      - user
+                    edit: []
+                  multivalued: false
+                - name: email
+                  displayName: ${email}
+                  validations:
+                    email: {}
+                    length:
+                      max: 255
+                  annotations: {}
+                  required:
+                    roles:
+                      - user
+                  permissions:
+                    view:
+                      - admin
+                      - user
+                    edit: []
+                  multivalued: false
+                - name: firstName
+                  displayName: ${firstName}
+                  validations:
+                    length:
+                      max: 255
+                    person_name_prohibited_characters: {}
+                  annotations: {}
+                  required:
+                    roles:
+                      - user
+                  permissions:
+                    view:
+                      - admin
+                      - user
+                    edit: []
+                  multivalued: false
+                - name: lastName
+                  displayName: ${lastName}
+                  validations:
+                    length:
+                      max: 255
+                    person_name_prohibited_characters: {}
+                  annotations: {}
+                  required:
+                    roles:
+                      - user
+                  permissions:
+                    view:
+                      - admin
+                      - user
+                    edit: []
+                  multivalued: false
+              groups:
+                - name: user-metadata
+                  displayHeader: User metadata
+                  displayDescription: Attributes, which refer to user metadata
+                  annotations: {}
+
 
     - name: "Configure keycloak client scope openid"
       community.general.keycloak_clientscope:
