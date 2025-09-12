@@ -17,6 +17,10 @@ public class ConfigKeys extends ComputateConfigKeys {
     ctx.put(SITE_OS_VERSION, config.getString(SITE_OS_VERSION));
     ctx.put(AUTHORIZE_NET_ENVIRONMENT, config.getString(AUTHORIZE_NET_ENVIRONMENT));
     ctx.put(AUTHORIZE_NET_URL, config.getString(AUTHORIZE_NET_URL));
+    ctx.put(AUTHORIZE_NET_API_HOST_NAME, config.getString(AUTHORIZE_NET_API_HOST_NAME));
+    ctx.put(AUTHORIZE_NET_API_PORT, config.getString(AUTHORIZE_NET_API_PORT));
+    ctx.put(AUTHORIZE_NET_API_SSL, config.getString(AUTHORIZE_NET_API_SSL));
+    ctx.put(AUTHORIZE_NET_API_URI, config.getString(AUTHORIZE_NET_API_URI));
     ctx.put(AUTHORIZE_NET_API_LOGIN_ID, config.getString(AUTHORIZE_NET_API_LOGIN_ID));
     ctx.put(AUTHORIZE_NET_PUBLIC_CLIENT_KEY, config.getString(AUTHORIZE_NET_PUBLIC_CLIENT_KEY));
     return ctx;
@@ -25,16 +29,4 @@ public class ConfigKeys extends ComputateConfigKeys {
   public static final String SITE_OS_NAME = "SITE_OS_NAME";
   public static final String SITE_OS_SHORT_NAME = "SITE_OS_SHORT_NAME";
   public static final String SITE_OS_VERSION = "SITE_OS_VERSION";
-
-	public static final String ENABLE_AUTHORIZE_NET = "ENABLE_AUTHORIZE_NET";
-	public static final String AUTHORIZE_NET_ENVIRONMENT = "AUTHORIZE_NET_ENVIRONMENT";
-	public static final String AUTHORIZE_NET_URL = "AUTHORIZE_NET_URL";
-	public static final String AUTHORIZE_NET_ACCEPT_JS_URL = "AUTHORIZE_NET_ACCEPT_JS_URL";
-	public static final String AUTHORIZE_NET_API_LOGIN_ID = "AUTHORIZE_NET_API_LOGIN_ID";
-	public static final String AUTHORIZE_NET_TRANSACTION_KEY = "AUTHORIZE_NET_TRANSACTION_KEY";
-	public static final String AUTHORIZE_NET_SIGNATURE_KEY = "AUTHORIZE_NET_SIGNATURE_KEY";
-	public static final String AUTHORIZE_NET_PUBLIC_CLIENT_KEY = "AUTHORIZE_NET_PUBLIC_CLIENT_KEY";
-	public static final String AUTHORIZE_NET_NOTIFICATION_URL = "AUTHORIZE_NET_NOTIFICATION_URL";
-	public static final String AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS = "AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS";
-	public static final String AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS = "AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS";
 }

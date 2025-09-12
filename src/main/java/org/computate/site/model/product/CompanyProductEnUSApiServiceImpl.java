@@ -6,9 +6,14 @@ import io.vertx.ext.web.client.WebClient;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.http.HttpResponseExpectation;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgPool;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -16,8 +21,11 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
+import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
+import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
+import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.search.list.SearchList;
 
 import io.vertx.kafka.client.producer.KafkaProducer;
@@ -53,9 +61,15 @@ import com.hubspot.jinjava.Jinjava;
 public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiServiceImpl {
 
   @Override
+  public void userDefine(Promise<Boolean> promise, ComputateSiteRequest siteRequest, JsonObject jsonObject, Boolean patch) {
+    userDefineAuthorizeNet(promise, siteRequest, jsonObject, patch);
+  }
+
+  @Override
   public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
     try {
-      SiteUser siteUser = page.getSiteRequest_().getSiteUser_();
+      SiteRequest siteRequest = page.getSiteRequest_();
+      SiteUser siteUser = siteRequest.getSiteUser_();
       CompanyProduct companyProduct = listCompanyProduct.first();
       String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
       String authorizeApiLoginId = config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
@@ -68,125 +82,139 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
       if(siteUser != null) {
         String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId");
         if(customerProfileId != null) {
-          MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-          merchantAuthenticationType.setName(authorizeApiLoginId);
-          merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-          ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-
-          GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
-          createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-          createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
-          ArrayOfSetting customerProfileSettings = new ArrayOfSetting();
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileManageOptions");
-            settingType.setSettingValue("showPayment");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileValidationMode");
-            settingType.setSettingValue("testMode");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileBillingAddressOptions");
-            settingType.setSettingValue("showNone");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileCardCodeRequired");
-            settingType.setSettingValue("true");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          createCustomerProfileRequest.setHostedProfileSettings(customerProfileSettings);
-
-          GetHostedProfilePageController hostedProfileController = new GetHostedProfilePageController(createCustomerProfileRequest);
-          GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(authorizeEnvironment));
-          GetHostedProfilePageResponse profilePageResponse = null;
-          hostedProfileController.execute();
-          if(hostedProfileController.getErrorResponse() != null)
-            throw new RuntimeException(hostedProfileController.getResults().toString());
-          else {
-            profilePageResponse = hostedProfileController.getApiResponse();
-            if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-              Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
-              if(message != null && message.getCode().equals("E00124"))
-                profilePageResponse = null;
-              else 
-                throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getCode(), m.getText(), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
-            }
-          }
-
-          if(profilePageResponse != null) {
-            GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
-            hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
-  
-            ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
-            SettingType settingType = new SettingType();
-            JsonObject hostedPaymentReturnOptions = new JsonObject().put("showReceipt", true);
-            if(!siteBaseUrl.startsWith("http://localhost")) {
-              hostedPaymentReturnOptions.put("url", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
-              hostedPaymentReturnOptions.put("cancelUrl", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
-            }
-            settingType.setSettingName("hostedPaymentReturnOptions");
-            settingType.setSettingValue(hostedPaymentReturnOptions.encode());
-            hostedPaymentSettings.getSetting().add(settingType);
-            hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
-            TransactionRequestType transactionRequest = new TransactionRequestType();
-            // This is the default transaction type. 
-            // When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
-            // Simple Checkout uses AUTH_CAPTURE only. 
-            // The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
-            // With an AUTH_CAPTURE transaction, the process is completely automatic. 
-            // The transaction is submitted to your processor for authorization and, 
-            // if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
-            // The transaction will settle at your next batch. 
-            // Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
-            // See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
-            transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-  
-            // Removed transaction fee
-            transactionRequest.setAmount(companyProduct.getPrice());
-  
-            ArrayOfLineItem lineItems = new ArrayOfLineItem();
-            LineItemType lineItem = new LineItemType();
-            lineItem.setItemId(StringUtils.truncate(companyProduct.getPageId(), 31));
-            lineItem.setDescription(StringUtils.truncate(companyProduct.getDescription(), 255));
-            lineItem.setName(StringUtils.truncate(companyProduct.getName(), 31));
-            lineItem.setTotalAmount(companyProduct.getPrice());
-            DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
-            LocalDate now = LocalDate.now();
-            LocalDate chargeEndDate = LocalDate.now();
-            CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
-            profile.setCustomerProfileId(customerProfileId);
-            transactionRequest.setProfile(profile);
-            transactionRequest.setLineItems(lineItems);
-            OrderType order = new OrderType();
-            order.setDescription(StringUtils.truncate(String.format("%s $%s payment from %s %s on %s", companyProduct.getName(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
-            transactionRequest.setOrder(order);
-            hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
-  
-            GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
-            GetHostedPaymentPageController.setEnvironment(Environment.valueOf(authorizeEnvironment));
-            GetHostedPaymentPageResponse hostedPaymentResponse = null;
-            hostedPaymentController.execute();
-            if(hostedPaymentController.getErrorResponse() != null)
-              promise.fail(new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentController.getResults().toString())));
-            else {
-              hostedPaymentResponse = hostedPaymentController.getApiResponse();
-              if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
-                promise.fail(new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "))));
-              } else {
-                ctx.put("hostedPaymentResponseToken", hostedPaymentResponse.getToken());
-                promise.complete();
+          JsonObject getHostedProfilePageRequestObj = new JsonObject();
+          JsonObject getHostedProfilePageRequest = new JsonObject();
+          getHostedProfilePageRequestObj.put("getHostedProfilePageRequest", getHostedProfilePageRequest);
+          JsonObject merchantAuthentication = new JsonObject();
+          getHostedProfilePageRequest.put("merchantAuthentication", merchantAuthentication);
+          merchantAuthentication.put("name", authorizeApiLoginId);
+          merchantAuthentication.put("transactionKey", authorizeTransactionKey);
+          getHostedProfilePageRequestObj.put("customerProfileId", customerProfileId);
+          JsonObject hostedProfileSettings = new JsonObject();
+          getHostedProfilePageRequest.put("hostedProfileSettings", hostedProfileSettings);
+          hostedProfileSettings.put("setting", new JsonArray()
+              .add(new JsonObject()
+                  .put("settingName", "hostedProfileManageOptions")
+                  .put("settingValue", "showPayment")
+              )
+              .add(new JsonObject()
+                  .put("settingName", "hostedProfileValidationMode")
+                  .put("settingValue", "testMode")
+              )
+              .add(new JsonObject()
+                  .put("settingName", "hostedProfileBillingAddressOptions")
+                  .put("settingValue", "showNone")
+              )
+              .add(new JsonObject()
+                  .put("settingName", "hostedProfileCardCodeRequired")
+                  .put("settingValue", "true")
+              )
+          );
+          webClient.post(Integer.parseInt(config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_PORT))
+              , config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_HOST_NAME)
+              , config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_URI))
+              .ssl(Boolean.parseBoolean(config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_SSL)))
+              .putHeader("Content-Type", "application/json")
+              .sendJsonObject(getHostedProfilePageRequestObj)
+              .expecting(HttpResponseExpectation.SC_OK)
+                  .onSuccess(hostedProfilePageResponse -> {
+            try {
+              JsonObject hostedProfilePageResponseObj = hostedProfilePageResponse.bodyAsJsonObject();
+              JsonObject messages = hostedProfilePageResponseObj.getJsonObject("messages");
+              if("Error".equals(messages.getString("resultCode"))) {
+                JsonObject message = messages.getJsonArray("message").stream().findFirst().map(m -> (JsonObject)m).orElse(null);
+                String messageStr = Optional.ofNullable(message).map(m -> m.getString("text")).orElse("");
+                String code = Optional.ofNullable(message).map(m -> m.getString("code")).orElse(null);
+                if("E00124".equals(code))
+                  hostedProfilePageResponseObj = null;
+                else 
+                  throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getString("code"), m.getString("text"), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
               }
+
+              if(hostedProfilePageResponseObj != null) {
+                JsonObject getHostedPaymentPageRequestObj = new JsonObject();
+                JsonObject getHostedPaymentPageRequest = new JsonObject();
+                getHostedPaymentPageRequestObj.put("getHostedPaymentPageRequest", getHostedPaymentPageRequest);
+                getHostedPaymentPageRequest.put("merchantAuthentication", merchantAuthentication);
+                JsonObject hostedPaymentReturnOptions = new JsonObject();
+                hostedPaymentReturnOptions.put("showReceipt", true);
+                if(!siteBaseUrl.startsWith("http://localhost")) {
+                  hostedPaymentReturnOptions.put("url", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
+                  hostedPaymentReturnOptions.put("cancelUrl", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
+                }
+                getHostedPaymentPageRequest.put("hostedPaymentSettings", new JsonObject()
+                    .put("setting", new JsonArray()
+                        .add(new JsonObject()
+                            .put("settingName", "hostedPaymentReturnOptions")
+                            .put("settingValue", hostedPaymentReturnOptions.encode())
+                        )
+                    )
+                );
+                DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
+                LocalDate now = LocalDate.now();
+                LocalDate chargeEndDate = LocalDate.now();
+                String orderDescription = StringUtils.truncate(String.format("%s $%s payment from %s %s on %s", companyProduct.getName(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255);
+                getHostedPaymentPageRequest.put("transactionRequest", new JsonObject()
+                    .put("transactionType", "authCaptureTransaction")
+                    .put("amount", companyProduct.getPrice().setScale(2, RoundingMode.HALF_UP).toString())
+                    .put("profile", new JsonObject()
+                        .put("customerProfileId", customerProfileId)
+                    )
+                    .put("customer", new JsonObject()
+                        .put("email", siteUser.getUserEmail())
+                    )
+                    .put("billTo", new JsonObject()
+                        .put("firstName", siteUser.getUserFirstName())
+                        .put("lastName", siteUser.getUserLastName())
+                    )
+                    .put("lineItems", new JsonObject()
+                        .put("lineItem", new JsonArray().add(new JsonObject()
+                            .put("itemId", StringUtils.truncate(companyProduct.getPageId(), 31))
+                            .put("description", StringUtils.truncate(companyProduct.getDescription(), 255))
+                            .put("name", StringUtils.truncate(companyProduct.getName(), 31))
+                            .put("totalAmount", companyProduct.getPrice())
+                        ))
+                    )
+                    .put("order", new JsonObject()
+                        .put("description", orderDescription)
+                    )
+                );
+                webClient.post(Integer.parseInt(config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_PORT))
+                    , config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_HOST_NAME)
+                    , config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_URI))
+                    .ssl(Boolean.parseBoolean(config.getString(ComputateConfigKeys.AUTHORIZE_NET_API_SSL)))
+                    .putHeader("Content-Type", "application/json")
+                    .sendJsonObject(getHostedPaymentPageRequestObj)
+                    .expecting(HttpResponseExpectation.SC_OK)
+                        .onSuccess(hostedPaymentPageResponse -> {
+                  try {
+                    JsonObject hostedPaymentPageResponseObj = hostedPaymentPageResponse.bodyAsJsonObject();
+                    JsonObject hostedPaymentPageResponseMessages = hostedPaymentPageResponseObj.getJsonObject("messages");
+                    if("Error".equals(hostedPaymentPageResponseMessages.getString("resultCode"))) {
+                      JsonObject message = hostedPaymentPageResponseMessages.getJsonArray("message").stream().findFirst().map(m -> (JsonObject)m).orElse(null);
+                      throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("Failed to set up hosted payment %s %s, %s, userName: %s, userFullName: %s", m.getString("code"), m.getString("text"), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedPaymentPageRequest failed. "));
+                    }
+                    ctx.put("hostedPaymentResponseToken", hostedPaymentPageResponseObj.getString("token"));
+                    promise.complete();
+                  } catch(Throwable ex) {
+                    LOG.error(String.format("Failed to process hosted profile page for user: %s", siteRequest.getUserName()), ex);
+                    promise.fail(ex);
+                  }
+                }).onFailure(ex -> {
+                  LOG.error(String.format("Failed to create hosted profile page for user: %s", siteRequest.getUserName()), ex);
+                  promise.fail(ex);
+                });
+              } else {
+                promise.fail(new RuntimeException(String.format("Failed to set up profilePageResponse: %s", hostedProfilePageResponseObj.encode())));
+              }
+            } catch(Throwable ex) {
+              LOG.error(String.format("Failed to process hosted profile page for user: %s", siteRequest.getUserName()), ex);
+              promise.fail(ex);
             }
-          } else {
-            promise.fail(new RuntimeException(String.format("Failed to set up profilePageResponse: %s", profilePageResponse)));
-          }
+          }).onFailure(ex -> {
+            LOG.error(String.format("Failed to create hosted profile page for user: %s", siteRequest.getUserName()), ex);
+            promise.fail(ex);
+          });
         } else {
           promise.complete();
         }
