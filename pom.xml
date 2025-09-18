@@ -75,7 +75,7 @@
 		<vertx-base.version>4.5.8</vertx-base.version>
 		<vertx.version>${vertx-base.version}</vertx.version>
 
-		<jinjava.version>2.7.2</jinjava.version>
+		<jinjava.version>2.8.1</jinjava.version>
 		<commons-text.version>1.10.0</commons-text.version>
 		<log4j.version>2.22.0</log4j.version>
 		<slf4j.version>2.0.9</slf4j.version>
