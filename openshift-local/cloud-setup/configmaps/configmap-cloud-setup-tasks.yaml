@@ -7,6 +7,67 @@ data:
   main.yaml: |
     ---
 
+    - name: Get postgres pod by label
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: postgres
+        label_selectors:
+          - postgres-operator.crunchydata.com/role=master
+      register: postgres_pod_info
+    - name: Set postgres pod name
+      set_fact:
+        POSTGRES_POD_NAME: "{{ postgres_pod_info.resources[0].metadata.name }}"
+    - name: "Create database user {{ DATABASE_USERNAME }}"
+      kubernetes.core.k8s_exec:
+        namespace: postgres
+        pod: "{{ POSTGRES_POD_NAME }}"
+        command: >-
+          env psql -U postgres postgres -c 
+          "create user {{ DATABASE_USERNAME }} password '{{ DATABASE_PASSWORD }}';"
+      ignore_errors: true
+      register: create_database_user
+    - name: Test create database user
+      fail:
+        msg: "{{ command_status }}"
+      when: create_database_user.failed and create_database_user is not search("already exists")
+    - name: "Create database {{ DATABASE_DATABASE }}"
+      kubernetes.core.k8s_exec:
+        namespace: postgres
+        pod: "{{ POSTGRES_POD_NAME }}"
+        command: >-
+          env psql -U postgres postgres -c 
+          "create database {{ DATABASE_DATABASE }} owner {{ DATABASE_USERNAME }};"
+      ignore_errors: true
+      register: create_database
+    - name: Test create database
+      fail:
+        msg: "{{ command_status }}"
+      when: create_database.failed and create_database is not search("already exists")
+
+    - name: >-
+        Create {{ SOLR_COLLECTION }} collection: 
+        SOLR_AUTH_TYPE=basic 
+        SOLR_AUTHENTICATION_OPTS="-Dbasicauth=admin:$(cat /opt/bitnami/solr/secrets/pass/password)" 
+        /opt/bitnami/solr/bin/solr create_collection --solr-url http://localhost:8983 -c {{ SOLR_COLLECTION }} -n computate'
+      kubernetes.core.k8s_exec:
+        namespace: solr
+        pod: solr-0
+        command: >-
+          bash -c '
+          SOLR_AUTH_TYPE=basic
+          SOLR_AUTHENTICATION_OPTS="-Dbasicauth=admin:$(cat /opt/bitnami/solr/secrets/pass/password)" 
+          /opt/bitnami/solr/bin/solr create_collection --solr-url http://localhost:8983 -c {{ SOLR_COLLECTION }} -n computate
+          '
+      register: create_collection
+      ignore_errors: true
+    - name: Debug create_collection
+      debug:
+        var: create_collection
+    - name: Test create {{ SOLR_COLLECTION }} collection success
+      fail:
+        msg: "{{ command_status }}"
+      when: create_collection.failed and create_collection is not search("already exists")
+
     - name: Configure keycloak realm
       community.general.keycloak_realm:
         validate_certs: false
@@ -152,7 +213,6 @@ data:
                   displayHeader: User metadata
                   displayDescription: Attributes, which refer to user metadata
                   annotations: {}
-
 
     - name: "Configure keycloak client scope openid"
       community.general.keycloak_clientscope:
@@ -374,26 +434,20 @@ data:
         state: present
         definition: "{{ lookup('template', 'context-broker-secret.yaml') }}"
         validate_certs: false
+    - name: "Create a site secret in namespace {{ SITE_NAMESPACE }}"
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'site-secret.yaml') }}"
+        validate_certs: false
     - name: "Create a font-awesome secret in namespace {{ SITE_NAMESPACE }}"
       kubernetes.core.k8s:
         state: present
         definition: "{{ lookup('template', 'font-awesome-secret.yaml') }}"
         validate_certs: false
       when: query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | length == 0
-    - name: "Create a email-smtp secret in namespace {{ SITE_NAMESPACE }}"
+    - name: "Create an extra secret in namespace {{ SITE_NAMESPACE }}"
       kubernetes.core.k8s:
         state: present
-        definition: "{{ lookup('template', 'email-smtp-secret.yaml') }}"
+        definition: "{{ lookup('template', 'extra-secret.yaml') }}"
         validate_certs: false
-      when: query('kubernetes.core.k8s', kind='Secret', resource_name=EMAIL_SECRET, namespace=SITE_NAMESPACE) | length == 0
-    - name: "Create a {{ AUTHORIZE_NET_SECRET }} secret in namespace {{ SITE_NAMESPACE }}"
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'authorize-net-secret.yaml') }}"
-        validate_certs: false
-      when: query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | length == 0
-    - name: "Create a site secret in namespace {{ SITE_NAMESPACE }}"
-      kubernetes.core.k8s:
-        state: present
-        definition: "{{ lookup('template', 'site-secret.yaml') }}"
-        validate_certs: false
+      when: query('kubernetes.core.k8s', kind='Secret', resource_name='cloud-extra', namespace=SITE_NAMESPACE) | length == 0

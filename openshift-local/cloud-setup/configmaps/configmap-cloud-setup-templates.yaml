@@ -275,6 +275,29 @@ data:
       ENABLE_AWESOME_EFFECTS: "{{ ENABLE_AWESOME_EFFECTS }}"
       WRITE_API: "{{ WRITE_API }}"
       WRITE_COMMENTS: "{{ WRITE_COMMENTS }}"
+  font-awesome-secret.yaml: |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: cloud-font-awesome
+      namespace: {{ SITE_NAMESPACE }}
+    type: Opaque
+    stringData:
+      WEB_COMPONENTS_SECRET: "{{ WEB_COMPONENTS_SECRET }}"
+      WEB_COMPONENTS_PREFIX: "{{ WEB_COMPONENTS_PREFIX }}"
+      WEB_COMPONENTS_THEME: "{{ WEB_COMPONENTS_THEME }}"
+      FONTAWESOME_KIT: "{{ FONTAWESOME_KIT }}"
+      FONTAWESOME_STYLE: "{{ FONTAWESOME_STYLE }}"
+      SITE_THEME: "{{ SITE_THEME }}"
+  extra-secret.yaml: |
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: cloud-extra
+      namespace: {{ SITE_NAMESPACE }}
+    type: Opaque
+    stringData:
+      SITE_REDIRECTS: "{{ SITE_REDIRECTS }}"
       ENABLE_EMAIL: "{{ ENABLE_EMAIL }}"
       EMAIL_HOST: "{{ EMAIL_HOST }}"
       EMAIL_PORT: "{{ EMAIL_PORT }}"
@@ -287,54 +310,8 @@ data:
       DOWNLOAD_PATH: "{{ DOWNLOAD_PATH }}"
       USE_CASE_SRC: "{{ USE_CASE_SRC }}"
       USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SUMMARY_PATH }}"
-      SITE_OS_NAME: "{{ SITE_OS_NAME }}"
-      SITE_OS_SHORT_NAME: "{{ SITE_OS_SHORT_NAME }}"
-      SITE_OS_VERSION: "{{ SITE_OS_VERSION }}"
-      YOUTUBE_URL: "{{ YOUTUBE_URL }}"
-      LINKEDIN_URL: "{{ LINKEDIN_URL }}"
-  font-awesome-secret.yaml: |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: cloud-font-awesome
-      namespace: {{ SITE_NAMESPACE }}
-    type: Opaque
-    stringData:
-      WEB_COMPONENTS_SECRET: "{{ WEB_COMPONENTS_SECRET }}"
-      WEB_COMPONENTS_PREFIX: "{{ WEB_COMPONENTS_PREFIX }}"
-      WEB_COMPONENTS_JS: >-
-        {{ WEB_COMPONENTS_JS }}
-      WEB_COMPONENTS_CSS: >-
-        {{ WEB_COMPONENTS_CSS }}
-      FONTAWESOME_KIT: "{{ FONTAWESOME_KIT }}"
-      FONTAWESOME_STYLE: "{{ FONTAWESOME_STYLE }}"
-      SITE_THEME: "{{ SITE_THEME }}"
-  email-smtp-secret.yaml: |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: {{ EMAIL_SECRET }}
-      namespace: {{ SITE_NAMESPACE }}
-    type: Opaque
-    stringData:
-      ENABLE_EMAIL: "{{ ENABLE_EMAIL }}"
-      EMAIL_HOST: "{{ EMAIL_HOST }}"
-      EMAIL_PORT: "{{ EMAIL_PORT }}"
-      EMAIL_SSL: "{{ EMAIL_SSL }}"
-      EMAIL_AUTH_METHOD: "{{ EMAIL_AUTH_METHOD }}"
-      EMAIL_USERNAME: "{{ EMAIL_USERNAME }}"
-      EMAIL_PASSWORD: "{{ EMAIL_PASSWORD }}"
-      EMAIL_FROM: "{{ EMAIL_FROM }}"
-      EMAIL_ADMIN: "{{ EMAIL_ADMIN }}"
-  authorize-net-secret.yaml: |
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: {{ AUTHORIZE_NET_SECRET }}
-      namespace: {{ SITE_NAMESPACE }}
-    type: Opaque
-    stringData:
       ENABLE_AUTHORIZE_NET: "{{ ENABLE_AUTHORIZE_NET }}"
+      AUTHORIZE_NET_SECRET: "{{ AUTHORIZE_NET_SECRET }}"
       AUTHORIZE_NET_ENVIRONMENT: "{{ AUTHORIZE_NET_ENVIRONMENT }}"
       AUTHORIZE_NET_URL: "{{ AUTHORIZE_NET_URL }}"
       AUTHORIZE_NET_ACCEPT_JS_URL: "{{ AUTHORIZE_NET_ACCEPT_JS_URL }}"
@@ -345,3 +322,8 @@ data:
       AUTHORIZE_NET_NOTIFICATION_URL: "{{ AUTHORIZE_NET_NOTIFICATION_URL }}"
       AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS: "{{ AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS }}"
       AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS: "{{ AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS }}"
+      SITE_OS_NAME: "{{ SITE_OS_NAME }}"
+      SITE_OS_SHORT_NAME: "{{ SITE_OS_SHORT_NAME }}"
+      SITE_OS_VERSION: "{{ SITE_OS_VERSION }}"
+      YOUTUBE_URL: "{{ YOUTUBE_URL }}"
+      LINKEDIN_URL: "{{ LINKEDIN_URL }}"

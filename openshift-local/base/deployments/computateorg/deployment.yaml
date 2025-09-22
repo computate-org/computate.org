@@ -57,6 +57,8 @@ spec:
             name: cloud-site
         - secretRef:
             name: cloud-font-awesome
+        - secretRef:
+            name: cloud-extra
         image: quay.io/computateorg/computate.org:latest
         imagePullPolicy: Always
         livenessProbe:

@@ -21,7 +21,7 @@ WORKBENCH_ADMIN: "{{ lookup('env', 'WORKBENCH_ADMIN') | bool }}"
 # The name of this application. 
 SITE_NAME: computate.org
 # The source code directory for the project. 
-SITE_SRC: "{{ lookup('env', 'HOME') + ('/' if USING_OPENSHIFT_AI | bool else '/.local/src/') + SITE_NAME }}"
+SITE_SRC: "{{ lookup('env', 'HOME') + ('/' if USING_OPENSHIFT_AI | bool else '/.local/src/') + SITE_NAME + '-developer/' + SITE_NAME }}"
 # The parent source directory. 
 PARENT_SRC: "{{ (SITE_SRC + '/..') | realpath }}"
 # The vars.yaml filename to load when running in development. 
@@ -126,11 +126,11 @@ SUFFIX_SRC_GEN_JAVA: /src/gen/java
 # The relative paths in the project to watch for changes. 
 RELATIVE_PATHS_TO_WATCH: "src/main/java/{{ SITE_JAVA_PACKAGE | replace('.', '/') }}"
 # The default source code directory for the computate application which helps generate and translate most the code. 
-COMPUTATE_SRC: "{{ (PARENT_SRC + '/computate') | realpath }}"
+COMPUTATE_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate' | realpath }}"
 # The default source code directory for the computate-search application. 
-COMPUTATE_SEARCH_SRC: "{{ (PARENT_SRC + '/computate-search') | realpath }}"
+COMPUTATE_SEARCH_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate-search' | realpath }}"
 # The default source code directory for the computate-vertx application. 
-COMPUTATE_VERTX_SRC: "{{ (PARENT_SRC + '/computate-vertx') | realpath }}"
+COMPUTATE_VERTX_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate-vertx' | realpath }}"
 # The paths to the internationalization for this project. 
 I18N_PATHS: ["{{ COMPUTATE_VERTX_SRC }}/src/main/resources/org/computate/i18n/i18n_{{ SITE_LANG }}.yaml"]
 # The Java main class of the site. 
@@ -548,6 +548,10 @@ WRITE_API: true
 # Write code comments into generated code. 
 WRITE_COMMENTS: true
 
+##############
+# extra vars #
+##############
+
 #IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
 #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
@@ -566,8 +570,8 @@ EMAIL_HOST: smtp.fastmail.com
 EMAIL_PORT: 465
 EMAIL_SSL: true
 EMAIL_AUTH_METHOD: PLAIN
-EMAIL_USERNAME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-email-smtp', namespace=SITE_NAMESPACE) | first | default({})).data['EMAIL_USERNAME'] | b64decode | default('') }}"
-EMAIL_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-email-smtp', namespace=SITE_NAMESPACE) | first | default({})).data['EMAIL_PASSWORD'] | b64decode | default('') }}"
+EMAIL_USERNAME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data['EMAIL_USERNAME'] | b64decode | default('') }}"
+EMAIL_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data['EMAIL_PASSWORD'] | b64decode | default('') }}"
 EMAIL_FROM: support@computate.org
 EMAIL_ADMIN: support@computate.org
 
@@ -592,10 +596,10 @@ AUTHORIZE_NET_SECRET: "local-authorize-net"
 AUTHORIZE_NET_ENVIRONMENT: "SANDBOX"
 AUTHORIZE_NET_URL: "https://test.authorize.net"
 AUTHORIZE_NET_ACCEPT_JS_URL: "https://jstest.authorize.net/v3/AcceptUI.js"
-AUTHORIZE_NET_API_LOGIN_ID: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_API_LOGIN_ID | default('') | b64decode | default('', true) }}"
-AUTHORIZE_NET_TRANSACTION_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_TRANSACTION_KEY | default('') | b64decode | default('', true) }}"
-AUTHORIZE_NET_SIGNATURE_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_SIGNATURE_KEY | default('') | b64decode | default('', true) }}"
-AUTHORIZE_NET_PUBLIC_CLIENT_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTHORIZE_NET_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_PUBLIC_CLIENT_KEY | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_API_LOGIN_ID: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_API_LOGIN_ID | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_TRANSACTION_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_TRANSACTION_KEY | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_SIGNATURE_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_SIGNATURE_KEY | default('') | b64decode | default('', true) }}"
+AUTHORIZE_NET_PUBLIC_CLIENT_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_PUBLIC_CLIENT_KEY | default('') | b64decode | default('', true) }}"
 AUTHORIZE_NET_NOTIFICATION_URL: ""
 AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS: "5000"
 AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS: "2000"

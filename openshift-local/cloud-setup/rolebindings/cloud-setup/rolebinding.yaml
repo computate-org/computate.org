@@ -3,6 +3,63 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: computateorg
+  name: database-setup-exec
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["get", "create"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: computateorg
+  name: database-setup-exec
+subjects:
+- kind: ServiceAccount
+  name: cloud-setup
+  namespace: computateorg
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: database-setup-exec
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: postgres
+  name: computateorg-database-setup-exec
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["get", "create"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: postgres
+  name: computateorg-database-setup-exec
+subjects:
+- kind: ServiceAccount
+  name: cloud-setup
+  namespace: computateorg
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: computateorg-database-setup-exec
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: computateorg
   name: cloud-setup-exec
 rules:
 - apiGroups: [""]
@@ -52,6 +109,33 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: computateorg-cloud-setup-postgres-secrets
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: solr
+  name: solr-setup-computateorg-exec
+rules:
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["get", "create"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: solr
+  name: solr-setup-computateorg-exec
+subjects:
+- kind: ServiceAccount
+  name: cloud-setup
+  namespace: computateorg
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: solr-setup-computateorg-exec
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
