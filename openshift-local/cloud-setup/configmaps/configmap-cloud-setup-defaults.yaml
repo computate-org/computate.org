@@ -135,7 +135,7 @@ data:
     # The default source code directory for the computate-vertx application. 
     COMPUTATE_VERTX_SRC: "{{ (PARENT_SRC + '/computate-vertx') | realpath }}"
     # The paths to the internationalization for this project. 
-    I18N_PATHS: ["/home/ctate/.local/src/computate-vertx/src/main/resources/org/computate/i18n/i18n_enUS.yaml"]
+    I18N_PATHS: ["{{ COMPUTATE_VERTX_SRC }}/src/main/resources/org/computate/i18n/i18n_enUS.yaml"]
     # The Java main class of the site. 
     JAVA_MAIN_CLASS: "org.computate.site.verticle.MainVerticle"
     # Enables Vert.x reactive APIs. 
@@ -211,7 +211,7 @@ data:
     # The path to the static files. 
     STATIC_PATH: "{{ (SITE_SRC + '/../' + SITE_STATIC_NAME + '/' + ('webawesome' if WEB_COMPONENTS_PREFIX == 'wa-' else 'shoelace')) | realpath }}"
     # The path to the template files. 
-    TEMPLATE_PATH: "/home/ctate/.local/src/computate.org-developer/computate.org-static/webawesome/templates"
+    TEMPLATE_PATH: "{{ STATIC_PATH }}/templates"
     # The path to the site page templates. 
 
     ######################
