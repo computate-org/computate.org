@@ -272,9 +272,9 @@ data:
     # Whether to use SSL when connecting to Solr. 
     SOLR_SSL: "{{ (lookup('env', 'SOLR_SSL') | lower) | default(false) }}"
     # The host name to connect to Solr in OpenShift. 
-    SOLR_HOST_NAME: "{{ lookup('env', 'SOLR_HOST_NAME') | default('solr.solr.svc', true) }}"
+    SOLR_HOST_NAME: "{{ lookup('env', 'SOLR_HOST_NAME') | default('solr-solrcloud-common.solr.svc', true) }}"
     # The default port that Solr runs. 
-    SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('8983', true) }}"
+    SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('80', true) }}"
     # The solr collection to use for the site. 
     SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'cloud', true) }}"
     # The URL to the Solr collection. 
