@@ -126,7 +126,7 @@ SUFFIX_SRC_GEN_JAVA: /src/gen/java
 # The relative paths in the project to watch for changes. 
 RELATIVE_PATHS_TO_WATCH: "src/main/java/{{ SITE_JAVA_PACKAGE | replace('.', '/') }}"
 # The default source code directory for the computate application which helps generate and translate most the code. 
-COMPUTATE_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate' | realpath }}"
+COMPUTATE_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate') | realpath }}"
 # The default source code directory for the computate-search application. 
 COMPUTATE_SEARCH_SRC: "{{ lookup('env', 'HOME') + '/.local/src/computate-search' | realpath }}"
 # The default source code directory for the computate-vertx application. 
@@ -187,9 +187,10 @@ CONTAINER_URI: "{{ CONTAINER_REGISTRY }}/{{ CONTAINER_ORG }}/{{ CONTAINER_NAME }
 # Static content defaults #
 ###########################
 
-WEB_COMPONENTS_SECRET: "local-font-awesome"
+# A secret with links to web components. 
+WEB_COMPONENTS_SECRET: "{{ lookup('env', 'WEB_COMPONENTS_SECRET') | default('local-font-awesome', true) }}"
 # Switch between Shoelace "sl-" and Web Awesome "wa-" element prefixes. 
-WEB_COMPONENTS_PREFIX: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_PREFIX | default('') | b64decode | default('sl-', true) }}"
+WEB_COMPONENTS_PREFIX: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_PREFIX | default('') | b64decode | default('wa-', true) }}"
 # Web components default theme. 
 WEB_COMPONENTS_THEME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_THEME | default('', true) | b64decode | default('active', true) }}"
 # Site default font size. 
@@ -280,19 +281,19 @@ SOLR_HOST_NAME: "{{ lookup('env', 'SOLR_HOST_NAME') | default('solr.' + OPENSHIF
 # The default port that Solr runs. 
 SOLR_PORT: "{{ lookup('env', 'SOLR_PORT') | default('443', true) }}"
 # The solr collection to use for the site. 
-SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
+SOLR_COLLECTION: "{{ lookup('env', 'SOLR_COLLECTION_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'local', true) }}"
 # The URL to the Solr collection. 
 SOLR_URL: "{{ ('https://' if SOLR_SSL | bool == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT | int == 443 else (':' + (SOLR_PORT | string))) }}/solr/{{ SOLR_COLLECTION }}"
 # The solr pod name to connect and create Solr configsets and collections. 
-SOLR_POD_NAME: "solr-0"
+SOLR_POD_NAME: "solr-solrcloud-0"
 # The time before committing Solr data in milliseconds. 
 SOLR_WORKER_COMMIT_WITHIN_MILLIS: 10000
 # The solr configset to use for the site. 
 SOLR_CONFIGSET: "computate"
 # The Solr admin username
-SOLR_USERNAME: admin
+SOLR_USERNAME: "admin"
 # The Solr admin password
-SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-admin', namespace=SOLR_NAMESPACE)[0].data['password'] | b64decode }}"
+SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-solrcloud-security-bootstrap', namespace=SOLR_NAMESPACE)[0].data['admin'] | b64decode }}"
 
 # Whether to use SSL when connecting to Solr. 
 SOLR_SSL_COMPUTATE: "{{ lookup('env', 'SOLR_SSL_COMPUTATE') | default(SOLR_SSL, true) | bool }}"
@@ -324,7 +325,7 @@ DATABASE_SECRET: "local-database"
 # The PostgreSQL database password of the site. 
 DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=DATABASE_SECRET, namespace=SITE_NAMESPACE)[0].data.DATABASE_PASSWORD | b64decode }}"
 # The PostgreSQL database name of the site. 
-DATABASE_DATABASE: "{{ lookup('env', 'DATABASE_DATABASE_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
+DATABASE_DATABASE: "{{ lookup('env', 'DATABASE_DATABASE_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'local', true) }}"
 # The PostgreSQL database max pool size. 
 DATABASE_MAX_POOL_SIZE: 10
 # The PostgreSQL database max wait queue size. 
@@ -422,7 +423,9 @@ CONTEXT_BROKER_PORT: "{{ lookup('env', 'CONTEXT_BROKER_PORT') | default('443', t
 # The delay between messages and requerying entity @context. 
 CONTEXT_BROKER_DELAY_MILLIS: 0
 # The Context Broker namespace. 
-CONTEXT_BROKER_CONTEXT: "{{ STATIC_BASE_URL }}/fiware/context.jsonld"
+CONTEXT_BROKER_CONTEXT: "https://smaq.computate.org/static/fiware/context.jsonld"
+# The base URL where the project will put NGSI-LD context information public on the Internet. 
+NGSILD_BASE_URL: "{{ lookup('env', 'NGSILD_BASE_URL') | default(SITE_PUBLIC_URL + '/static/fiware', true) }}"
 # The default NGSI-LD tenant environment variable
 NGSILD_TENANT_ENV: "{{ lookup('env', 'NGSILD_TENANT_ENV') | default('NGSILD_TENANT', true) }}"
 # The default NGSI-LD path
@@ -597,6 +600,10 @@ ENABLE_AUTHORIZE_NET: "true"
 AUTHORIZE_NET_SECRET: "local-authorize-net"
 AUTHORIZE_NET_ENVIRONMENT: "SANDBOX"
 AUTHORIZE_NET_URL: "https://test.authorize.net"
+AUTHORIZE_NET_API_HOST_NAME: "apitest.authorize.net"
+AUTHORIZE_NET_API_PORT: "443"
+AUTHORIZE_NET_API_SSL: "true"
+AUTHORIZE_NET_API_URI: "/xml/v1/request.api"
 AUTHORIZE_NET_ACCEPT_JS_URL: "https://jstest.authorize.net/v3/AcceptUI.js"
 AUTHORIZE_NET_API_LOGIN_ID: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_API_LOGIN_ID | default('') | b64decode | default('', true) }}"
 AUTHORIZE_NET_TRANSACTION_KEY: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.AUTHORIZE_NET_TRANSACTION_KEY | default('') | b64decode | default('', true) }}"

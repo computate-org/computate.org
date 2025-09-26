@@ -197,7 +197,7 @@ data:
     WEB_COMPONENTS_THEME: "active"
     FONTAWESOME_KIT: ""
     # A default FontAwesome style. 
-    FONTAWESOME_STYLE: "fa-duotone fa-regular "
+    FONTAWESOME_STYLE: "default"
     # Site default theme, light or dark. 
     SITE_THEME: "dark"
     # The site logo relative URI
@@ -280,7 +280,7 @@ data:
     # The URL to the Solr collection. 
     SOLR_URL: "{{ ('https://' if SOLR_SSL | bool == True else 'http://') + SOLR_HOST_NAME + ('' if SOLR_PORT | int == 443 else (':' + (SOLR_PORT | string))) }}/solr/{{ SOLR_COLLECTION }}"
     # The solr pod name to connect and create Solr configsets and collections. 
-    SOLR_POD_NAME: "solr-0"
+    SOLR_POD_NAME: "solr-solrcloud-0"
     # The time before committing Solr data in milliseconds. 
     SOLR_WORKER_COMMIT_WITHIN_MILLIS: 10000
     # The solr configset to use for the site. 
@@ -288,7 +288,7 @@ data:
     # The Solr admin username
     SOLR_USERNAME: "admin"
     # The Solr admin password
-    SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-admin', namespace=SOLR_NAMESPACE)[0].data['password'] | b64decode }}"
+    SOLR_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name='solr-solrcloud-security-bootstrap', namespace=SOLR_NAMESPACE)[0].data['admin'] | b64decode }}"
 
     # Whether to use SSL when connecting to Solr. 
     SOLR_SSL_COMPUTATE: "{{ lookup('env', 'SOLR_SSL_COMPUTATE') | default(SOLR_SSL, true) | bool }}"
@@ -594,6 +594,10 @@ data:
     AUTHORIZE_NET_SECRET: "local-authorize-net"
     AUTHORIZE_NET_ENVIRONMENT: "SANDBOX"
     AUTHORIZE_NET_URL: "https://test.authorize.net"
+    AUTHORIZE_NET_API_HOST_NAME: "apitest.authorize.net"
+    AUTHORIZE_NET_API_PORT: "443"
+    AUTHORIZE_NET_API_SSL: "true"
+    AUTHORIZE_NET_API_URI: "/xml/v1/request.api"
     AUTHORIZE_NET_ACCEPT_JS_URL: "https://jstest.authorize.net/v3/AcceptUI.js"
     AUTHORIZE_NET_API_LOGIN_ID: ""
     AUTHORIZE_NET_TRANSACTION_KEY: ""
