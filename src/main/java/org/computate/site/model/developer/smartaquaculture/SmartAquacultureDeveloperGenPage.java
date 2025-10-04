@@ -1,8 +1,8 @@
-package org.computate.site.model.product;
+package org.computate.site.model.developer.smartaquaculture;
 
-import org.computate.site.model.product.CompanyProduct;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
+import java.lang.Boolean;
 import java.lang.String;
-import java.math.BigDecimal;
 import java.lang.Integer;
 import java.util.List;
 import org.computate.vertx.search.list.SearchList;
@@ -33,6 +33,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 import java.util.Arrays;
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.math.MathContext;
 import java.util.Objects;
@@ -50,37 +51,37 @@ import io.vertx.pgclient.data.Point;
  * Translate: false
  * Generated: true
  **/
-public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> {
+public class SmartAquacultureDeveloperGenPage extends SmartAquacultureDeveloperGenPageGen<PageLayout> {
 
   /**
    * {@inheritDoc}
    * Ignore: true
    **/
-  protected void _searchListCompanyProduct_(Wrap<SearchList<CompanyProduct>> w) {
+  protected void _searchListSmartAquacultureDeveloper_(Wrap<SearchList<SmartAquacultureDeveloper>> w) {
   }
 
   @Override
   protected void _pageResponse(Wrap<String> w) {
-    if(searchListCompanyProduct_ != null)
-      w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
+    if(searchListSmartAquacultureDeveloper_ != null)
+      w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getResponse()).map(response -> JsonObject.mapFrom(response).toString()).orElse(null));
   }
 
   @Override
   protected void _stats(Wrap<SolrResponse.Stats> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getStats()).orElse(null));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getResponse()).map(response -> response.getStats()).orElse(null));
   }
 
   @Override
   protected void _facetCounts(Wrap<SolrResponse.FacetCounts> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getResponse()).map(response -> response.getFacetCounts()).orElse(null));
   }
 
   @Override
   protected void _pagination(JsonObject pagination) {
     JsonArray pages = new JsonArray();
-    Long start = searchListCompanyProduct_.getStart().longValue();
-    Long rows = searchListCompanyProduct_.getRows().longValue();
-    Long foundNum = Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyProduct_.getList().size()));
+    Long start = searchListSmartAquacultureDeveloper_.getStart().longValue();
+    Long rows = searchListSmartAquacultureDeveloper_.getRows().longValue();
+    Long foundNum = Optional.ofNullable(searchListSmartAquacultureDeveloper_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListSmartAquacultureDeveloper_.getList().size()));
     Long startNum = start + 1L;
     Long endNum = start + rows;
     Long floorMod = (rows == 0L ? 0L : Math.floorMod(foundNum, rows));
@@ -122,12 +123,12 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _varsQ(JsonObject vars) {
-    CompanyProduct.varsQForClass().forEach(var -> {
+    SmartAquacultureDeveloper.varsQForClass().forEach(var -> {
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(CompanyProduct.displayNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyProduct.classSimpleNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", Optional.ofNullable(searchListCompanyProduct_.getRequest().getQuery()).filter(fq -> fq.startsWith(CompanyProduct.varIndexedCompanyProduct(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(SmartAquacultureDeveloper.displayNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAquacultureDeveloper.classSimpleNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", Optional.ofNullable(searchListSmartAquacultureDeveloper_.getRequest().getQuery()).filter(fq -> fq.startsWith(SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var) + ":")).map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -140,17 +141,17 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   protected void _varsFq(JsonObject vars) {
     Map<String, SolrResponse.FacetField> facetFields = Optional.ofNullable(facetCounts).map(c -> c.getFacetFields()).map(f -> f.getFacets()).orElse(new HashMap<String,SolrResponse.FacetField>());
     varsFqCount = 0;
-    for(String var : CompanyProduct.varsFqForClass()) {
-      String varIndexed = CompanyProduct.varIndexedCompanyProduct(var);
-      String varStored = CompanyProduct.varStoredCompanyProduct(var);
+    for(String var : SmartAquacultureDeveloper.varsFqForClass()) {
+      String varIndexed = SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var);
+      String varStored = SmartAquacultureDeveloper.varStoredSmartAquacultureDeveloper(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
       json.put("varStored", varStored);
       json.put("varIndexed", varIndexed);
       String type = StringUtils.substringAfterLast(varIndexed, "_");
-      json.put("displayName", Optional.ofNullable(CompanyProduct.displayNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyProduct.classSimpleNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      Object v = searchListCompanyProduct_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyProduct.varIndexedCompanyProduct(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
+      json.put("displayName", Optional.ofNullable(SmartAquacultureDeveloper.displayNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAquacultureDeveloper.classSimpleNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      Object v = searchListSmartAquacultureDeveloper_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
       if(v != null) {
         json.put("val", v);
         varsFqCount++;
@@ -221,13 +222,13 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _varsRange(JsonObject vars) {
-    CompanyProduct.varsRangeForClass().forEach(var -> {
-      String varIndexed = CompanyProduct.varIndexedCompanyProduct(var);
+    SmartAquacultureDeveloper.varsRangeForClass().forEach(var -> {
+      String varIndexed = SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var);
       JsonObject json = new JsonObject();
       json.put("var", var);
-      json.put("displayName", Optional.ofNullable(CompanyProduct.displayNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("classSimpleName", Optional.ofNullable(CompanyProduct.classSimpleNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
-      json.put("val", searchListCompanyProduct_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyProduct.varIndexedCompanyProduct(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
+      json.put("displayName", Optional.ofNullable(SmartAquacultureDeveloper.displayNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("classSimpleName", Optional.ofNullable(SmartAquacultureDeveloper.classSimpleNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
+      json.put("val", searchListSmartAquacultureDeveloper_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null));
       vars.put(var, json);
     });
   }
@@ -238,7 +239,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     JsonObject params = serviceRequest.getParams();
 
     JsonObject queryParams = Optional.ofNullable(serviceRequest).map(ServiceRequest::getParams).map(or -> or.getJsonObject("query")).orElse(new JsonObject());
-    Long num = Optional.ofNullable(searchListCompanyProduct_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListCompanyProduct_.getList().size()));
+    Long num = Optional.ofNullable(searchListSmartAquacultureDeveloper_.getResponse()).map(response -> response.getResponse().getNumFound().longValue()).orElse(Long.valueOf(searchListSmartAquacultureDeveloper_.getList().size()));
     String q = "*:*";
     String q1 = "objectText";
     String q2 = "";
@@ -266,28 +267,28 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     }
     query.put("q", q);
 
-    Long rows1 = Optional.ofNullable(searchListCompanyProduct_).map(l -> l.getRows()).orElse(10L);
-    Long start1 = Optional.ofNullable(searchListCompanyProduct_).map(l -> l.getStart()).orElse(1L);
+    Long rows1 = Optional.ofNullable(searchListSmartAquacultureDeveloper_).map(l -> l.getRows()).orElse(10L);
+    Long start1 = Optional.ofNullable(searchListSmartAquacultureDeveloper_).map(l -> l.getStart()).orElse(1L);
     Long start2 = start1 - rows1;
     Long start3 = start1 + rows1;
     Long rows2 = rows1 / 2;
     Long rows3 = rows1 * 2;
     start2 = start2 < 0 ? 0 : start2;
     JsonObject fqs = new JsonObject();
-    for(String fq : Optional.ofNullable(searchListCompanyProduct_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
+    for(String fq : Optional.ofNullable(searchListSmartAquacultureDeveloper_).map(l -> l.getFilterQueries()).orElse(Arrays.asList())) {
       if(!StringUtils.contains(fq, "(")) {
-        String fq1 = CompanyProduct.searchVarCompanyProduct(StringUtils.substringBefore(fq, ":"));
+        String fq1 = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(StringUtils.substringBefore(fq, ":"));
         String fq2 = StringUtils.substringAfter(fq, ":");
         if(!StringUtils.startsWithAny(fq, "classCanonicalNames_", "archived_", "sessionId", "userKeys"))
-          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", CompanyProduct.displayNameForClass(fq1)));
+          fqs.put(fq1, new JsonObject().put("var", fq1).put("val", fq2).put("displayName", SmartAquacultureDeveloper.displayNameForClass(fq1)));
         }
       }
     query.put("fq", fqs);
 
     JsonArray sorts = new JsonArray();
-    for(String sort : Optional.ofNullable(searchListCompanyProduct_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
-      String sort1 = CompanyProduct.searchVarCompanyProduct(StringUtils.substringBefore(sort, " "));
-      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", CompanyProduct.displayNameForClass(sort1)));
+    for(String sort : Optional.ofNullable(searchListSmartAquacultureDeveloper_).map(l -> l.getSorts()).orElse(Arrays.asList())) {
+      String sort1 = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(StringUtils.substringBefore(sort, " "));
+      sorts.add(new JsonObject().put("var", sort1).put("order", StringUtils.substringAfter(sort, " ")).put("displayName", SmartAquacultureDeveloper.displayNameForClass(sort1)));
     }
     query.put("sort", sorts);
   }
@@ -321,31 +322,31 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   @Override
   protected void _rows(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("rows", null) != null)
-      w.o(searchListCompanyProduct_.getRows());
+      w.o(searchListSmartAquacultureDeveloper_.getRows());
   }
 
   @Override
   protected void _start(Wrap<Long> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("start", null) != null)
-      w.o(searchListCompanyProduct_.getStart());
+      w.o(searchListSmartAquacultureDeveloper_.getStart());
   }
 
   @Override
   protected void _rangeGap(Wrap<String> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.gap", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetRangeGap()).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetRangeGap()).orElse(null));
   }
 
   @Override
   protected void _rangeEnd(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.end", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetRangeEnd()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
   protected void _rangeStart(Wrap<ZonedDateTime> w) {
     if(serviceRequest.getParams().getJsonObject("query").getString("facet.range.start", null) != null)
-      w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
+      w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetRangeStart()).map(s -> TimeTool.parseZonedDateTime(defaultTimeZone, s)).orElse(null));
   }
 
   @Override
@@ -365,27 +366,27 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultRangeVar(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return CompanyProduct.searchVarCompanyProduct(v); }).orElse("created"));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetRanges()).orElse(Optional.ofNullable(defaultRangeStats).map(s -> Arrays.asList(s.getString("defaultRangeVar"))).orElse(Arrays.asList())).stream().findFirst().map(v -> { if(v.contains("}")) return StringUtils.substringBefore(StringUtils.substringAfterLast(v, "}"), "_"); else return SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(v); }).orElse("created"));
   }
 
   @Override
   protected void _defaultFacetSort(Wrap<String> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetSort()).orElse("index"));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetSort()).orElse("index"));
   }
 
   @Override
   protected void _defaultFacetLimit(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetLimit()).orElse(1));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetLimit()).orElse(1));
   }
 
   @Override
   protected void _defaultFacetMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetMinCount()).orElse(1));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetMinCount()).orElse(1));
   }
 
   @Override
   protected void _defaultPivotMinCount(Wrap<Integer> w) {
-    w.o(Optional.ofNullable(searchListCompanyProduct_.getFacetPivotMinCount()).orElse(0));
+    w.o(Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetPivotMinCount()).orElse(0));
   }
 
   @Override
@@ -401,10 +402,10 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultSortVars(List<String> l) {
-    if(!searchListCompanyProduct_.getDefaultSort()) {
-      Optional.ofNullable(searchListCompanyProduct_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
+    if(!searchListSmartAquacultureDeveloper_.getDefaultSort()) {
+      Optional.ofNullable(searchListSmartAquacultureDeveloper_.getSorts()).orElse(Arrays.asList()).forEach(varSortStr -> {
         String varSortParts[] = varSortStr.split(" ");
-        String varSort = CompanyProduct.searchVarCompanyProduct(varSortParts[0]);
+        String varSort = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(varSortParts[0]);
         String varSortDirection = varSortParts[1];
         l.add(String.format("%s %s", varSort, varSortDirection));
       });
@@ -413,14 +414,14 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultFieldListVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyProduct_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
+    Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFields()).orElse(Arrays.asList()).forEach(varStored -> {
       String varStored2 = varStored;
       if(StringUtils.contains(varStored2, "}"))
         varStored2 = StringUtils.substringAfterLast(varStored2, "}");
       String[] parts = varStored2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyProduct.searchVarCompanyProduct(part);
+          String var = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -430,14 +431,14 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultStatsVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyProduct_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
+    Optional.ofNullable(searchListSmartAquacultureDeveloper_.getStatsFields()).orElse(Arrays.asList()).forEach(varIndexed -> {
       String varIndexed2 = varIndexed;
       if(StringUtils.contains(varIndexed2, "}"))
         varIndexed2 = StringUtils.substringAfterLast(varIndexed2, "}");
       String[] parts = varIndexed2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyProduct.searchVarCompanyProduct(part);
+          String var = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -447,14 +448,14 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _defaultPivotVars(List<String> l) {
-    Optional.ofNullable(searchListCompanyProduct_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
+    Optional.ofNullable(searchListSmartAquacultureDeveloper_.getFacetPivots()).orElse(Arrays.asList()).forEach(facetPivot -> {
       String facetPivot2 = facetPivot;
       if(StringUtils.contains(facetPivot2, "}"))
         facetPivot2 = StringUtils.substringAfterLast(facetPivot2, "}");
       String[] parts = facetPivot2.split(",");
       for(String part : parts) {
         if(StringUtils.isNotBlank(part)) {
-          String var = CompanyProduct.searchVarCompanyProduct(part);
+          String var = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(part);
           if(StringUtils.isNotBlank(var))
             l.add(var);
         }
@@ -465,20 +466,20 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   /**
    * {@inheritDoc}
    **/
-  protected void _listCompanyProduct(JsonArray l) {
-    Optional.ofNullable(searchListCompanyProduct_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
+  protected void _listSmartAquacultureDeveloper(JsonArray l) {
+    Optional.ofNullable(searchListSmartAquacultureDeveloper_).map(o -> o.getList()).orElse(Arrays.asList()).stream().map(o -> JsonObject.mapFrom(o)).forEach(o -> l.add(o));
   }
 
   protected void _resultCount(Wrap<Integer> w) {
-    w.o(searchListCompanyProduct_ == null ? 0 : searchListCompanyProduct_.size());
+    w.o(searchListSmartAquacultureDeveloper_ == null ? 0 : searchListSmartAquacultureDeveloper_.size());
   }
 
   /**
    * Initialized: false
   **/
-  protected void _result(Wrap<CompanyProduct> w) {
+  protected void _result(Wrap<SmartAquacultureDeveloper> w) {
     if(resultCount >= 1 && Optional.ofNullable(siteRequest_.getServiceRequest().getParams().getJsonObject("path")).map(o -> o.getString("pageId")).orElse(null) != null)
-      w.o(searchListCompanyProduct_.get(0));
+      w.o(searchListSmartAquacultureDeveloper_.get(0));
   }
 
   protected void _solrId(Wrap<String> w) {
@@ -493,7 +494,7 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _classSimpleName(Wrap<String> w) {
-    w.o("CompanyProduct");
+    w.o("SmartAquacultureDeveloper");
   }
 
   @Override
@@ -501,21 +502,21 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("products");
-    else if(searchListCompanyProduct_ == null || resultCount == 0)
-      c.o("no product found");
+      c.o("Smart Aquaculture Developer courses");
+    else if(searchListSmartAquacultureDeveloper_ == null || resultCount == 0)
+      c.o("no Smart Aquaculture Developer course found");
     else
-      c.o("products");
+      c.o("Smart Aquaculture Developer courses");
   }
 
   @Override
   protected void _pageUri(Wrap<String> c) {
-    c.o("/en-us/search/product");
+    c.o("/en-us/search/smart-aquaculture-developer");
   }
 
   @Override
   protected void _apiUri(Wrap<String> c) {
-    c.o("/en-us/api/product");
+    c.o("/en-us/api/smart-aquaculture-developer");
   }
 
   @Override
@@ -525,20 +526,20 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("See the computate products that will help you build your own data-driven platforms");
+      c.o("Learn how to become a Smart Aquaculture platform developer — Understanding fish population and ocean health, tracking fishing boat movements, monitoring fish species landed and their weight, tracking processing and delivery times, providing net-zero waste solutions for seafood, promoting SA/IF innovation through community outreach, startup support, and IoT applications. ");
   }
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/en-us/search/product-999.png");
+      c.o("/png/en-us/search/smart-aquaculture-developer-999.png");
   }
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-duotone fa-regular fa-conveyor-belt\"></i>");
+      c.o("<i class=\"fa-duotone fa-regular fa-fish\"></i>");
   }
 
-  protected void _pageUriCompanyProduct(Wrap<String> c) {
-      c.o("/en-us/search/product");
+  protected void _pageUriSmartAquacultureDeveloper(Wrap<String> c) {
+      c.o("/en-us/search/smart-aquaculture-developer");
   }
 }

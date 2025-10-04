@@ -534,7 +534,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestUseCase();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketUseCase", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1387,7 +1387,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void searchpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+	public void searchpageUseCasePageInit(JsonObject ctx, UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1416,7 +1416,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageUseCasePageInit(page, listUseCase, promise1);
+					searchpageUseCasePageInit(ctx, page, listUseCase, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1553,7 +1553,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void editpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+	public void editpageUseCasePageInit(JsonObject ctx, UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1582,7 +1582,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageUseCasePageInit(page, listUseCase, promise1);
+					editpageUseCasePageInit(ctx, page, listUseCase, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1682,7 +1682,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void displaypageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+	public void displaypageUseCasePageInit(JsonObject ctx, UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1711,7 +1711,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageUseCasePageInit(page, listUseCase, promise1);
+					displaypageUseCasePageInit(ctx, page, listUseCase, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1848,7 +1848,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 		});
 	}
 
-	public void userpageUseCasePageInit(UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
+	public void userpageUseCasePageInit(JsonObject ctx, UseCasePage page, SearchList<UseCase> listUseCase, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1877,7 +1877,7 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					userpageUseCasePageInit(page, listUseCase, promise1);
+					userpageUseCasePageInit(ctx, page, listUseCase, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

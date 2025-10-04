@@ -534,7 +534,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestCompanyResearch();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketCompanyResearch", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1137,7 +1137,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public void searchpageCompanyResearchPageInit(CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
+	public void searchpageCompanyResearchPageInit(JsonObject ctx, CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1166,7 +1166,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageCompanyResearchPageInit(page, listCompanyResearch, promise1);
+					searchpageCompanyResearchPageInit(ctx, page, listCompanyResearch, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1303,7 +1303,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public void editpageCompanyResearchPageInit(CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
+	public void editpageCompanyResearchPageInit(JsonObject ctx, CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1332,7 +1332,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageCompanyResearchPageInit(page, listCompanyResearch, promise1);
+					editpageCompanyResearchPageInit(ctx, page, listCompanyResearch, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1432,7 +1432,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 		});
 	}
 
-	public void displaypageCompanyResearchPageInit(CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
+	public void displaypageCompanyResearchPageInit(JsonObject ctx, CompanyResearchPage page, SearchList<CompanyResearch> listCompanyResearch, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1461,7 +1461,7 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageCompanyResearchPageInit(page, listCompanyResearch, promise1);
+					displaypageCompanyResearchPageInit(ctx, page, listCompanyResearch, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

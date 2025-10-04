@@ -534,7 +534,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestCompanyEvent();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketCompanyEvent", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1387,7 +1387,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		});
 	}
 
-	public void searchpageCompanyEventPageInit(CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
+	public void searchpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1416,7 +1416,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageCompanyEventPageInit(page, listCompanyEvent, promise1);
+					searchpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1553,7 +1553,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		});
 	}
 
-	public void editpageCompanyEventPageInit(CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
+	public void editpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1582,7 +1582,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageCompanyEventPageInit(page, listCompanyEvent, promise1);
+					editpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1682,7 +1682,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		});
 	}
 
-	public void displaypageCompanyEventPageInit(CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
+	public void displaypageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1711,7 +1711,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageCompanyEventPageInit(page, listCompanyEvent, promise1);
+					displaypageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1848,7 +1848,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 		});
 	}
 
-	public void userpageCompanyEventPageInit(CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
+	public void userpageCompanyEventPageInit(JsonObject ctx, CompanyEventPage page, SearchList<CompanyEvent> listCompanyEvent, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1877,7 +1877,7 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					userpageCompanyEventPageInit(page, listCompanyEvent, promise1);
+					userpageCompanyEventPageInit(ctx, page, listCompanyEvent, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

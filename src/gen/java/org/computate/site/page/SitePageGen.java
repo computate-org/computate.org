@@ -2005,6 +2005,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
 	public void siteRequestSitePage(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
+		if(relatedArticleSearch != null)
+			relatedArticleSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {
@@ -3055,8 +3057,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 	public static final String DISPLAY_NAME_staticBaseUrl = "";
 	public static final String DISPLAY_NAME_staticPath = "";
 	public static final String DISPLAY_NAME_siteBaseUrl = "";
-	public static final String DISPLAY_NAME_courseNum = "Course Number";
-	public static final String DISPLAY_NAME_lessonNum = "Lesson Number";
+	public static final String DISPLAY_NAME_courseNum = "course number";
+	public static final String DISPLAY_NAME_lessonNum = "lesson number";
 	public static final String DISPLAY_NAME_name = "title";
 	public static final String DISPLAY_NAME_description = "description";
 	public static final String DISPLAY_NAME_authorName = "author name";

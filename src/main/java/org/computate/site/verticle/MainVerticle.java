@@ -75,25 +75,6 @@ import io.vertx.rabbitmq.RabbitMQOptions;
 import io.vertx.serviceproxy.ServiceBinder;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.BasicProperties;
-import com.squareup.square.Environment;
-import com.squareup.square.SquareClient;
-import com.squareup.square.api.CheckoutApi;
-import com.squareup.square.api.CustomersApi;
-import com.squareup.square.api.EventsApi;
-import com.squareup.square.api.OrdersApi;
-import com.squareup.square.api.PaymentsApi;
-import com.squareup.square.authentication.BearerAuthModel;
-import com.squareup.square.models.Customer;
-import com.squareup.square.models.GetPaymentResponse;
-import com.squareup.square.models.Order;
-import com.squareup.square.models.OrderLineItem;
-import com.squareup.square.models.OrderLineItemModifier;
-import com.squareup.square.models.Payment;
-import com.squareup.square.models.RetrieveCustomerResponse;
-import com.squareup.square.models.RetrieveOrderResponse;
-import com.squareup.square.models.Tender;
-import com.squareup.square.models.UpdateOrderRequest;
-import com.squareup.square.utilities.WebhooksHelper;
 
 import io.vertx.amqp.AmqpMessage;
 import io.vertx.amqp.AmqpMessageBuilder;
@@ -215,6 +196,9 @@ import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
 
 
 /**
@@ -273,7 +257,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		this.sdkMeterProvider = sdkMeterProvider;
 	}
 
-	private SquareClient squareClient;
 
 	/**	
 	 *	The main method for the Vert.x application that runs the Vert.x Runner class
@@ -393,6 +376,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			apiCompanyWebsite.setVertx(vertx);
 			apiCompanyWebsite.setConfig(config);
 			apiCompanyWebsite.setWebClient(webClient);
+			SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+			apiSmartAquacultureDeveloper.setVertx(vertx);
+			apiSmartAquacultureDeveloper.setConfig(config);
+			apiSmartAquacultureDeveloper.setWebClient(webClient);
 			apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
 					apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
 							.compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
@@ -424,8 +411,13 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 														apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
 																.compose(q11 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
 																.onSuccess(q11 -> {
-															LOG.info("authorize data complete");
-															promise.complete();
+															apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "smart-aquaculture-developer", new String[] { "GET" })
+																	.compose(q12 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+																	.compose(q12 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+																	.onSuccess(q12 -> {
+																LOG.info("authorize data complete");
+																promise.complete();
+														}).onFailure(ex -> promise.fail(ex));
 													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));
@@ -749,13 +741,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 												configureAmqp().onSuccess(j -> 
 													configureRabbitmq().onSuccess(k -> 
 														configureJinjava().onSuccess(l -> 
-															configureAuthorizeNet().onSuccess(m -> 
 																configureApi().onSuccess(n -> 
 																	configureUi().onSuccess(o -> 
 																		startServer().onSuccess(p -> startPromise.complete())
 																	).onFailure(ex -> startPromise.fail(ex))
 																).onFailure(ex -> startPromise.fail(ex))
-															).onFailure(ex -> startPromise.fail(ex))
 														).onFailure(ex -> startPromise.fail(ex))
 													).onFailure(ex -> startPromise.fail(ex))
 												).onFailure(ex -> startPromise.fail(ex))
@@ -1407,60 +1397,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		return promise.future();
 	}
 
-	/**
-	 * Configure authorize.net webhooks
-	 **/
-	public Future<Void> configureAuthorizeNet() {
-		Promise<Void> promise = Promise.promise();
-		try {
-			if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_AUTHORIZE_NET))) {
-				String authorizeApiLoginId = config().getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
-				String authorizeTransactionKey = config().getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
-				String authorizeSignatureKey = config().getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
-				String authorizePublicClientKey = config().getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
-				String authorizeNotificationUrl = config().getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
-				if(authorizeApiLoginId == null || authorizeTransactionKey == null || authorizeNotificationUrl == null) {
-					promise.complete();
-				} else {
-					LOG.info("Configure authorize.net succeeded.");
-					promise.complete();
-				}
-			} else {
-				LOG.info("Configuring authorize.net is disabled.");
-				promise.complete();
-			}
-		} catch (Exception ex) {
-			LOG.error("Configure authorize.net failed.", ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-
-	/**	
-	 * Configure square webhooks
-	 **/
-	public Future<Void> configureSquare() {
-		Promise<Void> promise = Promise.promise();
-		try {
-			String squareAccessToken = config().getString(ConfigKeys.SQUARE_ACCESS_TOKEN);
-			String squareSignatureKey = config().getString(ConfigKeys.SQUARE_SIGNATURE_KEY);
-			String squareNotificationUrl = config().getString(ConfigKeys.SQUARE_NOTIFICATION_URL);
-			if(squareAccessToken == null || squareSignatureKey == null || squareNotificationUrl == null) {
-				promise.complete();
-			} else {
-				squareClient = new SquareClient.Builder()
-						.bearerAuthCredentials(new BearerAuthModel.Builder(squareAccessToken).build())
-						.environment(Environment.PRODUCTION)
-						.build();
-				LOG.info("Configure Square succeeded.");
-				promise.complete();
-			}
-		} catch (Exception ex) {
-			LOG.error("Configure Square failed.", ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
 
 	public <API_IMPL extends BaseApiServiceInterface> void initializeApiService(API_IMPL service) {
 		service.setVertx(vertx);
@@ -1489,8 +1425,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 		Promise<Void> promise = Promise.promise();
 		try {
 			List<Future<?>> futures = new ArrayList<>();
-			List<String> authClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
-			List<String> authResources = Arrays.asList("COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE");
+			List<String> authClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","SmartAquacultureDeveloper");
+			List<String> authResources = Arrays.asList("COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE","SMARTAQUACULTUREDEVELOPER");
 			List<String> publicClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
 			SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
 			initializeApiService(apiSiteUser);
@@ -1537,6 +1473,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
 			registerApiService(CompanyWebsiteEnUSGenApiService.class, apiCompanyWebsite, CompanyWebsite.getClassApiAddress());
+
+			SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+			initializeApiService(apiSmartAquacultureDeveloper);
+			registerApiService(SmartAquacultureDeveloperEnUSGenApiService.class, apiSmartAquacultureDeveloper, SmartAquacultureDeveloper.getClassApiAddress());
 
 			Future.all(futures).onSuccess( a -> {
 				LOG.info("The API was configured properly.");

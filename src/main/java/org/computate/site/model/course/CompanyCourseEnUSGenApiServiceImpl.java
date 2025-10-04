@@ -534,7 +534,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestCompanyCourse();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketCompanyCourse", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1387,7 +1387,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		});
 	}
 
-	public void searchpageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
+	public void searchpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1416,7 +1416,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageCompanyCoursePageInit(page, listCompanyCourse, promise1);
+					searchpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1553,7 +1553,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		});
 	}
 
-	public void editpageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
+	public void editpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1582,7 +1582,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageCompanyCoursePageInit(page, listCompanyCourse, promise1);
+					editpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1682,7 +1682,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		});
 	}
 
-	public void displaypageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
+	public void displaypageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1711,7 +1711,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageCompanyCoursePageInit(page, listCompanyCourse, promise1);
+					displaypageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1848,7 +1848,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 		});
 	}
 
-	public void userpageCompanyCoursePageInit(CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
+	public void userpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1877,7 +1877,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					userpageCompanyCoursePageInit(page, listCompanyCourse, promise1);
+					userpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

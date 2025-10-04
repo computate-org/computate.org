@@ -1,5 +1,8 @@
+package org.computate.site.model.developer.smartaquaculture;
 
-package org.computate.site.page;
+import org.computate.search.wrap.Wrap;
+import org.computate.site.result.BaseResult;
+import org.computate.vertx.config.ComputateConfigKeys;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,41 +24,38 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.computate.search.tool.SearchTool;
-import org.computate.search.wrap.Wrap;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
-import org.computate.site.result.BaseResult;
 import org.computate.site.request.SiteRequest;
-import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.search.list.SearchList;
 
 import io.vertx.core.Promise;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
-
 /**
- * Order: 4
- * Description: Read the latest articles to learn more
- * AName: an article
- * Icon: <i class="fa-duotone fa-regular fa-newspaper"></i>
- * Sort.desc: courseNum
- * Sort.desc: lessonNum
- * Rows: 100
+ * Order: 11
+ * Description: Learn how to become a Smart Aquaculture platform developer — Understanding fish population and ocean health, tracking fishing boat movements, monitoring fish species landed and their weight, tracking processing and delivery times, providing net-zero waste solutions for seafood, promoting SA/IF innovation through community outreach, startup support, and IoT applications. 
+
+ * AName: a Smart Aquaculture Developer course
+ * Icon: <i class="fa-duotone fa-regular fa-fish"></i>
+ * Sort.asc: courseNum
  * 
- * PublicRead: true
- * SearchPageUri: /en-us/search/article
- * EditPageUri: /en-us/edit/article/{pageId}
- * DisplayPageUri: /en-us/view/article/{pageId}
- * ApiUri: /en-us/api/article
+ * SearchPageUri: /en-us/search/smart-aquaculture-developer
+ * EditPageUri: /en-us/edit/smart-aquaculture-developer/{pageId}
+ * UserPageUri: /en-us/learn/smart-aquaculture-developer/{pageId}
+ * ApiUri: /en-us/api/smart-aquaculture-developer
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   POST:
+ *   DELETE:
  *   PUTImport:
  * 
  * AuthGroup:
+ *   smart-aquaculture-developer:
+ *     GET:
  *   Admin:
  *     POST:
  *     PATCH:
@@ -69,7 +69,7 @@ import io.vertx.core.json.JsonObject;
  *     DELETE:
  *     SuperAdmin:
  */
-public class SitePage extends SitePageGen<BaseResult> {
+public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<BaseResult> {
 
   /**
    * {@inheritDoc}
@@ -80,84 +80,61 @@ public class SitePage extends SitePageGen<BaseResult> {
 
   /**
    * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: course name
+   * Description: The course name. 
+   * HtmRow: 3
+	 * HtmRowTitleOpen: course details
+   * HtmCell: 1
+   * HtmColumn: 0
+   * Facet: true
+	 * VarName: true
    */
-  protected void _githubOrg(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.GITHUB_ORG));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _siteName(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_NAME));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _siteDisplayName(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_DISPLAY_NAME));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _sitePublicUrl(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_PUBLIC_URL));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _mailingListUrl(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.MAILING_LIST_URL));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _quayioOrg(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.QUAYIO_ORG));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _sitePomGroupId(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_POM_GROUP_ID));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _staticBaseUrl(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.STATIC_BASE_URL));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _staticPath(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.STATIC_PATH));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void _siteBaseUrl(Wrap<String> w) {
-    w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_BASE_URL));
+  protected void _name(Wrap<String> w) {
   }
 
   /**
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * DisplayName: course description
+   * Description: The course description. 
+   * HtmRow: 3
+   * HtmCell: 2
+   * HtmColumn: 1
    * Facet: true
-   * DisplayName: course number
-   * Description: The course number for this page. 
+	 * VarDescription: true
    */
-  protected void _courseNum(Wrap<Integer> w) {
+  protected void _description(Wrap<String> w) {
   }
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * HtmRowTitleOpen: Useful URLs
+	 * HtmRow: 99
+	 * HtmCell: 1
+	 * Facet: true
+	 * DisplayName: page ID
+	 * Description: The ID for this page. 
+	 * VarId: true
+	 */
+	protected void _pageId(Wrap<String> w) {
+		w.o(toId(name));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * DocValues: true
+	 * Persist: true
+	 * Facet: true
+	 * DisplayName: course number
+	 * Description: The course number for this page. 
+	 */
+	protected void _courseNum(Wrap<Integer> w) {
+	}
 
   /**
    * {@inheritDoc}
@@ -168,30 +145,6 @@ public class SitePage extends SitePageGen<BaseResult> {
    * Description: The lesson number for this page. 
    */
   protected void _lessonNum(Wrap<Integer> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: title
-   * Description: The name of this page. 
-   * HtmColumn: 1
-   * VarName: true
-   */
-  protected void _name(Wrap<String> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: description
-   * Description: The description of this page. 
-   * HtmColumn: 2
-   * VarDescription: true
-   */
-  protected void _description(Wrap<String> w) {
   }
 
   /**
@@ -218,42 +171,6 @@ public class SitePage extends SitePageGen<BaseResult> {
    * Description: The author URL
    */
   protected void _authorUrl(Wrap<String> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * HtmRowTitleOpen: Useful URLs
-   * HtmRow: 99
-   * HtmCell: 1
-   * Facet: true
-   * DisplayName: Page ID
-   * Description: The ID for this page. 
-   * VarId: true
-   */
-  protected void _pageId(Wrap<String> w) {
-    toId(objectTitle);
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: header 1
-   * Description: The 1st header of this page. 
-   */
-  protected void _h1(Wrap<String> w) {
-  }
-
-  /**
-   * {@inheritDoc}
-   * DocValues: true
-   * Persist: true
-   * DisplayName: header 2
-   * Description: The 2nd header of this page. 
-   */
-  protected void _h2(Wrap<String> w) {
   }
 
   /**
@@ -348,11 +265,11 @@ public class SitePage extends SitePageGen<BaseResult> {
   /**
    * Ignore: true
    */
-  protected void _relatedArticleSearch(Promise<SearchList<SitePage>> promise) {
-    SearchList<SitePage> l = new SearchList<>();
+  protected void _relatedArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
+    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
     if(relatedArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(SitePage.class);
+      l.setC(SmartAquacultureDeveloper.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -373,16 +290,16 @@ public class SitePage extends SitePageGen<BaseResult> {
     JsonArray array = new JsonArray();
     relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
         JsonObject obj = JsonObject.mapFrom(relatedArticle);
-        obj.remove(SitePage.VAR_relatedArticles);
-        obj.remove(SitePage.VAR_relatedArticleIds);
+        obj.remove(SmartAquacultureDeveloper.VAR_relatedArticles);
+        obj.remove(SmartAquacultureDeveloper.VAR_relatedArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(SitePage.VAR_pageId, obj.getString(SitePage.VAR_pageId));
-        obj2.put(SitePage.VAR_name, obj.getString(SitePage.VAR_name));
-        obj2.put(SitePage.VAR_pageImageUri, obj.getString(SitePage.VAR_pageImageUri));
-        obj2.put(SitePage.VAR_pageImageWidth, obj.getString(SitePage.VAR_pageImageWidth));
-        obj2.put(SitePage.VAR_pageImageHeight, obj.getString(SitePage.VAR_pageImageHeight));
-        obj2.put(SitePage.VAR_pageImageAlt, obj.getString(SitePage.VAR_pageImageAlt));
-        obj2.put(SitePage.VAR_displayPage, obj.getString(SitePage.VAR_displayPage));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
+        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);

@@ -1253,6 +1253,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
 	public void siteRequestCompanyCourse(SiteRequest siteRequest_) {
 			super.siteRequestBaseResult(siteRequest_);
+		if(relatedArticleSearch != null)
+			relatedArticleSearch.setSiteRequest_(siteRequest_);
 	}
 
 	public void siteRequestForClass(SiteRequest siteRequest_) {

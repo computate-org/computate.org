@@ -66,6 +66,9 @@ import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -596,6 +599,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 			initializeApiService(apiCompanyResearch);
 			CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
 			initializeApiService(apiCompanyWebsite);
+			SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+			initializeApiService(apiSmartAquacultureDeveloper);
 
 			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
 				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
@@ -607,8 +612,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
 											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
 												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
-													LOG.info("data import complete");
-													promise.complete();
+													apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/learn/smart-aquaculture-developer"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
+														LOG.info("data import complete");
+														promise.complete();
+													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));
 										}).onFailure(ex -> promise.fail(ex));

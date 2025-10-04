@@ -1,16 +1,10 @@
 package org.computate.site.user;
 
-import io.vertx.ext.auth.authorization.AuthorizationProvider;
-import io.vertx.ext.auth.oauth2.OAuth2Auth;
-import io.vertx.ext.web.client.WebClient;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Promise;
-import io.vertx.core.Vertx;
-import io.vertx.core.WorkerExecutor;
 import io.vertx.core.http.HttpResponseExpectation;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.pgclient.PgPool;
 
 import java.net.URLEncoder;
 import java.util.Optional;
@@ -19,15 +13,9 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
-import org.computate.site.request.SiteRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
-import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.request.ComputateSiteRequest;
 
-import io.vertx.kafka.client.producer.KafkaProducer;
-import io.vertx.mqtt.MqttClient;
-import io.vertx.amqp.AmqpSender;
-import io.vertx.rabbitmq.RabbitMQClient;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
 import net.authorize.api.contract.v1.CreateCustomerProfileResponse;
@@ -37,8 +25,6 @@ import net.authorize.api.contract.v1.MessageTypeEnum;
 import net.authorize.api.controller.CreateCustomerProfileController;
 import net.authorize.api.controller.GetTransactionListForCustomerController;
 import net.authorize.api.controller.base.ApiOperationBase;
-
-import com.hubspot.jinjava.Jinjava;
 
 /**
  * Translate: false
@@ -84,7 +70,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
 
       if(Optional.ofNullable(siteRequest.getServiceRequest()).map(serviceRequest -> serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() == 0L
           && StringUtils.isNotBlank(authorizeEnvironment) && authorizeApiLoginId != null && authorizeTransactionKey != null) {
-        String customerProfileId1 = accessToken.getString("customerProfileId");
+        String customerProfileId1 = Optional.ofNullable(siteRequest.getSiteUser_(SiteUser.class).getCustomerProfileId()).orElse(accessToken.getString("customerProfileId"));
   
         if(customerProfileId1 == null) {
           String customerProfileId2 = customerProfileId1;
@@ -175,7 +161,7 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
                     .sendJsonObject(newUserObject)
                     .expecting(HttpResponseExpectation.SC_NO_CONTENT)
                     .onSuccess(groupResponse -> {
-                      promise.complete(false);
+                      promise.complete(true);
                     }).onFailure(ex -> {
                       LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
                       promise.fail(ex);

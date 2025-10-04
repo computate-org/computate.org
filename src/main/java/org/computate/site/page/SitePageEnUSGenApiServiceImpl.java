@@ -534,7 +534,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
 						if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
 							o.apiRequestSitePage();
-							if(apiRequest.getVars().size() > 0)
+							if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
 								eventBus.publish("websocketSitePage", JsonObject.mapFrom(apiRequest).toString());
 						}
 					}
@@ -1137,7 +1137,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void searchpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+	public void searchpageSitePagePageInit(JsonObject ctx, SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1166,7 +1166,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					searchpageSitePagePageInit(page, listSitePage, promise1);
+					searchpageSitePagePageInit(ctx, page, listSitePage, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1303,7 +1303,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void editpageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+	public void editpageSitePagePageInit(JsonObject ctx, SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1332,7 +1332,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					editpageSitePagePageInit(page, listSitePage, promise1);
+					editpageSitePagePageInit(ctx, page, listSitePage, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);
@@ -1432,7 +1432,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 		});
 	}
 
-	public void displaypageSitePagePageInit(SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
+	public void displaypageSitePagePageInit(JsonObject ctx, SitePagePage page, SearchList<SitePage> listSitePage, Promise<Void> promise) {
 		promise.complete();
 	}
 
@@ -1461,7 +1461,7 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 					JsonObject ctx = ConfigKeys.getPageContext(config);
 					ctx.mergeIn(JsonObject.mapFrom(page));
 					Promise<Void> promise1 = Promise.promise();
-					displaypageSitePagePageInit(page, listSitePage, promise1);
+					displaypageSitePagePageInit(ctx, page, listSitePage, promise1);
 					promise1.future().onSuccess(b -> {
 						String renderedTemplate = jinjava.render(template, ctx.getMap());
 						Buffer buffer = Buffer.buffer(renderedTemplate);

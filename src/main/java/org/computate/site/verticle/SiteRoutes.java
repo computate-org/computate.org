@@ -25,6 +25,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.search.response.solr.SolrResponse;
 import org.computate.search.response.solr.SolrResponse.FacetField;
 import org.computate.search.serialize.ComputateZonedDateTimeSerializer;
+import org.computate.vertx.api.BaseApiServiceImpl;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.result.base.ComputateBaseResult;
@@ -152,6 +153,30 @@ public class SiteRoutes {
     authorizeNet(vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser);
   }
 
+  public static Future<Void> grantGithubTeamAccess(String githubTeam, String githubUsername, JsonObject config, WebClient webClient) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      String githubOrg = config.getString(ConfigKeys.GITHUB_ORG);
+      String githubUri = String.format("/orgs/%s/teams/%s/memberships/%s", BaseApiServiceImpl.urlEncode(githubOrg), BaseApiServiceImpl.urlEncode(githubTeam), BaseApiServiceImpl.urlEncode(githubUsername));
+      webClient.put(443, "api.github.com", githubUri).ssl(true)
+          .putHeader("Accept", "application/vnd.github+json")
+          .putHeader("X-GitHub-Api-Version", "2022-11-28")
+          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_API_TOKEN)))
+          .sendJsonObject(new JsonObject().put("role", "member"))
+          .expecting(HttpResponseExpectation.SC_OK)
+          .onSuccess(memberResponse -> {
+        promise.complete();
+      }).onFailure(ex -> {
+        LOG.error(String.format("Failed to add user %s to team %s in org %s. ", githubUsername, githubTeam, githubOrg), ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error("The GitHub team access failed. ");
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
   public static Future<Void> processAuthorizeItem(Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
     Promise<Void> promise = Promise.promise();
     try {
@@ -210,7 +235,7 @@ public class SiteRoutes {
                     JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
                     if(group != null) {
                       String groupId = group.getString("id");
-                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=%s", authRealm, URLEncoder.encode(customerProfileId, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?q=", authRealm, URLEncoder.encode(String.format("customerProfileId:%s", customerProfileId), "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
                       .send()
                       .expecting(HttpResponseExpectation.SC_OK)
                       .onSuccess(userResponse -> {
@@ -219,9 +244,10 @@ public class SiteRoutes {
                         if(user != null) {
                           String userId = user.getString("id");
                           String userEmail = user.getString("email");
-                          String userName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+                          String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+                          String userName = user.getString("username");
                           JsonArray userGroups = user.getJsonArray("groups");
-                          LOG.info(String.format("user %s group %s in groups: %s", customerProfileId, groupName, userGroups));
+                          // LOG.info(String.format("user %s group %s in groups: %s", customerProfileId, groupName, userGroups));
                           // if(!userGroups.contains(groupName)) {
                             webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
                                 .putHeader("Authorization", String.format("Bearer %s", authToken))
@@ -231,6 +257,11 @@ public class SiteRoutes {
                                 .expecting(HttpResponseExpectation.SC_NO_CONTENT)
                                 .onSuccess(groupUserResponse -> {
                               try {
+                                grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
+                                  promise.complete();
+                                }).onFailure(ex -> {
+                                  promise.fail(ex);
+                                });
                                 // DeliveryOptions options = new DeliveryOptions();
                                 // String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
                                 // String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
@@ -294,11 +325,11 @@ public class SiteRoutes {
                                 //   promise.fail(ex);
                                 // });
                               } catch(Throwable ex) {
-                                LOG.error("Failed to process square webook while querying customer. ", ex);
+                                LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
                                 promise.fail(ex);
                               }
                             }).onFailure(ex -> {
-                              LOG.error("Failed to process square webook while adding user to group. ", ex);
+                              LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
                               promise.fail(ex);
                             });
                           // } else {
@@ -310,7 +341,7 @@ public class SiteRoutes {
                           promise.fail(ex);
                         }
                       }).onFailure(ex -> {
-                        LOG.error("Failed to process square webook while querying user. ", ex);
+                        LOG.error("Failed to process authorize.net webook while querying user. ", ex);
                         promise.fail(ex);
                       });
                     } else {
@@ -319,19 +350,19 @@ public class SiteRoutes {
                       promise.fail(ex);
                     }
                   } catch(Throwable ex) {
-                    LOG.error("Failed to process square webook while querying group. ", ex);
+                    LOG.error("Failed to process authorize.net webook while querying group. ", ex);
                     promise.fail(ex);
                   }
                 }).onFailure(ex -> {
-                  LOG.error("Failed to process square webook while querying group. ", ex);
+                  LOG.error("Failed to process authorize.net webook while querying group. ", ex);
                   promise.fail(ex);
                 });
               } catch(Throwable ex) {
-                LOG.error("Failed to process square webook while querying group. ", ex);
+                LOG.error("Failed to process authorize.net webook while querying group. ", ex);
                 promise.fail(ex);
               }
             }).onFailure(ex -> {
-              LOG.error("Failed to process square webook. ", ex);
+              LOG.error("Failed to process authorize.net webook. ", ex);
               promise.fail(ex);
             });
           } else {
@@ -339,7 +370,7 @@ public class SiteRoutes {
             promise.complete();
           }
         }).onFailure(ex -> {
-          LOG.error("Failed to process square webook. ", ex);
+          LOG.error("Failed to process authorize.net webook. ", ex);
           promise.fail(ex);
         });
       } else {
@@ -347,7 +378,7 @@ public class SiteRoutes {
         promise.complete();
       }
     } catch(Exception ex) {
-      LOG.error("The square item failed to process.");
+      LOG.error("The authorize.net item failed to process.");
       promise.fail(ex);
     }
     return promise.future();
@@ -359,15 +390,7 @@ public class SiteRoutes {
           JsonObject paymentBody = ((JsonObject)message.body()).getJsonObject("context").getJsonObject("params").getJsonObject("body");
           String notificationId = paymentBody.getString("notificationId");
           String eventType = paymentBody.getString("eventType");
-          String eventDate = paymentBody.getString("eventDate");
-          String webhookId = paymentBody.getString("webhookId");
           JsonObject payload = paymentBody.getJsonObject("payload");
-          Long responseCode = payload.getLong("responseCode");
-          String merchantReferenceId = payload.getString("merchantReferenceId");
-          String authCode = payload.getString("authCode");
-          String avsResponse = payload.getString("avsResponse");
-          BigDecimal authAmount = Optional.ofNullable(payload.getString("authAmount")).map(a -> new BigDecimal(a)).orElse(null);
-          String entityName = payload.getString("entityName");
           String transactionId = payload.getString("id");
           LOG.info(String.format("An authorize.net payment received: %s", paymentBody.encode()));
           if("net.authorize.payment.authcapture.created".equals(eventType) && payload != null) {
@@ -393,13 +416,8 @@ public class SiteRoutes {
                 GetTransactionDetailsResponse response = controller.getApiResponse();
                 TransactionDetailsType transactionDetails = Optional.ofNullable(response).map(r -> r.getTransaction()).orElse(null);
                 if (transactionDetails != null) {
-                  CustomerDataType customer = transactionDetails.getCustomer();
                   String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
-                  LOG.info(String.format("customerProfileId: %s", transactionDetails.getProfile().getCustomerProfileId()));
-                  LOG.info(String.format("customerId: %s", customer.getId()));
-                  LOG.info(String.format("billToFirstName: %s", transactionDetails.getBillTo().getFirstName()));
-                  LOG.info(String.format("billToLastName: %s", transactionDetails.getBillTo().getLastName()));
-                  LOG.info(String.format("orderDescription: %s", transactionDetails.getOrder().getDescription()));
+                  LOG.info(String.format("An authorize.net payment received for customerProfileId %s: %s", customerProfileId, paymentBody.encode()));
                   transactionDetails.getOrder().getPurchaserCode();
 
                   List<Future<String>> futures = new ArrayList<>();
@@ -413,16 +431,18 @@ public class SiteRoutes {
                     }));
                   }
                   Future.all(futures).onSuccess(b -> {
-                    vertx.setTimer(config.getInteger(ConfigKeys.AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS, 60000), tid -> {
+                    vertx.setTimer(Integer.parseInt(config.getString(ConfigKeys.AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS, "60000")), tid -> {
                       lock.release();
                       LOG.info(String.format("The notificationId %s lock was released", notificationId));
                     });
                   }).onFailure(ex -> {
+                    lock.release();
                     message.fail(400, ex.getMessage());
                   });
                 }
               } catch(Throwable ex) {
-                LOG.error("Failed to process square webook. ", ex);
+                lock.release();
+                LOG.error("Failed to process authorize.net webook. ", ex);
                 message.fail(400, ex.getMessage());
               }
             }).onFailure(ex -> {
@@ -434,7 +454,7 @@ public class SiteRoutes {
             LOG.info(String.format("The notification %s is the wrong event type %s", notificationId, eventType));
           }
         } catch(Throwable ex) {
-          LOG.error("Failed to process square webook. ", ex);
+          LOG.error("Failed to process authorize.net webook. ", ex);
           message.fail(400, ex.getMessage());
         }
       });

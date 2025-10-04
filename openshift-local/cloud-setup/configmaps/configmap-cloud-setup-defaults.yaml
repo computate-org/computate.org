@@ -586,6 +586,13 @@ data:
     USE_CASE_SRC: "{{ PARENT_SRC }}/courses/computate-smart-website-builder/use-cases/online-business-use-case"
     USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SRC }}/02-models-summary.ipynb"
 
+    ##############
+    # github API #
+    ##############
+
+    # In Developer Settings in your user, Create a Tokens (classic) personal access token with write:org permissions. 
+    GITHUB_API_TOKEN: ""
+
     #################
     # authorize.net #
     #################

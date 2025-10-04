@@ -192,7 +192,7 @@ CONTAINER_URI: "{{ CONTAINER_REGISTRY }}/{{ CONTAINER_ORG }}/{{ CONTAINER_NAME }
 ###########################
 
 # A secret with links to web components. 
-WEB_COMPONENTS_SECRET: "{{ lookup('env', 'WEB_COMPONENTS_SECRET') | default('local-font-awesome', true) }}"
+WEB_COMPONENTS_SECRET: "{{ lookup('env', 'WEB_COMPONENTS_SECRET') | default('local-extra', true) }}"
 # Switch between Shoelace "sl-" and Web Awesome "wa-" element prefixes. 
 WEB_COMPONENTS_PREFIX: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_PREFIX | default('') | b64decode | default('wa-', true) }}"
 # Web components default theme. 
@@ -595,6 +595,13 @@ DOWNLOAD_PATH: "{{ lookup('env', 'HOME') }}/.local/src/{{ SITE_NAME }}-downloads
 
 USE_CASE_SRC: "{{ PARENT_SRC }}/courses/computate-smart-website-builder/use-cases/online-business-use-case"
 USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SRC }}/02-models-summary.ipynb"
+
+##############
+# github API #
+##############
+
+# In Developer Settings in your user, Create a personal access token, with the GitHub org as the resource owner and Read and Write permissions to the Members. 
+GITHUB_API_TOKEN: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.GITHUB_API_TOKEN | default('') | b64decode | default('', true) }}"
 
 #################
 # authorize.net #
