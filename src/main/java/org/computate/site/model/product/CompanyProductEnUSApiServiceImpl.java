@@ -211,8 +211,9 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
       String authorizePublicClientKey = config.getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
       String authorizeNotificationUrl = config.getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
       String siteBaseUrl = config.getString(ConfigKeys.SITE_BASE_URL);
+      BigDecimal productPrice = companyProduct.getPrice();
 
-      if(siteUser != null) {
+      if(siteUser != null && productPrice != null && productPrice.compareTo(BigDecimal.ZERO) > 0) {
         String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId");
         if(customerProfileId != null) {
           MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
@@ -296,7 +297,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
   
             // Removed transaction fee
-            transactionRequest.setAmount(companyProduct.getPrice());
+            transactionRequest.setAmount(productPrice);
   
             ArrayOfLineItem lineItems = new ArrayOfLineItem();
             LineItemType lineItem = new LineItemType();
