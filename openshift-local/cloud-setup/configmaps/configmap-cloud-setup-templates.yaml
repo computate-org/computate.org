@@ -297,38 +297,38 @@ data:
       namespace: {{ SITE_NAMESPACE }}
     type: Opaque
     stringData:
-      SITE_REDIRECTS: "{{ SITE_REDIRECTS }}"
-      ENABLE_EMAIL: "{{ ENABLE_EMAIL }}"
-      EMAIL_HOST: "{{ EMAIL_HOST }}"
-      EMAIL_PORT: "{{ EMAIL_PORT }}"
-      EMAIL_SSL: "{{ EMAIL_SSL }}"
-      EMAIL_AUTH_METHOD: "{{ EMAIL_AUTH_METHOD }}"
-      EMAIL_USERNAME: "{{ EMAIL_USERNAME }}"
-      EMAIL_PASSWORD: "{{ EMAIL_PASSWORD }}"
-      EMAIL_FROM: "{{ EMAIL_FROM }}"
-      EMAIL_ADMIN: "{{ EMAIL_ADMIN }}"
-      DOWNLOAD_PATH: "{{ DOWNLOAD_PATH }}"
-      USE_CASE_SRC: "{{ USE_CASE_SRC }}"
-      USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SUMMARY_PATH }}"
-      GITHUB_API_TOKEN: "{{ GITHUB_API_TOKEN }}"
-      ENABLE_AUTHORIZE_NET: "{{ ENABLE_AUTHORIZE_NET }}"
-      AUTHORIZE_NET_SECRET: "{{ AUTHORIZE_NET_SECRET }}"
-      AUTHORIZE_NET_ENVIRONMENT: "{{ AUTHORIZE_NET_ENVIRONMENT }}"
-      AUTHORIZE_NET_URL: "{{ AUTHORIZE_NET_URL }}"
-      AUTHORIZE_NET_API_HOST_NAME: "{{ AUTHORIZE_NET_API_HOST_NAME }}"
-      AUTHORIZE_NET_API_PORT: "{{ AUTHORIZE_NET_API_PORT }}"
-      AUTHORIZE_NET_API_SSL: "{{ AUTHORIZE_NET_API_SSL }}"
-      AUTHORIZE_NET_API_URI: "{{ AUTHORIZE_NET_API_URI }}"
-      AUTHORIZE_NET_ACCEPT_JS_URL: "{{ AUTHORIZE_NET_ACCEPT_JS_URL }}"
-      AUTHORIZE_NET_API_LOGIN_ID: "{{ AUTHORIZE_NET_API_LOGIN_ID }}"
-      AUTHORIZE_NET_TRANSACTION_KEY: "{{ AUTHORIZE_NET_TRANSACTION_KEY }}"
-      AUTHORIZE_NET_SIGNATURE_KEY: "{{ AUTHORIZE_NET_SIGNATURE_KEY }}"
-      AUTHORIZE_NET_PUBLIC_CLIENT_KEY: "{{ AUTHORIZE_NET_PUBLIC_CLIENT_KEY }}"
-      AUTHORIZE_NET_NOTIFICATION_URL: "{{ AUTHORIZE_NET_NOTIFICATION_URL }}"
-      AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS: "{{ AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS }}"
-      AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS: "{{ AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS }}"
-      SITE_OS_NAME: "{{ SITE_OS_NAME }}"
-      SITE_OS_SHORT_NAME: "{{ SITE_OS_SHORT_NAME }}"
-      SITE_OS_VERSION: "{{ SITE_OS_VERSION }}"
-      YOUTUBE_URL: "{{ YOUTUBE_URL }}"
-      LINKEDIN_URL: "{{ LINKEDIN_URL }}"
+      SITE_REDIRECTS: '{{ SITE_REDIRECTS | replace("'", "\\'") }}'
+      ENABLE_EMAIL: '{{ ENABLE_EMAIL | replace("'", "\\'") }}'
+      EMAIL_HOST: '{{ EMAIL_HOST | replace("'", "\\'") }}'
+      EMAIL_PORT: '{{ EMAIL_PORT | replace("'", "\\'") }}'
+      EMAIL_SSL: '{{ EMAIL_SSL | replace("'", "\\'") }}'
+      EMAIL_AUTH_METHOD: '{{ EMAIL_AUTH_METHOD | replace("'", "\\'") }}'
+      EMAIL_USERNAME: '{{ EMAIL_USERNAME | replace("'", "\\'") }}'
+      EMAIL_PASSWORD: '{{ EMAIL_PASSWORD | replace("'", "\\'") }}'
+      EMAIL_FROM: '{{ EMAIL_FROM | replace("'", "\\'") }}'
+      EMAIL_ADMIN: '{{ EMAIL_ADMIN | replace("'", "\\'") }}'
+      DOWNLOAD_PATH: '{{ DOWNLOAD_PATH | replace("'", "\\'") }}'
+      USE_CASE_SRC: '{{ USE_CASE_SRC | replace("'", "\\'") }}'
+      USE_CASE_SUMMARY_PATH: '{{ USE_CASE_SUMMARY_PATH | replace("'", "\\'") }}'
+      GITHUB_API_TOKEN: '{{ GITHUB_API_TOKEN | replace("'", "\\'") }}'
+      ENABLE_AUTHORIZE_NET: '{{ ENABLE_AUTHORIZE_NET | replace("'", "\\'") }}'
+      AUTHORIZE_NET_SECRET: '{{ AUTHORIZE_NET_SECRET | replace("'", "\\'") }}'
+      AUTHORIZE_NET_ENVIRONMENT: '{{ AUTHORIZE_NET_ENVIRONMENT | replace("'", "\\'") }}'
+      AUTHORIZE_NET_URL: '{{ AUTHORIZE_NET_URL | replace("'", "\\'") }}'
+      AUTHORIZE_NET_API_HOST_NAME: '{{ AUTHORIZE_NET_API_HOST_NAME | replace("'", "\\'") }}'
+      AUTHORIZE_NET_API_PORT: '{{ AUTHORIZE_NET_API_PORT | replace("'", "\\'") }}'
+      AUTHORIZE_NET_API_SSL: '{{ AUTHORIZE_NET_API_SSL | replace("'", "\\'") }}'
+      AUTHORIZE_NET_API_URI: '{{ AUTHORIZE_NET_API_URI | replace("'", "\\'") }}'
+      AUTHORIZE_NET_ACCEPT_JS_URL: '{{ AUTHORIZE_NET_ACCEPT_JS_URL | replace("'", "\\'") }}'
+      AUTHORIZE_NET_API_LOGIN_ID: '{{ AUTHORIZE_NET_API_LOGIN_ID | replace("'", "\\'") }}'
+      AUTHORIZE_NET_TRANSACTION_KEY: '{{ AUTHORIZE_NET_TRANSACTION_KEY | replace("'", "\\'") }}'
+      AUTHORIZE_NET_SIGNATURE_KEY: '{{ AUTHORIZE_NET_SIGNATURE_KEY | replace("'", "\\'") }}'
+      AUTHORIZE_NET_PUBLIC_CLIENT_KEY: '{{ AUTHORIZE_NET_PUBLIC_CLIENT_KEY | replace("'", "\\'") }}'
+      AUTHORIZE_NET_NOTIFICATION_URL: '{{ AUTHORIZE_NET_NOTIFICATION_URL | replace("'", "\\'") }}'
+      AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS: '{{ AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS | replace("'", "\\'") }}'
+      AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS: '{{ AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS | replace("'", "\\'") }}'
+      SITE_OS_NAME: '{{ SITE_OS_NAME | replace("'", "\\'") }}'
+      SITE_OS_SHORT_NAME: '{{ SITE_OS_SHORT_NAME | replace("'", "\\'") }}'
+      SITE_OS_VERSION: '{{ SITE_OS_VERSION | replace("'", "\\'") }}'
+      YOUTUBE_URL: '{{ YOUTUBE_URL | replace("'", "\\'") }}'
+      LINKEDIN_URL: '{{ LINKEDIN_URL | replace("'", "\\'") }}'
