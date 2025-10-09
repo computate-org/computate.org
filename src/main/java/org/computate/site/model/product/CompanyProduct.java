@@ -311,6 +311,11 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * Description: The dialog template for this product. 
    */
   protected void _dialogTemplate(Wrap<String> w) {
-    w.o(String.format("%s/%s.htm", StringUtils.substringBeforeLast(StringUtils.substringAfter(classStringFormatUrlDisplayPageForClass().replace("/shop/", "/dialog/"), "%s/"), "/"), pageId));
+    w.o(String.format("en-us/dialog/product/%s.htm", pageId));
+  }
+
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/search/product?fq=pageId:%s";
   }
 }

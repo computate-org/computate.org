@@ -1966,6 +1966,9 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyService.VAR_pageId, CompanyService.staticSetPageId(siteRequest2, (String)result.get(CompanyService.VAR_pageId)));
 			page.persistForClass(CompanyService.VAR_objectTitle, CompanyService.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyService.VAR_objectTitle)));
 			page.persistForClass(CompanyService.VAR_displayPage, CompanyService.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyService.VAR_displayPage)));
+			page.persistForClass(CompanyService.VAR_editPage, CompanyService.staticSetEditPage(siteRequest2, (String)result.get(CompanyService.VAR_editPage)));
+			page.persistForClass(CompanyService.VAR_userPage, CompanyService.staticSetUserPage(siteRequest2, (String)result.get(CompanyService.VAR_userPage)));
+			page.persistForClass(CompanyService.VAR_download, CompanyService.staticSetDownload(siteRequest2, (String)result.get(CompanyService.VAR_download)));
 			page.persistForClass(CompanyService.VAR_solrId, CompanyService.staticSetSolrId(siteRequest2, (String)result.get(CompanyService.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

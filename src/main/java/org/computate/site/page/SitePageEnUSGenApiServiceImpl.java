@@ -1964,8 +1964,11 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SitePage.VAR_archived, SitePage.staticSetArchived(siteRequest2, (String)result.get(SitePage.VAR_archived)));
 			page.persistForClass(SitePage.VAR_objectTitle, SitePage.staticSetObjectTitle(siteRequest2, (String)result.get(SitePage.VAR_objectTitle)));
 			page.persistForClass(SitePage.VAR_displayPage, SitePage.staticSetDisplayPage(siteRequest2, (String)result.get(SitePage.VAR_displayPage)));
+			page.persistForClass(SitePage.VAR_editPage, SitePage.staticSetEditPage(siteRequest2, (String)result.get(SitePage.VAR_editPage)));
 			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
+			page.persistForClass(SitePage.VAR_userPage, SitePage.staticSetUserPage(siteRequest2, (String)result.get(SitePage.VAR_userPage)));
 			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
+			page.persistForClass(SitePage.VAR_download, SitePage.staticSetDownload(siteRequest2, (String)result.get(SitePage.VAR_download)));
 			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
 			page.persistForClass(SitePage.VAR_description, SitePage.staticSetDescription(siteRequest2, (String)result.get(SitePage.VAR_description)));
 			page.persistForClass(SitePage.VAR_authorName, SitePage.staticSetAuthorName(siteRequest2, (String)result.get(SitePage.VAR_authorName)));

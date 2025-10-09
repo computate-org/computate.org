@@ -2785,7 +2785,10 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageUri, SmartAquacultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageUri)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_objectTitle, SmartAquacultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_objectTitle)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_displayPage, SmartAquacultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_displayPage)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_editPage, SmartAquacultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_editPage)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_userPage, SmartAquacultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_userPage)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageAlt, SmartAquacultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageAlt)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_download, SmartAquacultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_download)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_labelsString, SmartAquacultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labelsString)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_labels, SmartAquacultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labels)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_relatedArticleIds, SmartAquacultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_relatedArticleIds)));

@@ -729,6 +729,30 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							num++;
 							bParams.add(o2.sqlDisplayPage());
 						break;
+					case "setEditPage":
+							o2.setEditPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_editPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlEditPage());
+						break;
+					case "setUserPage":
+							o2.setUserPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_userPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserPage());
+						break;
+					case "setDownload":
+							o2.setDownload(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(CompanyWebinar.VAR_download + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDownload());
+						break;
 				}
 			}
 			bSql.append(" WHERE pk=$" + num);
@@ -1212,6 +1236,33 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 						bSql.append(CompanyWebinar.VAR_displayPage + "=$" + num);
 						num++;
 						bParams.add(o2.sqlDisplayPage());
+						break;
+					case CompanyWebinar.VAR_editPage:
+						o2.setEditPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_editPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlEditPage());
+						break;
+					case CompanyWebinar.VAR_userPage:
+						o2.setUserPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_userPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserPage());
+						break;
+					case CompanyWebinar.VAR_download:
+						o2.setDownload(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(CompanyWebinar.VAR_download + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDownload());
 						break;
 					}
 				}
@@ -3221,7 +3272,7 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			SiteRequest siteRequest = o.getSiteRequest_();
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT name, description, created, pageId, joinUri, archived, webinarUrlAmericas, webinarUrlApac, webinarUrlEmea, icalUrl, sessionId, userKey, joinUrl, objectTitle, displayPage FROM CompanyWebinar WHERE pk=$1")
+			sqlConnection.preparedQuery("SELECT name, description, created, pageId, joinUri, archived, webinarUrlAmericas, webinarUrlApac, webinarUrlEmea, icalUrl, sessionId, userKey, joinUrl, objectTitle, displayPage, editPage, userPage, download FROM CompanyWebinar WHERE pk=$1")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(pk)
 					).onSuccess(result -> {
@@ -3440,6 +3491,9 @@ public class CompanyWebinarEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyWebinar.VAR_joinUrl, CompanyWebinar.staticSetJoinUrl(siteRequest2, (String)result.get(CompanyWebinar.VAR_joinUrl)));
 			page.persistForClass(CompanyWebinar.VAR_objectTitle, CompanyWebinar.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyWebinar.VAR_objectTitle)));
 			page.persistForClass(CompanyWebinar.VAR_displayPage, CompanyWebinar.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyWebinar.VAR_displayPage)));
+			page.persistForClass(CompanyWebinar.VAR_editPage, CompanyWebinar.staticSetEditPage(siteRequest2, (String)result.get(CompanyWebinar.VAR_editPage)));
+			page.persistForClass(CompanyWebinar.VAR_userPage, CompanyWebinar.staticSetUserPage(siteRequest2, (String)result.get(CompanyWebinar.VAR_userPage)));
+			page.persistForClass(CompanyWebinar.VAR_download, CompanyWebinar.staticSetDownload(siteRequest2, (String)result.get(CompanyWebinar.VAR_download)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

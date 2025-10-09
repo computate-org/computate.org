@@ -737,6 +737,30 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 							num++;
 							bParams.add(o2.sqlCustomerProfileId());
 						break;
+					case "setEditPage":
+							o2.setEditPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_editPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlEditPage());
+						break;
+					case "setUserPage":
+							o2.setUserPage(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_userPage + "=$" + num);
+							num++;
+							bParams.add(o2.sqlUserPage());
+						break;
+					case "setDownload":
+							o2.setDownload(jsonObject.getString(entityVar));
+							if(bParams.size() > 0)
+								bSql.append(", ");
+							bSql.append(SiteUser.VAR_download + "=$" + num);
+							num++;
+							bParams.add(o2.sqlDownload());
+						break;
 				}
 			}
 			bSql.append(" WHERE pk=$" + num);
@@ -1267,6 +1291,33 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 						bSql.append(SiteUser.VAR_customerProfileId + "=$" + num);
 						num++;
 						bParams.add(o2.sqlCustomerProfileId());
+						break;
+					case SiteUser.VAR_editPage:
+						o2.setEditPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_editPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlEditPage());
+						break;
+					case SiteUser.VAR_userPage:
+						o2.setUserPage(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_userPage + "=$" + num);
+						num++;
+						bParams.add(o2.sqlUserPage());
+						break;
+					case SiteUser.VAR_download:
+						o2.setDownload(jsonObject.getString(entityVar));
+						if(bParams.size() > 0) {
+							bSql.append(", ");
+						}
+						bSql.append(SiteUser.VAR_download + "=$" + num);
+						num++;
+						bParams.add(o2.sqlDownload());
 						break;
 					}
 				}
@@ -1994,7 +2045,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			SiteRequest siteRequest = o.getSiteRequest_();
 			SqlConnection sqlConnection = siteRequest.getSqlConnection();
 			Long pk = o.getPk();
-			sqlConnection.preparedQuery("SELECT userId, created, userName, userEmail, archived, userFirstName, userLastName, userFullName, seeArchived, sessionId, awesomeEffect, userKey, displayName, siteFontSize, siteTheme, objectTitle, webComponentsTheme, displayPage, customerProfileId FROM SiteUser WHERE pk=$1")
+			sqlConnection.preparedQuery("SELECT userId, created, userName, userEmail, archived, userFirstName, userLastName, userFullName, seeArchived, sessionId, awesomeEffect, userKey, displayName, siteFontSize, siteTheme, objectTitle, webComponentsTheme, displayPage, customerProfileId, editPage, userPage, download FROM SiteUser WHERE pk=$1")
 					.collecting(Collectors.toList())
 					.execute(Tuple.of(pk)
 					).onSuccess(result -> {
@@ -2183,6 +2234,9 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 			page.persistForClass(SiteUser.VAR_webComponentsTheme, SiteUser.staticSetWebComponentsTheme(siteRequest2, (String)result.get(SiteUser.VAR_webComponentsTheme)));
 			page.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
 			page.persistForClass(SiteUser.VAR_customerProfileId, SiteUser.staticSetCustomerProfileId(siteRequest2, (String)result.get(SiteUser.VAR_customerProfileId)));
+			page.persistForClass(SiteUser.VAR_editPage, SiteUser.staticSetEditPage(siteRequest2, (String)result.get(SiteUser.VAR_editPage)));
+			page.persistForClass(SiteUser.VAR_userPage, SiteUser.staticSetUserPage(siteRequest2, (String)result.get(SiteUser.VAR_userPage)));
+			page.persistForClass(SiteUser.VAR_download, SiteUser.staticSetDownload(siteRequest2, (String)result.get(SiteUser.VAR_download)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
 				try {

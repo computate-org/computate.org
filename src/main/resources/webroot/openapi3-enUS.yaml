@@ -12925,6 +12925,34 @@ components:
                     type: string
                   productNum:
                     type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  dialogTemplate:
+                    type: string
     PATCHCompanyProductRequest:
       allOf:
         - type: object
@@ -12984,6 +13012,104 @@ components:
             removeProductNum:
               type: string
             removeAllProductNum:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
               type: string
     PATCHCompanyProductResponse:
       allOf:
@@ -13045,6 +13171,104 @@ components:
               type: string
             removeAllProductNum:
               type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
+              type: string
     POSTCompanyProductRequest:
       allOf:
         - type: object
@@ -13064,6 +13288,34 @@ components:
             downloadUrl:
               type: string
             productNum:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            dialogTemplate:
               type: string
     POSTCompanyProductResponse:
       allOf:
@@ -13085,6 +13337,34 @@ components:
               type: string
             productNum:
               type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            dialogTemplate:
+              type: string
     DELETEFilterCompanyProductResponse:
       allOf:
         - type: object
@@ -13104,6 +13384,34 @@ components:
             downloadUrl:
               type: string
             productNum:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            dialogTemplate:
               type: string
     PUTImportCompanyProductRequest:
       allOf:
@@ -13130,6 +13438,34 @@ components:
                     type: string
                   productNum:
                     type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  dialogTemplate:
+                    type: string
     PUTImportCompanyProductResponse:
       allOf:
         - type: object
@@ -13149,6 +13485,34 @@ components:
                   downloadUrl:
                     type: string
                   productNum:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  dialogTemplate:
                     type: string
     GETCompanyProductResponse:
       allOf:
@@ -13170,6 +13534,34 @@ components:
               type: string
             productNum:
               type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            dialogTemplate:
+              type: string
     DELETECompanyProductResponse:
       allOf:
         - type: object
@@ -13189,6 +13581,34 @@ components:
             downloadUrl:
               type: string
             productNum:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            dialogTemplate:
               type: string
     SearchPageCompanyProductResponse:
       allOf:

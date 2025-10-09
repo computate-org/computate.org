@@ -2465,6 +2465,9 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 			page.persistForClass(CompanyAbout.VAR_archived, CompanyAbout.staticSetArchived(siteRequest2, (String)result.get(CompanyAbout.VAR_archived)));
 			page.persistForClass(CompanyAbout.VAR_objectTitle, CompanyAbout.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyAbout.VAR_objectTitle)));
 			page.persistForClass(CompanyAbout.VAR_displayPage, CompanyAbout.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyAbout.VAR_displayPage)));
+			page.persistForClass(CompanyAbout.VAR_editPage, CompanyAbout.staticSetEditPage(siteRequest2, (String)result.get(CompanyAbout.VAR_editPage)));
+			page.persistForClass(CompanyAbout.VAR_userPage, CompanyAbout.staticSetUserPage(siteRequest2, (String)result.get(CompanyAbout.VAR_userPage)));
+			page.persistForClass(CompanyAbout.VAR_download, CompanyAbout.staticSetDownload(siteRequest2, (String)result.get(CompanyAbout.VAR_download)));
 			page.persistForClass(CompanyAbout.VAR_solrId, CompanyAbout.staticSetSolrId(siteRequest2, (String)result.get(CompanyAbout.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {

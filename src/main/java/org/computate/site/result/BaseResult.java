@@ -180,13 +180,14 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
+	 * Persist: true
 	 * Facet: true
 	 * DisplayName: manage
 	 * Description: Manage this
 	 * Link: true
 	 * Icon: <i class="fa-duotone fa-regular fa-pen-to-square"></i>
 	 * VarUrlEditPage: true
-	 */
+	 */ 
 	protected void _editPage(Wrap<String> w) {
 		String f = classStringFormatUrlEditPageForClass();
 		if(f != null)
@@ -196,6 +197,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
+	 * Persist: true
 	 * Facet: true
 	 * DisplayName: user
 	 * Description: User page
@@ -211,6 +213,7 @@ public class BaseResult extends BaseResultGen<Object> implements ComputateBaseRe
 	/**
 	 * {@inheritDoc}
 	 * DocValues: true
+	 * Persist: true
 	 * Facet: true
 	 * DisplayName: download
 	 * Description: the download URL

@@ -2638,6 +2638,9 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
 			page.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
 			page.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
 			page.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
+			page.persistForClass(CompanyCourse.VAR_editPage, CompanyCourse.staticSetEditPage(siteRequest2, (String)result.get(CompanyCourse.VAR_editPage)));
+			page.persistForClass(CompanyCourse.VAR_userPage, CompanyCourse.staticSetUserPage(siteRequest2, (String)result.get(CompanyCourse.VAR_userPage)));
+			page.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
 			page.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
 			page.persistForClass(CompanyCourse.VAR_relatedArticleIds, CompanyCourse.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyCourse.VAR_relatedArticleIds)));
 			page.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
