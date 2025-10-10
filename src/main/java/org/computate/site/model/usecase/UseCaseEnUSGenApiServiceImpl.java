@@ -2615,40 +2615,10 @@ public class UseCaseEnUSGenApiServiceImpl extends BaseApiServiceImpl implements 
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Object result, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
-			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
-			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
-			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			UseCase page = new UseCase();
-			page.setSiteRequest_((SiteRequest)siteRequest);
-
-			page.persistForClass(UseCase.VAR_name, UseCase.staticSetName(siteRequest2, (String)result.get(UseCase.VAR_name)));
-			page.persistForClass(UseCase.VAR_created, UseCase.staticSetCreated(siteRequest2, (String)result.get(UseCase.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-			page.persistForClass(UseCase.VAR_authorName, UseCase.staticSetAuthorName(siteRequest2, (String)result.get(UseCase.VAR_authorName)));
-			page.persistForClass(UseCase.VAR_description, UseCase.staticSetDescription(siteRequest2, (String)result.get(UseCase.VAR_description)));
-			page.persistForClass(UseCase.VAR_archived, UseCase.staticSetArchived(siteRequest2, (String)result.get(UseCase.VAR_archived)));
-			page.persistForClass(UseCase.VAR_pageId, UseCase.staticSetPageId(siteRequest2, (String)result.get(UseCase.VAR_pageId)));
-			page.persistForClass(UseCase.VAR_objectTitle, UseCase.staticSetObjectTitle(siteRequest2, (String)result.get(UseCase.VAR_objectTitle)));
-			page.persistForClass(UseCase.VAR_displayPage, UseCase.staticSetDisplayPage(siteRequest2, (String)result.get(UseCase.VAR_displayPage)));
-			page.persistForClass(UseCase.VAR_editPage, UseCase.staticSetEditPage(siteRequest2, (String)result.get(UseCase.VAR_editPage)));
-			page.persistForClass(UseCase.VAR_userPage, UseCase.staticSetUserPage(siteRequest2, (String)result.get(UseCase.VAR_userPage)));
-			page.persistForClass(UseCase.VAR_download, UseCase.staticSetDownload(siteRequest2, (String)result.get(UseCase.VAR_download)));
-			page.persistForClass(UseCase.VAR_solrId, UseCase.staticSetSolrId(siteRequest2, (String)result.get(UseCase.VAR_solrId)));
-
-			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
-				try {
-					JsonObject data = JsonObject.mapFrom(result);
-					promise.complete(data);
-				} catch(Exception ex) {
-					LOG.error(String.format(importModelFail, classSimpleName), ex);
-					promise.fail(ex);
-				}
-			}).onFailure(ex -> {
-				LOG.error(String.format("generatePageBody failed. "), ex);
-				promise.fail(ex);
-			});
+			promise.complete(JsonObject.mapFrom(result));
 		} catch(Exception ex) {
 			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);

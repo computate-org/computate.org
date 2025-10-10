@@ -2616,45 +2616,10 @@ public class CompanyEventEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Object result, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
-			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
-			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
-			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			CompanyEvent page = new CompanyEvent();
-			page.setSiteRequest_((SiteRequest)siteRequest);
-
-			page.persistForClass(CompanyEvent.VAR_name, CompanyEvent.staticSetName(siteRequest2, (String)result.get(CompanyEvent.VAR_name)));
-			page.persistForClass(CompanyEvent.VAR_created, CompanyEvent.staticSetCreated(siteRequest2, (String)result.get(CompanyEvent.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-			page.persistForClass(CompanyEvent.VAR_description, CompanyEvent.staticSetDescription(siteRequest2, (String)result.get(CompanyEvent.VAR_description)));
-			page.persistForClass(CompanyEvent.VAR_startDateTime, CompanyEvent.staticSetStartDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_startDateTime), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-			page.persistForClass(CompanyEvent.VAR_archived, CompanyEvent.staticSetArchived(siteRequest2, (String)result.get(CompanyEvent.VAR_archived)));
-			page.persistForClass(CompanyEvent.VAR_endDateTime, CompanyEvent.staticSetEndDateTime(siteRequest2, (String)result.get(CompanyEvent.VAR_endDateTime), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-			page.persistForClass(CompanyEvent.VAR_price, CompanyEvent.staticSetPrice(siteRequest2, (String)result.get(CompanyEvent.VAR_price)));
-			page.persistForClass(CompanyEvent.VAR_pageId, CompanyEvent.staticSetPageId(siteRequest2, (String)result.get(CompanyEvent.VAR_pageId)));
-			page.persistForClass(CompanyEvent.VAR_emailTemplate, CompanyEvent.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyEvent.VAR_emailTemplate)));
-			page.persistForClass(CompanyEvent.VAR_storeUrl, CompanyEvent.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyEvent.VAR_storeUrl)));
-			page.persistForClass(CompanyEvent.VAR_location, CompanyEvent.staticSetLocation(siteRequest2, (String)result.get(CompanyEvent.VAR_location)));
-			page.persistForClass(CompanyEvent.VAR_objectTitle, CompanyEvent.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyEvent.VAR_objectTitle)));
-			page.persistForClass(CompanyEvent.VAR_displayPage, CompanyEvent.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyEvent.VAR_displayPage)));
-			page.persistForClass(CompanyEvent.VAR_editPage, CompanyEvent.staticSetEditPage(siteRequest2, (String)result.get(CompanyEvent.VAR_editPage)));
-			page.persistForClass(CompanyEvent.VAR_userPage, CompanyEvent.staticSetUserPage(siteRequest2, (String)result.get(CompanyEvent.VAR_userPage)));
-			page.persistForClass(CompanyEvent.VAR_download, CompanyEvent.staticSetDownload(siteRequest2, (String)result.get(CompanyEvent.VAR_download)));
-			page.persistForClass(CompanyEvent.VAR_solrId, CompanyEvent.staticSetSolrId(siteRequest2, (String)result.get(CompanyEvent.VAR_solrId)));
-
-			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
-				try {
-					JsonObject data = JsonObject.mapFrom(result);
-					promise.complete(data);
-				} catch(Exception ex) {
-					LOG.error(String.format(importModelFail, classSimpleName), ex);
-					promise.fail(ex);
-				}
-			}).onFailure(ex -> {
-				LOG.error(String.format("generatePageBody failed. "), ex);
-				promise.fail(ex);
-			});
+			promise.complete(JsonObject.mapFrom(result));
 		} catch(Exception ex) {
 			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);

@@ -2764,48 +2764,10 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Object result, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
-			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
-			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
-			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-			SmartAquacultureDeveloper page = new SmartAquacultureDeveloper();
-			page.setSiteRequest_((SiteRequest)siteRequest);
-
-			page.persistForClass(SmartAquacultureDeveloper.VAR_created, SmartAquacultureDeveloper.staticSetCreated(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_name, SmartAquacultureDeveloper.staticSetName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_name)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_description, SmartAquacultureDeveloper.staticSetDescription(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_description)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_archived, SmartAquacultureDeveloper.staticSetArchived(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_archived)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_pageId, SmartAquacultureDeveloper.staticSetPageId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageId)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_courseNum, SmartAquacultureDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_courseNum)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_lessonNum, SmartAquacultureDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_lessonNum)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_authorName, SmartAquacultureDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorName)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_authorUrl, SmartAquacultureDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorUrl)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageUri, SmartAquacultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageUri)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_objectTitle, SmartAquacultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_objectTitle)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_displayPage, SmartAquacultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_displayPage)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_editPage, SmartAquacultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_editPage)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_userPage, SmartAquacultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_userPage)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageAlt, SmartAquacultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageAlt)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_download, SmartAquacultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_download)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_labelsString, SmartAquacultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labelsString)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_labels, SmartAquacultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labels)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_relatedArticleIds, SmartAquacultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_relatedArticleIds)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_solrId, SmartAquacultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_solrId)));
-
-			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(a -> {
-				try {
-					JsonObject data = JsonObject.mapFrom(result);
-					promise.complete(data);
-				} catch(Exception ex) {
-					LOG.error(String.format(importModelFail, classSimpleName), ex);
-					promise.fail(ex);
-				}
-			}).onFailure(ex -> {
-				LOG.error(String.format("generatePageBody failed. "), ex);
-				promise.fail(ex);
-			});
+			promise.complete(JsonObject.mapFrom(result));
 		} catch(Exception ex) {
 			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
