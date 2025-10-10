@@ -502,11 +502,11 @@ public class SmartAquacultureDeveloperGenPage extends SmartAquacultureDeveloperG
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("Smart Aquaculture Developer courses");
+      c.o("Smart Aquaculture Developers");
     else if(searchListSmartAquacultureDeveloper_ == null || resultCount == 0)
-      c.o("no Smart Aquaculture Developer course found");
+      c.o("no Smart Aquaculture Developer found");
     else
-      c.o("Smart Aquaculture Developer courses");
+      c.o("Smart Aquaculture Developers");
   }
 
   @Override

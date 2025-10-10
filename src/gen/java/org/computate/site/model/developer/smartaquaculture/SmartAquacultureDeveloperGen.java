@@ -110,7 +110,7 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Smart Aquaculture Developer courses"</b>, which groups all of the OpenAPIs for SmartAquacultureDeveloper objects under the tag "Smart Aquaculture Developer courses". 
+ * <p>This class contains a comment <b>"ApiTag: Smart Aquaculture Developers"</b>, which groups all of the OpenAPIs for SmartAquacultureDeveloper objects under the tag "Smart Aquaculture Developers". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/smart-aquaculture-developer</h2>
  * <p>This class contains a comment <b>"ApiUri: /en-us/api/smart-aquaculture-developer"</b>, which defines the base API URI for SmartAquacultureDeveloper objects as "/en-us/api/smart-aquaculture-developer" in the OpenAPI spec. 
@@ -163,8 +163,8 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: a Smart Aquaculture Developer course</h2>
- * <p>This class contains a comment <b>"AName.enUS: a Smart Aquaculture Developer course"</b>, which identifies the language context to describe a SmartAquacultureDeveloper as "a Smart Aquaculture Developer course". 
+ * <h2>AName.enUS: a Smart Aquaculture Developer</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a Smart Aquaculture Developer"</b>, which identifies the language context to describe a SmartAquacultureDeveloper as "a Smart Aquaculture Developer". 
  * </p>
  * <p>
  * Delete the class SmartAquacultureDeveloper in Solr: 
@@ -184,27 +184,27 @@ public abstract class SmartAquacultureDeveloperGen<DEV> extends BaseResult {
 	protected static final Logger LOG = LoggerFactory.getLogger(SmartAquacultureDeveloper.class);
 
 	public static final String Description_enUS = "Learn how to become a Smart Aquaculture platform developer — Understanding fish population and ocean health, tracking fishing boat movements, monitoring fish species landed and their weight, tracking processing and delivery times, providing net-zero waste solutions for seafood, promoting SA/IF innovation through community outreach, startup support, and IoT applications. ";
-	public static final String AName_enUS = "a Smart Aquaculture Developer course";
+	public static final String AName_enUS = "a Smart Aquaculture Developer";
 	public static final String This_enUS = "this ";
-	public static final String ThisName_enUS = "this Smart Aquaculture Developer course";
+	public static final String ThisName_enUS = "this Smart Aquaculture Developer";
 	public static final String A_enUS = "a ";
-	public static final String TheName_enUS = "the Smart Aquaculture Developer course";
-	public static final String SingularName_enUS = "Smart Aquaculture Developer course";
-	public static final String PluralName_enUS = "Smart Aquaculture Developer courses";
-	public static final String NameActual_enUS = "current Smart Aquaculture Developer course";
-	public static final String AllName_enUS = "all Smart Aquaculture Developer courses";
-	public static final String SearchAllNameBy_enUS = "search Smart Aquaculture Developer courses by ";
-	public static final String SearchAllName_enUS = "search Smart Aquaculture Developer courses";
-	public static final String Title_enUS = "Smart Aquaculture Developer courses";
-	public static final String ThePluralName_enUS = "the Smart Aquaculture Developer courses";
-	public static final String NoNameFound_enUS = "no Smart Aquaculture Developer course found";
+	public static final String TheName_enUS = "the Smart Aquaculture Developer";
+	public static final String SingularName_enUS = "Smart Aquaculture Developer";
+	public static final String PluralName_enUS = "Smart Aquaculture Developers";
+	public static final String NameActual_enUS = "current Smart Aquaculture Developer";
+	public static final String AllName_enUS = "all Smart Aquaculture Developers";
+	public static final String SearchAllNameBy_enUS = "search Smart Aquaculture Developers by ";
+	public static final String SearchAllName_enUS = "search Smart Aquaculture Developers";
+	public static final String Title_enUS = "Smart Aquaculture Developers";
+	public static final String ThePluralName_enUS = "the Smart Aquaculture Developers";
+	public static final String NoNameFound_enUS = "no Smart Aquaculture Developer found";
 	public static final String ApiUri_enUS = "/en-us/api/smart-aquaculture-developer";
 	public static final String ApiUriSearchPage_enUS = "/en-us/search/smart-aquaculture-developer";
 	public static final String ApiUriEditPage_enUS = "/en-us/edit/smart-aquaculture-developer/{pageId}";
-	public static final String OfName_enUS = "of Smart Aquaculture Developer course";
-	public static final String ANameAdjective_enUS = "a Smart Aquaculture Developer course";
-	public static final String NameAdjectiveSingular_enUS = "Smart Aquaculture Developer course";
-	public static final String NameAdjectivePlural_enUS = "Smart Aquaculture Developer courses";
+	public static final String OfName_enUS = "of Smart Aquaculture Developer";
+	public static final String ANameAdjective_enUS = "a Smart Aquaculture Developer";
+	public static final String NameAdjectiveSingular_enUS = "Smart Aquaculture Developer";
+	public static final String NameAdjectivePlural_enUS = "Smart Aquaculture Developers";
 	public static final String Search_enUS_OpenApiUri = "/en-us/api/smart-aquaculture-developer";
 	public static final String Search_enUS_StringFormatUri = "/en-us/api/smart-aquaculture-developer";
 	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/smart-aquaculture-developer";

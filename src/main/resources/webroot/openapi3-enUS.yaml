@@ -1876,7 +1876,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2068,7 +2068,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2138,7 +2138,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2185,7 +2185,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2269,7 +2269,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2340,7 +2340,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2386,7 +2386,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2476,7 +2476,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2558,7 +2558,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2604,7 +2604,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -2651,7 +2651,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Smart Aquaculture Developer courses
+        - Smart Aquaculture Developers
       parameters:
         - name: vertx-web.session
           in: cookie

@@ -312,7 +312,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * Description: The dialog template for this product. 
    */
   protected void _dialogTemplate(Wrap<String> w) {
-    w.o(String.format("en-us/dialog/product/%s.htm", pageId));
+    w.o(String.format("en-us/dialog/product/dialog-%s.htm", pageId));
   }
 
   @Override

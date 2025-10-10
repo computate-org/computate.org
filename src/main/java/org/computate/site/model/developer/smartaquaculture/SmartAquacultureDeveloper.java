@@ -37,7 +37,7 @@ import io.vertx.core.json.JsonObject;
  * Order: 11
  * Description: Learn how to become a Smart Aquaculture platform developer — Understanding fish population and ocean health, tracking fishing boat movements, monitoring fish species landed and their weight, tracking processing and delivery times, providing net-zero waste solutions for seafood, promoting SA/IF innovation through community outreach, startup support, and IoT applications. 
 
- * AName: a Smart Aquaculture Developer course
+ * AName: a Smart Aquaculture Developer
  * Icon: <i class="fa-duotone fa-regular fa-fish"></i>
  * Sort.asc: courseNum
  * 

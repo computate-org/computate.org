@@ -230,7 +230,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			response200Search(listSmartAquacultureDeveloper.getRequest(), listSmartAquacultureDeveloper.getResponse(), json);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -366,7 +366,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = JsonObject.mapFrom(listSmartAquacultureDeveloper.getList().stream().findFirst().orElse(null));
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -632,7 +632,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -847,7 +847,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = JsonObject.mapFrom(o);
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -1097,7 +1097,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -1403,7 +1403,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
@@ -2317,7 +2317,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			JsonObject json = new JsonObject();
 			if(json == null) {
 				String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-				String m = String.format("%s %s not found", "Smart Aquaculture Developer course", pageId);
+				String m = String.format("%s %s not found", "Smart Aquaculture Developer", pageId);
 				promise.complete(new ServiceResponse(404
 						, m
 						, Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
