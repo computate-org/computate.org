@@ -4376,6 +4376,93 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETECompanyProductResponse'
+  /en-us/edit/product/{pageId}:
+    get:
+      operationId: editpageCompanyProduct
+      x-vertx-event-bus: computate.org-enUS-CompanyProduct
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - products
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EditPageCompanyProductResponse'
   /en-us/search/product:
     get:
       operationId: searchpageCompanyProduct
@@ -10447,6 +10534,11 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/DELETECompanyProductResponse'
+    EditPageCompanyProductResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/EditPageCompanyProductResponse'
     SearchPageCompanyProductResponse:
       content:
         text/html; charset=utf-8:
@@ -13610,6 +13702,9 @@ components:
                   - type: boolean
             dialogTemplate:
               type: string
+    EditPageCompanyProductResponse:
+      allOf:
+        - type: string
     SearchPageCompanyProductResponse:
       allOf:
         - type: string

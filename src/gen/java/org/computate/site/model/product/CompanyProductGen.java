@@ -97,6 +97,9 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: SearchPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
  * </p>
+ * <h2>ApiMethode: EditPage</h2>
+ * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
+ * </p>
  * <h2>ApiMethode: DisplayPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
  * </p>
@@ -197,6 +200,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String NoNameFound_enUS = "no product found";
 	public static final String ApiUri_enUS = "/en-us/api/product";
 	public static final String ApiUriSearchPage_enUS = "/en-us/search/product";
+	public static final String ApiUriEditPage_enUS = "/en-us/edit/product/{pageId}";
 	public static final String OfName_enUS = "of product";
 	public static final String ANameAdjective_enUS = "a product";
 	public static final String NameAdjectiveSingular_enUS = "product";
@@ -222,6 +226,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/product";
 	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/product";
 	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/product";
+	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/product/{pageId}";
+	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/product/%s";
+	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/product/%s";
 	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
 	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/product/%s";
 	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
@@ -2400,7 +2407,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 	@Override
 	public String classStringFormatUrlEditPageForClass() {
-		return null;
+		return "%s/en-us/edit/product/%s";
 	}
 
 	@Override

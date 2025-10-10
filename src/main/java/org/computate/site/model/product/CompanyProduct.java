@@ -39,6 +39,7 @@ import io.vertx.pgclient.data.Point;
  * PublicRead: true
  * SearchPageUri: /en-us/search/product
  * UserPageUri: /en-us/shop/product/{pageId}
+ * EditPageUri: /en-us/edit/product/{pageId}
  * ApiUri: /en-us/api/product
  * ApiMethod:
  *   Search:
