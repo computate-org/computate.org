@@ -345,6 +345,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
         promise.complete();
       }
     } catch(Throwable ex) {
+      promise.fail(new RuntimeException("Failed to set up authorize.net payment"));
     }
   }
 }
