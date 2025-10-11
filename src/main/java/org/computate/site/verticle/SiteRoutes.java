@@ -238,12 +238,12 @@ public class SiteRoutes {
                     JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
                     if(group != null) {
                       String groupId = group.getString("id");
-                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=%s", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
                       .send()
                       .expecting(HttpResponseExpectation.SC_OK)
                       .onSuccess(userResponse -> {
                         JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
-                        JsonObject user = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+                        JsonObject user = users.stream().map(o -> (JsonObject)o).filter(o -> userName.equals(o.getString("username"))).findFirst().orElse(null);
                         if(user != null) {
                           String userId = user.getString("id");
                           String userEmail = user.getString("email");
