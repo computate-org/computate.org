@@ -238,7 +238,7 @@ public class SiteRoutes {
                     JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
                     if(group != null) {
                       String groupId = group.getString("id");
-                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
                       .send()
                       .expecting(HttpResponseExpectation.SC_OK)
                       .onSuccess(userResponse -> {
