@@ -1357,6 +1357,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 		return CompanyProduct.staticSearchDialogTemplate(siteRequest_, CompanyProduct.staticSetDialogTemplate(siteRequest_, o)).toString();
 	}
 
+	public String sqlDialogTemplate() {
+		return dialogTemplate;
+	}
+
 	//////////////
 	// initDeep //
 	//////////////
@@ -1851,6 +1855,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 					setRelatedArticleIds((String)val);
 				}
 				saves.add("relatedArticleIds");
+				return val;
+			} else if("dialogtemplate".equals(varLower)) {
+				if(val instanceof String) {
+					setDialogTemplate((String)val);
+				}
+				saves.add("dialogTemplate");
 				return val;
 		} else {
 			return super.persistBaseResult(var, val);

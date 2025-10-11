@@ -1951,10 +1951,51 @@ public class SitePageEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Object result, String templatePath, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
-			promise.complete(JsonObject.mapFrom(result));
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			SitePage page = new SitePage();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(SitePage.VAR_created, SitePage.staticSetCreated(siteRequest2, (String)result.get(SitePage.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+			page.persistForClass(SitePage.VAR_archived, SitePage.staticSetArchived(siteRequest2, (String)result.get(SitePage.VAR_archived)));
+			page.persistForClass(SitePage.VAR_objectTitle, SitePage.staticSetObjectTitle(siteRequest2, (String)result.get(SitePage.VAR_objectTitle)));
+			page.persistForClass(SitePage.VAR_displayPage, SitePage.staticSetDisplayPage(siteRequest2, (String)result.get(SitePage.VAR_displayPage)));
+			page.persistForClass(SitePage.VAR_editPage, SitePage.staticSetEditPage(siteRequest2, (String)result.get(SitePage.VAR_editPage)));
+			page.persistForClass(SitePage.VAR_courseNum, SitePage.staticSetCourseNum(siteRequest2, (String)result.get(SitePage.VAR_courseNum)));
+			page.persistForClass(SitePage.VAR_userPage, SitePage.staticSetUserPage(siteRequest2, (String)result.get(SitePage.VAR_userPage)));
+			page.persistForClass(SitePage.VAR_lessonNum, SitePage.staticSetLessonNum(siteRequest2, (String)result.get(SitePage.VAR_lessonNum)));
+			page.persistForClass(SitePage.VAR_download, SitePage.staticSetDownload(siteRequest2, (String)result.get(SitePage.VAR_download)));
+			page.persistForClass(SitePage.VAR_name, SitePage.staticSetName(siteRequest2, (String)result.get(SitePage.VAR_name)));
+			page.persistForClass(SitePage.VAR_description, SitePage.staticSetDescription(siteRequest2, (String)result.get(SitePage.VAR_description)));
+			page.persistForClass(SitePage.VAR_authorName, SitePage.staticSetAuthorName(siteRequest2, (String)result.get(SitePage.VAR_authorName)));
+			page.persistForClass(SitePage.VAR_solrId, SitePage.staticSetSolrId(siteRequest2, (String)result.get(SitePage.VAR_solrId)));
+			page.persistForClass(SitePage.VAR_authorUrl, SitePage.staticSetAuthorUrl(siteRequest2, (String)result.get(SitePage.VAR_authorUrl)));
+			page.persistForClass(SitePage.VAR_pageId, SitePage.staticSetPageId(siteRequest2, (String)result.get(SitePage.VAR_pageId)));
+			page.persistForClass(SitePage.VAR_h1, SitePage.staticSetH1(siteRequest2, (String)result.get(SitePage.VAR_h1)));
+			page.persistForClass(SitePage.VAR_h2, SitePage.staticSetH2(siteRequest2, (String)result.get(SitePage.VAR_h2)));
+			page.persistForClass(SitePage.VAR_pageImageUri, SitePage.staticSetPageImageUri(siteRequest2, (String)result.get(SitePage.VAR_pageImageUri)));
+			page.persistForClass(SitePage.VAR_pageImageAlt, SitePage.staticSetPageImageAlt(siteRequest2, (String)result.get(SitePage.VAR_pageImageAlt)));
+			page.persistForClass(SitePage.VAR_labelsString, SitePage.staticSetLabelsString(siteRequest2, (String)result.get(SitePage.VAR_labelsString)));
+			page.persistForClass(SitePage.VAR_labels, SitePage.staticSetLabels(siteRequest2, (String)result.get(SitePage.VAR_labels)));
+			page.persistForClass(SitePage.VAR_relatedArticleIds, SitePage.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SitePage.VAR_relatedArticleIds)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(o);
+					ctx.put("result", data.getMap());
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
 		} catch(Exception ex) {
 			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);

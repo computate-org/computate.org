@@ -308,6 +308,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
   /**
    * {@inheritDoc}
    * DocValues: true
+   * Persist: true
    * DisplayName: dialog template
    * Description: The dialog template for this product. 
    */

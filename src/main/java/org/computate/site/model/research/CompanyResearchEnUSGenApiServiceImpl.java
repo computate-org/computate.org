@@ -1949,10 +1949,40 @@ public class CompanyResearchEnUSGenApiServiceImpl extends BaseApiServiceImpl imp
 	}
 
 	@Override
-	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Object result, String templatePath, String classSimpleName) {
+	public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
 		Promise<JsonObject> promise = Promise.promise();
 		try {
-			promise.complete(JsonObject.mapFrom(result));
+			Map<String, Object> result = (Map<String, Object>)ctx.get("result");
+			SiteRequest siteRequest2 = (SiteRequest)siteRequest;
+			String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
+			CompanyResearch page = new CompanyResearch();
+			page.setSiteRequest_((SiteRequest)siteRequest);
+
+			page.persistForClass(CompanyResearch.VAR_name, CompanyResearch.staticSetName(siteRequest2, (String)result.get(CompanyResearch.VAR_name)));
+			page.persistForClass(CompanyResearch.VAR_created, CompanyResearch.staticSetCreated(siteRequest2, (String)result.get(CompanyResearch.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+			page.persistForClass(CompanyResearch.VAR_description, CompanyResearch.staticSetDescription(siteRequest2, (String)result.get(CompanyResearch.VAR_description)));
+			page.persistForClass(CompanyResearch.VAR_pageId, CompanyResearch.staticSetPageId(siteRequest2, (String)result.get(CompanyResearch.VAR_pageId)));
+			page.persistForClass(CompanyResearch.VAR_archived, CompanyResearch.staticSetArchived(siteRequest2, (String)result.get(CompanyResearch.VAR_archived)));
+			page.persistForClass(CompanyResearch.VAR_objectTitle, CompanyResearch.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyResearch.VAR_objectTitle)));
+			page.persistForClass(CompanyResearch.VAR_displayPage, CompanyResearch.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyResearch.VAR_displayPage)));
+			page.persistForClass(CompanyResearch.VAR_editPage, CompanyResearch.staticSetEditPage(siteRequest2, (String)result.get(CompanyResearch.VAR_editPage)));
+			page.persistForClass(CompanyResearch.VAR_userPage, CompanyResearch.staticSetUserPage(siteRequest2, (String)result.get(CompanyResearch.VAR_userPage)));
+			page.persistForClass(CompanyResearch.VAR_download, CompanyResearch.staticSetDownload(siteRequest2, (String)result.get(CompanyResearch.VAR_download)));
+			page.persistForClass(CompanyResearch.VAR_solrId, CompanyResearch.staticSetSolrId(siteRequest2, (String)result.get(CompanyResearch.VAR_solrId)));
+
+			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+				try {
+					JsonObject data = JsonObject.mapFrom(o);
+					ctx.put("result", data.getMap());
+					promise.complete(data);
+				} catch(Exception ex) {
+					LOG.error(String.format(importModelFail, classSimpleName), ex);
+					promise.fail(ex);
+				}
+			}).onFailure(ex -> {
+				LOG.error(String.format("generatePageBody failed. "), ex);
+				promise.fail(ex);
+			});
 		} catch(Exception ex) {
 			LOG.error(String.format("generatePageBody failed. "), ex);
 			promise.fail(ex);
