@@ -276,8 +276,8 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             SettingType settingType = new SettingType();
             JsonObject hostedPaymentReturnOptions = new JsonObject().put("showReceipt", true);
             if(!siteBaseUrl.startsWith("http://localhost")) {
-              hostedPaymentReturnOptions.put("url", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
-              hostedPaymentReturnOptions.put("cancelUrl", String.format("%s%s", siteBaseUrl, page.getSiteRequest_().getRequestUri()));
+              hostedPaymentReturnOptions.put("url", companyProduct.getUserPage());
+              hostedPaymentReturnOptions.put("cancelUrl", companyProduct.getDisplayPage());
             }
             settingType.setSettingName("hostedPaymentReturnOptions");
             settingType.setSettingValue(hostedPaymentReturnOptions.encode());

@@ -165,6 +165,7 @@ public class SiteRoutes {
           .sendJsonObject(new JsonObject().put("role", "member"))
           .expecting(HttpResponseExpectation.SC_OK)
           .onSuccess(memberResponse -> {
+        LOG.info(String.format("Successfully granted user %s access to team %s in org %s in GitHub", githubUsername, githubTeam, githubOrg));
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("Failed to add user %s to team %s in org %s. ", githubUsername, githubTeam, githubOrg), ex);
@@ -257,6 +258,7 @@ public class SiteRoutes {
                                 .expecting(HttpResponseExpectation.SC_NO_CONTENT)
                                 .onSuccess(groupUserResponse -> {
                               try {
+                                LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
                                 grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
                                   promise.complete();
                                 }).onFailure(ex -> {
