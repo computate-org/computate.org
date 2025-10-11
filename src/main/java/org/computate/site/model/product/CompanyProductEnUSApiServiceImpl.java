@@ -316,7 +316,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             transactionRequest.setProfile(profile);
             transactionRequest.setLineItems(lineItems);
             OrderType order = new OrderType();
-            order.setDescription(StringUtils.truncate(String.format("%s $%s payment from %s %s on %s", companyProduct.getName(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
+            order.setDescription(StringUtils.truncate(String.format("%s bought %s $%s payment from %s %s on %s", siteUser.getUserName(), companyProduct.getPageId(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
             transactionRequest.setOrder(order);
             hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
   

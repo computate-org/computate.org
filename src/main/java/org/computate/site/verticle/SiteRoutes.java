@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.digest.HmacAlgorithms;
@@ -69,6 +71,7 @@ import net.authorize.api.contract.v1.GetTransactionDetailsResponse;
 import net.authorize.api.contract.v1.LineItemType;
 import net.authorize.api.contract.v1.MerchantAuthenticationType;
 import net.authorize.api.contract.v1.MessageTypeEnum;
+import net.authorize.api.contract.v1.OrderExType;
 import net.authorize.api.contract.v1.TransactionDetailsType;
 import net.authorize.api.controller.GetTransactionDetailsController;
 import net.authorize.api.controller.base.ApiOperationBase;
@@ -178,12 +181,12 @@ public class SiteRoutes {
     return promise.future();
   }
 
-  public static Future<Void> processAuthorizeItem(Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
+  public static Future<Void> processAuthorizeItem(String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
     Promise<Void> promise = Promise.promise();
     try {
-      String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
-      if(customerProfileId != null) {
-        LOG.info(String.format("Processing %s order for customerProfileId %s", item.getItemId(), customerProfileId));
+      // String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
+      if(userName != null) {
+        LOG.info(String.format("Processing %s order for userName %s", item.getItemId(), userName));
         String itemId = item.getItemId();
         String itemName = item.getName();
 
@@ -207,7 +210,6 @@ public class SiteRoutes {
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           if(searchList.size() > 0) {
             ComputateBaseResult result = searchList.first();
-            String pageId = (String)result.obtainForClass("pageId");
             String classSimpleName = (String)result.obtainForClass("classSimpleName");
             String groupName = String.format("%s-%s-GET", classSimpleName, pageId);
             String authAdminUsername = config.getString(ConfigKeys.AUTH_ADMIN_USERNAME);
@@ -236,7 +238,7 @@ public class SiteRoutes {
                     JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
                     if(group != null) {
                       String groupId = group.getString("id");
-                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?q=", authRealm, URLEncoder.encode(String.format("customerProfileId:%s", customerProfileId), "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?username=", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
                       .send()
                       .expecting(HttpResponseExpectation.SC_OK)
                       .onSuccess(userResponse -> {
@@ -246,7 +248,6 @@ public class SiteRoutes {
                           String userId = user.getString("id");
                           String userEmail = user.getString("email");
                           String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
-                          String userName = user.getString("username");
                           JsonArray userGroups = user.getJsonArray("groups");
                           // LOG.info(String.format("user %s group %s in groups: %s", customerProfileId, groupName, userGroups));
                           // if(!userGroups.contains(groupName)) {
@@ -338,7 +339,7 @@ public class SiteRoutes {
                           //   LOG.info(String.format("User %s already in group %s", customerProfileId, groupName));
                           // }
                         } else {
-                          Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", customerProfileId));
+                          Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", userName));
                           LOG.error(ex.getMessage(), ex);
                           promise.fail(ex);
                         }
@@ -376,7 +377,7 @@ public class SiteRoutes {
           promise.fail(ex);
         });
       } else {
-        LOG.warn(String.format("Order %s missing customerProfileId", transactionId));
+        LOG.warn(String.format("Order %s missing userName", transactionId));
         promise.complete();
       }
     } catch(Exception ex) {
@@ -418,14 +419,21 @@ public class SiteRoutes {
                 GetTransactionDetailsResponse response = controller.getApiResponse();
                 TransactionDetailsType transactionDetails = Optional.ofNullable(response).map(r -> r.getTransaction()).orElse(null);
                 if (transactionDetails != null) {
-                  String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
-                  LOG.info(String.format("An authorize.net payment received for customerProfileId %s: %s", customerProfileId, paymentBody.encode()));
+                  OrderExType order = transactionDetails.getOrder();
+                  String orderDescription = order.getDescription();
+                  Matcher orderMatcher = Pattern.compile("^(.*) bought ([^ ]+) ").matcher(order.getDescription());
+                  orderMatcher.find();
+                  String userName = orderMatcher.group(1);
+                  String pageId = orderMatcher.group(2);
+                  // String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
+                  // LOG.info(String.format("An authorize.net payment received for customerProfileId %s: %s", customerProfileId, paymentBody.encode()));
+                  LOG.info(String.format("An authorize.net payment received for user %s: %s", userName, paymentBody.encode()));
                   transactionDetails.getOrder().getPurchaserCode();
 
                   List<Future<String>> futures = new ArrayList<>();
                   for(LineItemType item : transactionDetails.getLineItems().getLineItem()) {
                     futures.add(Future.future(promise1 -> {
-                      processAuthorizeItem(vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item).onSuccess(a -> {
+                      processAuthorizeItem(userName, pageId, vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item).onSuccess(a -> {
                         promise1.complete();
                       }).onFailure(ex -> {
                         promise1.fail(ex);
