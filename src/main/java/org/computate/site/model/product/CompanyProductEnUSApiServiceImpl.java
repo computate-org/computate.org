@@ -263,8 +263,10 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
               Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
               if(message != null && message.getCode().equals("E00124"))
                 profilePageResponse = null;
-              else 
-                throw new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getCode(), m.getText(), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
+              else {
+                Exception ex = new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getCode(), m.getText(), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
+                LOG.error("Error setting up authorize.net payment", ex);
+              }
             }
           }
 
