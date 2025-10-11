@@ -277,10 +277,10 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
             SettingType settingType = new SettingType();
             JsonObject hostedPaymentReturnOptions = new JsonObject().put("showReceipt", true);
-            if(!siteBaseUrl.startsWith("http://localhost")) {
-              hostedPaymentReturnOptions.put("url", companyProduct.getUserPage());
-              hostedPaymentReturnOptions.put("cancelUrl", companyProduct.getDisplayPage());
-            }
+            // if(!siteBaseUrl.startsWith("http://localhost")) {
+              // hostedPaymentReturnOptions.put("url", companyProduct.getUserPage());
+              // hostedPaymentReturnOptions.put("cancelUrl", companyProduct.getDisplayPage());
+            // }
             settingType.setSettingName("hostedPaymentReturnOptions");
             settingType.setSettingValue(hostedPaymentReturnOptions.encode());
             hostedPaymentSettings.getSetting().add(settingType);
@@ -326,19 +326,25 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             GetHostedPaymentPageController.setEnvironment(Environment.valueOf(authorizeEnvironment));
             GetHostedPaymentPageResponse hostedPaymentResponse = null;
             hostedPaymentController.execute();
-            if(hostedPaymentController.getErrorResponse() != null)
-              promise.fail(new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentController.getResults().toString())));
-            else {
+            if(hostedPaymentController.getErrorResponse() != null) {
+              Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentController.getResults().toString()));
+              LOG.error("Failed to execute hosted payment controller", ex);
+              promise.fail(ex);
+            } else {
               hostedPaymentResponse = hostedPaymentController.getApiResponse();
               if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
-                promise.fail(new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. "))));
+                Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. ")));
+                LOG.error("Error response from hosted payment controller", ex);
+                promise.fail(ex);
               } else {
                 ctx.put("hostedPaymentResponseToken", hostedPaymentResponse.getToken());
                 promise.complete();
               }
             }
           } else {
-            promise.fail(new RuntimeException(String.format("Failed to set up profilePageResponse: %s", profilePageResponse)));
+            Exception ex = new RuntimeException(String.format("Failed to set up profilePageResponse: %s", profilePageResponse));
+            LOG.error("Failed profile page response", ex);
+            promise.fail(ex);
           }
         } else {
           promise.complete();
