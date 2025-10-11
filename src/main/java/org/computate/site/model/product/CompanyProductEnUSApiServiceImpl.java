@@ -337,6 +337,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
                 LOG.error("Error response from hosted payment controller", ex);
                 promise.fail(ex);
               } else {
+                LOG.info(String.format("hostedPaymentResponseToken found for user %s", siteUser.getUserName()));
                 ctx.put("hostedPaymentResponseToken", hostedPaymentResponse.getToken());
                 promise.complete();
               }
@@ -347,9 +348,11 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             promise.fail(ex);
           }
         } else {
+          LOG.warn(String.format("The customerProfileId for user %s was null", siteUser.getUserName()));
           promise.complete();
         }
       } else {
+        LOG.warn(String.format("No price %s for user %s", productPrice, siteUser.getUserName()));
         promise.complete();
       }
     } catch(Throwable ex) {
