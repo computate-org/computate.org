@@ -2641,8 +2641,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
 			page.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
 			page.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
-			page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
 			page.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
+			page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
 			page.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
 			page.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
 			page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));

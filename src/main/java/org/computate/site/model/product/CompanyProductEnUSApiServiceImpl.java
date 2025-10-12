@@ -61,6 +61,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
   @Override
   public void userDefine(Promise<Boolean> promise, ComputateSiteRequest siteRequest, JsonObject jsonObject, Boolean patch) {
     try {
+      SiteUser siteUser = siteRequest.getSiteUser_(null);
       JsonObject attributes = siteRequest.getUser().attributes();
       JsonObject accessToken = attributes.getJsonObject("accessToken");
       String authorizeApiLoginId = config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
@@ -81,16 +82,9 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
           CreateCustomerProfileRequest createCustomerProfileRequest = new CreateCustomerProfileRequest();
           createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
           CustomerProfileType profile = new CustomerProfileType();
-          if(patch) {
-            profile.setEmail(jsonObject.getString("setUserEmail"));
-            profile.setDescription(jsonObject.getString("setUserId"));
-            profile.setMerchantCustomerId(StringUtils.substring(jsonObject.getString("setUserCompleteName"), 0, 20));
-          }
-          else {
-            profile.setEmail(jsonObject.getString("userEmail"));
-            profile.setDescription(jsonObject.getString("userId"));
-            profile.setMerchantCustomerId(StringUtils.substring(jsonObject.getString("userCompleteName"), 0, 20));
-          }
+          profile.setEmail(siteUser.getUserEmail());
+          profile.setDescription(siteUser.getUserId());
+          profile.setMerchantCustomerId(StringUtils.substring(siteUser.getUserFullName(), 0, 20));
           createCustomerProfileRequest.setProfile(profile);
     
           CreateCustomerProfileController controller = new CreateCustomerProfileController(createCustomerProfileRequest);
@@ -112,10 +106,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
           else {
             customerProfileId2 = response.getCustomerProfileId();
           }
-          if(patch)
-            jsonObject.put("setCustomerProfileId", customerProfileId2);
-          else
-            jsonObject.put("customerProfileId", customerProfileId2);
+          siteUser.setCustomerProfileId(customerProfileId2);
 
           String customerProfileId = customerProfileId2;
           String authAdminUsername = config.getString(ComputateConfigKeys.AUTH_ADMIN_USERNAME);

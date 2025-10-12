@@ -1,5 +1,6 @@
 package org.computate.site.user;
 
+import io.vertx.core.Future;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Promise;
 import io.vertx.core.http.HttpResponseExpectation;
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
+import org.computate.site.request.SiteRequest;
+import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.request.ComputateSiteRequest;
 
@@ -199,4 +202,150 @@ public class SiteUserEnUSApiServiceImpl extends SiteUserEnUSGenApiServiceImpl {
     } catch(Throwable ex) {
     }
   }
+
+  @Override
+  public Future<SiteUser> patchSiteUserFuture(SiteUser o, Boolean inheritPrimaryKey) {
+		SiteRequest siteRequest = o.getSiteRequest_();
+		Promise<SiteUser> promise = Promise.promise();
+
+		try {
+			ApiRequest apiRequest = siteRequest.getApiRequest_();
+			Promise<SiteUser> promise1 = Promise.promise();
+			pgPool.withTransaction(sqlConnection -> {
+				siteRequest.setSqlConnection(sqlConnection);
+				varsSiteUser(siteRequest).onSuccess(a -> {
+					sqlPATCHSiteUser(o, inheritPrimaryKey).onSuccess(siteUser -> {
+						persistSiteUser(siteUser, true).onSuccess(c -> {
+							relateSiteUser(siteUser).onSuccess(d -> {
+								indexSiteUser(siteUser).onSuccess(o2 -> {
+									if(apiRequest != null) {
+										apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+										if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+											o2.apiRequestSiteUser();
+											if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(false))
+												eventBus.publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
+										}
+									}
+									promise1.complete(siteUser);
+								}).onFailure(ex -> {
+									promise1.fail(ex);
+								});
+							}).onFailure(ex -> {
+								promise1.fail(ex);
+							});
+						}).onFailure(ex -> {
+							promise1.fail(ex);
+						});
+					}).onFailure(ex -> {
+						promise1.fail(ex);
+					});
+				}).onFailure(ex -> {
+					promise1.fail(ex);
+				});
+				return promise1.future();
+			}).onSuccess(a -> {
+				siteRequest.setSqlConnection(null);
+			}).onFailure(ex -> {
+				siteRequest.setSqlConnection(null);
+				promise.fail(ex);
+			}).compose(siteUser -> {
+				Promise<SiteUser> promise2 = Promise.promise();
+				refreshSiteUser(siteUser).onSuccess(a -> {
+					promise2.complete(siteUser);
+				}).onFailure(ex -> {
+					promise2.fail(ex);
+				});
+				return promise2.future();
+			}).onSuccess(siteUser -> {
+				promise.complete(siteUser);
+			}).onFailure(ex -> {
+				promise.fail(ex);
+			});
+		} catch(Exception ex) {
+			LOG.error(String.format("patchSiteUserFuture failed. "), ex);
+			promise.fail(ex);
+		}
+		return promise.future();
+  }
+
+	// public Future<SiteUser> keycloakPATCHSiteUser(SiteUser o, Boolean inheritPrimaryKey) {
+	// 	Promise<SiteUser> promise = Promise.promise();
+	// 	try {
+  //     SiteRequest siteRequest = o.getSiteRequest_();
+  //     String customerProfileId1 = siteRequest.getSiteUser_(SiteUser.class).getCustomerProfileId();
+  //     String authAdminUsername = config.getString(ComputateConfigKeys.AUTH_ADMIN_USERNAME);
+  //     String authAdminPassword = config.getString(ComputateConfigKeys.AUTH_ADMIN_PASSWORD);
+  //     Integer authPort = Integer.parseInt(config.getString(ComputateConfigKeys.AUTH_PORT));
+  //     String authHostName = config.getString(ComputateConfigKeys.AUTH_HOST_NAME);
+  //     Boolean authSsl = Boolean.parseBoolean(config.getString(ComputateConfigKeys.AUTH_SSL));
+  //     String authRealm = config.getString(ComputateConfigKeys.AUTH_REALM);
+  //     webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+  //         .sendForm(MultiMap.caseInsensitiveMultiMap()
+  //             .add("username", authAdminUsername)
+  //             .add("password", authAdminPassword)
+  //             .add("grant_type", "password")
+  //             .add("client_id", "admin-cli")
+  //             )
+  //         .expecting(HttpResponseExpectation.SC_OK)
+  //             .onSuccess(tokenResponse -> {
+  //       try {
+  //         String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+  //         webClient.get(authPort, authHostName
+  //             , String.format("/admin/realms/%s/users?exact=true&first=0&max=1&search=%s"
+  //             , authRealm
+  //             , URLEncoder.encode(siteRequest.getUserName(), "UTF-8")
+  //             )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+  //         .send()
+  //         .expecting(HttpResponseExpectation.SC_OK)
+  //         .onSuccess(userResponse -> {
+  //           try {
+  //             JsonArray users = userResponse.bodyAsJsonArray();
+  //             JsonObject userObject = users.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+  //             if(userObject != null) {
+  //               String userId = userObject.getString("id");
+  //               JsonObject newUserObject = userObject.copy();
+  //               JsonObject newAttibutes = Optional.ofNullable(newUserObject.getJsonObject("attributes")).map(a -> a.copy()).orElse(new JsonObject());
+  //               newAttibutes.put("customerProfileId", new JsonArray().add(customerProfileId));
+  //               newUserObject.put("attributes", newAttibutes);
+  //               webClient.put(authPort, authHostName
+  //                   , String.format("/admin/realms/%s/users/%s"
+  //                   , authRealm
+  //                   , URLEncoder.encode(userId, "UTF-8")
+  //                   )).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+  //               .sendJsonObject(newUserObject)
+  //               .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+  //               .onSuccess(groupResponse -> {
+  //                 promise.complete(true);
+  //               }).onFailure(ex -> {
+  //                 LOG.error(String.format("Failed to update customerProfileId attribute for user: %s", userId), ex);
+  //                 promise.fail(ex);
+  //               });
+  //             } else {
+  //               Exception ex = new RuntimeException(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")));
+  //               LOG.error(ex.getMessage(), ex);
+  //               promise.fail(ex);
+  //             }
+  //           } catch(Throwable ex) {
+  //             LOG.error(String.format("Failed to prepare query to update customerProfileId for user: %s", userResponse.bodyAsJsonObject().getString("id")), ex);
+  //             promise.fail(ex);
+  //           }
+  //         }).onFailure(ex -> {
+  //           LOG.error(String.format("Failed to query user by id: %s", siteRequest.getUserName()), ex);
+  //           LOG.error("Failed to render page. ", ex);
+  //           promise.fail(ex);
+  //         });
+  //       } catch(Throwable ex) {
+  //         LOG.error(String.format("Failed preparing to query user by id: %s", siteRequest.getUserName()), ex);
+  //         promise.fail(ex);
+  //       }
+  //     }).onFailure(ex -> {
+  //       LOG.error("Failed to query admin access token. ", ex);
+  //       promise.fail(ex);
+  //     });
+	// 	} catch(Exception ex) {
+	// 		LOG.error(String.format("sqlPATCHSiteUser failed. "), ex);
+	// 		promise.fail(ex);
+	// 	}
+	// 	return promise.future();
+	// }
 }
