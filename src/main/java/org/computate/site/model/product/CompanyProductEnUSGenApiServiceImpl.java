@@ -341,7 +341,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PATCH")) {
+					if(!scopes.contains("PATCH") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -634,7 +634,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("POST")) {
+					if(!scopes.contains("POST") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -876,7 +876,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("DELETE")) {
+					if(!scopes.contains("DELETE") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -1153,7 +1153,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("PUT")) {
+					if(!scopes.contains("PUT") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -1599,6 +1599,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+			form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
 			if(pageId != null)
 				form.add("permission", String.format("%s#%s", pageId, "GET"));
 			webClient.post(
@@ -1614,7 +1615,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("GET")) {
+					if(!scopes.contains("GET") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -1792,6 +1793,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
 			form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+			form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
 			if(pageId != null)
 				form.add("permission", String.format("%s#%s", pageId, "GET"));
 			webClient.post(
@@ -1807,7 +1809,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("GET")) {
+					if(!scopes.contains("GET") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
@@ -2001,7 +2003,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-					if(!scopes.contains("DELETE")) {
+					if(!scopes.contains("DELETE") && !classPublicRead) {
 						//
 						List<String> fqs = new ArrayList<>();
 						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
