@@ -571,7 +571,7 @@ SITE_REDIRECTS: '[ { "src": "/hackathons" "dest": "/en-us/view/article/hackathon
 #########
 
 ENABLE_EMAIL: true
-EMAIL_HOST: smtp.fastmail.com
+EMAIL_HOST_NAME: smtp.fastmail.com
 EMAIL_PORT: 465
 EMAIL_SSL: true
 EMAIL_AUTH_METHOD: PLAIN

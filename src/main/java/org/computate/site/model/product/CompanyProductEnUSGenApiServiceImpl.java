@@ -341,6 +341,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("PATCH")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(PATCH)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("PATCH");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					if(authorizationDecisionResponse.failed() && !scopes.contains("PATCH")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
@@ -607,6 +634,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("POST")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(POST)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("POST");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					if(authorizationDecisionResponse.failed() && !scopes.contains("POST")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
@@ -822,6 +876,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("DELETE")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(DELETE)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("DELETE");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					if(authorizationDecisionResponse.failed() && !scopes.contains("DELETE")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
@@ -1072,6 +1153,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("PUT")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(PUT)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("PUT");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					if(authorizationDecisionResponse.failed() && !scopes.contains("PUT")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
@@ -1347,6 +1455,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 
 	@Override
 	public void searchpageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+		oauth2AuthenticationProvider.refresh(User.create(serviceRequest.getUser())).onSuccess(user -> {
+			serviceRequest.setUser(user.principal());
 		Boolean classPublicRead = true;
 		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
 						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
@@ -1361,6 +1471,30 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 							LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
 							error(siteRequest, eventHandler, ex);
 						});
+		}).onFailure(ex -> {
+			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+				try {
+					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+				} catch(Exception ex2) {
+					LOG.error(String.format("searchpageCompanyProduct failed. ", ex2));
+					error(null, eventHandler, ex2);
+				}
+			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+				eventHandler.handle(Future.succeededFuture(
+					new ServiceResponse(401, "UNAUTHORIZED",
+						Buffer.buffer().appendString(
+							new JsonObject()
+								.put("errorCode", "401")
+								.put("errorMessage", "SSO Resource Permission check returned DENY")
+								.encodePrettily()
+							), MultiMap.caseInsensitiveMultiMap()
+							)
+					));
+			} else {
+				LOG.error(String.format("searchpageCompanyProduct failed. "), ex);
+				error(null, eventHandler, ex);
+			}
+		});
 		}).onFailure(ex -> {
 			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
 				try {
@@ -1506,6 +1640,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(GET)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("GET");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						List<String> scopes2 = siteRequest.getScopes();
@@ -1672,6 +1833,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("GET")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(GET)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("GET");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					{
 						siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
 						List<String> scopes2 = siteRequest.getScopes();
@@ -1839,6 +2027,33 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 				try {
 					HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
 					JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+					if(!scopes.contains("DELETE")) {
+						//
+						List<String> fqs = new ArrayList<>();
+						List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+						groups.stream().map(group -> {
+									Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-(.*))-(DELETE)$").matcher(group);
+									return mPermission.find() ? mPermission.group(1) : null;
+								}).filter(v -> v != null).forEach(value -> {
+									fqs.add(String.format("%s:%s", "productResource", value));
+								});
+						JsonObject authParams = siteRequest.getServiceRequest().getParams();
+						JsonObject authQuery = authParams.getJsonObject("query");
+						if(authQuery == null) {
+							authQuery = new JsonObject();
+							authParams.put("query", authQuery);
+						}
+						JsonArray fq = authQuery.getJsonArray("fq");
+						if(fq == null) {
+							fq = new JsonArray();
+							authQuery.put("fq", fq);
+						}
+						if(fqs.size() > 0) {
+							fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+							scopes.add("DELETE");
+							siteRequest.setFilteredScope(true);
+						}
+					}
 					if(authorizationDecisionResponse.failed() && !scopes.contains("DELETE")) {
 						String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
 						eventHandler.handle(Future.succeededFuture(
@@ -2502,21 +2717,22 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
 			page.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
 			page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
+			page.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
 			page.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
 			page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
 			page.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
 			page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
-			page.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
 			page.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
+			page.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
 			page.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
 			page.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
 			page.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
-			page.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
 			page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
+			page.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
 			page.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
 			page.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
-			page.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
 			page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
+			page.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
 			page.persistForClass(CompanyProduct.VAR_dialogTemplate, CompanyProduct.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_dialogTemplate)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {

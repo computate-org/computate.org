@@ -299,7 +299,7 @@ data:
     stringData:
       SITE_REDIRECTS: '{{ SITE_REDIRECTS | replace("'", "\\'") }}'
       ENABLE_EMAIL: '{{ ENABLE_EMAIL | replace("'", "\\'") }}'
-      EMAIL_HOST: '{{ EMAIL_HOST | replace("'", "\\'") }}'
+      EMAIL_HOST_NAME: '{{ EMAIL_HOST_NAME | replace("'", "\\'") }}'
       EMAIL_PORT: '{{ EMAIL_PORT | replace("'", "\\'") }}'
       EMAIL_SSL: '{{ EMAIL_SSL | replace("'", "\\'") }}'
       EMAIL_AUTH_METHOD: '{{ EMAIL_AUTH_METHOD | replace("'", "\\'") }}'

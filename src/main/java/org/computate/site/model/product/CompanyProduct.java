@@ -72,11 +72,11 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * DisplayName: product name
    * Description: The product name. 
    * HtmRow: 3
-	 * HtmRowTitleOpen: product details
+   * HtmRowTitleOpen: product details
    * HtmCell: 1
    * HtmColumn: 0
    * Facet: true
-	 * VarName: true
+   * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }
@@ -91,7 +91,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * HtmCell: 2
    * HtmColumn: 1
    * Facet: true
-	 * VarDescription: true
+   * VarDescription: true
    */
   protected void _description(Wrap<String> w) {
   }
@@ -109,69 +109,82 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
   protected void _price(Wrap<BigDecimal> w) {
   }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRowTitleOpen: Useful URLs
-	 * HtmRow: 99
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: Page ID
-	 * Description: The ID for this page. 
-	 * VarId: true
-	 */
-	protected void _pageId(Wrap<String> w) {
-		w.o(toId(name));
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRowTitleOpen: Useful URLs
+   * HtmRow: 99
+   * HtmCell: 1
+   * Facet: true
+   * DisplayName: Page ID
+   * Description: The ID for this page. 
+   * VarId: true
+   */
+  protected void _pageId(Wrap<String> w) {
+    w.o(toId(name));
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: email template
-	 * Description: The HTML email template for this product. 
-	 */
-	protected void _emailTemplate(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: product auth resource
+   * Description: The unique authorization resource for the company product for multi-tenancy
+   * Facet: true
+   * AuthorizationResource: COMPANYPRODUCT
+   **/
+  protected void _productResource(Wrap<String> w) {
+    w.o(String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId));
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: store URL
-	 * Description: The store URL for this page. 
-	 */
-	protected void _storeUrl(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: email template
+   * Description: The HTML email template for this product. 
+   */
+  protected void _emailTemplate(Wrap<String> w) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: download URL
-	 * Description: The download URL for this page. 
-	 * VarUrlDownload: true
-	 */
-	protected void _downloadUrl(Wrap<String> w) {
-		String f = classStringFormatUrlDownloadForClass();
-		if(f != null)
-			w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: store URL
+   * Description: The store URL for this page. 
+   */
+  protected void _storeUrl(Wrap<String> w) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: Product Number
-	 * Description: The product number for this page. 
-	 */
-	protected void _productNum(Wrap<Integer> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: download URL
+   * Description: The download URL for this page. 
+   * VarUrlDownload: true
+   */
+  protected void _downloadUrl(Wrap<String> w) {
+    String f = classStringFormatUrlDownloadForClass();
+    if(f != null)
+      w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: Product Number
+   * Description: The product number for this page. 
+   */
+  protected void _productNum(Wrap<Integer> w) {
+  }
 
   /**
    * {@inheritDoc}

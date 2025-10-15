@@ -185,33 +185,12 @@ public class SiteRoutes {
     Promise<Void> promise = Promise.promise();
     try {
       String userEmail = user.getString("email");
-      String userFullName = String.format("%s %s", user.getString("name"));
-      String itemId = item.getItemId();
+      String customerName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
       String itemName = item.getName();
       DeliveryOptions options = new DeliveryOptions();
       String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
       String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
-      // String customerId = order.getCustomerId();
       String emailTo = userEmail;
-      String customerName = userName;
-      // Payment payment = null;
-      // if(emailTo == null && customerId == null) {
-      //   List<Tender> tenders = order.getTenders();
-      //   if(tenders != null) {
-      //     Tender tender = order.getTenders().get(0);
-      //     String paymentId = tender.getPaymentId();
-      //     PaymentsApi paymentsApi = squareClient.getPaymentsApi();
-      //     payment = paymentsApi.getPayment(paymentId).getPayment();
-      //     customerId = payment.getCustomerId();
-      //   }
-      // }
-      // if(emailTo == null && customerId != null) {
-      //   Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
-      //   emailTo = customer.getEmailAddress();
-      //   customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
-      // } else if(payment != null) {
-      //   emailTo = payment.getBuyerEmailAddress();
-      // }
 
       String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemName, siteName);
       String emailTemplate = (String)result.obtainForClass("emailTemplate");
@@ -244,13 +223,8 @@ public class SiteRoutes {
       String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
       body.put("createdAt", createdAtStr);
 
-      vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
-        LOG.info(String.format("Email sent to %s for purchasing %s", userName, pageId));
-        promise.complete();
-      }).onFailure(ex -> {
-        LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
-        promise.fail(ex);
-      });
+      vertx.eventBus().send(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options);
+      LOG.info(String.format("Sending email to %s for purchasing %s", userName, pageId));
     } catch(Exception ex) {
       LOG.error("The square item failed to process.");
       promise.fail(ex);
@@ -261,7 +235,6 @@ public class SiteRoutes {
   public static Future<Void> processAuthorizeItem(String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
     Promise<Void> promise = Promise.promise();
     try {
-      // String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
       if(userName != null) {
         LOG.info(String.format("Processing %s order for userName %s", item.getItemId(), userName));
         String itemId = item.getItemId();
@@ -326,38 +299,33 @@ public class SiteRoutes {
                           String userEmail = user.getString("email");
                           String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
                           JsonArray userGroups = user.getJsonArray("groups");
-                          // LOG.info(String.format("user %s group %s in groups: %s", customerProfileId, groupName, userGroups));
-                          // if(!userGroups.contains(groupName)) {
-                            webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-                                .putHeader("Authorization", String.format("Bearer %s", authToken))
-                                .putHeader("Content-Type", "application/json")
-                                .putHeader("Content-Length", "0")
-                                .send()
-                                .expecting(HttpResponseExpectation.SC_NO_CONTENT)
-                                .onSuccess(groupUserResponse -> {
-                              sendProductEmail(siteRequest, userName, pageId, vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item, user, result).onSuccess(c -> {
-                                try {
-                                  LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
-                                  grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
-                                    promise.complete();
-                                  }).onFailure(ex -> {
-                                    promise.fail(ex);
-                                  });
-                                } catch(Throwable ex) {
-                                  LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
+                          webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+                              .putHeader("Authorization", String.format("Bearer %s", authToken))
+                              .putHeader("Content-Type", "application/json")
+                              .putHeader("Content-Length", "0")
+                              .send()
+                              .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                              .onSuccess(groupUserResponse -> {
+                            LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
+                            sendProductEmail(siteRequest, userName, pageId, vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item, user, result).onSuccess(c -> {
+                              try {
+                                grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
+                                  promise.complete();
+                                }).onFailure(ex -> {
                                   promise.fail(ex);
-                                }
-                              }).onFailure(ex -> {
-                                LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                                });
+                              } catch(Throwable ex) {
+                                LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
                                 promise.fail(ex);
-                              });
+                              }
                             }).onFailure(ex -> {
-                              LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                              LOG.error("Failed to process authorize.net webook while sending email. ", ex);
                               promise.fail(ex);
                             });
-                          // } else {
-                          //   LOG.info(String.format("User %s already in group %s", customerProfileId, groupName));
-                          // }
+                          }).onFailure(ex -> {
+                            LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                            promise.fail(ex);
+                          });
                         } else {
                           Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", userName));
                           LOG.error(ex.getMessage(), ex);
@@ -496,7 +464,8 @@ public class SiteRoutes {
             String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
             HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeSignatureKey);
             String generatedSignature = hmacUtils.hmacHex(bodyStr);
-            // if(generatedSignature.equalsIgnoreCase(signature)) {
+            String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
+            if("SANDBOX".equals(authorizeEnvironment) ||  generatedSignature.equalsIgnoreCase(signature)) {
               JsonObject body = handler.body().asJsonObject();
               JsonObject params = new JsonObject();
               params.put("body", body);
@@ -507,15 +476,14 @@ public class SiteRoutes {
               params.put("query", new JsonObject());
               JsonObject context = new JsonObject().put("params", params).put("user", null);
               JsonObject json = new JsonObject().put("context", context);
-              // vertx.eventBus().publish("authorize-order", json, new DeliveryOptions().addHeader("X-ANET-Signature", signature));
-              vertx.eventBus().publish("authorize-order", json, new DeliveryOptions());
+              vertx.eventBus().send("authorize-order", json, new DeliveryOptions());
               handler.response().putHeader("Content-Type", "application/json");
               handler.end(new JsonObject().toBuffer());
-            // } else {
-            //   LOG.warn(String.format("Invalid authorize.net webhook with header X-ANET-Signature: %s\n%s", signature, bodyStr));
-            //   handler.response().putHeader("Content-Type", "application/json");
-            //   handler.end(new JsonObject().toBuffer());
-            // }
+            } else {
+              LOG.warn(String.format("Invalid authorize.net webhook with header X-ANET-Signature: %s\n%s", signature, bodyStr));
+              handler.response().putHeader("Content-Type", "application/json");
+              handler.end(new JsonObject().toBuffer());
+            }
           } catch(Throwable ex) {
             LOG.error("Failed to process authorize.net webook. ", ex);
             handler.fail(ex);
