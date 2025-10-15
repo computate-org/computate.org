@@ -13,6 +13,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.PgPool;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,8 +22,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
+import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.request.ComputateSiteRequest;
@@ -35,6 +38,7 @@ import net.authorize.api.contract.v1.CreateCustomerProfileRequest;
 import net.authorize.api.contract.v1.CreateCustomerProfileResponse;
 import net.authorize.api.contract.v1.CustomerProfilePaymentType;
 import net.authorize.api.contract.v1.CustomerProfileType;
+import net.authorize.api.contract.v1.ExtendedAmountType;
 import net.authorize.api.contract.v1.GetHostedPaymentPageRequest;
 import net.authorize.api.contract.v1.GetHostedPaymentPageResponse;
 import net.authorize.api.contract.v1.GetHostedProfilePageRequest;
@@ -194,6 +198,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
   public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
     try {
       SiteUser siteUser = page.getSiteRequest_().getSiteUser_();
+      SiteRequest siteRequest = siteUser.getSiteRequest_();
       CompanyProduct companyProduct = listCompanyProduct.first();
       String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
       String authorizeApiLoginId = config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
@@ -288,8 +293,22 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             // Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
             // See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
             transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-  
-            // Removed transaction fee
+
+            BigDecimal itemPrice;
+            if(BooleanUtils.toBoolean(siteRequest.getRequestVars().get("utah"))) {
+              BigDecimal calculatedTaxRate = new BigDecimal(0.0725).setScale(4, RoundingMode.HALF_UP);
+              BigDecimal calculatedTaxAmount = productPrice.subtract(productPrice.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
+              ExtendedAmountType tax = new ExtendedAmountType();
+              tax.setAmount(calculatedTaxAmount);
+              tax.setName("Sales Tax");
+              tax.setDescription("Utah State Sales Tax");
+              transactionRequest.setTax(tax);
+              transactionRequest.setTaxExempt(false);
+              itemPrice = productPrice.subtract(calculatedTaxAmount);
+            } else {
+              transactionRequest.setTaxExempt(true);
+              itemPrice = productPrice;
+            }
             transactionRequest.setAmount(productPrice);
   
             ArrayOfLineItem lineItems = new ArrayOfLineItem();
@@ -297,9 +316,9 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
             lineItem.setItemId(StringUtils.truncate(companyProduct.getPageId(), 31));
             lineItem.setDescription(StringUtils.truncate(companyProduct.getDescription(), 255));
             lineItem.setName(StringUtils.truncate(companyProduct.getName(), 31));
-            lineItem.setTotalAmount(companyProduct.getPrice());
+            lineItem.setTotalAmount(itemPrice);
             lineItem.setQuantity(BigDecimal.ONE);
-            lineItem.setUnitPrice(companyProduct.getPrice());
+            lineItem.setUnitPrice(itemPrice);
             lineItems.getLineItem().add(lineItem);
             DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
             LocalDate now = LocalDate.now();

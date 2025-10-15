@@ -1638,135 +1638,6 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 		}
 	}
 
-	// DisplayPage //
-
-	@Override
-	public void displaypageCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
-		Boolean classPublicRead = true;
-		user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
-						searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
-							response200DisplayPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
-								eventHandler.handle(Future.succeededFuture(response));
-								LOG.debug(String.format("displaypageCompanyProduct succeeded. "));
-							}).onFailure(ex -> {
-								LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
-								error(siteRequest, eventHandler, ex);
-							});
-						}).onFailure(ex -> {
-							LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
-							error(siteRequest, eventHandler, ex);
-						});
-		}).onFailure(ex -> {
-			if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
-				try {
-					eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
-				} catch(Exception ex2) {
-					LOG.error(String.format("displaypageCompanyProduct failed. ", ex2));
-					error(null, eventHandler, ex2);
-				}
-			} else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
-				eventHandler.handle(Future.succeededFuture(
-					new ServiceResponse(401, "UNAUTHORIZED",
-						Buffer.buffer().appendString(
-							new JsonObject()
-								.put("errorCode", "401")
-								.put("errorMessage", "SSO Resource Permission check returned DENY")
-								.encodePrettily()
-							), MultiMap.caseInsensitiveMultiMap()
-							)
-					));
-			} else {
-				LOG.error(String.format("displaypageCompanyProduct failed. "), ex);
-				error(null, eventHandler, ex);
-			}
-		});
-	}
-
-	public void displaypageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
-		promise.complete();
-	}
-
-	public String templateDisplayPageCompanyProduct(ServiceRequest serviceRequest) {
-		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
-	}
-	public Future<ServiceResponse> response200DisplayPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
-		Promise<ServiceResponse> promise = Promise.promise();
-		try {
-			SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
-			String pageTemplateUri = templateDisplayPageCompanyProduct(siteRequest.getServiceRequest());
-			String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-			Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-			String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-			CompanyProductPage page = new CompanyProductPage();
-			MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-			siteRequest.setRequestHeaders(requestHeaders);
-
-			page.setSearchListCompanyProduct_(listCompanyProduct);
-			page.setSiteRequest_(siteRequest);
-			page.setServiceRequest(siteRequest.getServiceRequest());
-			page.setWebClient(webClient);
-			page.setVertx(vertx);
-			page.promiseDeepCompanyProductPage(siteRequest).onSuccess(a -> {
-				try {
-					JsonObject ctx = ConfigKeys.getPageContext(config);
-					ctx.mergeIn(JsonObject.mapFrom(page));
-					Promise<Void> promise1 = Promise.promise();
-					displaypageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
-					promise1.future().onSuccess(b -> {
-						String renderedTemplate = jinjava.render(template, ctx.getMap());
-						Buffer buffer = Buffer.buffer(renderedTemplate);
-						promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-					}).onFailure(ex -> {
-						promise.fail(ex);
-					});
-				} catch(Exception ex) {
-					LOG.error(String.format("response200DisplayPageCompanyProduct failed. "), ex);
-					promise.fail(ex);
-				}
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		} catch(Exception ex) {
-			LOG.error(String.format("response200DisplayPageCompanyProduct failed. "), ex);
-			promise.fail(ex);
-		}
-		return promise.future();
-	}
-	public void responsePivotDisplayPageCompanyProduct(List<SolrResponse.Pivot> pivots, JsonArray pivotArray) {
-		if(pivots != null) {
-			for(SolrResponse.Pivot pivotField : pivots) {
-				String entityIndexed = pivotField.getField();
-				String entityVar = StringUtils.substringBefore(entityIndexed, "_docvalues_");
-				JsonObject pivotJson = new JsonObject();
-				pivotArray.add(pivotJson);
-				pivotJson.put("field", entityVar);
-				pivotJson.put("value", pivotField.getValue());
-				pivotJson.put("count", pivotField.getCount());
-				Collection<SolrResponse.PivotRange> pivotRanges = pivotField.getRanges().values();
-				List<SolrResponse.Pivot> pivotFields2 = pivotField.getPivotList();
-				if(pivotRanges != null) {
-					JsonObject rangeJson = new JsonObject();
-					pivotJson.put("ranges", rangeJson);
-					for(SolrResponse.PivotRange rangeFacet : pivotRanges) {
-						JsonObject rangeFacetJson = new JsonObject();
-						String rangeFacetVar = StringUtils.substringBefore(rangeFacet.getName(), "_docvalues_");
-						rangeJson.put(rangeFacetVar, rangeFacetJson);
-						JsonObject rangeFacetCountsObject = new JsonObject();
-						rangeFacetJson.put("counts", rangeFacetCountsObject);
-						rangeFacet.getCounts().forEach((value, count) -> {
-							rangeFacetCountsObject.put(value, count);
-						});
-					}
-				}
-				if(pivotFields2 != null) {
-					JsonArray pivotArray2 = new JsonArray();
-					pivotJson.put("pivot", pivotArray2);
-					responsePivotDisplayPageCompanyProduct(pivotFields2, pivotArray2);
-				}
-			}
-		}
-	}
-
 	// UserPage //
 
 	@Override
@@ -1853,7 +1724,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 	}
 
 	public String templateUserPageCompanyProduct(ServiceRequest serviceRequest) {
-		return String.format("%s.htm", serviceRequest.getExtra().getString("uri").substring(1));
+		return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
 	}
 	public Future<ServiceResponse> response200UserPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
 		Promise<ServiceResponse> promise = Promise.promise();
@@ -2641,8 +2512,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
 			page.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
 			page.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
 			page.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
-			page.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
 			page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
+			page.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
 			page.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
 			page.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
 			page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));

@@ -181,6 +181,83 @@ public class SiteRoutes {
     return promise.future();
   }
 
+  public static Future<Void> sendProductEmail(SiteRequest siteRequest, String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item, JsonObject user, ComputateBaseResult result) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      String userEmail = user.getString("email");
+      String userFullName = String.format("%s %s", user.getString("name"));
+      String itemId = item.getItemId();
+      String itemName = item.getName();
+      DeliveryOptions options = new DeliveryOptions();
+      String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
+      String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
+      // String customerId = order.getCustomerId();
+      String emailTo = userEmail;
+      String customerName = userName;
+      // Payment payment = null;
+      // if(emailTo == null && customerId == null) {
+      //   List<Tender> tenders = order.getTenders();
+      //   if(tenders != null) {
+      //     Tender tender = order.getTenders().get(0);
+      //     String paymentId = tender.getPaymentId();
+      //     PaymentsApi paymentsApi = squareClient.getPaymentsApi();
+      //     payment = paymentsApi.getPayment(paymentId).getPayment();
+      //     customerId = payment.getCustomerId();
+      //   }
+      // }
+      // if(emailTo == null && customerId != null) {
+      //   Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
+      //   emailTo = customer.getEmailAddress();
+      //   customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
+      // } else if(payment != null) {
+      //   emailTo = payment.getBuyerEmailAddress();
+      // }
+
+      String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemName, siteName);
+      String emailTemplate = (String)result.obtainForClass("emailTemplate");
+      BigDecimal total = transactionDetails.getAuthAmount();
+      BigDecimal totalTax = Optional.ofNullable(transactionDetails.getTax()).map(tax -> tax.getAmount()).orElse(null);
+      BigDecimal netAmountDue = transactionDetails.getAuthAmount();
+      options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
+      options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+
+      ZoneId zoneId = ZoneId.of(config.getString(ComputateConfigKeys.SITE_ZONE));
+      ZoneId zoneIdSite = ZoneId.of(siteRequest.getConfig().getString(ConfigKeys.SITE_ZONE));
+      ZonedDateTime createdAt = ZonedDateTime.now(zoneIdSite);
+      Locale locale = Locale.forLanguageTag(config.getString(ComputateConfigKeys.SITE_LOCALE));
+      DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
+      JsonObject body = new JsonObject();
+      body.put(ComputateConfigKeys.SITE_BASE_URL, config.getString(ComputateConfigKeys.SITE_BASE_URL));
+      body.put("siteName", siteName);
+      body.put("githubUsername", userName);
+      body.put("transactionId", transactionId);
+      body.put("subject", subject);
+      body.put("emailTo", emailTo);
+      body.put("customerName", customerName);
+      body.put("result", JsonObject.mapFrom(result));
+      body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
+      body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
+      body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
+
+      String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
+      body.put("createdAt", createdAtStr);
+
+      vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
+        LOG.info(String.format("Email sent to %s for purchasing %s", userName, pageId));
+        promise.complete();
+      }).onFailure(ex -> {
+        LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error("The square item failed to process.");
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
   public static Future<Void> processAuthorizeItem(String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
     Promise<Void> promise = Promise.promise();
     try {
@@ -258,79 +335,22 @@ public class SiteRoutes {
                                 .send()
                                 .expecting(HttpResponseExpectation.SC_NO_CONTENT)
                                 .onSuccess(groupUserResponse -> {
-                              try {
-                                LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
-                                grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
-                                  promise.complete();
-                                }).onFailure(ex -> {
+                              sendProductEmail(siteRequest, userName, pageId, vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item, user, result).onSuccess(c -> {
+                                try {
+                                  LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
+                                  grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
+                                    promise.complete();
+                                  }).onFailure(ex -> {
+                                    promise.fail(ex);
+                                  });
+                                } catch(Throwable ex) {
+                                  LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
                                   promise.fail(ex);
-                                });
-                                // DeliveryOptions options = new DeliveryOptions();
-                                // String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
-                                // String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
-                                // String customerId = customerProfileId;
-                                // String emailTo = userEmail;
-                                // String customerName = userName;
-                                // Payment payment = null;
-                                // if(emailTo == null && customerId == null) {
-                                //   List<Tender> tenders = order.getTenders();
-                                //   if(tenders != null) {
-                                //     Tender tender = order.getTenders().get(0);
-                                //     String paymentId = tender.getPaymentId();
-                                //     PaymentsApi paymentsApi = squareClient.getPaymentsApi();
-                                //     payment = paymentsApi.getPayment(paymentId).getPayment();
-                                //     customerId = payment.getCustomerId();
-                                //   }
-                                // }
-                                // if(emailTo == null && customerId != null) {
-                                //   Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
-                                //   emailTo = customer.getEmailAddress();
-                                //   customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
-                                // } else if(payment != null) {
-                                //   emailTo = payment.getBuyerEmailAddress();
-                                // }
-
-                                // String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemI, siteName);
-                                // String emailTemplate = (String)result.obtainForClass("emailTemplate");
-                                // BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
-
-                                // ZoneId zoneId = ZoneId.of(config.getString(ComputateConfigKeys.SITE_ZONE));
-                                // ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
-                                // Locale locale = Locale.forLanguageTag(config.getString(ComputateConfigKeys.SITE_LOCALE));
-                                // DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
-                                // JsonObject body = new JsonObject();
-                                // body.put(ComputateConfigKeys.SITE_BASE_URL, config.getString(ComputateConfigKeys.SITE_BASE_URL));
-                                // body.put("siteName", siteName);
-                                // body.put("customerProfileId", customerProfileId);
-                                // body.put("orderId", order.getId());
-                                // body.put("subject", subject);
-                                // body.put("emailTo", emailTo);
-                                // body.put("customerName", customerName);
-                                // body.put("result", JsonObject.mapFrom(result));
-                                // body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
-                                // body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
-                                // body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
-
-                                // String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
-                                // body.put("createdAt", createdAtStr);
-
-                                // vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
-                                //   LOG.info(String.format("Successfully granted %s access to %s", customerProfileId, name));
-                                //   promise.complete();
-                                // }).onFailure(ex -> {
-                                //   LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
-                                //   promise.fail(ex);
-                                // });
-                              } catch(Throwable ex) {
-                                LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
+                                }
+                              }).onFailure(ex -> {
+                                LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
                                 promise.fail(ex);
-                              }
+                              });
                             }).onFailure(ex -> {
                               LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
                               promise.fail(ex);

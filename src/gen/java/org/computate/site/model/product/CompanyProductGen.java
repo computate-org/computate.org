@@ -100,9 +100,6 @@ import io.vertx.core.json.JsonObject;
  * <h2>ApiMethode: EditPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
  * </p>
- * <h2>ApiMethode: DisplayPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
- * </p>
  * <h2>ApiMethode: UserPage</h2>
  * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
  * </p>
@@ -229,9 +226,6 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/product/{pageId}";
 	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/product/%s";
 	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/product/%s";
-	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
-	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/shop/product/%s";
-	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
 	public static final String UserPage_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
 	public static final String UserPage_enUS_StringFormatUri = "/en-us/shop/product/%s";
 	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
@@ -2422,7 +2416,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
 	@Override
 	public String classStringFormatUrlDisplayPageForClass() {
-		return "%s/en-us/shop/product/%s";
+		return null;
 	}
 
 	@Override
