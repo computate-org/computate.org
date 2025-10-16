@@ -197,7 +197,7 @@ data:
     WEB_COMPONENTS_THEME: "active"
     FONTAWESOME_KIT: ""
     # A default FontAwesome style. 
-    FONTAWESOME_STYLE: "fa-duotone fa-regular "
+    FONTAWESOME_STYLE: "fa-duotone fa-regular"
     # Site default theme, light or dark. 
     SITE_THEME: "dark"
     # The site logo relative URI
@@ -416,7 +416,7 @@ data:
     # The delay between messages and requerying entity @context. 
     CONTEXT_BROKER_DELAY_MILLIS: 0
     # The Context Broker namespace. 
-    CONTEXT_BROKER_CONTEXT: "{{ SITE_BASE_URL }}/static/fiware/context.jsonld"
+    CONTEXT_BROKER_CONTEXT: "{{ SITE_PUBLIC_URL }}/static/fiware/context.jsonld"
     # The base URL where the project will put NGSI-LD context information public on the Internet. 
     NGSILD_BASE_URL: "{{ lookup('env', 'NGSILD_BASE_URL') | default(SITE_PUBLIC_URL + '/static/fiware', true) }}"
     # The default NGSI-LD tenant environment variable
@@ -554,17 +554,7 @@ data:
     #IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
     #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
-    SITE_REDIRECTS: |-
-      [
-        {
-          "src": "/hackathons"
-          "dest": "/en-us/view/article/hackathons"
-        }
-        , {
-          "src": "/websites"
-          "dest": "/en-us/view/article/websites"
-        }
-      ]
+    SITE_REDIRECTS: '[ { "src": "/hackathons" "dest": "/en-us/view/article/hackathons" } , { "src": "/websites" "dest": "/en-us/view/article/websites" } ]'
 
     #########
     # Email #
