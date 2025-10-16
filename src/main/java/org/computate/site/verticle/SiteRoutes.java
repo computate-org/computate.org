@@ -35,6 +35,7 @@ import org.computate.vertx.search.list.SearchList;
 import org.computate.vertx.verticle.EmailVerticle;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.page.PageLayout;
 import org.computate.site.page.SitePage;
 import org.computate.site.request.SiteRequest;
@@ -87,40 +88,45 @@ public class SiteRoutes {
         siteRequest.addScopes("GET");
         facetAll(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(facetResponse -> {
           searchFreeCourses(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(topCourses -> {
-            searchPathToComputerEnlightenment(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(pathToComputerEnlightenment -> {
-              try {
-                PageLayout page = new PageLayout();
-                MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-                siteRequest.setRequestHeaders(requestHeaders);
-                page.setSiteRequest_(siteRequest);
-                page.setServiceRequest(siteRequest.getServiceRequest());
-                page.setWebClient(webClient);
-                page.promiseDeepPageLayout(siteRequest).onSuccess(a -> {
-                  try {
-                    JsonObject ctx = ConfigKeys.getPageContext(config);
-                    ctx.mergeIn(JsonObject.mapFrom(page));
+            searchProducts(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(topProducts -> {
+              searchPathToComputerEnlightenment(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(pathToComputerEnlightenment -> {
+                try {
+                  PageLayout page = new PageLayout();
+                  MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+                  siteRequest.setRequestHeaders(requestHeaders);
+                  page.setSiteRequest_(siteRequest);
+                  page.setServiceRequest(siteRequest.getServiceRequest());
+                  page.setWebClient(webClient);
+                  page.promiseDeepPageLayout(siteRequest).onSuccess(a -> {
+                    try {
+                      JsonObject ctx = ConfigKeys.getPageContext(config);
+                      ctx.mergeIn(JsonObject.mapFrom(page));
 
-                    FacetField facetClass = facetResponse.getFacetField("classSimpleName_docvalues_string");
-                    ctx.put("facetClass", facetClass);
-                    ctx.put("topCourses", topCourses);
-                    ctx.put("pathToComputerEnlightenment", pathToComputerEnlightenment);
+                      FacetField facetClass = facetResponse.getFacetField("classSimpleName_docvalues_string");
+                      ctx.put("facetClass", facetClass);
+                      ctx.put("topCourses", topCourses);
+                      ctx.put("topProducts", topProducts);
+                      ctx.put("pathToComputerEnlightenment", pathToComputerEnlightenment);
 
-                    Path resourceTemplatePath = Path.of(config.getString(ConfigKeys.TEMPLATE_PATH), "/en-us/HomePage.htm");
-                    String template = Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-                    String renderedTemplate = jinjava.render(template, ctx.getMap());
-                    Buffer buffer = Buffer.buffer(renderedTemplate);
-                    eventHandler.response().putHeader("Content-Type", "text/html");
-                    eventHandler.end(buffer);
-                  } catch(Exception ex) {
+                      Path resourceTemplatePath = Path.of(config.getString(ConfigKeys.TEMPLATE_PATH), "/en-us/HomePage.htm");
+                      String template = Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+                      String renderedTemplate = jinjava.render(template, ctx.getMap());
+                      Buffer buffer = Buffer.buffer(renderedTemplate);
+                      eventHandler.response().putHeader("Content-Type", "text/html");
+                      eventHandler.end(buffer);
+                    } catch(Exception ex) {
+                      LOG.error(String.format("GET home page failed. "), ex);
+                    }
+                  }).onFailure(ex -> {
                     LOG.error(String.format("GET home page failed. "), ex);
-                  }
-                }).onFailure(ex -> {
-                  LOG.error(String.format("GET home page failed. "), ex);
-                });
-              } catch(Exception ex) {
-                LOG.error("Failed to load page. ", ex);
-                eventHandler.fail(ex);
-              }
+                  });
+                } catch(Exception ex) {
+                  LOG.error("Failed to load page. ", ex);
+                  eventHandler.fail(ex);
+                }
+              }).onFailure(ex -> {
+                LOG.error(String.format("Search failed. "), new RuntimeException(ex));
+              });
             }).onFailure(ex -> {
               LOG.error(String.format("Search failed. "), new RuntimeException(ex));
             });
@@ -492,24 +498,47 @@ public class SiteRoutes {
       }
   }
 
-  public static Future<SearchList<CompanyCourse>> searchFreeCourses(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
-    Promise<SearchList<CompanyCourse>> promise = Promise.promise();
+  public static Future<SearchList<CompanyProduct>> searchFreeCourses(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
+    Promise<SearchList<CompanyProduct>> promise = Promise.promise();
     try {
-      SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+      SearchList<CompanyProduct> searchList = new SearchList<CompanyProduct>();
       searchList.setStore(true);
       searchList.q("*:*");
       searchList.sort("created_docvalues_date", "desc");
       searchList.fq("price_docvalues_double:0.00");
-      searchList.setC(CompanyCourse.class);
+      searchList.setC(CompanyProduct.class);
       searchList.setSiteRequest_(siteRequest);
       searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
         promise.complete(searchList);
       }).onFailure(ex -> {
-        LOG.error(String.format("searchCompanyCourse failed. "), ex);
+        LOG.error(String.format("searchCompanyProduct failed. "), ex);
         promise.fail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyCourse failed. "), ex);
+      LOG.error(String.format("searchCompanyProduct failed. "), ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
+  public static Future<SearchList<CompanyProduct>> searchProducts(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
+    Promise<SearchList<CompanyProduct>> promise = Promise.promise();
+    try {
+      SearchList<CompanyProduct> searchList = new SearchList<CompanyProduct>();
+      searchList.setStore(true);
+      searchList.q("*:*");
+      searchList.sort("created_docvalues_date", "desc");
+      searchList.fq("price_docvalues_double:[0.01 TO *]");
+      searchList.setC(CompanyProduct.class);
+      searchList.setSiteRequest_(siteRequest);
+      searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
+        promise.complete(searchList);
+      }).onFailure(ex -> {
+        LOG.error(String.format("searchCompanyProduct failed. "), ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("searchCompanyProduct failed. "), ex);
       promise.fail(ex);
     }
     return promise.future();
