@@ -43,7 +43,7 @@ import io.vertx.core.json.JsonObject;
  * 
  * SearchPageUri: /en-us/search/smart-aquaculture-developer
  * EditPageUri: /en-us/edit/smart-aquaculture-developer/{pageId}
- * UserPageUri: /en-us/learn/smart-aquaculture-developer/{pageId}
+ * UserPageUri: /en-us/smart-aquaculture-developer/learn/{pageId}
  * ApiUri: /en-us/api/smart-aquaculture-developer
  * ApiMethod:
  *   Search:
@@ -54,7 +54,7 @@ import io.vertx.core.json.JsonObject;
  *   PUTImport:
  * 
  * AuthGroup:
- *   smart-aquaculture-developer:
+ *   COMPANYPRODUCT-smart-aquaculture-developer-GET:
  *     GET:
  *   Admin:
  *     POST:
@@ -303,5 +303,10 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
         array.add(obj2);
     });
     w.o(array);
+  }
+
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/smart-aquaculture-developer/learn/%s";
   }
 }

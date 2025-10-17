@@ -2623,110 +2623,6 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EditPageSmartAquacultureDeveloperResponse'
-  /en-us/learn/smart-aquaculture-developer/{pageId}:
-    get:
-      operationId: displaypageSmartAquacultureDeveloper
-      x-vertx-event-bus: computate.org-enUS-SmartAquacultureDeveloper
-      description: >+
-      summary: >+
-      tags:
-        - Smart Aquaculture Developers
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_FONT_SIZE
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_THEME
-          in: cookie
-          schema:
-            type: string
-        - name: WEB_COMPONENTS_THEME
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: var
-          description: 'The var parameters are additional optional variables and values to pass into the application. '
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - name: pageId
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/DisplayPageSmartAquacultureDeveloperResponse'
-    get:
-      operationId: userpageSmartAquacultureDeveloper
-      x-vertx-event-bus: computate.org-enUS-SmartAquacultureDeveloper
-      security:
-        - openIdConnect:
-          - openid
-          - profile
-          - customerProfileId
-      description: >+
-      summary: >+
-      tags:
-        - Smart Aquaculture Developers
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_FONT_SIZE
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_THEME
-          in: cookie
-          schema:
-            type: string
-        - name: WEB_COMPONENTS_THEME
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: var
-          description: 'The var parameters are additional optional variables and values to pass into the application. '
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - name: pageId
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/UserPageSmartAquacultureDeveloperResponse'
   /en-us/search/smart-aquaculture-developer:
     get:
       operationId: searchpageSmartAquacultureDeveloper
@@ -2920,6 +2816,61 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageSmartAquacultureDeveloperResponse'
+  /en-us/smart-aquaculture-developer/learn/{pageId}:
+    get:
+      operationId: userpageSmartAquacultureDeveloper
+      x-vertx-event-bus: computate.org-enUS-SmartAquacultureDeveloper
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - Smart Aquaculture Developers
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/UserPageSmartAquacultureDeveloperResponse'
   /en-us/api/event:
     get:
       operationId: searchCompanyEvent
@@ -10670,21 +10621,16 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/EditPageSmartAquacultureDeveloperResponse'
-    DisplayPageSmartAquacultureDeveloperResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DisplayPageSmartAquacultureDeveloperResponse'
-    UserPageSmartAquacultureDeveloperResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/UserPageSmartAquacultureDeveloperResponse'
     SearchPageSmartAquacultureDeveloperResponse:
       content:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageSmartAquacultureDeveloperResponse'
+    UserPageSmartAquacultureDeveloperResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/UserPageSmartAquacultureDeveloperResponse'
     SearchCompanyEventResponse:
       content:
         application/json; charset=utf-8:
@@ -12701,13 +12647,10 @@ components:
     EditPageSmartAquacultureDeveloperResponse:
       allOf:
         - type: string
-    DisplayPageSmartAquacultureDeveloperResponse:
+    SearchPageSmartAquacultureDeveloperResponse:
       allOf:
         - type: string
     UserPageSmartAquacultureDeveloperResponse:
-      allOf:
-        - type: string
-    SearchPageSmartAquacultureDeveloperResponse:
       allOf:
         - type: string
     SearchCompanyEventResponse:
@@ -13275,6 +13218,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  productResource:
+                    type: string
                   emailTemplate:
                     type: string
                   storeUrl:
@@ -13342,6 +13287,13 @@ components:
             removePageId:
               type: string
             removeAllPageId:
+              type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
               type: string
             setEmailTemplate:
               type: string
@@ -13501,6 +13453,13 @@ components:
               type: string
             removeAllPageId:
               type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
+              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -13639,6 +13598,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -13687,6 +13648,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -13734,6 +13697,8 @@ components:
             price:
               type: string
             pageId:
+              type: string
+            productResource:
               type: string
             emailTemplate:
               type: string
@@ -13788,6 +13753,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  productResource:
+                    type: string
                   emailTemplate:
                     type: string
                   storeUrl:
@@ -13835,6 +13802,8 @@ components:
                   price:
                     type: string
                   pageId:
+                    type: string
+                  productResource:
                     type: string
                   emailTemplate:
                     type: string
@@ -13884,6 +13853,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -13931,6 +13902,8 @@ components:
             price:
               type: string
             pageId:
+              type: string
+            productResource:
               type: string
             emailTemplate:
               type: string
