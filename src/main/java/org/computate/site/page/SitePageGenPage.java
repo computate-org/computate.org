@@ -4,9 +4,9 @@ import org.computate.site.page.SitePage;
 import java.lang.Boolean;
 import java.lang.String;
 import java.lang.Integer;
-import java.util.List;
 import org.computate.vertx.search.list.SearchList;
 import io.vertx.core.json.JsonArray;
+import java.util.List;
 import org.computate.site.page.PageLayout;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
@@ -536,7 +536,7 @@ public class SitePageGenPage extends SitePageGenPageGen<PageLayout> {
 
   @Override
   protected void _classIcon(Wrap<String> c) {
-      c.o("<i class=\"fa-duotone fa-regular fa-newspaper\"></i>");
+      c.o("<i class=\"fa-duotone fa-regularfa-newspaper\"></i>");
   }
 
   protected void _pageUriSitePage(Wrap<String> c) {

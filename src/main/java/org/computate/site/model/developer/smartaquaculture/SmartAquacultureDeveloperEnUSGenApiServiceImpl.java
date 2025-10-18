@@ -2625,10 +2625,12 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
 			page.persistForClass(SmartAquacultureDeveloper.VAR_userPage, SmartAquacultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_userPage)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageAlt, SmartAquacultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageAlt)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_download, SmartAquacultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_download)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds, SmartAquacultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_solrId, SmartAquacultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_solrId)));
+			page.persistForClass(SmartAquacultureDeveloper.VAR_nextArticleIds, SmartAquacultureDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_nextArticleIds)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_labelsString, SmartAquacultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labelsString)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_labels, SmartAquacultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labels)));
 			page.persistForClass(SmartAquacultureDeveloper.VAR_relatedArticleIds, SmartAquacultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_relatedArticleIds)));
-			page.persistForClass(SmartAquacultureDeveloper.VAR_solrId, SmartAquacultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_solrId)));
 
 			page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
 				try {
