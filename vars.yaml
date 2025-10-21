@@ -224,7 +224,7 @@ TEMPLATE_PATH: "{{ STATIC_PATH }}/templates"
 ######################
 
 # The developer tools repo for this site. 
-DEVELOPER_REPO: "git@github.com:{{ GITHUB_ORG }}/{{ DEVELOPER_PROJECT_NAME }}.git"
+DEVELOPER_REPO: "https://github.com/{{ GITHUB_ORG }}/{{ DEVELOPER_PROJECT_NAME }}.git"
 # The software developer name. 
 DEVELOPER_NAME: Christopher Tate
 # The software organization name. 
@@ -565,6 +565,7 @@ WRITE_COMMENTS: true
 #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
 SITE_REDIRECTS: '[ { "src": "/hackathons", "dest": "/en-us/view/article/hackathons" } , { "src": "/websites", "dest": "/en-us/view/article/websites" } ]'
+STATIC_REPOS: '[ { "name": "smart-aquaculture-developer", "src": "https://github.com/computate-org/smart-aquaculture-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer" }, { "name": "ai-telemetry-developer", "src": "https://github.com/computate-org/ai-telemetry-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer" } ]'
 
 #########
 # Email #
@@ -596,8 +597,10 @@ USE_CASE_SUMMARY_PATH: "{{ USE_CASE_SRC }}/02-models-summary.ipynb"
 # github API #
 ##############
 
-# In Developer Settings in your user, Create a personal access token, with the GitHub org as the resource owner and Read and Write permissions to the Members. 
-GITHUB_API_TOKEN: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.GITHUB_API_TOKEN | default('') | b64decode | default('', true) }}"
+# In Developer Settings in your user, Create a personal access token, with the GitHub org as the resource owner and Read and Write access to the Members. 
+GITHUB_TEAMS_TOKEN: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.GITHUB_TEAMS_TOKEN | default('') | b64decode | default('', true) }}"
+# In Developer Settings in your user, Create a personal access token, with the GitHub org as the resource owner and Read-only access to the Contents and Metadata. 
+GITHUB_DEVELOPERS_TOKEN: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name='local-extra', namespace=SITE_NAMESPACE) | first | default({})).data.GITHUB_DEVELOPERS_TOKEN | default('') | b64decode | default('', true) }}"
 
 #################
 # authorize.net #

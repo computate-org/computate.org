@@ -37,5 +37,6 @@ public class ConfigKeys extends ComputateConfigKeys {
 	public static final String AUTHORIZE_NET_NOTIFICATION_URL = "AUTHORIZE_NET_NOTIFICATION_URL";
 	public static final String AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS = "AUTHORIZE_NET_WEBHOOK_UNLOCK_MILLIS";
 	public static final String AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS = "AUTHORIZE_NET_WEBHOOK_TIMEOUT_MILLIS";
-	public static final String GITHUB_API_TOKEN = "GITHUB_API_TOKEN";
+	public static final String GITHUB_TEAMS_TOKEN = "GITHUB_TEAMS_TOKEN";
+	public static final String GITHUB_DEVELOPERS_TOKEN = "GITHUB_DEVELOPERS_TOKEN";
 }

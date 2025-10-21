@@ -298,6 +298,7 @@ data:
     type: Opaque
     stringData:
       SITE_REDIRECTS: '{{ SITE_REDIRECTS | replace("'", "\\'") }}'
+      STATIC_REPOS: '{{ STATIC_REPOS | replace("'", "\\'") }}'
       ENABLE_EMAIL: '{{ ENABLE_EMAIL | replace("'", "\\'") }}'
       EMAIL_HOST_NAME: '{{ EMAIL_HOST_NAME | replace("'", "\\'") }}'
       EMAIL_PORT: '{{ EMAIL_PORT | replace("'", "\\'") }}'
@@ -310,7 +311,8 @@ data:
       DOWNLOAD_PATH: '{{ DOWNLOAD_PATH | replace("'", "\\'") }}'
       USE_CASE_SRC: '{{ USE_CASE_SRC | replace("'", "\\'") }}'
       USE_CASE_SUMMARY_PATH: '{{ USE_CASE_SUMMARY_PATH | replace("'", "\\'") }}'
-      GITHUB_API_TOKEN: '{{ GITHUB_API_TOKEN | replace("'", "\\'") }}'
+      GITHUB_TEAMS_TOKEN: '{{ GITHUB_TEAMS_TOKEN | replace("'", "\\'") }}'
+      GITHUB_DEVELOPERS_TOKEN: '{{ GITHUB_DEVELOPERS_TOKEN | replace("'", "\\'") }}'
       ENABLE_AUTHORIZE_NET: '{{ ENABLE_AUTHORIZE_NET | replace("'", "\\'") }}'
       AUTHORIZE_NET_SECRET: '{{ AUTHORIZE_NET_SECRET | replace("'", "\\'") }}'
       AUTHORIZE_NET_ENVIRONMENT: '{{ AUTHORIZE_NET_ENVIRONMENT | replace("'", "\\'") }}'

@@ -170,7 +170,7 @@ public class SiteRoutes {
       webClient.put(443, "api.github.com", githubUri).ssl(true)
           .putHeader("Accept", "application/vnd.github+json")
           .putHeader("X-GitHub-Api-Version", "2022-11-28")
-          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_API_TOKEN)))
+          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_TEAMS_TOKEN)))
           .sendJsonObject(new JsonObject().put("role", "member"))
           .expecting(HttpResponseExpectation.SC_OK)
           .onSuccess(memberResponse -> {
