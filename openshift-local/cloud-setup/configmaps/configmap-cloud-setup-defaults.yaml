@@ -558,7 +558,7 @@ data:
     #IMPORT_DATA_START_TIME_CompanyProduct: 12:12 America/Denver
     #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
-    SITE_REDIRECTS: ' [ { "src": "/hackathons" "dest": "/en-us/view/article/hackathons" } , { "src": "/websites" "dest": "/en-us/view/article/websites" } ]'
+    SITE_REDIRECTS: ' [ { "src": "/hackathons", "dest": "/en-us/view/article/hackathons" } , { "src": "/websites", "dest": "/en-us/view/article/websites" } ]'
 
     #########
     # Email #

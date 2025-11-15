@@ -201,6 +201,8 @@ WEB_COMPONENTS_SECRET: "{{ lookup('env', 'WEB_COMPONENTS_SECRET') | default('loc
 WEB_COMPONENTS_PREFIX: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_PREFIX | default('') | b64decode | default('wa-', true) }}"
 # Web components default theme. 
 WEB_COMPONENTS_THEME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_THEME | default('', true) | b64decode | default('active', true) }}"
+# An optional Web Awesome Pro Kit for Web Components. 
+WEB_COMPONENTS_KIT: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.WEB_COMPONENTS_KIT | default('', true) | b64decode | default('', true) }}"
 # Site default font size. 
 SITE_FONT_SIZE: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=WEB_COMPONENTS_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.SITE_FONT_SIZE | default('', true) | b64decode | default('m', true) }}"
 # An optional FontAwesome Pro Kit for additional FontAwesome icons. 
