@@ -5,8 +5,8 @@ import java.util.List;
 import org.computate.search.wrap.Wrap;
 import org.computate.vertx.model.user.ComputateSiteUser;
 import org.computate.vertx.request.ComputateSiteRequest;
-import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.BaseModel;
+import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
 
 /**
@@ -116,8 +116,9 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * Persist: true
 	 * HtmRow: 4
 	 * HtmCell: 2
-	 * DisplayName: awesome effect (requires refresh)
-	 * Description: an awesome effect for the entire site
+	 * Refresh: true
+	 * DisplayName: awesome effect
+	 * Description: An awesome effect for the entire site
 	 */
 	protected void _awesomeEffect(Wrap<Boolean> w) {
 		w.o(false);
@@ -140,9 +141,9 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * HtmRow: 4
 	 * HtmCell: 1
 	 * DisplayName: font size
-	 * Description: The default font size for the site (small, medium, large). 
+	 * Description: The default font size for the site
 	 * Refresh: true
-   * Cookie: SITE_FONT_SIZE
+	 * Cookie: SITE_FONT_SIZE
 	 * Radio:
 	 *   s: small
 	 *   m: medium
@@ -161,7 +162,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DisplayName: site theme
 	 * Description: The site theme, either light or dark. 
 	 * Refresh: true
-   * Cookie: SITE_THEME
+	 * Cookie: SITE_THEME
 	 * Radio:
 	 *   light: Light
 	 *   dark: Dark
@@ -179,7 +180,7 @@ public class SiteUser extends SiteUserGen<BaseModel> implements ComputateSiteUse
 	 * DisplayName: web components theme
 	 * Description: The web components theme for the site. 
 	 * Refresh: true
-   * Cookie: WEB_COMPONENTS_THEME
+	 * Cookie: WEB_COMPONENTS_THEME
 	 * Radio:
 	 *   default: Default — "Your trusty companion, like a perfectly broken-in pair of jeans."
 	 *   classic: Classic — "Timeless elegance that never goes out of style."

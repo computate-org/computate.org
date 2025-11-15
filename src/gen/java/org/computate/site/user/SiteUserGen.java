@@ -1879,7 +1879,7 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 	public static final String DISPLAY_NAME_userLastName = "";
 	public static final String DISPLAY_NAME_userFullName = "";
 	public static final String DISPLAY_NAME_seeArchived = "see archived";
-	public static final String DISPLAY_NAME_awesomeEffect = "awesome effect (requires refresh)";
+	public static final String DISPLAY_NAME_awesomeEffect = "awesome effect";
 	public static final String DISPLAY_NAME_displayName = "";
 	public static final String DISPLAY_NAME_siteFontSize = "font size";
 	public static final String DISPLAY_NAME_siteTheme = "site theme";
@@ -1990,11 +1990,11 @@ public abstract class SiteUserGen<DEV> extends BaseModel {
 		case VAR_seeArchived:
 			return "A user field allowing a user to see archived records";
 		case VAR_awesomeEffect:
-			return "an awesome effect for the entire site";
+			return "An awesome effect for the entire site";
 		case VAR_displayName:
 			return "The display name for this user";
 		case VAR_siteFontSize:
-			return "The default font size for the site (small, medium, large). ";
+			return "The default font size for the site";
 		case VAR_siteTheme:
 			return "The site theme, either light or dark. ";
 		case VAR_webComponentsTheme:
