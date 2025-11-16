@@ -43,7 +43,7 @@ import io.vertx.core.json.JsonObject;
  * 
  * SearchPageUri: /en-us/search/smart-aquaculture-developer
  * EditPageUri: /en-us/edit/smart-aquaculture-developer/{pageId}
- * UserPageUri: /en-us/learn/smart-aquaculture-developer/{pageId}
+ * UserPageUri: /en-us/smart-aquaculture-developer/learn/{pageId}
  * ApiUri: /en-us/api/smart-aquaculture-developer
  * ApiMethod:
  *   Search:
@@ -54,7 +54,7 @@ import io.vertx.core.json.JsonObject;
  *   PUTImport:
  * 
  * AuthGroup:
- *   smart-aquaculture-developer:
+ *   COMPANYPRODUCT-smart-aquaculture-developer-GET:
  *     GET:
  *   Admin:
  *     POST:
@@ -233,6 +233,112 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * DisplayName: prerequisite article IDs
+   * Description: The prerequisite article IDs comma-separated. 
+   */
+  protected void _prerequisiteArticleIds(Wrap<String> w) {
+  }
+
+  /**
+   * Ignore: true
+   */
+  protected void _prerequisiteArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
+    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
+    if(prerequisiteArticleIds != null) {
+      List<String> list = Arrays.asList(StringUtils.split(prerequisiteArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+      l.setC(SmartAquacultureDeveloper.class);
+      l.q("*:*");
+      l.fq(String.format("pageId_docvalues_string:" + list.stream()
+          .map(id -> SearchTool.escapeQueryChars(id))
+          .collect(Collectors.joining(" OR ", "(", ")"))
+          ));
+      l.setStore(true);
+    }
+    promise.complete(l);
+  }
+
+  /**
+   * {@inheritDoc}
+   * Stored: true
+   * DisplayName: prerequisite articles
+   * Description: A JSON array of prerequisite articles. 
+   */
+  protected void _prerequisiteArticles(Wrap<JsonArray> w) {
+    JsonArray array = new JsonArray();
+    prerequisiteArticleSearch.getList().stream().forEach(prerequisiteArticle -> {
+        JsonObject obj = JsonObject.mapFrom(prerequisiteArticle);
+        obj.remove(SmartAquacultureDeveloper.VAR_prerequisiteArticles);
+        obj.remove(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds);
+        JsonObject obj2 = new JsonObject();
+        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
+        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
+        array.add(obj2);
+    });
+    w.o(array);
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: next article IDs
+   * Description: The next article IDs comma-separated. 
+   */
+  protected void _nextArticleIds(Wrap<String> w) {
+  }
+
+  /**
+   * Ignore: true
+   */
+  protected void _nextArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
+    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
+    if(nextArticleIds != null) {
+      List<String> list = Arrays.asList(StringUtils.split(nextArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+      l.setC(SmartAquacultureDeveloper.class);
+      l.q("*:*");
+      l.fq(String.format("pageId_docvalues_string:" + list.stream()
+          .map(id -> SearchTool.escapeQueryChars(id))
+          .collect(Collectors.joining(" OR ", "(", ")"))
+          ));
+      l.setStore(true);
+    }
+    promise.complete(l);
+  }
+
+  /**
+   * {@inheritDoc}
+   * Stored: true
+   * DisplayName: next articles
+   * Description: A JSON array of next articles. 
+   */
+  protected void _nextArticles(Wrap<JsonArray> w) {
+    JsonArray array = new JsonArray();
+    nextArticleSearch.getList().stream().forEach(nextArticle -> {
+        JsonObject obj = JsonObject.mapFrom(nextArticle);
+        obj.remove(SmartAquacultureDeveloper.VAR_nextArticles);
+        obj.remove(SmartAquacultureDeveloper.VAR_nextArticleIds);
+        JsonObject obj2 = new JsonObject();
+        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
+        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
+        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
+        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
+        array.add(obj2);
+    });
+    w.o(array);
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
    * DisplayName: labels string
    * Description: The labels String for this article comma-separated. 
    */
@@ -303,5 +409,10 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
         array.add(obj2);
     });
     w.o(array);
+  }
+
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/smart-aquaculture-developer/learn/%s";
   }
 }

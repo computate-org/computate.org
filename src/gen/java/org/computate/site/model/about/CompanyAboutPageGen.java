@@ -111,308 +111,308 @@ import io.vertx.core.json.JsonArray;
  * Generated: true
  **/
 public abstract class CompanyAboutPageGen<DEV> extends CompanyAboutGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyAboutPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyAboutPage.class);
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyAboutPageGen<DEV>> promiseDeepCompanyAboutPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyAboutPage();
-	}
+  public Future<CompanyAboutPageGen<DEV>> promiseDeepCompanyAboutPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyAboutPage();
+  }
 
-	public Future<CompanyAboutPageGen<DEV>> promiseDeepCompanyAboutPage() {
-		Promise<CompanyAboutPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyAboutPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepCompanyAboutGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyAboutPageGen<DEV>> promiseDeepCompanyAboutPage() {
+    Promise<CompanyAboutPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyAboutPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepCompanyAboutGenPage(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyAboutPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyAboutPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyAboutPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyAboutPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyAboutPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyAboutPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyAboutPage(SiteRequest siteRequest_) {
-			super.siteRequestCompanyAboutGenPage(siteRequest_);
-	}
+  public void siteRequestCompanyAboutPage(SiteRequest siteRequest_) {
+      super.siteRequestCompanyAboutGenPage(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyAboutPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyAboutPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyAboutPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyAboutPage(String var) {
-		CompanyAboutPage oCompanyAboutPage = (CompanyAboutPage)this;
-		switch(var) {
-			default:
-				return super.obtainCompanyAboutGenPage(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyAboutPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyAboutPage(String var) {
+    CompanyAboutPage oCompanyAboutPage = (CompanyAboutPage)this;
+    switch(var) {
+      default:
+        return super.obtainCompanyAboutGenPage(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyAboutPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyAboutPage(String var, Object val) {
-		CompanyAboutPage oCompanyAboutPage = (CompanyAboutPage)this;
-		switch(var) {
-			default:
-				return super.relateCompanyAboutGenPage(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyAboutPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyAboutPage(String var, Object val) {
+    CompanyAboutPage oCompanyAboutPage = (CompanyAboutPage)this;
+    switch(var) {
+      default:
+        return super.relateCompanyAboutGenPage(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutPage o) {
-		return staticSetCompanyAboutPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyAboutPage(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutPage o) {
-		switch(entityVar) {
-			default:
-				return CompanyAboutGenPage.staticSetCompanyAboutGenPage(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutPage o) {
+    return staticSetCompanyAboutPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyAboutPage(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutPage o) {
+    switch(entityVar) {
+      default:
+        return CompanyAboutGenPage.staticSetCompanyAboutGenPage(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyAboutPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyAboutPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyAboutGenPage.staticSearchCompanyAboutGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyAboutPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyAboutPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyAboutGenPage.staticSearchCompanyAboutGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyAboutPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyAboutPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyAboutGenPage.staticSearchStrCompanyAboutGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyAboutPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyAboutPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyAboutGenPage.staticSearchStrCompanyAboutGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyAboutPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyAboutPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-			default:
-				return CompanyAboutGenPage.staticSearchFqCompanyAboutGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyAboutPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyAboutPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+      default:
+        return CompanyAboutGenPage.staticSearchFqCompanyAboutGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyAboutPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAboutPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String CLASS_SIMPLE_NAME = "CompanyAboutPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAboutPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
 
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyAboutPage.displayNameCompanyAboutPage(var);
-	}
-	public static String displayNameCompanyAboutPage(String var) {
-		switch(var) {
-		default:
-			return CompanyAboutGenPage.displayNameCompanyAboutGenPage(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyAboutPage.displayNameCompanyAboutPage(var);
+  }
+  public static String displayNameCompanyAboutPage(String var) {
+    switch(var) {
+    default:
+      return CompanyAboutGenPage.displayNameCompanyAboutGenPage(var);
+    }
+  }
 
-	public static String descriptionCompanyAboutPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.descriptionCompanyAboutGenPage(var);
-		}
-	}
+  public static String descriptionCompanyAboutPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.descriptionCompanyAboutGenPage(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.classSimpleNameCompanyAboutGenPage(var);
-		}
-	}
+  public static String classSimpleNameCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.classSimpleNameCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.htmColumnCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer htmColumnCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.htmColumnCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer htmRowCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.htmRowCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer htmRowCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.htmRowCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer htmCellCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.htmCellCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer htmCellCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.htmCellCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.lengthMinCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer lengthMinCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.lengthMinCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.lengthMaxCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer lengthMaxCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.lengthMaxCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer maxCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.maxCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer maxCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.maxCompanyAboutGenPage(var);
+    }
+  }
 
-	public static Integer minCompanyAboutPage(String var) {
-		switch(var) {
-			default:
-				return CompanyAboutGenPage.minCompanyAboutGenPage(var);
-		}
-	}
+  public static Integer minCompanyAboutPage(String var) {
+    switch(var) {
+      default:
+        return CompanyAboutGenPage.minCompanyAboutGenPage(var);
+    }
+  }
 }

@@ -111,308 +111,308 @@ import io.vertx.core.json.JsonArray;
  * Generated: true
  **/
 public abstract class SmartAquacultureDeveloperPageGen<DEV> extends SmartAquacultureDeveloperGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(SmartAquacultureDeveloperPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(SmartAquacultureDeveloperPage.class);
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<SmartAquacultureDeveloperPageGen<DEV>> promiseDeepSmartAquacultureDeveloperPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepSmartAquacultureDeveloperPage();
-	}
+  public Future<SmartAquacultureDeveloperPageGen<DEV>> promiseDeepSmartAquacultureDeveloperPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepSmartAquacultureDeveloperPage();
+  }
 
-	public Future<SmartAquacultureDeveloperPageGen<DEV>> promiseDeepSmartAquacultureDeveloperPage() {
-		Promise<SmartAquacultureDeveloperPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseSmartAquacultureDeveloperPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepSmartAquacultureDeveloperGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<SmartAquacultureDeveloperPageGen<DEV>> promiseDeepSmartAquacultureDeveloperPage() {
+    Promise<SmartAquacultureDeveloperPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseSmartAquacultureDeveloperPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepSmartAquacultureDeveloperGenPage(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseSmartAquacultureDeveloperPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseSmartAquacultureDeveloperPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends SmartAquacultureDeveloperPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepSmartAquacultureDeveloperPage(siteRequest_);
-	}
+  @Override public Future<? extends SmartAquacultureDeveloperPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepSmartAquacultureDeveloperPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestSmartAquacultureDeveloperPage(SiteRequest siteRequest_) {
-			super.siteRequestSmartAquacultureDeveloperGenPage(siteRequest_);
-	}
+  public void siteRequestSmartAquacultureDeveloperPage(SiteRequest siteRequest_) {
+      super.siteRequestSmartAquacultureDeveloperGenPage(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestSmartAquacultureDeveloperPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestSmartAquacultureDeveloperPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainSmartAquacultureDeveloperPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainSmartAquacultureDeveloperPage(String var) {
-		SmartAquacultureDeveloperPage oSmartAquacultureDeveloperPage = (SmartAquacultureDeveloperPage)this;
-		switch(var) {
-			default:
-				return super.obtainSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainSmartAquacultureDeveloperPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainSmartAquacultureDeveloperPage(String var) {
+    SmartAquacultureDeveloperPage oSmartAquacultureDeveloperPage = (SmartAquacultureDeveloperPage)this;
+    switch(var) {
+      default:
+        return super.obtainSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateSmartAquacultureDeveloperPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateSmartAquacultureDeveloperPage(String var, Object val) {
-		SmartAquacultureDeveloperPage oSmartAquacultureDeveloperPage = (SmartAquacultureDeveloperPage)this;
-		switch(var) {
-			default:
-				return super.relateSmartAquacultureDeveloperGenPage(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateSmartAquacultureDeveloperPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateSmartAquacultureDeveloperPage(String var, Object val) {
+    SmartAquacultureDeveloperPage oSmartAquacultureDeveloperPage = (SmartAquacultureDeveloperPage)this;
+    switch(var) {
+      default:
+        return super.relateSmartAquacultureDeveloperGenPage(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperPage o) {
-		return staticSetSmartAquacultureDeveloperPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperPage o) {
-		switch(entityVar) {
-			default:
-				return SmartAquacultureDeveloperGenPage.staticSetSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperPage o) {
+    return staticSetSmartAquacultureDeveloperPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperPage o) {
+    switch(entityVar) {
+      default:
+        return SmartAquacultureDeveloperGenPage.staticSetSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return SmartAquacultureDeveloperGenPage.staticSearchSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return SmartAquacultureDeveloperGenPage.staticSearchSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return SmartAquacultureDeveloperGenPage.staticSearchStrSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return SmartAquacultureDeveloperGenPage.staticSearchStrSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-			default:
-				return SmartAquacultureDeveloperGenPage.staticSearchFqSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqSmartAquacultureDeveloperPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+      default:
+        return SmartAquacultureDeveloperGenPage.staticSearchFqSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "SmartAquacultureDeveloperPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String CLASS_SIMPLE_NAME = "SmartAquacultureDeveloperPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
 
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return SmartAquacultureDeveloperPage.displayNameSmartAquacultureDeveloperPage(var);
-	}
-	public static String displayNameSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-		default:
-			return SmartAquacultureDeveloperGenPage.displayNameSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return SmartAquacultureDeveloperPage.displayNameSmartAquacultureDeveloperPage(var);
+  }
+  public static String displayNameSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+    default:
+      return SmartAquacultureDeveloperGenPage.displayNameSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static String descriptionSmartAquacultureDeveloperPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.descriptionSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static String descriptionSmartAquacultureDeveloperPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.descriptionSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static String classSimpleNameSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.classSimpleNameSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static String classSimpleNameSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.classSimpleNameSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer htmColumnSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.htmColumnSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer htmColumnSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.htmColumnSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer htmRowSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.htmRowSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer htmRowSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.htmRowSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer htmCellSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.htmCellSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer htmCellSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.htmCellSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer lengthMinSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.lengthMinSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer lengthMinSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.lengthMinSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer lengthMaxSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.lengthMaxSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer lengthMaxSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.lengthMaxSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer maxSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.maxSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer maxSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.maxSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 
-	public static Integer minSmartAquacultureDeveloperPage(String var) {
-		switch(var) {
-			default:
-				return SmartAquacultureDeveloperGenPage.minSmartAquacultureDeveloperGenPage(var);
-		}
-	}
+  public static Integer minSmartAquacultureDeveloperPage(String var) {
+    switch(var) {
+      default:
+        return SmartAquacultureDeveloperGenPage.minSmartAquacultureDeveloperGenPage(var);
+    }
+  }
 }

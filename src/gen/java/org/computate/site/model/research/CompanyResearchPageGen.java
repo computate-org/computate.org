@@ -111,308 +111,308 @@ import io.vertx.core.json.JsonArray;
  * Generated: true
  **/
 public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyResearchPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyResearchPage.class);
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyResearchPage();
-	}
+  public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyResearchPage();
+  }
 
-	public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage() {
-		Promise<CompanyResearchPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyResearchPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepCompanyResearchGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyResearchPageGen<DEV>> promiseDeepCompanyResearchPage() {
+    Promise<CompanyResearchPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyResearchPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepCompanyResearchGenPage(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyResearchPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyResearchPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyResearchPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyResearchPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyResearchPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyResearchPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyResearchPage(SiteRequest siteRequest_) {
-			super.siteRequestCompanyResearchGenPage(siteRequest_);
-	}
+  public void siteRequestCompanyResearchPage(SiteRequest siteRequest_) {
+      super.siteRequestCompanyResearchGenPage(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyResearchPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyResearchPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyResearchPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyResearchPage(String var) {
-		CompanyResearchPage oCompanyResearchPage = (CompanyResearchPage)this;
-		switch(var) {
-			default:
-				return super.obtainCompanyResearchGenPage(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyResearchPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyResearchPage(String var) {
+    CompanyResearchPage oCompanyResearchPage = (CompanyResearchPage)this;
+    switch(var) {
+      default:
+        return super.obtainCompanyResearchGenPage(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyResearchPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyResearchPage(String var, Object val) {
-		CompanyResearchPage oCompanyResearchPage = (CompanyResearchPage)this;
-		switch(var) {
-			default:
-				return super.relateCompanyResearchGenPage(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyResearchPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyResearchPage(String var, Object val) {
+    CompanyResearchPage oCompanyResearchPage = (CompanyResearchPage)this;
+    switch(var) {
+      default:
+        return super.relateCompanyResearchGenPage(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyResearchPage o) {
-		return staticSetCompanyResearchPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyResearchPage(String entityVar, SiteRequest siteRequest_, String v, CompanyResearchPage o) {
-		switch(entityVar) {
-			default:
-				return CompanyResearchGenPage.staticSetCompanyResearchGenPage(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyResearchPage o) {
+    return staticSetCompanyResearchPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyResearchPage(String entityVar, SiteRequest siteRequest_, String v, CompanyResearchPage o) {
+    switch(entityVar) {
+      default:
+        return CompanyResearchGenPage.staticSetCompanyResearchGenPage(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyResearchPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyResearchGenPage.staticSearchCompanyResearchGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyResearchPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyResearchGenPage.staticSearchCompanyResearchGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyResearchPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyResearchGenPage.staticSearchStrCompanyResearchGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyResearchPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyResearchPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyResearchGenPage.staticSearchStrCompanyResearchGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyResearchPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyResearchPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-			default:
-				return CompanyResearchGenPage.staticSearchFqCompanyResearchGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyResearchPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyResearchPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+      default:
+        return CompanyResearchGenPage.staticSearchFqCompanyResearchGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyResearchPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.research.CompanyResearchPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String CLASS_SIMPLE_NAME = "CompanyResearchPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.research.CompanyResearchPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
 
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyResearchPage.displayNameCompanyResearchPage(var);
-	}
-	public static String displayNameCompanyResearchPage(String var) {
-		switch(var) {
-		default:
-			return CompanyResearchGenPage.displayNameCompanyResearchGenPage(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyResearchPage.displayNameCompanyResearchPage(var);
+  }
+  public static String displayNameCompanyResearchPage(String var) {
+    switch(var) {
+    default:
+      return CompanyResearchGenPage.displayNameCompanyResearchGenPage(var);
+    }
+  }
 
-	public static String descriptionCompanyResearchPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.descriptionCompanyResearchGenPage(var);
-		}
-	}
+  public static String descriptionCompanyResearchPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.descriptionCompanyResearchGenPage(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.classSimpleNameCompanyResearchGenPage(var);
-		}
-	}
+  public static String classSimpleNameCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.classSimpleNameCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.htmColumnCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer htmColumnCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.htmColumnCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer htmRowCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.htmRowCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer htmRowCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.htmRowCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer htmCellCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.htmCellCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer htmCellCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.htmCellCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.lengthMinCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer lengthMinCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.lengthMinCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.lengthMaxCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer lengthMaxCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.lengthMaxCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer maxCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.maxCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer maxCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.maxCompanyResearchGenPage(var);
+    }
+  }
 
-	public static Integer minCompanyResearchPage(String var) {
-		switch(var) {
-			default:
-				return CompanyResearchGenPage.minCompanyResearchGenPage(var);
-		}
-	}
+  public static Integer minCompanyResearchPage(String var) {
+    switch(var) {
+      default:
+        return CompanyResearchGenPage.minCompanyResearchGenPage(var);
+    }
+  }
 }

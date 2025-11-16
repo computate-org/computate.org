@@ -134,695 +134,695 @@ import io.vertx.core.Future;
  * Generated: true
  **/
 public abstract class CompanyAboutGenPageGen<DEV> extends PageLayout {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyAboutGenPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyAboutGenPage.class);
 
 	/////////////////////////////
-	// searchListCompanyAbout_ //
+  // searchListCompanyAbout_ //
 	/////////////////////////////
 
 
-	/**	 The entity searchListCompanyAbout_
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<CompanyAbout> searchListCompanyAbout_;
+  /**   The entity searchListCompanyAbout_
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<CompanyAbout> searchListCompanyAbout_;
 
-	/**	<br> The entity searchListCompanyAbout_
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyAbout_">Find the entity searchListCompanyAbout_ in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _searchListCompanyAbout_(Wrap<SearchList<CompanyAbout>> w);
+  /**  <br> The entity searchListCompanyAbout_
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyAbout_">Find the entity searchListCompanyAbout_ in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _searchListCompanyAbout_(Wrap<SearchList<CompanyAbout>> w);
 
-	public SearchList<CompanyAbout> getSearchListCompanyAbout_() {
-		return searchListCompanyAbout_;
-	}
+  public SearchList<CompanyAbout> getSearchListCompanyAbout_() {
+    return searchListCompanyAbout_;
+  }
 
-	public void setSearchListCompanyAbout_(SearchList<CompanyAbout> searchListCompanyAbout_) {
-		this.searchListCompanyAbout_ = searchListCompanyAbout_;
-	}
-	public static SearchList<CompanyAbout> staticSetSearchListCompanyAbout_(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyAboutGenPage searchListCompanyAbout_Init() {
-		Wrap<SearchList<CompanyAbout>> searchListCompanyAbout_Wrap = new Wrap<SearchList<CompanyAbout>>().var("searchListCompanyAbout_");
-		if(searchListCompanyAbout_ == null) {
-			_searchListCompanyAbout_(searchListCompanyAbout_Wrap);
-			Optional.ofNullable(searchListCompanyAbout_Wrap.getO()).ifPresent(o -> {
-				setSearchListCompanyAbout_(o);
-			});
-		}
-		return (CompanyAboutGenPage)this;
-	}
+  public void setSearchListCompanyAbout_(SearchList<CompanyAbout> searchListCompanyAbout_) {
+    this.searchListCompanyAbout_ = searchListCompanyAbout_;
+  }
+  public static SearchList<CompanyAbout> staticSetSearchListCompanyAbout_(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyAboutGenPage searchListCompanyAbout_Init() {
+    Wrap<SearchList<CompanyAbout>> searchListCompanyAbout_Wrap = new Wrap<SearchList<CompanyAbout>>().var("searchListCompanyAbout_");
+    if(searchListCompanyAbout_ == null) {
+      _searchListCompanyAbout_(searchListCompanyAbout_Wrap);
+      Optional.ofNullable(searchListCompanyAbout_Wrap.getO()).ifPresent(o -> {
+        setSearchListCompanyAbout_(o);
+      });
+    }
+    return (CompanyAboutGenPage)this;
+  }
 
 	//////////////////////
-	// listCompanyAbout //
+  // listCompanyAbout //
 	//////////////////////
 
 
-	/**	 The entity listCompanyAbout
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = JsonArrayDeserializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected JsonArray listCompanyAbout = new JsonArray();
+  /**   The entity listCompanyAbout
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray listCompanyAbout = new JsonArray();
 
-	/**	<br> The entity listCompanyAbout
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:listCompanyAbout">Find the entity listCompanyAbout in Solr</a>
-	 * <br>
-	 * @param l is the entity already constructed. 
-	 **/
-	protected abstract void _listCompanyAbout(JsonArray l);
+  /**  <br> The entity listCompanyAbout
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:listCompanyAbout">Find the entity listCompanyAbout in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _listCompanyAbout(JsonArray l);
 
-	public JsonArray getListCompanyAbout() {
-		return listCompanyAbout;
-	}
+  public JsonArray getListCompanyAbout() {
+    return listCompanyAbout;
+  }
 
-	public void setListCompanyAbout(JsonArray listCompanyAbout) {
-		this.listCompanyAbout = listCompanyAbout;
-	}
-	@JsonIgnore
-	public void setListCompanyAbout(String o) {
-		this.listCompanyAbout = CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, o);
-	}
-	public static JsonArray staticSetListCompanyAbout(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonArray(o);
-		}
-		return null;
-	}
-	protected CompanyAboutGenPage listCompanyAboutInit() {
-		_listCompanyAbout(listCompanyAbout);
-		return (CompanyAboutGenPage)this;
-	}
+  public void setListCompanyAbout(JsonArray listCompanyAbout) {
+    this.listCompanyAbout = listCompanyAbout;
+  }
+  @JsonIgnore
+  public void setListCompanyAbout(String o) {
+    this.listCompanyAbout = CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, o);
+  }
+  public static JsonArray staticSetListCompanyAbout(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected CompanyAboutGenPage listCompanyAboutInit() {
+    _listCompanyAbout(listCompanyAbout);
+    return (CompanyAboutGenPage)this;
+  }
 
-	public static String staticSearchListCompanyAbout(SiteRequest siteRequest_, JsonArray o) {
-		return o.toString();
-	}
+  public static String staticSearchListCompanyAbout(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
 
-	public static String staticSearchStrListCompanyAbout(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrListCompanyAbout(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqListCompanyAbout(SiteRequest siteRequest_, String o) {
-		return CompanyAboutGenPage.staticSearchListCompanyAbout(siteRequest_, CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqListCompanyAbout(SiteRequest siteRequest_, String o) {
+    return CompanyAboutGenPage.staticSearchListCompanyAbout(siteRequest_, CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, o)).toString();
+  }
 
 	/////////////////
-	// resultCount //
+  // resultCount //
 	/////////////////
 
 
-	/**	 The entity resultCount
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer resultCount;
+  /**   The entity resultCount
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer resultCount;
 
-	/**	<br> The entity resultCount
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resultCount(Wrap<Integer> w);
+  /**  <br> The entity resultCount
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getResultCount() {
-		return resultCount;
-	}
+  public Integer getResultCount() {
+    return resultCount;
+  }
 
-	public void setResultCount(Integer resultCount) {
-		this.resultCount = resultCount;
-	}
-	@JsonIgnore
-	public void setResultCount(String o) {
-		this.resultCount = CompanyAboutGenPage.staticSetResultCount(siteRequest_, o);
-	}
-	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected CompanyAboutGenPage resultCountInit() {
-		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
-		if(resultCount == null) {
-			_resultCount(resultCountWrap);
-			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
-				setResultCount(o);
-			});
-		}
-		return (CompanyAboutGenPage)this;
-	}
+  public void setResultCount(Integer resultCount) {
+    this.resultCount = resultCount;
+  }
+  @JsonIgnore
+  public void setResultCount(String o) {
+    this.resultCount = CompanyAboutGenPage.staticSetResultCount(siteRequest_, o);
+  }
+  public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyAboutGenPage resultCountInit() {
+    Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+    if(resultCount == null) {
+      _resultCount(resultCountWrap);
+      Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+        setResultCount(o);
+      });
+    }
+    return (CompanyAboutGenPage)this;
+  }
 
-	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
+  public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
 
-	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
-		return CompanyAboutGenPage.staticSearchResultCount(siteRequest_, CompanyAboutGenPage.staticSetResultCount(siteRequest_, o)).toString();
-	}
-
-	////////////
-	// result //
-	////////////
-
-
-	/**	 The entity result
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected CompanyAbout result;
-
-	/**	<br> The entity result
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _result(Wrap<CompanyAbout> w);
-
-	public CompanyAbout getResult() {
-		return result;
-	}
-
-	public void setResult(CompanyAbout result) {
-		this.result = result;
-	}
-	public static CompanyAbout staticSetResult(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyAboutGenPage resultInit() {
-		Wrap<CompanyAbout> resultWrap = new Wrap<CompanyAbout>().var("result");
-		if(result == null) {
-			_result(resultWrap);
-			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
-				setResult(o);
-			});
-		}
-		return (CompanyAboutGenPage)this;
-	}
+  public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+    return CompanyAboutGenPage.staticSearchResultCount(siteRequest_, CompanyAboutGenPage.staticSetResultCount(siteRequest_, o)).toString();
+  }
 
 	////////////
-	// solrId //
+  // result //
 	////////////
 
 
-	/**	 The entity solrId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String solrId;
+  /**   The entity result
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected CompanyAbout result;
 
-	/**	<br> The entity solrId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _solrId(Wrap<String> w);
+  /**  <br> The entity result
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _result(Wrap<CompanyAbout> w);
 
-	public String getSolrId() {
-		return solrId;
-	}
-	public void setSolrId(String o) {
-		this.solrId = CompanyAboutGenPage.staticSetSolrId(siteRequest_, o);
-	}
-	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyAboutGenPage solrIdInit() {
-		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
-		if(solrId == null) {
-			_solrId(solrIdWrap);
-			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
-				setSolrId(o);
-			});
-		}
-		return (CompanyAboutGenPage)this;
-	}
+  public CompanyAbout getResult() {
+    return result;
+  }
 
-	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public void setResult(CompanyAbout result) {
+    this.result = result;
+  }
+  public static CompanyAbout staticSetResult(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyAboutGenPage resultInit() {
+    Wrap<CompanyAbout> resultWrap = new Wrap<CompanyAbout>().var("result");
+    if(result == null) {
+      _result(resultWrap);
+      Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+        setResult(o);
+      });
+    }
+    return (CompanyAboutGenPage)this;
+  }
 
-	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+	////////////
+  // solrId //
+	////////////
 
-	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
-		return CompanyAboutGenPage.staticSearchSolrId(siteRequest_, CompanyAboutGenPage.staticSetSolrId(siteRequest_, o)).toString();
-	}
+
+  /**   The entity solrId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String solrId;
+
+  /**  <br> The entity solrId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _solrId(Wrap<String> w);
+
+  public String getSolrId() {
+    return solrId;
+  }
+  public void setSolrId(String o) {
+    this.solrId = CompanyAboutGenPage.staticSetSolrId(siteRequest_, o);
+  }
+  public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyAboutGenPage solrIdInit() {
+    Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+    if(solrId == null) {
+      _solrId(solrIdWrap);
+      Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+        setSolrId(o);
+      });
+    }
+    return (CompanyAboutGenPage)this;
+  }
+
+  public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+    return CompanyAboutGenPage.staticSearchSolrId(siteRequest_, CompanyAboutGenPage.staticSetSolrId(siteRequest_, o)).toString();
+  }
 
 	/////////////////////////
-	// pageUriCompanyAbout //
+  // pageUriCompanyAbout //
 	/////////////////////////
 
 
-	/**	 The entity pageUriCompanyAbout
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageUriCompanyAbout;
+  /**   The entity pageUriCompanyAbout
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageUriCompanyAbout;
 
-	/**	<br> The entity pageUriCompanyAbout
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyAbout">Find the entity pageUriCompanyAbout in Solr</a>
-	 * <br>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageUriCompanyAbout(Wrap<String> c);
+  /**  <br> The entity pageUriCompanyAbout
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.about.CompanyAboutGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyAbout">Find the entity pageUriCompanyAbout in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageUriCompanyAbout(Wrap<String> c);
 
-	public String getPageUriCompanyAbout() {
-		return pageUriCompanyAbout;
-	}
-	public void setPageUriCompanyAbout(String o) {
-		this.pageUriCompanyAbout = CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, o);
-	}
-	public static String staticSetPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyAboutGenPage pageUriCompanyAboutInit() {
-		Wrap<String> pageUriCompanyAboutWrap = new Wrap<String>().var("pageUriCompanyAbout");
-		if(pageUriCompanyAbout == null) {
-			_pageUriCompanyAbout(pageUriCompanyAboutWrap);
-			Optional.ofNullable(pageUriCompanyAboutWrap.getO()).ifPresent(o -> {
-				setPageUriCompanyAbout(o);
-			});
-		}
-		return (CompanyAboutGenPage)this;
-	}
+  public String getPageUriCompanyAbout() {
+    return pageUriCompanyAbout;
+  }
+  public void setPageUriCompanyAbout(String o) {
+    this.pageUriCompanyAbout = CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, o);
+  }
+  public static String staticSetPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyAboutGenPage pageUriCompanyAboutInit() {
+    Wrap<String> pageUriCompanyAboutWrap = new Wrap<String>().var("pageUriCompanyAbout");
+    if(pageUriCompanyAbout == null) {
+      _pageUriCompanyAbout(pageUriCompanyAboutWrap);
+      Optional.ofNullable(pageUriCompanyAboutWrap.getO()).ifPresent(o -> {
+        setPageUriCompanyAbout(o);
+      });
+    }
+    return (CompanyAboutGenPage)this;
+  }
 
-	public static String staticSearchPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
-		return CompanyAboutGenPage.staticSearchPageUriCompanyAbout(siteRequest_, CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageUriCompanyAbout(SiteRequest siteRequest_, String o) {
+    return CompanyAboutGenPage.staticSearchPageUriCompanyAbout(siteRequest_, CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, o)).toString();
+  }
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyAboutGenPageGen<DEV>> promiseDeepCompanyAboutGenPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyAboutGenPage();
-	}
+  public Future<CompanyAboutGenPageGen<DEV>> promiseDeepCompanyAboutGenPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyAboutGenPage();
+  }
 
-	public Future<CompanyAboutGenPageGen<DEV>> promiseDeepCompanyAboutGenPage() {
-		Promise<CompanyAboutGenPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyAboutGenPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyAboutGenPageGen<DEV>> promiseDeepCompanyAboutGenPage() {
+    Promise<CompanyAboutGenPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyAboutGenPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyAboutGenPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				searchListCompanyAbout_Init();
-				listCompanyAboutInit();
-				resultCountInit();
-				resultInit();
-				solrIdInit();
-				pageUriCompanyAboutInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyAboutGenPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        searchListCompanyAbout_Init();
+        listCompanyAboutInit();
+        resultCountInit();
+        resultInit();
+        solrIdInit();
+        pageUriCompanyAboutInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyAboutGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyAboutGenPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyAboutGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyAboutGenPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyAboutGenPage(SiteRequest siteRequest_) {
-			super.siteRequestPageLayout(siteRequest_);
-	}
+  public void siteRequestCompanyAboutGenPage(SiteRequest siteRequest_) {
+      super.siteRequestPageLayout(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyAboutGenPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyAboutGenPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyAboutGenPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyAboutGenPage(String var) {
-		CompanyAboutGenPage oCompanyAboutGenPage = (CompanyAboutGenPage)this;
-		switch(var) {
-			case "searchListCompanyAbout_":
-				return oCompanyAboutGenPage.searchListCompanyAbout_;
-			case "listCompanyAbout":
-				return oCompanyAboutGenPage.listCompanyAbout;
-			case "resultCount":
-				return oCompanyAboutGenPage.resultCount;
-			case "result":
-				return oCompanyAboutGenPage.result;
-			case "solrId":
-				return oCompanyAboutGenPage.solrId;
-			case "pageUriCompanyAbout":
-				return oCompanyAboutGenPage.pageUriCompanyAbout;
-			default:
-				return super.obtainPageLayout(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyAboutGenPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyAboutGenPage(String var) {
+    CompanyAboutGenPage oCompanyAboutGenPage = (CompanyAboutGenPage)this;
+    switch(var) {
+      case "searchListCompanyAbout_":
+        return oCompanyAboutGenPage.searchListCompanyAbout_;
+      case "listCompanyAbout":
+        return oCompanyAboutGenPage.listCompanyAbout;
+      case "resultCount":
+        return oCompanyAboutGenPage.resultCount;
+      case "result":
+        return oCompanyAboutGenPage.result;
+      case "solrId":
+        return oCompanyAboutGenPage.solrId;
+      case "pageUriCompanyAbout":
+        return oCompanyAboutGenPage.pageUriCompanyAbout;
+      default:
+        return super.obtainPageLayout(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyAboutGenPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyAboutGenPage(String var, Object val) {
-		CompanyAboutGenPage oCompanyAboutGenPage = (CompanyAboutGenPage)this;
-		switch(var) {
-			default:
-				return super.relatePageLayout(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyAboutGenPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyAboutGenPage(String var, Object val) {
+    CompanyAboutGenPage oCompanyAboutGenPage = (CompanyAboutGenPage)this;
+    switch(var) {
+      default:
+        return super.relatePageLayout(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
-		return staticSetCompanyAboutGenPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
-		switch(entityVar) {
-		case "listCompanyAbout":
-			return CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, v);
-		case "resultCount":
-			return CompanyAboutGenPage.staticSetResultCount(siteRequest_, v);
-		case "solrId":
-			return CompanyAboutGenPage.staticSetSolrId(siteRequest_, v);
-		case "pageUriCompanyAbout":
-			return CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, v);
-			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
+    return staticSetCompanyAboutGenPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyAboutGenPage o) {
+    switch(entityVar) {
+    case "listCompanyAbout":
+      return CompanyAboutGenPage.staticSetListCompanyAbout(siteRequest_, v);
+    case "resultCount":
+      return CompanyAboutGenPage.staticSetResultCount(siteRequest_, v);
+    case "solrId":
+      return CompanyAboutGenPage.staticSetSolrId(siteRequest_, v);
+    case "pageUriCompanyAbout":
+      return CompanyAboutGenPage.staticSetPageUriCompanyAbout(siteRequest_, v);
+      default:
+        return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyAboutGenPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyAbout":
-			return CompanyAboutGenPage.staticSearchListCompanyAbout(siteRequest_, (JsonArray)o);
-		case "resultCount":
-			return CompanyAboutGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return CompanyAboutGenPage.staticSearchSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyAbout":
-			return CompanyAboutGenPage.staticSearchPageUriCompanyAbout(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyAboutGenPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyAbout":
+      return CompanyAboutGenPage.staticSearchListCompanyAbout(siteRequest_, (JsonArray)o);
+    case "resultCount":
+      return CompanyAboutGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return CompanyAboutGenPage.staticSearchSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyAbout":
+      return CompanyAboutGenPage.staticSearchPageUriCompanyAbout(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyAboutGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyAbout":
-			return CompanyAboutGenPage.staticSearchStrListCompanyAbout(siteRequest_, (String)o);
-		case "resultCount":
-			return CompanyAboutGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return CompanyAboutGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyAbout":
-			return CompanyAboutGenPage.staticSearchStrPageUriCompanyAbout(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyAboutGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyAbout":
+      return CompanyAboutGenPage.staticSearchStrListCompanyAbout(siteRequest_, (String)o);
+    case "resultCount":
+      return CompanyAboutGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return CompanyAboutGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyAbout":
+      return CompanyAboutGenPage.staticSearchStrPageUriCompanyAbout(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyAboutGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "listCompanyAbout":
-			return CompanyAboutGenPage.staticSearchFqListCompanyAbout(siteRequest_, o);
-		case "resultCount":
-			return CompanyAboutGenPage.staticSearchFqResultCount(siteRequest_, o);
-		case "solrId":
-			return CompanyAboutGenPage.staticSearchFqSolrId(siteRequest_, o);
-		case "pageUriCompanyAbout":
-			return CompanyAboutGenPage.staticSearchFqPageUriCompanyAbout(siteRequest_, o);
-			default:
-				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyAboutGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyAboutGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "listCompanyAbout":
+      return CompanyAboutGenPage.staticSearchFqListCompanyAbout(siteRequest_, o);
+    case "resultCount":
+      return CompanyAboutGenPage.staticSearchFqResultCount(siteRequest_, o);
+    case "solrId":
+      return CompanyAboutGenPage.staticSearchFqSolrId(siteRequest_, o);
+    case "pageUriCompanyAbout":
+      return CompanyAboutGenPage.staticSearchFqPageUriCompanyAbout(siteRequest_, o);
+      default:
+        return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyAboutGenPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAboutGenPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
-	public static final String VAR_searchListCompanyAbout_ = "searchListCompanyAbout_";
-	public static final String VAR_listCompanyAbout = "listCompanyAbout";
-	public static final String VAR_resultCount = "resultCount";
-	public static final String VAR_result = "result";
-	public static final String VAR_solrId = "solrId";
-	public static final String VAR_pageUriCompanyAbout = "pageUriCompanyAbout";
+  public static final String CLASS_SIMPLE_NAME = "CompanyAboutGenPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.about.CompanyAboutGenPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String VAR_searchListCompanyAbout_ = "searchListCompanyAbout_";
+  public static final String VAR_listCompanyAbout = "listCompanyAbout";
+  public static final String VAR_resultCount = "resultCount";
+  public static final String VAR_result = "result";
+  public static final String VAR_solrId = "solrId";
+  public static final String VAR_pageUriCompanyAbout = "pageUriCompanyAbout";
 
-	public static final String DISPLAY_NAME_searchListCompanyAbout_ = "";
-	public static final String DISPLAY_NAME_listCompanyAbout = "";
-	public static final String DISPLAY_NAME_resultCount = "";
-	public static final String DISPLAY_NAME_result = "";
-	public static final String DISPLAY_NAME_solrId = "";
-	public static final String DISPLAY_NAME_pageUriCompanyAbout = "";
+  public static final String DISPLAY_NAME_searchListCompanyAbout_ = "";
+  public static final String DISPLAY_NAME_listCompanyAbout = "";
+  public static final String DISPLAY_NAME_resultCount = "";
+  public static final String DISPLAY_NAME_result = "";
+  public static final String DISPLAY_NAME_solrId = "";
+  public static final String DISPLAY_NAME_pageUriCompanyAbout = "";
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyAboutGenPage.displayNameCompanyAboutGenPage(var);
-	}
-	public static String displayNameCompanyAboutGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyAbout_:
-			return DISPLAY_NAME_searchListCompanyAbout_;
-		case VAR_listCompanyAbout:
-			return DISPLAY_NAME_listCompanyAbout;
-		case VAR_resultCount:
-			return DISPLAY_NAME_resultCount;
-		case VAR_result:
-			return DISPLAY_NAME_result;
-		case VAR_solrId:
-			return DISPLAY_NAME_solrId;
-		case VAR_pageUriCompanyAbout:
-			return DISPLAY_NAME_pageUriCompanyAbout;
-		default:
-			return PageLayout.displayNamePageLayout(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyAboutGenPage.displayNameCompanyAboutGenPage(var);
+  }
+  public static String displayNameCompanyAboutGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyAbout_:
+      return DISPLAY_NAME_searchListCompanyAbout_;
+    case VAR_listCompanyAbout:
+      return DISPLAY_NAME_listCompanyAbout;
+    case VAR_resultCount:
+      return DISPLAY_NAME_resultCount;
+    case VAR_result:
+      return DISPLAY_NAME_result;
+    case VAR_solrId:
+      return DISPLAY_NAME_solrId;
+    case VAR_pageUriCompanyAbout:
+      return DISPLAY_NAME_pageUriCompanyAbout;
+    default:
+      return PageLayout.displayNamePageLayout(var);
+    }
+  }
 
-	public static String descriptionCompanyAboutGenPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return PageLayout.descriptionPageLayout(var);
-		}
-	}
+  public static String descriptionCompanyAboutGenPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return PageLayout.descriptionPageLayout(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyAboutGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyAbout_:
-			return "SearchList";
-		case VAR_listCompanyAbout:
-			return "JsonArray";
-		case VAR_resultCount:
-			return "Integer";
-		case VAR_result:
-			return "CompanyAbout";
-		case VAR_solrId:
-			return "String";
-		case VAR_pageUriCompanyAbout:
-			return "String";
-			default:
-				return PageLayout.classSimpleNamePageLayout(var);
-		}
-	}
+  public static String classSimpleNameCompanyAboutGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyAbout_:
+      return "SearchList";
+    case VAR_listCompanyAbout:
+      return "JsonArray";
+    case VAR_resultCount:
+      return "Integer";
+    case VAR_result:
+      return "CompanyAbout";
+    case VAR_solrId:
+      return "String";
+    case VAR_pageUriCompanyAbout:
+      return "String";
+      default:
+        return PageLayout.classSimpleNamePageLayout(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmColumnPageLayout(var);
-		}
-	}
+  public static Integer htmColumnCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmColumnPageLayout(var);
+    }
+  }
 
-	public static Integer htmRowCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmRowPageLayout(var);
-		}
-	}
+  public static Integer htmRowCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmRowPageLayout(var);
+    }
+  }
 
-	public static Integer htmCellCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmCellPageLayout(var);
-		}
-	}
+  public static Integer htmCellCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmCellPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMinPageLayout(var);
-		}
-	}
+  public static Integer lengthMinCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMinPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMaxPageLayout(var);
-		}
-	}
+  public static Integer lengthMaxCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMaxPageLayout(var);
+    }
+  }
 
-	public static Integer maxCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.maxPageLayout(var);
-		}
-	}
+  public static Integer maxCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.maxPageLayout(var);
+    }
+  }
 
-	public static Integer minCompanyAboutGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.minPageLayout(var);
-		}
-	}
+  public static Integer minCompanyAboutGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.minPageLayout(var);
+    }
+  }
 }

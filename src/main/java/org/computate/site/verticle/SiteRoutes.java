@@ -35,6 +35,7 @@ import org.computate.vertx.search.list.SearchList;
 import org.computate.vertx.verticle.EmailVerticle;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.model.course.CompanyCourse;
+import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.page.PageLayout;
 import org.computate.site.page.SitePage;
 import org.computate.site.request.SiteRequest;
@@ -87,40 +88,45 @@ public class SiteRoutes {
         siteRequest.addScopes("GET");
         facetAll(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(facetResponse -> {
           searchFreeCourses(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(topCourses -> {
-            searchPathToComputerEnlightenment(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(pathToComputerEnlightenment -> {
-              try {
-                PageLayout page = new PageLayout();
-                MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
-                siteRequest.setRequestHeaders(requestHeaders);
-                page.setSiteRequest_(siteRequest);
-                page.setServiceRequest(siteRequest.getServiceRequest());
-                page.setWebClient(webClient);
-                page.promiseDeepPageLayout(siteRequest).onSuccess(a -> {
-                  try {
-                    JsonObject ctx = ConfigKeys.getPageContext(config);
-                    ctx.mergeIn(JsonObject.mapFrom(page));
+            searchProducts(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(topProducts -> {
+              searchPathToComputerEnlightenment(siteRequest, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser).onSuccess(pathToComputerEnlightenment -> {
+                try {
+                  PageLayout page = new PageLayout();
+                  MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
+                  siteRequest.setRequestHeaders(requestHeaders);
+                  page.setSiteRequest_(siteRequest);
+                  page.setServiceRequest(siteRequest.getServiceRequest());
+                  page.setWebClient(webClient);
+                  page.promiseDeepPageLayout(siteRequest).onSuccess(a -> {
+                    try {
+                      JsonObject ctx = ConfigKeys.getPageContext(config);
+                      ctx.mergeIn(JsonObject.mapFrom(page));
 
-                    FacetField facetClass = facetResponse.getFacetField("classSimpleName_docvalues_string");
-                    ctx.put("facetClass", facetClass);
-                    ctx.put("topCourses", topCourses);
-                    ctx.put("pathToComputerEnlightenment", pathToComputerEnlightenment);
+                      FacetField facetClass = facetResponse.getFacetField("classSimpleName_docvalues_string");
+                      ctx.put("facetClass", facetClass);
+                      ctx.put("topCourses", topCourses);
+                      ctx.put("topProducts", topProducts);
+                      ctx.put("pathToComputerEnlightenment", pathToComputerEnlightenment);
 
-                    Path resourceTemplatePath = Path.of(config.getString(ConfigKeys.TEMPLATE_PATH), "/en-us/HomePage.htm");
-                    String template = Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-                    String renderedTemplate = jinjava.render(template, ctx.getMap());
-                    Buffer buffer = Buffer.buffer(renderedTemplate);
-                    eventHandler.response().putHeader("Content-Type", "text/html");
-                    eventHandler.end(buffer);
-                  } catch(Exception ex) {
+                      Path resourceTemplatePath = Path.of(config.getString(ConfigKeys.TEMPLATE_PATH), "/en-us/HomePage.htm");
+                      String template = Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+                      String renderedTemplate = jinjava.render(template, ctx.getMap());
+                      Buffer buffer = Buffer.buffer(renderedTemplate);
+                      eventHandler.response().putHeader("Content-Type", "text/html");
+                      eventHandler.end(buffer);
+                    } catch(Exception ex) {
+                      LOG.error(String.format("GET home page failed. "), ex);
+                    }
+                  }).onFailure(ex -> {
                     LOG.error(String.format("GET home page failed. "), ex);
-                  }
-                }).onFailure(ex -> {
-                  LOG.error(String.format("GET home page failed. "), ex);
-                });
-              } catch(Exception ex) {
-                LOG.error("Failed to load page. ", ex);
-                eventHandler.fail(ex);
-              }
+                  });
+                } catch(Exception ex) {
+                  LOG.error("Failed to load page. ", ex);
+                  eventHandler.fail(ex);
+                }
+              }).onFailure(ex -> {
+                LOG.error(String.format("Search failed. "), new RuntimeException(ex));
+              });
             }).onFailure(ex -> {
               LOG.error(String.format("Search failed. "), new RuntimeException(ex));
             });
@@ -164,7 +170,7 @@ public class SiteRoutes {
       webClient.put(443, "api.github.com", githubUri).ssl(true)
           .putHeader("Accept", "application/vnd.github+json")
           .putHeader("X-GitHub-Api-Version", "2022-11-28")
-          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_API_TOKEN)))
+          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_TEAMS_TOKEN)))
           .sendJsonObject(new JsonObject().put("role", "member"))
           .expecting(HttpResponseExpectation.SC_OK)
           .onSuccess(memberResponse -> {
@@ -181,10 +187,60 @@ public class SiteRoutes {
     return promise.future();
   }
 
+  public static Future<Void> sendProductEmail(SiteRequest siteRequest, String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item, JsonObject user, ComputateBaseResult result) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      String userEmail = user.getString("email");
+      String customerName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+      String itemName = item.getName();
+      DeliveryOptions options = new DeliveryOptions();
+      String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
+      String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
+      String emailTo = userEmail;
+
+      String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemName, siteName);
+      String emailTemplate = (String)result.obtainForClass("emailTemplate");
+      BigDecimal total = transactionDetails.getAuthAmount();
+      BigDecimal totalTax = Optional.ofNullable(transactionDetails.getTax()).map(tax -> tax.getAmount()).orElse(null);
+      BigDecimal netAmountDue = transactionDetails.getAuthAmount();
+      options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
+      options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+
+      ZoneId zoneId = ZoneId.of(config.getString(ComputateConfigKeys.SITE_ZONE));
+      ZoneId zoneIdSite = ZoneId.of(siteRequest.getConfig().getString(ConfigKeys.SITE_ZONE));
+      ZonedDateTime createdAt = ZonedDateTime.now(zoneIdSite);
+      Locale locale = Locale.forLanguageTag(config.getString(ComputateConfigKeys.SITE_LOCALE));
+      DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
+      JsonObject body = new JsonObject();
+      body.put(ComputateConfigKeys.SITE_BASE_URL, config.getString(ComputateConfigKeys.SITE_BASE_URL));
+      body.put("siteName", siteName);
+      body.put("githubUsername", userName);
+      body.put("transactionId", transactionId);
+      body.put("subject", subject);
+      body.put("emailTo", emailTo);
+      body.put("customerName", customerName);
+      body.put("result", JsonObject.mapFrom(result));
+      body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
+      body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
+      body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
+
+      String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
+      body.put("createdAt", createdAtStr);
+
+      vertx.eventBus().send(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options);
+      LOG.info(String.format("Sending email to %s for purchasing %s", userName, pageId));
+    } catch(Exception ex) {
+      LOG.error("The square item failed to process.");
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
   public static Future<Void> processAuthorizeItem(String userName, String pageId, Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser, String transactionId, TransactionDetailsType transactionDetails, Message<Object> message, LineItemType item) {
     Promise<Void> promise = Promise.promise();
     try {
-      // String customerProfileId = transactionDetails.getProfile().getCustomerProfileId();
       if(userName != null) {
         LOG.info(String.format("Processing %s order for userName %s", item.getItemId(), userName));
         String itemId = item.getItemId();
@@ -249,95 +305,33 @@ public class SiteRoutes {
                           String userEmail = user.getString("email");
                           String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
                           JsonArray userGroups = user.getJsonArray("groups");
-                          // LOG.info(String.format("user %s group %s in groups: %s", customerProfileId, groupName, userGroups));
-                          // if(!userGroups.contains(groupName)) {
-                            webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-                                .putHeader("Authorization", String.format("Bearer %s", authToken))
-                                .putHeader("Content-Type", "application/json")
-                                .putHeader("Content-Length", "0")
-                                .send()
-                                .expecting(HttpResponseExpectation.SC_NO_CONTENT)
-                                .onSuccess(groupUserResponse -> {
+                          webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+                              .putHeader("Authorization", String.format("Bearer %s", authToken))
+                              .putHeader("Content-Type", "application/json")
+                              .putHeader("Content-Length", "0")
+                              .send()
+                              .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                              .onSuccess(groupUserResponse -> {
+                            LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
+                            sendProductEmail(siteRequest, userName, pageId, vertx, router, oauth2AuthHandler, config, webClient, jinjava, apiSiteUser, transactionId, transactionDetails, message, item, user, result).onSuccess(c -> {
                               try {
-                                LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
                                 grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
                                   promise.complete();
                                 }).onFailure(ex -> {
                                   promise.fail(ex);
                                 });
-                                // DeliveryOptions options = new DeliveryOptions();
-                                // String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
-                                // String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
-                                // String customerId = customerProfileId;
-                                // String emailTo = userEmail;
-                                // String customerName = userName;
-                                // Payment payment = null;
-                                // if(emailTo == null && customerId == null) {
-                                //   List<Tender> tenders = order.getTenders();
-                                //   if(tenders != null) {
-                                //     Tender tender = order.getTenders().get(0);
-                                //     String paymentId = tender.getPaymentId();
-                                //     PaymentsApi paymentsApi = squareClient.getPaymentsApi();
-                                //     payment = paymentsApi.getPayment(paymentId).getPayment();
-                                //     customerId = payment.getCustomerId();
-                                //   }
-                                // }
-                                // if(emailTo == null && customerId != null) {
-                                //   Customer customer = customersApi.retrieveCustomer(customerId).getCustomer();
-                                //   emailTo = customer.getEmailAddress();
-                                //   customerName = String.format("%s %s", customer.getGivenName(), customer.getFamilyName());
-                                // } else if(payment != null) {
-                                //   emailTo = payment.getBuyerEmailAddress();
-                                // }
-
-                                // String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemI, siteName);
-                                // String emailTemplate = (String)result.obtainForClass("emailTemplate");
-                                // BigDecimal total = new BigDecimal(order.getTotalMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // BigDecimal totalTax = new BigDecimal(order.getTotalTaxMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // BigDecimal netAmountDue = new BigDecimal(order.getNetAmountDueMoney().getAmount()).divide(new BigDecimal(100), RoundingMode.HALF_EVEN);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
-                                // options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
-
-                                // ZoneId zoneId = ZoneId.of(config.getString(ComputateConfigKeys.SITE_ZONE));
-                                // ZonedDateTime createdAt = ZonedDateTime.parse(order.getCreatedAt(), ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER);
-                                // Locale locale = Locale.forLanguageTag(config.getString(ComputateConfigKeys.SITE_LOCALE));
-                                // DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
-                                // JsonObject body = new JsonObject();
-                                // body.put(ComputateConfigKeys.SITE_BASE_URL, config.getString(ComputateConfigKeys.SITE_BASE_URL));
-                                // body.put("siteName", siteName);
-                                // body.put("customerProfileId", customerProfileId);
-                                // body.put("orderId", order.getId());
-                                // body.put("subject", subject);
-                                // body.put("emailTo", emailTo);
-                                // body.put("customerName", customerName);
-                                // body.put("result", JsonObject.mapFrom(result));
-                                // body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
-                                // body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
-                                // body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
-
-                                // String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
-                                // body.put("createdAt", createdAtStr);
-
-                                // vertx.eventBus().request(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options).onSuccess(b -> {
-                                //   LOG.info(String.format("Successfully granted %s access to %s", customerProfileId, name));
-                                //   promise.complete();
-                                // }).onFailure(ex -> {
-                                //   LOG.error(String.format("Failed to send email to %s. ", userEmail), ex);
-                                //   promise.fail(ex);
-                                // });
                               } catch(Throwable ex) {
                                 LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
                                 promise.fail(ex);
                               }
                             }).onFailure(ex -> {
-                              LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                              LOG.error("Failed to process authorize.net webook while sending email. ", ex);
                               promise.fail(ex);
                             });
-                          // } else {
-                          //   LOG.info(String.format("User %s already in group %s", customerProfileId, groupName));
-                          // }
+                          }).onFailure(ex -> {
+                            LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                            promise.fail(ex);
+                          });
                         } else {
                           Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", userName));
                           LOG.error(ex.getMessage(), ex);
@@ -476,7 +470,8 @@ public class SiteRoutes {
             String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
             HmacUtils hmacUtils = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, authorizeSignatureKey);
             String generatedSignature = hmacUtils.hmacHex(bodyStr);
-            // if(generatedSignature.equalsIgnoreCase(signature)) {
+            String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
+            if("SANDBOX".equals(authorizeEnvironment) ||  generatedSignature.equalsIgnoreCase(signature)) {
               JsonObject body = handler.body().asJsonObject();
               JsonObject params = new JsonObject();
               params.put("body", body);
@@ -487,15 +482,14 @@ public class SiteRoutes {
               params.put("query", new JsonObject());
               JsonObject context = new JsonObject().put("params", params).put("user", null);
               JsonObject json = new JsonObject().put("context", context);
-              // vertx.eventBus().publish("authorize-order", json, new DeliveryOptions().addHeader("X-ANET-Signature", signature));
-              vertx.eventBus().publish("authorize-order", json, new DeliveryOptions());
+              vertx.eventBus().send("authorize-order", json, new DeliveryOptions());
               handler.response().putHeader("Content-Type", "application/json");
               handler.end(new JsonObject().toBuffer());
-            // } else {
-            //   LOG.warn(String.format("Invalid authorize.net webhook with header X-ANET-Signature: %s\n%s", signature, bodyStr));
-            //   handler.response().putHeader("Content-Type", "application/json");
-            //   handler.end(new JsonObject().toBuffer());
-            // }
+            } else {
+              LOG.warn(String.format("Invalid authorize.net webhook with header X-ANET-Signature: %s\n%s", signature, bodyStr));
+              handler.response().putHeader("Content-Type", "application/json");
+              handler.end(new JsonObject().toBuffer());
+            }
           } catch(Throwable ex) {
             LOG.error("Failed to process authorize.net webook. ", ex);
             handler.fail(ex);
@@ -504,24 +498,47 @@ public class SiteRoutes {
       }
   }
 
-  public static Future<SearchList<CompanyCourse>> searchFreeCourses(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
-    Promise<SearchList<CompanyCourse>> promise = Promise.promise();
+  public static Future<SearchList<CompanyProduct>> searchFreeCourses(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
+    Promise<SearchList<CompanyProduct>> promise = Promise.promise();
     try {
-      SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+      SearchList<CompanyProduct> searchList = new SearchList<CompanyProduct>();
       searchList.setStore(true);
       searchList.q("*:*");
       searchList.sort("created_docvalues_date", "desc");
       searchList.fq("price_docvalues_double:0.00");
-      searchList.setC(CompanyCourse.class);
+      searchList.setC(CompanyProduct.class);
       searchList.setSiteRequest_(siteRequest);
       searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
         promise.complete(searchList);
       }).onFailure(ex -> {
-        LOG.error(String.format("searchCompanyCourse failed. "), ex);
+        LOG.error(String.format("searchCompanyProduct failed. "), ex);
         promise.fail(ex);
       });
     } catch(Exception ex) {
-      LOG.error(String.format("searchCompanyCourse failed. "), ex);
+      LOG.error(String.format("searchCompanyProduct failed. "), ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
+  public static Future<SearchList<CompanyProduct>> searchProducts(SiteRequest siteRequest, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
+    Promise<SearchList<CompanyProduct>> promise = Promise.promise();
+    try {
+      SearchList<CompanyProduct> searchList = new SearchList<CompanyProduct>();
+      searchList.setStore(true);
+      searchList.q("*:*");
+      searchList.sort("created_docvalues_date", "desc");
+      searchList.fq("price_docvalues_double:[0.01 TO *]");
+      searchList.setC(CompanyProduct.class);
+      searchList.setSiteRequest_(siteRequest);
+      searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
+        promise.complete(searchList);
+      }).onFailure(ex -> {
+        LOG.error(String.format("searchCompanyProduct failed. "), ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("searchCompanyProduct failed. "), ex);
       promise.fail(ex);
     }
     return promise.future();

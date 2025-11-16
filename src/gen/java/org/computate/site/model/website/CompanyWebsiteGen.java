@@ -168,926 +168,926 @@ import io.vertx.core.json.JsonObject;
  * Generated: true
  **/
 public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebsite.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebsite.class);
 
-	public static final String Description_enUS = "See the live websites built with computate";
-	public static final String AName_enUS = "a website";
-	public static final String This_enUS = "this ";
-	public static final String ThisName_enUS = "this website";
-	public static final String A_enUS = "a ";
-	public static final String TheName_enUS = "the website";
-	public static final String SingularName_enUS = "website";
-	public static final String PluralName_enUS = "websites";
-	public static final String NameActual_enUS = "current website";
-	public static final String AllName_enUS = "all websites";
-	public static final String SearchAllNameBy_enUS = "search websites by ";
-	public static final String SearchAllName_enUS = "search websites";
-	public static final String Title_enUS = "websites";
-	public static final String ThePluralName_enUS = "the websites";
-	public static final String NoNameFound_enUS = "no website found";
-	public static final String ApiUri_enUS = "/en-us/api/website";
-	public static final String ApiUriSearchPage_enUS = "/en-us/search/website";
-	public static final String ApiUriEditPage_enUS = "/en-us/edit/website/{pageId}";
-	public static final String OfName_enUS = "of website";
-	public static final String ANameAdjective_enUS = "a website";
-	public static final String NameAdjectiveSingular_enUS = "website";
-	public static final String NameAdjectivePlural_enUS = "websites";
-	public static final String Search_enUS_OpenApiUri = "/en-us/api/website";
-	public static final String Search_enUS_StringFormatUri = "/en-us/api/website";
-	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/website";
-	public static final String GET_enUS_OpenApiUri = "/en-us/api/website/{pageId}";
-	public static final String GET_enUS_StringFormatUri = "/en-us/api/website/%s";
-	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/website/%s";
-	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/website";
-	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/website";
-	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/website";
-	public static final String POST_enUS_OpenApiUri = "/en-us/api/website";
-	public static final String POST_enUS_StringFormatUri = "/en-us/api/website";
-	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/website";
-	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/website-import";
-	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/website-import";
-	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/website-import";
-	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/website";
-	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/website";
-	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/website";
-	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/website/{pageId}";
-	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/website/%s";
-	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/website/%s";
-	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/website/{pageId}";
-	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/website/%s";
-	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/website/%s";
+  public static final String Description_enUS = "See the live websites built with computate";
+  public static final String AName_enUS = "a website";
+  public static final String This_enUS = "this ";
+  public static final String ThisName_enUS = "this website";
+  public static final String A_enUS = "a ";
+  public static final String TheName_enUS = "the website";
+  public static final String SingularName_enUS = "website";
+  public static final String PluralName_enUS = "websites";
+  public static final String NameActual_enUS = "current website";
+  public static final String AllName_enUS = "all websites";
+  public static final String SearchAllNameBy_enUS = "search websites by ";
+  public static final String SearchAllName_enUS = "search websites";
+  public static final String Title_enUS = "websites";
+  public static final String ThePluralName_enUS = "the websites";
+  public static final String NoNameFound_enUS = "no website found";
+  public static final String ApiUri_enUS = "/en-us/api/website";
+  public static final String ApiUriSearchPage_enUS = "/en-us/search/website";
+  public static final String ApiUriEditPage_enUS = "/en-us/edit/website/{pageId}";
+  public static final String OfName_enUS = "of website";
+  public static final String ANameAdjective_enUS = "a website";
+  public static final String NameAdjectiveSingular_enUS = "website";
+  public static final String NameAdjectivePlural_enUS = "websites";
+  public static final String Search_enUS_OpenApiUri = "/en-us/api/website";
+  public static final String Search_enUS_StringFormatUri = "/en-us/api/website";
+  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/website";
+  public static final String GET_enUS_OpenApiUri = "/en-us/api/website/{pageId}";
+  public static final String GET_enUS_StringFormatUri = "/en-us/api/website/%s";
+  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/website/%s";
+  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/website";
+  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/website";
+  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/website";
+  public static final String POST_enUS_OpenApiUri = "/en-us/api/website";
+  public static final String POST_enUS_StringFormatUri = "/en-us/api/website";
+  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/website";
+  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/website-import";
+  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/website-import";
+  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/website-import";
+  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/website";
+  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/website";
+  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/website";
+  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/website/{pageId}";
+  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/website/%s";
+  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/website/%s";
+  public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/website/{pageId}";
+  public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/website/%s";
+  public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/website/%s";
 
-	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-globe-pointer\"></i>";
+  public static final String Icon = "<i class=\"fa-duotone fa-regular fa-globe-pointer\"></i>";
 
 	//////////
-	// name //
+  // name //
 	//////////
 
 
-	/**	 The entity name
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String name;
+  /**   The entity name
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String name;
 
-	/**	<br> The entity name
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _name(Wrap<String> w);
+  /**  <br> The entity name
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _name(Wrap<String> w);
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String o) {
-		this.name = CompanyWebsite.staticSetName(siteRequest_, o);
-	}
-	public static String staticSetName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite nameInit() {
-		Wrap<String> nameWrap = new Wrap<String>().var("name");
-		if(name == null) {
-			_name(nameWrap);
-			Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
-				setName(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
+  public String getName() {
+    return name;
+  }
+  public void setName(String o) {
+    this.name = CompanyWebsite.staticSetName(siteRequest_, o);
+  }
+  public static String staticSetName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebsite nameInit() {
+    Wrap<String> nameWrap = new Wrap<String>().var("name");
+    if(name == null) {
+      _name(nameWrap);
+      Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
+        setName(o);
+      });
+    }
+    return (CompanyWebsite)this;
+  }
 
-	public static String staticSearchName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchName(siteRequest_, CompanyWebsite.staticSetName(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
+    return CompanyWebsite.staticSearchName(siteRequest_, CompanyWebsite.staticSetName(siteRequest_, o)).toString();
+  }
 
-	public String sqlName() {
-		return name;
-	}
+  public String sqlName() {
+    return name;
+  }
 
 	/////////////////
-	// description //
+  // description //
 	/////////////////
 
 
-	/**	 The entity description
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String description;
+  /**   The entity description
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String description;
 
-	/**	<br> The entity description
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _description(Wrap<String> w);
+  /**  <br> The entity description
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _description(Wrap<String> w);
 
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String o) {
-		this.description = CompanyWebsite.staticSetDescription(siteRequest_, o);
-	}
-	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite descriptionInit() {
-		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
-		if(description == null) {
-			_description(descriptionWrap);
-			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
-				setDescription(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
+  public String getDescription() {
+    return description;
+  }
+  public void setDescription(String o) {
+    this.description = CompanyWebsite.staticSetDescription(siteRequest_, o);
+  }
+  public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebsite descriptionInit() {
+    Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+    if(description == null) {
+      _description(descriptionWrap);
+      Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+        setDescription(o);
+      });
+    }
+    return (CompanyWebsite)this;
+  }
 
-	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchDescription(siteRequest_, CompanyWebsite.staticSetDescription(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+    return CompanyWebsite.staticSearchDescription(siteRequest_, CompanyWebsite.staticSetDescription(siteRequest_, o)).toString();
+  }
 
-	public String sqlDescription() {
-		return description;
-	}
+  public String sqlDescription() {
+    return description;
+  }
 
 	////////////
-	// pageId //
+  // pageId //
 	////////////
 
 
-	/**	 The entity pageId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageId;
+  /**   The entity pageId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageId;
 
-	/**	<br> The entity pageId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageId(Wrap<String> w);
+  /**  <br> The entity pageId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageId(Wrap<String> w);
 
-	public String getPageId() {
-		return pageId;
-	}
-	public void setPageId(String o) {
-		this.pageId = CompanyWebsite.staticSetPageId(siteRequest_, o);
-	}
-	public static String staticSetPageId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebsite pageIdInit() {
-		Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
-		if(pageId == null) {
-			_pageId(pageIdWrap);
-			Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
-				setPageId(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
+  public String getPageId() {
+    return pageId;
+  }
+  public void setPageId(String o) {
+    this.pageId = CompanyWebsite.staticSetPageId(siteRequest_, o);
+  }
+  public static String staticSetPageId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebsite pageIdInit() {
+    Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
+    if(pageId == null) {
+      _pageId(pageIdWrap);
+      Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
+        setPageId(o);
+      });
+    }
+    return (CompanyWebsite)this;
+  }
 
-	public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchPageId(siteRequest_, CompanyWebsite.staticSetPageId(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
+    return CompanyWebsite.staticSearchPageId(siteRequest_, CompanyWebsite.staticSetPageId(siteRequest_, o)).toString();
+  }
 
-	public String sqlPageId() {
-		return pageId;
-	}
-
-	////////////////
-	// websiteNum //
-	////////////////
-
-
-	/**	 The entity websiteNum
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer websiteNum;
-
-	/**	<br> The entity websiteNum
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:websiteNum">Find the entity websiteNum in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _websiteNum(Wrap<Integer> w);
-
-	public Integer getWebsiteNum() {
-		return websiteNum;
-	}
-
-	public void setWebsiteNum(Integer websiteNum) {
-		this.websiteNum = websiteNum;
-	}
-	@JsonIgnore
-	public void setWebsiteNum(String o) {
-		this.websiteNum = CompanyWebsite.staticSetWebsiteNum(siteRequest_, o);
-	}
-	public static Integer staticSetWebsiteNum(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected CompanyWebsite websiteNumInit() {
-		Wrap<Integer> websiteNumWrap = new Wrap<Integer>().var("websiteNum");
-		if(websiteNum == null) {
-			_websiteNum(websiteNumWrap);
-			Optional.ofNullable(websiteNumWrap.getO()).ifPresent(o -> {
-				setWebsiteNum(o);
-			});
-		}
-		return (CompanyWebsite)this;
-	}
-
-	public static Integer staticSearchWebsiteNum(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
-
-	public static String staticSearchStrWebsiteNum(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqWebsiteNum(SiteRequest siteRequest_, String o) {
-		return CompanyWebsite.staticSearchWebsiteNum(siteRequest_, CompanyWebsite.staticSetWebsiteNum(siteRequest_, o)).toString();
-	}
-
-	public Integer sqlWebsiteNum() {
-		return websiteNum;
-	}
-
-	//////////////
-	// initDeep //
-	//////////////
-
-	public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyWebsite();
-	}
-
-	public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite() {
-		Promise<CompanyWebsiteGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyWebsite(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
-
-	public Future<Void> promiseCompanyWebsite(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				nameInit();
-				descriptionInit();
-				pageIdInit();
-				websiteNumInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
-
-	@Override public Future<? extends CompanyWebsiteGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyWebsite(siteRequest_);
-	}
-
-	/////////////////
-	// siteRequest //
-	/////////////////
-
-	public void siteRequestCompanyWebsite(SiteRequest siteRequest_) {
-			super.siteRequestBaseResult(siteRequest_);
-	}
-
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyWebsite(siteRequest_);
-	}
-
-	/////////////
-	// obtain //
-	/////////////
-
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyWebsite(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyWebsite(String var) {
-		CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
-		switch(var) {
-			case "name":
-				return oCompanyWebsite.name;
-			case "description":
-				return oCompanyWebsite.description;
-			case "pageId":
-				return oCompanyWebsite.pageId;
-			case "websiteNum":
-				return oCompanyWebsite.websiteNum;
-			default:
-				return super.obtainBaseResult(var);
-		}
-	}
-
-	///////////////
-	// relate //
-	///////////////
-
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyWebsite(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyWebsite(String var, Object val) {
-		CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
-		switch(var) {
-			default:
-				return super.relateBaseResult(var, val);
-		}
-	}
-
-	///////////////
-	// staticSet //
-	///////////////
-
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
-		return staticSetCompanyWebsite(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyWebsite(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebsite.staticSetName(siteRequest_, v);
-		case "description":
-			return CompanyWebsite.staticSetDescription(siteRequest_, v);
-		case "pageId":
-			return CompanyWebsite.staticSetPageId(siteRequest_, v);
-		case "websiteNum":
-			return CompanyWebsite.staticSetWebsiteNum(siteRequest_, v);
-			default:
-				return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public String sqlPageId() {
+    return pageId;
+  }
 
 	////////////////
-	// staticSearch //
+  // websiteNum //
 	////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyWebsite(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyWebsite(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebsite.staticSearchName(siteRequest_, (String)o);
-		case "description":
-			return CompanyWebsite.staticSearchDescription(siteRequest_, (String)o);
-		case "pageId":
-			return CompanyWebsite.staticSearchPageId(siteRequest_, (String)o);
-		case "websiteNum":
-			return CompanyWebsite.staticSearchWebsiteNum(siteRequest_, (Integer)o);
-			default:
-				return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
-		}
-	}
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  /**   The entity websiteNum
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer websiteNum;
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyWebsite(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyWebsite(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebsite.staticSearchStrName(siteRequest_, (String)o);
-		case "description":
-			return CompanyWebsite.staticSearchStrDescription(siteRequest_, (String)o);
-		case "pageId":
-			return CompanyWebsite.staticSearchStrPageId(siteRequest_, (String)o);
-		case "websiteNum":
-			return CompanyWebsite.staticSearchStrWebsiteNum(siteRequest_, (Integer)o);
-			default:
-				return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
-		}
-	}
+  /**  <br> The entity websiteNum
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:websiteNum">Find the entity websiteNum in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _websiteNum(Wrap<Integer> w);
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  public Integer getWebsiteNum() {
+    return websiteNum;
+  }
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyWebsite(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyWebsite(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebsite.staticSearchFqName(siteRequest_, o);
-		case "description":
-			return CompanyWebsite.staticSearchFqDescription(siteRequest_, o);
-		case "pageId":
-			return CompanyWebsite.staticSearchFqPageId(siteRequest_, o);
-		case "websiteNum":
-			return CompanyWebsite.staticSearchFqWebsiteNum(siteRequest_, o);
-			default:
-				return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
-		}
-	}
+  public void setWebsiteNum(Integer websiteNum) {
+    this.websiteNum = websiteNum;
+  }
+  @JsonIgnore
+  public void setWebsiteNum(String o) {
+    this.websiteNum = CompanyWebsite.staticSetWebsiteNum(siteRequest_, o);
+  }
+  public static Integer staticSetWebsiteNum(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyWebsite websiteNumInit() {
+    Wrap<Integer> websiteNumWrap = new Wrap<Integer>().var("websiteNum");
+    if(websiteNum == null) {
+      _websiteNum(websiteNumWrap);
+      Optional.ofNullable(websiteNumWrap.getO()).ifPresent(o -> {
+        setWebsiteNum(o);
+      });
+    }
+    return (CompanyWebsite)this;
+  }
 
-	/////////////
-	// persist //
-	/////////////
+  public static Integer staticSearchWebsiteNum(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
 
-	@Override public boolean persistForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		if(val != null) {
-			for(String v : vars) {
-				if(o == null)
-					o = persistCompanyWebsite(v, val);
-				else if(o instanceof BaseModel) {
-					BaseModel oBaseModel = (BaseModel)o;
-					o = oBaseModel.persistForClass(v, val);
-				}
-			}
-		}
-		return o != null;
-	}
-	public Object persistCompanyWebsite(String var, Object val) {
-		String varLower = var.toLowerCase();
-			if("name".equals(varLower)) {
-				if(val instanceof String) {
-					setName((String)val);
-				}
-				saves.add("name");
-				return val;
-			} else if("description".equals(varLower)) {
-				if(val instanceof String) {
-					setDescription((String)val);
-				}
-				saves.add("description");
-				return val;
-			} else if("pageid".equals(varLower)) {
-				if(val instanceof String) {
-					setPageId((String)val);
-				}
-				saves.add("pageId");
-				return val;
-			} else if("websitenum".equals(varLower)) {
-				if(val instanceof Integer) {
-					setWebsiteNum((Integer)val);
-				} else {
-					setWebsiteNum(val == null ? null : val.toString());
-				}
-				saves.add("websiteNum");
-				return val;
-		} else {
-			return super.persistBaseResult(var, val);
-		}
-	}
+  public static String staticSearchStrWebsiteNum(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
 
-	/////////////
-	// populate //
-	/////////////
+  public static String staticSearchFqWebsiteNum(SiteRequest siteRequest_, String o) {
+    return CompanyWebsite.staticSearchWebsiteNum(siteRequest_, CompanyWebsite.staticSetWebsiteNum(siteRequest_, o)).toString();
+  }
 
-	@Override public void populateForClass(SolrResponse.Doc doc) {
-		populateCompanyWebsite(doc);
-	}
-	public void populateCompanyWebsite(SolrResponse.Doc doc) {
-		CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
-		saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
-		if(saves != null) {
+  public Integer sqlWebsiteNum() {
+    return websiteNum;
+  }
 
-			if(saves.contains("name")) {
-				String name = (String)doc.get("name_docvalues_string");
-				if(name != null)
-					oCompanyWebsite.setName(name);
-			}
+  //////////////
+  // initDeep //
+  //////////////
 
-			if(saves.contains("description")) {
-				String description = (String)doc.get("description_docvalues_string");
-				if(description != null)
-					oCompanyWebsite.setDescription(description);
-			}
+  public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyWebsite();
+  }
 
-			if(saves.contains("pageId")) {
-				String pageId = (String)doc.get("pageId_docvalues_string");
-				if(pageId != null)
-					oCompanyWebsite.setPageId(pageId);
-			}
+  public Future<CompanyWebsiteGen<DEV>> promiseDeepCompanyWebsite() {
+    Promise<CompanyWebsiteGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyWebsite(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepBaseResult(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-			if(saves.contains("websiteNum")) {
-				Integer websiteNum = (Integer)doc.get("websiteNum_docvalues_int");
-				if(websiteNum != null)
-					oCompanyWebsite.setWebsiteNum(websiteNum);
-			}
-		}
+  public Future<Void> promiseCompanyWebsite(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        nameInit();
+        descriptionInit();
+        pageIdInit();
+        websiteNumInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-		super.populateBaseResult(doc);
-	}
+  @Override public Future<? extends CompanyWebsiteGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyWebsite(siteRequest_);
+  }
 
-	public void indexCompanyWebsite(JsonObject doc) {
-		if(name != null) {
-			doc.put("name_docvalues_string", name);
-		}
-		if(description != null) {
-			doc.put("description_docvalues_string", description);
-		}
-		if(pageId != null) {
-			doc.put("pageId_docvalues_string", pageId);
-		}
-		if(websiteNum != null) {
-			doc.put("websiteNum_docvalues_int", websiteNum);
-		}
-		super.indexBaseResult(doc);
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	}
+  public void siteRequestCompanyWebsite(SiteRequest siteRequest_) {
+      super.siteRequestBaseResult(siteRequest_);
+  }
 
-	public static String varStoredCompanyWebsite(String entityVar) {
-		switch(entityVar) {
-			case "name":
-				return "name_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
-			case "pageId":
-				return "pageId_docvalues_string";
-			case "websiteNum":
-				return "websiteNum_docvalues_int";
-			default:
-				return BaseResult.varStoredBaseResult(entityVar);
-		}
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyWebsite(siteRequest_);
+  }
 
-	public static String varIndexedCompanyWebsite(String entityVar) {
-		switch(entityVar) {
-			case "name":
-				return "name_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
-			case "pageId":
-				return "pageId_docvalues_string";
-			case "websiteNum":
-				return "websiteNum_docvalues_int";
-			default:
-				return BaseResult.varIndexedBaseResult(entityVar);
-		}
-	}
+  /////////////
+  // obtain //
+  /////////////
 
-	public static String searchVarCompanyWebsite(String searchVar) {
-		switch(searchVar) {
-			case "name_docvalues_string":
-				return "name";
-			case "description_docvalues_string":
-				return "description";
-			case "pageId_docvalues_string":
-				return "pageId";
-			case "websiteNum_docvalues_int":
-				return "websiteNum";
-			default:
-				return BaseResult.searchVarBaseResult(searchVar);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyWebsite(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyWebsite(String var) {
+    CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
+    switch(var) {
+      case "name":
+        return oCompanyWebsite.name;
+      case "description":
+        return oCompanyWebsite.description;
+      case "pageId":
+        return oCompanyWebsite.pageId;
+      case "websiteNum":
+        return oCompanyWebsite.websiteNum;
+      default:
+        return super.obtainBaseResult(var);
+    }
+  }
 
-	public static String varSearchCompanyWebsite(String entityVar) {
-		switch(entityVar) {
-			default:
-				return BaseResult.varSearchBaseResult(entityVar);
-		}
-	}
+  ///////////////
+  // relate //
+  ///////////////
 
-	public static String varSuggestedCompanyWebsite(String entityVar) {
-		switch(entityVar) {
-			default:
-				return BaseResult.varSuggestedBaseResult(entityVar);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyWebsite(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyWebsite(String var, Object val) {
+    CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
+    switch(var) {
+      default:
+        return super.relateBaseResult(var, val);
+    }
+  }
 
-	/////////////
-	// store //
-	/////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	@Override public void storeForClass(SolrResponse.Doc doc) {
-		storeCompanyWebsite(doc);
-	}
-	public void storeCompanyWebsite(SolrResponse.Doc doc) {
-		CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
-		SiteRequest siteRequest = oCompanyWebsite.getSiteRequest_();
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
+    return staticSetCompanyWebsite(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyWebsite(String entityVar, SiteRequest siteRequest_, String v, CompanyWebsite o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebsite.staticSetName(siteRequest_, v);
+    case "description":
+      return CompanyWebsite.staticSetDescription(siteRequest_, v);
+    case "pageId":
+      return CompanyWebsite.staticSetPageId(siteRequest_, v);
+    case "websiteNum":
+      return CompanyWebsite.staticSetWebsiteNum(siteRequest_, v);
+      default:
+        return BaseResult.staticSetBaseResult(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-		oCompanyWebsite.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebsite.setWebsiteNum(Optional.ofNullable(doc.get("websiteNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-		super.storeBaseResult(doc);
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyWebsite(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyWebsite(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebsite.staticSearchName(siteRequest_, (String)o);
+    case "description":
+      return CompanyWebsite.staticSearchDescription(siteRequest_, (String)o);
+    case "pageId":
+      return CompanyWebsite.staticSearchPageId(siteRequest_, (String)o);
+    case "websiteNum":
+      return CompanyWebsite.staticSearchWebsiteNum(siteRequest_, (Integer)o);
+      default:
+        return BaseResult.staticSearchBaseResult(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// apiRequest //
-	//////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public void apiRequestCompanyWebsite() {
-		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
-		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(o != null && o instanceof CompanyWebsite) {
-			CompanyWebsite original = (CompanyWebsite)o;
-			if(!Objects.equals(name, original.getName()))
-				apiRequest.addVars("name");
-			if(!Objects.equals(description, original.getDescription()))
-				apiRequest.addVars("description");
-			if(!Objects.equals(pageId, original.getPageId()))
-				apiRequest.addVars("pageId");
-			if(!Objects.equals(websiteNum, original.getWebsiteNum()))
-				apiRequest.addVars("websiteNum");
-			super.apiRequestBaseResult();
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyWebsite(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyWebsite(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebsite.staticSearchStrName(siteRequest_, (String)o);
+    case "description":
+      return CompanyWebsite.staticSearchStrDescription(siteRequest_, (String)o);
+    case "pageId":
+      return CompanyWebsite.staticSearchStrPageId(siteRequest_, (String)o);
+    case "websiteNum":
+      return CompanyWebsite.staticSearchStrWebsiteNum(siteRequest_, (Integer)o);
+      default:
+        return BaseResult.staticSearchStrBaseResult(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(websiteNum).map(v -> "websiteNum: " + v + "\n").orElse(""));
-		return sb.toString();
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyWebsite(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyWebsite(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebsite.staticSearchFqName(siteRequest_, o);
+    case "description":
+      return CompanyWebsite.staticSearchFqDescription(siteRequest_, o);
+    case "pageId":
+      return CompanyWebsite.staticSearchFqPageId(siteRequest_, o);
+    case "websiteNum":
+      return CompanyWebsite.staticSearchFqWebsiteNum(siteRequest_, o);
+      default:
+        return BaseResult.staticSearchFqBaseResult(entityVar,  siteRequest_, o);
+    }
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyWebsite";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.website.CompanyWebsite";
-	public static final String CLASS_AUTH_RESOURCE = "COMPANYWEBSITE";
-	public static final String CLASS_API_ADDRESS_CompanyWebsite = "computate.org-enUS-CompanyWebsite";
-	public static String getClassApiAddress() {
-		return CLASS_API_ADDRESS_CompanyWebsite;
-	}
-	public static final String VAR_name = "name";
-	public static final String VAR_description = "description";
-	public static final String VAR_pageId = "pageId";
-	public static final String VAR_websiteNum = "websiteNum";
+  /////////////
+  // persist //
+  /////////////
 
-	public static List<String> varsQForClass() {
-		return CompanyWebsite.varsQCompanyWebsite(new ArrayList<String>());
-	}
-	public static List<String> varsQCompanyWebsite(List<String> vars) {
-		BaseResult.varsQBaseResult(vars);
-		return vars;
-	}
+  @Override public boolean persistForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    if(val != null) {
+      for(String v : vars) {
+        if(o == null)
+          o = persistCompanyWebsite(v, val);
+        else if(o instanceof BaseModel) {
+          BaseModel oBaseModel = (BaseModel)o;
+          o = oBaseModel.persistForClass(v, val);
+        }
+      }
+    }
+    return o != null;
+  }
+  public Object persistCompanyWebsite(String var, Object val) {
+    String varLower = var.toLowerCase();
+      if("name".equals(varLower)) {
+        if(val instanceof String) {
+          setName((String)val);
+        }
+        saves.add("name");
+        return val;
+      } else if("description".equals(varLower)) {
+        if(val instanceof String) {
+          setDescription((String)val);
+        }
+        saves.add("description");
+        return val;
+      } else if("pageid".equals(varLower)) {
+        if(val instanceof String) {
+          setPageId((String)val);
+        }
+        saves.add("pageId");
+        return val;
+      } else if("websitenum".equals(varLower)) {
+        if(val instanceof Integer) {
+          setWebsiteNum((Integer)val);
+        } else {
+          setWebsiteNum(val == null ? null : val.toString());
+        }
+        saves.add("websiteNum");
+        return val;
+    } else {
+      return super.persistBaseResult(var, val);
+    }
+  }
 
-	public static List<String> varsFqForClass() {
-		return CompanyWebsite.varsFqCompanyWebsite(new ArrayList<String>());
-	}
-	public static List<String> varsFqCompanyWebsite(List<String> vars) {
-		vars.add(VAR_name);
-		vars.add(VAR_description);
-		vars.add(VAR_pageId);
-		vars.add(VAR_websiteNum);
-		BaseResult.varsFqBaseResult(vars);
-		return vars;
-	}
+  /////////////
+  // populate //
+  /////////////
 
-	public static List<String> varsRangeForClass() {
-		return CompanyWebsite.varsRangeCompanyWebsite(new ArrayList<String>());
-	}
-	public static List<String> varsRangeCompanyWebsite(List<String> vars) {
-		vars.add(VAR_websiteNum);
-		BaseResult.varsRangeBaseResult(vars);
-		return vars;
-	}
+  @Override public void populateForClass(SolrResponse.Doc doc) {
+    populateCompanyWebsite(doc);
+  }
+  public void populateCompanyWebsite(SolrResponse.Doc doc) {
+    CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
+    saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
+    if(saves != null) {
 
-	public static final String DISPLAY_NAME_name = "service name";
-	public static final String DISPLAY_NAME_description = "service description";
-	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_websiteNum = "Website Number";
+      if(saves.contains("name")) {
+        String name = (String)doc.get("name_docvalues_string");
+        if(name != null)
+          oCompanyWebsite.setName(name);
+      }
 
-	@Override
-	public String idForClass() {
-		return pageId;
-	}
+      if(saves.contains("description")) {
+        String description = (String)doc.get("description_docvalues_string");
+        if(description != null)
+          oCompanyWebsite.setDescription(description);
+      }
 
-	@Override
-	public String titleForClass() {
-		return objectTitle;
-	}
+      if(saves.contains("pageId")) {
+        String pageId = (String)doc.get("pageId_docvalues_string");
+        if(pageId != null)
+          oCompanyWebsite.setPageId(pageId);
+      }
 
-	@Override
-	public String nameForClass() {
-		return name;
-	}
+      if(saves.contains("websiteNum")) {
+        Integer websiteNum = (Integer)doc.get("websiteNum_docvalues_int");
+        if(websiteNum != null)
+          oCompanyWebsite.setWebsiteNum(websiteNum);
+      }
+    }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return CompanyWebsite.NameAdjectiveSingular_enUS;
-	}
+    super.populateBaseResult(doc);
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return description;
-	}
+  public void indexCompanyWebsite(JsonObject doc) {
+    if(name != null) {
+      doc.put("name_docvalues_string", name);
+    }
+    if(description != null) {
+      doc.put("description_docvalues_string", description);
+    }
+    if(pageId != null) {
+      doc.put("pageId_docvalues_string", pageId);
+    }
+    if(websiteNum != null) {
+      doc.put("websiteNum_docvalues_int", websiteNum);
+    }
+    super.indexBaseResult(doc);
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return "%s/en-us/edit/website/%s";
-	}
-
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return "%s/en-us/view/website/%s";
-	}
-
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
-
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
-
-	public static String displayNameForClass(String var) {
-		return CompanyWebsite.displayNameCompanyWebsite(var);
-	}
-	public static String displayNameCompanyWebsite(String var) {
-		switch(var) {
-		case VAR_name:
-			return DISPLAY_NAME_name;
-		case VAR_description:
-			return DISPLAY_NAME_description;
-		case VAR_pageId:
-			return DISPLAY_NAME_pageId;
-		case VAR_websiteNum:
-			return DISPLAY_NAME_websiteNum;
-		default:
-			return BaseResult.displayNameBaseResult(var);
-		}
 	}
 
-	public static String descriptionCompanyWebsite(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-		case VAR_name:
-			return "The service name. ";
-		case VAR_description:
-			return "The service description. ";
-		case VAR_pageId:
-			return "The ID for this page. ";
-		case VAR_websiteNum:
-			return "The website number for sorting. ";
-			default:
-				return BaseResult.descriptionBaseResult(var);
-		}
-	}
+  public static String varStoredCompanyWebsite(String entityVar) {
+    switch(entityVar) {
+      case "name":
+        return "name_docvalues_string";
+      case "description":
+        return "description_docvalues_string";
+      case "pageId":
+        return "pageId_docvalues_string";
+      case "websiteNum":
+        return "websiteNum_docvalues_int";
+      default:
+        return BaseResult.varStoredBaseResult(entityVar);
+    }
+  }
 
-	public static String classSimpleNameCompanyWebsite(String var) {
-		switch(var) {
-		case VAR_name:
-			return "String";
-		case VAR_description:
-			return "String";
-		case VAR_pageId:
-			return "String";
-		case VAR_websiteNum:
-			return "Integer";
-			default:
-				return BaseResult.classSimpleNameBaseResult(var);
-		}
-	}
+  public static String varIndexedCompanyWebsite(String entityVar) {
+    switch(entityVar) {
+      case "name":
+        return "name_docvalues_string";
+      case "description":
+        return "description_docvalues_string";
+      case "pageId":
+        return "pageId_docvalues_string";
+      case "websiteNum":
+        return "websiteNum_docvalues_int";
+      default:
+        return BaseResult.varIndexedBaseResult(entityVar);
+    }
+  }
 
-	public static Integer htmColumnCompanyWebsite(String var) {
-		switch(var) {
-		case VAR_name:
-			return 1;
-		case VAR_description:
-			return 2;
-			default:
-				return BaseResult.htmColumnBaseResult(var);
-		}
-	}
+  public static String searchVarCompanyWebsite(String searchVar) {
+    switch(searchVar) {
+      case "name_docvalues_string":
+        return "name";
+      case "description_docvalues_string":
+        return "description";
+      case "pageId_docvalues_string":
+        return "pageId";
+      case "websiteNum_docvalues_int":
+        return "websiteNum";
+      default:
+        return BaseResult.searchVarBaseResult(searchVar);
+    }
+  }
 
-	public static Integer htmRowCompanyWebsite(String var) {
-		switch(var) {
-		case VAR_name:
-			return 3;
-		case VAR_description:
-			return 3;
-		case VAR_pageId:
-			return 99;
-			default:
-				return BaseResult.htmRowBaseResult(var);
-		}
-	}
+  public static String varSearchCompanyWebsite(String entityVar) {
+    switch(entityVar) {
+      default:
+        return BaseResult.varSearchBaseResult(entityVar);
+    }
+  }
 
-	public static Integer htmCellCompanyWebsite(String var) {
-		switch(var) {
-		case VAR_name:
-			return 1;
-		case VAR_description:
-			return 2;
-		case VAR_pageId:
-			return 1;
-			default:
-				return BaseResult.htmCellBaseResult(var);
-		}
-	}
+  public static String varSuggestedCompanyWebsite(String entityVar) {
+    switch(entityVar) {
+      default:
+        return BaseResult.varSuggestedBaseResult(entityVar);
+    }
+  }
 
-	public static Integer lengthMinCompanyWebsite(String var) {
-		switch(var) {
-			default:
-				return BaseResult.lengthMinBaseResult(var);
-		}
-	}
+  /////////////
+  // store //
+  /////////////
 
-	public static Integer lengthMaxCompanyWebsite(String var) {
-		switch(var) {
-			default:
-				return BaseResult.lengthMaxBaseResult(var);
-		}
-	}
+  @Override public void storeForClass(SolrResponse.Doc doc) {
+    storeCompanyWebsite(doc);
+  }
+  public void storeCompanyWebsite(SolrResponse.Doc doc) {
+    CompanyWebsite oCompanyWebsite = (CompanyWebsite)this;
+    SiteRequest siteRequest = oCompanyWebsite.getSiteRequest_();
 
-	public static Integer maxCompanyWebsite(String var) {
-		switch(var) {
-			default:
-				return BaseResult.maxBaseResult(var);
-		}
-	}
+    oCompanyWebsite.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebsite.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebsite.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebsite.setWebsiteNum(Optional.ofNullable(doc.get("websiteNum_docvalues_int")).map(v -> v.toString()).orElse(null));
 
-	public static Integer minCompanyWebsite(String var) {
-		switch(var) {
-			default:
-				return BaseResult.minBaseResult(var);
-		}
-	}
+    super.storeBaseResult(doc);
+  }
+
+  //////////////////
+  // apiRequest //
+  //////////////////
+
+  public void apiRequestCompanyWebsite() {
+    ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
+    Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+    if(o != null && o instanceof CompanyWebsite) {
+      CompanyWebsite original = (CompanyWebsite)o;
+      if(!Objects.equals(name, original.getName()))
+        apiRequest.addVars("name");
+      if(!Objects.equals(description, original.getDescription()))
+        apiRequest.addVars("description");
+      if(!Objects.equals(pageId, original.getPageId()))
+        apiRequest.addVars("pageId");
+      if(!Objects.equals(websiteNum, original.getWebsiteNum()))
+        apiRequest.addVars("websiteNum");
+      super.apiRequestBaseResult();
+    }
+  }
+
+  //////////////
+  // toString //
+  //////////////
+
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(websiteNum).map(v -> "websiteNum: " + v + "\n").orElse(""));
+    return sb.toString();
+  }
+
+  public static final String CLASS_SIMPLE_NAME = "CompanyWebsite";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.website.CompanyWebsite";
+  public static final String CLASS_AUTH_RESOURCE = "COMPANYWEBSITE";
+  public static final String CLASS_API_ADDRESS_CompanyWebsite = "computate.org-enUS-CompanyWebsite";
+  public static String getClassApiAddress() {
+    return CLASS_API_ADDRESS_CompanyWebsite;
+  }
+  public static final String VAR_name = "name";
+  public static final String VAR_description = "description";
+  public static final String VAR_pageId = "pageId";
+  public static final String VAR_websiteNum = "websiteNum";
+
+  public static List<String> varsQForClass() {
+    return CompanyWebsite.varsQCompanyWebsite(new ArrayList<String>());
+  }
+  public static List<String> varsQCompanyWebsite(List<String> vars) {
+    BaseResult.varsQBaseResult(vars);
+    return vars;
+  }
+
+  public static List<String> varsFqForClass() {
+    return CompanyWebsite.varsFqCompanyWebsite(new ArrayList<String>());
+  }
+  public static List<String> varsFqCompanyWebsite(List<String> vars) {
+    vars.add(VAR_name);
+    vars.add(VAR_description);
+    vars.add(VAR_pageId);
+    vars.add(VAR_websiteNum);
+    BaseResult.varsFqBaseResult(vars);
+    return vars;
+  }
+
+  public static List<String> varsRangeForClass() {
+    return CompanyWebsite.varsRangeCompanyWebsite(new ArrayList<String>());
+  }
+  public static List<String> varsRangeCompanyWebsite(List<String> vars) {
+    vars.add(VAR_websiteNum);
+    BaseResult.varsRangeBaseResult(vars);
+    return vars;
+  }
+
+  public static final String DISPLAY_NAME_name = "service name";
+  public static final String DISPLAY_NAME_description = "service description";
+  public static final String DISPLAY_NAME_pageId = "Page ID";
+  public static final String DISPLAY_NAME_websiteNum = "Website Number";
+
+  @Override
+  public String idForClass() {
+    return pageId;
+  }
+
+  @Override
+  public String titleForClass() {
+    return objectTitle;
+  }
+
+  @Override
+  public String nameForClass() {
+    return name;
+  }
+
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return CompanyWebsite.NameAdjectiveSingular_enUS;
+  }
+
+  @Override
+  public String descriptionForClass() {
+    return description;
+  }
+
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return "%s/en-us/edit/website/%s";
+  }
+
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/view/website/%s";
+  }
+
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
+
+  public static String displayNameForClass(String var) {
+    return CompanyWebsite.displayNameCompanyWebsite(var);
+  }
+  public static String displayNameCompanyWebsite(String var) {
+    switch(var) {
+    case VAR_name:
+      return DISPLAY_NAME_name;
+    case VAR_description:
+      return DISPLAY_NAME_description;
+    case VAR_pageId:
+      return DISPLAY_NAME_pageId;
+    case VAR_websiteNum:
+      return DISPLAY_NAME_websiteNum;
+    default:
+      return BaseResult.displayNameBaseResult(var);
+    }
+  }
+
+  public static String descriptionCompanyWebsite(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+    case VAR_name:
+      return "The service name. ";
+    case VAR_description:
+      return "The service description. ";
+    case VAR_pageId:
+      return "The ID for this page. ";
+    case VAR_websiteNum:
+      return "The website number for sorting. ";
+      default:
+        return BaseResult.descriptionBaseResult(var);
+    }
+  }
+
+  public static String classSimpleNameCompanyWebsite(String var) {
+    switch(var) {
+    case VAR_name:
+      return "String";
+    case VAR_description:
+      return "String";
+    case VAR_pageId:
+      return "String";
+    case VAR_websiteNum:
+      return "Integer";
+      default:
+        return BaseResult.classSimpleNameBaseResult(var);
+    }
+  }
+
+  public static Integer htmColumnCompanyWebsite(String var) {
+    switch(var) {
+    case VAR_name:
+      return 1;
+    case VAR_description:
+      return 2;
+      default:
+        return BaseResult.htmColumnBaseResult(var);
+    }
+  }
+
+  public static Integer htmRowCompanyWebsite(String var) {
+    switch(var) {
+    case VAR_name:
+      return 3;
+    case VAR_description:
+      return 3;
+    case VAR_pageId:
+      return 99;
+      default:
+        return BaseResult.htmRowBaseResult(var);
+    }
+  }
+
+  public static Integer htmCellCompanyWebsite(String var) {
+    switch(var) {
+    case VAR_name:
+      return 1;
+    case VAR_description:
+      return 2;
+    case VAR_pageId:
+      return 1;
+      default:
+        return BaseResult.htmCellBaseResult(var);
+    }
+  }
+
+  public static Integer lengthMinCompanyWebsite(String var) {
+    switch(var) {
+      default:
+        return BaseResult.lengthMinBaseResult(var);
+    }
+  }
+
+  public static Integer lengthMaxCompanyWebsite(String var) {
+    switch(var) {
+      default:
+        return BaseResult.lengthMaxBaseResult(var);
+    }
+  }
+
+  public static Integer maxCompanyWebsite(String var) {
+    switch(var) {
+      default:
+        return BaseResult.maxBaseResult(var);
+    }
+  }
+
+  public static Integer minCompanyWebsite(String var) {
+    switch(var) {
+      default:
+        return BaseResult.minBaseResult(var);
+    }
+  }
 }

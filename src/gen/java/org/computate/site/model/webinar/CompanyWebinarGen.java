@@ -188,1805 +188,1805 @@ import org.computate.search.response.solr.SolrResponse;
  * Generated: true
  **/
 public abstract class CompanyWebinarGen<DEV> extends BaseModel {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinar.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinar.class);
 
-	public static final String Description_enUS = "Join the Computate community for regular weekly webinars";
-	public static final String AName_enUS = "a webinar";
-	public static final String This_enUS = "this ";
-	public static final String ThisName_enUS = "this webinar";
-	public static final String A_enUS = "a ";
-	public static final String TheName_enUS = "the webinar";
-	public static final String SingularName_enUS = "webinar";
-	public static final String PluralName_enUS = "webinars";
-	public static final String NameActual_enUS = "current webinar";
-	public static final String AllName_enUS = "all webinars";
-	public static final String SearchAllNameBy_enUS = "search webinars by ";
-	public static final String SearchAllName_enUS = "search webinars";
-	public static final String Title_enUS = "webinars";
-	public static final String ThePluralName_enUS = "the webinars";
-	public static final String NoNameFound_enUS = "no webinar found";
-	public static final String ApiUri_enUS = "/en-us/api/webinar";
-	public static final String ApiUriSearchPage_enUS = "/en-us/search/webinar";
-	public static final String ApiUriEditPage_enUS = "/en-us/edit/webinar/{pageId}";
-	public static final String OfName_enUS = "of webinar";
-	public static final String ANameAdjective_enUS = "a webinar";
-	public static final String NameAdjectiveSingular_enUS = "webinar";
-	public static final String NameAdjectivePlural_enUS = "webinars";
-	public static final String Search_enUS_OpenApiUri = "/en-us/api/webinar";
-	public static final String Search_enUS_StringFormatUri = "/en-us/api/webinar";
-	public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/webinar";
-	public static final String GET_enUS_OpenApiUri = "/en-us/api/webinar/{pageId}";
-	public static final String GET_enUS_StringFormatUri = "/en-us/api/webinar/%s";
-	public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/webinar/%s";
-	public static final String PATCH_enUS_OpenApiUri = "/en-us/api/webinar";
-	public static final String PATCH_enUS_StringFormatUri = "/en-us/api/webinar";
-	public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/webinar";
-	public static final String POST_enUS_OpenApiUri = "/en-us/api/webinar";
-	public static final String POST_enUS_StringFormatUri = "/en-us/api/webinar";
-	public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/webinar";
-	public static final String DELETE_enUS_OpenApiUri = "/en-us/api/webinar/{pageId}";
-	public static final String DELETE_enUS_StringFormatUri = "/en-us/api/webinar/%s";
-	public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/webinar/%s";
-	public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/webinar-import";
-	public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/webinar-import";
-	public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/webinar-import";
-	public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/webinar";
-	public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/webinar";
-	public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/webinar";
-	public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/webinar/{pageId}";
-	public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/webinar/%s";
-	public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/webinar/%s";
-	public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/webinar/{pageId}";
-	public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/webinar/%s";
-	public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/webinar/%s";
-	public static final String UserPage_enUS_OpenApiUri = "/en-us/join/webinar/{pageId}";
-	public static final String UserPage_enUS_StringFormatUri = "/en-us/join/webinar/%s";
-	public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/join/webinar/%s";
-	public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/webinar";
-	public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/webinar";
-	public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/webinar";
+  public static final String Description_enUS = "Join the Computate community for regular weekly webinars";
+  public static final String AName_enUS = "a webinar";
+  public static final String This_enUS = "this ";
+  public static final String ThisName_enUS = "this webinar";
+  public static final String A_enUS = "a ";
+  public static final String TheName_enUS = "the webinar";
+  public static final String SingularName_enUS = "webinar";
+  public static final String PluralName_enUS = "webinars";
+  public static final String NameActual_enUS = "current webinar";
+  public static final String AllName_enUS = "all webinars";
+  public static final String SearchAllNameBy_enUS = "search webinars by ";
+  public static final String SearchAllName_enUS = "search webinars";
+  public static final String Title_enUS = "webinars";
+  public static final String ThePluralName_enUS = "the webinars";
+  public static final String NoNameFound_enUS = "no webinar found";
+  public static final String ApiUri_enUS = "/en-us/api/webinar";
+  public static final String ApiUriSearchPage_enUS = "/en-us/search/webinar";
+  public static final String ApiUriEditPage_enUS = "/en-us/edit/webinar/{pageId}";
+  public static final String OfName_enUS = "of webinar";
+  public static final String ANameAdjective_enUS = "a webinar";
+  public static final String NameAdjectiveSingular_enUS = "webinar";
+  public static final String NameAdjectivePlural_enUS = "webinars";
+  public static final String Search_enUS_OpenApiUri = "/en-us/api/webinar";
+  public static final String Search_enUS_StringFormatUri = "/en-us/api/webinar";
+  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/webinar";
+  public static final String GET_enUS_OpenApiUri = "/en-us/api/webinar/{pageId}";
+  public static final String GET_enUS_StringFormatUri = "/en-us/api/webinar/%s";
+  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/webinar/%s";
+  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/webinar";
+  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/webinar";
+  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/webinar";
+  public static final String POST_enUS_OpenApiUri = "/en-us/api/webinar";
+  public static final String POST_enUS_StringFormatUri = "/en-us/api/webinar";
+  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/webinar";
+  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/webinar/{pageId}";
+  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/webinar/%s";
+  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/webinar/%s";
+  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/webinar-import";
+  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/webinar-import";
+  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/webinar-import";
+  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/webinar";
+  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/webinar";
+  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/webinar";
+  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/webinar/{pageId}";
+  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/webinar/%s";
+  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/webinar/%s";
+  public static final String DisplayPage_enUS_OpenApiUri = "/en-us/view/webinar/{pageId}";
+  public static final String DisplayPage_enUS_StringFormatUri = "/en-us/view/webinar/%s";
+  public static final String DisplayPage_enUS_StringFormatUrl = "%s/en-us/view/webinar/%s";
+  public static final String UserPage_enUS_OpenApiUri = "/en-us/join/webinar/{pageId}";
+  public static final String UserPage_enUS_StringFormatUri = "/en-us/join/webinar/%s";
+  public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/join/webinar/%s";
+  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/webinar";
+  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/webinar";
+  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/webinar";
 
-	public static final String Icon = "<i class=\"fa-duotone fa-regular fa-video\"></i>";
+  public static final String Icon = "<i class=\"fa-duotone fa-regular fa-video\"></i>";
 
 	//////////
-	// name //
+  // name //
 	//////////
 
 
-	/**	 The entity name
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String name;
+  /**   The entity name
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String name;
 
-	/**	<br> The entity name
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _name(Wrap<String> w);
+  /**  <br> The entity name
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _name(Wrap<String> w);
 
-	public String getName() {
-		return name;
-	}
-	public void setName(String o) {
-		this.name = CompanyWebinar.staticSetName(siteRequest_, o);
-	}
-	public static String staticSetName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar nameInit() {
-		Wrap<String> nameWrap = new Wrap<String>().var("name");
-		if(name == null) {
-			_name(nameWrap);
-			Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
-				setName(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getName() {
+    return name;
+  }
+  public void setName(String o) {
+    this.name = CompanyWebinar.staticSetName(siteRequest_, o);
+  }
+  public static String staticSetName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar nameInit() {
+    Wrap<String> nameWrap = new Wrap<String>().var("name");
+    if(name == null) {
+      _name(nameWrap);
+      Optional.ofNullable(nameWrap.getO()).ifPresent(o -> {
+        setName(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchName(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchName(siteRequest_, CompanyWebinar.staticSetName(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqName(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchName(siteRequest_, CompanyWebinar.staticSetName(siteRequest_, o)).toString();
+  }
 
-	public String sqlName() {
-		return name;
-	}
+  public String sqlName() {
+    return name;
+  }
 
 	/////////////////
-	// description //
+  // description //
 	/////////////////
 
 
-	/**	 The entity description
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String description;
+  /**   The entity description
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String description;
 
-	/**	<br> The entity description
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _description(Wrap<String> w);
+  /**  <br> The entity description
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _description(Wrap<String> w);
 
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String o) {
-		this.description = CompanyWebinar.staticSetDescription(siteRequest_, o);
-	}
-	public static String staticSetDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar descriptionInit() {
-		Wrap<String> descriptionWrap = new Wrap<String>().var("description");
-		if(description == null) {
-			_description(descriptionWrap);
-			Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
-				setDescription(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getDescription() {
+    return description;
+  }
+  public void setDescription(String o) {
+    this.description = CompanyWebinar.staticSetDescription(siteRequest_, o);
+  }
+  public static String staticSetDescription(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar descriptionInit() {
+    Wrap<String> descriptionWrap = new Wrap<String>().var("description");
+    if(description == null) {
+      _description(descriptionWrap);
+      Optional.ofNullable(descriptionWrap.getO()).ifPresent(o -> {
+        setDescription(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchDescription(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrDescription(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchDescription(siteRequest_, CompanyWebinar.staticSetDescription(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqDescription(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchDescription(siteRequest_, CompanyWebinar.staticSetDescription(siteRequest_, o)).toString();
+  }
 
-	public String sqlDescription() {
-		return description;
-	}
+  public String sqlDescription() {
+    return description;
+  }
 
 	////////////
-	// pageId //
+  // pageId //
 	////////////
 
 
-	/**	 The entity pageId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageId;
+  /**   The entity pageId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageId;
 
-	/**	<br> The entity pageId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageId(Wrap<String> w);
+  /**  <br> The entity pageId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageId(Wrap<String> w);
 
-	public String getPageId() {
-		return pageId;
-	}
-	public void setPageId(String o) {
-		this.pageId = CompanyWebinar.staticSetPageId(siteRequest_, o);
-	}
-	public static String staticSetPageId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar pageIdInit() {
-		Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
-		if(pageId == null) {
-			_pageId(pageIdWrap);
-			Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
-				setPageId(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getPageId() {
+    return pageId;
+  }
+  public void setPageId(String o) {
+    this.pageId = CompanyWebinar.staticSetPageId(siteRequest_, o);
+  }
+  public static String staticSetPageId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar pageIdInit() {
+    Wrap<String> pageIdWrap = new Wrap<String>().var("pageId");
+    if(pageId == null) {
+      _pageId(pageIdWrap);
+      Optional.ofNullable(pageIdWrap.getO()).ifPresent(o -> {
+        setPageId(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchPageId(siteRequest_, CompanyWebinar.staticSetPageId(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageId(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchPageId(siteRequest_, CompanyWebinar.staticSetPageId(siteRequest_, o)).toString();
+  }
 
-	public String sqlPageId() {
-		return pageId;
-	}
+  public String sqlPageId() {
+    return pageId;
+  }
 
 	/////////////
-	// joinUri //
+  // joinUri //
 	/////////////
 
 
-	/**	 The entity joinUri
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String joinUri;
+  /**   The entity joinUri
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String joinUri;
 
-	/**	<br> The entity joinUri
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUri">Find the entity joinUri in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _joinUri(Wrap<String> w);
+  /**  <br> The entity joinUri
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUri">Find the entity joinUri in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _joinUri(Wrap<String> w);
 
-	public String getJoinUri() {
-		return joinUri;
-	}
-	public void setJoinUri(String o) {
-		this.joinUri = CompanyWebinar.staticSetJoinUri(siteRequest_, o);
-	}
-	public static String staticSetJoinUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar joinUriInit() {
-		Wrap<String> joinUriWrap = new Wrap<String>().var("joinUri");
-		if(joinUri == null) {
-			_joinUri(joinUriWrap);
-			Optional.ofNullable(joinUriWrap.getO()).ifPresent(o -> {
-				setJoinUri(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getJoinUri() {
+    return joinUri;
+  }
+  public void setJoinUri(String o) {
+    this.joinUri = CompanyWebinar.staticSetJoinUri(siteRequest_, o);
+  }
+  public static String staticSetJoinUri(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar joinUriInit() {
+    Wrap<String> joinUriWrap = new Wrap<String>().var("joinUri");
+    if(joinUri == null) {
+      _joinUri(joinUriWrap);
+      Optional.ofNullable(joinUriWrap.getO()).ifPresent(o -> {
+        setJoinUri(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchJoinUri(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchJoinUri(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrJoinUri(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrJoinUri(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqJoinUri(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchJoinUri(siteRequest_, CompanyWebinar.staticSetJoinUri(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqJoinUri(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchJoinUri(siteRequest_, CompanyWebinar.staticSetJoinUri(siteRequest_, o)).toString();
+  }
 
-	public String sqlJoinUri() {
-		return joinUri;
-	}
+  public String sqlJoinUri() {
+    return joinUri;
+  }
 
 	////////////////////////
-	// webinarUrlAmericas //
+  // webinarUrlAmericas //
 	////////////////////////
 
 
-	/**	 The entity webinarUrlAmericas
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String webinarUrlAmericas;
+  /**   The entity webinarUrlAmericas
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String webinarUrlAmericas;
 
-	/**	<br> The entity webinarUrlAmericas
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlAmericas">Find the entity webinarUrlAmericas in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _webinarUrlAmericas(Wrap<String> w);
+  /**  <br> The entity webinarUrlAmericas
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlAmericas">Find the entity webinarUrlAmericas in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _webinarUrlAmericas(Wrap<String> w);
 
-	public String getWebinarUrlAmericas() {
-		return webinarUrlAmericas;
-	}
-	public void setWebinarUrlAmericas(String o) {
-		this.webinarUrlAmericas = CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o);
-	}
-	public static String staticSetWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar webinarUrlAmericasInit() {
-		Wrap<String> webinarUrlAmericasWrap = new Wrap<String>().var("webinarUrlAmericas");
-		if(webinarUrlAmericas == null) {
-			_webinarUrlAmericas(webinarUrlAmericasWrap);
-			Optional.ofNullable(webinarUrlAmericasWrap.getO()).ifPresent(o -> {
-				setWebinarUrlAmericas(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getWebinarUrlAmericas() {
+    return webinarUrlAmericas;
+  }
+  public void setWebinarUrlAmericas(String o) {
+    this.webinarUrlAmericas = CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o);
+  }
+  public static String staticSetWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar webinarUrlAmericasInit() {
+    Wrap<String> webinarUrlAmericasWrap = new Wrap<String>().var("webinarUrlAmericas");
+    if(webinarUrlAmericas == null) {
+      _webinarUrlAmericas(webinarUrlAmericasWrap);
+      Optional.ofNullable(webinarUrlAmericasWrap.getO()).ifPresent(o -> {
+        setWebinarUrlAmericas(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchWebinarUrlAmericas(siteRequest_, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqWebinarUrlAmericas(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchWebinarUrlAmericas(siteRequest_, CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, o)).toString();
+  }
 
-	public String sqlWebinarUrlAmericas() {
-		return webinarUrlAmericas;
-	}
-
-	////////////////////
-	// webinarUrlApac //
-	////////////////////
-
-
-	/**	 The entity webinarUrlApac
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String webinarUrlApac;
-
-	/**	<br> The entity webinarUrlApac
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlApac">Find the entity webinarUrlApac in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _webinarUrlApac(Wrap<String> w);
-
-	public String getWebinarUrlApac() {
-		return webinarUrlApac;
-	}
-	public void setWebinarUrlApac(String o) {
-		this.webinarUrlApac = CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, o);
-	}
-	public static String staticSetWebinarUrlApac(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar webinarUrlApacInit() {
-		Wrap<String> webinarUrlApacWrap = new Wrap<String>().var("webinarUrlApac");
-		if(webinarUrlApac == null) {
-			_webinarUrlApac(webinarUrlApacWrap);
-			Optional.ofNullable(webinarUrlApacWrap.getO()).ifPresent(o -> {
-				setWebinarUrlApac(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
-
-	public static String staticSearchWebinarUrlApac(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrWebinarUrlApac(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqWebinarUrlApac(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchWebinarUrlApac(siteRequest_, CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, o)).toString();
-	}
-
-	public String sqlWebinarUrlApac() {
-		return webinarUrlApac;
-	}
+  public String sqlWebinarUrlAmericas() {
+    return webinarUrlAmericas;
+  }
 
 	////////////////////
-	// webinarUrlEmea //
+  // webinarUrlApac //
 	////////////////////
 
 
-	/**	 The entity webinarUrlEmea
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String webinarUrlEmea;
+  /**   The entity webinarUrlApac
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String webinarUrlApac;
 
-	/**	<br> The entity webinarUrlEmea
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlEmea">Find the entity webinarUrlEmea in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _webinarUrlEmea(Wrap<String> w);
+  /**  <br> The entity webinarUrlApac
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlApac">Find the entity webinarUrlApac in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _webinarUrlApac(Wrap<String> w);
 
-	public String getWebinarUrlEmea() {
-		return webinarUrlEmea;
-	}
-	public void setWebinarUrlEmea(String o) {
-		this.webinarUrlEmea = CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o);
-	}
-	public static String staticSetWebinarUrlEmea(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar webinarUrlEmeaInit() {
-		Wrap<String> webinarUrlEmeaWrap = new Wrap<String>().var("webinarUrlEmea");
-		if(webinarUrlEmea == null) {
-			_webinarUrlEmea(webinarUrlEmeaWrap);
-			Optional.ofNullable(webinarUrlEmeaWrap.getO()).ifPresent(o -> {
-				setWebinarUrlEmea(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getWebinarUrlApac() {
+    return webinarUrlApac;
+  }
+  public void setWebinarUrlApac(String o) {
+    this.webinarUrlApac = CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, o);
+  }
+  public static String staticSetWebinarUrlApac(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar webinarUrlApacInit() {
+    Wrap<String> webinarUrlApacWrap = new Wrap<String>().var("webinarUrlApac");
+    if(webinarUrlApac == null) {
+      _webinarUrlApac(webinarUrlApacWrap);
+      Optional.ofNullable(webinarUrlApacWrap.getO()).ifPresent(o -> {
+        setWebinarUrlApac(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchWebinarUrlEmea(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchWebinarUrlApac(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrWebinarUrlEmea(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrWebinarUrlApac(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqWebinarUrlEmea(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchWebinarUrlEmea(siteRequest_, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqWebinarUrlApac(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchWebinarUrlApac(siteRequest_, CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, o)).toString();
+  }
 
-	public String sqlWebinarUrlEmea() {
-		return webinarUrlEmea;
-	}
+  public String sqlWebinarUrlApac() {
+    return webinarUrlApac;
+  }
+
+	////////////////////
+  // webinarUrlEmea //
+	////////////////////
+
+
+  /**   The entity webinarUrlEmea
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String webinarUrlEmea;
+
+  /**  <br> The entity webinarUrlEmea
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlEmea">Find the entity webinarUrlEmea in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _webinarUrlEmea(Wrap<String> w);
+
+  public String getWebinarUrlEmea() {
+    return webinarUrlEmea;
+  }
+  public void setWebinarUrlEmea(String o) {
+    this.webinarUrlEmea = CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o);
+  }
+  public static String staticSetWebinarUrlEmea(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar webinarUrlEmeaInit() {
+    Wrap<String> webinarUrlEmeaWrap = new Wrap<String>().var("webinarUrlEmea");
+    if(webinarUrlEmea == null) {
+      _webinarUrlEmea(webinarUrlEmeaWrap);
+      Optional.ofNullable(webinarUrlEmeaWrap.getO()).ifPresent(o -> {
+        setWebinarUrlEmea(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
+
+  public static String staticSearchWebinarUrlEmea(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrWebinarUrlEmea(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqWebinarUrlEmea(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchWebinarUrlEmea(siteRequest_, CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, o)).toString();
+  }
+
+  public String sqlWebinarUrlEmea() {
+    return webinarUrlEmea;
+  }
 
 	/////////////
-	// icalUrl //
+  // icalUrl //
 	/////////////
 
 
-	/**	 The entity icalUrl
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String icalUrl;
+  /**   The entity icalUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String icalUrl;
 
-	/**	<br> The entity icalUrl
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:icalUrl">Find the entity icalUrl in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _icalUrl(Wrap<String> w);
+  /**  <br> The entity icalUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:icalUrl">Find the entity icalUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _icalUrl(Wrap<String> w);
 
-	public String getIcalUrl() {
-		return icalUrl;
-	}
-	public void setIcalUrl(String o) {
-		this.icalUrl = CompanyWebinar.staticSetIcalUrl(siteRequest_, o);
-	}
-	public static String staticSetIcalUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar icalUrlInit() {
-		Wrap<String> icalUrlWrap = new Wrap<String>().var("icalUrl");
-		if(icalUrl == null) {
-			_icalUrl(icalUrlWrap);
-			Optional.ofNullable(icalUrlWrap.getO()).ifPresent(o -> {
-				setIcalUrl(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public String getIcalUrl() {
+    return icalUrl;
+  }
+  public void setIcalUrl(String o) {
+    this.icalUrl = CompanyWebinar.staticSetIcalUrl(siteRequest_, o);
+  }
+  public static String staticSetIcalUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar icalUrlInit() {
+    Wrap<String> icalUrlWrap = new Wrap<String>().var("icalUrl");
+    if(icalUrl == null) {
+      _icalUrl(icalUrlWrap);
+      Optional.ofNullable(icalUrlWrap.getO()).ifPresent(o -> {
+        setIcalUrl(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchIcalUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchIcalUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrIcalUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrIcalUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqIcalUrl(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchIcalUrl(siteRequest_, CompanyWebinar.staticSetIcalUrl(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqIcalUrl(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchIcalUrl(siteRequest_, CompanyWebinar.staticSetIcalUrl(siteRequest_, o)).toString();
+  }
 
-	public String sqlIcalUrl() {
-		return icalUrl;
-	}
+  public String sqlIcalUrl() {
+    return icalUrl;
+  }
 
 	////////////
-	// caldav //
+  // caldav //
 	////////////
 
-	public static final String caldavFail1_enUS = "Failed to query the ICal file: %s";
-	public static final String caldavFail_enUS = caldavFail1_enUS;
+  public static final String caldavFail1_enUS = "Failed to query the ICal file: %s";
+  public static final String caldavFail_enUS = caldavFail1_enUS;
 
-	/**	 The entity caldav
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String caldav;
+  /**   The entity caldav
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String caldav;
 
-	/**	<br> The entity caldav
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:caldav">Find the entity caldav in Solr</a>
-	 * <br>
-	 * @param promise is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _caldav(Promise<String> promise);
+  /**  <br> The entity caldav
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:caldav">Find the entity caldav in Solr</a>
+   * <br>
+   * @param promise is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _caldav(Promise<String> promise);
 
-	public String getCaldav() {
-		return caldav;
-	}
-	public void setCaldav(String o) {
-		this.caldav = CompanyWebinar.staticSetCaldav(siteRequest_, o);
-	}
-	public static String staticSetCaldav(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected Future<String> caldavPromise() {
-		Promise<String> promise = Promise.promise();
-		Promise<String> promise2 = Promise.promise();
-		_caldav(promise2);
-		promise2.future().onSuccess(o -> {
-			setCaldav(o);
-			promise.complete(o);
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public String getCaldav() {
+    return caldav;
+  }
+  public void setCaldav(String o) {
+    this.caldav = CompanyWebinar.staticSetCaldav(siteRequest_, o);
+  }
+  public static String staticSetCaldav(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected Future<String> caldavPromise() {
+    Promise<String> promise = Promise.promise();
+    Promise<String> promise2 = Promise.promise();
+    _caldav(promise2);
+    promise2.future().onSuccess(o -> {
+      setCaldav(o);
+      promise.complete(o);
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public static String staticSearchCaldav(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchCaldav(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrCaldav(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrCaldav(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqCaldav(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchCaldav(siteRequest_, CompanyWebinar.staticSetCaldav(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqCaldav(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchCaldav(siteRequest_, CompanyWebinar.staticSetCaldav(siteRequest_, o)).toString();
+  }
 
 	/////////////////
-	// nextWebinar //
+  // nextWebinar //
 	/////////////////
 
 
-	/**	 The entity nextWebinar
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = ComputateZonedDateTimeDeserializer.class)
-	@JsonSerialize(using = ComputateZonedDateTimeSerializer.class)
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
-	@JsonInclude(Include.NON_NULL)
-	protected ZonedDateTime nextWebinar;
+  /**   The entity nextWebinar
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = ComputateZonedDateTimeDeserializer.class)
+  @JsonSerialize(using = ComputateZonedDateTimeSerializer.class)
+  @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
+  @JsonInclude(Include.NON_NULL)
+  protected ZonedDateTime nextWebinar;
 
-	/**	<br> The entity nextWebinar
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinar">Find the entity nextWebinar in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _nextWebinar(Wrap<ZonedDateTime> w);
+  /**  <br> The entity nextWebinar
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinar">Find the entity nextWebinar in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _nextWebinar(Wrap<ZonedDateTime> w);
 
-	public ZonedDateTime getNextWebinar() {
-		return nextWebinar;
-	}
+  public ZonedDateTime getNextWebinar() {
+    return nextWebinar;
+  }
 
-	public void setNextWebinar(ZonedDateTime nextWebinar) {
-		this.nextWebinar = Optional.ofNullable(nextWebinar).map(v -> v.truncatedTo(ChronoUnit.MILLIS)).orElse(null);
-	}
-	@JsonIgnore
-	public void setNextWebinar(Instant o) {
-		this.nextWebinar = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
-	}
-	/** Example: 2011-12-03T10:15:30+01:00 **/
-	@JsonIgnore
-	public void setNextWebinar(String o) {
-		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
-		this.nextWebinar = CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId);
-	}
-	@JsonIgnore
-	public void setNextWebinar(Date o) {
-		this.nextWebinar = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
-	}
-	public static ZonedDateTime staticSetNextWebinar(SiteRequest siteRequest_, String o, ZoneId zoneId) {
-		if(StringUtils.endsWith(o, "]"))
-			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
-		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
-		else if(StringUtils.contains(o, "T"))
-			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
-		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
-	}
-	protected CompanyWebinar nextWebinarInit() {
-		Wrap<ZonedDateTime> nextWebinarWrap = new Wrap<ZonedDateTime>().var("nextWebinar");
-		if(nextWebinar == null) {
-			_nextWebinar(nextWebinarWrap);
-			Optional.ofNullable(nextWebinarWrap.getO()).ifPresent(o -> {
-				setNextWebinar(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
+  public void setNextWebinar(ZonedDateTime nextWebinar) {
+    this.nextWebinar = Optional.ofNullable(nextWebinar).map(v -> v.truncatedTo(ChronoUnit.MILLIS)).orElse(null);
+  }
+  @JsonIgnore
+  public void setNextWebinar(Instant o) {
+    this.nextWebinar = o == null ? null : ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+  }
+  /** Example: 2011-12-03T10:15:30+01:00 **/
+  @JsonIgnore
+  public void setNextWebinar(String o) {
+    ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+    this.nextWebinar = CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId);
+  }
+  @JsonIgnore
+  public void setNextWebinar(Date o) {
+    this.nextWebinar = o == null ? null : ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))).truncatedTo(ChronoUnit.MILLIS);
+  }
+  public static ZonedDateTime staticSetNextWebinar(SiteRequest siteRequest_, String o, ZoneId zoneId) {
+    if(StringUtils.endsWith(o, "]"))
+      return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
+    else if(StringUtils.endsWith(o, "Z"))
+      return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
+    else if(StringUtils.contains(o, "T"))
+      return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
+    else
+      return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
+  }
+  protected CompanyWebinar nextWebinarInit() {
+    Wrap<ZonedDateTime> nextWebinarWrap = new Wrap<ZonedDateTime>().var("nextWebinar");
+    if(nextWebinar == null) {
+      _nextWebinar(nextWebinarWrap);
+      Optional.ofNullable(nextWebinarWrap.getO()).ifPresent(o -> {
+        setNextWebinar(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchNextWebinar(SiteRequest siteRequest_, ZonedDateTime o) {
-		return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
-	}
+  public static String staticSearchNextWebinar(SiteRequest siteRequest_, ZonedDateTime o) {
+    return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
+  }
 
-	public static String staticSearchStrNextWebinar(SiteRequest siteRequest_, String o) {
-		ZoneId zoneId = ZoneId.of("UTC");
-		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId));
-	}
+  public static String staticSearchStrNextWebinar(SiteRequest siteRequest_, String o) {
+    ZoneId zoneId = ZoneId.of("UTC");
+    return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId));
+  }
 
-	public static String staticSearchFqNextWebinar(SiteRequest siteRequest_, String o) {
-		ZoneId zoneId = ZoneId.of("UTC");
-		return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId)).toString();
-	}
+  public static String staticSearchFqNextWebinar(SiteRequest siteRequest_, String o) {
+    ZoneId zoneId = ZoneId.of("UTC");
+    return CompanyWebinar.staticSearchNextWebinar(siteRequest_, CompanyWebinar.staticSetNextWebinar(siteRequest_, o, zoneId)).toString();
+  }
 
 	///////////////////////
-	// nextWebinarsBegin //
+  // nextWebinarsBegin //
 	///////////////////////
 
 
-	/**	 The entity nextWebinarsBegin
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(contentUsing = ComputateZonedDateTimeDeserializer.class)
-	@JsonSerialize(contentUsing = ComputateZonedDateTimeSerializer.class)
-	@JsonFormat(shape=JsonFormat.Shape.ARRAY, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
-	@JsonInclude(Include.NON_NULL)
-	protected List<ZonedDateTime> nextWebinarsBegin = new ArrayList<ZonedDateTime>();
+  /**   The entity nextWebinarsBegin
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(contentUsing = ComputateZonedDateTimeDeserializer.class)
+  @JsonSerialize(contentUsing = ComputateZonedDateTimeSerializer.class)
+  @JsonFormat(shape=JsonFormat.Shape.ARRAY, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSV'['VV']'")
+  @JsonInclude(Include.NON_NULL)
+  protected List<ZonedDateTime> nextWebinarsBegin = new ArrayList<ZonedDateTime>();
 
-	/**	<br> The entity nextWebinarsBegin
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinarsBegin">Find the entity nextWebinarsBegin in Solr</a>
-	 * <br>
-	 * @param w is the entity already constructed. 
-	 **/
-	protected abstract void _nextWebinarsBegin(List<ZonedDateTime> w);
+  /**  <br> The entity nextWebinarsBegin
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinarsBegin">Find the entity nextWebinarsBegin in Solr</a>
+   * <br>
+   * @param w is the entity already constructed. 
+   **/
+  protected abstract void _nextWebinarsBegin(List<ZonedDateTime> w);
 
-	public List<ZonedDateTime> getNextWebinarsBegin() {
-		return nextWebinarsBegin;
-	}
+  public List<ZonedDateTime> getNextWebinarsBegin() {
+    return nextWebinarsBegin;
+  }
 
-	public void setNextWebinarsBegin(List<ZonedDateTime> nextWebinarsBegin) {
-		this.nextWebinarsBegin = nextWebinarsBegin;
-	}
-	public static ZonedDateTime staticSetNextWebinarsBegin(SiteRequest siteRequest_, String o, ZoneId zoneId) {
-		if(StringUtils.endsWith(o, "]"))
-			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
-		else if(StringUtils.endsWith(o, "Z"))
-			return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
-		else if(StringUtils.contains(o, "T"))
-			return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
-		else
-			return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
-	}
-	public CompanyWebinar addNextWebinarsBegin(ZonedDateTime...objects) {
-		for(ZonedDateTime o : objects) {
-			addNextWebinarsBegin(o);
-		}
-		return (CompanyWebinar)this;
-	}
-	public CompanyWebinar addNextWebinarsBegin(ZonedDateTime o) {
-		if(o != null)
-			this.nextWebinarsBegin.add(o);
-		return (CompanyWebinar)this;
-	}
-	@JsonIgnore
-	public void setNextWebinarsBegin(JsonArray objects) {
-		nextWebinarsBegin.clear();
-		if(objects == null)
-			return;
-		for(int i = 0; i < objects.size(); i++) {
-			Instant o = objects.getInstant(i);
-			addNextWebinarsBegin(o);
-		}
-	}
-	/** Example: 2011-12-03T10:15:30+01:00 **/
-	public CompanyWebinar addNextWebinarsBegin(String o) {
-		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
-		ZonedDateTime p = CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId);
-		addNextWebinarsBegin(p);
-		return (CompanyWebinar)this;
-	}
-	public CompanyWebinar addNextWebinarsBegin(Instant o) {
-		ZonedDateTime p = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
-		addNextWebinarsBegin(p);
-		return (CompanyWebinar)this;
-	}
-	public CompanyWebinar addNextWebinarsBegin(Date o) {
-		ZonedDateTime p = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE)));
-		addNextWebinarsBegin(p);
-		return (CompanyWebinar)this;
-	}
-	protected CompanyWebinar nextWebinarsBeginInit() {
-		_nextWebinarsBegin(nextWebinarsBegin);
-		return (CompanyWebinar)this;
-	}
+  public void setNextWebinarsBegin(List<ZonedDateTime> nextWebinarsBegin) {
+    this.nextWebinarsBegin = nextWebinarsBegin;
+  }
+  public static ZonedDateTime staticSetNextWebinarsBegin(SiteRequest siteRequest_, String o, ZoneId zoneId) {
+    if(StringUtils.endsWith(o, "]"))
+      return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER);
+    else if(StringUtils.endsWith(o, "Z"))
+      return o == null ? null : Instant.parse(o).atZone(zoneId).truncatedTo(ChronoUnit.MILLIS);
+    else if(StringUtils.contains(o, "T"))
+      return o == null ? null : ZonedDateTime.parse(o, ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER).truncatedTo(ChronoUnit.MILLIS);
+    else
+      return o == null ? null : LocalDate.parse(o, DateTimeFormatter.ISO_DATE).atStartOfDay(zoneId).truncatedTo(ChronoUnit.MILLIS);
+  }
+  public CompanyWebinar addNextWebinarsBegin(ZonedDateTime...objects) {
+    for(ZonedDateTime o : objects) {
+      addNextWebinarsBegin(o);
+    }
+    return (CompanyWebinar)this;
+  }
+  public CompanyWebinar addNextWebinarsBegin(ZonedDateTime o) {
+    if(o != null)
+      this.nextWebinarsBegin.add(o);
+    return (CompanyWebinar)this;
+  }
+  @JsonIgnore
+  public void setNextWebinarsBegin(JsonArray objects) {
+    nextWebinarsBegin.clear();
+    if(objects == null)
+      return;
+    for(int i = 0; i < objects.size(); i++) {
+      Instant o = objects.getInstant(i);
+      addNextWebinarsBegin(o);
+    }
+  }
+  /** Example: 2011-12-03T10:15:30+01:00 **/
+  public CompanyWebinar addNextWebinarsBegin(String o) {
+    ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+    ZonedDateTime p = CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId);
+    addNextWebinarsBegin(p);
+    return (CompanyWebinar)this;
+  }
+  public CompanyWebinar addNextWebinarsBegin(Instant o) {
+    ZonedDateTime p = ZonedDateTime.from(o).truncatedTo(ChronoUnit.MILLIS);
+    addNextWebinarsBegin(p);
+    return (CompanyWebinar)this;
+  }
+  public CompanyWebinar addNextWebinarsBegin(Date o) {
+    ZonedDateTime p = ZonedDateTime.ofInstant(o.toInstant(), ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE)));
+    addNextWebinarsBegin(p);
+    return (CompanyWebinar)this;
+  }
+  protected CompanyWebinar nextWebinarsBeginInit() {
+    _nextWebinarsBegin(nextWebinarsBegin);
+    return (CompanyWebinar)this;
+  }
 
-	public static String staticSearchNextWebinarsBegin(SiteRequest siteRequest_, ZonedDateTime o) {
-		return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
-	}
+  public static String staticSearchNextWebinarsBegin(SiteRequest siteRequest_, ZonedDateTime o) {
+    return o == null ? null : ComputateZonedDateTimeSerializer.UTC_DATE_TIME_FORMATTER.format(o.toInstant().atOffset(ZoneOffset.UTC));
+  }
 
-	public static String staticSearchStrNextWebinarsBegin(SiteRequest siteRequest_, String o) {
-		ZoneId zoneId = ZoneId.of("UTC");
-		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId));
-	}
+  public static String staticSearchStrNextWebinarsBegin(SiteRequest siteRequest_, String o) {
+    ZoneId zoneId = ZoneId.of("UTC");
+    return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId));
+  }
 
-	public static String staticSearchFqNextWebinarsBegin(SiteRequest siteRequest_, String o) {
-		ZoneId zoneId = ZoneId.of("UTC");
-		return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId)).toString();
-	}
-
-	/////////////
-	// joinUrl //
-	/////////////
-
-
-	/**	 The entity joinUrl
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String joinUrl;
-
-	/**	<br> The entity joinUrl
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUrl">Find the entity joinUrl in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _joinUrl(Wrap<String> w);
-
-	public String getJoinUrl() {
-		return joinUrl;
-	}
-	public void setJoinUrl(String o) {
-		this.joinUrl = CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
-	}
-	public static String staticSetJoinUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinar joinUrlInit() {
-		Wrap<String> joinUrlWrap = new Wrap<String>().var("joinUrl");
-		if(joinUrl == null) {
-			_joinUrl(joinUrlWrap);
-			Optional.ofNullable(joinUrlWrap.getO()).ifPresent(o -> {
-				setJoinUrl(o);
-			});
-		}
-		return (CompanyWebinar)this;
-	}
-
-	public static String staticSearchJoinUrl(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-
-	public static String staticSearchStrJoinUrl(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
-
-	public static String staticSearchFqJoinUrl(SiteRequest siteRequest_, String o) {
-		return CompanyWebinar.staticSearchJoinUrl(siteRequest_, CompanyWebinar.staticSetJoinUrl(siteRequest_, o)).toString();
-	}
-
-	public String sqlJoinUrl() {
-		return joinUrl;
-	}
-
-	//////////////
-	// initDeep //
-	//////////////
-
-	public Future<CompanyWebinarGen<DEV>> promiseDeepCompanyWebinar(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyWebinar();
-	}
-
-	public Future<CompanyWebinarGen<DEV>> promiseDeepCompanyWebinar() {
-		Promise<CompanyWebinarGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyWebinar(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
-
-	public Future<Void> promiseCompanyWebinar(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				nameInit();
-				descriptionInit();
-				pageIdInit();
-				joinUriInit();
-				webinarUrlAmericasInit();
-				webinarUrlApacInit();
-				webinarUrlEmeaInit();
-				icalUrlInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			caldavPromise().onSuccess(caldav -> {
-				promise2.complete();
-			}).onFailure(ex -> {
-				promise2.fail(ex);
-			});
-			return promise2.future();
-		}).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				nextWebinarInit();
-				nextWebinarsBeginInit();
-				joinUrlInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
-
-	@Override public Future<? extends CompanyWebinarGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyWebinar(siteRequest_);
-	}
-
-	/////////////////
-	// siteRequest //
-	/////////////////
-
-	public void siteRequestCompanyWebinar(SiteRequest siteRequest_) {
-			super.siteRequestBaseModel(siteRequest_);
-	}
-
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyWebinar(siteRequest_);
-	}
+  public static String staticSearchFqNextWebinarsBegin(SiteRequest siteRequest_, String o) {
+    ZoneId zoneId = ZoneId.of("UTC");
+    return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, o, zoneId)).toString();
+  }
 
 	/////////////
-	// obtain //
+  // joinUrl //
 	/////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyWebinar(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyWebinar(String var) {
-		CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
-		switch(var) {
-			case "name":
-				return oCompanyWebinar.name;
-			case "description":
-				return oCompanyWebinar.description;
-			case "pageId":
-				return oCompanyWebinar.pageId;
-			case "joinUri":
-				return oCompanyWebinar.joinUri;
-			case "webinarUrlAmericas":
-				return oCompanyWebinar.webinarUrlAmericas;
-			case "webinarUrlApac":
-				return oCompanyWebinar.webinarUrlApac;
-			case "webinarUrlEmea":
-				return oCompanyWebinar.webinarUrlEmea;
-			case "icalUrl":
-				return oCompanyWebinar.icalUrl;
-			case "caldav":
-				return oCompanyWebinar.caldav;
-			case "nextWebinar":
-				return oCompanyWebinar.nextWebinar;
-			case "nextWebinarsBegin":
-				return oCompanyWebinar.nextWebinarsBegin;
-			case "joinUrl":
-				return oCompanyWebinar.joinUrl;
-			default:
-				return super.obtainBaseModel(var);
-		}
-	}
 
-	///////////////
-	// relate //
-	///////////////
+  /**   The entity joinUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String joinUrl;
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyWebinar(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyWebinar(String var, Object val) {
-		CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
-		switch(var) {
-			default:
-				return super.relateBaseModel(var, val);
-		}
-	}
+  /**  <br> The entity joinUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUrl">Find the entity joinUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _joinUrl(Wrap<String> w);
 
-	///////////////
-	// staticSet //
-	///////////////
+  public String getJoinUrl() {
+    return joinUrl;
+  }
+  public void setJoinUrl(String o) {
+    this.joinUrl = CompanyWebinar.staticSetJoinUrl(siteRequest_, o);
+  }
+  public static String staticSetJoinUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinar joinUrlInit() {
+    Wrap<String> joinUrlWrap = new Wrap<String>().var("joinUrl");
+    if(joinUrl == null) {
+      _joinUrl(joinUrlWrap);
+      Optional.ofNullable(joinUrlWrap.getO()).ifPresent(o -> {
+        setJoinUrl(o);
+      });
+    }
+    return (CompanyWebinar)this;
+  }
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
-		return staticSetCompanyWebinar(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyWebinar(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebinar.staticSetName(siteRequest_, v);
-		case "description":
-			return CompanyWebinar.staticSetDescription(siteRequest_, v);
-		case "pageId":
-			return CompanyWebinar.staticSetPageId(siteRequest_, v);
-		case "joinUri":
-			return CompanyWebinar.staticSetJoinUri(siteRequest_, v);
-		case "webinarUrlAmericas":
-			return CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, v);
-		case "webinarUrlApac":
-			return CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, v);
-		case "webinarUrlEmea":
-			return CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, v);
-		case "icalUrl":
-			return CompanyWebinar.staticSetIcalUrl(siteRequest_, v);
-		case "caldav":
-			return CompanyWebinar.staticSetCaldav(siteRequest_, v);
-		case "nextWebinar":
-		case "nextWebinarsBegin":
-		case "joinUrl":
-			return CompanyWebinar.staticSetJoinUrl(siteRequest_, v);
-			default:
-				return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static String staticSearchJoinUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  public static String staticSearchStrJoinUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyWebinar(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyWebinar(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebinar.staticSearchName(siteRequest_, (String)o);
-		case "description":
-			return CompanyWebinar.staticSearchDescription(siteRequest_, (String)o);
-		case "pageId":
-			return CompanyWebinar.staticSearchPageId(siteRequest_, (String)o);
-		case "joinUri":
-			return CompanyWebinar.staticSearchJoinUri(siteRequest_, (String)o);
-		case "webinarUrlAmericas":
-			return CompanyWebinar.staticSearchWebinarUrlAmericas(siteRequest_, (String)o);
-		case "webinarUrlApac":
-			return CompanyWebinar.staticSearchWebinarUrlApac(siteRequest_, (String)o);
-		case "webinarUrlEmea":
-			return CompanyWebinar.staticSearchWebinarUrlEmea(siteRequest_, (String)o);
-		case "icalUrl":
-			return CompanyWebinar.staticSearchIcalUrl(siteRequest_, (String)o);
-		case "caldav":
-			return CompanyWebinar.staticSearchCaldav(siteRequest_, (String)o);
-		case "nextWebinar":
-			return CompanyWebinar.staticSearchNextWebinar(siteRequest_, (ZonedDateTime)o);
-		case "nextWebinarsBegin":
-			return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, (ZonedDateTime)o);
-		case "joinUrl":
-			return CompanyWebinar.staticSearchJoinUrl(siteRequest_, (String)o);
-			default:
-				return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqJoinUrl(SiteRequest siteRequest_, String o) {
+    return CompanyWebinar.staticSearchJoinUrl(siteRequest_, CompanyWebinar.staticSetJoinUrl(siteRequest_, o)).toString();
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  public String sqlJoinUrl() {
+    return joinUrl;
+  }
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyWebinar(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyWebinar(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebinar.staticSearchStrName(siteRequest_, (String)o);
-		case "description":
-			return CompanyWebinar.staticSearchStrDescription(siteRequest_, (String)o);
-		case "pageId":
-			return CompanyWebinar.staticSearchStrPageId(siteRequest_, (String)o);
-		case "joinUri":
-			return CompanyWebinar.staticSearchStrJoinUri(siteRequest_, (String)o);
-		case "webinarUrlAmericas":
-			return CompanyWebinar.staticSearchStrWebinarUrlAmericas(siteRequest_, (String)o);
-		case "webinarUrlApac":
-			return CompanyWebinar.staticSearchStrWebinarUrlApac(siteRequest_, (String)o);
-		case "webinarUrlEmea":
-			return CompanyWebinar.staticSearchStrWebinarUrlEmea(siteRequest_, (String)o);
-		case "icalUrl":
-			return CompanyWebinar.staticSearchStrIcalUrl(siteRequest_, (String)o);
-		case "caldav":
-			return CompanyWebinar.staticSearchStrCaldav(siteRequest_, (String)o);
-		case "nextWebinar":
-			return CompanyWebinar.staticSearchStrNextWebinar(siteRequest_, (String)o);
-		case "nextWebinarsBegin":
-			return CompanyWebinar.staticSearchStrNextWebinarsBegin(siteRequest_, (String)o);
-		case "joinUrl":
-			return CompanyWebinar.staticSearchStrJoinUrl(siteRequest_, (String)o);
-			default:
-				return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
-		}
-	}
+  //////////////
+  // initDeep //
+  //////////////
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  public Future<CompanyWebinarGen<DEV>> promiseDeepCompanyWebinar(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyWebinar();
+  }
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyWebinar(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyWebinar(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "name":
-			return CompanyWebinar.staticSearchFqName(siteRequest_, o);
-		case "description":
-			return CompanyWebinar.staticSearchFqDescription(siteRequest_, o);
-		case "pageId":
-			return CompanyWebinar.staticSearchFqPageId(siteRequest_, o);
-		case "joinUri":
-			return CompanyWebinar.staticSearchFqJoinUri(siteRequest_, o);
-		case "webinarUrlAmericas":
-			return CompanyWebinar.staticSearchFqWebinarUrlAmericas(siteRequest_, o);
-		case "webinarUrlApac":
-			return CompanyWebinar.staticSearchFqWebinarUrlApac(siteRequest_, o);
-		case "webinarUrlEmea":
-			return CompanyWebinar.staticSearchFqWebinarUrlEmea(siteRequest_, o);
-		case "icalUrl":
-			return CompanyWebinar.staticSearchFqIcalUrl(siteRequest_, o);
-		case "caldav":
-			return CompanyWebinar.staticSearchFqCaldav(siteRequest_, o);
-		case "nextWebinar":
-			return CompanyWebinar.staticSearchFqNextWebinar(siteRequest_, o);
-		case "nextWebinarsBegin":
-			return CompanyWebinar.staticSearchFqNextWebinarsBegin(siteRequest_, o);
-		case "joinUrl":
-			return CompanyWebinar.staticSearchFqJoinUrl(siteRequest_, o);
-			default:
-				return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
-		}
-	}
+  public Future<CompanyWebinarGen<DEV>> promiseDeepCompanyWebinar() {
+    Promise<CompanyWebinarGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyWebinar(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepBaseModel(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	/////////////
-	// persist //
-	/////////////
+  public Future<Void> promiseCompanyWebinar(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        nameInit();
+        descriptionInit();
+        pageIdInit();
+        joinUriInit();
+        webinarUrlAmericasInit();
+        webinarUrlApacInit();
+        webinarUrlEmeaInit();
+        icalUrlInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      caldavPromise().onSuccess(caldav -> {
+        promise2.complete();
+      }).onFailure(ex -> {
+        promise2.fail(ex);
+      });
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        nextWebinarInit();
+        nextWebinarsBeginInit();
+        joinUrlInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public boolean persistForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		if(val != null) {
-			for(String v : vars) {
-				if(o == null)
-					o = persistCompanyWebinar(v, val);
-				else if(o instanceof BaseModel) {
-					BaseModel oBaseModel = (BaseModel)o;
-					o = oBaseModel.persistForClass(v, val);
-				}
-			}
-		}
-		return o != null;
-	}
-	public Object persistCompanyWebinar(String var, Object val) {
-		String varLower = var.toLowerCase();
-			if("name".equals(varLower)) {
-				if(val instanceof String) {
-					setName((String)val);
-				}
-				saves.add("name");
-				return val;
-			} else if("description".equals(varLower)) {
-				if(val instanceof String) {
-					setDescription((String)val);
-				}
-				saves.add("description");
-				return val;
-			} else if("pageid".equals(varLower)) {
-				if(val instanceof String) {
-					setPageId((String)val);
-				}
-				saves.add("pageId");
-				return val;
-			} else if("joinuri".equals(varLower)) {
-				if(val instanceof String) {
-					setJoinUri((String)val);
-				}
-				saves.add("joinUri");
-				return val;
-			} else if("webinarurlamericas".equals(varLower)) {
-				if(val instanceof String) {
-					setWebinarUrlAmericas((String)val);
-				}
-				saves.add("webinarUrlAmericas");
-				return val;
-			} else if("webinarurlapac".equals(varLower)) {
-				if(val instanceof String) {
-					setWebinarUrlApac((String)val);
-				}
-				saves.add("webinarUrlApac");
-				return val;
-			} else if("webinarurlemea".equals(varLower)) {
-				if(val instanceof String) {
-					setWebinarUrlEmea((String)val);
-				}
-				saves.add("webinarUrlEmea");
-				return val;
-			} else if("icalurl".equals(varLower)) {
-				if(val instanceof String) {
-					setIcalUrl((String)val);
-				}
-				saves.add("icalUrl");
-				return val;
-			} else if("joinurl".equals(varLower)) {
-				if(val instanceof String) {
-					setJoinUrl((String)val);
-				}
-				saves.add("joinUrl");
-				return val;
-		} else {
-			return super.persistBaseModel(var, val);
-		}
-	}
+  @Override public Future<? extends CompanyWebinarGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyWebinar(siteRequest_);
+  }
 
-	/////////////
-	// populate //
-	/////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	@Override public void populateForClass(SolrResponse.Doc doc) {
-		populateCompanyWebinar(doc);
-	}
-	public void populateCompanyWebinar(SolrResponse.Doc doc) {
-		CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
-		saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
-		if(saves != null) {
+  public void siteRequestCompanyWebinar(SiteRequest siteRequest_) {
+      super.siteRequestBaseModel(siteRequest_);
+  }
 
-			if(saves.contains("name")) {
-				String name = (String)doc.get("name_docvalues_string");
-				if(name != null)
-					oCompanyWebinar.setName(name);
-			}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyWebinar(siteRequest_);
+  }
 
-			if(saves.contains("description")) {
-				String description = (String)doc.get("description_docvalues_string");
-				if(description != null)
-					oCompanyWebinar.setDescription(description);
-			}
+  /////////////
+  // obtain //
+  /////////////
 
-			if(saves.contains("pageId")) {
-				String pageId = (String)doc.get("pageId_docvalues_string");
-				if(pageId != null)
-					oCompanyWebinar.setPageId(pageId);
-			}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyWebinar(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyWebinar(String var) {
+    CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
+    switch(var) {
+      case "name":
+        return oCompanyWebinar.name;
+      case "description":
+        return oCompanyWebinar.description;
+      case "pageId":
+        return oCompanyWebinar.pageId;
+      case "joinUri":
+        return oCompanyWebinar.joinUri;
+      case "webinarUrlAmericas":
+        return oCompanyWebinar.webinarUrlAmericas;
+      case "webinarUrlApac":
+        return oCompanyWebinar.webinarUrlApac;
+      case "webinarUrlEmea":
+        return oCompanyWebinar.webinarUrlEmea;
+      case "icalUrl":
+        return oCompanyWebinar.icalUrl;
+      case "caldav":
+        return oCompanyWebinar.caldav;
+      case "nextWebinar":
+        return oCompanyWebinar.nextWebinar;
+      case "nextWebinarsBegin":
+        return oCompanyWebinar.nextWebinarsBegin;
+      case "joinUrl":
+        return oCompanyWebinar.joinUrl;
+      default:
+        return super.obtainBaseModel(var);
+    }
+  }
 
-			if(saves.contains("joinUri")) {
-				String joinUri = (String)doc.get("joinUri_docvalues_string");
-				if(joinUri != null)
-					oCompanyWebinar.setJoinUri(joinUri);
-			}
+  ///////////////
+  // relate //
+  ///////////////
 
-			if(saves.contains("webinarUrlAmericas")) {
-				String webinarUrlAmericas = (String)doc.get("webinarUrlAmericas_docvalues_string");
-				if(webinarUrlAmericas != null)
-					oCompanyWebinar.setWebinarUrlAmericas(webinarUrlAmericas);
-			}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyWebinar(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyWebinar(String var, Object val) {
+    CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
+    switch(var) {
+      default:
+        return super.relateBaseModel(var, val);
+    }
+  }
 
-			if(saves.contains("webinarUrlApac")) {
-				String webinarUrlApac = (String)doc.get("webinarUrlApac_docvalues_string");
-				if(webinarUrlApac != null)
-					oCompanyWebinar.setWebinarUrlApac(webinarUrlApac);
-			}
+  ///////////////
+  // staticSet //
+  ///////////////
 
-			if(saves.contains("webinarUrlEmea")) {
-				String webinarUrlEmea = (String)doc.get("webinarUrlEmea_docvalues_string");
-				if(webinarUrlEmea != null)
-					oCompanyWebinar.setWebinarUrlEmea(webinarUrlEmea);
-			}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
+    return staticSetCompanyWebinar(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyWebinar(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinar o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebinar.staticSetName(siteRequest_, v);
+    case "description":
+      return CompanyWebinar.staticSetDescription(siteRequest_, v);
+    case "pageId":
+      return CompanyWebinar.staticSetPageId(siteRequest_, v);
+    case "joinUri":
+      return CompanyWebinar.staticSetJoinUri(siteRequest_, v);
+    case "webinarUrlAmericas":
+      return CompanyWebinar.staticSetWebinarUrlAmericas(siteRequest_, v);
+    case "webinarUrlApac":
+      return CompanyWebinar.staticSetWebinarUrlApac(siteRequest_, v);
+    case "webinarUrlEmea":
+      return CompanyWebinar.staticSetWebinarUrlEmea(siteRequest_, v);
+    case "icalUrl":
+      return CompanyWebinar.staticSetIcalUrl(siteRequest_, v);
+    case "caldav":
+      return CompanyWebinar.staticSetCaldav(siteRequest_, v);
+    case "nextWebinar":
+    case "nextWebinarsBegin":
+    case "joinUrl":
+      return CompanyWebinar.staticSetJoinUrl(siteRequest_, v);
+      default:
+        return BaseModel.staticSetBaseModel(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-			if(saves.contains("icalUrl")) {
-				String icalUrl = (String)doc.get("icalUrl_docvalues_string");
-				if(icalUrl != null)
-					oCompanyWebinar.setIcalUrl(icalUrl);
-			}
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-			if(saves.contains("nextWebinar")) {
-				String nextWebinar = (String)doc.get("nextWebinar_docvalues_date");
-				if(nextWebinar != null)
-					oCompanyWebinar.setNextWebinar(nextWebinar);
-			}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyWebinar(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyWebinar(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebinar.staticSearchName(siteRequest_, (String)o);
+    case "description":
+      return CompanyWebinar.staticSearchDescription(siteRequest_, (String)o);
+    case "pageId":
+      return CompanyWebinar.staticSearchPageId(siteRequest_, (String)o);
+    case "joinUri":
+      return CompanyWebinar.staticSearchJoinUri(siteRequest_, (String)o);
+    case "webinarUrlAmericas":
+      return CompanyWebinar.staticSearchWebinarUrlAmericas(siteRequest_, (String)o);
+    case "webinarUrlApac":
+      return CompanyWebinar.staticSearchWebinarUrlApac(siteRequest_, (String)o);
+    case "webinarUrlEmea":
+      return CompanyWebinar.staticSearchWebinarUrlEmea(siteRequest_, (String)o);
+    case "icalUrl":
+      return CompanyWebinar.staticSearchIcalUrl(siteRequest_, (String)o);
+    case "caldav":
+      return CompanyWebinar.staticSearchCaldav(siteRequest_, (String)o);
+    case "nextWebinar":
+      return CompanyWebinar.staticSearchNextWebinar(siteRequest_, (ZonedDateTime)o);
+    case "nextWebinarsBegin":
+      return CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, (ZonedDateTime)o);
+    case "joinUrl":
+      return CompanyWebinar.staticSearchJoinUrl(siteRequest_, (String)o);
+      default:
+        return BaseModel.staticSearchBaseModel(entityVar,  siteRequest_, o);
+    }
+  }
 
-			if(saves.contains("nextWebinarsBegin")) {
-				List<String> nextWebinarsBegin = (List<String>)doc.get("nextWebinarsBegin_indexedstored_dates");
-				if(nextWebinarsBegin != null) {
-					ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
-					nextWebinarsBegin.stream().forEach( v -> {
-						oCompanyWebinar.nextWebinarsBegin.add(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, v, zoneId));
-					});
-				}
-			}
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-			if(saves.contains("joinUrl")) {
-				String joinUrl = (String)doc.get("joinUrl_docvalues_string");
-				if(joinUrl != null)
-					oCompanyWebinar.setJoinUrl(joinUrl);
-			}
-		}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyWebinar(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyWebinar(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebinar.staticSearchStrName(siteRequest_, (String)o);
+    case "description":
+      return CompanyWebinar.staticSearchStrDescription(siteRequest_, (String)o);
+    case "pageId":
+      return CompanyWebinar.staticSearchStrPageId(siteRequest_, (String)o);
+    case "joinUri":
+      return CompanyWebinar.staticSearchStrJoinUri(siteRequest_, (String)o);
+    case "webinarUrlAmericas":
+      return CompanyWebinar.staticSearchStrWebinarUrlAmericas(siteRequest_, (String)o);
+    case "webinarUrlApac":
+      return CompanyWebinar.staticSearchStrWebinarUrlApac(siteRequest_, (String)o);
+    case "webinarUrlEmea":
+      return CompanyWebinar.staticSearchStrWebinarUrlEmea(siteRequest_, (String)o);
+    case "icalUrl":
+      return CompanyWebinar.staticSearchStrIcalUrl(siteRequest_, (String)o);
+    case "caldav":
+      return CompanyWebinar.staticSearchStrCaldav(siteRequest_, (String)o);
+    case "nextWebinar":
+      return CompanyWebinar.staticSearchStrNextWebinar(siteRequest_, (String)o);
+    case "nextWebinarsBegin":
+      return CompanyWebinar.staticSearchStrNextWebinarsBegin(siteRequest_, (String)o);
+    case "joinUrl":
+      return CompanyWebinar.staticSearchStrJoinUrl(siteRequest_, (String)o);
+      default:
+        return BaseModel.staticSearchStrBaseModel(entityVar,  siteRequest_, o);
+    }
+  }
 
-		super.populateBaseModel(doc);
-	}
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public void indexCompanyWebinar(JsonObject doc) {
-		if(name != null) {
-			doc.put("name_docvalues_string", name);
-		}
-		if(description != null) {
-			doc.put("description_docvalues_string", description);
-		}
-		if(pageId != null) {
-			doc.put("pageId_docvalues_string", pageId);
-		}
-		if(joinUri != null) {
-			doc.put("joinUri_docvalues_string", joinUri);
-		}
-		if(webinarUrlAmericas != null) {
-			doc.put("webinarUrlAmericas_docvalues_string", webinarUrlAmericas);
-		}
-		if(webinarUrlApac != null) {
-			doc.put("webinarUrlApac_docvalues_string", webinarUrlApac);
-		}
-		if(webinarUrlEmea != null) {
-			doc.put("webinarUrlEmea_docvalues_string", webinarUrlEmea);
-		}
-		if(icalUrl != null) {
-			doc.put("icalUrl_docvalues_string", icalUrl);
-		}
-		if(nextWebinar != null) {
-			doc.put("nextWebinar_docvalues_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(nextWebinar.toInstant(), ZoneId.of("UTC"))));
-		}
-		if(nextWebinarsBegin != null) {
-			JsonArray l = new JsonArray();
-			doc.put("nextWebinarsBegin_indexedstored_dates", l);
-			for(ZonedDateTime o : nextWebinarsBegin) {
-				l.add(CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, o));
-			}
-		}
-		if(joinUrl != null) {
-			doc.put("joinUrl_docvalues_string", joinUrl);
-		}
-		super.indexBaseModel(doc);
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyWebinar(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyWebinar(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "name":
+      return CompanyWebinar.staticSearchFqName(siteRequest_, o);
+    case "description":
+      return CompanyWebinar.staticSearchFqDescription(siteRequest_, o);
+    case "pageId":
+      return CompanyWebinar.staticSearchFqPageId(siteRequest_, o);
+    case "joinUri":
+      return CompanyWebinar.staticSearchFqJoinUri(siteRequest_, o);
+    case "webinarUrlAmericas":
+      return CompanyWebinar.staticSearchFqWebinarUrlAmericas(siteRequest_, o);
+    case "webinarUrlApac":
+      return CompanyWebinar.staticSearchFqWebinarUrlApac(siteRequest_, o);
+    case "webinarUrlEmea":
+      return CompanyWebinar.staticSearchFqWebinarUrlEmea(siteRequest_, o);
+    case "icalUrl":
+      return CompanyWebinar.staticSearchFqIcalUrl(siteRequest_, o);
+    case "caldav":
+      return CompanyWebinar.staticSearchFqCaldav(siteRequest_, o);
+    case "nextWebinar":
+      return CompanyWebinar.staticSearchFqNextWebinar(siteRequest_, o);
+    case "nextWebinarsBegin":
+      return CompanyWebinar.staticSearchFqNextWebinarsBegin(siteRequest_, o);
+    case "joinUrl":
+      return CompanyWebinar.staticSearchFqJoinUrl(siteRequest_, o);
+      default:
+        return BaseModel.staticSearchFqBaseModel(entityVar,  siteRequest_, o);
+    }
+  }
 
-	}
+  /////////////
+  // persist //
+  /////////////
 
-	public static String varStoredCompanyWebinar(String entityVar) {
-		switch(entityVar) {
-			case "name":
-				return "name_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
-			case "pageId":
-				return "pageId_docvalues_string";
-			case "joinUri":
-				return "joinUri_docvalues_string";
-			case "webinarUrlAmericas":
-				return "webinarUrlAmericas_docvalues_string";
-			case "webinarUrlApac":
-				return "webinarUrlApac_docvalues_string";
-			case "webinarUrlEmea":
-				return "webinarUrlEmea_docvalues_string";
-			case "icalUrl":
-				return "icalUrl_docvalues_string";
-			case "nextWebinar":
-				return "nextWebinar_docvalues_date";
-			case "nextWebinarsBegin":
-				return "nextWebinarsBegin_indexedstored_dates";
-			case "joinUrl":
-				return "joinUrl_docvalues_string";
-			default:
-				return BaseModel.varStoredBaseModel(entityVar);
-		}
-	}
+  @Override public boolean persistForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    if(val != null) {
+      for(String v : vars) {
+        if(o == null)
+          o = persistCompanyWebinar(v, val);
+        else if(o instanceof BaseModel) {
+          BaseModel oBaseModel = (BaseModel)o;
+          o = oBaseModel.persistForClass(v, val);
+        }
+      }
+    }
+    return o != null;
+  }
+  public Object persistCompanyWebinar(String var, Object val) {
+    String varLower = var.toLowerCase();
+      if("name".equals(varLower)) {
+        if(val instanceof String) {
+          setName((String)val);
+        }
+        saves.add("name");
+        return val;
+      } else if("description".equals(varLower)) {
+        if(val instanceof String) {
+          setDescription((String)val);
+        }
+        saves.add("description");
+        return val;
+      } else if("pageid".equals(varLower)) {
+        if(val instanceof String) {
+          setPageId((String)val);
+        }
+        saves.add("pageId");
+        return val;
+      } else if("joinuri".equals(varLower)) {
+        if(val instanceof String) {
+          setJoinUri((String)val);
+        }
+        saves.add("joinUri");
+        return val;
+      } else if("webinarurlamericas".equals(varLower)) {
+        if(val instanceof String) {
+          setWebinarUrlAmericas((String)val);
+        }
+        saves.add("webinarUrlAmericas");
+        return val;
+      } else if("webinarurlapac".equals(varLower)) {
+        if(val instanceof String) {
+          setWebinarUrlApac((String)val);
+        }
+        saves.add("webinarUrlApac");
+        return val;
+      } else if("webinarurlemea".equals(varLower)) {
+        if(val instanceof String) {
+          setWebinarUrlEmea((String)val);
+        }
+        saves.add("webinarUrlEmea");
+        return val;
+      } else if("icalurl".equals(varLower)) {
+        if(val instanceof String) {
+          setIcalUrl((String)val);
+        }
+        saves.add("icalUrl");
+        return val;
+      } else if("joinurl".equals(varLower)) {
+        if(val instanceof String) {
+          setJoinUrl((String)val);
+        }
+        saves.add("joinUrl");
+        return val;
+    } else {
+      return super.persistBaseModel(var, val);
+    }
+  }
 
-	public static String varIndexedCompanyWebinar(String entityVar) {
-		switch(entityVar) {
-			case "name":
-				return "name_docvalues_string";
-			case "description":
-				return "description_docvalues_string";
-			case "pageId":
-				return "pageId_docvalues_string";
-			case "joinUri":
-				return "joinUri_docvalues_string";
-			case "webinarUrlAmericas":
-				return "webinarUrlAmericas_docvalues_string";
-			case "webinarUrlApac":
-				return "webinarUrlApac_docvalues_string";
-			case "webinarUrlEmea":
-				return "webinarUrlEmea_docvalues_string";
-			case "icalUrl":
-				return "icalUrl_docvalues_string";
-			case "nextWebinar":
-				return "nextWebinar_docvalues_date";
-			case "nextWebinarsBegin":
-				return "nextWebinarsBegin_indexedstored_dates";
-			case "joinUrl":
-				return "joinUrl_docvalues_string";
-			default:
-				return BaseModel.varIndexedBaseModel(entityVar);
-		}
-	}
+  /////////////
+  // populate //
+  /////////////
 
-	public static String searchVarCompanyWebinar(String searchVar) {
-		switch(searchVar) {
-			case "name_docvalues_string":
-				return "name";
-			case "description_docvalues_string":
-				return "description";
-			case "pageId_docvalues_string":
-				return "pageId";
-			case "joinUri_docvalues_string":
-				return "joinUri";
-			case "webinarUrlAmericas_docvalues_string":
-				return "webinarUrlAmericas";
-			case "webinarUrlApac_docvalues_string":
-				return "webinarUrlApac";
-			case "webinarUrlEmea_docvalues_string":
-				return "webinarUrlEmea";
-			case "icalUrl_docvalues_string":
-				return "icalUrl";
-			case "nextWebinar_docvalues_date":
-				return "nextWebinar";
-			case "nextWebinarsBegin_indexedstored_dates":
-				return "nextWebinarsBegin";
-			case "joinUrl_docvalues_string":
-				return "joinUrl";
-			default:
-				return BaseModel.searchVarBaseModel(searchVar);
-		}
-	}
+  @Override public void populateForClass(SolrResponse.Doc doc) {
+    populateCompanyWebinar(doc);
+  }
+  public void populateCompanyWebinar(SolrResponse.Doc doc) {
+    CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
+    saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
+    if(saves != null) {
 
-	public static String varSearchCompanyWebinar(String entityVar) {
-		switch(entityVar) {
-			default:
-				return BaseModel.varSearchBaseModel(entityVar);
-		}
-	}
+      if(saves.contains("name")) {
+        String name = (String)doc.get("name_docvalues_string");
+        if(name != null)
+          oCompanyWebinar.setName(name);
+      }
 
-	public static String varSuggestedCompanyWebinar(String entityVar) {
-		switch(entityVar) {
-			default:
-				return BaseModel.varSuggestedBaseModel(entityVar);
-		}
-	}
+      if(saves.contains("description")) {
+        String description = (String)doc.get("description_docvalues_string");
+        if(description != null)
+          oCompanyWebinar.setDescription(description);
+      }
 
-	/////////////
-	// store //
-	/////////////
+      if(saves.contains("pageId")) {
+        String pageId = (String)doc.get("pageId_docvalues_string");
+        if(pageId != null)
+          oCompanyWebinar.setPageId(pageId);
+      }
 
-	@Override public void storeForClass(SolrResponse.Doc doc) {
-		storeCompanyWebinar(doc);
-	}
-	public void storeCompanyWebinar(SolrResponse.Doc doc) {
-		CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
-		SiteRequest siteRequest = oCompanyWebinar.getSiteRequest_();
+      if(saves.contains("joinUri")) {
+        String joinUri = (String)doc.get("joinUri_docvalues_string");
+        if(joinUri != null)
+          oCompanyWebinar.setJoinUri(joinUri);
+      }
 
-		oCompanyWebinar.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setJoinUri(Optional.ofNullable(doc.get("joinUri_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setWebinarUrlAmericas(Optional.ofNullable(doc.get("webinarUrlAmericas_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setWebinarUrlApac(Optional.ofNullable(doc.get("webinarUrlApac_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setWebinarUrlEmea(Optional.ofNullable(doc.get("webinarUrlEmea_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setIcalUrl(Optional.ofNullable(doc.get("icalUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-		oCompanyWebinar.setNextWebinar(Optional.ofNullable(doc.get("nextWebinar_docvalues_date")).map(v -> v.toString()).orElse(null));
-		ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
-		Optional.ofNullable((List<?>)doc.get("nextWebinarsBegin_indexedstored_dates")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
-			oCompanyWebinar.addNextWebinarsBegin(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest, v.toString(), zoneId));
-		});
-		oCompanyWebinar.setJoinUrl(Optional.ofNullable(doc.get("joinUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+      if(saves.contains("webinarUrlAmericas")) {
+        String webinarUrlAmericas = (String)doc.get("webinarUrlAmericas_docvalues_string");
+        if(webinarUrlAmericas != null)
+          oCompanyWebinar.setWebinarUrlAmericas(webinarUrlAmericas);
+      }
 
-		super.storeBaseModel(doc);
-	}
+      if(saves.contains("webinarUrlApac")) {
+        String webinarUrlApac = (String)doc.get("webinarUrlApac_docvalues_string");
+        if(webinarUrlApac != null)
+          oCompanyWebinar.setWebinarUrlApac(webinarUrlApac);
+      }
 
-	//////////////////
-	// apiRequest //
-	//////////////////
+      if(saves.contains("webinarUrlEmea")) {
+        String webinarUrlEmea = (String)doc.get("webinarUrlEmea_docvalues_string");
+        if(webinarUrlEmea != null)
+          oCompanyWebinar.setWebinarUrlEmea(webinarUrlEmea);
+      }
 
-	public void apiRequestCompanyWebinar() {
-		ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
-		Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
-		if(o != null && o instanceof CompanyWebinar) {
-			CompanyWebinar original = (CompanyWebinar)o;
-			if(!Objects.equals(name, original.getName()))
-				apiRequest.addVars("name");
-			if(!Objects.equals(description, original.getDescription()))
-				apiRequest.addVars("description");
-			if(!Objects.equals(pageId, original.getPageId()))
-				apiRequest.addVars("pageId");
-			if(!Objects.equals(joinUri, original.getJoinUri()))
-				apiRequest.addVars("joinUri");
-			if(!Objects.equals(webinarUrlAmericas, original.getWebinarUrlAmericas()))
-				apiRequest.addVars("webinarUrlAmericas");
-			if(!Objects.equals(webinarUrlApac, original.getWebinarUrlApac()))
-				apiRequest.addVars("webinarUrlApac");
-			if(!Objects.equals(webinarUrlEmea, original.getWebinarUrlEmea()))
-				apiRequest.addVars("webinarUrlEmea");
-			if(!Objects.equals(icalUrl, original.getIcalUrl()))
-				apiRequest.addVars("icalUrl");
-			if(!Objects.equals(nextWebinar, original.getNextWebinar()))
-				apiRequest.addVars("nextWebinar");
-			if(!Objects.equals(nextWebinarsBegin, original.getNextWebinarsBegin()))
-				apiRequest.addVars("nextWebinarsBegin");
-			if(!Objects.equals(joinUrl, original.getJoinUrl()))
-				apiRequest.addVars("joinUrl");
-			super.apiRequestBaseModel();
-		}
+      if(saves.contains("icalUrl")) {
+        String icalUrl = (String)doc.get("icalUrl_docvalues_string");
+        if(icalUrl != null)
+          oCompanyWebinar.setIcalUrl(icalUrl);
+      }
+
+      if(saves.contains("nextWebinar")) {
+        String nextWebinar = (String)doc.get("nextWebinar_docvalues_date");
+        if(nextWebinar != null)
+          oCompanyWebinar.setNextWebinar(nextWebinar);
+      }
+
+      if(saves.contains("nextWebinarsBegin")) {
+        List<String> nextWebinarsBegin = (List<String>)doc.get("nextWebinarsBegin_indexedstored_dates");
+        if(nextWebinarsBegin != null) {
+          ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+          nextWebinarsBegin.stream().forEach( v -> {
+            oCompanyWebinar.nextWebinarsBegin.add(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest_, v, zoneId));
+          });
+        }
+      }
+
+      if(saves.contains("joinUrl")) {
+        String joinUrl = (String)doc.get("joinUrl_docvalues_string");
+        if(joinUrl != null)
+          oCompanyWebinar.setJoinUrl(joinUrl);
+      }
+    }
+
+    super.populateBaseModel(doc);
+  }
+
+  public void indexCompanyWebinar(JsonObject doc) {
+    if(name != null) {
+      doc.put("name_docvalues_string", name);
+    }
+    if(description != null) {
+      doc.put("description_docvalues_string", description);
+    }
+    if(pageId != null) {
+      doc.put("pageId_docvalues_string", pageId);
+    }
+    if(joinUri != null) {
+      doc.put("joinUri_docvalues_string", joinUri);
+    }
+    if(webinarUrlAmericas != null) {
+      doc.put("webinarUrlAmericas_docvalues_string", webinarUrlAmericas);
+    }
+    if(webinarUrlApac != null) {
+      doc.put("webinarUrlApac_docvalues_string", webinarUrlApac);
+    }
+    if(webinarUrlEmea != null) {
+      doc.put("webinarUrlEmea_docvalues_string", webinarUrlEmea);
+    }
+    if(icalUrl != null) {
+      doc.put("icalUrl_docvalues_string", icalUrl);
+    }
+    if(nextWebinar != null) {
+      doc.put("nextWebinar_docvalues_date", DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").format(ZonedDateTime.ofInstant(nextWebinar.toInstant(), ZoneId.of("UTC"))));
+    }
+    if(nextWebinarsBegin != null) {
+      JsonArray l = new JsonArray();
+      doc.put("nextWebinarsBegin_indexedstored_dates", l);
+      for(ZonedDateTime o : nextWebinarsBegin) {
+        l.add(CompanyWebinar.staticSearchNextWebinarsBegin(siteRequest_, o));
+      }
+    }
+    if(joinUrl != null) {
+      doc.put("joinUrl_docvalues_string", joinUrl);
+    }
+    super.indexBaseModel(doc);
+
 	}
 
-	//////////////
-	// toString //
-	//////////////
+  public static String varStoredCompanyWebinar(String entityVar) {
+    switch(entityVar) {
+      case "name":
+        return "name_docvalues_string";
+      case "description":
+        return "description_docvalues_string";
+      case "pageId":
+        return "pageId_docvalues_string";
+      case "joinUri":
+        return "joinUri_docvalues_string";
+      case "webinarUrlAmericas":
+        return "webinarUrlAmericas_docvalues_string";
+      case "webinarUrlApac":
+        return "webinarUrlApac_docvalues_string";
+      case "webinarUrlEmea":
+        return "webinarUrlEmea_docvalues_string";
+      case "icalUrl":
+        return "icalUrl_docvalues_string";
+      case "nextWebinar":
+        return "nextWebinar_docvalues_date";
+      case "nextWebinarsBegin":
+        return "nextWebinarsBegin_indexedstored_dates";
+      case "joinUrl":
+        return "joinUrl_docvalues_string";
+      default:
+        return BaseModel.varStoredBaseModel(entityVar);
+    }
+  }
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(joinUri).map(v -> "joinUri: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(webinarUrlAmericas).map(v -> "webinarUrlAmericas: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(webinarUrlApac).map(v -> "webinarUrlApac: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(webinarUrlEmea).map(v -> "webinarUrlEmea: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(icalUrl).map(v -> "icalUrl: \"" + v + "\"\n" ).orElse(""));
-		sb.append(Optional.ofNullable(nextWebinar).map(v -> "nextWebinar: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(nextWebinarsBegin).map(v -> "nextWebinarsBegin: " + v + "\n").orElse(""));
-		sb.append(Optional.ofNullable(joinUrl).map(v -> "joinUrl: \"" + v + "\"\n" ).orElse(""));
-		return sb.toString();
-	}
+  public static String varIndexedCompanyWebinar(String entityVar) {
+    switch(entityVar) {
+      case "name":
+        return "name_docvalues_string";
+      case "description":
+        return "description_docvalues_string";
+      case "pageId":
+        return "pageId_docvalues_string";
+      case "joinUri":
+        return "joinUri_docvalues_string";
+      case "webinarUrlAmericas":
+        return "webinarUrlAmericas_docvalues_string";
+      case "webinarUrlApac":
+        return "webinarUrlApac_docvalues_string";
+      case "webinarUrlEmea":
+        return "webinarUrlEmea_docvalues_string";
+      case "icalUrl":
+        return "icalUrl_docvalues_string";
+      case "nextWebinar":
+        return "nextWebinar_docvalues_date";
+      case "nextWebinarsBegin":
+        return "nextWebinarsBegin_indexedstored_dates";
+      case "joinUrl":
+        return "joinUrl_docvalues_string";
+      default:
+        return BaseModel.varIndexedBaseModel(entityVar);
+    }
+  }
 
-	public static final String[] CompanyWebinarVals = new String[] { caldavFail1_enUS };
+  public static String searchVarCompanyWebinar(String searchVar) {
+    switch(searchVar) {
+      case "name_docvalues_string":
+        return "name";
+      case "description_docvalues_string":
+        return "description";
+      case "pageId_docvalues_string":
+        return "pageId";
+      case "joinUri_docvalues_string":
+        return "joinUri";
+      case "webinarUrlAmericas_docvalues_string":
+        return "webinarUrlAmericas";
+      case "webinarUrlApac_docvalues_string":
+        return "webinarUrlApac";
+      case "webinarUrlEmea_docvalues_string":
+        return "webinarUrlEmea";
+      case "icalUrl_docvalues_string":
+        return "icalUrl";
+      case "nextWebinar_docvalues_date":
+        return "nextWebinar";
+      case "nextWebinarsBegin_indexedstored_dates":
+        return "nextWebinarsBegin";
+      case "joinUrl_docvalues_string":
+        return "joinUrl";
+      default:
+        return BaseModel.searchVarBaseModel(searchVar);
+    }
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyWebinar";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinar";
-	public static final String CLASS_AUTH_RESOURCE = "COMPANYWEBINAR";
-	public static final String CLASS_API_ADDRESS_CompanyWebinar = "computate.org-enUS-CompanyWebinar";
-	public static String getClassApiAddress() {
-		return CLASS_API_ADDRESS_CompanyWebinar;
-	}
-	public static final String VAR_name = "name";
-	public static final String VAR_description = "description";
-	public static final String VAR_pageId = "pageId";
-	public static final String VAR_joinUri = "joinUri";
-	public static final String VAR_webinarUrlAmericas = "webinarUrlAmericas";
-	public static final String VAR_webinarUrlApac = "webinarUrlApac";
-	public static final String VAR_webinarUrlEmea = "webinarUrlEmea";
-	public static final String VAR_icalUrl = "icalUrl";
-	public static final String VAR_caldav = "caldav";
-	public static final String VAR_nextWebinar = "nextWebinar";
-	public static final String VAR_nextWebinarsBegin = "nextWebinarsBegin";
-	public static final String VAR_joinUrl = "joinUrl";
+  public static String varSearchCompanyWebinar(String entityVar) {
+    switch(entityVar) {
+      default:
+        return BaseModel.varSearchBaseModel(entityVar);
+    }
+  }
 
-	public static List<String> varsQForClass() {
-		return CompanyWebinar.varsQCompanyWebinar(new ArrayList<String>());
-	}
-	public static List<String> varsQCompanyWebinar(List<String> vars) {
-		BaseModel.varsQBaseModel(vars);
-		return vars;
-	}
+  public static String varSuggestedCompanyWebinar(String entityVar) {
+    switch(entityVar) {
+      default:
+        return BaseModel.varSuggestedBaseModel(entityVar);
+    }
+  }
 
-	public static List<String> varsFqForClass() {
-		return CompanyWebinar.varsFqCompanyWebinar(new ArrayList<String>());
-	}
-	public static List<String> varsFqCompanyWebinar(List<String> vars) {
-		vars.add(VAR_name);
-		vars.add(VAR_description);
-		vars.add(VAR_pageId);
-		vars.add(VAR_joinUri);
-		vars.add(VAR_webinarUrlAmericas);
-		vars.add(VAR_webinarUrlApac);
-		vars.add(VAR_webinarUrlEmea);
-		vars.add(VAR_icalUrl);
-		vars.add(VAR_nextWebinar);
-		BaseModel.varsFqBaseModel(vars);
-		return vars;
-	}
+  /////////////
+  // store //
+  /////////////
 
-	public static List<String> varsRangeForClass() {
-		return CompanyWebinar.varsRangeCompanyWebinar(new ArrayList<String>());
-	}
-	public static List<String> varsRangeCompanyWebinar(List<String> vars) {
-		vars.add(VAR_nextWebinar);
-		BaseModel.varsRangeBaseModel(vars);
-		return vars;
-	}
+  @Override public void storeForClass(SolrResponse.Doc doc) {
+    storeCompanyWebinar(doc);
+  }
+  public void storeCompanyWebinar(SolrResponse.Doc doc) {
+    CompanyWebinar oCompanyWebinar = (CompanyWebinar)this;
+    SiteRequest siteRequest = oCompanyWebinar.getSiteRequest_();
 
-	public static final String DISPLAY_NAME_name = "name";
-	public static final String DISPLAY_NAME_description = "description";
-	public static final String DISPLAY_NAME_pageId = "Page ID";
-	public static final String DISPLAY_NAME_joinUri = "join URI";
-	public static final String DISPLAY_NAME_webinarUrlAmericas = "Webinar URL Americas";
-	public static final String DISPLAY_NAME_webinarUrlApac = "Webinar URL APAC";
-	public static final String DISPLAY_NAME_webinarUrlEmea = "Webinar URL EMEA";
-	public static final String DISPLAY_NAME_icalUrl = "ICal URL";
-	public static final String DISPLAY_NAME_caldav = "";
-	public static final String DISPLAY_NAME_nextWebinar = "next webinar";
-	public static final String DISPLAY_NAME_nextWebinarsBegin = "next webinars begin";
-	public static final String DISPLAY_NAME_joinUrl = "Join the webinar";
+    oCompanyWebinar.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setJoinUri(Optional.ofNullable(doc.get("joinUri_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setWebinarUrlAmericas(Optional.ofNullable(doc.get("webinarUrlAmericas_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setWebinarUrlApac(Optional.ofNullable(doc.get("webinarUrlApac_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setWebinarUrlEmea(Optional.ofNullable(doc.get("webinarUrlEmea_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setIcalUrl(Optional.ofNullable(doc.get("icalUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyWebinar.setNextWebinar(Optional.ofNullable(doc.get("nextWebinar_docvalues_date")).map(v -> v.toString()).orElse(null));
+    ZoneId zoneId = Optional.ofNullable(siteRequest_).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"));
+    Optional.ofNullable((List<?>)doc.get("nextWebinarsBegin_indexedstored_dates")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+      oCompanyWebinar.addNextWebinarsBegin(CompanyWebinar.staticSetNextWebinarsBegin(siteRequest, v.toString(), zoneId));
+    });
+    oCompanyWebinar.setJoinUrl(Optional.ofNullable(doc.get("joinUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
 
-	@Override
-	public String idForClass() {
-		return pageId;
-	}
+    super.storeBaseModel(doc);
+  }
 
-	@Override
-	public String titleForClass() {
-		return objectTitle;
-	}
+  //////////////////
+  // apiRequest //
+  //////////////////
 
-	@Override
-	public String nameForClass() {
-		return name;
-	}
+  public void apiRequestCompanyWebinar() {
+    ApiRequest apiRequest = Optional.ofNullable(siteRequest_).map(r -> r.getApiRequest_()).orElse(null);
+    Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
+    if(o != null && o instanceof CompanyWebinar) {
+      CompanyWebinar original = (CompanyWebinar)o;
+      if(!Objects.equals(name, original.getName()))
+        apiRequest.addVars("name");
+      if(!Objects.equals(description, original.getDescription()))
+        apiRequest.addVars("description");
+      if(!Objects.equals(pageId, original.getPageId()))
+        apiRequest.addVars("pageId");
+      if(!Objects.equals(joinUri, original.getJoinUri()))
+        apiRequest.addVars("joinUri");
+      if(!Objects.equals(webinarUrlAmericas, original.getWebinarUrlAmericas()))
+        apiRequest.addVars("webinarUrlAmericas");
+      if(!Objects.equals(webinarUrlApac, original.getWebinarUrlApac()))
+        apiRequest.addVars("webinarUrlApac");
+      if(!Objects.equals(webinarUrlEmea, original.getWebinarUrlEmea()))
+        apiRequest.addVars("webinarUrlEmea");
+      if(!Objects.equals(icalUrl, original.getIcalUrl()))
+        apiRequest.addVars("icalUrl");
+      if(!Objects.equals(nextWebinar, original.getNextWebinar()))
+        apiRequest.addVars("nextWebinar");
+      if(!Objects.equals(nextWebinarsBegin, original.getNextWebinarsBegin()))
+        apiRequest.addVars("nextWebinarsBegin");
+      if(!Objects.equals(joinUrl, original.getJoinUrl()))
+        apiRequest.addVars("joinUrl");
+      super.apiRequestBaseModel();
+    }
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return CompanyWebinar.NameAdjectiveSingular_enUS;
-	}
+  //////////////
+  // toString //
+  //////////////
 
-	@Override
-	public String descriptionForClass() {
-		return description;
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(joinUri).map(v -> "joinUri: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(webinarUrlAmericas).map(v -> "webinarUrlAmericas: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(webinarUrlApac).map(v -> "webinarUrlApac: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(webinarUrlEmea).map(v -> "webinarUrlEmea: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(icalUrl).map(v -> "icalUrl: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(nextWebinar).map(v -> "nextWebinar: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(nextWebinarsBegin).map(v -> "nextWebinarsBegin: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(joinUrl).map(v -> "joinUrl: \"" + v + "\"\n" ).orElse(""));
+    return sb.toString();
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return "%s/en-us/edit/webinar/%s";
-	}
+  public static final String[] CompanyWebinarVals = new String[] { caldavFail1_enUS };
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return "%s/en-us/view/webinar/%s";
-	}
+  public static final String CLASS_SIMPLE_NAME = "CompanyWebinar";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinar";
+  public static final String CLASS_AUTH_RESOURCE = "COMPANYWEBINAR";
+  public static final String CLASS_API_ADDRESS_CompanyWebinar = "computate.org-enUS-CompanyWebinar";
+  public static String getClassApiAddress() {
+    return CLASS_API_ADDRESS_CompanyWebinar;
+  }
+  public static final String VAR_name = "name";
+  public static final String VAR_description = "description";
+  public static final String VAR_pageId = "pageId";
+  public static final String VAR_joinUri = "joinUri";
+  public static final String VAR_webinarUrlAmericas = "webinarUrlAmericas";
+  public static final String VAR_webinarUrlApac = "webinarUrlApac";
+  public static final String VAR_webinarUrlEmea = "webinarUrlEmea";
+  public static final String VAR_icalUrl = "icalUrl";
+  public static final String VAR_caldav = "caldav";
+  public static final String VAR_nextWebinar = "nextWebinar";
+  public static final String VAR_nextWebinarsBegin = "nextWebinarsBegin";
+  public static final String VAR_joinUrl = "joinUrl";
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return "%s/en-us/join/webinar/%s";
-	}
+  public static List<String> varsQForClass() {
+    return CompanyWebinar.varsQCompanyWebinar(new ArrayList<String>());
+  }
+  public static List<String> varsQCompanyWebinar(List<String> vars) {
+    BaseModel.varsQBaseModel(vars);
+    return vars;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  public static List<String> varsFqForClass() {
+    return CompanyWebinar.varsFqCompanyWebinar(new ArrayList<String>());
+  }
+  public static List<String> varsFqCompanyWebinar(List<String> vars) {
+    vars.add(VAR_name);
+    vars.add(VAR_description);
+    vars.add(VAR_pageId);
+    vars.add(VAR_joinUri);
+    vars.add(VAR_webinarUrlAmericas);
+    vars.add(VAR_webinarUrlApac);
+    vars.add(VAR_webinarUrlEmea);
+    vars.add(VAR_icalUrl);
+    vars.add(VAR_nextWebinar);
+    BaseModel.varsFqBaseModel(vars);
+    return vars;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyWebinar.displayNameCompanyWebinar(var);
-	}
-	public static String displayNameCompanyWebinar(String var) {
-		switch(var) {
-		case VAR_name:
-			return DISPLAY_NAME_name;
-		case VAR_description:
-			return DISPLAY_NAME_description;
-		case VAR_pageId:
-			return DISPLAY_NAME_pageId;
-		case VAR_joinUri:
-			return DISPLAY_NAME_joinUri;
-		case VAR_webinarUrlAmericas:
-			return DISPLAY_NAME_webinarUrlAmericas;
-		case VAR_webinarUrlApac:
-			return DISPLAY_NAME_webinarUrlApac;
-		case VAR_webinarUrlEmea:
-			return DISPLAY_NAME_webinarUrlEmea;
-		case VAR_icalUrl:
-			return DISPLAY_NAME_icalUrl;
-		case VAR_caldav:
-			return DISPLAY_NAME_caldav;
-		case VAR_nextWebinar:
-			return DISPLAY_NAME_nextWebinar;
-		case VAR_nextWebinarsBegin:
-			return DISPLAY_NAME_nextWebinarsBegin;
-		case VAR_joinUrl:
-			return DISPLAY_NAME_joinUrl;
-		default:
-			return BaseModel.displayNameBaseModel(var);
-		}
-	}
+  public static List<String> varsRangeForClass() {
+    return CompanyWebinar.varsRangeCompanyWebinar(new ArrayList<String>());
+  }
+  public static List<String> varsRangeCompanyWebinar(List<String> vars) {
+    vars.add(VAR_nextWebinar);
+    BaseModel.varsRangeBaseModel(vars);
+    return vars;
+  }
 
-	public static String descriptionCompanyWebinar(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-		case VAR_name:
-			return "The name of this webinar";
-		case VAR_description:
-			return "A description of this webinar";
-		case VAR_pageId:
-			return "The ID for this page. ";
-		case VAR_joinUri:
-			return "The join relative URI for this page. ";
-		case VAR_webinarUrlAmericas:
-			return "The actual link to the Webinar in Americas";
-		case VAR_webinarUrlApac:
-			return "The actual link to the Webinar in APAC";
-		case VAR_webinarUrlEmea:
-			return "The actual link to the Webinar in EMEA";
-		case VAR_icalUrl:
-			return "The ICalendar URL for the events. ";
-		case VAR_nextWebinar:
-			return "The start date time of the next webinar. ";
-		case VAR_nextWebinarsBegin:
-			return "The start date time of the next webinars for the week. ";
-		case VAR_joinUrl:
-			return "Access the webinar links. ";
-			default:
-				return BaseModel.descriptionBaseModel(var);
-		}
-	}
+  public static final String DISPLAY_NAME_name = "name";
+  public static final String DISPLAY_NAME_description = "description";
+  public static final String DISPLAY_NAME_pageId = "Page ID";
+  public static final String DISPLAY_NAME_joinUri = "join URI";
+  public static final String DISPLAY_NAME_webinarUrlAmericas = "Webinar URL Americas";
+  public static final String DISPLAY_NAME_webinarUrlApac = "Webinar URL APAC";
+  public static final String DISPLAY_NAME_webinarUrlEmea = "Webinar URL EMEA";
+  public static final String DISPLAY_NAME_icalUrl = "ICal URL";
+  public static final String DISPLAY_NAME_caldav = "";
+  public static final String DISPLAY_NAME_nextWebinar = "next webinar";
+  public static final String DISPLAY_NAME_nextWebinarsBegin = "next webinars begin";
+  public static final String DISPLAY_NAME_joinUrl = "Join the webinar";
 
-	public static String classSimpleNameCompanyWebinar(String var) {
-		switch(var) {
-		case VAR_name:
-			return "String";
-		case VAR_description:
-			return "String";
-		case VAR_pageId:
-			return "String";
-		case VAR_joinUri:
-			return "String";
-		case VAR_webinarUrlAmericas:
-			return "String";
-		case VAR_webinarUrlApac:
-			return "String";
-		case VAR_webinarUrlEmea:
-			return "String";
-		case VAR_icalUrl:
-			return "String";
-		case VAR_caldav:
-			return "String";
-		case VAR_nextWebinar:
-			return "ZonedDateTime";
-		case VAR_nextWebinarsBegin:
-			return "List";
-		case VAR_joinUrl:
-			return "String";
-			default:
-				return BaseModel.classSimpleNameBaseModel(var);
-		}
-	}
+  @Override
+  public String idForClass() {
+    return pageId;
+  }
 
-	public static Integer htmColumnCompanyWebinar(String var) {
-		switch(var) {
-		case VAR_name:
-			return 0;
-		case VAR_description:
-			return 3;
-		case VAR_nextWebinar:
-			return 1;
-		case VAR_joinUrl:
-			return 2;
-			default:
-				return BaseModel.htmColumnBaseModel(var);
-		}
-	}
+  @Override
+  public String titleForClass() {
+    return objectTitle;
+  }
 
-	public static Integer htmRowCompanyWebinar(String var) {
-		switch(var) {
-		case VAR_name:
-			return 3;
-		case VAR_description:
-			return 3;
-		case VAR_pageId:
-			return 99;
-		case VAR_webinarUrlAmericas:
-			return 4;
-		case VAR_webinarUrlApac:
-			return 4;
-		case VAR_webinarUrlEmea:
-			return 4;
-		case VAR_icalUrl:
-			return 4;
-		case VAR_nextWebinar:
-			return 4;
-			default:
-				return BaseModel.htmRowBaseModel(var);
-		}
-	}
+  @Override
+  public String nameForClass() {
+    return name;
+  }
 
-	public static Integer htmCellCompanyWebinar(String var) {
-		switch(var) {
-		case VAR_name:
-			return 1;
-		case VAR_description:
-			return 2;
-		case VAR_pageId:
-			return 1;
-		case VAR_webinarUrlAmericas:
-			return 1;
-		case VAR_webinarUrlApac:
-			return 2;
-		case VAR_webinarUrlEmea:
-			return 3;
-		case VAR_icalUrl:
-			return 4;
-		case VAR_nextWebinar:
-			return 5;
-			default:
-				return BaseModel.htmCellBaseModel(var);
-		}
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return CompanyWebinar.NameAdjectiveSingular_enUS;
+  }
 
-	public static Integer lengthMinCompanyWebinar(String var) {
-		switch(var) {
-			default:
-				return BaseModel.lengthMinBaseModel(var);
-		}
-	}
+  @Override
+  public String descriptionForClass() {
+    return description;
+  }
 
-	public static Integer lengthMaxCompanyWebinar(String var) {
-		switch(var) {
-			default:
-				return BaseModel.lengthMaxBaseModel(var);
-		}
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return "%s/en-us/edit/webinar/%s";
+  }
 
-	public static Integer maxCompanyWebinar(String var) {
-		switch(var) {
-			default:
-				return BaseModel.maxBaseModel(var);
-		}
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return "%s/en-us/view/webinar/%s";
+  }
 
-	public static Integer minCompanyWebinar(String var) {
-		switch(var) {
-			default:
-				return BaseModel.minBaseModel(var);
-		}
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return "%s/en-us/join/webinar/%s";
+  }
+
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
+
+  public static String displayNameForClass(String var) {
+    return CompanyWebinar.displayNameCompanyWebinar(var);
+  }
+  public static String displayNameCompanyWebinar(String var) {
+    switch(var) {
+    case VAR_name:
+      return DISPLAY_NAME_name;
+    case VAR_description:
+      return DISPLAY_NAME_description;
+    case VAR_pageId:
+      return DISPLAY_NAME_pageId;
+    case VAR_joinUri:
+      return DISPLAY_NAME_joinUri;
+    case VAR_webinarUrlAmericas:
+      return DISPLAY_NAME_webinarUrlAmericas;
+    case VAR_webinarUrlApac:
+      return DISPLAY_NAME_webinarUrlApac;
+    case VAR_webinarUrlEmea:
+      return DISPLAY_NAME_webinarUrlEmea;
+    case VAR_icalUrl:
+      return DISPLAY_NAME_icalUrl;
+    case VAR_caldav:
+      return DISPLAY_NAME_caldav;
+    case VAR_nextWebinar:
+      return DISPLAY_NAME_nextWebinar;
+    case VAR_nextWebinarsBegin:
+      return DISPLAY_NAME_nextWebinarsBegin;
+    case VAR_joinUrl:
+      return DISPLAY_NAME_joinUrl;
+    default:
+      return BaseModel.displayNameBaseModel(var);
+    }
+  }
+
+  public static String descriptionCompanyWebinar(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+    case VAR_name:
+      return "The name of this webinar";
+    case VAR_description:
+      return "A description of this webinar";
+    case VAR_pageId:
+      return "The ID for this page. ";
+    case VAR_joinUri:
+      return "The join relative URI for this page. ";
+    case VAR_webinarUrlAmericas:
+      return "The actual link to the Webinar in Americas";
+    case VAR_webinarUrlApac:
+      return "The actual link to the Webinar in APAC";
+    case VAR_webinarUrlEmea:
+      return "The actual link to the Webinar in EMEA";
+    case VAR_icalUrl:
+      return "The ICalendar URL for the events. ";
+    case VAR_nextWebinar:
+      return "The start date time of the next webinar. ";
+    case VAR_nextWebinarsBegin:
+      return "The start date time of the next webinars for the week. ";
+    case VAR_joinUrl:
+      return "Access the webinar links. ";
+      default:
+        return BaseModel.descriptionBaseModel(var);
+    }
+  }
+
+  public static String classSimpleNameCompanyWebinar(String var) {
+    switch(var) {
+    case VAR_name:
+      return "String";
+    case VAR_description:
+      return "String";
+    case VAR_pageId:
+      return "String";
+    case VAR_joinUri:
+      return "String";
+    case VAR_webinarUrlAmericas:
+      return "String";
+    case VAR_webinarUrlApac:
+      return "String";
+    case VAR_webinarUrlEmea:
+      return "String";
+    case VAR_icalUrl:
+      return "String";
+    case VAR_caldav:
+      return "String";
+    case VAR_nextWebinar:
+      return "ZonedDateTime";
+    case VAR_nextWebinarsBegin:
+      return "List";
+    case VAR_joinUrl:
+      return "String";
+      default:
+        return BaseModel.classSimpleNameBaseModel(var);
+    }
+  }
+
+  public static Integer htmColumnCompanyWebinar(String var) {
+    switch(var) {
+    case VAR_name:
+      return 0;
+    case VAR_description:
+      return 3;
+    case VAR_nextWebinar:
+      return 1;
+    case VAR_joinUrl:
+      return 2;
+      default:
+        return BaseModel.htmColumnBaseModel(var);
+    }
+  }
+
+  public static Integer htmRowCompanyWebinar(String var) {
+    switch(var) {
+    case VAR_name:
+      return 3;
+    case VAR_description:
+      return 3;
+    case VAR_pageId:
+      return 99;
+    case VAR_webinarUrlAmericas:
+      return 4;
+    case VAR_webinarUrlApac:
+      return 4;
+    case VAR_webinarUrlEmea:
+      return 4;
+    case VAR_icalUrl:
+      return 4;
+    case VAR_nextWebinar:
+      return 4;
+      default:
+        return BaseModel.htmRowBaseModel(var);
+    }
+  }
+
+  public static Integer htmCellCompanyWebinar(String var) {
+    switch(var) {
+    case VAR_name:
+      return 1;
+    case VAR_description:
+      return 2;
+    case VAR_pageId:
+      return 1;
+    case VAR_webinarUrlAmericas:
+      return 1;
+    case VAR_webinarUrlApac:
+      return 2;
+    case VAR_webinarUrlEmea:
+      return 3;
+    case VAR_icalUrl:
+      return 4;
+    case VAR_nextWebinar:
+      return 5;
+      default:
+        return BaseModel.htmCellBaseModel(var);
+    }
+  }
+
+  public static Integer lengthMinCompanyWebinar(String var) {
+    switch(var) {
+      default:
+        return BaseModel.lengthMinBaseModel(var);
+    }
+  }
+
+  public static Integer lengthMaxCompanyWebinar(String var) {
+    switch(var) {
+      default:
+        return BaseModel.lengthMaxBaseModel(var);
+    }
+  }
+
+  public static Integer maxCompanyWebinar(String var) {
+    switch(var) {
+      default:
+        return BaseModel.maxBaseModel(var);
+    }
+  }
+
+  public static Integer minCompanyWebinar(String var) {
+    switch(var) {
+      default:
+        return BaseModel.minBaseModel(var);
+    }
+  }
 }

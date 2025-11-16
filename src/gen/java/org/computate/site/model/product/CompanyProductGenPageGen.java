@@ -134,695 +134,695 @@ import io.vertx.core.Future;
  * Generated: true
  **/
 public abstract class CompanyProductGenPageGen<DEV> extends PageLayout {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyProductGenPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyProductGenPage.class);
 
 	///////////////////////////////
-	// searchListCompanyProduct_ //
+  // searchListCompanyProduct_ //
 	///////////////////////////////
 
 
-	/**	 The entity searchListCompanyProduct_
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<CompanyProduct> searchListCompanyProduct_;
+  /**   The entity searchListCompanyProduct_
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<CompanyProduct> searchListCompanyProduct_;
 
-	/**	<br> The entity searchListCompanyProduct_
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyProduct_">Find the entity searchListCompanyProduct_ in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _searchListCompanyProduct_(Wrap<SearchList<CompanyProduct>> w);
+  /**  <br> The entity searchListCompanyProduct_
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyProduct_">Find the entity searchListCompanyProduct_ in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _searchListCompanyProduct_(Wrap<SearchList<CompanyProduct>> w);
 
-	public SearchList<CompanyProduct> getSearchListCompanyProduct_() {
-		return searchListCompanyProduct_;
-	}
+  public SearchList<CompanyProduct> getSearchListCompanyProduct_() {
+    return searchListCompanyProduct_;
+  }
 
-	public void setSearchListCompanyProduct_(SearchList<CompanyProduct> searchListCompanyProduct_) {
-		this.searchListCompanyProduct_ = searchListCompanyProduct_;
-	}
-	public static SearchList<CompanyProduct> staticSetSearchListCompanyProduct_(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyProductGenPage searchListCompanyProduct_Init() {
-		Wrap<SearchList<CompanyProduct>> searchListCompanyProduct_Wrap = new Wrap<SearchList<CompanyProduct>>().var("searchListCompanyProduct_");
-		if(searchListCompanyProduct_ == null) {
-			_searchListCompanyProduct_(searchListCompanyProduct_Wrap);
-			Optional.ofNullable(searchListCompanyProduct_Wrap.getO()).ifPresent(o -> {
-				setSearchListCompanyProduct_(o);
-			});
-		}
-		return (CompanyProductGenPage)this;
-	}
+  public void setSearchListCompanyProduct_(SearchList<CompanyProduct> searchListCompanyProduct_) {
+    this.searchListCompanyProduct_ = searchListCompanyProduct_;
+  }
+  public static SearchList<CompanyProduct> staticSetSearchListCompanyProduct_(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyProductGenPage searchListCompanyProduct_Init() {
+    Wrap<SearchList<CompanyProduct>> searchListCompanyProduct_Wrap = new Wrap<SearchList<CompanyProduct>>().var("searchListCompanyProduct_");
+    if(searchListCompanyProduct_ == null) {
+      _searchListCompanyProduct_(searchListCompanyProduct_Wrap);
+      Optional.ofNullable(searchListCompanyProduct_Wrap.getO()).ifPresent(o -> {
+        setSearchListCompanyProduct_(o);
+      });
+    }
+    return (CompanyProductGenPage)this;
+  }
 
 	////////////////////////
-	// listCompanyProduct //
+  // listCompanyProduct //
 	////////////////////////
 
 
-	/**	 The entity listCompanyProduct
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = JsonArrayDeserializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected JsonArray listCompanyProduct = new JsonArray();
+  /**   The entity listCompanyProduct
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray listCompanyProduct = new JsonArray();
 
-	/**	<br> The entity listCompanyProduct
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:listCompanyProduct">Find the entity listCompanyProduct in Solr</a>
-	 * <br>
-	 * @param l is the entity already constructed. 
-	 **/
-	protected abstract void _listCompanyProduct(JsonArray l);
+  /**  <br> The entity listCompanyProduct
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:listCompanyProduct">Find the entity listCompanyProduct in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _listCompanyProduct(JsonArray l);
 
-	public JsonArray getListCompanyProduct() {
-		return listCompanyProduct;
-	}
+  public JsonArray getListCompanyProduct() {
+    return listCompanyProduct;
+  }
 
-	public void setListCompanyProduct(JsonArray listCompanyProduct) {
-		this.listCompanyProduct = listCompanyProduct;
-	}
-	@JsonIgnore
-	public void setListCompanyProduct(String o) {
-		this.listCompanyProduct = CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o);
-	}
-	public static JsonArray staticSetListCompanyProduct(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonArray(o);
-		}
-		return null;
-	}
-	protected CompanyProductGenPage listCompanyProductInit() {
-		_listCompanyProduct(listCompanyProduct);
-		return (CompanyProductGenPage)this;
-	}
+  public void setListCompanyProduct(JsonArray listCompanyProduct) {
+    this.listCompanyProduct = listCompanyProduct;
+  }
+  @JsonIgnore
+  public void setListCompanyProduct(String o) {
+    this.listCompanyProduct = CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o);
+  }
+  public static JsonArray staticSetListCompanyProduct(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected CompanyProductGenPage listCompanyProductInit() {
+    _listCompanyProduct(listCompanyProduct);
+    return (CompanyProductGenPage)this;
+  }
 
-	public static String staticSearchListCompanyProduct(SiteRequest siteRequest_, JsonArray o) {
-		return o.toString();
-	}
+  public static String staticSearchListCompanyProduct(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
 
-	public static String staticSearchStrListCompanyProduct(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrListCompanyProduct(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqListCompanyProduct(SiteRequest siteRequest_, String o) {
-		return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqListCompanyProduct(SiteRequest siteRequest_, String o) {
+    return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, o)).toString();
+  }
 
 	/////////////////
-	// resultCount //
+  // resultCount //
 	/////////////////
 
 
-	/**	 The entity resultCount
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer resultCount;
+  /**   The entity resultCount
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer resultCount;
 
-	/**	<br> The entity resultCount
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resultCount(Wrap<Integer> w);
+  /**  <br> The entity resultCount
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getResultCount() {
-		return resultCount;
-	}
+  public Integer getResultCount() {
+    return resultCount;
+  }
 
-	public void setResultCount(Integer resultCount) {
-		this.resultCount = resultCount;
-	}
-	@JsonIgnore
-	public void setResultCount(String o) {
-		this.resultCount = CompanyProductGenPage.staticSetResultCount(siteRequest_, o);
-	}
-	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected CompanyProductGenPage resultCountInit() {
-		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
-		if(resultCount == null) {
-			_resultCount(resultCountWrap);
-			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
-				setResultCount(o);
-			});
-		}
-		return (CompanyProductGenPage)this;
-	}
+  public void setResultCount(Integer resultCount) {
+    this.resultCount = resultCount;
+  }
+  @JsonIgnore
+  public void setResultCount(String o) {
+    this.resultCount = CompanyProductGenPage.staticSetResultCount(siteRequest_, o);
+  }
+  public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyProductGenPage resultCountInit() {
+    Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+    if(resultCount == null) {
+      _resultCount(resultCountWrap);
+      Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+        setResultCount(o);
+      });
+    }
+    return (CompanyProductGenPage)this;
+  }
 
-	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
+  public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
 
-	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
-		return CompanyProductGenPage.staticSearchResultCount(siteRequest_, CompanyProductGenPage.staticSetResultCount(siteRequest_, o)).toString();
-	}
-
-	////////////
-	// result //
-	////////////
-
-
-	/**	 The entity result
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected CompanyProduct result;
-
-	/**	<br> The entity result
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _result(Wrap<CompanyProduct> w);
-
-	public CompanyProduct getResult() {
-		return result;
-	}
-
-	public void setResult(CompanyProduct result) {
-		this.result = result;
-	}
-	public static CompanyProduct staticSetResult(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyProductGenPage resultInit() {
-		Wrap<CompanyProduct> resultWrap = new Wrap<CompanyProduct>().var("result");
-		if(result == null) {
-			_result(resultWrap);
-			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
-				setResult(o);
-			});
-		}
-		return (CompanyProductGenPage)this;
-	}
+  public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+    return CompanyProductGenPage.staticSearchResultCount(siteRequest_, CompanyProductGenPage.staticSetResultCount(siteRequest_, o)).toString();
+  }
 
 	////////////
-	// solrId //
+  // result //
 	////////////
 
 
-	/**	 The entity solrId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String solrId;
+  /**   The entity result
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected CompanyProduct result;
 
-	/**	<br> The entity solrId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _solrId(Wrap<String> w);
+  /**  <br> The entity result
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _result(Wrap<CompanyProduct> w);
 
-	public String getSolrId() {
-		return solrId;
-	}
-	public void setSolrId(String o) {
-		this.solrId = CompanyProductGenPage.staticSetSolrId(siteRequest_, o);
-	}
-	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyProductGenPage solrIdInit() {
-		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
-		if(solrId == null) {
-			_solrId(solrIdWrap);
-			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
-				setSolrId(o);
-			});
-		}
-		return (CompanyProductGenPage)this;
-	}
+  public CompanyProduct getResult() {
+    return result;
+  }
 
-	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public void setResult(CompanyProduct result) {
+    this.result = result;
+  }
+  public static CompanyProduct staticSetResult(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyProductGenPage resultInit() {
+    Wrap<CompanyProduct> resultWrap = new Wrap<CompanyProduct>().var("result");
+    if(result == null) {
+      _result(resultWrap);
+      Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+        setResult(o);
+      });
+    }
+    return (CompanyProductGenPage)this;
+  }
 
-	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+	////////////
+  // solrId //
+	////////////
 
-	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
-		return CompanyProductGenPage.staticSearchSolrId(siteRequest_, CompanyProductGenPage.staticSetSolrId(siteRequest_, o)).toString();
-	}
+
+  /**   The entity solrId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String solrId;
+
+  /**  <br> The entity solrId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _solrId(Wrap<String> w);
+
+  public String getSolrId() {
+    return solrId;
+  }
+  public void setSolrId(String o) {
+    this.solrId = CompanyProductGenPage.staticSetSolrId(siteRequest_, o);
+  }
+  public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyProductGenPage solrIdInit() {
+    Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+    if(solrId == null) {
+      _solrId(solrIdWrap);
+      Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+        setSolrId(o);
+      });
+    }
+    return (CompanyProductGenPage)this;
+  }
+
+  public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+    return CompanyProductGenPage.staticSearchSolrId(siteRequest_, CompanyProductGenPage.staticSetSolrId(siteRequest_, o)).toString();
+  }
 
 	///////////////////////////
-	// pageUriCompanyProduct //
+  // pageUriCompanyProduct //
 	///////////////////////////
 
 
-	/**	 The entity pageUriCompanyProduct
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageUriCompanyProduct;
+  /**   The entity pageUriCompanyProduct
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageUriCompanyProduct;
 
-	/**	<br> The entity pageUriCompanyProduct
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyProduct">Find the entity pageUriCompanyProduct in Solr</a>
-	 * <br>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageUriCompanyProduct(Wrap<String> c);
+  /**  <br> The entity pageUriCompanyProduct
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProductGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyProduct">Find the entity pageUriCompanyProduct in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageUriCompanyProduct(Wrap<String> c);
 
-	public String getPageUriCompanyProduct() {
-		return pageUriCompanyProduct;
-	}
-	public void setPageUriCompanyProduct(String o) {
-		this.pageUriCompanyProduct = CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, o);
-	}
-	public static String staticSetPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyProductGenPage pageUriCompanyProductInit() {
-		Wrap<String> pageUriCompanyProductWrap = new Wrap<String>().var("pageUriCompanyProduct");
-		if(pageUriCompanyProduct == null) {
-			_pageUriCompanyProduct(pageUriCompanyProductWrap);
-			Optional.ofNullable(pageUriCompanyProductWrap.getO()).ifPresent(o -> {
-				setPageUriCompanyProduct(o);
-			});
-		}
-		return (CompanyProductGenPage)this;
-	}
+  public String getPageUriCompanyProduct() {
+    return pageUriCompanyProduct;
+  }
+  public void setPageUriCompanyProduct(String o) {
+    this.pageUriCompanyProduct = CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, o);
+  }
+  public static String staticSetPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyProductGenPage pageUriCompanyProductInit() {
+    Wrap<String> pageUriCompanyProductWrap = new Wrap<String>().var("pageUriCompanyProduct");
+    if(pageUriCompanyProduct == null) {
+      _pageUriCompanyProduct(pageUriCompanyProductWrap);
+      Optional.ofNullable(pageUriCompanyProductWrap.getO()).ifPresent(o -> {
+        setPageUriCompanyProduct(o);
+      });
+    }
+    return (CompanyProductGenPage)this;
+  }
 
-	public static String staticSearchPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
-		return CompanyProductGenPage.staticSearchPageUriCompanyProduct(siteRequest_, CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageUriCompanyProduct(SiteRequest siteRequest_, String o) {
+    return CompanyProductGenPage.staticSearchPageUriCompanyProduct(siteRequest_, CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, o)).toString();
+  }
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyProductGenPageGen<DEV>> promiseDeepCompanyProductGenPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyProductGenPage();
-	}
+  public Future<CompanyProductGenPageGen<DEV>> promiseDeepCompanyProductGenPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyProductGenPage();
+  }
 
-	public Future<CompanyProductGenPageGen<DEV>> promiseDeepCompanyProductGenPage() {
-		Promise<CompanyProductGenPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyProductGenPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyProductGenPageGen<DEV>> promiseDeepCompanyProductGenPage() {
+    Promise<CompanyProductGenPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyProductGenPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyProductGenPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				searchListCompanyProduct_Init();
-				listCompanyProductInit();
-				resultCountInit();
-				resultInit();
-				solrIdInit();
-				pageUriCompanyProductInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyProductGenPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        searchListCompanyProduct_Init();
+        listCompanyProductInit();
+        resultCountInit();
+        resultInit();
+        solrIdInit();
+        pageUriCompanyProductInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyProductGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyProductGenPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyProductGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyProductGenPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyProductGenPage(SiteRequest siteRequest_) {
-			super.siteRequestPageLayout(siteRequest_);
-	}
+  public void siteRequestCompanyProductGenPage(SiteRequest siteRequest_) {
+      super.siteRequestPageLayout(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyProductGenPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyProductGenPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyProductGenPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyProductGenPage(String var) {
-		CompanyProductGenPage oCompanyProductGenPage = (CompanyProductGenPage)this;
-		switch(var) {
-			case "searchListCompanyProduct_":
-				return oCompanyProductGenPage.searchListCompanyProduct_;
-			case "listCompanyProduct":
-				return oCompanyProductGenPage.listCompanyProduct;
-			case "resultCount":
-				return oCompanyProductGenPage.resultCount;
-			case "result":
-				return oCompanyProductGenPage.result;
-			case "solrId":
-				return oCompanyProductGenPage.solrId;
-			case "pageUriCompanyProduct":
-				return oCompanyProductGenPage.pageUriCompanyProduct;
-			default:
-				return super.obtainPageLayout(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyProductGenPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyProductGenPage(String var) {
+    CompanyProductGenPage oCompanyProductGenPage = (CompanyProductGenPage)this;
+    switch(var) {
+      case "searchListCompanyProduct_":
+        return oCompanyProductGenPage.searchListCompanyProduct_;
+      case "listCompanyProduct":
+        return oCompanyProductGenPage.listCompanyProduct;
+      case "resultCount":
+        return oCompanyProductGenPage.resultCount;
+      case "result":
+        return oCompanyProductGenPage.result;
+      case "solrId":
+        return oCompanyProductGenPage.solrId;
+      case "pageUriCompanyProduct":
+        return oCompanyProductGenPage.pageUriCompanyProduct;
+      default:
+        return super.obtainPageLayout(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyProductGenPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyProductGenPage(String var, Object val) {
-		CompanyProductGenPage oCompanyProductGenPage = (CompanyProductGenPage)this;
-		switch(var) {
-			default:
-				return super.relatePageLayout(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyProductGenPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyProductGenPage(String var, Object val) {
+    CompanyProductGenPage oCompanyProductGenPage = (CompanyProductGenPage)this;
+    switch(var) {
+      default:
+        return super.relatePageLayout(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyProductGenPage o) {
-		return staticSetCompanyProductGenPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyProductGenPage o) {
-		switch(entityVar) {
-		case "listCompanyProduct":
-			return CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, v);
-		case "resultCount":
-			return CompanyProductGenPage.staticSetResultCount(siteRequest_, v);
-		case "solrId":
-			return CompanyProductGenPage.staticSetSolrId(siteRequest_, v);
-		case "pageUriCompanyProduct":
-			return CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, v);
-			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyProductGenPage o) {
+    return staticSetCompanyProductGenPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyProductGenPage o) {
+    switch(entityVar) {
+    case "listCompanyProduct":
+      return CompanyProductGenPage.staticSetListCompanyProduct(siteRequest_, v);
+    case "resultCount":
+      return CompanyProductGenPage.staticSetResultCount(siteRequest_, v);
+    case "solrId":
+      return CompanyProductGenPage.staticSetSolrId(siteRequest_, v);
+    case "pageUriCompanyProduct":
+      return CompanyProductGenPage.staticSetPageUriCompanyProduct(siteRequest_, v);
+      default:
+        return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyProductGenPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyProduct":
-			return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, (JsonArray)o);
-		case "resultCount":
-			return CompanyProductGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return CompanyProductGenPage.staticSearchSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyProduct":
-			return CompanyProductGenPage.staticSearchPageUriCompanyProduct(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyProductGenPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyProduct":
+      return CompanyProductGenPage.staticSearchListCompanyProduct(siteRequest_, (JsonArray)o);
+    case "resultCount":
+      return CompanyProductGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return CompanyProductGenPage.staticSearchSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyProduct":
+      return CompanyProductGenPage.staticSearchPageUriCompanyProduct(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyProductGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyProduct":
-			return CompanyProductGenPage.staticSearchStrListCompanyProduct(siteRequest_, (String)o);
-		case "resultCount":
-			return CompanyProductGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return CompanyProductGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyProduct":
-			return CompanyProductGenPage.staticSearchStrPageUriCompanyProduct(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyProductGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyProduct":
+      return CompanyProductGenPage.staticSearchStrListCompanyProduct(siteRequest_, (String)o);
+    case "resultCount":
+      return CompanyProductGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return CompanyProductGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyProduct":
+      return CompanyProductGenPage.staticSearchStrPageUriCompanyProduct(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyProductGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "listCompanyProduct":
-			return CompanyProductGenPage.staticSearchFqListCompanyProduct(siteRequest_, o);
-		case "resultCount":
-			return CompanyProductGenPage.staticSearchFqResultCount(siteRequest_, o);
-		case "solrId":
-			return CompanyProductGenPage.staticSearchFqSolrId(siteRequest_, o);
-		case "pageUriCompanyProduct":
-			return CompanyProductGenPage.staticSearchFqPageUriCompanyProduct(siteRequest_, o);
-			default:
-				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyProductGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyProductGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "listCompanyProduct":
+      return CompanyProductGenPage.staticSearchFqListCompanyProduct(siteRequest_, o);
+    case "resultCount":
+      return CompanyProductGenPage.staticSearchFqResultCount(siteRequest_, o);
+    case "solrId":
+      return CompanyProductGenPage.staticSearchFqSolrId(siteRequest_, o);
+    case "pageUriCompanyProduct":
+      return CompanyProductGenPage.staticSearchFqPageUriCompanyProduct(siteRequest_, o);
+      default:
+        return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyProductGenPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProductGenPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
-	public static final String VAR_searchListCompanyProduct_ = "searchListCompanyProduct_";
-	public static final String VAR_listCompanyProduct = "listCompanyProduct";
-	public static final String VAR_resultCount = "resultCount";
-	public static final String VAR_result = "result";
-	public static final String VAR_solrId = "solrId";
-	public static final String VAR_pageUriCompanyProduct = "pageUriCompanyProduct";
+  public static final String CLASS_SIMPLE_NAME = "CompanyProductGenPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.product.CompanyProductGenPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String VAR_searchListCompanyProduct_ = "searchListCompanyProduct_";
+  public static final String VAR_listCompanyProduct = "listCompanyProduct";
+  public static final String VAR_resultCount = "resultCount";
+  public static final String VAR_result = "result";
+  public static final String VAR_solrId = "solrId";
+  public static final String VAR_pageUriCompanyProduct = "pageUriCompanyProduct";
 
-	public static final String DISPLAY_NAME_searchListCompanyProduct_ = "";
-	public static final String DISPLAY_NAME_listCompanyProduct = "";
-	public static final String DISPLAY_NAME_resultCount = "";
-	public static final String DISPLAY_NAME_result = "";
-	public static final String DISPLAY_NAME_solrId = "";
-	public static final String DISPLAY_NAME_pageUriCompanyProduct = "";
+  public static final String DISPLAY_NAME_searchListCompanyProduct_ = "";
+  public static final String DISPLAY_NAME_listCompanyProduct = "";
+  public static final String DISPLAY_NAME_resultCount = "";
+  public static final String DISPLAY_NAME_result = "";
+  public static final String DISPLAY_NAME_solrId = "";
+  public static final String DISPLAY_NAME_pageUriCompanyProduct = "";
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyProductGenPage.displayNameCompanyProductGenPage(var);
-	}
-	public static String displayNameCompanyProductGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyProduct_:
-			return DISPLAY_NAME_searchListCompanyProduct_;
-		case VAR_listCompanyProduct:
-			return DISPLAY_NAME_listCompanyProduct;
-		case VAR_resultCount:
-			return DISPLAY_NAME_resultCount;
-		case VAR_result:
-			return DISPLAY_NAME_result;
-		case VAR_solrId:
-			return DISPLAY_NAME_solrId;
-		case VAR_pageUriCompanyProduct:
-			return DISPLAY_NAME_pageUriCompanyProduct;
-		default:
-			return PageLayout.displayNamePageLayout(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyProductGenPage.displayNameCompanyProductGenPage(var);
+  }
+  public static String displayNameCompanyProductGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyProduct_:
+      return DISPLAY_NAME_searchListCompanyProduct_;
+    case VAR_listCompanyProduct:
+      return DISPLAY_NAME_listCompanyProduct;
+    case VAR_resultCount:
+      return DISPLAY_NAME_resultCount;
+    case VAR_result:
+      return DISPLAY_NAME_result;
+    case VAR_solrId:
+      return DISPLAY_NAME_solrId;
+    case VAR_pageUriCompanyProduct:
+      return DISPLAY_NAME_pageUriCompanyProduct;
+    default:
+      return PageLayout.displayNamePageLayout(var);
+    }
+  }
 
-	public static String descriptionCompanyProductGenPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return PageLayout.descriptionPageLayout(var);
-		}
-	}
+  public static String descriptionCompanyProductGenPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return PageLayout.descriptionPageLayout(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyProductGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyProduct_:
-			return "SearchList";
-		case VAR_listCompanyProduct:
-			return "JsonArray";
-		case VAR_resultCount:
-			return "Integer";
-		case VAR_result:
-			return "CompanyProduct";
-		case VAR_solrId:
-			return "String";
-		case VAR_pageUriCompanyProduct:
-			return "String";
-			default:
-				return PageLayout.classSimpleNamePageLayout(var);
-		}
-	}
+  public static String classSimpleNameCompanyProductGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyProduct_:
+      return "SearchList";
+    case VAR_listCompanyProduct:
+      return "JsonArray";
+    case VAR_resultCount:
+      return "Integer";
+    case VAR_result:
+      return "CompanyProduct";
+    case VAR_solrId:
+      return "String";
+    case VAR_pageUriCompanyProduct:
+      return "String";
+      default:
+        return PageLayout.classSimpleNamePageLayout(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmColumnPageLayout(var);
-		}
-	}
+  public static Integer htmColumnCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmColumnPageLayout(var);
+    }
+  }
 
-	public static Integer htmRowCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmRowPageLayout(var);
-		}
-	}
+  public static Integer htmRowCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmRowPageLayout(var);
+    }
+  }
 
-	public static Integer htmCellCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmCellPageLayout(var);
-		}
-	}
+  public static Integer htmCellCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmCellPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMinPageLayout(var);
-		}
-	}
+  public static Integer lengthMinCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMinPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMaxPageLayout(var);
-		}
-	}
+  public static Integer lengthMaxCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMaxPageLayout(var);
+    }
+  }
 
-	public static Integer maxCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.maxPageLayout(var);
-		}
-	}
+  public static Integer maxCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.maxPageLayout(var);
+    }
+  }
 
-	public static Integer minCompanyProductGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.minPageLayout(var);
-		}
-	}
+  public static Integer minCompanyProductGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.minPageLayout(var);
+    }
+  }
 }

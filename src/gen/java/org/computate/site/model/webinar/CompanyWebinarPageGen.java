@@ -113,308 +113,308 @@ import io.vertx.core.Future;
  * Generated: true
  **/
 public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarPage.class);
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyWebinarPage();
-	}
+  public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyWebinarPage();
+  }
 
-	public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage() {
-		Promise<CompanyWebinarPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyWebinarPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepCompanyWebinarGenPage(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyWebinarPageGen<DEV>> promiseDeepCompanyWebinarPage() {
+    Promise<CompanyWebinarPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyWebinarPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepCompanyWebinarGenPage(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyWebinarPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyWebinarPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyWebinarPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyWebinarPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyWebinarPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyWebinarPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyWebinarPage(SiteRequest siteRequest_) {
-			super.siteRequestCompanyWebinarGenPage(siteRequest_);
-	}
+  public void siteRequestCompanyWebinarPage(SiteRequest siteRequest_) {
+      super.siteRequestCompanyWebinarGenPage(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyWebinarPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyWebinarPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyWebinarPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyWebinarPage(String var) {
-		CompanyWebinarPage oCompanyWebinarPage = (CompanyWebinarPage)this;
-		switch(var) {
-			default:
-				return super.obtainCompanyWebinarGenPage(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyWebinarPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyWebinarPage(String var) {
+    CompanyWebinarPage oCompanyWebinarPage = (CompanyWebinarPage)this;
+    switch(var) {
+      default:
+        return super.obtainCompanyWebinarGenPage(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyWebinarPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyWebinarPage(String var, Object val) {
-		CompanyWebinarPage oCompanyWebinarPage = (CompanyWebinarPage)this;
-		switch(var) {
-			default:
-				return super.relateCompanyWebinarGenPage(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyWebinarPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyWebinarPage(String var, Object val) {
+    CompanyWebinarPage oCompanyWebinarPage = (CompanyWebinarPage)this;
+    switch(var) {
+      default:
+        return super.relateCompanyWebinarGenPage(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
-		return staticSetCompanyWebinarPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
-		switch(entityVar) {
-			default:
-				return CompanyWebinarGenPage.staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
+    return staticSetCompanyWebinarPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarPage o) {
+    switch(entityVar) {
+      default:
+        return CompanyWebinarGenPage.staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyWebinarPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyWebinarGenPage.staticSearchCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyWebinarPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyWebinarGenPage.staticSearchCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyWebinarPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-			default:
-				return CompanyWebinarGenPage.staticSearchStrCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyWebinarPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+      default:
+        return CompanyWebinarGenPage.staticSearchStrCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyWebinarPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-			default:
-				return CompanyWebinarGenPage.staticSearchFqCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyWebinarPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyWebinarPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+      default:
+        return CompanyWebinarGenPage.staticSearchFqCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String CLASS_SIMPLE_NAME = "CompanyWebinarPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
 
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyWebinarPage.displayNameCompanyWebinarPage(var);
-	}
-	public static String displayNameCompanyWebinarPage(String var) {
-		switch(var) {
-		default:
-			return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyWebinarPage.displayNameCompanyWebinarPage(var);
+  }
+  public static String displayNameCompanyWebinarPage(String var) {
+    switch(var) {
+    default:
+      return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static String descriptionCompanyWebinarPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.descriptionCompanyWebinarGenPage(var);
-		}
-	}
+  public static String descriptionCompanyWebinarPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.descriptionCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.classSimpleNameCompanyWebinarGenPage(var);
-		}
-	}
+  public static String classSimpleNameCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.classSimpleNameCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.htmColumnCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer htmColumnCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.htmColumnCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer htmRowCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.htmRowCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer htmRowCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.htmRowCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer htmCellCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.htmCellCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer htmCellCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.htmCellCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.lengthMinCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer lengthMinCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.lengthMinCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.lengthMaxCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer lengthMaxCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.lengthMaxCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer maxCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.maxCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer maxCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.maxCompanyWebinarGenPage(var);
+    }
+  }
 
-	public static Integer minCompanyWebinarPage(String var) {
-		switch(var) {
-			default:
-				return CompanyWebinarGenPage.minCompanyWebinarGenPage(var);
-		}
-	}
+  public static Integer minCompanyWebinarPage(String var) {
+    switch(var) {
+      default:
+        return CompanyWebinarGenPage.minCompanyWebinarGenPage(var);
+    }
+  }
 }

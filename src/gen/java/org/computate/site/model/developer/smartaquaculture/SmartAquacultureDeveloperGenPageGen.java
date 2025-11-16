@@ -134,695 +134,695 @@ import io.vertx.core.Future;
  * Generated: true
  **/
 public abstract class SmartAquacultureDeveloperGenPageGen<DEV> extends PageLayout {
-	protected static final Logger LOG = LoggerFactory.getLogger(SmartAquacultureDeveloperGenPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(SmartAquacultureDeveloperGenPage.class);
 
 	//////////////////////////////////////////
-	// searchListSmartAquacultureDeveloper_ //
+  // searchListSmartAquacultureDeveloper_ //
 	//////////////////////////////////////////
 
 
-	/**	 The entity searchListSmartAquacultureDeveloper_
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<SmartAquacultureDeveloper> searchListSmartAquacultureDeveloper_;
+  /**   The entity searchListSmartAquacultureDeveloper_
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<SmartAquacultureDeveloper> searchListSmartAquacultureDeveloper_;
 
-	/**	<br> The entity searchListSmartAquacultureDeveloper_
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:searchListSmartAquacultureDeveloper_">Find the entity searchListSmartAquacultureDeveloper_ in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _searchListSmartAquacultureDeveloper_(Wrap<SearchList<SmartAquacultureDeveloper>> w);
+  /**  <br> The entity searchListSmartAquacultureDeveloper_
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:searchListSmartAquacultureDeveloper_">Find the entity searchListSmartAquacultureDeveloper_ in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _searchListSmartAquacultureDeveloper_(Wrap<SearchList<SmartAquacultureDeveloper>> w);
 
-	public SearchList<SmartAquacultureDeveloper> getSearchListSmartAquacultureDeveloper_() {
-		return searchListSmartAquacultureDeveloper_;
-	}
+  public SearchList<SmartAquacultureDeveloper> getSearchListSmartAquacultureDeveloper_() {
+    return searchListSmartAquacultureDeveloper_;
+  }
 
-	public void setSearchListSmartAquacultureDeveloper_(SearchList<SmartAquacultureDeveloper> searchListSmartAquacultureDeveloper_) {
-		this.searchListSmartAquacultureDeveloper_ = searchListSmartAquacultureDeveloper_;
-	}
-	public static SearchList<SmartAquacultureDeveloper> staticSetSearchListSmartAquacultureDeveloper_(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected SmartAquacultureDeveloperGenPage searchListSmartAquacultureDeveloper_Init() {
-		Wrap<SearchList<SmartAquacultureDeveloper>> searchListSmartAquacultureDeveloper_Wrap = new Wrap<SearchList<SmartAquacultureDeveloper>>().var("searchListSmartAquacultureDeveloper_");
-		if(searchListSmartAquacultureDeveloper_ == null) {
-			_searchListSmartAquacultureDeveloper_(searchListSmartAquacultureDeveloper_Wrap);
-			Optional.ofNullable(searchListSmartAquacultureDeveloper_Wrap.getO()).ifPresent(o -> {
-				setSearchListSmartAquacultureDeveloper_(o);
-			});
-		}
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public void setSearchListSmartAquacultureDeveloper_(SearchList<SmartAquacultureDeveloper> searchListSmartAquacultureDeveloper_) {
+    this.searchListSmartAquacultureDeveloper_ = searchListSmartAquacultureDeveloper_;
+  }
+  public static SearchList<SmartAquacultureDeveloper> staticSetSearchListSmartAquacultureDeveloper_(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected SmartAquacultureDeveloperGenPage searchListSmartAquacultureDeveloper_Init() {
+    Wrap<SearchList<SmartAquacultureDeveloper>> searchListSmartAquacultureDeveloper_Wrap = new Wrap<SearchList<SmartAquacultureDeveloper>>().var("searchListSmartAquacultureDeveloper_");
+    if(searchListSmartAquacultureDeveloper_ == null) {
+      _searchListSmartAquacultureDeveloper_(searchListSmartAquacultureDeveloper_Wrap);
+      Optional.ofNullable(searchListSmartAquacultureDeveloper_Wrap.getO()).ifPresent(o -> {
+        setSearchListSmartAquacultureDeveloper_(o);
+      });
+    }
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
 
 	///////////////////////////////////
-	// listSmartAquacultureDeveloper //
+  // listSmartAquacultureDeveloper //
 	///////////////////////////////////
 
 
-	/**	 The entity listSmartAquacultureDeveloper
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = JsonArrayDeserializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected JsonArray listSmartAquacultureDeveloper = new JsonArray();
+  /**   The entity listSmartAquacultureDeveloper
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray listSmartAquacultureDeveloper = new JsonArray();
 
-	/**	<br> The entity listSmartAquacultureDeveloper
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:listSmartAquacultureDeveloper">Find the entity listSmartAquacultureDeveloper in Solr</a>
-	 * <br>
-	 * @param l is the entity already constructed. 
-	 **/
-	protected abstract void _listSmartAquacultureDeveloper(JsonArray l);
+  /**  <br> The entity listSmartAquacultureDeveloper
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:listSmartAquacultureDeveloper">Find the entity listSmartAquacultureDeveloper in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _listSmartAquacultureDeveloper(JsonArray l);
 
-	public JsonArray getListSmartAquacultureDeveloper() {
-		return listSmartAquacultureDeveloper;
-	}
+  public JsonArray getListSmartAquacultureDeveloper() {
+    return listSmartAquacultureDeveloper;
+  }
 
-	public void setListSmartAquacultureDeveloper(JsonArray listSmartAquacultureDeveloper) {
-		this.listSmartAquacultureDeveloper = listSmartAquacultureDeveloper;
-	}
-	@JsonIgnore
-	public void setListSmartAquacultureDeveloper(String o) {
-		this.listSmartAquacultureDeveloper = SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, o);
-	}
-	public static JsonArray staticSetListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonArray(o);
-		}
-		return null;
-	}
-	protected SmartAquacultureDeveloperGenPage listSmartAquacultureDeveloperInit() {
-		_listSmartAquacultureDeveloper(listSmartAquacultureDeveloper);
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public void setListSmartAquacultureDeveloper(JsonArray listSmartAquacultureDeveloper) {
+    this.listSmartAquacultureDeveloper = listSmartAquacultureDeveloper;
+  }
+  @JsonIgnore
+  public void setListSmartAquacultureDeveloper(String o) {
+    this.listSmartAquacultureDeveloper = SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, o);
+  }
+  public static JsonArray staticSetListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected SmartAquacultureDeveloperGenPage listSmartAquacultureDeveloperInit() {
+    _listSmartAquacultureDeveloper(listSmartAquacultureDeveloper);
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
 
-	public static String staticSearchListSmartAquacultureDeveloper(SiteRequest siteRequest_, JsonArray o) {
-		return o.toString();
-	}
+  public static String staticSearchListSmartAquacultureDeveloper(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
 
-	public static String staticSearchStrListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return SmartAquacultureDeveloperGenPage.staticSearchListSmartAquacultureDeveloper(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqListSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return SmartAquacultureDeveloperGenPage.staticSearchListSmartAquacultureDeveloper(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, o)).toString();
+  }
 
 	/////////////////
-	// resultCount //
+  // resultCount //
 	/////////////////
 
 
-	/**	 The entity resultCount
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer resultCount;
+  /**   The entity resultCount
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer resultCount;
 
-	/**	<br> The entity resultCount
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resultCount(Wrap<Integer> w);
+  /**  <br> The entity resultCount
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getResultCount() {
-		return resultCount;
-	}
+  public Integer getResultCount() {
+    return resultCount;
+  }
 
-	public void setResultCount(Integer resultCount) {
-		this.resultCount = resultCount;
-	}
-	@JsonIgnore
-	public void setResultCount(String o) {
-		this.resultCount = SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, o);
-	}
-	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected SmartAquacultureDeveloperGenPage resultCountInit() {
-		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
-		if(resultCount == null) {
-			_resultCount(resultCountWrap);
-			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
-				setResultCount(o);
-			});
-		}
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public void setResultCount(Integer resultCount) {
+    this.resultCount = resultCount;
+  }
+  @JsonIgnore
+  public void setResultCount(String o) {
+    this.resultCount = SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, o);
+  }
+  public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected SmartAquacultureDeveloperGenPage resultCountInit() {
+    Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+    if(resultCount == null) {
+      _resultCount(resultCountWrap);
+      Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+        setResultCount(o);
+      });
+    }
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
 
-	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
+  public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
 
-	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
-		return SmartAquacultureDeveloperGenPage.staticSearchResultCount(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, o)).toString();
-	}
-
-	////////////
-	// result //
-	////////////
-
-
-	/**	 The entity result
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected SmartAquacultureDeveloper result;
-
-	/**	<br> The entity result
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _result(Wrap<SmartAquacultureDeveloper> w);
-
-	public SmartAquacultureDeveloper getResult() {
-		return result;
-	}
-
-	public void setResult(SmartAquacultureDeveloper result) {
-		this.result = result;
-	}
-	public static SmartAquacultureDeveloper staticSetResult(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected SmartAquacultureDeveloperGenPage resultInit() {
-		Wrap<SmartAquacultureDeveloper> resultWrap = new Wrap<SmartAquacultureDeveloper>().var("result");
-		if(result == null) {
-			_result(resultWrap);
-			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
-				setResult(o);
-			});
-		}
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+    return SmartAquacultureDeveloperGenPage.staticSearchResultCount(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, o)).toString();
+  }
 
 	////////////
-	// solrId //
+  // result //
 	////////////
 
 
-	/**	 The entity solrId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String solrId;
+  /**   The entity result
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected SmartAquacultureDeveloper result;
 
-	/**	<br> The entity solrId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _solrId(Wrap<String> w);
+  /**  <br> The entity result
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _result(Wrap<SmartAquacultureDeveloper> w);
 
-	public String getSolrId() {
-		return solrId;
-	}
-	public void setSolrId(String o) {
-		this.solrId = SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, o);
-	}
-	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected SmartAquacultureDeveloperGenPage solrIdInit() {
-		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
-		if(solrId == null) {
-			_solrId(solrIdWrap);
-			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
-				setSolrId(o);
-			});
-		}
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public SmartAquacultureDeveloper getResult() {
+    return result;
+  }
 
-	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public void setResult(SmartAquacultureDeveloper result) {
+    this.result = result;
+  }
+  public static SmartAquacultureDeveloper staticSetResult(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected SmartAquacultureDeveloperGenPage resultInit() {
+    Wrap<SmartAquacultureDeveloper> resultWrap = new Wrap<SmartAquacultureDeveloper>().var("result");
+    if(result == null) {
+      _result(resultWrap);
+      Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+        setResult(o);
+      });
+    }
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
 
-	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+	////////////
+  // solrId //
+	////////////
 
-	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
-		return SmartAquacultureDeveloperGenPage.staticSearchSolrId(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, o)).toString();
-	}
+
+  /**   The entity solrId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String solrId;
+
+  /**  <br> The entity solrId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _solrId(Wrap<String> w);
+
+  public String getSolrId() {
+    return solrId;
+  }
+  public void setSolrId(String o) {
+    this.solrId = SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, o);
+  }
+  public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SmartAquacultureDeveloperGenPage solrIdInit() {
+    Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+    if(solrId == null) {
+      _solrId(solrIdWrap);
+      Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+        setSolrId(o);
+      });
+    }
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
+
+  public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+    return SmartAquacultureDeveloperGenPage.staticSearchSolrId(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, o)).toString();
+  }
 
 	//////////////////////////////////////
-	// pageUriSmartAquacultureDeveloper //
+  // pageUriSmartAquacultureDeveloper //
 	//////////////////////////////////////
 
 
-	/**	 The entity pageUriSmartAquacultureDeveloper
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageUriSmartAquacultureDeveloper;
+  /**   The entity pageUriSmartAquacultureDeveloper
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageUriSmartAquacultureDeveloper;
 
-	/**	<br> The entity pageUriSmartAquacultureDeveloper
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:pageUriSmartAquacultureDeveloper">Find the entity pageUriSmartAquacultureDeveloper in Solr</a>
-	 * <br>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageUriSmartAquacultureDeveloper(Wrap<String> c);
+  /**  <br> The entity pageUriSmartAquacultureDeveloper
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage&fq=entiteVar_enUS_indexed_string:pageUriSmartAquacultureDeveloper">Find the entity pageUriSmartAquacultureDeveloper in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageUriSmartAquacultureDeveloper(Wrap<String> c);
 
-	public String getPageUriSmartAquacultureDeveloper() {
-		return pageUriSmartAquacultureDeveloper;
-	}
-	public void setPageUriSmartAquacultureDeveloper(String o) {
-		this.pageUriSmartAquacultureDeveloper = SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, o);
-	}
-	public static String staticSetPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected SmartAquacultureDeveloperGenPage pageUriSmartAquacultureDeveloperInit() {
-		Wrap<String> pageUriSmartAquacultureDeveloperWrap = new Wrap<String>().var("pageUriSmartAquacultureDeveloper");
-		if(pageUriSmartAquacultureDeveloper == null) {
-			_pageUriSmartAquacultureDeveloper(pageUriSmartAquacultureDeveloperWrap);
-			Optional.ofNullable(pageUriSmartAquacultureDeveloperWrap.getO()).ifPresent(o -> {
-				setPageUriSmartAquacultureDeveloper(o);
-			});
-		}
-		return (SmartAquacultureDeveloperGenPage)this;
-	}
+  public String getPageUriSmartAquacultureDeveloper() {
+    return pageUriSmartAquacultureDeveloper;
+  }
+  public void setPageUriSmartAquacultureDeveloper(String o) {
+    this.pageUriSmartAquacultureDeveloper = SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, o);
+  }
+  public static String staticSetPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected SmartAquacultureDeveloperGenPage pageUriSmartAquacultureDeveloperInit() {
+    Wrap<String> pageUriSmartAquacultureDeveloperWrap = new Wrap<String>().var("pageUriSmartAquacultureDeveloper");
+    if(pageUriSmartAquacultureDeveloper == null) {
+      _pageUriSmartAquacultureDeveloper(pageUriSmartAquacultureDeveloperWrap);
+      Optional.ofNullable(pageUriSmartAquacultureDeveloperWrap.getO()).ifPresent(o -> {
+        setPageUriSmartAquacultureDeveloper(o);
+      });
+    }
+    return (SmartAquacultureDeveloperGenPage)this;
+  }
 
-	public static String staticSearchPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
-		return SmartAquacultureDeveloperGenPage.staticSearchPageUriSmartAquacultureDeveloper(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageUriSmartAquacultureDeveloper(SiteRequest siteRequest_, String o) {
+    return SmartAquacultureDeveloperGenPage.staticSearchPageUriSmartAquacultureDeveloper(siteRequest_, SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, o)).toString();
+  }
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepSmartAquacultureDeveloperGenPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepSmartAquacultureDeveloperGenPage();
-	}
+  public Future<SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepSmartAquacultureDeveloperGenPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepSmartAquacultureDeveloperGenPage();
+  }
 
-	public Future<SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepSmartAquacultureDeveloperGenPage() {
-		Promise<SmartAquacultureDeveloperGenPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseSmartAquacultureDeveloperGenPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepSmartAquacultureDeveloperGenPage() {
+    Promise<SmartAquacultureDeveloperGenPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseSmartAquacultureDeveloperGenPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseSmartAquacultureDeveloperGenPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				searchListSmartAquacultureDeveloper_Init();
-				listSmartAquacultureDeveloperInit();
-				resultCountInit();
-				resultInit();
-				solrIdInit();
-				pageUriSmartAquacultureDeveloperInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseSmartAquacultureDeveloperGenPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        searchListSmartAquacultureDeveloper_Init();
+        listSmartAquacultureDeveloperInit();
+        resultCountInit();
+        resultInit();
+        solrIdInit();
+        pageUriSmartAquacultureDeveloperInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepSmartAquacultureDeveloperGenPage(siteRequest_);
-	}
+  @Override public Future<? extends SmartAquacultureDeveloperGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepSmartAquacultureDeveloperGenPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestSmartAquacultureDeveloperGenPage(SiteRequest siteRequest_) {
-			super.siteRequestPageLayout(siteRequest_);
-	}
+  public void siteRequestSmartAquacultureDeveloperGenPage(SiteRequest siteRequest_) {
+      super.siteRequestPageLayout(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestSmartAquacultureDeveloperGenPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestSmartAquacultureDeveloperGenPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainSmartAquacultureDeveloperGenPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainSmartAquacultureDeveloperGenPage(String var) {
-		SmartAquacultureDeveloperGenPage oSmartAquacultureDeveloperGenPage = (SmartAquacultureDeveloperGenPage)this;
-		switch(var) {
-			case "searchListSmartAquacultureDeveloper_":
-				return oSmartAquacultureDeveloperGenPage.searchListSmartAquacultureDeveloper_;
-			case "listSmartAquacultureDeveloper":
-				return oSmartAquacultureDeveloperGenPage.listSmartAquacultureDeveloper;
-			case "resultCount":
-				return oSmartAquacultureDeveloperGenPage.resultCount;
-			case "result":
-				return oSmartAquacultureDeveloperGenPage.result;
-			case "solrId":
-				return oSmartAquacultureDeveloperGenPage.solrId;
-			case "pageUriSmartAquacultureDeveloper":
-				return oSmartAquacultureDeveloperGenPage.pageUriSmartAquacultureDeveloper;
-			default:
-				return super.obtainPageLayout(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainSmartAquacultureDeveloperGenPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainSmartAquacultureDeveloperGenPage(String var) {
+    SmartAquacultureDeveloperGenPage oSmartAquacultureDeveloperGenPage = (SmartAquacultureDeveloperGenPage)this;
+    switch(var) {
+      case "searchListSmartAquacultureDeveloper_":
+        return oSmartAquacultureDeveloperGenPage.searchListSmartAquacultureDeveloper_;
+      case "listSmartAquacultureDeveloper":
+        return oSmartAquacultureDeveloperGenPage.listSmartAquacultureDeveloper;
+      case "resultCount":
+        return oSmartAquacultureDeveloperGenPage.resultCount;
+      case "result":
+        return oSmartAquacultureDeveloperGenPage.result;
+      case "solrId":
+        return oSmartAquacultureDeveloperGenPage.solrId;
+      case "pageUriSmartAquacultureDeveloper":
+        return oSmartAquacultureDeveloperGenPage.pageUriSmartAquacultureDeveloper;
+      default:
+        return super.obtainPageLayout(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateSmartAquacultureDeveloperGenPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateSmartAquacultureDeveloperGenPage(String var, Object val) {
-		SmartAquacultureDeveloperGenPage oSmartAquacultureDeveloperGenPage = (SmartAquacultureDeveloperGenPage)this;
-		switch(var) {
-			default:
-				return super.relatePageLayout(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateSmartAquacultureDeveloperGenPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateSmartAquacultureDeveloperGenPage(String var, Object val) {
+    SmartAquacultureDeveloperGenPage oSmartAquacultureDeveloperGenPage = (SmartAquacultureDeveloperGenPage)this;
+    switch(var) {
+      default:
+        return super.relatePageLayout(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperGenPage o) {
-		return staticSetSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperGenPage o) {
-		switch(entityVar) {
-		case "listSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, v);
-		case "resultCount":
-			return SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, v);
-		case "solrId":
-			return SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, v);
-		case "pageUriSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, v);
-			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperGenPage o) {
+    return staticSetSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, String v, SmartAquacultureDeveloperGenPage o) {
+    switch(entityVar) {
+    case "listSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSetListSmartAquacultureDeveloper(siteRequest_, v);
+    case "resultCount":
+      return SmartAquacultureDeveloperGenPage.staticSetResultCount(siteRequest_, v);
+    case "solrId":
+      return SmartAquacultureDeveloperGenPage.staticSetSolrId(siteRequest_, v);
+    case "pageUriSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSetPageUriSmartAquacultureDeveloper(siteRequest_, v);
+      default:
+        return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchListSmartAquacultureDeveloper(siteRequest_, (JsonArray)o);
-		case "resultCount":
-			return SmartAquacultureDeveloperGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return SmartAquacultureDeveloperGenPage.staticSearchSolrId(siteRequest_, (String)o);
-		case "pageUriSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchPageUriSmartAquacultureDeveloper(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchListSmartAquacultureDeveloper(siteRequest_, (JsonArray)o);
+    case "resultCount":
+      return SmartAquacultureDeveloperGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return SmartAquacultureDeveloperGenPage.staticSearchSolrId(siteRequest_, (String)o);
+    case "pageUriSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchPageUriSmartAquacultureDeveloper(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchStrListSmartAquacultureDeveloper(siteRequest_, (String)o);
-		case "resultCount":
-			return SmartAquacultureDeveloperGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
-		case "solrId":
-			return SmartAquacultureDeveloperGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
-		case "pageUriSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchStrPageUriSmartAquacultureDeveloper(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchStrListSmartAquacultureDeveloper(siteRequest_, (String)o);
+    case "resultCount":
+      return SmartAquacultureDeveloperGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
+    case "solrId":
+      return SmartAquacultureDeveloperGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
+    case "pageUriSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchStrPageUriSmartAquacultureDeveloper(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "listSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchFqListSmartAquacultureDeveloper(siteRequest_, o);
-		case "resultCount":
-			return SmartAquacultureDeveloperGenPage.staticSearchFqResultCount(siteRequest_, o);
-		case "solrId":
-			return SmartAquacultureDeveloperGenPage.staticSearchFqSolrId(siteRequest_, o);
-		case "pageUriSmartAquacultureDeveloper":
-			return SmartAquacultureDeveloperGenPage.staticSearchFqPageUriSmartAquacultureDeveloper(siteRequest_, o);
-			default:
-				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqSmartAquacultureDeveloperGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqSmartAquacultureDeveloperGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "listSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchFqListSmartAquacultureDeveloper(siteRequest_, o);
+    case "resultCount":
+      return SmartAquacultureDeveloperGenPage.staticSearchFqResultCount(siteRequest_, o);
+    case "solrId":
+      return SmartAquacultureDeveloperGenPage.staticSearchFqSolrId(siteRequest_, o);
+    case "pageUriSmartAquacultureDeveloper":
+      return SmartAquacultureDeveloperGenPage.staticSearchFqPageUriSmartAquacultureDeveloper(siteRequest_, o);
+      default:
+        return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "SmartAquacultureDeveloperGenPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
-	public static final String VAR_searchListSmartAquacultureDeveloper_ = "searchListSmartAquacultureDeveloper_";
-	public static final String VAR_listSmartAquacultureDeveloper = "listSmartAquacultureDeveloper";
-	public static final String VAR_resultCount = "resultCount";
-	public static final String VAR_result = "result";
-	public static final String VAR_solrId = "solrId";
-	public static final String VAR_pageUriSmartAquacultureDeveloper = "pageUriSmartAquacultureDeveloper";
+  public static final String CLASS_SIMPLE_NAME = "SmartAquacultureDeveloperGenPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperGenPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String VAR_searchListSmartAquacultureDeveloper_ = "searchListSmartAquacultureDeveloper_";
+  public static final String VAR_listSmartAquacultureDeveloper = "listSmartAquacultureDeveloper";
+  public static final String VAR_resultCount = "resultCount";
+  public static final String VAR_result = "result";
+  public static final String VAR_solrId = "solrId";
+  public static final String VAR_pageUriSmartAquacultureDeveloper = "pageUriSmartAquacultureDeveloper";
 
-	public static final String DISPLAY_NAME_searchListSmartAquacultureDeveloper_ = "";
-	public static final String DISPLAY_NAME_listSmartAquacultureDeveloper = "";
-	public static final String DISPLAY_NAME_resultCount = "";
-	public static final String DISPLAY_NAME_result = "";
-	public static final String DISPLAY_NAME_solrId = "";
-	public static final String DISPLAY_NAME_pageUriSmartAquacultureDeveloper = "";
+  public static final String DISPLAY_NAME_searchListSmartAquacultureDeveloper_ = "";
+  public static final String DISPLAY_NAME_listSmartAquacultureDeveloper = "";
+  public static final String DISPLAY_NAME_resultCount = "";
+  public static final String DISPLAY_NAME_result = "";
+  public static final String DISPLAY_NAME_solrId = "";
+  public static final String DISPLAY_NAME_pageUriSmartAquacultureDeveloper = "";
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return SmartAquacultureDeveloperGenPage.displayNameSmartAquacultureDeveloperGenPage(var);
-	}
-	public static String displayNameSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-		case VAR_searchListSmartAquacultureDeveloper_:
-			return DISPLAY_NAME_searchListSmartAquacultureDeveloper_;
-		case VAR_listSmartAquacultureDeveloper:
-			return DISPLAY_NAME_listSmartAquacultureDeveloper;
-		case VAR_resultCount:
-			return DISPLAY_NAME_resultCount;
-		case VAR_result:
-			return DISPLAY_NAME_result;
-		case VAR_solrId:
-			return DISPLAY_NAME_solrId;
-		case VAR_pageUriSmartAquacultureDeveloper:
-			return DISPLAY_NAME_pageUriSmartAquacultureDeveloper;
-		default:
-			return PageLayout.displayNamePageLayout(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return SmartAquacultureDeveloperGenPage.displayNameSmartAquacultureDeveloperGenPage(var);
+  }
+  public static String displayNameSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+    case VAR_searchListSmartAquacultureDeveloper_:
+      return DISPLAY_NAME_searchListSmartAquacultureDeveloper_;
+    case VAR_listSmartAquacultureDeveloper:
+      return DISPLAY_NAME_listSmartAquacultureDeveloper;
+    case VAR_resultCount:
+      return DISPLAY_NAME_resultCount;
+    case VAR_result:
+      return DISPLAY_NAME_result;
+    case VAR_solrId:
+      return DISPLAY_NAME_solrId;
+    case VAR_pageUriSmartAquacultureDeveloper:
+      return DISPLAY_NAME_pageUriSmartAquacultureDeveloper;
+    default:
+      return PageLayout.displayNamePageLayout(var);
+    }
+  }
 
-	public static String descriptionSmartAquacultureDeveloperGenPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return PageLayout.descriptionPageLayout(var);
-		}
-	}
+  public static String descriptionSmartAquacultureDeveloperGenPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return PageLayout.descriptionPageLayout(var);
+    }
+  }
 
-	public static String classSimpleNameSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-		case VAR_searchListSmartAquacultureDeveloper_:
-			return "SearchList";
-		case VAR_listSmartAquacultureDeveloper:
-			return "JsonArray";
-		case VAR_resultCount:
-			return "Integer";
-		case VAR_result:
-			return "SmartAquacultureDeveloper";
-		case VAR_solrId:
-			return "String";
-		case VAR_pageUriSmartAquacultureDeveloper:
-			return "String";
-			default:
-				return PageLayout.classSimpleNamePageLayout(var);
-		}
-	}
+  public static String classSimpleNameSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+    case VAR_searchListSmartAquacultureDeveloper_:
+      return "SearchList";
+    case VAR_listSmartAquacultureDeveloper:
+      return "JsonArray";
+    case VAR_resultCount:
+      return "Integer";
+    case VAR_result:
+      return "SmartAquacultureDeveloper";
+    case VAR_solrId:
+      return "String";
+    case VAR_pageUriSmartAquacultureDeveloper:
+      return "String";
+      default:
+        return PageLayout.classSimpleNamePageLayout(var);
+    }
+  }
 
-	public static Integer htmColumnSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmColumnPageLayout(var);
-		}
-	}
+  public static Integer htmColumnSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmColumnPageLayout(var);
+    }
+  }
 
-	public static Integer htmRowSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmRowPageLayout(var);
-		}
-	}
+  public static Integer htmRowSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmRowPageLayout(var);
+    }
+  }
 
-	public static Integer htmCellSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmCellPageLayout(var);
-		}
-	}
+  public static Integer htmCellSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmCellPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMinSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMinPageLayout(var);
-		}
-	}
+  public static Integer lengthMinSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMinPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMaxSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMaxPageLayout(var);
-		}
-	}
+  public static Integer lengthMaxSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMaxPageLayout(var);
+    }
+  }
 
-	public static Integer maxSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.maxPageLayout(var);
-		}
-	}
+  public static Integer maxSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.maxPageLayout(var);
+    }
+  }
 
-	public static Integer minSmartAquacultureDeveloperGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.minPageLayout(var);
-		}
-	}
+  public static Integer minSmartAquacultureDeveloperGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.minPageLayout(var);
+    }
+  }
 }

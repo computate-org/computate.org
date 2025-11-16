@@ -134,772 +134,772 @@ import io.vertx.core.Future;
  * Generated: true
  **/
 public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
-	protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarGenPage.class);
+  protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebinarGenPage.class);
 
 	///////////////////////////////
-	// searchListCompanyWebinar_ //
+  // searchListCompanyWebinar_ //
 	///////////////////////////////
 
 
-	/**	 The entity searchListCompanyWebinar_
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonIgnore
-	@JsonInclude(Include.NON_NULL)
-	protected SearchList<CompanyWebinar> searchListCompanyWebinar_;
+  /**   The entity searchListCompanyWebinar_
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<CompanyWebinar> searchListCompanyWebinar_;
 
-	/**	<br> The entity searchListCompanyWebinar_
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyWebinar_">Find the entity searchListCompanyWebinar_ in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _searchListCompanyWebinar_(Wrap<SearchList<CompanyWebinar>> w);
+  /**  <br> The entity searchListCompanyWebinar_
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyWebinar_">Find the entity searchListCompanyWebinar_ in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _searchListCompanyWebinar_(Wrap<SearchList<CompanyWebinar>> w);
 
-	public SearchList<CompanyWebinar> getSearchListCompanyWebinar_() {
-		return searchListCompanyWebinar_;
-	}
+  public SearchList<CompanyWebinar> getSearchListCompanyWebinar_() {
+    return searchListCompanyWebinar_;
+  }
 
-	public void setSearchListCompanyWebinar_(SearchList<CompanyWebinar> searchListCompanyWebinar_) {
-		this.searchListCompanyWebinar_ = searchListCompanyWebinar_;
-	}
-	public static SearchList<CompanyWebinar> staticSetSearchListCompanyWebinar_(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyWebinarGenPage searchListCompanyWebinar_Init() {
-		Wrap<SearchList<CompanyWebinar>> searchListCompanyWebinar_Wrap = new Wrap<SearchList<CompanyWebinar>>().var("searchListCompanyWebinar_");
-		if(searchListCompanyWebinar_ == null) {
-			_searchListCompanyWebinar_(searchListCompanyWebinar_Wrap);
-			Optional.ofNullable(searchListCompanyWebinar_Wrap.getO()).ifPresent(o -> {
-				setSearchListCompanyWebinar_(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public void setSearchListCompanyWebinar_(SearchList<CompanyWebinar> searchListCompanyWebinar_) {
+    this.searchListCompanyWebinar_ = searchListCompanyWebinar_;
+  }
+  public static SearchList<CompanyWebinar> staticSetSearchListCompanyWebinar_(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyWebinarGenPage searchListCompanyWebinar_Init() {
+    Wrap<SearchList<CompanyWebinar>> searchListCompanyWebinar_Wrap = new Wrap<SearchList<CompanyWebinar>>().var("searchListCompanyWebinar_");
+    if(searchListCompanyWebinar_ == null) {
+      _searchListCompanyWebinar_(searchListCompanyWebinar_Wrap);
+      Optional.ofNullable(searchListCompanyWebinar_Wrap.getO()).ifPresent(o -> {
+        setSearchListCompanyWebinar_(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
 	////////////////////////
-	// listCompanyWebinar //
+  // listCompanyWebinar //
 	////////////////////////
 
 
-	/**	 The entity listCompanyWebinar
-	 *	 It is constructed before being initialized with the constructor by default. 
-	 */
-	@JsonProperty
-	@JsonDeserialize(using = JsonArrayDeserializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected JsonArray listCompanyWebinar = new JsonArray();
+  /**   The entity listCompanyWebinar
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray listCompanyWebinar = new JsonArray();
 
-	/**	<br> The entity listCompanyWebinar
-	 *  It is constructed before being initialized with the constructor by default. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:listCompanyWebinar">Find the entity listCompanyWebinar in Solr</a>
-	 * <br>
-	 * @param l is the entity already constructed. 
-	 **/
-	protected abstract void _listCompanyWebinar(JsonArray l);
+  /**  <br> The entity listCompanyWebinar
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:listCompanyWebinar">Find the entity listCompanyWebinar in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _listCompanyWebinar(JsonArray l);
 
-	public JsonArray getListCompanyWebinar() {
-		return listCompanyWebinar;
-	}
+  public JsonArray getListCompanyWebinar() {
+    return listCompanyWebinar;
+  }
 
-	public void setListCompanyWebinar(JsonArray listCompanyWebinar) {
-		this.listCompanyWebinar = listCompanyWebinar;
-	}
-	@JsonIgnore
-	public void setListCompanyWebinar(String o) {
-		this.listCompanyWebinar = CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o);
-	}
-	public static JsonArray staticSetListCompanyWebinar(SiteRequest siteRequest_, String o) {
-		if(o != null) {
-				return new JsonArray(o);
-		}
-		return null;
-	}
-	protected CompanyWebinarGenPage listCompanyWebinarInit() {
-		_listCompanyWebinar(listCompanyWebinar);
-		return (CompanyWebinarGenPage)this;
-	}
+  public void setListCompanyWebinar(JsonArray listCompanyWebinar) {
+    this.listCompanyWebinar = listCompanyWebinar;
+  }
+  @JsonIgnore
+  public void setListCompanyWebinar(String o) {
+    this.listCompanyWebinar = CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o);
+  }
+  public static JsonArray staticSetListCompanyWebinar(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected CompanyWebinarGenPage listCompanyWebinarInit() {
+    _listCompanyWebinar(listCompanyWebinar);
+    return (CompanyWebinarGenPage)this;
+  }
 
-	public static String staticSearchListCompanyWebinar(SiteRequest siteRequest_, JsonArray o) {
-		return o.toString();
-	}
+  public static String staticSearchListCompanyWebinar(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
 
-	public static String staticSearchStrListCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrListCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqListCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqListCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, o)).toString();
+  }
 
 	/////////////////
-	// resultCount //
+  // resultCount //
 	/////////////////
 
 
-	/**	 The entity resultCount
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Integer resultCount;
+  /**   The entity resultCount
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Integer resultCount;
 
-	/**	<br> The entity resultCount
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _resultCount(Wrap<Integer> w);
+  /**  <br> The entity resultCount
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _resultCount(Wrap<Integer> w);
 
-	public Integer getResultCount() {
-		return resultCount;
-	}
+  public Integer getResultCount() {
+    return resultCount;
+  }
 
-	public void setResultCount(Integer resultCount) {
-		this.resultCount = resultCount;
-	}
-	@JsonIgnore
-	public void setResultCount(String o) {
-		this.resultCount = CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o);
-	}
-	public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Integer.parseInt(o);
-		return null;
-	}
-	protected CompanyWebinarGenPage resultCountInit() {
-		Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
-		if(resultCount == null) {
-			_resultCount(resultCountWrap);
-			Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
-				setResultCount(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public void setResultCount(Integer resultCount) {
+    this.resultCount = resultCount;
+  }
+  @JsonIgnore
+  public void setResultCount(String o) {
+    this.resultCount = CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o);
+  }
+  public static Integer staticSetResultCount(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Integer.parseInt(o);
+    return null;
+  }
+  protected CompanyWebinarGenPage resultCountInit() {
+    Wrap<Integer> resultCountWrap = new Wrap<Integer>().var("resultCount");
+    if(resultCount == null) {
+      _resultCount(resultCountWrap);
+      Optional.ofNullable(resultCountWrap.getO()).ifPresent(o -> {
+        setResultCount(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
-	public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
-		return o;
-	}
+  public static Integer staticSearchResultCount(SiteRequest siteRequest_, Integer o) {
+    return o;
+  }
 
-	public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrResultCount(SiteRequest siteRequest_, Integer o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqResultCount(SiteRequest siteRequest_, String o) {
+    return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, CompanyWebinarGenPage.staticSetResultCount(siteRequest_, o)).toString();
+  }
 
 	////////////
-	// result //
+  // result //
 	////////////
 
 
-	/**	 The entity result
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected CompanyWebinar result;
+  /**   The entity result
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected CompanyWebinar result;
 
-	/**	<br> The entity result
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _result(Wrap<CompanyWebinar> w);
+  /**  <br> The entity result
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _result(Wrap<CompanyWebinar> w);
 
-	public CompanyWebinar getResult() {
-		return result;
-	}
+  public CompanyWebinar getResult() {
+    return result;
+  }
 
-	public void setResult(CompanyWebinar result) {
-		this.result = result;
-	}
-	public static CompanyWebinar staticSetResult(SiteRequest siteRequest_, String o) {
-		return null;
-	}
-	protected CompanyWebinarGenPage resultInit() {
-		Wrap<CompanyWebinar> resultWrap = new Wrap<CompanyWebinar>().var("result");
-		if(result == null) {
-			_result(resultWrap);
-			Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
-				setResult(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public void setResult(CompanyWebinar result) {
+    this.result = result;
+  }
+  public static CompanyWebinar staticSetResult(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected CompanyWebinarGenPage resultInit() {
+    Wrap<CompanyWebinar> resultWrap = new Wrap<CompanyWebinar>().var("result");
+    if(result == null) {
+      _result(resultWrap);
+      Optional.ofNullable(resultWrap.getO()).ifPresent(o -> {
+        setResult(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
 	////////
-	// pk //
+  // pk //
 	////////
 
 
-	/**	 The entity pk
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonSerialize(using = ToStringSerializer.class)
-	@JsonInclude(Include.NON_NULL)
-	protected Long pk;
+  /**   The entity pk
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected Long pk;
 
-	/**	<br> The entity pk
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:pk">Find the entity pk in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pk(Wrap<Long> w);
+  /**  <br> The entity pk
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:pk">Find the entity pk in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pk(Wrap<Long> w);
 
-	public Long getPk() {
-		return pk;
-	}
+  public Long getPk() {
+    return pk;
+  }
 
-	public void setPk(Long pk) {
-		this.pk = pk;
-	}
-	@JsonIgnore
-	public void setPk(String o) {
-		this.pk = CompanyWebinarGenPage.staticSetPk(siteRequest_, o);
-	}
-	public static Long staticSetPk(SiteRequest siteRequest_, String o) {
-		if(NumberUtils.isParsable(o))
-			return Long.parseLong(o);
-		return null;
-	}
-	protected CompanyWebinarGenPage pkInit() {
-		Wrap<Long> pkWrap = new Wrap<Long>().var("pk");
-		if(pk == null) {
-			_pk(pkWrap);
-			Optional.ofNullable(pkWrap.getO()).ifPresent(o -> {
-				setPk(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public void setPk(Long pk) {
+    this.pk = pk;
+  }
+  @JsonIgnore
+  public void setPk(String o) {
+    this.pk = CompanyWebinarGenPage.staticSetPk(siteRequest_, o);
+  }
+  public static Long staticSetPk(SiteRequest siteRequest_, String o) {
+    if(NumberUtils.isParsable(o))
+      return Long.parseLong(o);
+    return null;
+  }
+  protected CompanyWebinarGenPage pkInit() {
+    Wrap<Long> pkWrap = new Wrap<Long>().var("pk");
+    if(pk == null) {
+      _pk(pkWrap);
+      Optional.ofNullable(pkWrap.getO()).ifPresent(o -> {
+        setPk(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
-	public static Long staticSearchPk(SiteRequest siteRequest_, Long o) {
-		return o;
-	}
+  public static Long staticSearchPk(SiteRequest siteRequest_, Long o) {
+    return o;
+  }
 
-	public static String staticSearchStrPk(SiteRequest siteRequest_, Long o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPk(SiteRequest siteRequest_, Long o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPk(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchPk(siteRequest_, CompanyWebinarGenPage.staticSetPk(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPk(SiteRequest siteRequest_, String o) {
+    return CompanyWebinarGenPage.staticSearchPk(siteRequest_, CompanyWebinarGenPage.staticSetPk(siteRequest_, o)).toString();
+  }
 
 	////////////
-	// solrId //
+  // solrId //
 	////////////
 
 
-	/**	 The entity solrId
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String solrId;
+  /**   The entity solrId
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String solrId;
 
-	/**	<br> The entity solrId
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
-	 * <br>
-	 * @param w is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _solrId(Wrap<String> w);
+  /**  <br> The entity solrId
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _solrId(Wrap<String> w);
 
-	public String getSolrId() {
-		return solrId;
-	}
-	public void setSolrId(String o) {
-		this.solrId = CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o);
-	}
-	public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinarGenPage solrIdInit() {
-		Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
-		if(solrId == null) {
-			_solrId(solrIdWrap);
-			Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
-				setSolrId(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public String getSolrId() {
+    return solrId;
+  }
+  public void setSolrId(String o) {
+    this.solrId = CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o);
+  }
+  public static String staticSetSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinarGenPage solrIdInit() {
+    Wrap<String> solrIdWrap = new Wrap<String>().var("solrId");
+    if(solrId == null) {
+      _solrId(solrIdWrap);
+      Optional.ofNullable(solrIdWrap.getO()).ifPresent(o -> {
+        setSolrId(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
-	public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchSolrId(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrSolrId(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqSolrId(SiteRequest siteRequest_, String o) {
+    return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, CompanyWebinarGenPage.staticSetSolrId(siteRequest_, o)).toString();
+  }
 
 	///////////////////////////
-	// pageUriCompanyWebinar //
+  // pageUriCompanyWebinar //
 	///////////////////////////
 
 
-	/**	 The entity pageUriCompanyWebinar
-	 *	 is defined as null before being initialized. 
-	 */
-	@JsonProperty
-	@JsonInclude(Include.NON_NULL)
-	protected String pageUriCompanyWebinar;
+  /**   The entity pageUriCompanyWebinar
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String pageUriCompanyWebinar;
 
-	/**	<br> The entity pageUriCompanyWebinar
-	 *  is defined as null before being initialized. 
-	 * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyWebinar">Find the entity pageUriCompanyWebinar in Solr</a>
-	 * <br>
-	 * @param c is for wrapping a value to assign to this entity during initialization. 
-	 **/
-	protected abstract void _pageUriCompanyWebinar(Wrap<String> c);
+  /**  <br> The entity pageUriCompanyWebinar
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinarGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyWebinar">Find the entity pageUriCompanyWebinar in Solr</a>
+   * <br>
+   * @param c is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _pageUriCompanyWebinar(Wrap<String> c);
 
-	public String getPageUriCompanyWebinar() {
-		return pageUriCompanyWebinar;
-	}
-	public void setPageUriCompanyWebinar(String o) {
-		this.pageUriCompanyWebinar = CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o);
-	}
-	public static String staticSetPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return o;
-	}
-	protected CompanyWebinarGenPage pageUriCompanyWebinarInit() {
-		Wrap<String> pageUriCompanyWebinarWrap = new Wrap<String>().var("pageUriCompanyWebinar");
-		if(pageUriCompanyWebinar == null) {
-			_pageUriCompanyWebinar(pageUriCompanyWebinarWrap);
-			Optional.ofNullable(pageUriCompanyWebinarWrap.getO()).ifPresent(o -> {
-				setPageUriCompanyWebinar(o);
-			});
-		}
-		return (CompanyWebinarGenPage)this;
-	}
+  public String getPageUriCompanyWebinar() {
+    return pageUriCompanyWebinar;
+  }
+  public void setPageUriCompanyWebinar(String o) {
+    this.pageUriCompanyWebinar = CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o);
+  }
+  public static String staticSetPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected CompanyWebinarGenPage pageUriCompanyWebinarInit() {
+    Wrap<String> pageUriCompanyWebinarWrap = new Wrap<String>().var("pageUriCompanyWebinar");
+    if(pageUriCompanyWebinar == null) {
+      _pageUriCompanyWebinar(pageUriCompanyWebinarWrap);
+      Optional.ofNullable(pageUriCompanyWebinarWrap.getO()).ifPresent(o -> {
+        setPageUriCompanyWebinar(o);
+      });
+    }
+    return (CompanyWebinarGenPage)this;
+  }
 
-	public static String staticSearchPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return o;
-	}
+  public static String staticSearchPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return o;
+  }
 
-	public static String staticSearchStrPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return o == null ? null : o.toString();
-	}
+  public static String staticSearchStrPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
 
-	public static String staticSearchFqPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
-		return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o)).toString();
-	}
+  public static String staticSearchFqPageUriCompanyWebinar(SiteRequest siteRequest_, String o) {
+    return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, o)).toString();
+  }
 
-	//////////////
-	// initDeep //
-	//////////////
+  //////////////
+  // initDeep //
+  //////////////
 
-	public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage(SiteRequest siteRequest_) {
-		setSiteRequest_(siteRequest_);
-		return promiseDeepCompanyWebinarGenPage();
-	}
+  public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage(SiteRequest siteRequest_) {
+    setSiteRequest_(siteRequest_);
+    return promiseDeepCompanyWebinarGenPage();
+  }
 
-	public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage() {
-		Promise<CompanyWebinarGenPageGen<DEV>> promise = Promise.promise();
-		Promise<Void> promise2 = Promise.promise();
-		promiseCompanyWebinarGenPage(promise2);
-		promise2.future().onSuccess(a -> {
-			super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
-				promise.complete(this);
-			}).onFailure(ex -> {
-				promise.fail(ex);
-			});
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<CompanyWebinarGenPageGen<DEV>> promiseDeepCompanyWebinarGenPage() {
+    Promise<CompanyWebinarGenPageGen<DEV>> promise = Promise.promise();
+    Promise<Void> promise2 = Promise.promise();
+    promiseCompanyWebinarGenPage(promise2);
+    promise2.future().onSuccess(a -> {
+      super.promiseDeepPageLayout(siteRequest_).onSuccess(b -> {
+        promise.complete(this);
+      }).onFailure(ex -> {
+        promise.fail(ex);
+      });
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	public Future<Void> promiseCompanyWebinarGenPage(Promise<Void> promise) {
-		Future.future(a -> a.complete()).compose(a -> {
-			Promise<Void> promise2 = Promise.promise();
-			try {
-				searchListCompanyWebinar_Init();
-				listCompanyWebinarInit();
-				resultCountInit();
-				resultInit();
-				pkInit();
-				solrIdInit();
-				pageUriCompanyWebinarInit();
-				promise2.complete();
-			} catch(Exception ex) {
-				promise2.fail(ex);
-			}
-			return promise2.future();
-		}).onSuccess(a -> {
-			promise.complete();
-		}).onFailure(ex -> {
-			promise.fail(ex);
-		});
-		return promise.future();
-	}
+  public Future<Void> promiseCompanyWebinarGenPage(Promise<Void> promise) {
+    Future.future(a -> a.complete()).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        searchListCompanyWebinar_Init();
+        listCompanyWebinarInit();
+        resultCountInit();
+        resultInit();
+        pkInit();
+        solrIdInit();
+        pageUriCompanyWebinarInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).onSuccess(a -> {
+      promise.complete();
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
 
-	@Override public Future<? extends CompanyWebinarGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
-		return promiseDeepCompanyWebinarGenPage(siteRequest_);
-	}
+  @Override public Future<? extends CompanyWebinarGenPageGen<DEV>> promiseDeepForClass(SiteRequest siteRequest_) {
+    return promiseDeepCompanyWebinarGenPage(siteRequest_);
+  }
 
-	/////////////////
-	// siteRequest //
-	/////////////////
+  /////////////////
+  // siteRequest //
+  /////////////////
 
-	public void siteRequestCompanyWebinarGenPage(SiteRequest siteRequest_) {
-			super.siteRequestPageLayout(siteRequest_);
-	}
+  public void siteRequestCompanyWebinarGenPage(SiteRequest siteRequest_) {
+      super.siteRequestPageLayout(siteRequest_);
+  }
 
-	public void siteRequestForClass(SiteRequest siteRequest_) {
-		siteRequestCompanyWebinarGenPage(siteRequest_);
-	}
+  public void siteRequestForClass(SiteRequest siteRequest_) {
+    siteRequestCompanyWebinarGenPage(siteRequest_);
+  }
 
-	/////////////
-	// obtain //
-	/////////////
+  /////////////
+  // obtain //
+  /////////////
 
-	@Override public Object obtainForClass(String var) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = obtainCompanyWebinarGenPage(v);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.obtainForClass(v);
-			}
-			else if(o instanceof Map) {
-				Map<?, ?> map = (Map<?, ?>)o;
-				o = map.get(v);
-			}
-		}
-		return o;
-	}
-	public Object obtainCompanyWebinarGenPage(String var) {
-		CompanyWebinarGenPage oCompanyWebinarGenPage = (CompanyWebinarGenPage)this;
-		switch(var) {
-			case "searchListCompanyWebinar_":
-				return oCompanyWebinarGenPage.searchListCompanyWebinar_;
-			case "listCompanyWebinar":
-				return oCompanyWebinarGenPage.listCompanyWebinar;
-			case "resultCount":
-				return oCompanyWebinarGenPage.resultCount;
-			case "result":
-				return oCompanyWebinarGenPage.result;
-			case "pk":
-				return oCompanyWebinarGenPage.pk;
-			case "solrId":
-				return oCompanyWebinarGenPage.solrId;
-			case "pageUriCompanyWebinar":
-				return oCompanyWebinarGenPage.pageUriCompanyWebinar;
-			default:
-				return super.obtainPageLayout(var);
-		}
-	}
+  @Override public Object obtainForClass(String var) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = obtainCompanyWebinarGenPage(v);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.obtainForClass(v);
+      }
+      else if(o instanceof Map) {
+        Map<?, ?> map = (Map<?, ?>)o;
+        o = map.get(v);
+      }
+    }
+    return o;
+  }
+  public Object obtainCompanyWebinarGenPage(String var) {
+    CompanyWebinarGenPage oCompanyWebinarGenPage = (CompanyWebinarGenPage)this;
+    switch(var) {
+      case "searchListCompanyWebinar_":
+        return oCompanyWebinarGenPage.searchListCompanyWebinar_;
+      case "listCompanyWebinar":
+        return oCompanyWebinarGenPage.listCompanyWebinar;
+      case "resultCount":
+        return oCompanyWebinarGenPage.resultCount;
+      case "result":
+        return oCompanyWebinarGenPage.result;
+      case "pk":
+        return oCompanyWebinarGenPage.pk;
+      case "solrId":
+        return oCompanyWebinarGenPage.solrId;
+      case "pageUriCompanyWebinar":
+        return oCompanyWebinarGenPage.pageUriCompanyWebinar;
+      default:
+        return super.obtainPageLayout(var);
+    }
+  }
 
-	///////////////
-	// relate //
-	///////////////
+  ///////////////
+  // relate //
+  ///////////////
 
-	@Override public boolean relateForClass(String var, Object val) {
-		String[] vars = StringUtils.split(var, ".");
-		Object o = null;
-		for(String v : vars) {
-			if(o == null)
-				o = relateCompanyWebinarGenPage(v, val);
-			else if(o instanceof BaseModel) {
-				BaseModel baseModel = (BaseModel)o;
-				o = baseModel.relateForClass(v, val);
-			}
-		}
-		return o != null;
-	}
-	public Object relateCompanyWebinarGenPage(String var, Object val) {
-		CompanyWebinarGenPage oCompanyWebinarGenPage = (CompanyWebinarGenPage)this;
-		switch(var) {
-			default:
-				return super.relatePageLayout(var, val);
-		}
-	}
+  @Override public boolean relateForClass(String var, Object val) {
+    String[] vars = StringUtils.split(var, ".");
+    Object o = null;
+    for(String v : vars) {
+      if(o == null)
+        o = relateCompanyWebinarGenPage(v, val);
+      else if(o instanceof BaseModel) {
+        BaseModel baseModel = (BaseModel)o;
+        o = baseModel.relateForClass(v, val);
+      }
+    }
+    return o != null;
+  }
+  public Object relateCompanyWebinarGenPage(String var, Object val) {
+    CompanyWebinarGenPage oCompanyWebinarGenPage = (CompanyWebinarGenPage)this;
+    switch(var) {
+      default:
+        return super.relatePageLayout(var, val);
+    }
+  }
 
-	///////////////
-	// staticSet //
-	///////////////
+  ///////////////
+  // staticSet //
+  ///////////////
 
-	public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarGenPage o) {
-		return staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, v, o);
-	}
-	public static Object staticSetCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarGenPage o) {
-		switch(entityVar) {
-		case "listCompanyWebinar":
-			return CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, v);
-		case "resultCount":
-			return CompanyWebinarGenPage.staticSetResultCount(siteRequest_, v);
-		case "pk":
-			return CompanyWebinarGenPage.staticSetPk(siteRequest_, v);
-		case "solrId":
-			return CompanyWebinarGenPage.staticSetSolrId(siteRequest_, v);
-		case "pageUriCompanyWebinar":
-			return CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, v);
-			default:
-				return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
-		}
-	}
+  public static Object staticSetForClass(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarGenPage o) {
+    return staticSetCompanyWebinarGenPage(entityVar,  siteRequest_, v, o);
+  }
+  public static Object staticSetCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, String v, CompanyWebinarGenPage o) {
+    switch(entityVar) {
+    case "listCompanyWebinar":
+      return CompanyWebinarGenPage.staticSetListCompanyWebinar(siteRequest_, v);
+    case "resultCount":
+      return CompanyWebinarGenPage.staticSetResultCount(siteRequest_, v);
+    case "pk":
+      return CompanyWebinarGenPage.staticSetPk(siteRequest_, v);
+    case "solrId":
+      return CompanyWebinarGenPage.staticSetSolrId(siteRequest_, v);
+    case "pageUriCompanyWebinar":
+      return CompanyWebinarGenPage.staticSetPageUriCompanyWebinar(siteRequest_, v);
+      default:
+        return PageLayout.staticSetPageLayout(entityVar,  siteRequest_, v, o);
+    }
+  }
 
-	////////////////
-	// staticSearch //
-	////////////////
+  ////////////////
+  // staticSearch //
+  ////////////////
 
-	public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-	}
-	public static Object staticSearchCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, (JsonArray)o);
-		case "resultCount":
-			return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
-		case "pk":
-			return CompanyWebinarGenPage.staticSearchPk(siteRequest_, (Long)o);
-		case "solrId":
-			return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+  }
+  public static Object staticSearchCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchListCompanyWebinar(siteRequest_, (JsonArray)o);
+    case "resultCount":
+      return CompanyWebinarGenPage.staticSearchResultCount(siteRequest_, (Integer)o);
+    case "pk":
+      return CompanyWebinarGenPage.staticSearchPk(siteRequest_, (Long)o);
+    case "solrId":
+      return CompanyWebinarGenPage.staticSearchSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchPageUriCompanyWebinar(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	///////////////////
-	// staticSearchStr //
-	///////////////////
+  ///////////////////
+  // staticSearchStr //
+  ///////////////////
 
-	public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
-		return staticSearchStrCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchStrCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
-		switch(entityVar) {
-		case "listCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchStrListCompanyWebinar(siteRequest_, (String)o);
-		case "resultCount":
-			return CompanyWebinarGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
-		case "pk":
-			return CompanyWebinarGenPage.staticSearchStrPk(siteRequest_, (Long)o);
-		case "solrId":
-			return CompanyWebinarGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
-		case "pageUriCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchStrPageUriCompanyWebinar(siteRequest_, (String)o);
-			default:
-				return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchStrForClass(String entityVar, SiteRequest siteRequest_, Object o) {
+    return staticSearchStrCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchStrCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, Object o) {
+    switch(entityVar) {
+    case "listCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchStrListCompanyWebinar(siteRequest_, (String)o);
+    case "resultCount":
+      return CompanyWebinarGenPage.staticSearchStrResultCount(siteRequest_, (Integer)o);
+    case "pk":
+      return CompanyWebinarGenPage.staticSearchStrPk(siteRequest_, (Long)o);
+    case "solrId":
+      return CompanyWebinarGenPage.staticSearchStrSolrId(siteRequest_, (String)o);
+    case "pageUriCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchStrPageUriCompanyWebinar(siteRequest_, (String)o);
+      default:
+        return PageLayout.staticSearchStrPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////////
-	// staticSearchFq //
-	//////////////////
+  //////////////////
+  // staticSearchFq //
+  //////////////////
 
-	public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
-		return staticSearchFqCompanyWebinarGenPage(entityVar,  siteRequest_, o);
-	}
-	public static String staticSearchFqCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, String o) {
-		switch(entityVar) {
-		case "listCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchFqListCompanyWebinar(siteRequest_, o);
-		case "resultCount":
-			return CompanyWebinarGenPage.staticSearchFqResultCount(siteRequest_, o);
-		case "pk":
-			return CompanyWebinarGenPage.staticSearchFqPk(siteRequest_, o);
-		case "solrId":
-			return CompanyWebinarGenPage.staticSearchFqSolrId(siteRequest_, o);
-		case "pageUriCompanyWebinar":
-			return CompanyWebinarGenPage.staticSearchFqPageUriCompanyWebinar(siteRequest_, o);
-			default:
-				return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
-		}
-	}
+  public static String staticSearchFqForClass(String entityVar, SiteRequest siteRequest_, String o) {
+    return staticSearchFqCompanyWebinarGenPage(entityVar,  siteRequest_, o);
+  }
+  public static String staticSearchFqCompanyWebinarGenPage(String entityVar, SiteRequest siteRequest_, String o) {
+    switch(entityVar) {
+    case "listCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchFqListCompanyWebinar(siteRequest_, o);
+    case "resultCount":
+      return CompanyWebinarGenPage.staticSearchFqResultCount(siteRequest_, o);
+    case "pk":
+      return CompanyWebinarGenPage.staticSearchFqPk(siteRequest_, o);
+    case "solrId":
+      return CompanyWebinarGenPage.staticSearchFqSolrId(siteRequest_, o);
+    case "pageUriCompanyWebinar":
+      return CompanyWebinarGenPage.staticSearchFqPageUriCompanyWebinar(siteRequest_, o);
+      default:
+        return PageLayout.staticSearchFqPageLayout(entityVar,  siteRequest_, o);
+    }
+  }
 
-	//////////////
-	// toString //
-	//////////////
+  //////////////
+  // toString //
+  //////////////
 
-	@Override public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(super.toString());
-		return sb.toString();
-	}
+  @Override public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(super.toString());
+    return sb.toString();
+  }
 
-	public static final String CLASS_SIMPLE_NAME = "CompanyWebinarGenPage";
-	public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarGenPage";
-	public static final String CLASS_AUTH_RESOURCE = "";
-	public static final String VAR_searchListCompanyWebinar_ = "searchListCompanyWebinar_";
-	public static final String VAR_listCompanyWebinar = "listCompanyWebinar";
-	public static final String VAR_resultCount = "resultCount";
-	public static final String VAR_result = "result";
-	public static final String VAR_pk = "pk";
-	public static final String VAR_solrId = "solrId";
-	public static final String VAR_pageUriCompanyWebinar = "pageUriCompanyWebinar";
+  public static final String CLASS_SIMPLE_NAME = "CompanyWebinarGenPage";
+  public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarGenPage";
+  public static final String CLASS_AUTH_RESOURCE = "";
+  public static final String VAR_searchListCompanyWebinar_ = "searchListCompanyWebinar_";
+  public static final String VAR_listCompanyWebinar = "listCompanyWebinar";
+  public static final String VAR_resultCount = "resultCount";
+  public static final String VAR_result = "result";
+  public static final String VAR_pk = "pk";
+  public static final String VAR_solrId = "solrId";
+  public static final String VAR_pageUriCompanyWebinar = "pageUriCompanyWebinar";
 
-	public static final String DISPLAY_NAME_searchListCompanyWebinar_ = "";
-	public static final String DISPLAY_NAME_listCompanyWebinar = "";
-	public static final String DISPLAY_NAME_resultCount = "";
-	public static final String DISPLAY_NAME_result = "";
-	public static final String DISPLAY_NAME_pk = "";
-	public static final String DISPLAY_NAME_solrId = "";
-	public static final String DISPLAY_NAME_pageUriCompanyWebinar = "";
+  public static final String DISPLAY_NAME_searchListCompanyWebinar_ = "";
+  public static final String DISPLAY_NAME_listCompanyWebinar = "";
+  public static final String DISPLAY_NAME_resultCount = "";
+  public static final String DISPLAY_NAME_result = "";
+  public static final String DISPLAY_NAME_pk = "";
+  public static final String DISPLAY_NAME_solrId = "";
+  public static final String DISPLAY_NAME_pageUriCompanyWebinar = "";
 
-	@Override
-	public String idForClass() {
-		return null;
-	}
+  @Override
+  public String idForClass() {
+    return null;
+  }
 
-	@Override
-	public String titleForClass() {
-		return null;
-	}
+  @Override
+  public String titleForClass() {
+    return null;
+  }
 
-	@Override
-	public String nameForClass() {
-		return null;
-	}
+  @Override
+  public String nameForClass() {
+    return null;
+  }
 
-	@Override
-	public String classNameAdjectiveSingularForClass() {
-		return null;
-	}
+  @Override
+  public String classNameAdjectiveSingularForClass() {
+    return null;
+  }
 
-	@Override
-	public String descriptionForClass() {
-		return null;
-	}
+  @Override
+  public String descriptionForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlEditPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlEditPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDisplayPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDisplayPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlUserPageForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlUserPageForClass() {
+    return null;
+  }
 
-	@Override
-	public String classStringFormatUrlDownloadForClass() {
-		return null;
-	}
+  @Override
+  public String classStringFormatUrlDownloadForClass() {
+    return null;
+  }
 
-	public static String displayNameForClass(String var) {
-		return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
-	}
-	public static String displayNameCompanyWebinarGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyWebinar_:
-			return DISPLAY_NAME_searchListCompanyWebinar_;
-		case VAR_listCompanyWebinar:
-			return DISPLAY_NAME_listCompanyWebinar;
-		case VAR_resultCount:
-			return DISPLAY_NAME_resultCount;
-		case VAR_result:
-			return DISPLAY_NAME_result;
-		case VAR_pk:
-			return DISPLAY_NAME_pk;
-		case VAR_solrId:
-			return DISPLAY_NAME_solrId;
-		case VAR_pageUriCompanyWebinar:
-			return DISPLAY_NAME_pageUriCompanyWebinar;
-		default:
-			return PageLayout.displayNamePageLayout(var);
-		}
-	}
+  public static String displayNameForClass(String var) {
+    return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
+  }
+  public static String displayNameCompanyWebinarGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyWebinar_:
+      return DISPLAY_NAME_searchListCompanyWebinar_;
+    case VAR_listCompanyWebinar:
+      return DISPLAY_NAME_listCompanyWebinar;
+    case VAR_resultCount:
+      return DISPLAY_NAME_resultCount;
+    case VAR_result:
+      return DISPLAY_NAME_result;
+    case VAR_pk:
+      return DISPLAY_NAME_pk;
+    case VAR_solrId:
+      return DISPLAY_NAME_solrId;
+    case VAR_pageUriCompanyWebinar:
+      return DISPLAY_NAME_pageUriCompanyWebinar;
+    default:
+      return PageLayout.displayNamePageLayout(var);
+    }
+  }
 
-	public static String descriptionCompanyWebinarGenPage(String var) {
-		if(var == null)
-			return null;
-		switch(var) {
-			default:
-				return PageLayout.descriptionPageLayout(var);
-		}
-	}
+  public static String descriptionCompanyWebinarGenPage(String var) {
+    if(var == null)
+      return null;
+    switch(var) {
+      default:
+        return PageLayout.descriptionPageLayout(var);
+    }
+  }
 
-	public static String classSimpleNameCompanyWebinarGenPage(String var) {
-		switch(var) {
-		case VAR_searchListCompanyWebinar_:
-			return "SearchList";
-		case VAR_listCompanyWebinar:
-			return "JsonArray";
-		case VAR_resultCount:
-			return "Integer";
-		case VAR_result:
-			return "CompanyWebinar";
-		case VAR_pk:
-			return "Long";
-		case VAR_solrId:
-			return "String";
-		case VAR_pageUriCompanyWebinar:
-			return "String";
-			default:
-				return PageLayout.classSimpleNamePageLayout(var);
-		}
-	}
+  public static String classSimpleNameCompanyWebinarGenPage(String var) {
+    switch(var) {
+    case VAR_searchListCompanyWebinar_:
+      return "SearchList";
+    case VAR_listCompanyWebinar:
+      return "JsonArray";
+    case VAR_resultCount:
+      return "Integer";
+    case VAR_result:
+      return "CompanyWebinar";
+    case VAR_pk:
+      return "Long";
+    case VAR_solrId:
+      return "String";
+    case VAR_pageUriCompanyWebinar:
+      return "String";
+      default:
+        return PageLayout.classSimpleNamePageLayout(var);
+    }
+  }
 
-	public static Integer htmColumnCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmColumnPageLayout(var);
-		}
-	}
+  public static Integer htmColumnCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmColumnPageLayout(var);
+    }
+  }
 
-	public static Integer htmRowCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmRowPageLayout(var);
-		}
-	}
+  public static Integer htmRowCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmRowPageLayout(var);
+    }
+  }
 
-	public static Integer htmCellCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.htmCellPageLayout(var);
-		}
-	}
+  public static Integer htmCellCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.htmCellPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMinCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMinPageLayout(var);
-		}
-	}
+  public static Integer lengthMinCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMinPageLayout(var);
+    }
+  }
 
-	public static Integer lengthMaxCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.lengthMaxPageLayout(var);
-		}
-	}
+  public static Integer lengthMaxCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.lengthMaxPageLayout(var);
+    }
+  }
 
-	public static Integer maxCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.maxPageLayout(var);
-		}
-	}
+  public static Integer maxCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.maxPageLayout(var);
+    }
+  }
 
-	public static Integer minCompanyWebinarGenPage(String var) {
-		switch(var) {
-			default:
-				return PageLayout.minPageLayout(var);
-		}
-	}
+  public static Integer minCompanyWebinarGenPage(String var) {
+    switch(var) {
+      default:
+        return PageLayout.minPageLayout(var);
+    }
+  }
 }
