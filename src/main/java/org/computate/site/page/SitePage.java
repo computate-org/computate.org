@@ -4,6 +4,7 @@ package org.computate.site.page;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -147,6 +148,17 @@ public class SitePage extends SitePageGen<BaseResult> {
    */
   protected void _siteBaseUrl(Wrap<String> w) {
     w.o(siteRequest_.getConfig().getString(ConfigKeys.SITE_BASE_URL));
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: importance
+   * Description: The importance of this page. 
+   */
+  protected void _importance(Wrap<BigDecimal> w) {
   }
 
   /**

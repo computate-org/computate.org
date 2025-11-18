@@ -35,6 +35,7 @@ import java.math.RoundingMode;
 import java.util.Map;
 import java.lang.Boolean;
 import java.lang.String;
+import java.math.BigDecimal;
 import java.lang.Integer;
 import org.computate.vertx.search.list.SearchList;
 import org.computate.site.page.SitePage;
@@ -811,6 +812,83 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
   public static String staticSearchFqSiteBaseUrl(SiteRequest siteRequest_, String o) {
     return SitePage.staticSearchSiteBaseUrl(siteRequest_, SitePage.staticSetSiteBaseUrl(siteRequest_, o)).toString();
+  }
+
+	////////////////
+  // importance //
+	////////////////
+
+
+  /**   The entity importance
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonSerialize(using = ToStringSerializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected BigDecimal importance;
+
+  /**  <br> The entity importance
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.SitePage&fq=entiteVar_enUS_indexed_string:importance">Find the entity importance in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _importance(Wrap<BigDecimal> w);
+
+  public BigDecimal getImportance() {
+    return importance;
+  }
+
+  public void setImportance(BigDecimal importance) {
+    this.importance = importance;
+  }
+  @JsonIgnore
+  public void setImportance(String o) {
+    this.importance = SitePage.staticSetImportance(siteRequest_, o);
+  }
+  public static BigDecimal staticSetImportance(SiteRequest siteRequest_, String o) {
+    o = StringUtils.removeAll(o, "[^\\d\\.]");
+    if(NumberUtils.isParsable(o))
+      return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+    return null;
+  }
+  @JsonIgnore
+  public void setImportance(Double o) {
+    setImportance(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+  }
+  @JsonIgnore
+  public void setImportance(Integer o) {
+    setImportance(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+  }
+  @JsonIgnore
+  public void setImportance(Number o) {
+    setImportance(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+  }
+  protected SitePage importanceInit() {
+    Wrap<BigDecimal> importanceWrap = new Wrap<BigDecimal>().var("importance");
+    if(importance == null) {
+      _importance(importanceWrap);
+      Optional.ofNullable(importanceWrap.getO()).ifPresent(o -> {
+        setImportance(o);
+      });
+    }
+    return (SitePage)this;
+  }
+
+  public static Double staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.doubleValue();
+  }
+
+  public static String staticSearchStrImportance(SiteRequest siteRequest_, Double o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqImportance(SiteRequest siteRequest_, String o) {
+    return SitePage.staticSearchImportance(siteRequest_, SitePage.staticSetImportance(siteRequest_, o)).toString();
+  }
+
+  public BigDecimal sqlImportance() {
+    return importance;
   }
 
 	///////////////
@@ -2296,6 +2374,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         staticBaseUrlInit();
         staticPathInit();
         siteBaseUrlInit();
+        importanceInit();
         courseNumInit();
         lessonNumInit();
         nameInit();
@@ -2447,6 +2526,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
         return oSitePage.staticPath;
       case "siteBaseUrl":
         return oSitePage.siteBaseUrl;
+      case "importance":
+        return oSitePage.importance;
       case "courseNum":
         return oSitePage.courseNum;
       case "lessonNum":
@@ -2558,6 +2639,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSetStaticPath(siteRequest_, v);
     case "siteBaseUrl":
       return SitePage.staticSetSiteBaseUrl(siteRequest_, v);
+    case "importance":
+      return SitePage.staticSetImportance(siteRequest_, v);
     case "courseNum":
       return SitePage.staticSetCourseNum(siteRequest_, v);
     case "lessonNum":
@@ -2638,6 +2721,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchStaticPath(siteRequest_, (String)o);
     case "siteBaseUrl":
       return SitePage.staticSearchSiteBaseUrl(siteRequest_, (String)o);
+    case "importance":
+      return SitePage.staticSearchImportance(siteRequest_, (BigDecimal)o);
     case "courseNum":
       return SitePage.staticSearchCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -2718,6 +2803,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchStrStaticPath(siteRequest_, (String)o);
     case "siteBaseUrl":
       return SitePage.staticSearchStrSiteBaseUrl(siteRequest_, (String)o);
+    case "importance":
+      return SitePage.staticSearchStrImportance(siteRequest_, (Double)o);
     case "courseNum":
       return SitePage.staticSearchStrCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -2798,6 +2885,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return SitePage.staticSearchFqStaticPath(siteRequest_, o);
     case "siteBaseUrl":
       return SitePage.staticSearchFqSiteBaseUrl(siteRequest_, o);
+    case "importance":
+      return SitePage.staticSearchFqImportance(siteRequest_, o);
     case "courseNum":
       return SitePage.staticSearchFqCourseNum(siteRequest_, o);
     case "lessonNum":
@@ -2868,7 +2957,15 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   }
   public Object persistSitePage(String var, Object val) {
     String varLower = var.toLowerCase();
-      if("coursenum".equals(varLower)) {
+      if("importance".equals(varLower)) {
+        if(val instanceof String) {
+          setImportance((String)val);
+        } else if(val instanceof Number) {
+          setImportance(new BigDecimal(((Number)val).doubleValue()));
+        }
+        saves.add("importance");
+        return val;
+      } else if("coursenum".equals(varLower)) {
         if(val instanceof Integer) {
           setCourseNum((Integer)val);
         } else {
@@ -2990,6 +3087,12 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     SitePage oSitePage = (SitePage)this;
     saves = Optional.ofNullable((ArrayList<String>)doc.get("saves_docvalues_strings")).orElse(new ArrayList<String>());
     if(saves != null) {
+
+      if(saves.contains("importance")) {
+        Double importance = (Double)doc.get("importance_docvalues_double");
+        if(importance != null)
+          oSitePage.setImportance(importance);
+      }
 
       if(saves.contains("courseNum")) {
         Integer courseNum = (Integer)doc.get("courseNum_docvalues_int");
@@ -3131,6 +3234,9 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   }
 
   public void indexSitePage(JsonObject doc) {
+    if(importance != null) {
+      doc.put("importance_docvalues_double", importance.doubleValue());
+    }
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
     }
@@ -3207,6 +3313,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
   public static String varStoredSitePage(String entityVar) {
     switch(entityVar) {
+      case "importance":
+        return "importance_docvalues_double";
       case "courseNum":
         return "courseNum_docvalues_int";
       case "lessonNum":
@@ -3258,6 +3366,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
   public static String varIndexedSitePage(String entityVar) {
     switch(entityVar) {
+      case "importance":
+        return "importance_docvalues_double";
       case "courseNum":
         return "courseNum_docvalues_int";
       case "lessonNum":
@@ -3303,6 +3413,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
 
   public static String searchVarSitePage(String searchVar) {
     switch(searchVar) {
+      case "importance_docvalues_double":
+        return "importance";
       case "courseNum_docvalues_int":
         return "courseNum";
       case "lessonNum_docvalues_int":
@@ -3371,6 +3483,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     SitePage oSitePage = (SitePage)this;
     SiteRequest siteRequest = oSitePage.getSiteRequest_();
 
+    oSitePage.setImportance(Optional.ofNullable(doc.get("importance_docvalues_double")).map(v -> v.toString()).orElse(null));
     oSitePage.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSitePage.setLessonNum(Optional.ofNullable(doc.get("lessonNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oSitePage.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -3408,6 +3521,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     Object o = Optional.ofNullable(apiRequest).map(ApiRequest::getOriginal).orElse(null);
     if(o != null && o instanceof SitePage) {
       SitePage original = (SitePage)o;
+      if(!Objects.equals(importance, original.getImportance()) && importance != null && original.getImportance() != null && importance.compareTo(original.getImportance()) != 0)
+        apiRequest.addVars("importance");
       if(!Objects.equals(courseNum, original.getCourseNum()))
         apiRequest.addVars("courseNum");
       if(!Objects.equals(lessonNum, original.getLessonNum()))
@@ -3463,6 +3578,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   @Override public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(super.toString());
+    sb.append(Optional.ofNullable(importance).map(v -> "importance: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(lessonNum).map(v -> "lessonNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
@@ -3506,6 +3622,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public static final String VAR_staticBaseUrl = "staticBaseUrl";
   public static final String VAR_staticPath = "staticPath";
   public static final String VAR_siteBaseUrl = "siteBaseUrl";
+  public static final String VAR_importance = "importance";
   public static final String VAR_courseNum = "courseNum";
   public static final String VAR_lessonNum = "lessonNum";
   public static final String VAR_name = "name";
@@ -3544,6 +3661,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     return SitePage.varsFqSitePage(new ArrayList<String>());
   }
   public static List<String> varsFqSitePage(List<String> vars) {
+    vars.add(VAR_importance);
     vars.add(VAR_courseNum);
     vars.add(VAR_lessonNum);
     vars.add(VAR_authorName);
@@ -3558,6 +3676,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     return SitePage.varsRangeSitePage(new ArrayList<String>());
   }
   public static List<String> varsRangeSitePage(List<String> vars) {
+    vars.add(VAR_importance);
     vars.add(VAR_courseNum);
     vars.add(VAR_lessonNum);
     BaseResult.varsRangeBaseResult(vars);
@@ -3575,6 +3694,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_staticBaseUrl = "";
   public static final String DISPLAY_NAME_staticPath = "";
   public static final String DISPLAY_NAME_siteBaseUrl = "";
+  public static final String DISPLAY_NAME_importance = "importance";
   public static final String DISPLAY_NAME_courseNum = "course number";
   public static final String DISPLAY_NAME_lessonNum = "lesson number";
   public static final String DISPLAY_NAME_name = "title";
@@ -3673,6 +3793,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return DISPLAY_NAME_staticPath;
     case VAR_siteBaseUrl:
       return DISPLAY_NAME_siteBaseUrl;
+    case VAR_importance:
+      return DISPLAY_NAME_importance;
     case VAR_courseNum:
       return DISPLAY_NAME_courseNum;
     case VAR_lessonNum:
@@ -3732,6 +3854,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     if(var == null)
       return null;
     switch(var) {
+    case VAR_importance:
+      return "The importance of this page. ";
     case VAR_courseNum:
       return "The course number for this page. ";
     case VAR_lessonNum:
@@ -3805,6 +3929,8 @@ public abstract class SitePageGen<DEV> extends BaseResult {
       return "String";
     case VAR_siteBaseUrl:
       return "String";
+    case VAR_importance:
+      return "BigDecimal";
     case VAR_courseNum:
       return "Integer";
     case VAR_lessonNum:

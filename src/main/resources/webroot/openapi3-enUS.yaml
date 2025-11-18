@@ -4740,55 +4740,6 @@ paths:
                 $ref: '#/components/schemas/SearchPageCompanyProductResponse'
   /en-us/shop/product/{pageId}:
     get:
-      operationId: displaypageCompanyProduct
-      x-vertx-event-bus: computate.org-enUS-CompanyProduct
-      description: >+
-      summary: >+
-      tags:
-        - products
-      parameters:
-        - name: vertx-web.session
-          in: cookie
-          schema:
-            type: string
-        - name: sessionIdBefore
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_FONT_SIZE
-          in: cookie
-          schema:
-            type: string
-        - name: SITE_THEME
-          in: cookie
-          schema:
-            type: string
-        - name: WEB_COMPONENTS_THEME
-          in: cookie
-          schema:
-            type: string
-        - in: query
-          name: var
-          description: 'The var parameters are additional optional variables and values to pass into the application. '
-          required: false
-          schema:
-            type: array
-            items:
-                type: string
-        - name: pageId
-          in: path
-          description: >+
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: >+
-          content:
-            text/html; charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/DisplayPageCompanyProductResponse'
-    get:
       operationId: userpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
       security:
@@ -10982,11 +10933,6 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageCompanyProductResponse'
-    DisplayPageCompanyProductResponse:
-      content:
-        text/html; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/DisplayPageCompanyProductResponse'
     UserPageCompanyProductResponse:
       content:
         text/html; charset=utf-8:
@@ -13742,6 +13688,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  productResource:
+                    type: string
                   emailTemplate:
                     type: string
                   storeUrl:
@@ -13809,6 +13757,13 @@ components:
             removePageId:
               type: string
             removeAllPageId:
+              type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
               type: string
             setEmailTemplate:
               type: string
@@ -13968,6 +13923,13 @@ components:
               type: string
             removeAllPageId:
               type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
+              type: string
             setEmailTemplate:
               type: string
               nullable: true
@@ -14106,6 +14068,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -14154,6 +14118,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -14201,6 +14167,8 @@ components:
             price:
               type: string
             pageId:
+              type: string
+            productResource:
               type: string
             emailTemplate:
               type: string
@@ -14255,6 +14223,8 @@ components:
                     type: string
                   pageId:
                     type: string
+                  productResource:
+                    type: string
                   emailTemplate:
                     type: string
                   storeUrl:
@@ -14302,6 +14272,8 @@ components:
                   price:
                     type: string
                   pageId:
+                    type: string
+                  productResource:
                     type: string
                   emailTemplate:
                     type: string
@@ -14351,6 +14323,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -14399,6 +14373,8 @@ components:
               type: string
             pageId:
               type: string
+            productResource:
+              type: string
             emailTemplate:
               type: string
             storeUrl:
@@ -14439,9 +14415,6 @@ components:
       allOf:
         - type: string
     SearchPageCompanyProductResponse:
-      allOf:
-        - type: string
-    DisplayPageCompanyProductResponse:
       allOf:
         - type: string
     UserPageCompanyProductResponse:
@@ -15611,6 +15584,8 @@ components:
                     type: string
                   siteBaseUrl:
                     type: string
+                  importance:
+                    type: string
                   courseNum:
                     type: string
                   lessonNum:
@@ -15755,6 +15730,13 @@ components:
             removeSiteBaseUrl:
               type: string
             removeAllSiteBaseUrl:
+              type: string
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
               type: string
             setCourseNum:
               type: string
@@ -16055,6 +16037,13 @@ components:
               type: string
             removeAllSiteBaseUrl:
               type: string
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
+              type: string
             setCourseNum:
               type: string
               nullable: true
@@ -16299,6 +16288,8 @@ components:
               type: string
             siteBaseUrl:
               type: string
+            importance:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -16389,6 +16380,8 @@ components:
               type: string
             siteBaseUrl:
               type: string
+            importance:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -16478,6 +16471,8 @@ components:
             staticPath:
               type: string
             siteBaseUrl:
+              type: string
+            importance:
               type: string
             courseNum:
               type: string
@@ -16574,6 +16569,8 @@ components:
                     type: string
                   siteBaseUrl:
                     type: string
+                  importance:
+                    type: string
                   courseNum:
                     type: string
                   lessonNum:
@@ -16663,6 +16660,8 @@ components:
                   staticPath:
                     type: string
                   siteBaseUrl:
+                    type: string
+                  importance:
                     type: string
                   courseNum:
                     type: string
@@ -16754,6 +16753,8 @@ components:
               type: string
             siteBaseUrl:
               type: string
+            importance:
+              type: string
             courseNum:
               type: string
             lessonNum:
@@ -16843,6 +16844,8 @@ components:
             staticPath:
               type: string
             siteBaseUrl:
+              type: string
+            importance:
               type: string
             courseNum:
               type: string
