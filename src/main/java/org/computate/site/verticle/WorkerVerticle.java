@@ -69,6 +69,12 @@ import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper;
+import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.computate.ComputateDeveloper;
+import org.computate.site.model.developer.computate.ComputateDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.computate.ComputateDeveloperEnUSGenApiService;
 import org.computate.vertx.api.ApiCounter;
 import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
@@ -601,6 +607,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       initializeApiService(apiCompanyWebsite);
       SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
       initializeApiService(apiSmartAquacultureDeveloper);
+      AiTelemetryDeveloperEnUSApiServiceImpl apiAiTelemetryDeveloper = new AiTelemetryDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiAiTelemetryDeveloper);
+      ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiComputateDeveloper);
 
 			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
 				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
@@ -613,8 +623,12 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
 												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
 													apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
-														LOG.info("data import complete");
-														promise.complete();
+														apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
+															apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
+																LOG.info("data import complete");
+																promise.complete();
+															}).onFailure(ex -> promise.fail(ex));
+														}).onFailure(ex -> promise.fail(ex));
 													}).onFailure(ex -> promise.fail(ex));
 												}).onFailure(ex -> promise.fail(ex));
 											}).onFailure(ex -> promise.fail(ex));

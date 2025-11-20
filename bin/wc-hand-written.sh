@@ -36,5 +36,11 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloper.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloper.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSApiServiceImpl.java \
       -type f -exec wc -l {} +
 echo hand written

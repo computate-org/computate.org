@@ -45,6 +45,8 @@ spec:
               mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
             - name: "ai-telemetry-developer"
               mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer"
+            - name: "computate-developer"
+              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer"
           terminationMessagePolicy: File
           envFrom:
             - secretRef:
@@ -54,6 +56,7 @@ spec:
             - >-
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/smart-aquaculture-developer.git /home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer; 
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer; 
+              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/computate-developer.git /home/default/computate.org-static/webawesome/templates/en-us/computate-developer; 
       containers:
       - name: computateorg
         env:
@@ -126,6 +129,8 @@ spec:
               mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
             - name: "ai-telemetry-developer"
               mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer"
+            - name: "computate-developer"
+              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
@@ -133,4 +138,6 @@ spec:
         - name: "smart-aquaculture-developer"
           emptyDir: {}
         - name: "ai-telemetry-developer"
+          emptyDir: {}
+        - name: "computate-developer"
           emptyDir: {}

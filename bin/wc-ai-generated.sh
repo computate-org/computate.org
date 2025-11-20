@@ -40,6 +40,12 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/ \
   ~/.local/src/computate.org/src/main/java/org/computate/site/request/ \
   ~/.local/src/computate.org/src/main/java/org/computate/site/result/ \
@@ -128,5 +134,19 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/ai-telemetry-developer/AiTelemetryDeveloperGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/computate-developer/ComputateDeveloperGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperSidebar.htm \
     -type f -exec wc -l {} +
 echo AI generated
