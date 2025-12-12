@@ -107,7 +107,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////
 
 
-  /**   The entity config
+  /**
+   *  The entity config
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -115,7 +116,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected JsonObject config;
 
-  /**  <br> The entity config
+  /**
+   * <br> The entity config
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:config">Find the entity config in Solr</a>
    * <br>
@@ -168,7 +170,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////
 
 
-  /**   The entity i18n
+  /**
+   *  The entity i18n
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -176,7 +179,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected JsonObject i18n;
 
-  /**  <br> The entity i18n
+  /**
+   * <br> The entity i18n
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:i18n">Find the entity i18n in Solr</a>
    * <br>
@@ -229,14 +233,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////////
 
 
-  /**   The entity siteRequest_
+  /**
+   *  The entity siteRequest_
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected SiteRequest siteRequest_;
 
-  /**  <br> The entity siteRequest_
+  /**
+   * <br> The entity siteRequest_
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:siteRequest_">Find the entity siteRequest_ in Solr</a>
    * <br>
@@ -270,14 +276,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////
 
 
-  /**   The entity webClient
+  /**
+   *  The entity webClient
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected WebClient webClient;
 
-  /**  <br> The entity webClient
+  /**
+   * <br> The entity webClient
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:webClient">Find the entity webClient in Solr</a>
    * <br>
@@ -311,14 +319,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	/////////////////
 
 
-  /**   The entity apiRequest_
+  /**
+   *  The entity apiRequest_
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected ApiRequest apiRequest_;
 
-  /**  <br> The entity apiRequest_
+  /**
+   * <br> The entity apiRequest_
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:apiRequest_">Find the entity apiRequest_ in Solr</a>
    * <br>
@@ -352,7 +362,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////////
 
 
-  /**   The entity jsonObject
+  /**
+   *  The entity jsonObject
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -360,7 +371,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected JsonObject jsonObject;
 
-  /**  <br> The entity jsonObject
+  /**
+   * <br> The entity jsonObject
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:jsonObject">Find the entity jsonObject in Solr</a>
    * <br>
@@ -413,14 +425,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////////////
 
 
-  /**   The entity serviceRequest
+  /**
+   *  The entity serviceRequest
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected ServiceRequest serviceRequest;
 
-  /**  <br> The entity serviceRequest
+  /**
+   * <br> The entity serviceRequest
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:serviceRequest">Find the entity serviceRequest in Solr</a>
    * <br>
@@ -454,14 +468,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	/////////////////////////
 
 
-  /**   The entity sessionSiteFontSize
+  /**
+   *  The entity sessionSiteFontSize
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String sessionSiteFontSize;
 
-  /**  <br> The entity sessionSiteFontSize
+  /**
+   * <br> The entity sessionSiteFontSize
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sessionSiteFontSize">Find the entity sessionSiteFontSize in Solr</a>
    * <br>
@@ -506,14 +522,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////////////////
 
 
-  /**   The entity sessionWebComponentsTheme
+  /**
+   *  The entity sessionWebComponentsTheme
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String sessionWebComponentsTheme;
 
-  /**  <br> The entity sessionWebComponentsTheme
+  /**
+   * <br> The entity sessionWebComponentsTheme
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sessionWebComponentsTheme">Find the entity sessionWebComponentsTheme in Solr</a>
    * <br>
@@ -558,14 +576,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////////////
 
 
-  /**   The entity sessionSiteTheme
+  /**
+   *  The entity sessionSiteTheme
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String sessionSiteTheme;
 
-  /**  <br> The entity sessionSiteTheme
+  /**
+   * <br> The entity sessionSiteTheme
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sessionSiteTheme">Find the entity sessionSiteTheme in Solr</a>
    * <br>
@@ -610,14 +630,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////
 
 
-  /**   The entity user
+  /**
+   *  The entity user
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected User user;
 
-  /**  <br> The entity user
+  /**
+   * <br> The entity user
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:user">Find the entity user in Solr</a>
    * <br>
@@ -651,7 +673,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////
 
 
-  /**   The entity userPrincipal
+  /**
+   *  The entity userPrincipal
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -659,7 +682,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected JsonObject userPrincipal;
 
-  /**  <br> The entity userPrincipal
+  /**
+   * <br> The entity userPrincipal
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userPrincipal">Find the entity userPrincipal in Solr</a>
    * <br>
@@ -712,14 +736,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////
 
 
-  /**   The entity userId
+  /**
+   *  The entity userId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userId;
 
-  /**  <br> The entity userId
+  /**
+   * <br> The entity userId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userId">Find the entity userId in Solr</a>
    * <br>
@@ -764,7 +790,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	/////////////
 
 
-  /**   The entity userKey
+  /**
+   *  The entity userKey
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -772,7 +799,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected Long userKey;
 
-  /**  <br> The entity userKey
+  /**
+   * <br> The entity userKey
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userKey">Find the entity userKey in Solr</a>
    * <br>
@@ -824,14 +852,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////
 
 
-  /**   The entity sessionId
+  /**
+   *  The entity sessionId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String sessionId;
 
-  /**  <br> The entity sessionId
+  /**
+   * <br> The entity sessionId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sessionId">Find the entity sessionId in Solr</a>
    * <br>
@@ -876,14 +906,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	/////////////////////
 
 
-  /**   The entity sessionIdBefore
+  /**
+   *  The entity sessionIdBefore
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String sessionIdBefore;
 
-  /**  <br> The entity sessionIdBefore
+  /**
+   * <br> The entity sessionIdBefore
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sessionIdBefore">Find the entity sessionIdBefore in Solr</a>
    * <br>
@@ -928,14 +960,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////////
 
 
-  /**   The entity customerProfileId
+  /**
+   *  The entity customerProfileId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String customerProfileId;
 
-  /**  <br> The entity customerProfileId
+  /**
+   * <br> The entity customerProfileId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:customerProfileId">Find the entity customerProfileId in Solr</a>
    * <br>
@@ -980,14 +1014,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////
 
 
-  /**   The entity userName
+  /**
+   *  The entity userName
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userName;
 
-  /**  <br> The entity userName
+  /**
+   * <br> The entity userName
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userName">Find the entity userName in Solr</a>
    * <br>
@@ -1032,14 +1068,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////////
 
 
-  /**   The entity userLastName
+  /**
+   *  The entity userLastName
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userLastName;
 
-  /**  <br> The entity userLastName
+  /**
+   * <br> The entity userLastName
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userLastName">Find the entity userLastName in Solr</a>
    * <br>
@@ -1084,14 +1122,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////
 
 
-  /**   The entity userFirstName
+  /**
+   *  The entity userFirstName
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userFirstName;
 
-  /**  <br> The entity userFirstName
+  /**
+   * <br> The entity userFirstName
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userFirstName">Find the entity userFirstName in Solr</a>
    * <br>
@@ -1136,14 +1176,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////////
 
 
-  /**   The entity userFullName
+  /**
+   *  The entity userFullName
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userFullName;
 
-  /**  <br> The entity userFullName
+  /**
+   * <br> The entity userFullName
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userFullName">Find the entity userFullName in Solr</a>
    * <br>
@@ -1188,14 +1230,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////
 
 
-  /**   The entity userEmail
+  /**
+   *  The entity userEmail
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String userEmail;
 
-  /**  <br> The entity userEmail
+  /**
+   * <br> The entity userEmail
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userEmail">Find the entity userEmail in Solr</a>
    * <br>
@@ -1240,14 +1284,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////
 
 
-  /**   The entity filteredScope
+  /**
+   *  The entity filteredScope
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected Boolean filteredScope;
 
-  /**  <br> The entity filteredScope
+  /**
+   * <br> The entity filteredScope
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:filteredScope">Find the entity filteredScope in Solr</a>
    * <br>
@@ -1297,7 +1343,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////
 
 
-  /**   The entity scopes
+  /**
+   *  The entity scopes
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -1305,7 +1352,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected List<String> scopes = new ArrayList<String>();
 
-  /**  <br> The entity scopes
+  /**
+   * <br> The entity scopes
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:scopes">Find the entity scopes in Solr</a>
    * <br>
@@ -1372,7 +1420,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////
 
 
-  /**   The entity groups
+  /**
+   *  The entity groups
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -1380,7 +1429,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected List<String> groups = new ArrayList<String>();
 
-  /**  <br> The entity groups
+  /**
+   * <br> The entity groups
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:groups">Find the entity groups in Solr</a>
    * <br>
@@ -1447,14 +1497,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////////
 
 
-  /**   The entity publicRead
+  /**
+   *  The entity publicRead
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected Boolean publicRead;
 
-  /**  <br> The entity publicRead
+  /**
+   * <br> The entity publicRead
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:publicRead">Find the entity publicRead in Solr</a>
    * <br>
@@ -1504,7 +1556,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////////////
 
 
-  /**   The entity userResource
+  /**
+   *  The entity userResource
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -1512,7 +1565,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected JsonObject userResource;
 
-  /**  <br> The entity userResource
+  /**
+   * <br> The entity userResource
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:userResource">Find the entity userResource in Solr</a>
    * <br>
@@ -1565,14 +1619,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////
 
 
-  /**   The entity siteUser_
+  /**
+   *  The entity siteUser_
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected SiteUser siteUser_;
 
-  /**  <br> The entity siteUser_
+  /**
+   * <br> The entity siteUser_
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:siteUser_">Find the entity siteUser_ in Solr</a>
    * <br>
@@ -1606,14 +1662,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	//////////
 
 
-  /**   The entity lang
+  /**
+   *  The entity lang
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String lang;
 
-  /**  <br> The entity lang
+  /**
+   * <br> The entity lang
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:lang">Find the entity lang in Solr</a>
    * <br>
@@ -1658,7 +1716,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////
 
 
-  /**   The entity requestPk
+  /**
+   *  The entity requestPk
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -1666,7 +1725,8 @@ public abstract class SiteRequestGen<DEV> extends Object {
   @JsonInclude(Include.NON_NULL)
   protected Long requestPk;
 
-  /**  <br> The entity requestPk
+  /**
+   * <br> The entity requestPk
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:requestPk">Find the entity requestPk in Solr</a>
    * <br>
@@ -1718,14 +1778,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////////
 
 
-  /**   The entity requestUri
+  /**
+   *  The entity requestUri
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String requestUri;
 
-  /**  <br> The entity requestUri
+  /**
+   * <br> The entity requestUri
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:requestUri">Find the entity requestUri in Solr</a>
    * <br>
@@ -1770,14 +1832,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////
 
 
-  /**   The entity requestMethod
+  /**
+   *  The entity requestMethod
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String requestMethod;
 
-  /**  <br> The entity requestMethod
+  /**
+   * <br> The entity requestMethod
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:requestMethod">Find the entity requestMethod in Solr</a>
    * <br>
@@ -1822,14 +1886,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	///////////////////
 
 
-  /**   The entity sqlConnection
+  /**
+   *  The entity sqlConnection
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected SqlConnection sqlConnection;
 
-  /**  <br> The entity sqlConnection
+  /**
+   * <br> The entity sqlConnection
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:sqlConnection">Find the entity sqlConnection in Solr</a>
    * <br>
@@ -1863,14 +1929,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	////////////////////
 
 
-  /**   The entity requestHeaders
+  /**
+   *  The entity requestHeaders
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected MultiMap requestHeaders;
 
-  /**  <br> The entity requestHeaders
+  /**
+   * <br> The entity requestHeaders
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:requestHeaders">Find the entity requestHeaders in Solr</a>
    * <br>
@@ -1904,14 +1972,16 @@ public abstract class SiteRequestGen<DEV> extends Object {
 	/////////////////
 
 
-  /**   The entity requestVars
+  /**
+   *  The entity requestVars
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected Map<String, String> requestVars = new HashMap<String, String>();
 
-  /**  <br> The entity requestVars
+  /**
+   * <br> The entity requestVars
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&fq=entiteVar_enUS_indexed_string:requestVars">Find the entity requestVars in Solr</a>
    * <br>

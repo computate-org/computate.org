@@ -141,14 +141,16 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	///////////////////////////////
 
 
-  /**   The entity searchListCompanyWebsite_
+  /**
+   *  The entity searchListCompanyWebsite_
    *	 is defined as null before being initialized. 
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
   protected SearchList<CompanyWebsite> searchListCompanyWebsite_;
 
-  /**  <br> The entity searchListCompanyWebsite_
+  /**
+   * <br> The entity searchListCompanyWebsite_
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:searchListCompanyWebsite_">Find the entity searchListCompanyWebsite_ in Solr</a>
    * <br>
@@ -182,7 +184,8 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	////////////////////////
 
 
-  /**   The entity listCompanyWebsite
+  /**
+   *  The entity listCompanyWebsite
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -190,7 +193,8 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
   @JsonInclude(Include.NON_NULL)
   protected JsonArray listCompanyWebsite = new JsonArray();
 
-  /**  <br> The entity listCompanyWebsite
+  /**
+   * <br> The entity listCompanyWebsite
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:listCompanyWebsite">Find the entity listCompanyWebsite in Solr</a>
    * <br>
@@ -237,7 +241,8 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	/////////////////
 
 
-  /**   The entity resultCount
+  /**
+   *  The entity resultCount
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -245,7 +250,8 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
   @JsonInclude(Include.NON_NULL)
   protected Integer resultCount;
 
-  /**  <br> The entity resultCount
+  /**
+   * <br> The entity resultCount
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
    * <br>
@@ -297,14 +303,16 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	////////////
 
 
-  /**   The entity result
+  /**
+   *  The entity result
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected CompanyWebsite result;
 
-  /**  <br> The entity result
+  /**
+   * <br> The entity result
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
    * <br>
@@ -338,14 +346,16 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	////////////
 
 
-  /**   The entity solrId
+  /**
+   *  The entity solrId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String solrId;
 
-  /**  <br> The entity solrId
+  /**
+   * <br> The entity solrId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
    * <br>
@@ -390,14 +400,16 @@ public abstract class CompanyWebsiteGenPageGen<DEV> extends PageLayout {
 	///////////////////////////
 
 
-  /**   The entity pageUriCompanyWebsite
+  /**
+   *  The entity pageUriCompanyWebsite
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageUriCompanyWebsite;
 
-  /**  <br> The entity pageUriCompanyWebsite
+  /**
+   * <br> The entity pageUriCompanyWebsite
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsiteGenPage&fq=entiteVar_enUS_indexed_string:pageUriCompanyWebsite">Find the entity pageUriCompanyWebsite in Solr</a>
    * <br>

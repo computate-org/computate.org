@@ -224,14 +224,16 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 	//////////
 
 
-  /**   The entity name
+  /**
+   *  The entity name
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String name;
 
-  /**  <br> The entity name
+  /**
+   * <br> The entity name
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
@@ -275,19 +277,25 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     return name;
   }
 
+  public static String staticJsonName(String name) {
+    return name;
+  }
+
 	/////////////////
   // description //
 	/////////////////
 
 
-  /**   The entity description
+  /**
+   *  The entity description
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String description;
 
-  /**  <br> The entity description
+  /**
+   * <br> The entity description
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
@@ -331,19 +339,25 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     return description;
   }
 
+  public static String staticJsonDescription(String description) {
+    return description;
+  }
+
 	////////////
   // pageId //
 	////////////
 
 
-  /**   The entity pageId
+  /**
+   *  The entity pageId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageId;
 
-  /**  <br> The entity pageId
+  /**
+   * <br> The entity pageId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
@@ -387,12 +401,17 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     return pageId;
   }
 
+  public static String staticJsonPageId(String pageId) {
+    return pageId;
+  }
+
 	////////////////
   // websiteNum //
 	////////////////
 
 
-  /**   The entity websiteNum
+  /**
+   *  The entity websiteNum
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -400,7 +419,8 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected Integer websiteNum;
 
-  /**  <br> The entity websiteNum
+  /**
+   * <br> The entity websiteNum
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&fq=entiteVar_enUS_indexed_string:websiteNum">Find the entity websiteNum in Solr</a>
    * <br>
@@ -449,6 +469,10 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
 
   public Integer sqlWebsiteNum() {
     return websiteNum;
+  }
+
+  public static String staticJsonWebsiteNum(Integer websiteNum) {
+    return Optional.ofNullable(websiteNum).map(v -> v.toString()).orElse(null);
   }
 
   //////////////

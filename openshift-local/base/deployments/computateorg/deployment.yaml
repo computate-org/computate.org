@@ -124,13 +124,13 @@ spec:
             cpu: 750m
             ephemeral-storage: 1Gi
             memory: 768Mi
-          volumeMounts:
-            - name: "smart-aquaculture-developer"
-              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
-            - name: "ai-telemetry-developer"
-              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer"
-            - name: "computate-developer"
-              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer"
+        volumeMounts:
+          - name: "smart-aquaculture-developer"
+            mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
+          - name: "ai-telemetry-developer"
+            mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer"
+          - name: "computate-developer"
+            mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       terminationGracePeriodSeconds: 30

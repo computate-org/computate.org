@@ -253,14 +253,16 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	//////////
 
 
-  /**   The entity name
+  /**
+   *  The entity name
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String name;
 
-  /**  <br> The entity name
+  /**
+   * <br> The entity name
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
@@ -304,19 +306,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return name;
   }
 
+  public static String staticJsonName(String name) {
+    return name;
+  }
+
 	/////////////////
   // description //
 	/////////////////
 
 
-  /**   The entity description
+  /**
+   *  The entity description
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String description;
 
-  /**  <br> The entity description
+  /**
+   * <br> The entity description
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
@@ -360,19 +368,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return description;
   }
 
+  public static String staticJsonDescription(String description) {
+    return description;
+  }
+
 	////////////
   // pageId //
 	////////////
 
 
-  /**   The entity pageId
+  /**
+   *  The entity pageId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageId;
 
-  /**  <br> The entity pageId
+  /**
+   * <br> The entity pageId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
@@ -416,19 +430,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return pageId;
   }
 
+  public static String staticJsonPageId(String pageId) {
+    return pageId;
+  }
+
 	/////////////
   // joinUri //
 	/////////////
 
 
-  /**   The entity joinUri
+  /**
+   *  The entity joinUri
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String joinUri;
 
-  /**  <br> The entity joinUri
+  /**
+   * <br> The entity joinUri
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUri">Find the entity joinUri in Solr</a>
    * <br>
@@ -472,19 +492,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return joinUri;
   }
 
+  public static String staticJsonJoinUri(String joinUri) {
+    return joinUri;
+  }
+
 	////////////////////////
   // webinarUrlAmericas //
 	////////////////////////
 
 
-  /**   The entity webinarUrlAmericas
+  /**
+   *  The entity webinarUrlAmericas
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String webinarUrlAmericas;
 
-  /**  <br> The entity webinarUrlAmericas
+  /**
+   * <br> The entity webinarUrlAmericas
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlAmericas">Find the entity webinarUrlAmericas in Solr</a>
    * <br>
@@ -528,19 +554,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return webinarUrlAmericas;
   }
 
+  public static String staticJsonWebinarUrlAmericas(String webinarUrlAmericas) {
+    return webinarUrlAmericas;
+  }
+
 	////////////////////
   // webinarUrlApac //
 	////////////////////
 
 
-  /**   The entity webinarUrlApac
+  /**
+   *  The entity webinarUrlApac
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String webinarUrlApac;
 
-  /**  <br> The entity webinarUrlApac
+  /**
+   * <br> The entity webinarUrlApac
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlApac">Find the entity webinarUrlApac in Solr</a>
    * <br>
@@ -584,19 +616,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return webinarUrlApac;
   }
 
+  public static String staticJsonWebinarUrlApac(String webinarUrlApac) {
+    return webinarUrlApac;
+  }
+
 	////////////////////
   // webinarUrlEmea //
 	////////////////////
 
 
-  /**   The entity webinarUrlEmea
+  /**
+   *  The entity webinarUrlEmea
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String webinarUrlEmea;
 
-  /**  <br> The entity webinarUrlEmea
+  /**
+   * <br> The entity webinarUrlEmea
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:webinarUrlEmea">Find the entity webinarUrlEmea in Solr</a>
    * <br>
@@ -640,19 +678,25 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return webinarUrlEmea;
   }
 
+  public static String staticJsonWebinarUrlEmea(String webinarUrlEmea) {
+    return webinarUrlEmea;
+  }
+
 	/////////////
   // icalUrl //
 	/////////////
 
 
-  /**   The entity icalUrl
+  /**
+   *  The entity icalUrl
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String icalUrl;
 
-  /**  <br> The entity icalUrl
+  /**
+   * <br> The entity icalUrl
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:icalUrl">Find the entity icalUrl in Solr</a>
    * <br>
@@ -696,6 +740,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return icalUrl;
   }
 
+  public static String staticJsonIcalUrl(String icalUrl) {
+    return icalUrl;
+  }
+
 	////////////
   // caldav //
 	////////////
@@ -703,14 +751,16 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   public static final String caldavFail1_enUS = "Failed to query the ICal file: %s";
   public static final String caldavFail_enUS = caldavFail1_enUS;
 
-  /**   The entity caldav
+  /**
+   *  The entity caldav
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String caldav;
 
-  /**  <br> The entity caldav
+  /**
+   * <br> The entity caldav
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:caldav">Find the entity caldav in Solr</a>
    * <br>
@@ -757,7 +807,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	/////////////////
 
 
-  /**   The entity nextWebinar
+  /**
+   *  The entity nextWebinar
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -767,7 +818,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   @JsonInclude(Include.NON_NULL)
   protected ZonedDateTime nextWebinar;
 
-  /**  <br> The entity nextWebinar
+  /**
+   * <br> The entity nextWebinar
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinar">Find the entity nextWebinar in Solr</a>
    * <br>
@@ -836,7 +888,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	///////////////////////
 
 
-  /**   The entity nextWebinarsBegin
+  /**
+   *  The entity nextWebinarsBegin
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -846,7 +899,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   @JsonInclude(Include.NON_NULL)
   protected List<ZonedDateTime> nextWebinarsBegin = new ArrayList<ZonedDateTime>();
 
-  /**  <br> The entity nextWebinarsBegin
+  /**
+   * <br> The entity nextWebinarsBegin
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:nextWebinarsBegin">Find the entity nextWebinarsBegin in Solr</a>
    * <br>
@@ -933,14 +987,16 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
 	/////////////
 
 
-  /**   The entity joinUrl
+  /**
+   *  The entity joinUrl
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String joinUrl;
 
-  /**  <br> The entity joinUrl
+  /**
+   * <br> The entity joinUrl
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.webinar.CompanyWebinar&fq=entiteVar_enUS_indexed_string:joinUrl">Find the entity joinUrl in Solr</a>
    * <br>
@@ -981,6 +1037,10 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   }
 
   public String sqlJoinUrl() {
+    return joinUrl;
+  }
+
+  public static String staticJsonJoinUrl(String joinUrl) {
     return joinUrl;
   }
 

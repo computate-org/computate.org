@@ -141,14 +141,16 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	////////////////////////
 
 
-  /**   The entity searchListUseCase_
+  /**
+   *  The entity searchListUseCase_
    *	 is defined as null before being initialized. 
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
   protected SearchList<UseCase> searchListUseCase_;
 
-  /**  <br> The entity searchListUseCase_
+  /**
+   * <br> The entity searchListUseCase_
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:searchListUseCase_">Find the entity searchListUseCase_ in Solr</a>
    * <br>
@@ -182,7 +184,8 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	/////////////////
 
 
-  /**   The entity listUseCase
+  /**
+   *  The entity listUseCase
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -190,7 +193,8 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
   @JsonInclude(Include.NON_NULL)
   protected JsonArray listUseCase = new JsonArray();
 
-  /**  <br> The entity listUseCase
+  /**
+   * <br> The entity listUseCase
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:listUseCase">Find the entity listUseCase in Solr</a>
    * <br>
@@ -237,7 +241,8 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	/////////////////
 
 
-  /**   The entity resultCount
+  /**
+   *  The entity resultCount
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -245,7 +250,8 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
   @JsonInclude(Include.NON_NULL)
   protected Integer resultCount;
 
-  /**  <br> The entity resultCount
+  /**
+   * <br> The entity resultCount
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:resultCount">Find the entity resultCount in Solr</a>
    * <br>
@@ -297,14 +303,16 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	////////////
 
 
-  /**   The entity result
+  /**
+   *  The entity result
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected UseCase result;
 
-  /**  <br> The entity result
+  /**
+   * <br> The entity result
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:result">Find the entity result in Solr</a>
    * <br>
@@ -338,14 +346,16 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	////////////
 
 
-  /**   The entity solrId
+  /**
+   *  The entity solrId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String solrId;
 
-  /**  <br> The entity solrId
+  /**
+   * <br> The entity solrId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:solrId">Find the entity solrId in Solr</a>
    * <br>
@@ -390,14 +400,16 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
 	////////////////////
 
 
-  /**   The entity pageUriUseCase
+  /**
+   *  The entity pageUriUseCase
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageUriUseCase;
 
-  /**  <br> The entity pageUriUseCase
+  /**
+   * <br> The entity pageUriUseCase
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.usecase.UseCaseGenPage&fq=entiteVar_enUS_indexed_string:pageUriUseCase">Find the entity pageUriUseCase in Solr</a>
    * <br>

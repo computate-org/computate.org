@@ -76,8 +76,8 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
    * HtmCell: 1
    * Facet: true
    * Required: true
-	 * HtmColumn: 1
-	 * VarName: true
+   * HtmColumn: 1
+   * VarName: true
    */
   protected void _name(Wrap<String> w) {
   }
@@ -92,7 +92,7 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
    * HtmCell: 2
    * Facet: true
    * Multiline: true
-	 * HtmColumn: 2
+   * HtmColumn: 2
    */
   protected void _description(Wrap<String> w) {
   }
@@ -111,75 +111,75 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
   protected void _price(Wrap<BigDecimal> w) {
   }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * HtmRowTitleOpen: Useful URLs
-	 * HtmRow: 99
-	 * HtmCell: 1
-	 * Facet: true
-	 * DisplayName: Page ID
-	 * Description: The ID for this page. 
-	 * VarId: true
-	 */
-	protected void _pageId(Wrap<String> w) {
-		w.o(toId(name));
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRowTitleOpen: Useful URLs
+   * HtmRow: 99
+   * HtmCell: 1
+   * Facet: true
+   * DisplayName: Page ID
+   * Description: The ID for this page. 
+   * VarId: true
+   */
+  protected void _pageId(Wrap<String> w) {
+    w.o(toId(name));
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: email template
-	 * Description: The HTML email template for this course. 
-	 */
-	protected void _emailTemplate(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: email template
+   * Description: The HTML email template for this course. 
+   */
+  protected void _emailTemplate(Wrap<String> w) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DisplayName: course page
-	 * Description: Visit this course's landing page. 
-	 */
-	@Override
-	protected void _displayPage(Wrap<String> w) {
-		super._displayPage(w);
-	}
+  /**
+   * {@inheritDoc}
+   * DisplayName: course page
+   * Description: Visit this course's landing page. 
+   */
+  @Override
+  protected void _displayPage(Wrap<String> w) {
+    super._displayPage(w);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: store URL
-	 * Description: The store URL for this page. 
-	 */
-	protected void _storeUrl(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: store URL
+   * Description: The store URL for this page. 
+   */
+  protected void _storeUrl(Wrap<String> w) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: download URI
-	 * Description: The download relative URI for this page. 
-	 */
-	protected void _downloadUri(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: download URI
+   * Description: The download relative URI for this page. 
+   */
+  protected void _downloadUri(Wrap<String> w) {
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * Facet: true
-	 * DisplayName: Course Number
-	 * Description: The course number for this page. 
-	 */
-	protected void _courseNum(Wrap<Integer> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * Facet: true
+   * DisplayName: Course Number
+   * Description: The course number for this page. 
+   */
+  protected void _courseNum(Wrap<Integer> w) {
+  }
 
   /**
    * {@inheritDoc}
@@ -237,54 +237,54 @@ public class CompanyCourse extends CompanyCourseGen<BaseResult> {
   protected void _pageImageAlt(Wrap<String> c) {
   }
 
-	/**
-	 * {@inheritDoc}
-	 * DocValues: true
-	 * Persist: true
-	 * DisplayName: related article IDs
-	 * Description: The related article IDs comma-separated. 
-	 */
-	protected void _relatedArticleIds(Wrap<String> w) {
-	}
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: related article IDs
+   * Description: The related article IDs comma-separated. 
+   */
+  protected void _relatedArticleIds(Wrap<String> w) {
+  }
 
-	/**
-	 * Ignore: true
-	 */
-	protected void _relatedArticleSearch(Promise<SearchList<SitePage>> promise) {
-		SearchList<SitePage> l = new SearchList<>();
-		if(relatedArticleIds != null) {
-			List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-			l.setC(SitePage.class);
-			l.q("*:*");
-			l.fq(String.format("pageId_docvalues_string:" + list.stream()
-					.map(id -> SearchTool.escapeQueryChars(id))
-					.collect(Collectors.joining(" OR ", "(", ")"))
-					));
-			l.setStore(true);
-		}
-		promise.complete(l);
-	}
+  /**
+   * Ignore: true
+   */
+  protected void _relatedArticleSearch(Promise<SearchList<SitePage>> promise) {
+    SearchList<SitePage> l = new SearchList<>();
+    if(relatedArticleIds != null) {
+      List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+      l.setC(SitePage.class);
+      l.q("*:*");
+      l.fq(String.format("pageId_docvalues_string:" + list.stream()
+          .map(id -> SearchTool.escapeQueryChars(id))
+          .collect(Collectors.joining(" OR ", "(", ")"))
+          ));
+      l.setStore(true);
+    }
+    promise.complete(l);
+  }
 
-	/**
-	 * {@inheritDoc}
-	 * Stored: true
-	 * DisplayName: related articles
-	 * Description: A JSON array of related articles. 
-	 */
+  /**
+   * {@inheritDoc}
+   * Stored: true
+   * DisplayName: related articles
+   * Description: A JSON array of related articles. 
+   */
   protected void _relatedArticles(Wrap<JsonArray> w) {
     JsonArray array = new JsonArray();
     relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
         JsonObject obj = JsonObject.mapFrom(relatedArticle);
-				obj.remove(SitePage.VAR_relatedArticles);
-				obj.remove(SitePage.VAR_relatedArticleIds);
-				JsonObject obj2 = new JsonObject();
-				obj2.put(SitePage.VAR_pageId, obj.getString(SitePage.VAR_pageId));
-				obj2.put(SitePage.VAR_name, obj.getString(SitePage.VAR_name));
-				obj2.put(SitePage.VAR_pageImageUri, obj.getString(SitePage.VAR_pageImageUri));
-				obj2.put(SitePage.VAR_pageImageWidth, obj.getString(SitePage.VAR_pageImageWidth));
-				obj2.put(SitePage.VAR_pageImageHeight, obj.getString(SitePage.VAR_pageImageHeight));
-				obj2.put(SitePage.VAR_pageImageAlt, obj.getString(SitePage.VAR_pageImageAlt));
-				obj2.put(SitePage.VAR_displayPage, obj.getString(SitePage.VAR_displayPage));
+        obj.remove(SitePage.VAR_relatedArticles);
+        obj.remove(SitePage.VAR_relatedArticleIds);
+        JsonObject obj2 = new JsonObject();
+        obj2.put(SitePage.VAR_pageId, obj.getString(SitePage.VAR_pageId));
+        obj2.put(SitePage.VAR_name, obj.getString(SitePage.VAR_name));
+        obj2.put(SitePage.VAR_pageImageUri, obj.getString(SitePage.VAR_pageImageUri));
+        obj2.put(SitePage.VAR_pageImageWidth, obj.getString(SitePage.VAR_pageImageWidth));
+        obj2.put(SitePage.VAR_pageImageHeight, obj.getString(SitePage.VAR_pageImageHeight));
+        obj2.put(SitePage.VAR_pageImageAlt, obj.getString(SitePage.VAR_pageImageAlt));
+        obj2.put(SitePage.VAR_displayPage, obj.getString(SitePage.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);

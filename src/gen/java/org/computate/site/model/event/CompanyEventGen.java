@@ -49,6 +49,7 @@ import java.math.BigDecimal;
 import io.vertx.pgclient.data.Point;
 import org.computate.vertx.serialize.pgclient.PgClientPointSerializer;
 import org.computate.vertx.serialize.pgclient.PgClientPointDeserializer;
+import org.computate.vertx.tool.VertxTool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
@@ -264,14 +265,16 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	//////////
 
 
-  /**   The entity name
+  /**
+   *  The entity name
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String name;
 
-  /**  <br> The entity name
+  /**
+   * <br> The entity name
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
@@ -315,19 +318,25 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return name;
   }
 
+  public static String staticJsonName(String name) {
+    return name;
+  }
+
 	/////////////////
   // description //
 	/////////////////
 
 
-  /**   The entity description
+  /**
+   *  The entity description
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String description;
 
-  /**  <br> The entity description
+  /**
+   * <br> The entity description
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
@@ -371,12 +380,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return description;
   }
 
+  public static String staticJsonDescription(String description) {
+    return description;
+  }
+
 	///////////////////
   // startDateTime //
 	///////////////////
 
 
-  /**   The entity startDateTime
+  /**
+   *  The entity startDateTime
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -386,7 +400,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected ZonedDateTime startDateTime;
 
-  /**  <br> The entity startDateTime
+  /**
+   * <br> The entity startDateTime
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:startDateTime">Find the entity startDateTime in Solr</a>
    * <br>
@@ -454,12 +469,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return startDateTime == null ? null : startDateTime.toOffsetDateTime();
   }
 
+  public static String staticJsonStartDateTime(ZonedDateTime startDateTime) {
+    return Optional.ofNullable(startDateTime).map(v -> v.format(ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER)).orElse(null);
+  }
+
 	/////////////////
   // endDateTime //
 	/////////////////
 
 
-  /**   The entity endDateTime
+  /**
+   *  The entity endDateTime
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -469,7 +489,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected ZonedDateTime endDateTime;
 
-  /**  <br> The entity endDateTime
+  /**
+   * <br> The entity endDateTime
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:endDateTime">Find the entity endDateTime in Solr</a>
    * <br>
@@ -537,12 +558,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return endDateTime == null ? null : endDateTime.toOffsetDateTime();
   }
 
+  public static String staticJsonEndDateTime(ZonedDateTime endDateTime) {
+    return Optional.ofNullable(endDateTime).map(v -> v.format(ComputateZonedDateTimeSerializer.ZONED_DATE_TIME_FORMATTER)).orElse(null);
+  }
+
 	///////////
   // price //
 	///////////
 
 
-  /**   The entity price
+  /**
+   *  The entity price
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -550,7 +576,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected BigDecimal price;
 
-  /**  <br> The entity price
+  /**
+   * <br> The entity price
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:price">Find the entity price in Solr</a>
    * <br>
@@ -614,19 +641,25 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return price;
   }
 
+  public static String staticJsonPrice(BigDecimal price) {
+    return Optional.ofNullable(price).map(v -> v.toString()).orElse(null);
+  }
+
 	////////////
   // pageId //
 	////////////
 
 
-  /**   The entity pageId
+  /**
+   *  The entity pageId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageId;
 
-  /**  <br> The entity pageId
+  /**
+   * <br> The entity pageId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
@@ -670,19 +703,25 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return pageId;
   }
 
+  public static String staticJsonPageId(String pageId) {
+    return pageId;
+  }
+
 	///////////////////
   // emailTemplate //
 	///////////////////
 
 
-  /**   The entity emailTemplate
+  /**
+   *  The entity emailTemplate
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String emailTemplate;
 
-  /**  <br> The entity emailTemplate
+  /**
+   * <br> The entity emailTemplate
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:emailTemplate">Find the entity emailTemplate in Solr</a>
    * <br>
@@ -726,19 +765,25 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return emailTemplate;
   }
 
+  public static String staticJsonEmailTemplate(String emailTemplate) {
+    return emailTemplate;
+  }
+
 	//////////////
   // storeUrl //
 	//////////////
 
 
-  /**   The entity storeUrl
+  /**
+   *  The entity storeUrl
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String storeUrl;
 
-  /**  <br> The entity storeUrl
+  /**
+   * <br> The entity storeUrl
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:storeUrl">Find the entity storeUrl in Solr</a>
    * <br>
@@ -782,12 +827,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return storeUrl;
   }
 
+  public static String staticJsonStoreUrl(String storeUrl) {
+    return storeUrl;
+  }
+
 	//////////////
   // location //
 	//////////////
 
 
-  /**   The entity location
+  /**
+   *  The entity location
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -796,7 +846,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected Point location;
 
-  /**  <br> The entity location
+  /**
+   * <br> The entity location
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:location">Find the entity location in Solr</a>
    * <br>
@@ -886,12 +937,17 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return location;
   }
 
+  public static JsonObject staticJsonLocation(Point location) {
+    return Optional.ofNullable(location).map(v -> VertxTool.toGeoJson(v)).orElse(null);
+  }
+
 	////////////////////
   // locationColors //
 	////////////////////
 
 
-  /**   The entity locationColors
+  /**
+   *  The entity locationColors
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -899,7 +955,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected List<String> locationColors = new ArrayList<String>();
 
-  /**  <br> The entity locationColors
+  /**
+   * <br> The entity locationColors
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:locationColors">Find the entity locationColors in Solr</a>
    * <br>
@@ -966,7 +1023,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	////////////////////
 
 
-  /**   The entity locationTitles
+  /**
+   *  The entity locationTitles
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -974,7 +1032,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected List<String> locationTitles = new ArrayList<String>();
 
-  /**  <br> The entity locationTitles
+  /**
+   * <br> The entity locationTitles
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:locationTitles">Find the entity locationTitles in Solr</a>
    * <br>
@@ -1041,7 +1100,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
 	///////////////////
 
 
-  /**   The entity locationLinks
+  /**
+   *  The entity locationLinks
    *	 It is constructed before being initialized with the constructor by default. 
    */
   @JsonProperty
@@ -1049,7 +1109,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected List<String> locationLinks = new ArrayList<String>();
 
-  /**  <br> The entity locationLinks
+  /**
+   * <br> The entity locationLinks
    *  It is constructed before being initialized with the constructor by default. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.event.CompanyEvent&fq=entiteVar_enUS_indexed_string:locationLinks">Find the entity locationLinks in Solr</a>
    * <br>

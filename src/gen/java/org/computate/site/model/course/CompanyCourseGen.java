@@ -246,14 +246,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	//////////
 
 
-  /**   The entity name
+  /**
+   *  The entity name
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String name;
 
-  /**  <br> The entity name
+  /**
+   * <br> The entity name
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:name">Find the entity name in Solr</a>
    * <br>
@@ -297,19 +299,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return name;
   }
 
+  public static String staticJsonName(String name) {
+    return name;
+  }
+
 	/////////////////
   // description //
 	/////////////////
 
 
-  /**   The entity description
+  /**
+   *  The entity description
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String description;
 
-  /**  <br> The entity description
+  /**
+   * <br> The entity description
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:description">Find the entity description in Solr</a>
    * <br>
@@ -353,12 +361,17 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return description;
   }
 
+  public static String staticJsonDescription(String description) {
+    return description;
+  }
+
 	///////////
   // price //
 	///////////
 
 
-  /**   The entity price
+  /**
+   *  The entity price
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -366,7 +379,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected BigDecimal price;
 
-  /**  <br> The entity price
+  /**
+   * <br> The entity price
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:price">Find the entity price in Solr</a>
    * <br>
@@ -430,19 +444,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return price;
   }
 
+  public static String staticJsonPrice(BigDecimal price) {
+    return Optional.ofNullable(price).map(v -> v.toString()).orElse(null);
+  }
+
 	////////////
   // pageId //
 	////////////
 
 
-  /**   The entity pageId
+  /**
+   *  The entity pageId
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageId;
 
-  /**  <br> The entity pageId
+  /**
+   * <br> The entity pageId
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageId">Find the entity pageId in Solr</a>
    * <br>
@@ -486,19 +506,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return pageId;
   }
 
+  public static String staticJsonPageId(String pageId) {
+    return pageId;
+  }
+
 	///////////////////
   // emailTemplate //
 	///////////////////
 
 
-  /**   The entity emailTemplate
+  /**
+   *  The entity emailTemplate
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String emailTemplate;
 
-  /**  <br> The entity emailTemplate
+  /**
+   * <br> The entity emailTemplate
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:emailTemplate">Find the entity emailTemplate in Solr</a>
    * <br>
@@ -542,19 +568,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return emailTemplate;
   }
 
+  public static String staticJsonEmailTemplate(String emailTemplate) {
+    return emailTemplate;
+  }
+
 	//////////////
   // storeUrl //
 	//////////////
 
 
-  /**   The entity storeUrl
+  /**
+   *  The entity storeUrl
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String storeUrl;
 
-  /**  <br> The entity storeUrl
+  /**
+   * <br> The entity storeUrl
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:storeUrl">Find the entity storeUrl in Solr</a>
    * <br>
@@ -598,19 +630,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return storeUrl;
   }
 
+  public static String staticJsonStoreUrl(String storeUrl) {
+    return storeUrl;
+  }
+
 	/////////////////
   // downloadUri //
 	/////////////////
 
 
-  /**   The entity downloadUri
+  /**
+   *  The entity downloadUri
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String downloadUri;
 
-  /**  <br> The entity downloadUri
+  /**
+   * <br> The entity downloadUri
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:downloadUri">Find the entity downloadUri in Solr</a>
    * <br>
@@ -654,12 +692,17 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return downloadUri;
   }
 
+  public static String staticJsonDownloadUri(String downloadUri) {
+    return downloadUri;
+  }
+
 	///////////////
   // courseNum //
 	///////////////
 
 
-  /**   The entity courseNum
+  /**
+   *  The entity courseNum
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -667,7 +710,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected Integer courseNum;
 
-  /**  <br> The entity courseNum
+  /**
+   * <br> The entity courseNum
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:courseNum">Find the entity courseNum in Solr</a>
    * <br>
@@ -718,19 +762,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return courseNum;
   }
 
+  public static String staticJsonCourseNum(Integer courseNum) {
+    return Optional.ofNullable(courseNum).map(v -> v.toString()).orElse(null);
+  }
+
 	//////////////////
   // pageImageUri //
 	//////////////////
 
 
-  /**   The entity pageImageUri
+  /**
+   *  The entity pageImageUri
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageImageUri;
 
-  /**  <br> The entity pageImageUri
+  /**
+   * <br> The entity pageImageUri
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageUri">Find the entity pageImageUri in Solr</a>
    * <br>
@@ -774,12 +824,17 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return pageImageUri;
   }
 
+  public static String staticJsonPageImageUri(String pageImageUri) {
+    return pageImageUri;
+  }
+
 	////////////////////
   // pageImageWidth //
 	////////////////////
 
 
-  /**   The entity pageImageWidth
+  /**
+   *  The entity pageImageWidth
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -787,7 +842,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected Integer pageImageWidth;
 
-  /**  <br> The entity pageImageWidth
+  /**
+   * <br> The entity pageImageWidth
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageWidth">Find the entity pageImageWidth in Solr</a>
    * <br>
@@ -839,7 +895,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	/////////////////////
 
 
-  /**   The entity pageImageHeight
+  /**
+   *  The entity pageImageHeight
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -847,7 +904,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected Integer pageImageHeight;
 
-  /**  <br> The entity pageImageHeight
+  /**
+   * <br> The entity pageImageHeight
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageHeight">Find the entity pageImageHeight in Solr</a>
    * <br>
@@ -899,14 +957,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	///////////////////
 
 
-  /**   The entity pageImageType
+  /**
+   *  The entity pageImageType
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageImageType;
 
-  /**  <br> The entity pageImageType
+  /**
+   * <br> The entity pageImageType
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageType">Find the entity pageImageType in Solr</a>
    * <br>
@@ -951,14 +1011,16 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	//////////////////
 
 
-  /**   The entity pageImageAlt
+  /**
+   *  The entity pageImageAlt
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String pageImageAlt;
 
-  /**  <br> The entity pageImageAlt
+  /**
+   * <br> The entity pageImageAlt
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:pageImageAlt">Find the entity pageImageAlt in Solr</a>
    * <br>
@@ -1002,19 +1064,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return pageImageAlt;
   }
 
+  public static String staticJsonPageImageAlt(String pageImageAlt) {
+    return pageImageAlt;
+  }
+
 	///////////////////////
   // relatedArticleIds //
 	///////////////////////
 
 
-  /**   The entity relatedArticleIds
+  /**
+   *  The entity relatedArticleIds
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
   protected String relatedArticleIds;
 
-  /**  <br> The entity relatedArticleIds
+  /**
+   * <br> The entity relatedArticleIds
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticleIds">Find the entity relatedArticleIds in Solr</a>
    * <br>
@@ -1058,19 +1126,25 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return relatedArticleIds;
   }
 
+  public static String staticJsonRelatedArticleIds(String relatedArticleIds) {
+    return relatedArticleIds;
+  }
+
 	//////////////////////////
   // relatedArticleSearch //
 	//////////////////////////
 
 
-  /**   The entity relatedArticleSearch
+  /**
+   *  The entity relatedArticleSearch
    *	 is defined as null before being initialized. 
    */
   @JsonIgnore
   @JsonInclude(Include.NON_NULL)
   protected SearchList<SitePage> relatedArticleSearch;
 
-  /**  <br> The entity relatedArticleSearch
+  /**
+   * <br> The entity relatedArticleSearch
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticleSearch">Find the entity relatedArticleSearch in Solr</a>
    * <br>
@@ -1114,7 +1188,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 	/////////////////////
 
 
-  /**   The entity relatedArticles
+  /**
+   *  The entity relatedArticles
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
@@ -1122,7 +1197,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   @JsonInclude(Include.NON_NULL)
   protected JsonArray relatedArticles;
 
-  /**  <br> The entity relatedArticles
+  /**
+   * <br> The entity relatedArticles
    *  is defined as null before being initialized. 
    * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.course.CompanyCourse&fq=entiteVar_enUS_indexed_string:relatedArticles">Find the entity relatedArticles in Solr</a>
    * <br>
