@@ -336,13 +336,15 @@ public class CompanyWebinar extends CompanyWebinarGen<BaseModel> {
                             }
                             mExceptionFound = mException.find();
                           }
-                          if(nextStart2 != null) {
-                            if(nextStart == null)
-                              nextStart = nextStart2;
-                            nextWebinarsBegin.add(nextStart2);
-                            nextWebinarsDescription.add(description);
-                          } else {
-                            nextStart = null;
+                          if(nextStart == null) {
+                            if(nextStart2 != null) {
+                              if(nextStart == null)
+                                nextStart = nextStart2;
+                              nextWebinarsBegin.add(nextStart2);
+                              nextWebinarsDescription.add(description);
+                            } else {
+                              nextStart = null;
+                            }
                           }
                         }
                       }
