@@ -170,7 +170,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * VarUrlDownload: true
    */
   protected void _downloadUrl(Wrap<String> w) {
-    String f = classStringFormatUrlDownloadForClass();
+    String f = enUSStringFormatUrlDownloadForClass();
     if(f != null)
       w.o(String.format(f, siteRequest_.getConfig().getString(ComputateConfigKeys.SITE_BASE_URL), idForClass()));
   }
@@ -330,7 +330,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return "%s/en-us/search/product?fq=pageId:%s";
   }
 }

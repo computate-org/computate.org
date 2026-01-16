@@ -324,22 +324,22 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
   }
 
   @Override
-  public String classStringFormatUrlEditPageForClass() {
+  public String enUSStringFormatUrlEditPageForClass() {
     return null;
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return null;
   }
 
   @Override
-  public String classStringFormatUrlUserPageForClass() {
+  public String enUSStringFormatUrlUserPageForClass() {
     return null;
   }
 
   @Override
-  public String classStringFormatUrlDownloadForClass() {
+  public String enUSStringFormatUrlDownloadForClass() {
     return null;
   }
 

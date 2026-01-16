@@ -48,6 +48,9 @@ import org.computate.site.model.course.CompanyCourseEnUSGenApiService;
 import org.computate.site.page.SitePage;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePageEnUSGenApiService;
+import org.computate.site.model.spine.SpineProgramming;
+import org.computate.site.model.spine.SpineProgrammingEnUSApiServiceImpl;
+import org.computate.site.model.spine.SpineProgrammingEnUSGenApiService;
 import org.computate.site.model.product.CompanyProduct;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
@@ -90,17 +93,26 @@ import com.google.common.io.PatternFilenameFilter;
 import com.hubspot.jinjava.Jinjava;
 import com.hubspot.jinjava.loader.FileLocator;
 
+import io.vertx.config.ConfigRetriever;
+import io.vertx.config.ConfigRetrieverOptions;
+import io.vertx.config.ConfigStoreOptions;
 import io.vertx.config.yaml.YamlProcessor;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.CompositeFuture;
 import io.vertx.core.Future;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Promise;
+import io.vertx.core.Vertx;
+import io.vertx.core.VertxBuilder;
+import io.vertx.core.VertxOptions;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.DeliveryOptions;
+import io.vertx.core.eventbus.EventBusOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.spi.cluster.ClusterManager;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.trace.SdkTracerProvider;
 import io.opentelemetry.api.trace.Tracer;
@@ -120,6 +132,7 @@ import io.vertx.amqp.AmqpClientOptions;
 import io.vertx.amqp.AmqpSender;
 import io.vertx.rabbitmq.RabbitMQClient;
 import io.vertx.rabbitmq.RabbitMQOptions;
+import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import io.vertx.amqp.AmqpMessage;
@@ -185,8 +198,6 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
 
   WorkerExecutor workerExecutor;
 
-  Integer commitWithin;
-
   Jinjava jinjava;
 
   SdkTracerProvider sdkTracerProvider;
@@ -199,29 +210,178 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     this.sdkMeterProvider = sdkMeterProvider;
   }
 
-  /**	
-   *	This is called by Vert.x when the verticle instance is deployed. 
-   *	Initialize a new site context object for storing information about the entire site in English. 
-   *	Setup the startPromise to handle the configuration steps and starting the server. 
+  /**
+   * The main method for the Vert.x application that runs the Vert.x Runner class
+   **/
+  public static void  main(String[] args) {
+    Vertx vertx = Vertx.vertx();
+    String configVarsPath = System.getenv(ConfigKeys.VARS_PATH);
+    configureConfig(vertx).onSuccess(config -> {
+      runDataImport(config).onSuccess(k -> {
+        vertx.close();
+        System.exit(0);
+      }).onFailure(ex -> {
+        LOG.error("Error running data import", ex);
+        vertx.close();
+        System.exit(0);
+      });
+    }).onFailure(ex -> {
+      LOG.error(String.format("Error loading config: %s", configVarsPath), ex);
+      vertx.close();
+      System.exit(0);
+    });
+  }
+
+  /**
+   * Description: Static method to sync Solr search engine records with database. 
+   * Val.Complete.enUS: database to solr sync completed. 
+   **/
+  public static Future<Void> runDataImport(JsonObject config) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      Boolean enableZookeeperCluster = Boolean.valueOf(config.getString(ConfigKeys.ENABLE_ZOOKEEPER_CLUSTER));
+      VertxOptions vertxOptions = new VertxOptions();
+      EventBusOptions eventBusOptions = new EventBusOptions();
+  
+      ClusterManager clusterManager = null;
+      if(enableZookeeperCluster) {
+        JsonObject zkConfig = new JsonObject();
+        String zookeeperHostName = config.getString(ConfigKeys.ZOOKEEPER_HOST_NAME);
+        Integer zookeeperPort = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_PORT));
+        String zookeeperHosts = Optional.ofNullable(config.getString(ConfigKeys.ZOOKEEPER_HOSTS)).orElse(zookeeperHostName + ":" + zookeeperPort);
+        String clusterHostName = config.getString(ConfigKeys.CLUSTER_HOST_NAME);
+        Integer clusterPort = Integer.parseInt(config.getString(ConfigKeys.CLUSTER_PORT));
+        String clusterPublicHostName = config.getString(ConfigKeys.CLUSTER_PUBLIC_HOST_NAME);
+        Integer clusterPublicPort = Integer.parseInt(config.getString(ConfigKeys.CLUSTER_PUBLIC_PORT));
+        String zookeeperRetryPolicy = config.getString(ConfigKeys.ZOOKEEPER_RETRY_POLICY);
+        Integer zookeeperBaseSleepTimeMillis = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_BASE_SLEEP_TIME_MILLIS));
+        Integer zookeeperMaxSleepMillis = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_MAX_SLEEP_MILLIS));
+        Integer zookeeperMaxRetries = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_MAX_RETRIES));
+        Integer zookeeperConnectionTimeoutMillis = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_CONNECTION_TIMEOUT_MILLIS));
+        Integer zookeeperSessionTimeoutMillis = Integer.parseInt(config.getString(ConfigKeys.ZOOKEEPER_SESSION_TIMEOUT_MILLIS));
+        zkConfig.put("zookeeperHosts", zookeeperHosts);
+        zkConfig.put("sessionTimeout", zookeeperSessionTimeoutMillis);
+        zkConfig.put("connectTimeout", zookeeperConnectionTimeoutMillis);
+        zkConfig.put("rootPath", config.getString(ConfigKeys.ZOOKEEPER_ROOT_PATH));
+        zkConfig.put("retry", new JsonObject()
+            .put("policy", zookeeperRetryPolicy)
+            .put("initialSleepTime", zookeeperBaseSleepTimeMillis)
+            .put("intervalTimes", zookeeperMaxSleepMillis)
+            .put("maxTimes", zookeeperMaxRetries)
+        );
+        clusterManager = new ZookeeperClusterManager(zkConfig);
+  
+        if(clusterHostName != null) {
+          LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_HOST_NAME, clusterHostName));
+          eventBusOptions.setHost(clusterHostName);
+        }
+        if(clusterPort != null) {
+          LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PORT, clusterPort));
+          eventBusOptions.setPort(clusterPort);
+        }
+        if(clusterPublicHostName != null) {
+          LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PUBLIC_HOST_NAME, clusterPublicHostName));
+          eventBusOptions.setClusterPublicHost(clusterPublicHostName);
+        }
+        if(clusterPublicPort != null) {
+          LOG.info(String.format("%s — %s", ConfigKeys.CLUSTER_PUBLIC_PORT, clusterPublicPort));
+          eventBusOptions.setClusterPublicPort(clusterPublicPort);
+        }
+      }
+      Long vertxWarningExceptionSeconds = config.getLong(ConfigKeys.VERTX_WARNING_EXCEPTION_SECONDS);
+      Long vertxMaxEventLoopExecuteTime = config.getLong(ConfigKeys.VERTX_MAX_EVENT_LOOP_EXECUTE_TIME);
+      Long vertxMaxWorkerExecuteTime = config.getLong(ConfigKeys.VERTX_MAX_WORKER_EXECUTE_TIME);
+      vertxOptions.setEventBusOptions(eventBusOptions);
+      vertxOptions.setWarningExceptionTime(vertxWarningExceptionSeconds);
+      vertxOptions.setWarningExceptionTimeUnit(TimeUnit.SECONDS);
+      vertxOptions.setMaxEventLoopExecuteTime(vertxMaxEventLoopExecuteTime);
+      vertxOptions.setMaxEventLoopExecuteTimeUnit(TimeUnit.SECONDS);
+      vertxOptions.setMaxWorkerExecuteTime(vertxMaxWorkerExecuteTime);
+      vertxOptions.setMaxWorkerExecuteTimeUnit(TimeUnit.SECONDS);
+      vertxOptions.setWorkerPoolSize(Integer.parseInt(config.getString(ConfigKeys.WORKER_POOL_SIZE)));
+      VertxBuilder vertxBuilder = Vertx.builder();
+      vertxBuilder.with(vertxOptions);
+      vertxBuilder.withClusterManager(clusterManager);
+
+      DeploymentOptions workerVerticleDeploymentOptions = new DeploymentOptions();
+      workerVerticleDeploymentOptions.setConfig(config);
+      workerVerticleDeploymentOptions.setInstances(1);
+      workerVerticleDeploymentOptions.setMaxWorkerExecuteTime(vertxMaxWorkerExecuteTime);
+      workerVerticleDeploymentOptions.setMaxWorkerExecuteTimeUnit(TimeUnit.SECONDS);
+
+      vertxBuilder.buildClustered().onSuccess(vertx -> {
+        WorkerVerticle workerVerticle = new WorkerVerticle();
+        vertx.deployVerticle(workerVerticle, workerVerticleDeploymentOptions).onSuccess(a -> {
+          promise.complete();
+        }).onFailure(ex -> {
+          LOG.error("Starting the WorkerVerticle failed. ", ex);
+          promise.fail(ex);
+        });
+      }).onFailure(ex -> {
+        LOG.error("Starting the clustered vertx failed. ", ex);
+        promise.fail(ex);
+      });
+    } catch (Exception ex) {
+      LOG.error("Could not run the data import.", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
+  /**
+   **/
+  public static Future<JsonObject> configureConfig(Vertx vertx) {
+    Promise<JsonObject> promise = Promise.promise();
+
+    try {
+      ConfigRetrieverOptions retrieverOptions = new ConfigRetrieverOptions();
+
+      String configVarsPath = System.getenv(ComputateConfigKeys.VARS_PATH);
+      if(StringUtils.isNotBlank(configVarsPath)) {
+        Jinjava jinjava = ComputateConfigKeys.getJinjava();
+        JsonObject config = ComputateConfigKeys.getConfig(jinjava);
+        ConfigStoreOptions configOptions = new ConfigStoreOptions().setType("json").setConfig(config);
+        retrieverOptions.addStore(configOptions);
+      }
+
+      ConfigStoreOptions storeEnv = new ConfigStoreOptions().setType("env");
+      retrieverOptions.addStore(storeEnv);
+
+      ConfigRetriever configRetriever = ConfigRetriever.create(vertx, retrieverOptions);
+      configRetriever.getConfig().onSuccess(config -> {
+        LOG.info("The config was configured successfully. ");
+        promise.complete(config);
+      }).onFailure(ex -> {
+        LOG.error("Unable to configure site context. ", ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error("Unable to configure site context. ", ex);
+      promise.fail(ex);
+    }
+
+    return promise.future();
+  }
+
+  /**
+   * This is called by Vert.x when the verticle instance is deployed. 
+   * Initialize a new site context object for storing information about the entire site in English. 
+   * Setup the startPromise to handle the configuration steps and starting the server. 
    **/
   @Override()
   public void start(Promise<Void> startPromise) throws Exception, Exception {
-    commitWithin = Integer.parseInt(config().getString(ConfigKeys.SOLR_WORKER_COMMIT_WITHIN_MILLIS));
-
-    try {
-      configureI18n().onSuccess(a -> 
-        configureData().onSuccess(b -> 
-          configureJinjava().onSuccess(c -> 
-            configureWebClient().onSuccess(d -> 
-              configureSharedWorkerExecutor().onSuccess(e -> 
-                configureKafka().onSuccess(f -> 
-                  configureMqtt().onSuccess(g -> 
-                    configureAmqp().onSuccess(h -> 
-                      configureRabbitmq().onSuccess(i -> 
-                        MainVerticle.authorizeData(vertx, config(), webClient).onComplete(j -> 
-                          importData().onSuccess(k -> 
-                            startPromise.complete()
-                          ).onFailure(ex -> startPromise.fail(ex))
+    configureI18n().onSuccess(a -> 
+      configureData().onSuccess(b -> 
+        configureJinjava().onSuccess(c -> 
+          configureWebClient().onSuccess(d -> 
+            configureSharedWorkerExecutor().onSuccess(e -> 
+              configureKafka().onSuccess(f -> 
+                configureMqtt().onSuccess(g -> 
+                  configureAmqp().onSuccess(h -> 
+                    configureRabbitmq().onSuccess(i -> 
+                      MainVerticle.authorizeData(vertx, config(), webClient).onComplete(j -> 
+                        importData().onSuccess(k -> 
+                          startPromise.complete()
                         ).onFailure(ex -> startPromise.fail(ex))
                       ).onFailure(ex -> startPromise.fail(ex))
                     ).onFailure(ex -> startPromise.fail(ex))
@@ -231,10 +391,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
             ).onFailure(ex -> startPromise.fail(ex))
           ).onFailure(ex -> startPromise.fail(ex))
         ).onFailure(ex -> startPromise.fail(ex))
-      ).onFailure(ex -> startPromise.fail(ex));
-    } catch (Exception ex) {
-      LOG.error("Couldn't start verticle. ", ex);
-    }
+      ).onFailure(ex -> startPromise.fail(ex))
+    ).onFailure(ex -> startPromise.fail(ex));
   }
 
   /**
@@ -300,7 +458,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    **/
   private Future<Void> configureWebClient() {
     Promise<Void> promise = Promise.promise();
@@ -317,7 +475,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    * 
    * Val.ConnectionError.enUS: Could not open the database client connection. 
    * Val.ConnectionSuccess.enUS: The database client connection was successful. 
@@ -325,10 +483,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
    * Val.InitError.enUS: Could not initialize the database tables. 
    * Val.InitSuccess.enUS: The database was initialized successfully. 
    * 
-   *	Configure shared database connections across the cluster for massive scaling of the application. 
-   *	Return a promise that configures a shared database client connection. 
-   *	Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
-   *	Initialize the database tables if not already created for the first time. 
+   * Configure shared database connections across the cluster for massive scaling of the application. 
+   * Return a promise that configures a shared database client connection. 
+   * Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+   * Initialize the database tables if not already created for the first time. 
    **/
   private Future<Void> configureData() {
     Promise<Void> promise = Promise.promise();
@@ -366,12 +524,12 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    * Val.Fail.enUS: Could not configure the shared worker executor. 
    * Val.Complete.enUS: The shared worker executor "{}" was configured successfully. 
    * 
-   *	Configure a shared worker executor for running blocking tasks in the background. 
-   *	Return a promise that configures the shared worker executor. 
+   * Configure a shared worker executor for running blocking tasks in the background. 
+   * Return a promise that configures the shared worker executor. 
    **/
   private Future<Void> configureSharedWorkerExecutor() {
     Promise<Void> promise = Promise.promise();
@@ -575,7 +733,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
    * Description: Import initial data
    * Val.Skip.enUS: The data import is disabled. 
    **/
-  private Future<Void> importData() {
+  public Future<Void> importData() {
     Promise<Void> promise = Promise.promise();
     if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_IMPORT_DATA))) {
       SiteRequest siteRequest = new SiteRequest();
@@ -593,6 +751,8 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       initializeApiService(apiCompanyCourse);
       SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
       initializeApiService(apiSitePage);
+      SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
+      initializeApiService(apiSpineProgramming);
       CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
       initializeApiService(apiCompanyProduct);
       CompanyEventEnUSApiServiceImpl apiCompanyEvent = new CompanyEventEnUSApiServiceImpl();
@@ -612,34 +772,36 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       initializeApiService(apiComputateDeveloper);
 
-			apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
-				apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
-					apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
-						apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q4 -> {
-							apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q5 -> {
-								apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q6 -> {
-									apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
-										apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
-											apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
-												apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
-													apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
-														apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
-															apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
-																LOG.info("data import complete");
-																promise.complete();
-															}).onFailure(ex -> promise.fail(ex));
-														}).onFailure(ex -> promise.fail(ex));
-													}).onFailure(ex -> promise.fail(ex));
-												}).onFailure(ex -> promise.fail(ex));
-											}).onFailure(ex -> promise.fail(ex));
-										}).onFailure(ex -> promise.fail(ex));
-									}).onFailure(ex -> promise.fail(ex));
-								}).onFailure(ex -> promise.fail(ex));
-							}).onFailure(ex -> promise.fail(ex));
-						}).onFailure(ex -> promise.fail(ex));
-					}).onFailure(ex -> promise.fail(ex));
-				}).onFailure(ex -> promise.fail(ex));
-			}).onFailure(ex -> promise.fail(ex));
+      apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
+        apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
+          apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
+            apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q4 -> {
+              apiSpineProgramming.importTimer(Paths.get(templatePath, "/en-us/view/spine-programming"), vertx, siteRequest, SpineProgramming.CLASS_CANONICAL_NAME, SpineProgramming.CLASS_SIMPLE_NAME, SpineProgramming.CLASS_API_ADDRESS_SpineProgramming, SpineProgramming.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q5 -> {
+                apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q6 -> {
+                  apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
+                    apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
+                      apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
+                        apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
+                          apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
+                            apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
+                              apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
+                                apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q14 -> {
+                                  LOG.info("data import complete");
+                                  promise.complete();
+                                }).onFailure(ex -> promise.fail(ex));
+                              }).onFailure(ex -> promise.fail(ex));
+                            }).onFailure(ex -> promise.fail(ex));
+                          }).onFailure(ex -> promise.fail(ex));
+                        }).onFailure(ex -> promise.fail(ex));
+                      }).onFailure(ex -> promise.fail(ex));
+                    }).onFailure(ex -> promise.fail(ex));
+                  }).onFailure(ex -> promise.fail(ex));
+                }).onFailure(ex -> promise.fail(ex));
+              }).onFailure(ex -> promise.fail(ex));
+            }).onFailure(ex -> promise.fail(ex));
+          }).onFailure(ex -> promise.fail(ex));
+        }).onFailure(ex -> promise.fail(ex));
+      }).onFailure(ex -> promise.fail(ex));
     }
     else {
       LOG.info(importDataSkip);

@@ -1538,6 +1538,8 @@ public abstract class BaseResultGen<DEV> extends Object {
           setCreated((String)val);
         } else if(val instanceof OffsetDateTime) {
           setCreated(((OffsetDateTime)val).atZoneSameInstant(ZoneId.of(siteRequest_.getConfig().getString(ConfigKeys.SITE_ZONE))));
+        } else if(val instanceof ZonedDateTime) {
+          setCreated((ZonedDateTime)val);
         }
         saves.add("created");
         return val;
@@ -2065,19 +2067,19 @@ public abstract class BaseResultGen<DEV> extends Object {
     return null;
   }
 
-  public String classStringFormatUrlEditPageForClass() {
+  public String enUSStringFormatUrlEditPageForClass() {
     return null;
   }
 
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return null;
   }
 
-  public String classStringFormatUrlUserPageForClass() {
+  public String enUSStringFormatUrlUserPageForClass() {
     return null;
   }
 
-  public String classStringFormatUrlDownloadForClass() {
+  public String enUSStringFormatUrlDownloadForClass() {
     return null;
   }
 

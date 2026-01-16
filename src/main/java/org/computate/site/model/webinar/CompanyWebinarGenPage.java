@@ -529,13 +529,14 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
   }
 
   @Override
-  protected void _pageUri(Wrap<String> c) {
-    c.o("/en-us/search/webinar");
+  protected void _pageUri(Wrap<String> w) {
+    if("enUS".equals(lang))
+      w.o("/en-us/search/webinar");
   }
 
   @Override
-  protected void _apiUri(Wrap<String> c) {
-    c.o("/en-us/api/webinar");
+  protected void _apiUri(Wrap<String> w) {
+    w.o("/en-us/api/webinar");
   }
 
   @Override

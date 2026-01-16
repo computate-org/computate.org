@@ -76,39 +76,6 @@ import io.vertx.core.json.JsonObject;
  * <h2>Api: true</h2>
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
- * <h2>ApiMethode: Search</h2>
- * <p>This class contains a comment <b>"ApiMethod: Search"</b>, which creates an API "Search". 
- * </p>
- * <h2>ApiMethode: GET</h2>
- * <p>This class contains a comment <b>"ApiMethod: GET"</b>, which creates an API "GET". 
- * </p>
- * <h2>ApiMethode: PATCH</h2>
- * <p>This class contains a comment <b>"ApiMethod: PATCH"</b>, which creates an API "PATCH". 
- * </p>
- * <h2>ApiMethode: POST</h2>
- * <p>This class contains a comment <b>"ApiMethod: POST"</b>, which creates an API "POST". 
- * </p>
- * <h2>ApiMethode: DELETE</h2>
- * <p>This class contains a comment <b>"ApiMethod: DELETE"</b>, which creates an API "DELETE". 
- * </p>
- * <h2>ApiMethode: PUTImport</h2>
- * <p>This class contains a comment <b>"ApiMethod: PUTImport"</b>, which creates an API "PUTImport". 
- * </p>
- * <h2>ApiMethode: SearchPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: SearchPage"</b>, which creates an API "SearchPage". 
- * </p>
- * <h2>ApiMethode: EditPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: EditPage"</b>, which creates an API "EditPage". 
- * </p>
- * <h2>ApiMethode: DisplayPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: DisplayPage"</b>, which creates an API "DisplayPage". 
- * </p>
- * <h2>ApiMethode: UserPage</h2>
- * <p>This class contains a comment <b>"ApiMethod: UserPage"</b>, which creates an API "UserPage". 
- * </p>
- * <h2>ApiMethode: DELETEFilter</h2>
- * <p>This class contains a comment <b>"ApiMethod: DELETEFilter"</b>, which creates an API "DELETEFilter". 
- * </p>
  * <h2>ApiTag.enUS: true</h2>
  * <p>This class contains a comment <b>"ApiTag: courses"</b>, which groups all of the OpenAPIs for CompanyCourse objects under the tag "courses". 
  * </p>
@@ -399,23 +366,26 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   public void setPrice(String o) {
     this.price = CompanyCourse.staticSetPrice(siteRequest_, o);
   }
+  public static MathContext staticMathContextPrice() {
+    return new MathContext(2, RoundingMode.valueOf("HALF_UP"));
+  }
   public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
-    o = StringUtils.removeAll(o, "[^\\d\\.]");
+    o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP);
+      return new BigDecimal(o, staticMathContextPrice());
     return null;
   }
   @JsonIgnore
   public void setPrice(Double o) {
-    setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+    setPrice(new BigDecimal(o, staticMathContextPrice()));
   }
   @JsonIgnore
   public void setPrice(Integer o) {
-    setPrice(new BigDecimal(o, MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+    setPrice(new BigDecimal(o, staticMathContextPrice()));
   }
   @JsonIgnore
   public void setPrice(Number o) {
-    setPrice(new BigDecimal(o.doubleValue(), MathContext.DECIMAL64).setScale(2, RoundingMode.HALF_UP));
+    setPrice(new BigDecimal(o.doubleValue(), staticMathContextPrice()));
   }
   protected CompanyCourse priceInit() {
     Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
@@ -1637,6 +1607,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
           setPrice((String)val);
         } else if(val instanceof Number) {
           setPrice(new BigDecimal(((Number)val).doubleValue()));
+        } else if(val instanceof BigDecimal) {
+          setPrice((BigDecimal)val);
         }
         saves.add("price");
         return val;
@@ -1720,7 +1692,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       }
 
       if(saves.contains("price")) {
-        Double price = (Double)doc.get("price_docvalues_double");
+        Double price = (Double)doc.get("price_docvalues_string");
         if(price != null)
           oCompanyCourse.setPrice(price);
       }
@@ -1809,7 +1781,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       doc.put("description_docvalues_string", description);
     }
     if(price != null) {
-      doc.put("price_docvalues_double", price.doubleValue());
+      doc.put("price_docvalues_string", price.toPlainString());
     }
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
@@ -1858,7 +1830,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       case "description":
         return "description_docvalues_string";
       case "price":
-        return "price_docvalues_double";
+        return "price_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "emailTemplate":
@@ -1895,7 +1867,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
       case "description":
         return "description_docvalues_string";
       case "price":
-        return "price_docvalues_double";
+        return "price_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "emailTemplate":
@@ -1929,7 +1901,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
         return "name";
       case "description_docvalues_string":
         return "description";
-      case "price_docvalues_double":
+      case "price_docvalues_string":
         return "price";
       case "pageId_docvalues_string":
         return "pageId";
@@ -1985,7 +1957,7 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
 
     oCompanyCourse.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyCourse.setPrice(Optional.ofNullable(doc.get("price_docvalues_double")).map(v -> v.toString()).orElse(null));
+    oCompanyCourse.setPrice(Optional.ofNullable(doc.get("price_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyCourse.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -2172,22 +2144,22 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String classStringFormatUrlEditPageForClass() {
+  public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/course/%s";
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return "%s/en-us/shop/course/%s";
   }
 
   @Override
-  public String classStringFormatUrlUserPageForClass() {
+  public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/use/course/%s";
   }
 
   @Override
-  public String classStringFormatUrlDownloadForClass() {
+  public String enUSStringFormatUrlDownloadForClass() {
     return null;
   }
 

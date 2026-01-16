@@ -45,6 +45,8 @@ import org.computate.search.tool.TimeTool;
 import org.computate.search.tool.SearchTool;
 import java.time.ZoneId;
 import io.vertx.pgclient.data.Point;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -153,7 +155,21 @@ public class SmartAquacultureDeveloperGenPage extends SmartAquacultureDeveloperG
       json.put("classSimpleName", Optional.ofNullable(SmartAquacultureDeveloper.classSimpleNameSmartAquacultureDeveloper(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
       Object v = searchListSmartAquacultureDeveloper_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(SmartAquacultureDeveloper.varIndexedSmartAquacultureDeveloper(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
       if(v != null) {
-        json.put("val", v);
+        Matcher mFq = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|$)))").matcher(SearchTool.unescapeQueryChars((String)v));
+        StringBuffer sb = new StringBuffer();
+        while(mFq.find()) {
+          String entityVar = SmartAquacultureDeveloper.searchVarSmartAquacultureDeveloper(varIndexed);
+          String valueIndexed = mFq.group(2).trim();
+          String entityFq = entityVar + ":" + valueIndexed;
+          if(var.equals(entityVar))
+            mFq.appendReplacement(sb, valueIndexed);
+          else
+            mFq.appendReplacement(sb, entityFq);
+        }
+        if(!sb.isEmpty()) {
+          mFq.appendTail(sb);
+          json.put("val", sb.toString());
+        }
         varsFqCount++;
       }
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
@@ -510,13 +526,14 @@ public class SmartAquacultureDeveloperGenPage extends SmartAquacultureDeveloperG
   }
 
   @Override
-  protected void _pageUri(Wrap<String> c) {
-    c.o("/en-us/search/smart-aquaculture-developer");
+  protected void _pageUri(Wrap<String> w) {
+    if("enUS".equals(lang))
+      w.o("/en-us/search/smart-aquaculture-developer");
   }
 
   @Override
-  protected void _apiUri(Wrap<String> c) {
-    c.o("/en-us/api/smart-aquaculture-developer");
+  protected void _apiUri(Wrap<String> w) {
+    w.o("/en-us/api/smart-aquaculture-developer");
   }
 
   @Override

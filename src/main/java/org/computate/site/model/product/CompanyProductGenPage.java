@@ -44,6 +44,8 @@ import org.computate.search.tool.TimeTool;
 import org.computate.search.tool.SearchTool;
 import java.time.ZoneId;
 import io.vertx.pgclient.data.Point;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -152,7 +154,21 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
       json.put("classSimpleName", Optional.ofNullable(CompanyProduct.classSimpleNameCompanyProduct(var)).map(d -> StringUtils.isBlank(d) ? var : d).orElse(var));
       Object v = searchListCompanyProduct_.getRequest().getFilterQueries().stream().filter(fq -> fq.startsWith(CompanyProduct.varIndexedCompanyProduct(var) + ":")).findFirst().map(s -> SearchTool.unescapeQueryChars(StringUtils.substringAfter(s, ":"))).orElse(null);
       if(v != null) {
-        json.put("val", v);
+        Matcher mFq = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|$)))").matcher(SearchTool.unescapeQueryChars((String)v));
+        StringBuffer sb = new StringBuffer();
+        while(mFq.find()) {
+          String entityVar = CompanyProduct.searchVarCompanyProduct(varIndexed);
+          String valueIndexed = mFq.group(2).trim();
+          String entityFq = entityVar + ":" + valueIndexed;
+          if(var.equals(entityVar))
+            mFq.appendReplacement(sb, valueIndexed);
+          else
+            mFq.appendReplacement(sb, entityFq);
+        }
+        if(!sb.isEmpty()) {
+          mFq.appendTail(sb);
+          json.put("val", sb.toString());
+        }
         varsFqCount++;
       }
       Optional.ofNullable(stats).map(s -> s.get(varIndexed)).ifPresent(stat -> {
@@ -509,13 +525,14 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   }
 
   @Override
-  protected void _pageUri(Wrap<String> c) {
-    c.o("/en-us/search/product");
+  protected void _pageUri(Wrap<String> w) {
+    if("enUS".equals(lang))
+      w.o("/en-us/search/product");
   }
 
   @Override
-  protected void _apiUri(Wrap<String> c) {
-    c.o("/en-us/api/product");
+  protected void _apiUri(Wrap<String> w) {
+    w.o("/en-us/api/product");
   }
 
   @Override

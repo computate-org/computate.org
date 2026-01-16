@@ -412,7 +412,7 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return "%s/en-us/smart-aquaculture-developer/learn/%s";
   }
 }

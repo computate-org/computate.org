@@ -689,6 +689,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -1615,6 +1623,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -2671,6 +2687,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -3622,6 +3646,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -4513,6 +4545,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -5454,6 +5494,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -6445,6 +6493,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -7209,6 +7265,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -7968,6 +8032,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -8213,6 +8285,945 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DisplayPageCompanyServiceResponse'
+  /en-us/api/spine-programming:
+    get:
+      operationId: searchSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchSpineProgrammingResponse'
+    patch:
+      operationId: patchSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHSpineProgrammingRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PATCHSpineProgrammingResponse'
+    post:
+      operationId: postSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/POSTSpineProgrammingRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/POSTSpineProgrammingResponse'
+    delete:
+      operationId: deletefilterSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETEFilterSpineProgrammingResponse'
+  /en-us/api/spine-programming-import:
+    put:
+      operationId: putimportSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PUTImportSpineProgrammingRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PUTImportSpineProgrammingResponse'
+  /en-us/api/spine-programming/{pageId}:
+    get:
+      operationId: getSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GETSpineProgrammingResponse'
+    delete:
+      operationId: deleteSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: commitWithin
+          description: 'The number of milliseconds to commit the record to Solr. '
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: softCommit
+          description: 'Does a soft commit for the record in Solr immediately. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DELETESpineProgrammingResponse'
+  /en-us/edit/spine-programming/{pageId}:
+    get:
+      operationId: editpageSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EditPageSpineProgrammingResponse'
+  /en-us/search/spine-programming:
+    get:
+      operationId: searchpageSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: fl
+          description: 'The field list parameter limits the information included in a query response to a specified list of fields. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sort
+          description: 'The sort parameter arranges search results in either ascending (asc) or descending (desc) order. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: start
+          description: 'The start parameter specifies an offset into a query result set and instructs Solr to begin displaying results from this offset. '
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - in: query
+          name: rows
+          description: 'The rows parameter specifies the maximum number of documents from the complete result set that Solr should return to the client at one time. '
+          required: false
+          schema:
+            type: integer
+            default: 100
+            minimum: 0
+        - in: query
+          name: facet
+          description: 'The facet parameter enables facet counts in the query response. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: facet.range.start
+          description: 'The facet.range.start parameter specifies the lower bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.end
+          description: 'The facet.range.end specifies the upper bound of the ranges. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range.gap
+          description: 'The span of each range expressed as a value to be added to the lower bound. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.pivot
+          description: 'The facet.pivot parameter defines the fields to use for the pivot. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.range
+          description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: d
+          description: 'The radial distance, usually in kilometers. '
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - in: query
+          name: pt
+          description: 'he center point using the format lat,lon if latitude & longitude. Otherwise, x,y for PointType or x y for RPT field types. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: sfield
+          description: 'A spatial indexed field. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: score
+          description: '(Advanced option; not supported by LatLonType (deprecated) or PointType) If the query is used in a scoring context (e.g., as the main query in q), this local parameter determines what scores will be produced. Valid values are: none, kilometers, miles, degrees, distance, recipDistance, overlapRatio, area, area2D'
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: distanceUnits
+          description: 'This is used to specify the units for distance measurements used throughout the use of this field. This can be degrees, kilometers or miles. '
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: stats
+          description: 'The Stats component returns simple statistics for numeric, string, and date fields within the document set. '
+          required: false
+          schema:
+            type: boolean
+        - in: query
+          name: stats.field
+          description: 'Specifies a field for which statistics should be generated. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SearchPageSpineProgrammingResponse'
+  /en-us/view/spine-programming/{pageId}:
+    get:
+      operationId: displaypageSpineProgramming
+      x-vertx-event-bus: computate.org-enUS-SpineProgramming
+      description: >+
+      summary: >+
+      tags:
+        - SPINE Programming articles
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: >+
+          content:
+            text/html; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/DisplayPageSpineProgrammingResponse'
   /en-us/api/use-case:
     get:
       operationId: searchUseCase
@@ -8894,6 +9905,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -9885,6 +10904,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -10694,6 +11721,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -11630,6 +12665,14 @@ paths:
             type: array
             items:
               type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
       responses:
         '200':
           description: >+
@@ -12268,6 +13311,14 @@ paths:
         - in: query
           name: facet.range
           description: 'The facet.range parameter defines the field for which Solr should create range facets. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - in: query
+          name: facet.field
+          description: 'The facet.field parameter identifies a field that should be treated as a facet. '
           required: false
           schema:
             type: array
@@ -13080,6 +14131,71 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/DisplayPageCompanyServiceResponse'
+    SearchSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchSpineProgrammingResponse'
+    PATCHSpineProgrammingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHSpineProgrammingRequest'
+    PATCHSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHSpineProgrammingResponse'
+    POSTSpineProgrammingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/POSTSpineProgrammingRequest'
+    POSTSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/POSTSpineProgrammingResponse'
+    DELETEFilterSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETEFilterSpineProgrammingResponse'
+    PUTImportSpineProgrammingRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PUTImportSpineProgrammingRequest'
+    PUTImportSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PUTImportSpineProgrammingResponse'
+    GETSpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/GETSpineProgrammingResponse'
+    DELETESpineProgrammingResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DELETESpineProgrammingResponse'
+    EditPageSpineProgrammingResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/EditPageSpineProgrammingResponse'
+    SearchPageSpineProgrammingResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/SearchPageSpineProgrammingResponse'
+    DisplayPageSpineProgrammingResponse:
+      content:
+        text/html; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/DisplayPageSpineProgrammingResponse'
     SearchUseCaseResponse:
       content:
         application/json; charset=utf-8:
@@ -18724,6 +19840,1022 @@ components:
       allOf:
         - type: string
     DisplayPageCompanyServiceResponse:
+      allOf:
+        - type: string
+    SearchSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            startNum:
+              type: integer
+              minimum: 0
+            foundNum:
+              type: integer
+              minimum: 0
+            returnedNum:
+              type: integer
+              minimum: 0
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    PATCHSpineProgrammingRequest:
+      allOf:
+        - type: object
+          properties:
+            setArticle:
+              type: boolean
+              nullable: true
+            removeArticle:
+              type: boolean
+            removeAllArticle:
+              type: boolean
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
+              type: string
+            setCourseNum:
+              type: string
+              nullable: true
+            removeCourseNum:
+              type: string
+            removeAllCourseNum:
+              type: string
+            setLessonNum:
+              type: string
+              nullable: true
+            removeLessonNum:
+              type: string
+            removeAllLessonNum:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setPrerequisiteArticleIds:
+              type: string
+              nullable: true
+            removePrerequisiteArticleIds:
+              type: string
+            removeAllPrerequisiteArticleIds:
+              type: string
+            setPrerequisiteArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removePrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllPrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setNextArticleIds:
+              type: string
+              nullable: true
+            removeNextArticleIds:
+              type: string
+            removeAllNextArticleIds:
+              type: string
+            setNextArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    PATCHSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            setArticle:
+              type: boolean
+              nullable: true
+            removeArticle:
+              type: boolean
+            removeAllArticle:
+              type: boolean
+            setImportance:
+              type: string
+              nullable: true
+            removeImportance:
+              type: string
+            removeAllImportance:
+              type: string
+            setCourseNum:
+              type: string
+              nullable: true
+            removeCourseNum:
+              type: string
+            removeAllCourseNum:
+              type: string
+            setLessonNum:
+              type: string
+              nullable: true
+            removeLessonNum:
+              type: string
+            removeAllLessonNum:
+              type: string
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setAuthorName:
+              type: string
+              nullable: true
+            removeAuthorName:
+              type: string
+            removeAllAuthorName:
+              type: string
+            setAuthorUrl:
+              type: string
+              nullable: true
+            removeAuthorUrl:
+              type: string
+            removeAllAuthorUrl:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setPrerequisiteArticleIds:
+              type: string
+              nullable: true
+            removePrerequisiteArticleIds:
+              type: string
+            removeAllPrerequisiteArticleIds:
+              type: string
+            setPrerequisiteArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removePrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllPrerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setNextArticleIds:
+              type: string
+              nullable: true
+            removeNextArticleIds:
+              type: string
+            removeAllNextArticleIds:
+              type: string
+            setNextArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllNextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    POSTSpineProgrammingRequest:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    POSTSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    DELETEFilterSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    PUTImportSpineProgrammingRequest:
+      allOf:
+        - type: object
+          properties:
+            list:
+              type: array
+              items:
+                type: object
+                properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    PUTImportSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+                  article:
+                    type: boolean
+                  importance:
+                    type: string
+                  courseNum:
+                    type: string
+                  lessonNum:
+                    type: string
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  authorName:
+                    type: string
+                  authorUrl:
+                    type: string
+                  pageId:
+                    type: string
+                  pageImageUri:
+                    type: string
+                  pageImageWidth:
+                    type: string
+                  pageImageHeight:
+                    type: string
+                  pageImageType:
+                    type: string
+                  pageImageAlt:
+                    type: string
+                  prerequisiteArticleIds:
+                    type: string
+                  prerequisiteArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  nextArticleIds:
+                    type: string
+                  nextArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+                  labelsString:
+                    type: string
+                  labels:
+                    type: array
+                    items:
+                      type: string
+                  relatedArticleIds:
+                    type: string
+                  relatedArticles:
+                    type: array
+                    items:
+                      anyOf:
+                        - type: string
+                        - type: number
+                        - type: string
+                        - type: boolean
+    GETSpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    DELETESpineProgrammingResponse:
+      allOf:
+        - type: object
+          properties:
+            article:
+              type: boolean
+            importance:
+              type: string
+            courseNum:
+              type: string
+            lessonNum:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+            authorName:
+              type: string
+            authorUrl:
+              type: string
+            pageId:
+              type: string
+            pageImageUri:
+              type: string
+            pageImageWidth:
+              type: string
+            pageImageHeight:
+              type: string
+            pageImageType:
+              type: string
+            pageImageAlt:
+              type: string
+            prerequisiteArticleIds:
+              type: string
+            prerequisiteArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            nextArticleIds:
+              type: string
+            nextArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            labelsString:
+              type: string
+            labels:
+              type: array
+              items:
+                type: string
+            relatedArticleIds:
+              type: string
+            relatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+    EditPageSpineProgrammingResponse:
+      allOf:
+        - type: string
+    SearchPageSpineProgrammingResponse:
+      allOf:
+        - type: string
+    DisplayPageSpineProgrammingResponse:
       allOf:
         - type: string
     SearchUseCaseResponse:

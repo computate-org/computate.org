@@ -412,7 +412,7 @@ public class ComputateDeveloper extends ComputateDeveloperGen<BaseResult> {
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return "%s/en-us/computate-developer/learn/%s";
   }
 }

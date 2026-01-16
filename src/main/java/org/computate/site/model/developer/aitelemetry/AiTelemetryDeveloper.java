@@ -412,7 +412,7 @@ public class AiTelemetryDeveloper extends AiTelemetryDeveloperGen<BaseResult> {
   }
 
   @Override
-  public String classStringFormatUrlDisplayPageForClass() {
+  public String enUSStringFormatUrlDisplayPageForClass() {
     return "%s/en-us/ai-telemetry-developer/learn/%s";
   }
 }
