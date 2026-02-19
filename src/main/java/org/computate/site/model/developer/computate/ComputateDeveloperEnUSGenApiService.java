@@ -32,6 +32,7 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @ProxyGen
 public interface ComputateDeveloperEnUSGenApiService {
 
+
   public void searchComputateDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void getComputateDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchComputateDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

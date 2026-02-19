@@ -32,6 +32,7 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @ProxyGen
 public interface SiteUserEnUSGenApiService {
 
+
   public void searchSiteUser(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchSiteUser(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchSiteUserFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

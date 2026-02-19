@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +210,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -313,7 +315,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -456,7 +458,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHSpineProgramming failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -467,18 +469,18 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHSpineProgramming failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHSpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -561,14 +563,14 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchSpineProgrammingFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -588,7 +590,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -779,17 +781,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           indexSpineProgramming(spineProgramming).onSuccess(o2 -> {
             promise.complete(spineProgramming);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postSpineProgrammingFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -810,7 +812,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -957,7 +959,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportSpineProgramming failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -966,11 +968,11 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportSpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1123,7 +1125,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1265,7 +1267,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETESpineProgramming failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -1276,18 +1278,18 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETESpineProgramming failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETESpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETESpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1356,11 +1358,11 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       unindexSpineProgramming(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteSpineProgrammingFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1380,7 +1382,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETESpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1438,6 +1440,11 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void searchpageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1448,19 +1455,75 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     promise.complete();
   }
 
-  public String templateSearchPageSpineProgramming(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageSpineProgramming(ServiceRequest serviceRequest, SpineProgramming result) {
     return "en-us/search/spine-programming/SpineProgrammingSearchPage.htm";
+  }
+  public void templateSearchPageSpineProgramming(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineProgramming result = listSpineProgramming.first();
+      String pageTemplateUri = templateUriSearchPageSpineProgramming(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageSpineProgramming failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageSpineProgramming(SearchList<SpineProgramming> listSpineProgramming) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageSpineProgramming(siteRequest.getServiceRequest());
-      if(listSpineProgramming.size() == 0)
-        pageTemplateUri = templateSearchPageSpineProgramming(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SpineProgrammingPage page = new SpineProgrammingPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1477,22 +1540,32 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           searchpageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1622,6 +1695,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void editpageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1632,19 +1711,75 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     promise.complete();
   }
 
-  public String templateEditPageSpineProgramming(ServiceRequest serviceRequest) {
+  public String templateUriEditPageSpineProgramming(ServiceRequest serviceRequest, SpineProgramming result) {
     return "en-us/edit/spine-programming/SpineProgrammingEditPage.htm";
+  }
+  public void templateEditPageSpineProgramming(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineProgramming result = listSpineProgramming.first();
+      String pageTemplateUri = templateUriEditPageSpineProgramming(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageSpineProgramming failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageSpineProgramming(SearchList<SpineProgramming> listSpineProgramming) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageSpineProgramming(siteRequest.getServiceRequest());
-      if(listSpineProgramming.size() == 0)
-        pageTemplateUri = templateSearchPageSpineProgramming(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SpineProgrammingPage page = new SpineProgrammingPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1661,22 +1796,32 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           editpageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1768,6 +1913,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
   public void displaypageSpineProgrammingPageInit(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/spine-programming"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1778,19 +1929,75 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     promise.complete();
   }
 
-  public String templateDisplayPageSpineProgramming(ServiceRequest serviceRequest) {
+  public String templateUriDisplayPageSpineProgramming(ServiceRequest serviceRequest, SpineProgramming result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateDisplayPageSpineProgramming(JsonObject ctx, SpineProgrammingPage page, SearchList<SpineProgramming> listSpineProgramming, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SpineProgramming result = listSpineProgramming.first();
+      String pageTemplateUri = templateUriDisplayPageSpineProgramming(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateDisplayPageSpineProgramming failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200DisplayPageSpineProgramming(SearchList<SpineProgramming> listSpineProgramming) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateDisplayPageSpineProgramming(siteRequest.getServiceRequest());
-      if(listSpineProgramming.size() == 0)
-        pageTemplateUri = templateSearchPageSpineProgramming(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SpineProgrammingPage page = new SpineProgrammingPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1807,22 +2014,32 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           Promise<Void> promise1 = Promise.promise();
           displaypageSpineProgrammingPageInit(ctx, page, listSpineProgramming, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateDisplayPageSpineProgramming(ctx, page, listSpineProgramming, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200DisplayPageSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1998,7 +2215,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterSpineProgramming failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2009,18 +2226,18 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterSpineProgramming failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterSpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2089,11 +2306,11 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       unindexSpineProgramming(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterSpineProgrammingFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2113,7 +2330,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2128,7 +2345,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2194,13 +2411,13 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchSpineProgramming failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2405,18 +2622,18 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchSpineProgramming failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchSpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2451,15 +2668,15 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistSpineProgramming failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistSpineProgramming failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2501,11 +2718,11 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexSpineProgramming failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2538,69 +2755,69 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexSpineProgramming failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexSpineProgramming failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexSpineProgramming failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      SpineProgramming page = new SpineProgramming();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      SpineProgramming o = new SpineProgramming();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(SpineProgramming.VAR_created, SpineProgramming.staticSetCreated(siteRequest2, (String)result.get(SpineProgramming.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(SpineProgramming.VAR_importance, SpineProgramming.staticSetImportance(siteRequest2, (String)result.get(SpineProgramming.VAR_importance)));
-      page.persistForClass(SpineProgramming.VAR_courseNum, SpineProgramming.staticSetCourseNum(siteRequest2, (String)result.get(SpineProgramming.VAR_courseNum)));
-      page.persistForClass(SpineProgramming.VAR_archived, SpineProgramming.staticSetArchived(siteRequest2, (String)result.get(SpineProgramming.VAR_archived)));
-      page.persistForClass(SpineProgramming.VAR_lessonNum, SpineProgramming.staticSetLessonNum(siteRequest2, (String)result.get(SpineProgramming.VAR_lessonNum)));
-      page.persistForClass(SpineProgramming.VAR_name, SpineProgramming.staticSetName(siteRequest2, (String)result.get(SpineProgramming.VAR_name)));
-      page.persistForClass(SpineProgramming.VAR_description, SpineProgramming.staticSetDescription(siteRequest2, (String)result.get(SpineProgramming.VAR_description)));
-      page.persistForClass(SpineProgramming.VAR_authorName, SpineProgramming.staticSetAuthorName(siteRequest2, (String)result.get(SpineProgramming.VAR_authorName)));
-      page.persistForClass(SpineProgramming.VAR_authorUrl, SpineProgramming.staticSetAuthorUrl(siteRequest2, (String)result.get(SpineProgramming.VAR_authorUrl)));
-      page.persistForClass(SpineProgramming.VAR_pageId, SpineProgramming.staticSetPageId(siteRequest2, (String)result.get(SpineProgramming.VAR_pageId)));
-      page.persistForClass(SpineProgramming.VAR_objectTitle, SpineProgramming.staticSetObjectTitle(siteRequest2, (String)result.get(SpineProgramming.VAR_objectTitle)));
-      page.persistForClass(SpineProgramming.VAR_pageImageUri, SpineProgramming.staticSetPageImageUri(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageUri)));
-      page.persistForClass(SpineProgramming.VAR_displayPage, SpineProgramming.staticSetDisplayPage(siteRequest2, (String)result.get(SpineProgramming.VAR_displayPage)));
-      page.persistForClass(SpineProgramming.VAR_editPage, SpineProgramming.staticSetEditPage(siteRequest2, (String)result.get(SpineProgramming.VAR_editPage)));
-      page.persistForClass(SpineProgramming.VAR_userPage, SpineProgramming.staticSetUserPage(siteRequest2, (String)result.get(SpineProgramming.VAR_userPage)));
-      page.persistForClass(SpineProgramming.VAR_download, SpineProgramming.staticSetDownload(siteRequest2, (String)result.get(SpineProgramming.VAR_download)));
-      page.persistForClass(SpineProgramming.VAR_pageImageAlt, SpineProgramming.staticSetPageImageAlt(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageAlt)));
-      page.persistForClass(SpineProgramming.VAR_prerequisiteArticleIds, SpineProgramming.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_prerequisiteArticleIds)));
-      page.persistForClass(SpineProgramming.VAR_solrId, SpineProgramming.staticSetSolrId(siteRequest2, (String)result.get(SpineProgramming.VAR_solrId)));
-      page.persistForClass(SpineProgramming.VAR_nextArticleIds, SpineProgramming.staticSetNextArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_nextArticleIds)));
-      page.persistForClass(SpineProgramming.VAR_labelsString, SpineProgramming.staticSetLabelsString(siteRequest2, (String)result.get(SpineProgramming.VAR_labelsString)));
-      page.persistForClass(SpineProgramming.VAR_labels, SpineProgramming.staticSetLabels(siteRequest2, (String)result.get(SpineProgramming.VAR_labels)));
-      page.persistForClass(SpineProgramming.VAR_relatedArticleIds, SpineProgramming.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_relatedArticleIds)));
+      o.persistForClass(SpineProgramming.VAR_created, SpineProgramming.staticSetCreated(siteRequest2, (String)result.get(SpineProgramming.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(SpineProgramming.VAR_importance, SpineProgramming.staticSetImportance(siteRequest2, (String)result.get(SpineProgramming.VAR_importance)));
+      o.persistForClass(SpineProgramming.VAR_courseNum, SpineProgramming.staticSetCourseNum(siteRequest2, (String)result.get(SpineProgramming.VAR_courseNum)));
+      o.persistForClass(SpineProgramming.VAR_archived, SpineProgramming.staticSetArchived(siteRequest2, (String)result.get(SpineProgramming.VAR_archived)));
+      o.persistForClass(SpineProgramming.VAR_lessonNum, SpineProgramming.staticSetLessonNum(siteRequest2, (String)result.get(SpineProgramming.VAR_lessonNum)));
+      o.persistForClass(SpineProgramming.VAR_name, SpineProgramming.staticSetName(siteRequest2, (String)result.get(SpineProgramming.VAR_name)));
+      o.persistForClass(SpineProgramming.VAR_description, SpineProgramming.staticSetDescription(siteRequest2, (String)result.get(SpineProgramming.VAR_description)));
+      o.persistForClass(SpineProgramming.VAR_authorName, SpineProgramming.staticSetAuthorName(siteRequest2, (String)result.get(SpineProgramming.VAR_authorName)));
+      o.persistForClass(SpineProgramming.VAR_authorUrl, SpineProgramming.staticSetAuthorUrl(siteRequest2, (String)result.get(SpineProgramming.VAR_authorUrl)));
+      o.persistForClass(SpineProgramming.VAR_pageId, SpineProgramming.staticSetPageId(siteRequest2, (String)result.get(SpineProgramming.VAR_pageId)));
+      o.persistForClass(SpineProgramming.VAR_objectTitle, SpineProgramming.staticSetObjectTitle(siteRequest2, (String)result.get(SpineProgramming.VAR_objectTitle)));
+      o.persistForClass(SpineProgramming.VAR_pageImageUri, SpineProgramming.staticSetPageImageUri(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageUri)));
+      o.persistForClass(SpineProgramming.VAR_displayPage, SpineProgramming.staticSetDisplayPage(siteRequest2, (String)result.get(SpineProgramming.VAR_displayPage)));
+      o.persistForClass(SpineProgramming.VAR_editPage, SpineProgramming.staticSetEditPage(siteRequest2, (String)result.get(SpineProgramming.VAR_editPage)));
+      o.persistForClass(SpineProgramming.VAR_userPage, SpineProgramming.staticSetUserPage(siteRequest2, (String)result.get(SpineProgramming.VAR_userPage)));
+      o.persistForClass(SpineProgramming.VAR_download, SpineProgramming.staticSetDownload(siteRequest2, (String)result.get(SpineProgramming.VAR_download)));
+      o.persistForClass(SpineProgramming.VAR_pageImageAlt, SpineProgramming.staticSetPageImageAlt(siteRequest2, (String)result.get(SpineProgramming.VAR_pageImageAlt)));
+      o.persistForClass(SpineProgramming.VAR_prerequisiteArticleIds, SpineProgramming.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_prerequisiteArticleIds)));
+      o.persistForClass(SpineProgramming.VAR_solrId, SpineProgramming.staticSetSolrId(siteRequest2, (String)result.get(SpineProgramming.VAR_solrId)));
+      o.persistForClass(SpineProgramming.VAR_nextArticleIds, SpineProgramming.staticSetNextArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_nextArticleIds)));
+      o.persistForClass(SpineProgramming.VAR_labelsString, SpineProgramming.staticSetLabelsString(siteRequest2, (String)result.get(SpineProgramming.VAR_labelsString)));
+      o.persistForClass(SpineProgramming.VAR_labels, SpineProgramming.staticSetLabels(siteRequest2, (String)result.get(SpineProgramming.VAR_labels)));
+      o.persistForClass(SpineProgramming.VAR_relatedArticleIds, SpineProgramming.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SpineProgramming.VAR_relatedArticleIds)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

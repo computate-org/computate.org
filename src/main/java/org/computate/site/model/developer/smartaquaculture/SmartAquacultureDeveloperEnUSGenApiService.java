@@ -32,6 +32,7 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @ProxyGen
 public interface SmartAquacultureDeveloperEnUSGenApiService {
 
+
   public void searchSmartAquacultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void getSmartAquacultureDeveloper(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchSmartAquacultureDeveloper(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

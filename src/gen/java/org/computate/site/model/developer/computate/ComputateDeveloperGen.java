@@ -135,20 +135,35 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * <p>
  * Delete the class ComputateDeveloper in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.computate.ComputateDeveloper&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.computate.ComputateDeveloper&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the package org.computate.site.model.developer.computate in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.developer.computate&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.developer.computate&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * Generated: true
  **/
 public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(ComputateDeveloper.class);
+
+  public static final String Description_frFR = "Learn how to become a Computate platform developer — Learn how to build your own data-driven website on your own computer for your own ideas. ";
+  public static final String AName_frFR = "a Computate Developer";
+  public static final String SingularName_frFR = "Computate Developer";
+  public static final String PluralName_frFR = "Computate Developers";
+  public static final String Title_frFR = "Computate Developers";
+  public static final String ThePluralName_frFR = "les Computate Developers";
+  public static final String NameAdjectiveSingular_frFR = "Computate Developer";
+  public static final String NameAdjectivePlural_frFR = "Computate Developers";
 
   public static final String Description_enUS = "Learn how to become a Computate platform developer — Learn how to build your own data-driven website on your own computer for your own ideas. ";
   public static final String AName_enUS = "a Computate Developer";
@@ -2866,8 +2881,18 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/computate-developer/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDisplayPageForClass() {
+    return null;
   }
 
   @Override
@@ -2876,8 +2901,18 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/computate-developer/learn/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDownloadForClass() {
+    return null;
   }
 
   @Override

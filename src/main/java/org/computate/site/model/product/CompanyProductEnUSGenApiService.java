@@ -32,6 +32,7 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @ProxyGen
 public interface CompanyProductEnUSGenApiService {
 
+
   public void searchCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void getCompanyProduct(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchCompanyProduct(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

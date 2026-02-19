@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,17 +126,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -149,11 +151,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, false, true, false).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listComputateDeveloper -> {
                 response200SearchComputateDeveloper(listComputateDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchComputateDeveloper succeeded. "));
@@ -245,7 +248,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -294,17 +297,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -319,11 +322,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, false, true, false).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listComputateDeveloper -> {
                 response200GETComputateDeveloper(listComputateDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("getComputateDeveloper succeeded. "));
@@ -387,7 +391,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -403,17 +407,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PATCH"));
         webClient.post(
@@ -428,7 +432,8 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -444,7 +449,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, true, false, true).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, true, false, true, "PATCH").onSuccess(listComputateDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listComputateDeveloper.getRequest().getRows());
@@ -530,7 +535,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHComputateDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -541,18 +546,18 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHComputateDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -570,7 +575,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             siteRequest.addScopes(scope);
           });
         });
-        searchComputateDeveloperList(siteRequest, false, true, true).onSuccess(listComputateDeveloper -> {
+        searchComputateDeveloperList(siteRequest, false, true, true, "PATCH").onSuccess(listComputateDeveloper -> {
           try {
             ComputateDeveloper o = listComputateDeveloper.first();
             ApiRequest apiRequest = new ApiRequest();
@@ -635,14 +640,14 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchComputateDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -662,7 +667,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -678,17 +683,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "POST"));
         webClient.post(
@@ -703,7 +708,8 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -729,6 +735,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
+              params.put("scopes", scopes2);
               params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
               params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
               params.put("form", new JsonObject());
@@ -853,17 +860,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           indexComputateDeveloper(computateDeveloper).onSuccess(o2 -> {
             promise.complete(computateDeveloper);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postComputateDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -884,7 +891,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -900,17 +907,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -925,7 +932,8 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -941,7 +949,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, true, false, true).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, true, false, true, "DELETE").onSuccess(listComputateDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listComputateDeveloper.getRequest().getRows());
@@ -1026,7 +1034,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEComputateDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -1037,18 +1045,18 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEComputateDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1066,7 +1074,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             siteRequest.addScopes(scope);
           });
         });
-        searchComputateDeveloperList(siteRequest, false, true, true).onSuccess(listComputateDeveloper -> {
+        searchComputateDeveloperList(siteRequest, false, true, true, "DELETE").onSuccess(listComputateDeveloper -> {
           try {
             ComputateDeveloper o = listComputateDeveloper.first();
             if(o != null && listComputateDeveloper.getResponse().getResponse().getNumFound() == 1) {
@@ -1117,11 +1125,11 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       unindexComputateDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteComputateDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1141,7 +1149,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1157,17 +1165,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PUT"));
         webClient.post(
@@ -1182,7 +1190,8 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1288,7 +1297,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportComputateDeveloper failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -1297,11 +1306,11 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1454,7 +1463,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1469,17 +1478,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1494,11 +1503,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, false, true, false).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listComputateDeveloper -> {
                 response200SearchPageComputateDeveloper(listComputateDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchpageComputateDeveloper succeeded. "));
@@ -1549,6 +1559,11 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void searchpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1559,19 +1574,80 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
     promise.complete();
   }
 
-  public String templateSearchPageComputateDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageComputateDeveloper(ServiceRequest serviceRequest, ComputateDeveloper result) {
     return "en-us/search/computate-developer/ComputateDeveloperSearchPage.htm";
+  }
+  public void templateSearchPageComputateDeveloper(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      ComputateDeveloper result = listComputateDeveloper.first();
+      String pageTemplateUri = templateUriSearchPageComputateDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/computate-developer/ComputateDeveloperSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageComputateDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageComputateDeveloper(SearchList<ComputateDeveloper> listComputateDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageComputateDeveloper(siteRequest.getServiceRequest());
-      if(listComputateDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageComputateDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       ComputateDeveloperPage page = new ComputateDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1588,22 +1664,32 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           searchpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1652,18 +1738,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1678,11 +1763,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, false, true, false).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listComputateDeveloper -> {
                 response200EditPageComputateDeveloper(listComputateDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("editpageComputateDeveloper succeeded. "));
@@ -1733,6 +1819,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void editpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1743,19 +1835,80 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
     promise.complete();
   }
 
-  public String templateEditPageComputateDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriEditPageComputateDeveloper(ServiceRequest serviceRequest, ComputateDeveloper result) {
     return "en-us/edit/computate-developer/ComputateDeveloperEditPage.htm";
+  }
+  public void templateEditPageComputateDeveloper(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      ComputateDeveloper result = listComputateDeveloper.first();
+      String pageTemplateUri = templateUriEditPageComputateDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/computate-developer/ComputateDeveloperSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageComputateDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageComputateDeveloper(SearchList<ComputateDeveloper> listComputateDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageComputateDeveloper(siteRequest.getServiceRequest());
-      if(listComputateDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageComputateDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       ComputateDeveloperPage page = new ComputateDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1772,22 +1925,32 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           editpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1836,18 +1999,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1862,11 +2024,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, false, true, false).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, false, true, false, "GET").onSuccess(listComputateDeveloper -> {
                 response200UserPageComputateDeveloper(listComputateDeveloper).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("userpageComputateDeveloper succeeded. "));
@@ -1917,6 +2080,12 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
   public void userpageComputateDeveloperPageInit(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/computate-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1927,19 +2096,80 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
     promise.complete();
   }
 
-  public String templateUserPageComputateDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriUserPageComputateDeveloper(ServiceRequest serviceRequest, ComputateDeveloper result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateUserPageComputateDeveloper(JsonObject ctx, ComputateDeveloperPage page, SearchList<ComputateDeveloper> listComputateDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      ComputateDeveloper result = listComputateDeveloper.first();
+      String pageTemplateUri = templateUriUserPageComputateDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/computate-developer/ComputateDeveloperSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateUserPageComputateDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200UserPageComputateDeveloper(SearchList<ComputateDeveloper> listComputateDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listComputateDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateUserPageComputateDeveloper(siteRequest.getServiceRequest());
-      if(listComputateDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageComputateDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       ComputateDeveloperPage page = new ComputateDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1956,22 +2186,32 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           Promise<Void> promise1 = Promise.promise();
           userpageComputateDeveloperPageInit(ctx, page, listComputateDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateUserPageComputateDeveloper(ctx, page, listComputateDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200UserPageComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2021,17 +2261,17 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPUTATEDEVELOPER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPUTATEDEVELOPER");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -2046,7 +2286,8 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPUTATEDEVELOPER".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -2062,7 +2303,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchComputateDeveloperList(siteRequest, true, false, true).onSuccess(listComputateDeveloper -> {
+              searchComputateDeveloperList(siteRequest, true, false, true, "DELETE").onSuccess(listComputateDeveloper -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listComputateDeveloper.getRequest().getRows());
@@ -2147,7 +2388,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterComputateDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2158,18 +2399,18 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterComputateDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2187,7 +2428,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             siteRequest.addScopes(scope);
           });
         });
-        searchComputateDeveloperList(siteRequest, false, true, true).onSuccess(listComputateDeveloper -> {
+        searchComputateDeveloperList(siteRequest, false, true, true, "DELETE").onSuccess(listComputateDeveloper -> {
           try {
             ComputateDeveloper o = listComputateDeveloper.first();
             if(o != null && listComputateDeveloper.getResponse().getResponse().getNumFound() == 1) {
@@ -2238,11 +2479,11 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       unindexComputateDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterComputateDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2262,7 +2503,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2277,7 +2518,7 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2343,24 +2584,25 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchComputateDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
-  public Future<SearchList<ComputateDeveloper>> searchComputateDeveloperList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+  public Future<SearchList<ComputateDeveloper>> searchComputateDeveloperList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
     Promise<SearchList<ComputateDeveloper>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
       SearchList<ComputateDeveloper> searchList = new SearchList<ComputateDeveloper>();
+      searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
       Date facetRangeEnd = null;
@@ -2553,18 +2795,18 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchComputateDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2599,15 +2841,15 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistComputateDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistComputateDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2649,11 +2891,11 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexComputateDeveloper failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2686,68 +2928,68 @@ public class ComputateDeveloperEnUSGenApiServiceImpl extends BaseApiServiceImpl 
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexComputateDeveloper failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexComputateDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexComputateDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      ComputateDeveloper page = new ComputateDeveloper();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      ComputateDeveloper o = new ComputateDeveloper();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(ComputateDeveloper.VAR_created, ComputateDeveloper.staticSetCreated(siteRequest2, (String)result.get(ComputateDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(ComputateDeveloper.VAR_name, ComputateDeveloper.staticSetName(siteRequest2, (String)result.get(ComputateDeveloper.VAR_name)));
-      page.persistForClass(ComputateDeveloper.VAR_description, ComputateDeveloper.staticSetDescription(siteRequest2, (String)result.get(ComputateDeveloper.VAR_description)));
-      page.persistForClass(ComputateDeveloper.VAR_archived, ComputateDeveloper.staticSetArchived(siteRequest2, (String)result.get(ComputateDeveloper.VAR_archived)));
-      page.persistForClass(ComputateDeveloper.VAR_pageId, ComputateDeveloper.staticSetPageId(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageId)));
-      page.persistForClass(ComputateDeveloper.VAR_courseNum, ComputateDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(ComputateDeveloper.VAR_courseNum)));
-      page.persistForClass(ComputateDeveloper.VAR_lessonNum, ComputateDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(ComputateDeveloper.VAR_lessonNum)));
-      page.persistForClass(ComputateDeveloper.VAR_authorName, ComputateDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorName)));
-      page.persistForClass(ComputateDeveloper.VAR_authorUrl, ComputateDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorUrl)));
-      page.persistForClass(ComputateDeveloper.VAR_pageImageUri, ComputateDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageUri)));
-      page.persistForClass(ComputateDeveloper.VAR_objectTitle, ComputateDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(ComputateDeveloper.VAR_objectTitle)));
-      page.persistForClass(ComputateDeveloper.VAR_displayPage, ComputateDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_displayPage)));
-      page.persistForClass(ComputateDeveloper.VAR_editPage, ComputateDeveloper.staticSetEditPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_editPage)));
-      page.persistForClass(ComputateDeveloper.VAR_userPage, ComputateDeveloper.staticSetUserPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_userPage)));
-      page.persistForClass(ComputateDeveloper.VAR_pageImageAlt, ComputateDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageAlt)));
-      page.persistForClass(ComputateDeveloper.VAR_download, ComputateDeveloper.staticSetDownload(siteRequest2, (String)result.get(ComputateDeveloper.VAR_download)));
-      page.persistForClass(ComputateDeveloper.VAR_prerequisiteArticleIds, ComputateDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_prerequisiteArticleIds)));
-      page.persistForClass(ComputateDeveloper.VAR_solrId, ComputateDeveloper.staticSetSolrId(siteRequest2, (String)result.get(ComputateDeveloper.VAR_solrId)));
-      page.persistForClass(ComputateDeveloper.VAR_nextArticleIds, ComputateDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_nextArticleIds)));
-      page.persistForClass(ComputateDeveloper.VAR_labelsString, ComputateDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(ComputateDeveloper.VAR_labelsString)));
-      page.persistForClass(ComputateDeveloper.VAR_labels, ComputateDeveloper.staticSetLabels(siteRequest2, (String)result.get(ComputateDeveloper.VAR_labels)));
-      page.persistForClass(ComputateDeveloper.VAR_relatedArticleIds, ComputateDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_relatedArticleIds)));
+      o.persistForClass(ComputateDeveloper.VAR_created, ComputateDeveloper.staticSetCreated(siteRequest2, (String)result.get(ComputateDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(ComputateDeveloper.VAR_name, ComputateDeveloper.staticSetName(siteRequest2, (String)result.get(ComputateDeveloper.VAR_name)));
+      o.persistForClass(ComputateDeveloper.VAR_description, ComputateDeveloper.staticSetDescription(siteRequest2, (String)result.get(ComputateDeveloper.VAR_description)));
+      o.persistForClass(ComputateDeveloper.VAR_archived, ComputateDeveloper.staticSetArchived(siteRequest2, (String)result.get(ComputateDeveloper.VAR_archived)));
+      o.persistForClass(ComputateDeveloper.VAR_pageId, ComputateDeveloper.staticSetPageId(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageId)));
+      o.persistForClass(ComputateDeveloper.VAR_courseNum, ComputateDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(ComputateDeveloper.VAR_courseNum)));
+      o.persistForClass(ComputateDeveloper.VAR_lessonNum, ComputateDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(ComputateDeveloper.VAR_lessonNum)));
+      o.persistForClass(ComputateDeveloper.VAR_authorName, ComputateDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorName)));
+      o.persistForClass(ComputateDeveloper.VAR_authorUrl, ComputateDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(ComputateDeveloper.VAR_authorUrl)));
+      o.persistForClass(ComputateDeveloper.VAR_pageImageUri, ComputateDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageUri)));
+      o.persistForClass(ComputateDeveloper.VAR_objectTitle, ComputateDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(ComputateDeveloper.VAR_objectTitle)));
+      o.persistForClass(ComputateDeveloper.VAR_displayPage, ComputateDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_displayPage)));
+      o.persistForClass(ComputateDeveloper.VAR_editPage, ComputateDeveloper.staticSetEditPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_editPage)));
+      o.persistForClass(ComputateDeveloper.VAR_userPage, ComputateDeveloper.staticSetUserPage(siteRequest2, (String)result.get(ComputateDeveloper.VAR_userPage)));
+      o.persistForClass(ComputateDeveloper.VAR_pageImageAlt, ComputateDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(ComputateDeveloper.VAR_pageImageAlt)));
+      o.persistForClass(ComputateDeveloper.VAR_download, ComputateDeveloper.staticSetDownload(siteRequest2, (String)result.get(ComputateDeveloper.VAR_download)));
+      o.persistForClass(ComputateDeveloper.VAR_prerequisiteArticleIds, ComputateDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_prerequisiteArticleIds)));
+      o.persistForClass(ComputateDeveloper.VAR_solrId, ComputateDeveloper.staticSetSolrId(siteRequest2, (String)result.get(ComputateDeveloper.VAR_solrId)));
+      o.persistForClass(ComputateDeveloper.VAR_nextArticleIds, ComputateDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_nextArticleIds)));
+      o.persistForClass(ComputateDeveloper.VAR_labelsString, ComputateDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(ComputateDeveloper.VAR_labelsString)));
+      o.persistForClass(ComputateDeveloper.VAR_labels, ComputateDeveloper.staticSetLabels(siteRequest2, (String)result.get(ComputateDeveloper.VAR_labels)));
+      o.persistForClass(ComputateDeveloper.VAR_relatedArticleIds, ComputateDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(ComputateDeveloper.VAR_relatedArticleIds)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

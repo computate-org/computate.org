@@ -135,20 +135,35 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * <p>
  * Delete the class AiTelemetryDeveloper in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the package org.computate.site.model.developer.aitelemetry in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.developer.aitelemetry&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.developer.aitelemetry&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * Generated: true
  **/
 public abstract class AiTelemetryDeveloperGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(AiTelemetryDeveloper.class);
+
+  public static final String Description_frFR = "Learn how to become an AI Telemetry platform developer — Providing access control to observability metrics for cloud environments, ACM hubs, OpenShift Clusters, virtual machines, bare metal hardware, and cloud projects. ";
+  public static final String AName_frFR = "an AI Telemetry developer";
+  public static final String SingularName_frFR = "AI Telemetry developer";
+  public static final String PluralName_frFR = "AI Telemetry developers";
+  public static final String Title_frFR = "AI Telemetry developers";
+  public static final String ThePluralName_frFR = "les AI Telemetry developers";
+  public static final String NameAdjectiveSingular_frFR = "AI Telemetry developer";
+  public static final String NameAdjectivePlural_frFR = "AI Telemetry developers";
 
   public static final String Description_enUS = "Learn how to become an AI Telemetry platform developer — Providing access control to observability metrics for cloud environments, ACM hubs, OpenShift Clusters, virtual machines, bare metal hardware, and cloud projects. ";
   public static final String AName_enUS = "an AI Telemetry developer";
@@ -2866,8 +2881,18 @@ public abstract class AiTelemetryDeveloperGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/ai-telemetry-developer/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDisplayPageForClass() {
+    return null;
   }
 
   @Override
@@ -2876,8 +2901,18 @@ public abstract class AiTelemetryDeveloperGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/ai-telemetry-developer/learn/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDownloadForClass() {
+    return null;
   }
 
   @Override

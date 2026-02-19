@@ -526,6 +526,11 @@ public class ComputateDeveloperGenPage extends ComputateDeveloperGenPageGen<Page
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all Computate Developers");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/computate-developer");

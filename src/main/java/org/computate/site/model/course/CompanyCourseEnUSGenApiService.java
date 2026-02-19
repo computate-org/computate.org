@@ -32,6 +32,7 @@ import io.vertx.ext.auth.authorization.AuthorizationProvider;
 @ProxyGen
 public interface CompanyCourseEnUSGenApiService {
 
+
   public void searchCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void getCompanyCourse(ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);
   public void patchCompanyCourse(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler);

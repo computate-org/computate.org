@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +210,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -313,7 +315,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -483,7 +485,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHCompanyProduct failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -494,18 +496,18 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHCompanyProduct failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHCompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -588,14 +590,14 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchCompanyProductFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -615,7 +617,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -833,17 +835,17 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           indexCompanyProduct(companyProduct).onSuccess(o2 -> {
             promise.complete(companyProduct);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postCompanyProductFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -864,7 +866,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1033,7 +1035,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -1044,18 +1046,18 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETECompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1124,11 +1126,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       unindexCompanyProduct(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteCompanyProductFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1148,7 +1150,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETECompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1322,7 +1324,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportCompanyProduct failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -1331,11 +1333,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportCompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1488,7 +1490,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1546,6 +1548,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
   public void searchpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1556,19 +1563,75 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     promise.complete();
   }
 
-  public String templateSearchPageCompanyProduct(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageCompanyProduct(ServiceRequest serviceRequest, CompanyProduct result) {
     return "en-us/search/product/CompanyProductSearchPage.htm";
+  }
+  public void templateSearchPageCompanyProduct(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyProduct result = listCompanyProduct.first();
+      String pageTemplateUri = templateUriSearchPageCompanyProduct(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageCompanyProduct failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageCompanyProduct(siteRequest.getServiceRequest());
-      if(listCompanyProduct.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyProduct(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyProductPage page = new CompanyProductPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1585,22 +1648,32 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           Promise<Void> promise1 = Promise.promise();
           searchpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageCompanyProduct(ctx, page, listCompanyProduct, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1757,6 +1830,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
   public void editpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1767,19 +1846,75 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     promise.complete();
   }
 
-  public String templateEditPageCompanyProduct(ServiceRequest serviceRequest) {
+  public String templateUriEditPageCompanyProduct(ServiceRequest serviceRequest, CompanyProduct result) {
     return "en-us/edit/product/CompanyProductEditPage.htm";
+  }
+  public void templateEditPageCompanyProduct(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyProduct result = listCompanyProduct.first();
+      String pageTemplateUri = templateUriEditPageCompanyProduct(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageCompanyProduct failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageCompanyProduct(siteRequest.getServiceRequest());
-      if(listCompanyProduct.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyProduct(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyProductPage page = new CompanyProductPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1796,22 +1931,32 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           Promise<Void> promise1 = Promise.promise();
           editpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageCompanyProduct(ctx, page, listCompanyProduct, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageCompanyProduct failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageCompanyProduct failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1968,6 +2113,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
   public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1978,19 +2129,75 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     promise.complete();
   }
 
-  public String templateUserPageCompanyProduct(ServiceRequest serviceRequest) {
+  public String templateUriUserPageCompanyProduct(ServiceRequest serviceRequest, CompanyProduct result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateUserPageCompanyProduct(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyProduct result = listCompanyProduct.first();
+      String pageTemplateUri = templateUriUserPageCompanyProduct(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateUserPageCompanyProduct failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200UserPageCompanyProduct(SearchList<CompanyProduct> listCompanyProduct) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateUserPageCompanyProduct(siteRequest.getServiceRequest());
-      if(listCompanyProduct.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyProduct(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyProductPage page = new CompanyProductPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -2007,22 +2214,32 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           Promise<Void> promise1 = Promise.promise();
           userpageCompanyProductPageInit(ctx, page, listCompanyProduct, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateUserPageCompanyProduct(ctx, page, listCompanyProduct, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200UserPageCompanyProduct failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200UserPageCompanyProduct failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200UserPageCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2225,7 +2442,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterCompanyProduct failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2236,18 +2453,18 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterCompanyProduct failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterCompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2316,11 +2533,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       unindexCompanyProduct(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterCompanyProductFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2340,7 +2557,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2355,7 +2572,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2421,13 +2638,13 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchCompanyProduct failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2631,18 +2848,18 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchCompanyProduct failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchCompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2677,15 +2894,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistCompanyProduct failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistCompanyProduct failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2727,11 +2944,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexCompanyProduct failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2764,69 +2981,69 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexCompanyProduct failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexCompanyProduct failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexCompanyProduct failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      CompanyProduct page = new CompanyProduct();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      CompanyProduct o = new CompanyProduct();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
-      page.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
-      page.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
-      page.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
-      page.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
-      page.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
-      page.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
-      page.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
-      page.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
-      page.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
-      page.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
-      page.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
-      page.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
-      page.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
-      page.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
-      page.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
-      page.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
-      page.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
-      page.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
-      page.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
-      page.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
-      page.persistForClass(CompanyProduct.VAR_dialogTemplate, CompanyProduct.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_dialogTemplate)));
+      o.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
+      o.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
+      o.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
+      o.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
+      o.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
+      o.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
+      o.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
+      o.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
+      o.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
+      o.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
+      o.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
+      o.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
+      o.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
+      o.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
+      o.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
+      o.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
+      o.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
+      o.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
+      o.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
+      o.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
+      o.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
+      o.persistForClass(CompanyProduct.VAR_dialogTemplate, CompanyProduct.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_dialogTemplate)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

@@ -170,6 +170,9 @@ import org.computate.site.user.SiteUserEnUSGenApiService;
 import org.computate.site.user.SiteUserEnUSApiServiceImpl;
 import org.computate.site.result.BaseResult;
 import org.computate.site.model.BaseModel;
+import org.computate.site.model.spine.SpineProgrammingEnUSGenApiService;
+import org.computate.site.model.spine.SpineProgrammingEnUSApiServiceImpl;
+import org.computate.site.model.spine.SpineProgramming;
 import org.computate.site.model.about.CompanyAboutEnUSGenApiService;
 import org.computate.site.model.about.CompanyAboutEnUSApiServiceImpl;
 import org.computate.site.model.about.CompanyAbout;
@@ -182,9 +185,6 @@ import org.computate.site.model.course.CompanyCourse;
 import org.computate.site.page.SitePageEnUSGenApiService;
 import org.computate.site.page.SitePageEnUSApiServiceImpl;
 import org.computate.site.page.SitePage;
-import org.computate.site.model.spine.SpineProgrammingEnUSGenApiService;
-import org.computate.site.model.spine.SpineProgrammingEnUSApiServiceImpl;
-import org.computate.site.model.spine.SpineProgramming;
 import org.computate.site.model.product.CompanyProductEnUSGenApiService;
 import org.computate.site.model.product.CompanyProductEnUSApiServiceImpl;
 import org.computate.site.model.product.CompanyProduct;
@@ -270,6 +270,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     this.sdkMeterProvider = sdkMeterProvider;
   }
 
+
   /**
    * The main method for the Vert.x application that runs the Vert.x Runner class
    **/
@@ -344,6 +345,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       siteRequest.setConfig(config);
       siteRequest.setWebClient(webClient);
       siteRequest.initDeepSiteRequest(siteRequest);
+      SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
+      apiSpineProgramming.setVertx(vertx);
+      apiSpineProgramming.setConfig(config);
+      apiSpineProgramming.setWebClient(webClient);
       SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
       apiSiteUser.setVertx(vertx);
       apiSiteUser.setConfig(config);
@@ -364,10 +369,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiSitePage.setVertx(vertx);
       apiSitePage.setConfig(config);
       apiSitePage.setWebClient(webClient);
-      SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
-      apiSpineProgramming.setVertx(vertx);
-      apiSpineProgramming.setConfig(config);
-      apiSpineProgramming.setWebClient(webClient);
       CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
       apiCompanyProduct.setVertx(vertx);
       apiCompanyProduct.setConfig(config);
@@ -404,21 +405,21 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiComputateDeveloper.setVertx(vertx);
       apiComputateDeveloper.setConfig(config);
       apiComputateDeveloper.setWebClient(webClient);
-      apiSiteUser.createAuthorizationScopes().onSuccess(authToken -> {
-          apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-              .compose(q2 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
-              .onSuccess(q2 -> {
-            apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                .compose(q3 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin" }).onSuccess(authToken -> {
+        apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+            .compose(q1 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+            .onSuccess(q1 -> {
+            apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                .compose(q3 -> apiCompanyAbout.authorizeGroupData(authToken, CompanyAbout.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                 .onSuccess(q3 -> {
-              apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                  .compose(q4 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+              apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                  .compose(q4 -> apiUseCase.authorizeGroupData(authToken, UseCase.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                   .onSuccess(q4 -> {
-                apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                    .compose(q5 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                    .compose(q5 -> apiCompanyCourse.authorizeGroupData(authToken, CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                     .onSuccess(q5 -> {
-                  apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
-                      .compose(q6 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                  apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
+                      .compose(q6 -> apiSitePage.authorizeGroupData(authToken, SitePage.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                       .onSuccess(q6 -> {
                     apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
                         .compose(q7 -> apiCompanyProduct.authorizeGroupData(authToken, CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
@@ -452,7 +453,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                                         .onSuccess(q15 -> {
                                       LOG.info("authorize data complete");
                                       promise.complete();
-                                  }).onFailure(ex -> promise.fail(ex));
+                                    }).onFailure(ex -> promise.fail(ex));
                                 }).onFailure(ex -> promise.fail(ex));
                               }).onFailure(ex -> promise.fail(ex));
                             }).onFailure(ex -> promise.fail(ex));
@@ -779,11 +780,11 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                         configureAmqp().onSuccess(j -> 
                           configureRabbitmq().onSuccess(k -> 
                             configureJinjava().onSuccess(l -> 
-                              configureApi().onSuccess(n -> 
-                                configureUi().onSuccess(o -> 
-                                  startServer().onSuccess(p -> startPromise.complete())
+                                configureApi().onSuccess(n -> 
+                                  configureUi().onSuccess(o -> 
+                                    startServer().onSuccess(p -> startPromise.complete())
+                                  ).onFailure(ex -> startPromise.fail(ex))
                                 ).onFailure(ex -> startPromise.fail(ex))
-                              ).onFailure(ex -> startPromise.fail(ex))
                             ).onFailure(ex -> startPromise.fail(ex))
                           ).onFailure(ex -> startPromise.fail(ex))
                         ).onFailure(ex -> startPromise.fail(ex))
@@ -873,7 +874,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
         Map<String, String> kafkaConfig = new HashMap<>();
         kafkaConfig.put("bootstrap.servers", config().getString(ConfigKeys.KAFKA_BROKERS));
         kafkaConfig.put("acks", "1");
-        kafkaConfig.put("security.protocol", "SSL");
+        if(StringUtils.isNotBlank(config().getString(ConfigKeys.KAFKA_SECURITY_PROTOCOL)))
+          kafkaConfig.put("security.protocol", config().getString(ConfigKeys.KAFKA_SECURITY_PROTOCOL));
         kafkaConfig.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaConfig.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         kafkaConfig.put("group.id", config().getString(ConfigKeys.KAFKA_GROUP));
@@ -896,7 +898,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
               
         // use consumer for interacting with Apache Kafka
         kafkaConsumer = KafkaConsumer.create(vertx, kafkaConfig);
-        SiteRoutes.kafkaConsumer(vertx, kafkaConsumer, config()).onSuccess(a -> {
+        SiteRoutes.kafkaConsumer(vertx, kafkaConsumer, config(), webClient).onSuccess(a -> {
           LOG.info("The Kafka producer was initialized successfully. ");
           promise.complete(kafkaProducer);
         }).onFailure(ex -> {
@@ -1435,6 +1437,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
+
   public <API_IMPL extends BaseApiServiceInterface> void initializeApiService(API_IMPL service) {
     service.setVertx(vertx);
     service.setEventBus(vertx.eventBus());
@@ -1462,14 +1465,18 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     Promise<Void> promise = Promise.promise();
     try {
       List<Future<?>> futures = new ArrayList<>();
-      List<String> authClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","SpineProgramming","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","SmartAquacultureDeveloper","AiTelemetryDeveloper","ComputateDeveloper");
-      List<String> authResources = Arrays.asList("COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","SPINEPROGRAMMING","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE","SMARTAQUACULTUREDEVELOPER","AITELEMETRYDEVELOPER","COMPUTATEDEVELOPER");
-      List<String> publicClassSimpleNames = Arrays.asList("CompanyAbout","UseCase","CompanyCourse","SitePage","SpineProgramming","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
+      List<String> authClassSimpleNames = Arrays.asList("SpineProgramming","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","SmartAquacultureDeveloper","AiTelemetryDeveloper","ComputateDeveloper");
+      List<String> authResources = Arrays.asList("SPINEPROGRAMMING","COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE","SMARTAQUACULTUREDEVELOPER","AITELEMETRYDEVELOPER","COMPUTATEDEVELOPER");
+      List<String> publicClassSimpleNames = Arrays.asList("SpineProgramming","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
       SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
       initializeApiService(apiSiteUser);
       registerApiService(SiteUserEnUSGenApiService.class, apiSiteUser, SiteUser.getClassApiAddress());
       apiSiteUser.configureUserSearchApi(config().getString(ComputateConfigKeys.USER_SEARCH_URI), router, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, config(), webClient, authResources, authClassSimpleNames);
       apiSiteUser.configurePublicSearchApi(config().getString(ComputateConfigKeys.PUBLIC_SEARCH_URI), router, SiteRequest.class, config(), webClient, publicClassSimpleNames);
+
+      SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
+      initializeApiService(apiSpineProgramming);
+      registerApiService(SpineProgrammingEnUSGenApiService.class, apiSpineProgramming, SpineProgramming.getClassApiAddress());
 
       CompanyAboutEnUSApiServiceImpl apiCompanyAbout = new CompanyAboutEnUSApiServiceImpl();
       initializeApiService(apiCompanyAbout);
@@ -1486,10 +1493,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       SitePageEnUSApiServiceImpl apiSitePage = new SitePageEnUSApiServiceImpl();
       initializeApiService(apiSitePage);
       registerApiService(SitePageEnUSGenApiService.class, apiSitePage, SitePage.getClassApiAddress());
-
-      SpineProgrammingEnUSApiServiceImpl apiSpineProgramming = new SpineProgrammingEnUSApiServiceImpl();
-      initializeApiService(apiSpineProgramming);
-      registerApiService(SpineProgrammingEnUSGenApiService.class, apiSpineProgramming, SpineProgramming.getClassApiAddress());
 
       CompanyProductEnUSApiServiceImpl apiCompanyProduct = new CompanyProductEnUSApiServiceImpl();
       initializeApiService(apiCompanyProduct);
@@ -1553,7 +1556,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
         staticHandler.setAllowRootFileSystemAccess(true);
         staticHandler.setWebRoot(staticPath);
         staticHandler.setFilesReadOnly(true);
-        staticHandler.setCachingEnabled(true);
       }
       router.route("/static/*").handler(staticHandler);
 
@@ -1678,7 +1680,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
 
       SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
       initializeApiService(apiSiteUser);
-      SiteRoutes.routes(vertx, router, oauth2AuthHandler, config(), webClient, jinjava, apiSiteUser);
+      SiteRoutes.routes(vertx, router, oauth2AuthenticationProvider, oauth2AuthHandler, config(), webClient, jinjava, apiSiteUser);
 
       LOG.info("The UI was configured properly.");
       promise.complete();

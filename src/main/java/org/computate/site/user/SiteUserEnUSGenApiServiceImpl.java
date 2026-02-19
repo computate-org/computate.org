@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -246,7 +248,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -294,67 +296,52 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-        String userId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("userId");
-        String SITEUSER = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SITEUSER");
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
-        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
-        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
-        form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "GET"));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "DELETE"));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SiteUser.CLASS_AUTH_RESOURCE, "PUT"));
-        if(userId != null)
-          form.add("permission", String.format("%s#%s", userId, "PATCH"));
-        siteRequest.setPublicRead(classPublicRead);
+        form.add("username", config.getString(ComputateConfigKeys.AUTH_ADMIN_USERNAME));
+        form.add("password", config.getString(ComputateConfigKeys.AUTH_ADMIN_PASSWORD));
+        form.add("grant_type", "password");
+        form.add("client_id", "admin-cli");
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
-            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            , "/realms/master/protocol/openid-connect/token"
             )
             .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
-            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
             .sendForm(form)
-            .expecting(HttpResponseExpectation.SC_OK)
-        .onComplete(authorizationDecisionResponse -> {
+        .onSuccess(adminTokenResponse -> {
           try {
-            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            scopes.add("GET");
-            scopes.add("PATCH");
-            if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
-              String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
-              eventHandler.handle(Future.succeededFuture(
-                new ServiceResponse(403, "FORBIDDEN",
-                  Buffer.buffer().appendString(
-                    new JsonObject()
-                      .put("errorCode", "403")
-                      .put("errorMessage", msg)
-                      .encodePrettily()
-                    ), MultiMap.caseInsensitiveMultiMap()
+            String adminAuthToken = adminTokenResponse.bodyAsJsonObject().getString("access_token");
+            String authRealm = config.getString(ComputateConfigKeys.AUTH_REALM);
+            String userId = siteRequest.getUserId();
+            webClient.get(
+                config.getInteger(ComputateConfigKeys.AUTH_PORT)
+                , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+                , String.format("/admin/realms/%s/users/%s", authRealm, userId)
                 )
-              ));
-            } else {
-              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
-              List<String> scopes2 = siteRequest.getScopes();
-              searchSiteUserList(siteRequest, false, true, true).onSuccess(listSiteUser -> {
-                try {
-                  ApiRequest apiRequest = new ApiRequest();
-                  apiRequest.setRows(listSiteUser.getRequest().getRows());
-                  apiRequest.setNumFound(listSiteUser.getResponse().getResponse().getNumFound());
-                  apiRequest.setNumPATCH(0L);
-                  apiRequest.initDeepApiRequest(siteRequest);
-                  siteRequest.setApiRequest_(apiRequest);
-                  if(apiRequest.getNumFound() == 1L)
-                    apiRequest.setOriginal(listSiteUser.first());
-                  apiRequest.setId(Optional.ofNullable(listSiteUser.first()).map(o2 -> o2.getUserId().toString()).orElse(null));
-                  apiRequest.setSolrId(Optional.ofNullable(listSiteUser.first()).map(o2 -> o2.getSolrId()).orElse(null));
-                  eventBus.publish("websocketSiteUser", JsonObject.mapFrom(apiRequest).toString());
-
-                  listPATCHSiteUser(apiRequest, listSiteUser).onSuccess(e -> {
+                .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+                .putHeader("Authorization", String.format("Bearer %s", adminAuthToken))
+                .send()
+                .expecting(HttpResponseExpectation.SC_OK)
+            .onSuccess(userResponse -> {
+              try {
+                JsonObject userBody = userResponse.bodyAsJsonObject();
+                if(userBody.getJsonObject("attributes") == null)
+                  userBody.put("attributes", new JsonObject());
+                body.stream().filter(entry -> entry.getKey().startsWith("set")).forEach(entry -> {
+                  userBody.getJsonObject("attributes").put(StringUtils.uncapitalize(entry.getKey().substring(3)), new JsonArray().add(entry.getValue()));
+                });
+                webClient.put(
+                    config.getInteger(ComputateConfigKeys.AUTH_PORT)
+                    , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+                    , String.format("/admin/realms/%s/users/%s", authRealm, userId)
+                    )
+                    .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+                    .putHeader("Authorization", String.format("Bearer %s", adminAuthToken))
+                    .putHeader("Content-Type", "application/json")
+                    .sendJsonObject(userBody)
+                    .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                .onSuccess(userUpdateResponse -> {
+                  try {
                     response200PATCHSiteUser(siteRequest).onSuccess(response -> {
                       LOG.debug(String.format("patchSiteUser succeeded. "));
                       eventHandler.handle(Future.succeededFuture(response));
@@ -362,23 +349,29 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
                       LOG.error(String.format("patchSiteUser failed. "), ex);
                       error(siteRequest, eventHandler, ex);
                     });
-                  }).onFailure(ex -> {
+                  } catch(Throwable ex) {
                     LOG.error(String.format("patchSiteUser failed. "), ex);
-                    error(siteRequest, eventHandler, ex);
-                  });
-                } catch(Exception ex) {
+                    error(null, eventHandler, ex);
+                  }
+                }).onFailure(ex -> {
                   LOG.error(String.format("patchSiteUser failed. "), ex);
-                  error(siteRequest, eventHandler, ex);
-                }
-              }).onFailure(ex -> {
+                  error(null, eventHandler, ex);
+                });
+              } catch(Throwable ex) {
                 LOG.error(String.format("patchSiteUser failed. "), ex);
-                error(siteRequest, eventHandler, ex);
-              });
-            }
-          } catch(Exception ex) {
+                error(null, eventHandler, ex);
+              }
+            }).onFailure(ex -> {
+              LOG.error(String.format("patchSiteUser failed. "), ex);
+              error(null, eventHandler, ex);
+            });
+          } catch(Throwable ex) {
             LOG.error(String.format("patchSiteUser failed. "), ex);
             error(null, eventHandler, ex);
           }
+        }).onFailure(ex -> {
+          LOG.error(String.format("patchSiteUser failed. "), ex);
+          error(null, eventHandler, ex);
         });
       } catch(Exception ex) {
         LOG.error(String.format("patchSiteUser failed. "), ex);
@@ -427,7 +420,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHSiteUser failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -438,18 +431,18 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHSiteUser failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHSiteUser failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -539,42 +532,42 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
                   }
                   promise1.complete(siteUser);
                 }).onFailure(ex -> {
-                  promise1.fail(ex);
+                  promise1.tryFail(ex);
                 });
               }).onFailure(ex -> {
-                promise1.fail(ex);
+                promise1.tryFail(ex);
               });
             }).onFailure(ex -> {
-              promise1.fail(ex);
+              promise1.tryFail(ex);
             });
           }).onFailure(ex -> {
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
         return promise1.future();
       }).onSuccess(a -> {
         siteRequest.setSqlConnection(null);
       }).onFailure(ex -> {
         siteRequest.setSqlConnection(null);
-        promise.fail(ex);
+        promise.tryFail(ex);
       }).compose(siteUser -> {
         Promise<SiteUser> promise2 = Promise.promise();
         refreshSiteUser(siteUser).onSuccess(a -> {
           promise2.complete(siteUser);
         }).onFailure(ex -> {
-          promise2.fail(ex);
+          promise2.tryFail(ex);
         });
         return promise2.future();
       }).onSuccess(siteUser -> {
         promise.complete(siteUser);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchSiteUserFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -802,15 +795,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           promise.complete(o3);
         }).onFailure(ex -> {
           LOG.error(String.format("sqlPATCHSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("sqlPATCHSiteUser failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("sqlPATCHSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -830,7 +823,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1031,29 +1024,29 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
                   indexSiteUser(siteUser).onSuccess(o2 -> {
                     promise1.complete(siteUser);
                   }).onFailure(ex -> {
-                    promise1.fail(ex);
+                    promise1.tryFail(ex);
                   });
                 }).onFailure(ex -> {
-                  promise1.fail(ex);
+                  promise1.tryFail(ex);
                 });
               }).onFailure(ex -> {
-                promise1.fail(ex);
+                promise1.tryFail(ex);
               });
             }).onFailure(ex -> {
-              promise1.fail(ex);
+              promise1.tryFail(ex);
             });
           }).onFailure(ex -> {
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
         return promise1.future();
       }).onSuccess(a -> {
         siteRequest.setSqlConnection(null);
       }).onFailure(ex -> {
         siteRequest.setSqlConnection(null);
-        promise.fail(ex);
+        promise.tryFail(ex);
       }).compose(siteUser -> {
         Promise<SiteUser> promise2 = Promise.promise();
         refreshSiteUser(siteUser).onSuccess(a -> {
@@ -1067,10 +1060,10 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
             promise2.complete(siteUser);
           } catch(Exception ex) {
             LOG.error(String.format("postSiteUserFuture failed. "), ex);
-            promise2.fail(ex);
+            promise2.tryFail(ex);
           }
         }).onFailure(ex -> {
-          promise2.fail(ex);
+          promise2.tryFail(ex);
         });
         return promise2.future();
       }).onSuccess(siteUser -> {
@@ -1084,14 +1077,14 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           promise.complete(siteUser);
         } catch(Exception ex) {
           LOG.error(String.format("postSiteUserFuture failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postSiteUserFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1365,15 +1358,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           promise.complete(o2);
         }).onFailure(ex -> {
           LOG.error(String.format("sqlPOSTSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("sqlPOSTSiteUser failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("sqlPOSTSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1394,7 +1387,7 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1490,6 +1483,11 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
   public void searchpageSiteUserPageInit(JsonObject ctx, SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/user"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/user"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1500,19 +1498,75 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
     promise.complete();
   }
 
-  public String templateSearchPageSiteUser(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageSiteUser(ServiceRequest serviceRequest, SiteUser result) {
     return "en-us/search/user/SiteUserSearchPage.htm";
+  }
+  public void templateSearchPageSiteUser(JsonObject ctx, SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSiteUser.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SiteUser result = listSiteUser.first();
+      String pageTemplateUri = templateUriSearchPageSiteUser(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageSiteUser failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageSiteUser(SearchList<SiteUser> listSiteUser) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSiteUser.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageSiteUser(siteRequest.getServiceRequest());
-      if(listSiteUser.size() == 0)
-        pageTemplateUri = templateSearchPageSiteUser(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SiteUserPage page = new SiteUserPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1531,22 +1585,32 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           Promise<Void> promise1 = Promise.promise();
           searchpageSiteUserPageInit(ctx, page, listSiteUser, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageSiteUser(ctx, page, listSiteUser, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageSiteUser failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1677,6 +1741,12 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
   public void editpageSiteUserPageInit(JsonObject ctx, SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/user"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1687,19 +1757,75 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
     promise.complete();
   }
 
-  public String templateEditPageSiteUser(ServiceRequest serviceRequest) {
+  public String templateUriEditPageSiteUser(ServiceRequest serviceRequest, SiteUser result) {
     return "en-us/edit/user/SiteUserEditPage.htm";
+  }
+  public void templateEditPageSiteUser(JsonObject ctx, SiteUserPage page, SearchList<SiteUser> listSiteUser, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSiteUser.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SiteUser result = listSiteUser.first();
+      String pageTemplateUri = templateUriEditPageSiteUser(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageSiteUser failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageSiteUser(SearchList<SiteUser> listSiteUser) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSiteUser.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageSiteUser(siteRequest.getServiceRequest());
-      if(listSiteUser.size() == 0)
-        pageTemplateUri = templateSearchPageSiteUser(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SiteUserPage page = new SiteUserPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1718,22 +1844,32 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           Promise<Void> promise1 = Promise.promise();
           editpageSiteUserPageInit(ctx, page, listSiteUser, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageSiteUser(ctx, page, listSiteUser, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageSiteUser failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1794,11 +1930,11 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       }).onFailure(ex -> {
         RuntimeException ex2 = new RuntimeException(ex);
         LOG.error("createSiteUser failed. ", ex2);
-        promise.fail(ex2);
+        promise.tryFail(ex2);
       });
     } catch(Exception ex) {
       LOG.error(String.format("createSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1864,13 +2000,13 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1878,218 +2014,23 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
   public Future<SearchList<SiteUser>> searchSiteUserList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
     Promise<SearchList<SiteUser>> promise = Promise.promise();
     try {
-      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
-      String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
-      String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
-      SearchList<SiteUser> searchList = new SearchList<SiteUser>();
-      String facetRange = null;
-      Date facetRangeStart = null;
-      Date facetRangeEnd = null;
-      String facetRangeGap = null;
-      String statsField = null;
-      String statsFieldIndexed = null;
-      searchList.setPopulate(populate);
-      searchList.setStore(store);
-      searchList.q("*:*");
-      searchList.setC(SiteUser.class);
-      searchList.setSiteRequest_(siteRequest);
-      searchList.facetMinCount(1);
-      if(entityList != null) {
-        for(String v : entityList) {
-          searchList.fl(SiteUser.varIndexedSiteUser(v));
-        }
-      }
-
-      String userId = serviceRequest.getParams().getJsonObject("path").getString("userId");
-      if(userId != null) {
-        searchList.fq("userId_docvalues_string:" + SearchTool.escapeQueryChars(userId));
-      }
-
-      if(!siteRequest.getScopes().contains("GET")) {
-        searchList.fq("sessionId_docvalues_string:" + SearchTool.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionId()).orElse("\"-----\"")) + " OR " + "sessionId_docvalues_string:" + SearchTool.escapeQueryChars(Optional.ofNullable(siteRequest.getSessionIdBefore()).orElse("\"-----\""))
-            + " OR userId_docvalues_string:" + Optional.ofNullable(siteRequest.getUserId()).orElse("\"-----\""));
-      }
-
-      for(String paramName : serviceRequest.getParams().getJsonObject("query").fieldNames()) {
-        Object paramValuesObject = serviceRequest.getParams().getJsonObject("query").getValue(paramName);
-        String entityVar = null;
-        String valueIndexed = null;
-        String varIndexed = null;
-        String valueSort = null;
-        Long valueStart = null;
-        Long valueRows = null;
-        String valueCursorMark = null;
-        JsonArray paramObjects = paramValuesObject instanceof JsonArray ? (JsonArray)paramValuesObject : new JsonArray().add(paramValuesObject);
-
-        try {
-          if(paramValuesObject != null && "facet.pivot".equals(paramName)) {
-            Matcher mFacetPivot = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher(StringUtils.join(paramObjects.getList().toArray(), ","));
-            if(mFacetPivot.find()) {
-              String solrLocalParams = mFacetPivot.group(1);
-              String[] entityVars = mFacetPivot.group(2).trim().split(",");
-              String[] varsIndexed = new String[entityVars.length];
-              for(Integer i = 0; i < entityVars.length; i++) {
-                entityVar = entityVars[i];
-                varsIndexed[i] = SiteUser.varIndexedSiteUser(entityVar);
-              }
-              searchList.facetPivot((solrLocalParams == null ? "" : solrLocalParams) + StringUtils.join(varsIndexed, ","));
-            }
-          } else if(paramValuesObject != null) {
-            for(Object paramObject : paramObjects) {
-              if(paramName.equals("q")) {
-                Matcher mQ = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|\\^|$)))").matcher((String)paramObject);
-                StringBuffer sb = new StringBuffer();
-                while(mQ.find()) {
-                  entityVar = mQ.group(1).trim();
-                  valueIndexed = mQ.group(2).trim();
-                  varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                  String entityQ = searchSiteUserFq(searchList, entityVar, valueIndexed, varIndexed);
-                  mQ.appendReplacement(sb, entityQ);
-                }
-                if(!sb.isEmpty()) {
-                  mQ.appendTail(sb);
-                  searchList.q(sb.toString());
-                }
-              } else if(paramName.equals("fq")) {
-                Matcher mFq = Pattern.compile("(\\w+):(.+?(?=(\\)|\\s+OR\\s+|\\s+AND\\s+|$)))").matcher((String)paramObject);
-                  StringBuffer sb = new StringBuffer();
-                while(mFq.find()) {
-                  entityVar = mFq.group(1).trim();
-                  valueIndexed = mFq.group(2).trim();
-                  varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                  String entityFq = searchSiteUserFq(searchList, entityVar, valueIndexed, varIndexed);
-                  mFq.appendReplacement(sb, entityFq);
-                }
-                if(!sb.isEmpty()) {
-                  mFq.appendTail(sb);
-                  searchList.fq(sb.toString());
-                }
-              } else if(paramName.equals("sort")) {
-                entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, " "));
-                valueIndexed = StringUtils.trim(StringUtils.substringAfter((String)paramObject, " "));
-                varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                searchSiteUserSort(searchList, entityVar, valueIndexed, varIndexed);
-              } else if(paramName.equals("start")) {
-                valueStart = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchSiteUserStart(searchList, valueStart);
-              } else if(paramName.equals("rows")) {
-                valueRows = paramObject instanceof Long ? (Long)paramObject : Long.parseLong(paramObject.toString());
-                searchSiteUserRows(searchList, valueRows);
-              } else if(paramName.equals("stats")) {
-                searchList.stats((Boolean)paramObject);
-              } else if(paramName.equals("stats.field")) {
-                Matcher mStats = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher((String)paramObject);
-                if(mStats.find()) {
-                  String solrLocalParams = mStats.group(1);
-                  entityVar = mStats.group(2).trim();
-                  varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                  searchList.statsField((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
-                  statsField = entityVar;
-                  statsFieldIndexed = varIndexed;
-                }
-              } else if(paramName.equals("facet")) {
-                searchList.facet((Boolean)paramObject);
-              } else if(paramName.equals("facet.range.start")) {
-                String startMathStr = (String)paramObject;
-                Date start = SearchTool.parseMath(startMathStr);
-                searchList.facetRangeStart(start.toInstant().toString());
-                facetRangeStart = start;
-              } else if(paramName.equals("facet.range.end")) {
-                String endMathStr = (String)paramObject;
-                Date end = SearchTool.parseMath(endMathStr);
-                searchList.facetRangeEnd(end.toInstant().toString());
-                facetRangeEnd = end;
-              } else if(paramName.equals("facet.range.gap")) {
-                String gap = (String)paramObject;
-                searchList.facetRangeGap(gap);
-                facetRangeGap = gap;
-              } else if(paramName.equals("facet.range")) {
-                Matcher mFacetRange = Pattern.compile("(?:(\\{![^\\}]+\\}))?(.*)").matcher((String)paramObject);
-                if(mFacetRange.find()) {
-                  String solrLocalParams = mFacetRange.group(1);
-                  entityVar = mFacetRange.group(2).trim();
-                  varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                  searchList.facetRange((solrLocalParams == null ? "" : solrLocalParams) + varIndexed);
-                  facetRange = entityVar;
-                }
-              } else if(paramName.equals("facet.field")) {
-                entityVar = (String)paramObject;
-                varIndexed = SiteUser.varIndexedSiteUser(entityVar);
-                if(varIndexed != null)
-                  searchList.facetField(varIndexed);
-              } else if(paramName.equals("var")) {
-                entityVar = StringUtils.trim(StringUtils.substringBefore((String)paramObject, ":"));
-                valueIndexed = URLDecoder.decode(StringUtils.trim(StringUtils.substringAfter((String)paramObject, ":")), "UTF-8");
-                searchSiteUserVar(searchList, entityVar, valueIndexed);
-              } else if(paramName.equals("cursorMark")) {
-                valueCursorMark = (String)paramObject;
-                searchList.cursorMark((String)paramObject);
-              }
-            }
-            searchSiteUserUri(searchList);
-          }
-        } catch(Exception e) {
-          ExceptionUtils.rethrow(e);
-        }
-      }
-      if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-        searchList.sort("created_docvalues_date", "desc");
-      }
-      String facetRange2 = facetRange;
-      Date facetRangeStart2 = facetRangeStart;
-      Date facetRangeEnd2 = facetRangeEnd;
-      String facetRangeGap2 = facetRangeGap;
-      String statsField2 = statsField;
-      String statsFieldIndexed2 = statsFieldIndexed;
-      searchSiteUser2(siteRequest, populate, store, modify, searchList);
-      searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
-        if(facetRange2 != null && statsField2 != null && facetRange2.equals(statsField2)) {
-          StatsField stats = searchList.getResponse().getStats().getStatsFields().get(statsFieldIndexed2);
-          Instant min = Optional.ofNullable(stats.getMin()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
-          Instant max = Optional.ofNullable(stats.getMax()).map(val -> Instant.parse(val.toString())).orElse(Instant.now());
-          if(min.equals(max)) {
-            min = min.minus(1, ChronoUnit.DAYS);
-            max = max.plus(2, ChronoUnit.DAYS);
-          }
-          Duration duration = Duration.between(min, max);
-          String gap = "HOUR";
-          if(duration.toDays() >= 365)
-            gap = "YEAR";
-          else if(duration.toDays() >= 28)
-            gap = "MONTH";
-          else if(duration.toDays() >= 1)
-            gap = "DAY";
-          else if(duration.toHours() >= 1)
-            gap = "HOUR";
-          else if(duration.toMinutes() >= 1)
-            gap = "MINUTE";
-          else if(duration.toMillis() >= 1000)
-            gap = "SECOND";
-          else if(duration.toMillis() >= 1)
-            gap = "MILLI";
-
-          if(facetRangeStart2 == null)
-            searchList.facetRangeStart(min.toString());
-          if(facetRangeEnd2 == null)
-            searchList.facetRangeEnd(max.toString());
-          if(facetRangeGap2 == null)
-            searchList.facetRangeGap(String.format("+1%s", gap));
-          searchList.query().onSuccess(b -> {
-            promise.complete(searchList);
-          }).onFailure(ex -> {
-            LOG.error(String.format("searchSiteUser failed. "), ex);
-            promise.fail(ex);
-          });
-        } else {
+      SiteUser siteUser = siteRequest.getSiteUser_();
+      siteUser.promiseDeepForClass(siteRequest).onSuccess(a -> {
+        SearchList<SiteUser> searchList = new SearchList<SiteUser>();
+        searchList.addList(siteUser);
+        searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
           promise.complete(searchList);
-        }
+        }).onFailure(ex -> {
+          LOG.error("Unable to create site user", ex);
+          promise.tryFail(ex);
+        });
       }).onFailure(ex -> {
-        LOG.error(String.format("searchSiteUser failed. "), ex);
-        promise.fail(ex);
+        LOG.error("Unable to create site user", ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2124,20 +2065,20 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistSiteUser failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistSiteUser failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         RuntimeException ex2 = new RuntimeException(ex);
         LOG.error(String.format("persistSiteUser failed. "), ex2);
-        promise.fail(ex2);
+        promise.tryFail(ex2);
       });
     } catch(Exception ex) {
       LOG.error(String.format("persistSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2185,11 +2126,11 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexSiteUser failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2222,15 +2163,15 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexSiteUser failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexSiteUser failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2257,60 +2198,60 @@ public class SiteUserEnUSGenApiServiceImpl extends BaseApiServiceImpl implements
       }
     } catch(Exception ex) {
       LOG.error(String.format("refreshSiteUser failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      SiteUser page = new SiteUser();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      SiteUser o = new SiteUser();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(SiteUser.VAR_userId, SiteUser.staticSetUserId(siteRequest2, (String)result.get(SiteUser.VAR_userId)));
-      page.persistForClass(SiteUser.VAR_created, SiteUser.staticSetCreated(siteRequest2, (String)result.get(SiteUser.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(SiteUser.VAR_userName, SiteUser.staticSetUserName(siteRequest2, (String)result.get(SiteUser.VAR_userName)));
-      page.persistForClass(SiteUser.VAR_userEmail, SiteUser.staticSetUserEmail(siteRequest2, (String)result.get(SiteUser.VAR_userEmail)));
-      page.persistForClass(SiteUser.VAR_archived, SiteUser.staticSetArchived(siteRequest2, (String)result.get(SiteUser.VAR_archived)));
-      page.persistForClass(SiteUser.VAR_userFirstName, SiteUser.staticSetUserFirstName(siteRequest2, (String)result.get(SiteUser.VAR_userFirstName)));
-      page.persistForClass(SiteUser.VAR_userLastName, SiteUser.staticSetUserLastName(siteRequest2, (String)result.get(SiteUser.VAR_userLastName)));
-      page.persistForClass(SiteUser.VAR_userFullName, SiteUser.staticSetUserFullName(siteRequest2, (String)result.get(SiteUser.VAR_userFullName)));
-      page.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
-      page.persistForClass(SiteUser.VAR_sessionId, SiteUser.staticSetSessionId(siteRequest2, (String)result.get(SiteUser.VAR_sessionId)));
-      page.persistForClass(SiteUser.VAR_awesomeEffect, SiteUser.staticSetAwesomeEffect(siteRequest2, (String)result.get(SiteUser.VAR_awesomeEffect)));
-      page.persistForClass(SiteUser.VAR_userKey, SiteUser.staticSetUserKey(siteRequest2, (String)result.get(SiteUser.VAR_userKey)));
-      page.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
-      page.persistForClass(SiteUser.VAR_siteFontSize, SiteUser.staticSetSiteFontSize(siteRequest2, (String)result.get(SiteUser.VAR_siteFontSize)));
-      page.persistForClass(SiteUser.VAR_siteTheme, SiteUser.staticSetSiteTheme(siteRequest2, (String)result.get(SiteUser.VAR_siteTheme)));
-      page.persistForClass(SiteUser.VAR_objectTitle, SiteUser.staticSetObjectTitle(siteRequest2, (String)result.get(SiteUser.VAR_objectTitle)));
-      page.persistForClass(SiteUser.VAR_webComponentsTheme, SiteUser.staticSetWebComponentsTheme(siteRequest2, (String)result.get(SiteUser.VAR_webComponentsTheme)));
-      page.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
-      page.persistForClass(SiteUser.VAR_customerProfileId, SiteUser.staticSetCustomerProfileId(siteRequest2, (String)result.get(SiteUser.VAR_customerProfileId)));
-      page.persistForClass(SiteUser.VAR_editPage, SiteUser.staticSetEditPage(siteRequest2, (String)result.get(SiteUser.VAR_editPage)));
-      page.persistForClass(SiteUser.VAR_userPage, SiteUser.staticSetUserPage(siteRequest2, (String)result.get(SiteUser.VAR_userPage)));
-      page.persistForClass(SiteUser.VAR_download, SiteUser.staticSetDownload(siteRequest2, (String)result.get(SiteUser.VAR_download)));
+      o.persistForClass(SiteUser.VAR_userId, SiteUser.staticSetUserId(siteRequest2, (String)result.get(SiteUser.VAR_userId)));
+      o.persistForClass(SiteUser.VAR_created, SiteUser.staticSetCreated(siteRequest2, (String)result.get(SiteUser.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(SiteUser.VAR_userName, SiteUser.staticSetUserName(siteRequest2, (String)result.get(SiteUser.VAR_userName)));
+      o.persistForClass(SiteUser.VAR_userEmail, SiteUser.staticSetUserEmail(siteRequest2, (String)result.get(SiteUser.VAR_userEmail)));
+      o.persistForClass(SiteUser.VAR_archived, SiteUser.staticSetArchived(siteRequest2, (String)result.get(SiteUser.VAR_archived)));
+      o.persistForClass(SiteUser.VAR_userFirstName, SiteUser.staticSetUserFirstName(siteRequest2, (String)result.get(SiteUser.VAR_userFirstName)));
+      o.persistForClass(SiteUser.VAR_userLastName, SiteUser.staticSetUserLastName(siteRequest2, (String)result.get(SiteUser.VAR_userLastName)));
+      o.persistForClass(SiteUser.VAR_userFullName, SiteUser.staticSetUserFullName(siteRequest2, (String)result.get(SiteUser.VAR_userFullName)));
+      o.persistForClass(SiteUser.VAR_seeArchived, SiteUser.staticSetSeeArchived(siteRequest2, (String)result.get(SiteUser.VAR_seeArchived)));
+      o.persistForClass(SiteUser.VAR_sessionId, SiteUser.staticSetSessionId(siteRequest2, (String)result.get(SiteUser.VAR_sessionId)));
+      o.persistForClass(SiteUser.VAR_awesomeEffect, SiteUser.staticSetAwesomeEffect(siteRequest2, (String)result.get(SiteUser.VAR_awesomeEffect)));
+      o.persistForClass(SiteUser.VAR_userKey, SiteUser.staticSetUserKey(siteRequest2, (String)result.get(SiteUser.VAR_userKey)));
+      o.persistForClass(SiteUser.VAR_displayName, SiteUser.staticSetDisplayName(siteRequest2, (String)result.get(SiteUser.VAR_displayName)));
+      o.persistForClass(SiteUser.VAR_siteFontSize, SiteUser.staticSetSiteFontSize(siteRequest2, (String)result.get(SiteUser.VAR_siteFontSize)));
+      o.persistForClass(SiteUser.VAR_siteTheme, SiteUser.staticSetSiteTheme(siteRequest2, (String)result.get(SiteUser.VAR_siteTheme)));
+      o.persistForClass(SiteUser.VAR_objectTitle, SiteUser.staticSetObjectTitle(siteRequest2, (String)result.get(SiteUser.VAR_objectTitle)));
+      o.persistForClass(SiteUser.VAR_webComponentsTheme, SiteUser.staticSetWebComponentsTheme(siteRequest2, (String)result.get(SiteUser.VAR_webComponentsTheme)));
+      o.persistForClass(SiteUser.VAR_displayPage, SiteUser.staticSetDisplayPage(siteRequest2, (String)result.get(SiteUser.VAR_displayPage)));
+      o.persistForClass(SiteUser.VAR_customerProfileId, SiteUser.staticSetCustomerProfileId(siteRequest2, (String)result.get(SiteUser.VAR_customerProfileId)));
+      o.persistForClass(SiteUser.VAR_editPage, SiteUser.staticSetEditPage(siteRequest2, (String)result.get(SiteUser.VAR_editPage)));
+      o.persistForClass(SiteUser.VAR_userPage, SiteUser.staticSetUserPage(siteRequest2, (String)result.get(SiteUser.VAR_userPage)));
+      o.persistForClass(SiteUser.VAR_download, SiteUser.staticSetDownload(siteRequest2, (String)result.get(SiteUser.VAR_download)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

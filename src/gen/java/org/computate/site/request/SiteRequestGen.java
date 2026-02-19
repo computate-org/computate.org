@@ -87,15 +87,21 @@ import io.vertx.core.Future;
  * <h2>AName.enUS: null</h2>
  * <p>
  * Delete the class SiteRequest in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.request.SiteRequest&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the package org.computate.site.request in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.request&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.request&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * Generated: true
  **/
@@ -2563,7 +2569,15 @@ public abstract class SiteRequestGen<DEV> extends Object {
     return null;
   }
 
+  public String frFRStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
   public String enUSStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
+  public String frFRStringFormatUrlDisplayPageForClass() {
     return null;
   }
 
@@ -2571,7 +2585,15 @@ public abstract class SiteRequestGen<DEV> extends Object {
     return null;
   }
 
+  public String frFRStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
   public String enUSStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  public String frFRStringFormatUrlDownloadForClass() {
     return null;
   }
 

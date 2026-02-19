@@ -131,20 +131,35 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * <p>
  * Delete the class CompanyWebsite in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.website.CompanyWebsite&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the package org.computate.site.model.website in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.website&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.website&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * Generated: true
  **/
 public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyWebsite.class);
+
+  public static final String Description_frFR = "See the live websites built with computate";
+  public static final String AName_frFR = "a website";
+  public static final String SingularName_frFR = "website";
+  public static final String PluralName_frFR = "websites";
+  public static final String Title_frFR = "websites";
+  public static final String ThePluralName_frFR = "les websites";
+  public static final String NameAdjectiveSingular_frFR = "website";
+  public static final String NameAdjectivePlural_frFR = "websites";
 
   public static final String Description_enUS = "See the live websites built with computate";
   public static final String AName_enUS = "a website";
@@ -957,8 +972,18 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/website/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDisplayPageForClass() {
+    return null;
   }
 
   @Override
@@ -967,7 +992,17 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
+  public String frFRStringFormatUrlDownloadForClass() {
     return null;
   }
 

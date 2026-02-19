@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +210,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -313,7 +315,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -456,7 +458,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -467,18 +469,18 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -561,14 +563,14 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchCompanyAboutFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -588,7 +590,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -779,17 +781,17 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           indexCompanyAbout(companyAbout).onSuccess(o2 -> {
             promise.complete(companyAbout);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postCompanyAboutFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -810,7 +812,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -952,7 +954,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -963,18 +965,18 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETECompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1043,11 +1045,11 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       unindexCompanyAbout(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteCompanyAboutFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1067,7 +1069,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETECompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1214,7 +1216,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -1223,11 +1225,11 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1380,7 +1382,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1438,6 +1440,11 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void searchpageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1448,19 +1455,75 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
     promise.complete();
   }
 
-  public String templateSearchPageCompanyAbout(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
     return "en-us/search/about/CompanyAboutSearchPage.htm";
+  }
+  public void templateSearchPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyAbout result = listCompanyAbout.first();
+      String pageTemplateUri = templateUriSearchPageCompanyAbout(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageCompanyAbout failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageCompanyAbout(siteRequest.getServiceRequest());
-      if(listCompanyAbout.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyAbout(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyAboutPage page = new CompanyAboutPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1477,22 +1540,32 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           searchpageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1622,6 +1695,12 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void editpageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1632,19 +1711,75 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
     promise.complete();
   }
 
-  public String templateEditPageCompanyAbout(ServiceRequest serviceRequest) {
+  public String templateUriEditPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
     return "en-us/edit/about/CompanyAboutEditPage.htm";
+  }
+  public void templateEditPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyAbout result = listCompanyAbout.first();
+      String pageTemplateUri = templateUriEditPageCompanyAbout(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageCompanyAbout failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageCompanyAbout(siteRequest.getServiceRequest());
-      if(listCompanyAbout.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyAbout(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyAboutPage page = new CompanyAboutPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1661,22 +1796,32 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           editpageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1768,6 +1913,12 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
   public void displaypageCompanyAboutPageInit(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/about"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1778,19 +1929,75 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
     promise.complete();
   }
 
-  public String templateDisplayPageCompanyAbout(ServiceRequest serviceRequest) {
+  public String templateUriDisplayPageCompanyAbout(ServiceRequest serviceRequest, CompanyAbout result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateDisplayPageCompanyAbout(JsonObject ctx, CompanyAboutPage page, SearchList<CompanyAbout> listCompanyAbout, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyAbout result = listCompanyAbout.first();
+      String pageTemplateUri = templateUriDisplayPageCompanyAbout(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateDisplayPageCompanyAbout failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200DisplayPageCompanyAbout(SearchList<CompanyAbout> listCompanyAbout) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyAbout.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateDisplayPageCompanyAbout(siteRequest.getServiceRequest());
-      if(listCompanyAbout.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyAbout(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyAboutPage page = new CompanyAboutPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1807,22 +2014,32 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           Promise<Void> promise1 = Promise.promise();
           displaypageCompanyAboutPageInit(ctx, page, listCompanyAbout, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateDisplayPageCompanyAbout(ctx, page, listCompanyAbout, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200DisplayPageCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1998,7 +2215,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2009,18 +2226,18 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2089,11 +2306,11 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       unindexCompanyAbout(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterCompanyAboutFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2113,7 +2330,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2128,7 +2345,7 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2194,13 +2411,13 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchCompanyAbout failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2403,18 +2620,18 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchCompanyAbout failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchCompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2449,15 +2666,15 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistCompanyAbout failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistCompanyAbout failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2499,11 +2716,11 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexCompanyAbout failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2536,57 +2753,57 @@ public class CompanyAboutEnUSGenApiServiceImpl extends BaseApiServiceImpl implem
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexCompanyAbout failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexCompanyAbout failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexCompanyAbout failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      CompanyAbout page = new CompanyAbout();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      CompanyAbout o = new CompanyAbout();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(CompanyAbout.VAR_name, CompanyAbout.staticSetName(siteRequest2, (String)result.get(CompanyAbout.VAR_name)));
-      page.persistForClass(CompanyAbout.VAR_created, CompanyAbout.staticSetCreated(siteRequest2, (String)result.get(CompanyAbout.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(CompanyAbout.VAR_description, CompanyAbout.staticSetDescription(siteRequest2, (String)result.get(CompanyAbout.VAR_description)));
-      page.persistForClass(CompanyAbout.VAR_pageId, CompanyAbout.staticSetPageId(siteRequest2, (String)result.get(CompanyAbout.VAR_pageId)));
-      page.persistForClass(CompanyAbout.VAR_archived, CompanyAbout.staticSetArchived(siteRequest2, (String)result.get(CompanyAbout.VAR_archived)));
-      page.persistForClass(CompanyAbout.VAR_objectTitle, CompanyAbout.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyAbout.VAR_objectTitle)));
-      page.persistForClass(CompanyAbout.VAR_displayPage, CompanyAbout.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyAbout.VAR_displayPage)));
-      page.persistForClass(CompanyAbout.VAR_editPage, CompanyAbout.staticSetEditPage(siteRequest2, (String)result.get(CompanyAbout.VAR_editPage)));
-      page.persistForClass(CompanyAbout.VAR_userPage, CompanyAbout.staticSetUserPage(siteRequest2, (String)result.get(CompanyAbout.VAR_userPage)));
-      page.persistForClass(CompanyAbout.VAR_download, CompanyAbout.staticSetDownload(siteRequest2, (String)result.get(CompanyAbout.VAR_download)));
-      page.persistForClass(CompanyAbout.VAR_solrId, CompanyAbout.staticSetSolrId(siteRequest2, (String)result.get(CompanyAbout.VAR_solrId)));
+      o.persistForClass(CompanyAbout.VAR_name, CompanyAbout.staticSetName(siteRequest2, (String)result.get(CompanyAbout.VAR_name)));
+      o.persistForClass(CompanyAbout.VAR_created, CompanyAbout.staticSetCreated(siteRequest2, (String)result.get(CompanyAbout.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(CompanyAbout.VAR_description, CompanyAbout.staticSetDescription(siteRequest2, (String)result.get(CompanyAbout.VAR_description)));
+      o.persistForClass(CompanyAbout.VAR_pageId, CompanyAbout.staticSetPageId(siteRequest2, (String)result.get(CompanyAbout.VAR_pageId)));
+      o.persistForClass(CompanyAbout.VAR_archived, CompanyAbout.staticSetArchived(siteRequest2, (String)result.get(CompanyAbout.VAR_archived)));
+      o.persistForClass(CompanyAbout.VAR_objectTitle, CompanyAbout.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyAbout.VAR_objectTitle)));
+      o.persistForClass(CompanyAbout.VAR_displayPage, CompanyAbout.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyAbout.VAR_displayPage)));
+      o.persistForClass(CompanyAbout.VAR_editPage, CompanyAbout.staticSetEditPage(siteRequest2, (String)result.get(CompanyAbout.VAR_editPage)));
+      o.persistForClass(CompanyAbout.VAR_userPage, CompanyAbout.staticSetUserPage(siteRequest2, (String)result.get(CompanyAbout.VAR_userPage)));
+      o.persistForClass(CompanyAbout.VAR_download, CompanyAbout.staticSetDownload(siteRequest2, (String)result.get(CompanyAbout.VAR_download)));
+      o.persistForClass(CompanyAbout.VAR_solrId, CompanyAbout.staticSetSolrId(siteRequest2, (String)result.get(CompanyAbout.VAR_solrId)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

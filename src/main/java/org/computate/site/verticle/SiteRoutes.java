@@ -59,6 +59,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.auth.authentication.UsernamePasswordCredentials;
+import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.ext.web.client.HttpRequest;
@@ -80,7 +81,7 @@ import net.authorize.api.controller.base.ApiOperationBase;
 public class SiteRoutes {
   protected static final Logger LOG = LoggerFactory.getLogger(SiteRoutes.class);
 
-  public static void routes(Vertx vertx, Router router, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
+  public static void routes(Vertx vertx, Router router, OAuth2Auth oauth2AuthenticationProvider, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
 
     router.get("/").handler(eventHandler -> {
       ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(eventHandler);
@@ -582,7 +583,7 @@ public class SiteRoutes {
       searchList.setStore(true);
       searchList.q("*:*");
       searchList.sort("created_docvalues_date", "desc");
-      searchList.fq("price_docvalues_double:0.00");
+      searchList.fq("price_docvalues_string:0");
       searchList.setC(CompanyProduct.class);
       searchList.setSiteRequest_(siteRequest);
       searchList.promiseDeepForClass(siteRequest).onSuccess(searchList2 -> {
@@ -677,7 +678,7 @@ public class SiteRoutes {
     return promise.future();
   }
 
-  public static Future<Void> kafkaConsumer(Vertx vertx, KafkaConsumer<String, String> consumer, JsonObject config) {
+  public static Future<Void> kafkaConsumer(Vertx vertx, KafkaConsumer<String, String> consumer, JsonObject config, WebClient webClient) {
     Promise<Void> promise = Promise.promise();
     try {
       promise.complete();

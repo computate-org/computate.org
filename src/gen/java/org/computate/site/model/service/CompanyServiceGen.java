@@ -131,20 +131,35 @@ import io.vertx.core.json.JsonObject;
  * </p>
  * <p>
  * Delete the class CompanyService in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomCanonique_enUS_indexed_string:org.computate.site.model.service.CompanyService&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the package org.computate.site.model.service in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.service&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;classeNomEnsemble_enUS_indexed_string:org.computate.site.model.service&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * <p>
  * Delete  the project computate.org in Solr: 
- * curl -k 'https://solr.apps-crc.testing/update?commitWithin=1000&overwrite=true&wt=json' -X POST -H 'Content-type: text/xml' --data-raw '&lt;add&gt;&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;&lt;/add&gt;'
+ * <pre>
+ * curl -k 'https://solr.apps-crc.testing/solr/computate/update?commitWithin=1000&amp;overwrite=true&amp;wt=json' -X POST -H 'Content-type: text/xml' -u "admin:$(oc -n solr get secret/solr-solrcloud-security-bootstrap -o jsonpath={.data.admin} | base64 -d)" --data-raw '&lt;delete&gt;&lt;query&gt;siteNom_indexed_string:computate.org&lt;/query&gt;&lt;/delete&gt;'
+ * </pre>
  * </p>
  * Generated: true
  **/
 public abstract class CompanyServiceGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyService.class);
+
+  public static final String Description_frFR = "See the services provided by computate that will help you build your own data-driven platforms";
+  public static final String AName_frFR = "a service";
+  public static final String SingularName_frFR = "service";
+  public static final String PluralName_frFR = "services";
+  public static final String Title_frFR = "services";
+  public static final String ThePluralName_frFR = "les services";
+  public static final String NameAdjectiveSingular_frFR = "service";
+  public static final String NameAdjectivePlural_frFR = "services";
 
   public static final String Description_enUS = "See the services provided by computate that will help you build your own data-driven platforms";
   public static final String AName_enUS = "a service";
@@ -975,8 +990,18 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlEditPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/service/%s";
+  }
+
+  @Override
+  public String frFRStringFormatUrlDisplayPageForClass() {
+    return null;
   }
 
   @Override
@@ -985,7 +1010,17 @@ public abstract class CompanyServiceGen<DEV> extends BaseResult {
   }
 
   @Override
+  public String frFRStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
   public String enUSStringFormatUrlUserPageForClass() {
+    return null;
+  }
+
+  @Override
+  public String frFRStringFormatUrlDownloadForClass() {
     return null;
   }
 

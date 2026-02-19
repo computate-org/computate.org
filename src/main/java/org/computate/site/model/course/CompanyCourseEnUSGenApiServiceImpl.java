@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +210,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -313,7 +315,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -456,7 +458,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -467,18 +469,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -561,14 +563,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchCompanyCourseFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -588,7 +590,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -779,17 +781,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           indexCompanyCourse(companyCourse).onSuccess(o2 -> {
             promise.complete(companyCourse);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postCompanyCourseFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -810,7 +812,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -952,7 +954,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -963,18 +965,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETECompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1043,11 +1045,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       unindexCompanyCourse(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteCompanyCourseFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1067,7 +1069,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETECompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1214,7 +1216,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -1223,11 +1225,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1380,7 +1382,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1438,6 +1440,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void searchpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1448,19 +1455,75 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     promise.complete();
   }
 
-  public String templateSearchPageCompanyCourse(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
     return "en-us/search/course/CompanyCourseSearchPage.htm";
+  }
+  public void templateSearchPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyCourse result = listCompanyCourse.first();
+      String pageTemplateUri = templateUriSearchPageCompanyCourse(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageCompanyCourse failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageCompanyCourse(siteRequest.getServiceRequest());
-      if(listCompanyCourse.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyCourse(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyCoursePage page = new CompanyCoursePage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1477,22 +1540,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           searchpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1622,6 +1695,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void editpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1632,19 +1711,75 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     promise.complete();
   }
 
-  public String templateEditPageCompanyCourse(ServiceRequest serviceRequest) {
+  public String templateUriEditPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
     return "en-us/edit/course/CompanyCourseEditPage.htm";
+  }
+  public void templateEditPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyCourse result = listCompanyCourse.first();
+      String pageTemplateUri = templateUriEditPageCompanyCourse(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageCompanyCourse failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageCompanyCourse(siteRequest.getServiceRequest());
-      if(listCompanyCourse.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyCourse(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyCoursePage page = new CompanyCoursePage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1661,22 +1796,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           editpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1768,6 +1913,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void displaypageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1778,19 +1929,75 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     promise.complete();
   }
 
-  public String templateDisplayPageCompanyCourse(ServiceRequest serviceRequest) {
+  public String templateUriDisplayPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateDisplayPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyCourse result = listCompanyCourse.first();
+      String pageTemplateUri = templateUriDisplayPageCompanyCourse(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateDisplayPageCompanyCourse failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200DisplayPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateDisplayPageCompanyCourse(siteRequest.getServiceRequest());
-      if(listCompanyCourse.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyCourse(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyCoursePage page = new CompanyCoursePage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1807,22 +2014,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           displaypageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateDisplayPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200DisplayPageCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1952,6 +2169,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void userpageCompanyCoursePageInit(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/course"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1962,19 +2185,75 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     promise.complete();
   }
 
-  public String templateUserPageCompanyCourse(ServiceRequest serviceRequest) {
+  public String templateUriUserPageCompanyCourse(ServiceRequest serviceRequest, CompanyCourse result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateUserPageCompanyCourse(JsonObject ctx, CompanyCoursePage page, SearchList<CompanyCourse> listCompanyCourse, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      CompanyCourse result = listCompanyCourse.first();
+      String pageTemplateUri = templateUriUserPageCompanyCourse(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateUserPageCompanyCourse failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200UserPageCompanyCourse(SearchList<CompanyCourse> listCompanyCourse) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateUserPageCompanyCourse(siteRequest.getServiceRequest());
-      if(listCompanyCourse.size() == 0)
-        pageTemplateUri = templateSearchPageCompanyCourse(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       CompanyCoursePage page = new CompanyCoursePage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1991,22 +2270,32 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           userpageCompanyCoursePageInit(ctx, page, listCompanyCourse, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateUserPageCompanyCourse(ctx, page, listCompanyCourse, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200UserPageCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2182,7 +2471,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2193,18 +2482,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2273,11 +2562,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       unindexCompanyCourse(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterCompanyCourseFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2297,7 +2586,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2312,7 +2601,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2378,13 +2667,13 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2588,18 +2877,18 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchCompanyCourse failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchCompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2634,15 +2923,15 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistCompanyCourse failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistCompanyCourse failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2684,11 +2973,11 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexCompanyCourse failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2721,65 +3010,65 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexCompanyCourse failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexCompanyCourse failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexCompanyCourse failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      CompanyCourse page = new CompanyCourse();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      CompanyCourse o = new CompanyCourse();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, (String)result.get(CompanyCourse.VAR_name)));
-      page.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
-      page.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, (String)result.get(CompanyCourse.VAR_price)));
-      page.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
-      page.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
-      page.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyCourse.VAR_emailTemplate)));
-      page.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
-      page.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
-      page.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, (String)result.get(CompanyCourse.VAR_courseNum)));
-      page.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
-      page.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
-      page.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
-      page.persistForClass(CompanyCourse.VAR_editPage, CompanyCourse.staticSetEditPage(siteRequest2, (String)result.get(CompanyCourse.VAR_editPage)));
-      page.persistForClass(CompanyCourse.VAR_userPage, CompanyCourse.staticSetUserPage(siteRequest2, (String)result.get(CompanyCourse.VAR_userPage)));
-      page.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
-      page.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
-      page.persistForClass(CompanyCourse.VAR_relatedArticleIds, CompanyCourse.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyCourse.VAR_relatedArticleIds)));
-      page.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
+      o.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, (String)result.get(CompanyCourse.VAR_name)));
+      o.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
+      o.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, (String)result.get(CompanyCourse.VAR_price)));
+      o.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
+      o.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
+      o.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyCourse.VAR_emailTemplate)));
+      o.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
+      o.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
+      o.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, (String)result.get(CompanyCourse.VAR_courseNum)));
+      o.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
+      o.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
+      o.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
+      o.persistForClass(CompanyCourse.VAR_editPage, CompanyCourse.staticSetEditPage(siteRequest2, (String)result.get(CompanyCourse.VAR_editPage)));
+      o.persistForClass(CompanyCourse.VAR_userPage, CompanyCourse.staticSetUserPage(siteRequest2, (String)result.get(CompanyCourse.VAR_userPage)));
+      o.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
+      o.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
+      o.persistForClass(CompanyCourse.VAR_relatedArticleIds, CompanyCourse.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyCourse.VAR_relatedArticleIds)));
+      o.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }

@@ -61,6 +61,8 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.ext.reactivestreams.ReactiveReadStream;
 import io.vertx.ext.reactivestreams.ReactiveWriteStream;
 import io.vertx.core.MultiMap;
+import org.computate.i18n.I18n;
+import org.yaml.snakeyaml.Yaml;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,7 +247,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -387,7 +389,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200GETSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -530,7 +532,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listPATCHSmartAquacultureDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -541,18 +543,18 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPATCHSmartAquacultureDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listPATCHSmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listPATCHSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -635,14 +637,14 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           }
           promise.complete(o);
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("patchSmartAquacultureDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -662,7 +664,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -853,17 +855,17 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           indexSmartAquacultureDeveloper(smartAquacultureDeveloper).onSuccess(o2 -> {
             promise.complete(smartAquacultureDeveloper);
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         }).onFailure(ex -> {
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("postSmartAquacultureDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -884,7 +886,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1026,7 +1028,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETESmartAquacultureDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -1037,18 +1039,18 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETESmartAquacultureDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETESmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETESmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -1117,11 +1119,11 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       unindexSmartAquacultureDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deleteSmartAquacultureDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1141,7 +1143,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETESmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1288,7 +1290,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise1.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listPUTImportSmartAquacultureDeveloper failed. "), ex);
-            promise1.fail(ex);
+            promise1.tryFail(ex);
           });
         }));
       });
@@ -1297,11 +1299,11 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
         promise.complete();
       }).onFailure(ex -> {
         LOG.error(String.format("listPUTImportSmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("listPUTImportSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1454,7 +1456,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1549,6 +1551,11 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
   public void searchpageSmartAquacultureDeveloperPageInit(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-aquaculture-developer"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-aquaculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1559,19 +1566,75 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
     promise.complete();
   }
 
-  public String templateSearchPageSmartAquacultureDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriSearchPageSmartAquacultureDeveloper(ServiceRequest serviceRequest, SmartAquacultureDeveloper result) {
     return "en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchPage.htm";
+  }
+  public void templateSearchPageSmartAquacultureDeveloper(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SmartAquacultureDeveloper result = listSmartAquacultureDeveloper.first();
+      String pageTemplateUri = templateUriSearchPageSmartAquacultureDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateSearchPageSmartAquacultureDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200SearchPageSmartAquacultureDeveloper(SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateSearchPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      if(listSmartAquacultureDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SmartAquacultureDeveloperPage page = new SmartAquacultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1588,22 +1651,32 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           Promise<Void> promise1 = Promise.promise();
           searchpageSmartAquacultureDeveloperPageInit(ctx, page, listSmartAquacultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateSearchPageSmartAquacultureDeveloper(ctx, page, listSmartAquacultureDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200SearchPageSmartAquacultureDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200SearchPageSmartAquacultureDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchPageSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1733,6 +1806,12 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
   public void editpageSmartAquacultureDeveloperPageInit(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-aquaculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1743,19 +1822,75 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
     promise.complete();
   }
 
-  public String templateEditPageSmartAquacultureDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriEditPageSmartAquacultureDeveloper(ServiceRequest serviceRequest, SmartAquacultureDeveloper result) {
     return "en-us/edit/smart-aquaculture-developer/SmartAquacultureDeveloperEditPage.htm";
+  }
+  public void templateEditPageSmartAquacultureDeveloper(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SmartAquacultureDeveloper result = listSmartAquacultureDeveloper.first();
+      String pageTemplateUri = templateUriEditPageSmartAquacultureDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateEditPageSmartAquacultureDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200EditPageSmartAquacultureDeveloper(SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateEditPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      if(listSmartAquacultureDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SmartAquacultureDeveloperPage page = new SmartAquacultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1772,22 +1907,32 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           Promise<Void> promise1 = Promise.promise();
           editpageSmartAquacultureDeveloperPageInit(ctx, page, listSmartAquacultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateEditPageSmartAquacultureDeveloper(ctx, page, listSmartAquacultureDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200EditPageSmartAquacultureDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200EditPageSmartAquacultureDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200EditPageSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -1917,6 +2062,12 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
   public void userpageSmartAquacultureDeveloperPageInit(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
+    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
+    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
+    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
+    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
+
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/smart-aquaculture-developer"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1927,19 +2078,75 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
     promise.complete();
   }
 
-  public String templateUserPageSmartAquacultureDeveloper(ServiceRequest serviceRequest) {
+  public String templateUriUserPageSmartAquacultureDeveloper(ServiceRequest serviceRequest, SmartAquacultureDeveloper result) {
     return String.format("%s.htm", StringUtils.substringBefore(serviceRequest.getExtra().getString("uri").substring(1), "?"));
+  }
+  public void templateUserPageSmartAquacultureDeveloper(JsonObject ctx, SmartAquacultureDeveloperPage page, SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper, Promise<String> promise) {
+    try {
+      SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
+      ServiceRequest serviceRequest = siteRequest.getServiceRequest();
+      SmartAquacultureDeveloper result = listSmartAquacultureDeveloper.first();
+      String pageTemplateUri = templateUriUserPageSmartAquacultureDeveloper(serviceRequest, result);
+      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
+      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
+      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
+      if(pageTemplateUri.endsWith(".md")) {
+        String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
+        Map<String, Object> data = new HashMap<>();
+        String body = "";
+        if(template.startsWith("---\n")) {
+          Matcher mMeta = Pattern.compile("---\n([\\w\\W]+?)\n---\n([\\w\\W]+)", Pattern.MULTILINE).matcher(template);
+          if(mMeta.find()) {
+            String meta = mMeta.group(1);
+            body = mMeta.group(2);
+            Yaml yaml = new Yaml();
+            Map<String, Object> map = yaml.load(meta);
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+            map.forEach((resultKey, value) -> {
+              if(resultKey.startsWith(metaPrefixResult)) {
+                String key = StringUtils.substringAfter(resultKey, metaPrefixResult);
+                String val = Optional.ofNullable(value).map(v -> v.toString()).orElse(null);
+                if(val instanceof String) {
+                  String rendered = jinjava.render(val, ctx.getMap());
+                  data.put(key, rendered);
+                } else {
+                  data.put(key, val);
+                }
+              }
+            });
+          }
+        }
+        org.commonmark.parser.Parser parser = org.commonmark.parser.Parser.builder().build();
+        org.commonmark.node.Node document = parser.parse(body);
+        org.commonmark.renderer.html.HtmlRenderer renderer = org.commonmark.renderer.html.HtmlRenderer.builder().build();
+        String pageExtends =  Optional.ofNullable((String)data.get("extends")).orElse("en-us/Article.htm");
+        String htmTemplate = "{% extends \"" + pageExtends + "\" %}\n{% block htmBodyMiddleArticle %}\n" + renderer.render(document) + "\n{% endblock htmBodyMiddleArticle %}\n";
+        String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else {
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("templateUserPageSmartAquacultureDeveloper failed. "), ex);
+      ExceptionUtils.rethrow(ex);
+    }
   }
   public Future<ServiceResponse> response200UserPageSmartAquacultureDeveloper(SearchList<SmartAquacultureDeveloper> listSmartAquacultureDeveloper) {
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       SiteRequest siteRequest = listSmartAquacultureDeveloper.getSiteRequest_(SiteRequest.class);
-      String pageTemplateUri = templateUserPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      if(listSmartAquacultureDeveloper.size() == 0)
-        pageTemplateUri = templateSearchPageSmartAquacultureDeveloper(siteRequest.getServiceRequest());
-      String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
-      Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
       SmartAquacultureDeveloperPage page = new SmartAquacultureDeveloperPage();
       MultiMap requestHeaders = MultiMap.caseInsensitiveMultiMap();
       siteRequest.setRequestHeaders(requestHeaders);
@@ -1956,22 +2163,32 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           Promise<Void> promise1 = Promise.promise();
           userpageSmartAquacultureDeveloperPageInit(ctx, page, listSmartAquacultureDeveloper, promise1);
           promise1.future().onSuccess(b -> {
-            String renderedTemplate = jinjava.render(template, ctx.getMap());
-            Buffer buffer = Buffer.buffer(renderedTemplate);
-            promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+            Promise<String> promise2 = Promise.promise();
+            templateUserPageSmartAquacultureDeveloper(ctx, page, listSmartAquacultureDeveloper, promise2);
+            promise2.future().onSuccess(renderedTemplate -> {
+              try {
+                Buffer buffer = Buffer.buffer(renderedTemplate);
+                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+              } catch(Throwable ex) {
+                LOG.error(String.format("response200UserPageSmartAquacultureDeveloper failed. "), ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              promise.fail(ex);
+            });
           }).onFailure(ex -> {
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("response200UserPageSmartAquacultureDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("response200UserPageSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2147,7 +2364,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           promise1.complete();
         }).onFailure(ex -> {
           LOG.error(String.format("listDELETEFilterSmartAquacultureDeveloper failed. "), ex);
-          promise1.fail(ex);
+          promise1.tryFail(ex);
         });
       }));
     });
@@ -2158,18 +2375,18 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("listDELETEFilterSmartAquacultureDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete();
         }
       }).onFailure(ex -> {
         LOG.error(String.format("listDELETEFilterSmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     }).onFailure(ex -> {
       LOG.error(String.format("listDELETEFilterSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     });
     return promise.future();
   }
@@ -2238,11 +2455,11 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       unindexSmartAquacultureDeveloper(o).onSuccess(e -> {
         promise.complete(o);
       }).onFailure(ex -> {
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("deletefilterSmartAquacultureDeveloperFuture failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2262,7 +2479,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       }
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2277,7 +2494,7 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
       promise.complete(o);
     } catch(Exception ex) {
       LOG.error(String.format("createSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2343,13 +2560,13 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           }
         } catch(Exception ex) {
           LOG.error(String.format("searchSmartAquacultureDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       });
       promise.complete();
     } catch(Exception ex) {
       LOG.error(String.format("searchSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2553,18 +2770,18 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise.complete(searchList);
           }).onFailure(ex -> {
             LOG.error(String.format("searchSmartAquacultureDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } else {
           promise.complete(searchList);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("searchSmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("searchSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2599,15 +2816,15 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
             promise.complete();
           }).onFailure(ex -> {
             LOG.error(String.format("persistSmartAquacultureDeveloper failed. "), ex);
-            promise.fail(ex);
+            promise.tryFail(ex);
           });
         } catch(Exception ex) {
           LOG.error(String.format("persistSmartAquacultureDeveloper failed. "), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
     } catch(Exception ex) {
       LOG.error(String.format("persistSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2649,11 +2866,11 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
         promise.complete(o);
       }).onFailure(ex -> {
         LOG.error(String.format("indexSmartAquacultureDeveloper failed. "), new RuntimeException(ex));
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("indexSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
@@ -2686,68 +2903,68 @@ public class SmartAquacultureDeveloperEnUSGenApiServiceImpl extends BaseApiServi
           promise.complete(o);
         }).onFailure(ex -> {
           LOG.error(String.format("unindexSmartAquacultureDeveloper failed. "), new RuntimeException(ex));
-          promise.fail(ex);
+          promise.tryFail(ex);
         });
       }).onFailure(ex -> {
         LOG.error(String.format("unindexSmartAquacultureDeveloper failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("unindexSmartAquacultureDeveloper failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
 
   @Override
-  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName) {
+  public Future<JsonObject> generatePageBody(ComputateSiteRequest siteRequest, Map<String, Object> ctx, String templatePath, String classSimpleName, String pageTemplate) {
     Promise<JsonObject> promise = Promise.promise();
     try {
       Map<String, Object> result = (Map<String, Object>)ctx.get("result");
       SiteRequest siteRequest2 = (SiteRequest)siteRequest;
       String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
-      SmartAquacultureDeveloper page = new SmartAquacultureDeveloper();
-      page.setSiteRequest_((SiteRequest)siteRequest);
+      SmartAquacultureDeveloper o = new SmartAquacultureDeveloper();
+      o.setSiteRequest_((SiteRequest)siteRequest);
 
-      page.persistForClass(SmartAquacultureDeveloper.VAR_created, SmartAquacultureDeveloper.staticSetCreated(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_name, SmartAquacultureDeveloper.staticSetName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_name)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_description, SmartAquacultureDeveloper.staticSetDescription(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_description)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_archived, SmartAquacultureDeveloper.staticSetArchived(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_archived)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_pageId, SmartAquacultureDeveloper.staticSetPageId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageId)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_courseNum, SmartAquacultureDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_courseNum)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_lessonNum, SmartAquacultureDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_lessonNum)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_authorName, SmartAquacultureDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorName)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_authorUrl, SmartAquacultureDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorUrl)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageUri, SmartAquacultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageUri)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_objectTitle, SmartAquacultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_objectTitle)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_displayPage, SmartAquacultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_displayPage)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_editPage, SmartAquacultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_editPage)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_userPage, SmartAquacultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_userPage)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_pageImageAlt, SmartAquacultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageAlt)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_download, SmartAquacultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_download)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds, SmartAquacultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_solrId, SmartAquacultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_solrId)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_nextArticleIds, SmartAquacultureDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_nextArticleIds)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_labelsString, SmartAquacultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labelsString)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_labels, SmartAquacultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labels)));
-      page.persistForClass(SmartAquacultureDeveloper.VAR_relatedArticleIds, SmartAquacultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_relatedArticleIds)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_created, SmartAquacultureDeveloper.staticSetCreated(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_name, SmartAquacultureDeveloper.staticSetName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_name)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_description, SmartAquacultureDeveloper.staticSetDescription(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_description)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_archived, SmartAquacultureDeveloper.staticSetArchived(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_archived)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_pageId, SmartAquacultureDeveloper.staticSetPageId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageId)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_courseNum, SmartAquacultureDeveloper.staticSetCourseNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_courseNum)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_lessonNum, SmartAquacultureDeveloper.staticSetLessonNum(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_lessonNum)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_authorName, SmartAquacultureDeveloper.staticSetAuthorName(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorName)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_authorUrl, SmartAquacultureDeveloper.staticSetAuthorUrl(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_authorUrl)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_pageImageUri, SmartAquacultureDeveloper.staticSetPageImageUri(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageUri)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_objectTitle, SmartAquacultureDeveloper.staticSetObjectTitle(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_objectTitle)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_displayPage, SmartAquacultureDeveloper.staticSetDisplayPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_displayPage)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_editPage, SmartAquacultureDeveloper.staticSetEditPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_editPage)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_userPage, SmartAquacultureDeveloper.staticSetUserPage(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_userPage)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_pageImageAlt, SmartAquacultureDeveloper.staticSetPageImageAlt(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_pageImageAlt)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_download, SmartAquacultureDeveloper.staticSetDownload(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_download)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds, SmartAquacultureDeveloper.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_solrId, SmartAquacultureDeveloper.staticSetSolrId(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_solrId)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_nextArticleIds, SmartAquacultureDeveloper.staticSetNextArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_nextArticleIds)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_labelsString, SmartAquacultureDeveloper.staticSetLabelsString(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labelsString)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_labels, SmartAquacultureDeveloper.staticSetLabels(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_labels)));
+      o.persistForClass(SmartAquacultureDeveloper.VAR_relatedArticleIds, SmartAquacultureDeveloper.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SmartAquacultureDeveloper.VAR_relatedArticleIds)));
 
-      page.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o -> {
+      o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
-          JsonObject data = JsonObject.mapFrom(o);
+          JsonObject data = JsonObject.mapFrom(o2);
           ctx.put("result", data.getMap());
           promise.complete(data);
         } catch(Exception ex) {
           LOG.error(String.format(importModelFail, classSimpleName), ex);
-          promise.fail(ex);
+          promise.tryFail(ex);
         }
       }).onFailure(ex -> {
         LOG.error(String.format("generatePageBody failed. "), ex);
-        promise.fail(ex);
+        promise.tryFail(ex);
       });
     } catch(Exception ex) {
       LOG.error(String.format("generatePageBody failed. "), ex);
-      promise.fail(ex);
+      promise.tryFail(ex);
     }
     return promise.future();
   }
