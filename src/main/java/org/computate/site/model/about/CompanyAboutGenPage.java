@@ -524,6 +524,11 @@ public class CompanyAboutGenPage extends CompanyAboutGenPageGen<PageLayout> {
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all about");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/about");

@@ -529,6 +529,11 @@ public class CompanyWebinarGenPage extends CompanyWebinarGenPageGen<PageLayout> 
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all webinars");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/webinar");

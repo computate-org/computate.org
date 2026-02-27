@@ -405,7 +405,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiComputateDeveloper.setVertx(vertx);
       apiComputateDeveloper.setConfig(config);
       apiComputateDeveloper.setWebClient(webClient);
-      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin" }).onSuccess(authToken -> {
+      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "GETManager", "PATCH", "POST", "SuperAdmin" }).onSuccess(authToken -> {
         apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
             .compose(q1 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
             .onSuccess(q1 -> {
@@ -448,7 +448,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                                       .compose(q14 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                       .onSuccess(q14 -> {
                                     apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
-                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "GETManager", "DELETE", "Admin" }))
                                         .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                         .onSuccess(q15 -> {
                                       LOG.info("authorize data complete");

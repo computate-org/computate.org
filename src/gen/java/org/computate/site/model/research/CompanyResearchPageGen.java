@@ -245,9 +245,9 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyResearchPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyResearchPage.displayNameCompanyResearchPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class CompanyResearchPageGen<DEV> extends CompanyResearchGenPage
     switch(var) {
     default:
       return CompanyResearchGenPage.displayNameCompanyResearchGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyResearchPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.descriptionCompanyResearchGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.classSimpleNameCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.htmColumnCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.htmRowCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.htmCellCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.lengthMinCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.lengthMaxCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.maxCompanyResearchGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyResearchPage(String var) {
-    switch(var) {
-      default:
-        return CompanyResearchGenPage.minCompanyResearchGenPage(var);
     }
   }
 }

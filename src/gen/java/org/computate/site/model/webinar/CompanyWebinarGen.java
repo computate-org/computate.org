@@ -50,6 +50,8 @@ import io.vertx.core.json.JsonArray;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 
@@ -1225,9 +1227,39 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<CompanyWebinar> fqCompanyWebinar(SiteRequest siteRequest, String var, Object val) {
+    Promise<CompanyWebinar> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<CompanyWebinar> searchList = new SearchList<CompanyWebinar>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(CompanyWebinar.class);
+        searchList.fq(String.format("%s:", CompanyWebinar.varIndexedCompanyWebinar(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying the webinar", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying the webinar", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying the webinar", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyWebinar(entityVar,  siteRequest_, o);
@@ -1743,17 +1775,29 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
     return CLASS_API_ADDRESS_CompanyWebinar;
   }
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
   public static final String VAR_joinUri = "joinUri";
+  public static final String SET_joinUri = "setJoinUri";
   public static final String VAR_webinarUrlAmericas = "webinarUrlAmericas";
+  public static final String SET_webinarUrlAmericas = "setWebinarUrlAmericas";
   public static final String VAR_webinarUrlApac = "webinarUrlApac";
+  public static final String SET_webinarUrlApac = "setWebinarUrlApac";
   public static final String VAR_webinarUrlEmea = "webinarUrlEmea";
+  public static final String SET_webinarUrlEmea = "setWebinarUrlEmea";
   public static final String VAR_icalUrl = "icalUrl";
+  public static final String SET_icalUrl = "setIcalUrl";
   public static final String VAR_caldav = "caldav";
+  public static final String SET_caldav = "setCaldav";
   public static final String VAR_nextWebinar = "nextWebinar";
+  public static final String SET_nextWebinar = "setNextWebinar";
   public static final String VAR_nextWebinarsBegin = "nextWebinarsBegin";
+  public static final String SET_nextWebinarsBegin = "setNextWebinarsBegin";
   public static final String VAR_joinUrl = "joinUrl";
+  public static final String SET_joinUrl = "setJoinUrl";
 
   public static List<String> varsQForClass() {
     return CompanyWebinar.varsQCompanyWebinar(new ArrayList<String>());
@@ -1828,18 +1872,8 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   }
 
   @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/webinar/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
   }
 
   @Override
@@ -1848,23 +1882,42 @@ public abstract class CompanyWebinarGen<DEV> extends BaseModel {
   }
 
   @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/join/webinar/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return CompanyWebinar.varJsonCompanyWebinar(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonCompanyWebinar(String var, Boolean patch) {
+    switch(var) {
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    case VAR_joinUri:
+      return patch ? SET_joinUri : VAR_joinUri;
+    case VAR_webinarUrlAmericas:
+      return patch ? SET_webinarUrlAmericas : VAR_webinarUrlAmericas;
+    case VAR_webinarUrlApac:
+      return patch ? SET_webinarUrlApac : VAR_webinarUrlApac;
+    case VAR_webinarUrlEmea:
+      return patch ? SET_webinarUrlEmea : VAR_webinarUrlEmea;
+    case VAR_icalUrl:
+      return patch ? SET_icalUrl : VAR_icalUrl;
+    case VAR_caldav:
+      return patch ? SET_caldav : VAR_caldav;
+    case VAR_nextWebinar:
+      return patch ? SET_nextWebinar : VAR_nextWebinar;
+    case VAR_nextWebinarsBegin:
+      return patch ? SET_nextWebinarsBegin : VAR_nextWebinarsBegin;
+    case VAR_joinUrl:
+      return patch ? SET_joinUrl : VAR_joinUrl;
+    default:
+      return BaseModel.varJsonBaseModel(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

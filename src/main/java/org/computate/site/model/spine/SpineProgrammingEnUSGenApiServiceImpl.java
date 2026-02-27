@@ -124,7 +124,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchSpineProgrammingList(siteRequest, false, true, false).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, false, true, false, "GET").onSuccess(listSpineProgramming -> {
                 response200SearchSpineProgramming(listSpineProgramming).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchSpineProgramming succeeded. "));
@@ -173,6 +173,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       List<String> fls = listSpineProgramming.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
+      List<String> scopes = siteRequest.getScopes();
       listSpineProgramming.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
@@ -199,15 +200,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       });
       json.put("list", l);
       response200Search(listSpineProgramming.getRequest(), listSpineProgramming.getResponse(), json);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -257,7 +250,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchSpineProgrammingList(siteRequest, false, true, false).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, false, true, false, "GET").onSuccess(listSpineProgramming -> {
                 response200GETSpineProgramming(listSpineProgramming).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("getSpineProgramming succeeded. "));
@@ -304,15 +297,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     try {
       SiteRequest siteRequest = listSpineProgramming.getSiteRequest_(SiteRequest.class);
       JsonObject json = JsonObject.mapFrom(listSpineProgramming.getList().stream().findFirst().orElse(null));
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200GETSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -331,17 +316,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PATCH"));
         webClient.post(
@@ -356,7 +341,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -372,7 +358,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchSpineProgrammingList(siteRequest, true, false, true).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, true, false, true, "PATCH").onSuccess(listSpineProgramming -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listSpineProgramming.getRequest().getRows());
@@ -498,7 +484,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             siteRequest.addScopes(scope);
           });
         });
-        searchSpineProgrammingList(siteRequest, false, true, true).onSuccess(listSpineProgramming -> {
+        searchSpineProgrammingList(siteRequest, false, true, true, "PATCH").onSuccess(listSpineProgramming -> {
           try {
             SpineProgramming o = listSpineProgramming.first();
             ApiRequest apiRequest = new ApiRequest();
@@ -579,15 +565,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -606,17 +584,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "POST"));
         webClient.post(
@@ -631,7 +609,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -657,6 +636,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
+              params.put("scopes", scopes2);
               params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
               params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
               params.put("form", new JsonObject());
@@ -801,15 +781,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -828,17 +800,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PUT"));
         webClient.post(
@@ -853,7 +825,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1114,15 +1087,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -1141,17 +1106,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -1166,7 +1131,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1182,7 +1148,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchSpineProgrammingList(siteRequest, true, false, true).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, true, false, true, "DELETE").onSuccess(listSpineProgramming -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listSpineProgramming.getRequest().getRows());
@@ -1307,7 +1273,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             siteRequest.addScopes(scope);
           });
         });
-        searchSpineProgrammingList(siteRequest, false, true, true).onSuccess(listSpineProgramming -> {
+        searchSpineProgrammingList(siteRequest, false, true, true, "DELETE").onSuccess(listSpineProgramming -> {
           try {
             SpineProgramming o = listSpineProgramming.first();
             if(o != null && listSpineProgramming.getResponse().getResponse().getNumFound() == 1) {
@@ -1371,15 +1337,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETESpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -1395,7 +1353,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchSpineProgrammingList(siteRequest, false, true, false).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, false, true, false, "GET").onSuccess(listSpineProgramming -> {
                 response200SearchPageSpineProgramming(listSpineProgramming).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchpageSpineProgramming succeeded. "));
@@ -1466,8 +1424,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       String pageTemplateUri = templateUriSearchPageSpineProgramming(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/spine-programming/SpineProgrammingSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1512,6 +1474,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1614,18 +1577,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1640,11 +1602,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchSpineProgrammingList(siteRequest, false, true, false).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, false, true, false, "GET").onSuccess(listSpineProgramming -> {
                 response200EditPageSpineProgramming(listSpineProgramming).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("editpageSpineProgramming succeeded. "));
@@ -1722,8 +1685,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       String pageTemplateUri = templateUriEditPageSpineProgramming(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/spine-programming/SpineProgrammingEditPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1768,6 +1735,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1868,7 +1836,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchSpineProgrammingList(siteRequest, false, true, false).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, false, true, false, "GET").onSuccess(listSpineProgramming -> {
                 response200DisplayPageSpineProgramming(listSpineProgramming).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("displaypageSpineProgramming succeeded. "));
@@ -1940,8 +1908,12 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
       String pageTemplateUri = templateUriDisplayPageSpineProgramming(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1986,6 +1958,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -2089,17 +2062,17 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String SPINEPROGRAMMING = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("SPINEPROGRAMMING");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -2114,7 +2087,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "SPINEPROGRAMMING".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -2130,7 +2104,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchSpineProgrammingList(siteRequest, true, false, true).onSuccess(listSpineProgramming -> {
+              searchSpineProgrammingList(siteRequest, true, false, true, "DELETE").onSuccess(listSpineProgramming -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listSpineProgramming.getRequest().getRows());
@@ -2255,7 +2229,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
             siteRequest.addScopes(scope);
           });
         });
-        searchSpineProgrammingList(siteRequest, false, true, true).onSuccess(listSpineProgramming -> {
+        searchSpineProgrammingList(siteRequest, false, true, true, "DELETE").onSuccess(listSpineProgramming -> {
           try {
             SpineProgramming o = listSpineProgramming.first();
             if(o != null && listSpineProgramming.getResponse().getResponse().getNumFound() == 1) {
@@ -2319,15 +2293,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "SPINE Programming lesson", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterSpineProgramming failed. "), ex);
       promise.tryFail(ex);
@@ -2422,13 +2388,14 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
     return promise.future();
   }
 
-  public Future<SearchList<SpineProgramming>> searchSpineProgrammingList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+  public Future<SearchList<SpineProgramming>> searchSpineProgrammingList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
     Promise<SearchList<SpineProgramming>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
       SearchList<SpineProgramming> searchList = new SearchList<SpineProgramming>();
+      searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
       Date facetRangeEnd = null;

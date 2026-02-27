@@ -245,9 +245,9 @@ public abstract class ComputateDeveloperPageGen<DEV> extends ComputateDeveloperG
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchComputateDeveloperPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class ComputateDeveloperPageGen<DEV> extends ComputateDeveloperG
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return ComputateDeveloperPage.displayNameComputateDeveloperPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class ComputateDeveloperPageGen<DEV> extends ComputateDeveloperG
     switch(var) {
     default:
       return ComputateDeveloperGenPage.displayNameComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static String descriptionComputateDeveloperPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.descriptionComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.classSimpleNameComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.htmColumnComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmRowComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.htmRowComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmCellComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.htmCellComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.lengthMinComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.lengthMaxComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer maxComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.maxComputateDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer minComputateDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return ComputateDeveloperGenPage.minComputateDeveloperGenPage(var);
     }
   }
 }

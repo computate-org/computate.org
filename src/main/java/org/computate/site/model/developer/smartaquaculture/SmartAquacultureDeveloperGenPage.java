@@ -526,6 +526,11 @@ public class SmartAquacultureDeveloperGenPage extends SmartAquacultureDeveloperG
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all Smart Aquaculture Developers");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/smart-aquaculture-developer");

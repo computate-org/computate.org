@@ -43,6 +43,7 @@ import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 import io.vertx.core.json.JsonObject;
@@ -1452,9 +1453,39 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<CompanyCourse> fqCompanyCourse(SiteRequest siteRequest, String var, Object val) {
+    Promise<CompanyCourse> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(CompanyCourse.class);
+        searchList.fq(String.format("%s:", CompanyCourse.varIndexedCompanyCourse(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying the course", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying the course", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying the course", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyCourse(entityVar,  siteRequest_, o);
@@ -2065,21 +2096,37 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
     return CLASS_API_ADDRESS_CompanyCourse;
   }
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_price = "price";
+  public static final String SET_price = "setPrice";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
   public static final String VAR_emailTemplate = "emailTemplate";
+  public static final String SET_emailTemplate = "setEmailTemplate";
   public static final String VAR_storeUrl = "storeUrl";
+  public static final String SET_storeUrl = "setStoreUrl";
   public static final String VAR_downloadUri = "downloadUri";
+  public static final String SET_downloadUri = "setDownloadUri";
   public static final String VAR_courseNum = "courseNum";
+  public static final String SET_courseNum = "setCourseNum";
   public static final String VAR_pageImageUri = "pageImageUri";
+  public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
+  public static final String SET_pageImageWidth = "setPageImageWidth";
   public static final String VAR_pageImageHeight = "pageImageHeight";
+  public static final String SET_pageImageHeight = "setPageImageHeight";
   public static final String VAR_pageImageType = "pageImageType";
+  public static final String SET_pageImageType = "setPageImageType";
   public static final String VAR_pageImageAlt = "pageImageAlt";
+  public static final String SET_pageImageAlt = "setPageImageAlt";
   public static final String VAR_relatedArticleIds = "relatedArticleIds";
+  public static final String SET_relatedArticleIds = "setRelatedArticleIds";
   public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
+  public static final String SET_relatedArticleSearch = "setRelatedArticleSearch";
   public static final String VAR_relatedArticles = "relatedArticles";
+  public static final String SET_relatedArticles = "setRelatedArticles";
 
   public static List<String> varsQForClass() {
     return CompanyCourse.varsQCompanyCourse(new ArrayList<String>());
@@ -2154,23 +2201,8 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/course/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
   }
 
   @Override
@@ -2179,23 +2211,50 @@ public abstract class CompanyCourseGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/use/course/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return CompanyCourse.varJsonCompanyCourse(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonCompanyCourse(String var, Boolean patch) {
+    switch(var) {
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_price:
+      return patch ? SET_price : VAR_price;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    case VAR_emailTemplate:
+      return patch ? SET_emailTemplate : VAR_emailTemplate;
+    case VAR_storeUrl:
+      return patch ? SET_storeUrl : VAR_storeUrl;
+    case VAR_downloadUri:
+      return patch ? SET_downloadUri : VAR_downloadUri;
+    case VAR_courseNum:
+      return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_pageImageUri:
+      return patch ? SET_pageImageUri : VAR_pageImageUri;
+    case VAR_pageImageWidth:
+      return patch ? SET_pageImageWidth : VAR_pageImageWidth;
+    case VAR_pageImageHeight:
+      return patch ? SET_pageImageHeight : VAR_pageImageHeight;
+    case VAR_pageImageType:
+      return patch ? SET_pageImageType : VAR_pageImageType;
+    case VAR_pageImageAlt:
+      return patch ? SET_pageImageAlt : VAR_pageImageAlt;
+    case VAR_relatedArticleIds:
+      return patch ? SET_relatedArticleIds : VAR_relatedArticleIds;
+    case VAR_relatedArticleSearch:
+      return patch ? SET_relatedArticleSearch : VAR_relatedArticleSearch;
+    case VAR_relatedArticles:
+      return patch ? SET_relatedArticles : VAR_relatedArticles;
+    default:
+      return BaseResult.varJsonBaseResult(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

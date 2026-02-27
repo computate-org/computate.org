@@ -674,9 +674,9 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyWebinarGenPage(entityVar,  siteRequest_, o);
@@ -760,12 +760,19 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.webinar.CompanyWebinarGenPage";
   public static final String CLASS_AUTH_RESOURCE = "";
   public static final String VAR_searchListCompanyWebinar_ = "searchListCompanyWebinar_";
+  public static final String SET_searchListCompanyWebinar_ = "setSearchListCompanyWebinar_";
   public static final String VAR_listCompanyWebinar = "listCompanyWebinar";
+  public static final String SET_listCompanyWebinar = "setListCompanyWebinar";
   public static final String VAR_resultCount = "resultCount";
+  public static final String SET_resultCount = "setResultCount";
   public static final String VAR_result = "result";
+  public static final String SET_result = "setResult";
   public static final String VAR_pk = "pk";
+  public static final String SET_pk = "setPk";
   public static final String VAR_solrId = "solrId";
+  public static final String SET_solrId = "setSolrId";
   public static final String VAR_pageUriCompanyWebinar = "pageUriCompanyWebinar";
+  public static final String SET_pageUriCompanyWebinar = "setPageUriCompanyWebinar";
 
   public static final String DISPLAY_NAME_searchListCompanyWebinar_ = "";
   public static final String DISPLAY_NAME_listCompanyWebinar = "";
@@ -774,71 +781,6 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
   public static final String DISPLAY_NAME_pk = "";
   public static final String DISPLAY_NAME_solrId = "";
   public static final String DISPLAY_NAME_pageUriCompanyWebinar = "";
-
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
 
   public static String displayNameForClass(String var) {
     return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
@@ -861,85 +803,6 @@ public abstract class CompanyWebinarGenPageGen<DEV> extends PageLayout {
       return DISPLAY_NAME_pageUriCompanyWebinar;
     default:
       return PageLayout.displayNamePageLayout(var);
-    }
-  }
-
-  public static String descriptionCompanyWebinarGenPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return PageLayout.descriptionPageLayout(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyWebinarGenPage(String var) {
-    switch(var) {
-    case VAR_searchListCompanyWebinar_:
-      return "SearchList";
-    case VAR_listCompanyWebinar:
-      return "JsonArray";
-    case VAR_resultCount:
-      return "Integer";
-    case VAR_result:
-      return "CompanyWebinar";
-    case VAR_pk:
-      return "Long";
-    case VAR_solrId:
-      return "String";
-    case VAR_pageUriCompanyWebinar:
-      return "String";
-      default:
-        return PageLayout.classSimpleNamePageLayout(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmColumnPageLayout(var);
-    }
-  }
-
-  public static Integer htmRowCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmRowPageLayout(var);
-    }
-  }
-
-  public static Integer htmCellCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmCellPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMinPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMaxPageLayout(var);
-    }
-  }
-
-  public static Integer maxCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.maxPageLayout(var);
-    }
-  }
-
-  public static Integer minCompanyWebinarGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.minPageLayout(var);
     }
   }
 }

@@ -607,9 +607,9 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchUseCaseGenPage(entityVar,  siteRequest_, o);
@@ -687,11 +687,17 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.usecase.UseCaseGenPage";
   public static final String CLASS_AUTH_RESOURCE = "";
   public static final String VAR_searchListUseCase_ = "searchListUseCase_";
+  public static final String SET_searchListUseCase_ = "setSearchListUseCase_";
   public static final String VAR_listUseCase = "listUseCase";
+  public static final String SET_listUseCase = "setListUseCase";
   public static final String VAR_resultCount = "resultCount";
+  public static final String SET_resultCount = "setResultCount";
   public static final String VAR_result = "result";
+  public static final String SET_result = "setResult";
   public static final String VAR_solrId = "solrId";
+  public static final String SET_solrId = "setSolrId";
   public static final String VAR_pageUriUseCase = "pageUriUseCase";
+  public static final String SET_pageUriUseCase = "setPageUriUseCase";
 
   public static final String DISPLAY_NAME_searchListUseCase_ = "";
   public static final String DISPLAY_NAME_listUseCase = "";
@@ -699,71 +705,6 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
   public static final String DISPLAY_NAME_result = "";
   public static final String DISPLAY_NAME_solrId = "";
   public static final String DISPLAY_NAME_pageUriUseCase = "";
-
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
 
   public static String displayNameForClass(String var) {
     return UseCaseGenPage.displayNameUseCaseGenPage(var);
@@ -784,83 +725,6 @@ public abstract class UseCaseGenPageGen<DEV> extends PageLayout {
       return DISPLAY_NAME_pageUriUseCase;
     default:
       return PageLayout.displayNamePageLayout(var);
-    }
-  }
-
-  public static String descriptionUseCaseGenPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return PageLayout.descriptionPageLayout(var);
-    }
-  }
-
-  public static String classSimpleNameUseCaseGenPage(String var) {
-    switch(var) {
-    case VAR_searchListUseCase_:
-      return "SearchList";
-    case VAR_listUseCase:
-      return "JsonArray";
-    case VAR_resultCount:
-      return "Integer";
-    case VAR_result:
-      return "UseCase";
-    case VAR_solrId:
-      return "String";
-    case VAR_pageUriUseCase:
-      return "String";
-      default:
-        return PageLayout.classSimpleNamePageLayout(var);
-    }
-  }
-
-  public static Integer htmColumnUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmColumnPageLayout(var);
-    }
-  }
-
-  public static Integer htmRowUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmRowPageLayout(var);
-    }
-  }
-
-  public static Integer htmCellUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmCellPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMinUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMinPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMaxUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMaxPageLayout(var);
-    }
-  }
-
-  public static Integer maxUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.maxPageLayout(var);
-    }
-  }
-
-  public static Integer minUseCaseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.minPageLayout(var);
     }
   }
 }

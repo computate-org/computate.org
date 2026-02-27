@@ -124,7 +124,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200SearchCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchCompanyCourse succeeded. "));
@@ -173,6 +173,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       List<String> fls = listCompanyCourse.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
+      List<String> scopes = siteRequest.getScopes();
       listCompanyCourse.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
@@ -199,15 +200,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       });
       json.put("list", l);
       response200Search(listCompanyCourse.getRequest(), listCompanyCourse.getResponse(), json);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -257,7 +250,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200GETCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("getCompanyCourse succeeded. "));
@@ -304,15 +297,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     try {
       SiteRequest siteRequest = listCompanyCourse.getSiteRequest_(SiteRequest.class);
       JsonObject json = JsonObject.mapFrom(listCompanyCourse.getList().stream().findFirst().orElse(null));
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -331,17 +316,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PATCH"));
         webClient.post(
@@ -356,7 +341,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -372,7 +358,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyCourse -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyCourse.getRequest().getRows());
@@ -498,7 +484,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
+        searchCompanyCourseList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyCourse -> {
           try {
             CompanyCourse o = listCompanyCourse.first();
             ApiRequest apiRequest = new ApiRequest();
@@ -579,15 +565,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -606,17 +584,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "POST"));
         webClient.post(
@@ -631,7 +609,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -657,6 +636,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
+              params.put("scopes", scopes2);
               params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
               params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
               params.put("form", new JsonObject());
@@ -801,15 +781,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -828,17 +800,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -853,7 +825,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -869,7 +842,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyCourse -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyCourse.getRequest().getRows());
@@ -994,7 +967,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
+        searchCompanyCourseList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyCourse -> {
           try {
             CompanyCourse o = listCompanyCourse.first();
             if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
@@ -1058,15 +1031,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETECompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -1085,17 +1050,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PUT"));
         webClient.post(
@@ -1110,7 +1075,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1371,15 +1337,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -1395,7 +1353,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200SearchPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchpageCompanyCourse succeeded. "));
@@ -1466,8 +1424,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       String pageTemplateUri = templateUriSearchPageCompanyCourse(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/course/CompanyCourseSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1512,6 +1474,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1614,18 +1577,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1640,11 +1602,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200EditPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("editpageCompanyCourse succeeded. "));
@@ -1722,8 +1685,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       String pageTemplateUri = templateUriEditPageCompanyCourse(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/course/CompanyCourseEditPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1768,6 +1735,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1868,7 +1836,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200DisplayPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("displaypageCompanyCourse succeeded. "));
@@ -1940,8 +1908,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       String pageTemplateUri = templateUriDisplayPageCompanyCourse(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1986,6 +1958,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -2088,18 +2061,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -2114,11 +2086,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, false, true, false).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, false, true, false, "GET").onSuccess(listCompanyCourse -> {
                 response200UserPageCompanyCourse(listCompanyCourse).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("userpageCompanyCourse succeeded. "));
@@ -2196,8 +2169,12 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       String pageTemplateUri = templateUriUserPageCompanyCourse(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -2242,6 +2219,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -2345,17 +2323,17 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYCOURSE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYCOURSE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyCourse.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
         webClient.post(
@@ -2370,7 +2348,8 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYCOURSE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("DELETE")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -2386,7 +2365,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyCourseList(siteRequest, true, false, true).onSuccess(listCompanyCourse -> {
+              searchCompanyCourseList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyCourse -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyCourse.getRequest().getRows());
@@ -2511,7 +2490,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyCourseList(siteRequest, false, true, true).onSuccess(listCompanyCourse -> {
+        searchCompanyCourseList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyCourse -> {
           try {
             CompanyCourse o = listCompanyCourse.first();
             if(o != null && listCompanyCourse.getResponse().getResponse().getNumFound() == 1) {
@@ -2575,15 +2554,7 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "course", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterCompanyCourse failed. "), ex);
       promise.tryFail(ex);
@@ -2678,13 +2649,14 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
     return promise.future();
   }
 
-  public Future<SearchList<CompanyCourse>> searchCompanyCourseList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+  public Future<SearchList<CompanyCourse>> searchCompanyCourseList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
     Promise<SearchList<CompanyCourse>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
       SearchList<CompanyCourse> searchList = new SearchList<CompanyCourse>();
+      searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
       Date facetRangeEnd = null;
@@ -3034,22 +3006,22 @@ public class CompanyCourseEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       o.setSiteRequest_((SiteRequest)siteRequest);
 
       o.persistForClass(CompanyCourse.VAR_name, CompanyCourse.staticSetName(siteRequest2, (String)result.get(CompanyCourse.VAR_name)));
-      o.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
       o.persistForClass(CompanyCourse.VAR_created, CompanyCourse.staticSetCreated(siteRequest2, (String)result.get(CompanyCourse.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(CompanyCourse.VAR_description, CompanyCourse.staticSetDescription(siteRequest2, (String)result.get(CompanyCourse.VAR_description)));
       o.persistForClass(CompanyCourse.VAR_price, CompanyCourse.staticSetPrice(siteRequest2, (String)result.get(CompanyCourse.VAR_price)));
-      o.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
       o.persistForClass(CompanyCourse.VAR_archived, CompanyCourse.staticSetArchived(siteRequest2, (String)result.get(CompanyCourse.VAR_archived)));
+      o.persistForClass(CompanyCourse.VAR_pageId, CompanyCourse.staticSetPageId(siteRequest2, (String)result.get(CompanyCourse.VAR_pageId)));
       o.persistForClass(CompanyCourse.VAR_emailTemplate, CompanyCourse.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyCourse.VAR_emailTemplate)));
       o.persistForClass(CompanyCourse.VAR_storeUrl, CompanyCourse.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyCourse.VAR_storeUrl)));
       o.persistForClass(CompanyCourse.VAR_downloadUri, CompanyCourse.staticSetDownloadUri(siteRequest2, (String)result.get(CompanyCourse.VAR_downloadUri)));
       o.persistForClass(CompanyCourse.VAR_courseNum, CompanyCourse.staticSetCourseNum(siteRequest2, (String)result.get(CompanyCourse.VAR_courseNum)));
-      o.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
       o.persistForClass(CompanyCourse.VAR_objectTitle, CompanyCourse.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyCourse.VAR_objectTitle)));
+      o.persistForClass(CompanyCourse.VAR_pageImageUri, CompanyCourse.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageUri)));
       o.persistForClass(CompanyCourse.VAR_displayPage, CompanyCourse.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyCourse.VAR_displayPage)));
       o.persistForClass(CompanyCourse.VAR_editPage, CompanyCourse.staticSetEditPage(siteRequest2, (String)result.get(CompanyCourse.VAR_editPage)));
       o.persistForClass(CompanyCourse.VAR_userPage, CompanyCourse.staticSetUserPage(siteRequest2, (String)result.get(CompanyCourse.VAR_userPage)));
-      o.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
       o.persistForClass(CompanyCourse.VAR_download, CompanyCourse.staticSetDownload(siteRequest2, (String)result.get(CompanyCourse.VAR_download)));
+      o.persistForClass(CompanyCourse.VAR_pageImageAlt, CompanyCourse.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyCourse.VAR_pageImageAlt)));
       o.persistForClass(CompanyCourse.VAR_relatedArticleIds, CompanyCourse.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyCourse.VAR_relatedArticleIds)));
       o.persistForClass(CompanyCourse.VAR_solrId, CompanyCourse.staticSetSolrId(siteRequest2, (String)result.get(CompanyCourse.VAR_solrId)));
 

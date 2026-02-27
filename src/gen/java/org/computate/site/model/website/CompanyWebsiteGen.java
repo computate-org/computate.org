@@ -39,6 +39,8 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 import io.vertx.core.json.JsonObject;
@@ -612,9 +614,39 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<CompanyWebsite> fqCompanyWebsite(SiteRequest siteRequest, String var, Object val) {
+    Promise<CompanyWebsite> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<CompanyWebsite> searchList = new SearchList<CompanyWebsite>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(CompanyWebsite.class);
+        searchList.fq(String.format("%s:", CompanyWebsite.varIndexedCompanyWebsite(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying the website", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying the website", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying the website", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyWebsite(entityVar,  siteRequest_, o);
@@ -908,9 +940,13 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     return CLASS_API_ADDRESS_CompanyWebsite;
   }
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
   public static final String VAR_websiteNum = "websiteNum";
+  public static final String SET_websiteNum = "setWebsiteNum";
 
   public static List<String> varsQForClass() {
     return CompanyWebsite.varsQCompanyWebsite(new ArrayList<String>());
@@ -972,18 +1008,8 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/website/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
   }
 
   @Override
@@ -991,24 +1017,22 @@ public abstract class CompanyWebsiteGen<DEV> extends BaseResult {
     return "%s/en-us/view/website/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return CompanyWebsite.varJsonCompanyWebsite(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonCompanyWebsite(String var, Boolean patch) {
+    switch(var) {
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    case VAR_websiteNum:
+      return patch ? SET_websiteNum : VAR_websiteNum;
+    default:
+      return BaseResult.varJsonBaseResult(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

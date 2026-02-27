@@ -607,9 +607,9 @@ public abstract class CompanyCourseGenPageGen<DEV> extends PageLayout {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyCourseGenPage(entityVar,  siteRequest_, o);
@@ -687,11 +687,17 @@ public abstract class CompanyCourseGenPageGen<DEV> extends PageLayout {
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.course.CompanyCourseGenPage";
   public static final String CLASS_AUTH_RESOURCE = "";
   public static final String VAR_searchListCompanyCourse_ = "searchListCompanyCourse_";
+  public static final String SET_searchListCompanyCourse_ = "setSearchListCompanyCourse_";
   public static final String VAR_listCompanyCourse = "listCompanyCourse";
+  public static final String SET_listCompanyCourse = "setListCompanyCourse";
   public static final String VAR_resultCount = "resultCount";
+  public static final String SET_resultCount = "setResultCount";
   public static final String VAR_result = "result";
+  public static final String SET_result = "setResult";
   public static final String VAR_solrId = "solrId";
+  public static final String SET_solrId = "setSolrId";
   public static final String VAR_pageUriCompanyCourse = "pageUriCompanyCourse";
+  public static final String SET_pageUriCompanyCourse = "setPageUriCompanyCourse";
 
   public static final String DISPLAY_NAME_searchListCompanyCourse_ = "";
   public static final String DISPLAY_NAME_listCompanyCourse = "";
@@ -699,71 +705,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends PageLayout {
   public static final String DISPLAY_NAME_result = "";
   public static final String DISPLAY_NAME_solrId = "";
   public static final String DISPLAY_NAME_pageUriCompanyCourse = "";
-
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
 
   public static String displayNameForClass(String var) {
     return CompanyCourseGenPage.displayNameCompanyCourseGenPage(var);
@@ -784,83 +725,6 @@ public abstract class CompanyCourseGenPageGen<DEV> extends PageLayout {
       return DISPLAY_NAME_pageUriCompanyCourse;
     default:
       return PageLayout.displayNamePageLayout(var);
-    }
-  }
-
-  public static String descriptionCompanyCourseGenPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return PageLayout.descriptionPageLayout(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyCourseGenPage(String var) {
-    switch(var) {
-    case VAR_searchListCompanyCourse_:
-      return "SearchList";
-    case VAR_listCompanyCourse:
-      return "JsonArray";
-    case VAR_resultCount:
-      return "Integer";
-    case VAR_result:
-      return "CompanyCourse";
-    case VAR_solrId:
-      return "String";
-    case VAR_pageUriCompanyCourse:
-      return "String";
-      default:
-        return PageLayout.classSimpleNamePageLayout(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmColumnPageLayout(var);
-    }
-  }
-
-  public static Integer htmRowCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmRowPageLayout(var);
-    }
-  }
-
-  public static Integer htmCellCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmCellPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMinPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMaxPageLayout(var);
-    }
-  }
-
-  public static Integer maxCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.maxPageLayout(var);
-    }
-  }
-
-  public static Integer minCompanyCourseGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.minPageLayout(var);
     }
   }
 }

@@ -245,9 +245,9 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyProductPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyProductPage.displayNameCompanyProductPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class CompanyProductPageGen<DEV> extends CompanyProductGenPage {
     switch(var) {
     default:
       return CompanyProductGenPage.displayNameCompanyProductGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyProductPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyProductGenPage.descriptionCompanyProductGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.classSimpleNameCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.htmColumnCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.htmRowCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.htmCellCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.lengthMinCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.lengthMaxCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.maxCompanyProductGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyProductPage(String var) {
-    switch(var) {
-      default:
-        return CompanyProductGenPage.minCompanyProductGenPage(var);
     }
   }
 }

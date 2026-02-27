@@ -245,9 +245,9 @@ public abstract class SpineProgrammingPageGen<DEV> extends SpineProgrammingGenPa
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchSpineProgrammingPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class SpineProgrammingPageGen<DEV> extends SpineProgrammingGenPa
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return SpineProgrammingPage.displayNameSpineProgrammingPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class SpineProgrammingPageGen<DEV> extends SpineProgrammingGenPa
     switch(var) {
     default:
       return SpineProgrammingGenPage.displayNameSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static String descriptionSpineProgrammingPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.descriptionSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.classSimpleNameSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.htmColumnSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer htmRowSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.htmRowSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer htmCellSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.htmCellSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.lengthMinSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.lengthMaxSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer maxSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.maxSpineProgrammingGenPage(var);
-    }
-  }
-
-  public static Integer minSpineProgrammingPage(String var) {
-    switch(var) {
-      default:
-        return SpineProgrammingGenPage.minSpineProgrammingGenPage(var);
     }
   }
 }

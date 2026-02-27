@@ -124,7 +124,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, false, true, false, "GET").onSuccess(listCompanyProduct -> {
                 response200SearchCompanyProduct(listCompanyProduct).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchCompanyProduct succeeded. "));
@@ -173,6 +173,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       List<String> fls = listCompanyProduct.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
+      List<String> scopes = siteRequest.getScopes();
       listCompanyProduct.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
@@ -199,15 +200,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       });
       json.put("list", l);
       response200Search(listCompanyProduct.getRequest(), listCompanyProduct.getResponse(), json);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -257,7 +250,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, false, true, false, "GET").onSuccess(listCompanyProduct -> {
                 response200GETCompanyProduct(listCompanyProduct).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("getCompanyProduct succeeded. "));
@@ -304,15 +297,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     try {
       SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
       JsonObject json = JsonObject.mapFrom(listCompanyProduct.getList().stream().findFirst().orElse(null));
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -331,19 +316,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PATCH"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -356,16 +347,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("PATCH") && !classPublicRead) {
               //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(PATCH)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("PATCH")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -380,7 +376,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("PATCH");
+                if(!scopes.contains("PATCH"))
+                  scopes.add("PATCH");
                 siteRequest.setFilteredScope(true);
               }
             }
@@ -399,7 +396,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyProduct -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyProduct.getRequest().getRows());
@@ -525,7 +522,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
+        searchCompanyProductList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyProduct -> {
           try {
             CompanyProduct o = listCompanyProduct.first();
             ApiRequest apiRequest = new ApiRequest();
@@ -606,15 +603,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -633,19 +622,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "POST"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -658,16 +653,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("POST") && !classPublicRead) {
               //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(POST)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("POST")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -682,7 +682,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("POST");
+                if(!scopes.contains("POST"))
+                  scopes.add("POST");
                 siteRequest.setFilteredScope(true);
               }
             }
@@ -711,6 +712,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
+              params.put("scopes", scopes2);
               params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
               params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
               params.put("form", new JsonObject());
@@ -855,15 +857,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -882,19 +876,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -907,16 +907,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("DELETE") && !classPublicRead) {
               //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(DELETE)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("DELETE")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -931,7 +936,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("DELETE");
+                if(!scopes.contains("DELETE"))
+                  scopes.add("DELETE");
                 siteRequest.setFilteredScope(true);
               }
             }
@@ -950,7 +956,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyProduct -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyProduct.getRequest().getRows());
@@ -1075,7 +1081,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
+        searchCompanyProductList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyProduct -> {
           try {
             CompanyProduct o = listCompanyProduct.first();
             if(o != null && listCompanyProduct.getResponse().getResponse().getNumFound() == 1) {
@@ -1139,15 +1145,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETECompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -1166,19 +1164,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PUT"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1191,16 +1195,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("PUT") && !classPublicRead) {
               //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(PUT)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("PUT")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -1215,7 +1224,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("PUT");
+                if(!scopes.contains("PUT"))
+                  scopes.add("PUT");
                 siteRequest.setFilteredScope(true);
               }
             }
@@ -1479,15 +1489,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -1503,7 +1505,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, false, true, false, "GET").onSuccess(listCompanyProduct -> {
                 response200SearchPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchpageCompanyProduct succeeded. "));
@@ -1574,8 +1576,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriSearchPageCompanyProduct(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/product/CompanyProductSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1620,6 +1626,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1722,20 +1729,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
               , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1748,16 +1760,20 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("GET") && !classPublicRead) {
-              //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(GET)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("GET")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -1772,14 +1788,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("GET");
+                if(!scopes.contains("GET"))
+                  scopes.add("GET");
                 siteRequest.setFilteredScope(true);
               }
             }
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, false, true, false, "GET").onSuccess(listCompanyProduct -> {
                 response200EditPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("editpageCompanyProduct succeeded. "));
@@ -1857,8 +1874,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriEditPageCompanyProduct(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/product/CompanyProductEditPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1903,6 +1924,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -2005,20 +2027,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
               , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -2031,16 +2058,20 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("GET") && !classPublicRead) {
-              //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(GET)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("GET")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -2055,14 +2086,15 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("GET");
+                if(!scopes.contains("GET"))
+                  scopes.add("GET");
                 siteRequest.setFilteredScope(true);
               }
             }
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyProductList(siteRequest, false, true, false).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, false, true, false, "GET").onSuccess(listCompanyProduct -> {
                 response200UserPageCompanyProduct(listCompanyProduct).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("userpageCompanyProduct succeeded. "));
@@ -2140,8 +2172,12 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriUserPageCompanyProduct(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -2186,6 +2222,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -2289,19 +2326,25 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -2314,16 +2357,21 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(!scopes.contains("DELETE") && !classPublicRead) {
               //
               List<String> fqs = new ArrayList<>();
-              List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
-              groups.stream().map(group -> {
-                    Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(DELETE)$").matcher(group);
-                    return mPermission.find() ? mPermission.group(1) : null;
-                  }).filter(v -> v != null).forEach(value -> {
-                    fqs.add(String.format("%s:%s", "productResource", value));
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("DELETE")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
                   });
               JsonObject authParams = siteRequest.getServiceRequest().getParams();
               JsonObject authQuery = authParams.getJsonObject("query");
@@ -2338,7 +2386,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               }
               if(fqs.size() > 0) {
                 fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
-                scopes.add("DELETE");
+                if(!scopes.contains("DELETE"))
+                  scopes.add("DELETE");
                 siteRequest.setFilteredScope(true);
               }
             }
@@ -2357,7 +2406,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyProductList(siteRequest, true, false, true).onSuccess(listCompanyProduct -> {
+              searchCompanyProductList(siteRequest, true, false, true, "DELETE").onSuccess(listCompanyProduct -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyProduct.getRequest().getRows());
@@ -2482,7 +2531,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyProductList(siteRequest, false, true, true).onSuccess(listCompanyProduct -> {
+        searchCompanyProductList(siteRequest, false, true, true, "DELETE").onSuccess(listCompanyProduct -> {
           try {
             CompanyProduct o = listCompanyProduct.first();
             if(o != null && listCompanyProduct.getResponse().getResponse().getNumFound() == 1) {
@@ -2546,15 +2595,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "product", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200DELETEFilterCompanyProduct failed. "), ex);
       promise.tryFail(ex);
@@ -2649,13 +2690,14 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     return promise.future();
   }
 
-  public Future<SearchList<CompanyProduct>> searchCompanyProductList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+  public Future<SearchList<CompanyProduct>> searchCompanyProductList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
     Promise<SearchList<CompanyProduct>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
       SearchList<CompanyProduct> searchList = new SearchList<CompanyProduct>();
+      searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
       Date facetRangeEnd = null;
@@ -3005,27 +3047,27 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       o.setSiteRequest_((SiteRequest)siteRequest);
 
       o.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
-      o.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
       o.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
+      o.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
       o.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
-      o.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
       o.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
+      o.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
       o.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
       o.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
       o.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
       o.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
       o.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
-      o.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
       o.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
+      o.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
       o.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
       o.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
       o.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
-      o.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
       o.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
+      o.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
       o.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
       o.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
-      o.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
       o.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
+      o.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
       o.persistForClass(CompanyProduct.VAR_dialogTemplate, CompanyProduct.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_dialogTemplate)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {

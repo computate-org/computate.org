@@ -124,7 +124,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, false, true, false, "GET").onSuccess(listCompanyService -> {
                 response200SearchCompanyService(listCompanyService).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchCompanyService succeeded. "));
@@ -173,6 +173,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       List<String> fls = listCompanyService.getRequest().getFields();
       JsonObject json = new JsonObject();
       JsonArray l = new JsonArray();
+      List<String> scopes = siteRequest.getScopes();
       listCompanyService.getList().stream().forEach(o -> {
         JsonObject json2 = JsonObject.mapFrom(o);
         if(fls.size() > 0) {
@@ -199,15 +200,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       });
       json.put("list", l);
       response200Search(listCompanyService.getRequest(), listCompanyService.getResponse(), json);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "service", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200SearchCompanyService failed. "), ex);
       promise.tryFail(ex);
@@ -257,7 +250,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, false, true, false, "GET").onSuccess(listCompanyService -> {
                 response200GETCompanyService(listCompanyService).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("getCompanyService succeeded. "));
@@ -304,15 +297,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     try {
       SiteRequest siteRequest = listCompanyService.getSiteRequest_(SiteRequest.class);
       JsonObject json = JsonObject.mapFrom(listCompanyService.getList().stream().findFirst().orElse(null));
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "service", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200GETCompanyService failed. "), ex);
       promise.tryFail(ex);
@@ -331,17 +316,17 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYSERVICE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYSERVICE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PATCH"));
         webClient.post(
@@ -356,7 +341,8 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYSERVICE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -372,7 +358,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             } else {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyServiceList(siteRequest, true, false, true).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyService -> {
                 try {
                   ApiRequest apiRequest = new ApiRequest();
                   apiRequest.setRows(listCompanyService.getRequest().getRows());
@@ -498,7 +484,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             siteRequest.addScopes(scope);
           });
         });
-        searchCompanyServiceList(siteRequest, false, true, true).onSuccess(listCompanyService -> {
+        searchCompanyServiceList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyService -> {
           try {
             CompanyService o = listCompanyService.first();
             ApiRequest apiRequest = new ApiRequest();
@@ -579,15 +565,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "service", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PATCHCompanyService failed. "), ex);
       promise.tryFail(ex);
@@ -606,17 +584,17 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYSERVICE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYSERVICE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "POST"));
         webClient.post(
@@ -631,7 +609,8 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYSERVICE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("POST")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -657,6 +636,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
               JsonObject params = new JsonObject();
               params.put("body", siteRequest.getJsonObject());
               params.put("path", new JsonObject());
+              params.put("scopes", scopes2);
               params.put("cookie", siteRequest.getServiceRequest().getParams().getJsonObject("cookie"));
               params.put("header", siteRequest.getServiceRequest().getParams().getJsonObject("header"));
               params.put("form", new JsonObject());
@@ -801,15 +781,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     try {
       SiteRequest siteRequest = o.getSiteRequest_();
       JsonObject json = JsonObject.mapFrom(o);
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "service", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200POSTCompanyService failed. "), ex);
       promise.tryFail(ex);
@@ -828,17 +800,17 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYSERVICE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYSERVICE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PUT"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "PUT"));
         webClient.post(
@@ -853,7 +825,8 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYSERVICE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             if(authorizationDecisionResponse.failed() || !scopes.contains("PUT")) {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               eventHandler.handle(Future.succeededFuture(
@@ -1114,15 +1087,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     Promise<ServiceResponse> promise = Promise.promise();
     try {
       JsonObject json = new JsonObject();
-      if(json == null) {
-        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
-        String m = String.format("%s %s not found", "service", pageId);
-        promise.complete(new ServiceResponse(404
-            , m
-            , Buffer.buffer(new JsonObject().put("message", m).encodePrettily()), null));
-      } else {
-        promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
-      }
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
     } catch(Exception ex) {
       LOG.error(String.format("response200PUTImportCompanyService failed. "), ex);
       promise.tryFail(ex);
@@ -1138,7 +1103,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, false, true, false, "GET").onSuccess(listCompanyService -> {
                 response200SearchPageCompanyService(listCompanyService).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("searchpageCompanyService succeeded. "));
@@ -1209,8 +1174,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriSearchPageCompanyService(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/service/CompanyServiceSearchPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1255,6 +1224,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1357,18 +1327,17 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         siteRequest.setLang("enUS");
         String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
         String COMPANYSERVICE = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYSERVICE");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
         MultiMap form = MultiMap.caseInsensitiveMultiMap();
         form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
         form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
         form.add("response_mode", "permissions");
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, config.getString(ComputateConfigKeys.AUTH_SCOPE_SUPER_ADMIN)));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "POST"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
         form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PATCH"));
-        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "PUT"));
-        form.add("permission", String.format("%s-%s#%s", CompanyService.CLASS_AUTH_RESOURCE, pageId, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyService.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
           form.add("permission", String.format("%s#%s", pageId, "GET"));
         webClient.post(
@@ -1383,11 +1352,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         .onComplete(authorizationDecisionResponse -> {
           try {
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
-            JsonArray scopes = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray().stream().findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYSERVICE".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
             {
               siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
               List<String> scopes2 = siteRequest.getScopes();
-              searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, false, true, false, "GET").onSuccess(listCompanyService -> {
                 response200EditPageCompanyService(listCompanyService).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("editpageCompanyService succeeded. "));
@@ -1465,8 +1435,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriEditPageCompanyService(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/service/CompanyServiceEditPage.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1511,6 +1485,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1611,7 +1586,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
       try {
         siteRequest.setLang("enUS");
-              searchCompanyServiceList(siteRequest, false, true, false).onSuccess(listCompanyService -> {
+              searchCompanyServiceList(siteRequest, false, true, false, "GET").onSuccess(listCompanyService -> {
                 response200DisplayPageCompanyService(listCompanyService).onSuccess(response -> {
                   eventHandler.handle(Future.succeededFuture(response));
                   LOG.debug(String.format("displaypageCompanyService succeeded. "));
@@ -1683,8 +1658,12 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String pageTemplateUri = templateUriDisplayPageCompanyService(serviceRequest, result);
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
-      String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
-      if(pageTemplateUri.endsWith(".md")) {
+      if(result == null || !Files.exists(resourceTemplatePath)) {
+        String template = Files.readString(Path.of(siteTemplatePath, "%s.htm"), Charset.forName("UTF-8"));
+        String renderedTemplate = jinjava.render(template, ctx.getMap());
+        promise.complete(renderedTemplate);
+      } else if(pageTemplateUri.endsWith(".md")) {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String metaPrefixResult = String.format("%s.", i18n.getString(I18n.var_resultat));
         Map<String, Object> data = new HashMap<>();
         String body = "";
@@ -1729,6 +1708,7 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         String renderedTemplate = jinjava.render(htmTemplate, ctx.getMap());
         promise.complete(renderedTemplate);
       } else {
+        String template = siteTemplatePath == null ? Resources.toString(Resources.getResource(resourceTemplatePath.toString()), StandardCharsets.UTF_8) : Files.readString(resourceTemplatePath, Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       }
@@ -1908,13 +1888,14 @@ public class CompanyServiceEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     return promise.future();
   }
 
-  public Future<SearchList<CompanyService>> searchCompanyServiceList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify) {
+  public Future<SearchList<CompanyService>> searchCompanyServiceList(SiteRequest siteRequest, Boolean populate, Boolean store, Boolean modify, String scope) {
     Promise<SearchList<CompanyService>> promise = Promise.promise();
     try {
       ServiceRequest serviceRequest = siteRequest.getServiceRequest();
       String entityListStr = siteRequest.getServiceRequest().getParams().getJsonObject("query").getString("fl");
       String[] entityList = entityListStr == null ? null : entityListStr.split(",\\s*");
       SearchList<CompanyService> searchList = new SearchList<CompanyService>();
+      searchList.setScope(scope);
       String facetRange = null;
       Date facetRangeStart = null;
       Date facetRangeEnd = null;

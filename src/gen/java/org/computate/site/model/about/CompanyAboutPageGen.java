@@ -245,9 +245,9 @@ public abstract class CompanyAboutPageGen<DEV> extends CompanyAboutGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyAboutPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class CompanyAboutPageGen<DEV> extends CompanyAboutGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyAboutPage.displayNameCompanyAboutPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class CompanyAboutPageGen<DEV> extends CompanyAboutGenPage {
     switch(var) {
     default:
       return CompanyAboutGenPage.displayNameCompanyAboutGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyAboutPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.descriptionCompanyAboutGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.classSimpleNameCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.htmColumnCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.htmRowCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.htmCellCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.lengthMinCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.lengthMaxCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.maxCompanyAboutGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyAboutPage(String var) {
-    switch(var) {
-      default:
-        return CompanyAboutGenPage.minCompanyAboutGenPage(var);
     }
   }
 }

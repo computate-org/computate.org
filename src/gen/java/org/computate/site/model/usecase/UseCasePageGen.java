@@ -245,9 +245,9 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchUseCasePage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return UseCasePage.displayNameUseCasePage(var);
   }
@@ -374,71 +309,6 @@ public abstract class UseCasePageGen<DEV> extends UseCaseGenPage {
     switch(var) {
     default:
       return UseCaseGenPage.displayNameUseCaseGenPage(var);
-    }
-  }
-
-  public static String descriptionUseCasePage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return UseCaseGenPage.descriptionUseCaseGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.classSimpleNameUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.htmColumnUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer htmRowUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.htmRowUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer htmCellUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.htmCellUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.lengthMinUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.lengthMaxUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer maxUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.maxUseCaseGenPage(var);
-    }
-  }
-
-  public static Integer minUseCasePage(String var) {
-    switch(var) {
-      default:
-        return UseCaseGenPage.minUseCaseGenPage(var);
     }
   }
 }

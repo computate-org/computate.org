@@ -524,6 +524,11 @@ public class UseCaseGenPage extends UseCaseGenPageGen<PageLayout> {
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all use cases");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/use-case");

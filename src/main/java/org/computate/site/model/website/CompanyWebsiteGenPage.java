@@ -525,6 +525,11 @@ public class CompanyWebsiteGenPage extends CompanyWebsiteGenPageGen<PageLayout> 
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all websites");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/website");

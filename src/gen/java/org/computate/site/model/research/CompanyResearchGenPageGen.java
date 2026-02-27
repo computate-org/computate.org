@@ -607,9 +607,9 @@ public abstract class CompanyResearchGenPageGen<DEV> extends PageLayout {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyResearchGenPage(entityVar,  siteRequest_, o);
@@ -687,11 +687,17 @@ public abstract class CompanyResearchGenPageGen<DEV> extends PageLayout {
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.research.CompanyResearchGenPage";
   public static final String CLASS_AUTH_RESOURCE = "";
   public static final String VAR_searchListCompanyResearch_ = "searchListCompanyResearch_";
+  public static final String SET_searchListCompanyResearch_ = "setSearchListCompanyResearch_";
   public static final String VAR_listCompanyResearch = "listCompanyResearch";
+  public static final String SET_listCompanyResearch = "setListCompanyResearch";
   public static final String VAR_resultCount = "resultCount";
+  public static final String SET_resultCount = "setResultCount";
   public static final String VAR_result = "result";
+  public static final String SET_result = "setResult";
   public static final String VAR_solrId = "solrId";
+  public static final String SET_solrId = "setSolrId";
   public static final String VAR_pageUriCompanyResearch = "pageUriCompanyResearch";
+  public static final String SET_pageUriCompanyResearch = "setPageUriCompanyResearch";
 
   public static final String DISPLAY_NAME_searchListCompanyResearch_ = "";
   public static final String DISPLAY_NAME_listCompanyResearch = "";
@@ -699,71 +705,6 @@ public abstract class CompanyResearchGenPageGen<DEV> extends PageLayout {
   public static final String DISPLAY_NAME_result = "";
   public static final String DISPLAY_NAME_solrId = "";
   public static final String DISPLAY_NAME_pageUriCompanyResearch = "";
-
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
 
   public static String displayNameForClass(String var) {
     return CompanyResearchGenPage.displayNameCompanyResearchGenPage(var);
@@ -784,83 +725,6 @@ public abstract class CompanyResearchGenPageGen<DEV> extends PageLayout {
       return DISPLAY_NAME_pageUriCompanyResearch;
     default:
       return PageLayout.displayNamePageLayout(var);
-    }
-  }
-
-  public static String descriptionCompanyResearchGenPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return PageLayout.descriptionPageLayout(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyResearchGenPage(String var) {
-    switch(var) {
-    case VAR_searchListCompanyResearch_:
-      return "SearchList";
-    case VAR_listCompanyResearch:
-      return "JsonArray";
-    case VAR_resultCount:
-      return "Integer";
-    case VAR_result:
-      return "CompanyResearch";
-    case VAR_solrId:
-      return "String";
-    case VAR_pageUriCompanyResearch:
-      return "String";
-      default:
-        return PageLayout.classSimpleNamePageLayout(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmColumnPageLayout(var);
-    }
-  }
-
-  public static Integer htmRowCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmRowPageLayout(var);
-    }
-  }
-
-  public static Integer htmCellCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmCellPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMinPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMaxPageLayout(var);
-    }
-  }
-
-  public static Integer maxCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.maxPageLayout(var);
-    }
-  }
-
-  public static Integer minCompanyResearchGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.minPageLayout(var);
     }
   }
 }

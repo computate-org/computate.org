@@ -526,6 +526,11 @@ public class SpineProgrammingGenPage extends SpineProgrammingGenPageGen<PageLayo
   }
 
   @Override
+  protected void _classAllName(Wrap<String> w) {
+    w.o("all SPINE Programming lessons");
+  }
+
+  @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
       w.o("/en-us/search/spine-programming");

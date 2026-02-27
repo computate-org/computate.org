@@ -245,9 +245,9 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyCoursePage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyCoursePage.displayNameCompanyCoursePage(var);
   }
@@ -374,71 +309,6 @@ public abstract class CompanyCoursePageGen<DEV> extends CompanyCourseGenPage {
     switch(var) {
     default:
       return CompanyCourseGenPage.displayNameCompanyCourseGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyCoursePage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.descriptionCompanyCourseGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.classSimpleNameCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.htmColumnCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.htmRowCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.htmCellCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.lengthMinCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.lengthMaxCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.maxCompanyCourseGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyCoursePage(String var) {
-    switch(var) {
-      default:
-        return CompanyCourseGenPage.minCompanyCourseGenPage(var);
     }
   }
 }

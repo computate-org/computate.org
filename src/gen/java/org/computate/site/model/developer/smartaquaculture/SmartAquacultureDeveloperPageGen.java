@@ -245,9 +245,9 @@ public abstract class SmartAquacultureDeveloperPageGen<DEV> extends SmartAquacul
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchSmartAquacultureDeveloperPage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class SmartAquacultureDeveloperPageGen<DEV> extends SmartAquacul
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return SmartAquacultureDeveloperPage.displayNameSmartAquacultureDeveloperPage(var);
   }
@@ -374,71 +309,6 @@ public abstract class SmartAquacultureDeveloperPageGen<DEV> extends SmartAquacul
     switch(var) {
     default:
       return SmartAquacultureDeveloperGenPage.displayNameSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static String descriptionSmartAquacultureDeveloperPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.descriptionSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.classSimpleNameSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.htmColumnSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmRowSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.htmRowSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer htmCellSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.htmCellSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.lengthMinSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.lengthMaxSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer maxSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.maxSmartAquacultureDeveloperGenPage(var);
-    }
-  }
-
-  public static Integer minSmartAquacultureDeveloperPage(String var) {
-    switch(var) {
-      default:
-        return SmartAquacultureDeveloperGenPage.minSmartAquacultureDeveloperGenPage(var);
     }
   }
 }

@@ -245,9 +245,9 @@ public abstract class CompanyWebsitePageGen<DEV> extends CompanyWebsiteGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyWebsitePage(entityVar,  siteRequest_, o);
@@ -302,71 +302,6 @@ public abstract class CompanyWebsitePageGen<DEV> extends CompanyWebsiteGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyWebsitePage.displayNameCompanyWebsitePage(var);
   }
@@ -374,71 +309,6 @@ public abstract class CompanyWebsitePageGen<DEV> extends CompanyWebsiteGenPage {
     switch(var) {
     default:
       return CompanyWebsiteGenPage.displayNameCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyWebsitePage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.descriptionCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.classSimpleNameCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.htmColumnCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.htmRowCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.htmCellCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.lengthMinCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.lengthMaxCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.maxCompanyWebsiteGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyWebsitePage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebsiteGenPage.minCompanyWebsiteGenPage(var);
     }
   }
 }

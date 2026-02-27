@@ -63,6 +63,8 @@ import io.vertx.core.json.JsonArray;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 
@@ -1341,9 +1343,39 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<CompanyEvent> fqCompanyEvent(SiteRequest siteRequest, String var, Object val) {
+    Promise<CompanyEvent> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<CompanyEvent> searchList = new SearchList<CompanyEvent>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(CompanyEvent.class);
+        searchList.fq(String.format("%s:", CompanyEvent.varIndexedCompanyEvent(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying theevent", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying theevent", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying theevent", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyEvent(entityVar,  siteRequest_, o);
@@ -1910,17 +1942,29 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
     return CLASS_API_ADDRESS_CompanyEvent;
   }
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_startDateTime = "startDateTime";
+  public static final String SET_startDateTime = "setStartDateTime";
   public static final String VAR_endDateTime = "endDateTime";
+  public static final String SET_endDateTime = "setEndDateTime";
   public static final String VAR_price = "price";
+  public static final String SET_price = "setPrice";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
   public static final String VAR_emailTemplate = "emailTemplate";
+  public static final String SET_emailTemplate = "setEmailTemplate";
   public static final String VAR_storeUrl = "storeUrl";
+  public static final String SET_storeUrl = "setStoreUrl";
   public static final String VAR_location = "location";
+  public static final String SET_location = "setLocation";
   public static final String VAR_locationColors = "locationColors";
+  public static final String SET_locationColors = "setLocationColors";
   public static final String VAR_locationTitles = "locationTitles";
+  public static final String SET_locationTitles = "setLocationTitles";
   public static final String VAR_locationLinks = "locationLinks";
+  public static final String SET_locationLinks = "setLocationLinks";
 
   public static List<String> varsQForClass() {
     return CompanyEvent.varsQCompanyEvent(new ArrayList<String>());
@@ -1993,23 +2037,8 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/event/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
   }
 
   @Override
@@ -2018,23 +2047,42 @@ public abstract class CompanyEventGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/use/event/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return CompanyEvent.varJsonCompanyEvent(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonCompanyEvent(String var, Boolean patch) {
+    switch(var) {
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_startDateTime:
+      return patch ? SET_startDateTime : VAR_startDateTime;
+    case VAR_endDateTime:
+      return patch ? SET_endDateTime : VAR_endDateTime;
+    case VAR_price:
+      return patch ? SET_price : VAR_price;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    case VAR_emailTemplate:
+      return patch ? SET_emailTemplate : VAR_emailTemplate;
+    case VAR_storeUrl:
+      return patch ? SET_storeUrl : VAR_storeUrl;
+    case VAR_location:
+      return patch ? SET_location : VAR_location;
+    case VAR_locationColors:
+      return patch ? SET_locationColors : VAR_locationColors;
+    case VAR_locationTitles:
+      return patch ? SET_locationTitles : VAR_locationTitles;
+    case VAR_locationLinks:
+      return patch ? SET_locationLinks : VAR_locationLinks;
+    default:
+      return BaseResult.varJsonBaseResult(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

@@ -607,9 +607,9 @@ public abstract class ComputateDeveloperGenPageGen<DEV> extends PageLayout {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchComputateDeveloperGenPage(entityVar,  siteRequest_, o);
@@ -687,11 +687,17 @@ public abstract class ComputateDeveloperGenPageGen<DEV> extends PageLayout {
   public static final String CLASS_CANONICAL_NAME = "org.computate.site.model.developer.computate.ComputateDeveloperGenPage";
   public static final String CLASS_AUTH_RESOURCE = "";
   public static final String VAR_searchListComputateDeveloper_ = "searchListComputateDeveloper_";
+  public static final String SET_searchListComputateDeveloper_ = "setSearchListComputateDeveloper_";
   public static final String VAR_listComputateDeveloper = "listComputateDeveloper";
+  public static final String SET_listComputateDeveloper = "setListComputateDeveloper";
   public static final String VAR_resultCount = "resultCount";
+  public static final String SET_resultCount = "setResultCount";
   public static final String VAR_result = "result";
+  public static final String SET_result = "setResult";
   public static final String VAR_solrId = "solrId";
+  public static final String SET_solrId = "setSolrId";
   public static final String VAR_pageUriComputateDeveloper = "pageUriComputateDeveloper";
+  public static final String SET_pageUriComputateDeveloper = "setPageUriComputateDeveloper";
 
   public static final String DISPLAY_NAME_searchListComputateDeveloper_ = "";
   public static final String DISPLAY_NAME_listComputateDeveloper = "";
@@ -699,71 +705,6 @@ public abstract class ComputateDeveloperGenPageGen<DEV> extends PageLayout {
   public static final String DISPLAY_NAME_result = "";
   public static final String DISPLAY_NAME_solrId = "";
   public static final String DISPLAY_NAME_pageUriComputateDeveloper = "";
-
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
 
   public static String displayNameForClass(String var) {
     return ComputateDeveloperGenPage.displayNameComputateDeveloperGenPage(var);
@@ -784,83 +725,6 @@ public abstract class ComputateDeveloperGenPageGen<DEV> extends PageLayout {
       return DISPLAY_NAME_pageUriComputateDeveloper;
     default:
       return PageLayout.displayNamePageLayout(var);
-    }
-  }
-
-  public static String descriptionComputateDeveloperGenPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return PageLayout.descriptionPageLayout(var);
-    }
-  }
-
-  public static String classSimpleNameComputateDeveloperGenPage(String var) {
-    switch(var) {
-    case VAR_searchListComputateDeveloper_:
-      return "SearchList";
-    case VAR_listComputateDeveloper:
-      return "JsonArray";
-    case VAR_resultCount:
-      return "Integer";
-    case VAR_result:
-      return "ComputateDeveloper";
-    case VAR_solrId:
-      return "String";
-    case VAR_pageUriComputateDeveloper:
-      return "String";
-      default:
-        return PageLayout.classSimpleNamePageLayout(var);
-    }
-  }
-
-  public static Integer htmColumnComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmColumnPageLayout(var);
-    }
-  }
-
-  public static Integer htmRowComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmRowPageLayout(var);
-    }
-  }
-
-  public static Integer htmCellComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.htmCellPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMinComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMinPageLayout(var);
-    }
-  }
-
-  public static Integer lengthMaxComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.lengthMaxPageLayout(var);
-    }
-  }
-
-  public static Integer maxComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.maxPageLayout(var);
-    }
-  }
-
-  public static Integer minComputateDeveloperGenPage(String var) {
-    switch(var) {
-      default:
-        return PageLayout.minPageLayout(var);
     }
   }
 }

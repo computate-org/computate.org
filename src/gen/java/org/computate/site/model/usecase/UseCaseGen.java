@@ -38,6 +38,8 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
+import org.computate.vertx.search.list.SearchList;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 import io.vertx.core.json.JsonObject;
@@ -612,9 +614,39 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<UseCase> fqUseCase(SiteRequest siteRequest, String var, Object val) {
+    Promise<UseCase> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<UseCase> searchList = new SearchList<UseCase>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(UseCase.class);
+        searchList.fq(String.format("%s:", UseCase.varIndexedUseCase(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying theuse case", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying theuse case", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying theuse case", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchUseCase(entityVar,  siteRequest_, o);
@@ -906,9 +938,13 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
     return CLASS_API_ADDRESS_UseCase;
   }
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_authorName = "authorName";
+  public static final String SET_authorName = "setAuthorName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
 
   public static List<String> varsQForClass() {
     return UseCase.varsQUseCase(new ArrayList<String>());
@@ -969,18 +1005,8 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/use-case/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
   }
 
   @Override
@@ -989,23 +1015,26 @@ public abstract class UseCaseGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlUserPageForClass() {
     return "%s/en-us/use/use-case/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return UseCase.varJsonUseCase(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonUseCase(String var, Boolean patch) {
+    switch(var) {
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_authorName:
+      return patch ? SET_authorName : VAR_authorName;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    default:
+      return BaseResult.varJsonBaseResult(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

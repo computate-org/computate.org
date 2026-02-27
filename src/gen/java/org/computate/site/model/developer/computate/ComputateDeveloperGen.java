@@ -43,6 +43,7 @@ import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
+import org.computate.search.tool.SearchTool;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.computate.search.response.solr.SolrResponse;
 import io.vertx.core.json.JsonObject;
@@ -2005,9 +2006,39 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
+
+  public static Future<ComputateDeveloper> fqComputateDeveloper(SiteRequest siteRequest, String var, Object val) {
+    Promise<ComputateDeveloper> promise = Promise.promise();
+    try {
+      if(val == null) {
+        promise.complete();
+      } else {
+        SearchList<ComputateDeveloper> searchList = new SearchList<ComputateDeveloper>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setC(ComputateDeveloper.class);
+        searchList.fq(String.format("%s:", ComputateDeveloper.varIndexedComputateDeveloper(var)) + SearchTool.escapeQueryChars(val.toString()));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          try {
+            promise.complete(searchList.getList().stream().findFirst().orElse(null));
+          } catch(Throwable ex) {
+            LOG.error("Error while querying the Computate Developer", ex);
+            promise.fail(ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error("Error while querying the Computate Developer", ex);
+          promise.fail(ex);
+        });
+      }
+    } catch(Throwable ex) {
+      LOG.error("Error while querying the Computate Developer", ex);
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchComputateDeveloper(entityVar,  siteRequest_, o);
@@ -2772,29 +2803,53 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
     return CLASS_API_ADDRESS_ComputateDeveloper;
   }
   public static final String VAR_article = "article";
+  public static final String SET_article = "setArticle";
   public static final String VAR_name = "name";
+  public static final String SET_name = "setName";
   public static final String VAR_description = "description";
+  public static final String SET_description = "setDescription";
   public static final String VAR_pageId = "pageId";
+  public static final String SET_pageId = "setPageId";
   public static final String VAR_courseNum = "courseNum";
+  public static final String SET_courseNum = "setCourseNum";
   public static final String VAR_lessonNum = "lessonNum";
+  public static final String SET_lessonNum = "setLessonNum";
   public static final String VAR_authorName = "authorName";
+  public static final String SET_authorName = "setAuthorName";
   public static final String VAR_authorUrl = "authorUrl";
+  public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageImageUri = "pageImageUri";
+  public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
+  public static final String SET_pageImageWidth = "setPageImageWidth";
   public static final String VAR_pageImageHeight = "pageImageHeight";
+  public static final String SET_pageImageHeight = "setPageImageHeight";
   public static final String VAR_pageImageType = "pageImageType";
+  public static final String SET_pageImageType = "setPageImageType";
   public static final String VAR_pageImageAlt = "pageImageAlt";
+  public static final String SET_pageImageAlt = "setPageImageAlt";
   public static final String VAR_prerequisiteArticleIds = "prerequisiteArticleIds";
+  public static final String SET_prerequisiteArticleIds = "setPrerequisiteArticleIds";
   public static final String VAR_prerequisiteArticleSearch = "prerequisiteArticleSearch";
+  public static final String SET_prerequisiteArticleSearch = "setPrerequisiteArticleSearch";
   public static final String VAR_prerequisiteArticles = "prerequisiteArticles";
+  public static final String SET_prerequisiteArticles = "setPrerequisiteArticles";
   public static final String VAR_nextArticleIds = "nextArticleIds";
+  public static final String SET_nextArticleIds = "setNextArticleIds";
   public static final String VAR_nextArticleSearch = "nextArticleSearch";
+  public static final String SET_nextArticleSearch = "setNextArticleSearch";
   public static final String VAR_nextArticles = "nextArticles";
+  public static final String SET_nextArticles = "setNextArticles";
   public static final String VAR_labelsString = "labelsString";
+  public static final String SET_labelsString = "setLabelsString";
   public static final String VAR_labels = "labels";
+  public static final String SET_labels = "setLabels";
   public static final String VAR_relatedArticleIds = "relatedArticleIds";
+  public static final String SET_relatedArticleIds = "setRelatedArticleIds";
   public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
+  public static final String SET_relatedArticleSearch = "setRelatedArticleSearch";
   public static final String VAR_relatedArticles = "relatedArticles";
+  public static final String SET_relatedArticles = "setRelatedArticles";
 
   public static List<String> varsQForClass() {
     return ComputateDeveloper.varsQComputateDeveloper(new ArrayList<String>());
@@ -2881,28 +2936,8 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
   }
 
   @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
   public String enUSStringFormatUrlEditPageForClass() {
     return "%s/en-us/edit/computate-developer/%s";
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
   }
 
   @Override
@@ -2910,14 +2945,62 @@ public abstract class ComputateDeveloperGen<DEV> extends BaseResult {
     return "%s/en-us/computate-developer/learn/%s";
   }
 
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonForClass(String var, Boolean patch) {
+    return ComputateDeveloper.varJsonComputateDeveloper(var, patch);
   }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
+  public static String varJsonComputateDeveloper(String var, Boolean patch) {
+    switch(var) {
+    case VAR_article:
+      return patch ? SET_article : VAR_article;
+    case VAR_name:
+      return patch ? SET_name : VAR_name;
+    case VAR_description:
+      return patch ? SET_description : VAR_description;
+    case VAR_pageId:
+      return patch ? SET_pageId : VAR_pageId;
+    case VAR_courseNum:
+      return patch ? SET_courseNum : VAR_courseNum;
+    case VAR_lessonNum:
+      return patch ? SET_lessonNum : VAR_lessonNum;
+    case VAR_authorName:
+      return patch ? SET_authorName : VAR_authorName;
+    case VAR_authorUrl:
+      return patch ? SET_authorUrl : VAR_authorUrl;
+    case VAR_pageImageUri:
+      return patch ? SET_pageImageUri : VAR_pageImageUri;
+    case VAR_pageImageWidth:
+      return patch ? SET_pageImageWidth : VAR_pageImageWidth;
+    case VAR_pageImageHeight:
+      return patch ? SET_pageImageHeight : VAR_pageImageHeight;
+    case VAR_pageImageType:
+      return patch ? SET_pageImageType : VAR_pageImageType;
+    case VAR_pageImageAlt:
+      return patch ? SET_pageImageAlt : VAR_pageImageAlt;
+    case VAR_prerequisiteArticleIds:
+      return patch ? SET_prerequisiteArticleIds : VAR_prerequisiteArticleIds;
+    case VAR_prerequisiteArticleSearch:
+      return patch ? SET_prerequisiteArticleSearch : VAR_prerequisiteArticleSearch;
+    case VAR_prerequisiteArticles:
+      return patch ? SET_prerequisiteArticles : VAR_prerequisiteArticles;
+    case VAR_nextArticleIds:
+      return patch ? SET_nextArticleIds : VAR_nextArticleIds;
+    case VAR_nextArticleSearch:
+      return patch ? SET_nextArticleSearch : VAR_nextArticleSearch;
+    case VAR_nextArticles:
+      return patch ? SET_nextArticles : VAR_nextArticles;
+    case VAR_labelsString:
+      return patch ? SET_labelsString : VAR_labelsString;
+    case VAR_labels:
+      return patch ? SET_labels : VAR_labels;
+    case VAR_relatedArticleIds:
+      return patch ? SET_relatedArticleIds : VAR_relatedArticleIds;
+    case VAR_relatedArticleSearch:
+      return patch ? SET_relatedArticleSearch : VAR_relatedArticleSearch;
+    case VAR_relatedArticles:
+      return patch ? SET_relatedArticles : VAR_relatedArticles;
+    default:
+      return BaseResult.varJsonBaseResult(var, patch);
+    }
   }
 
   public static String displayNameForClass(String var) {

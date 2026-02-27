@@ -247,9 +247,9 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
     }
   }
 
-  ////////////////
+  //////////////////
   // staticSearch //
-  ////////////////
+  //////////////////
 
   public static Object staticSearchForClass(String entityVar, SiteRequest siteRequest_, Object o) {
     return staticSearchCompanyWebinarPage(entityVar,  siteRequest_, o);
@@ -304,71 +304,6 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
   public static final String CLASS_AUTH_RESOURCE = "";
 
 
-  @Override
-  public String idForClass() {
-    return null;
-  }
-
-  @Override
-  public String titleForClass() {
-    return null;
-  }
-
-  @Override
-  public String nameForClass() {
-    return null;
-  }
-
-  @Override
-  public String classNameAdjectiveSingularForClass() {
-    return null;
-  }
-
-  @Override
-  public String descriptionForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlEditPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDisplayPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlUserPageForClass() {
-    return null;
-  }
-
-  @Override
-  public String frFRStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
-  @Override
-  public String enUSStringFormatUrlDownloadForClass() {
-    return null;
-  }
-
   public static String displayNameForClass(String var) {
     return CompanyWebinarPage.displayNameCompanyWebinarPage(var);
   }
@@ -376,71 +311,6 @@ public abstract class CompanyWebinarPageGen<DEV> extends CompanyWebinarGenPage {
     switch(var) {
     default:
       return CompanyWebinarGenPage.displayNameCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static String descriptionCompanyWebinarPage(String var) {
-    if(var == null)
-      return null;
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.descriptionCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static String classSimpleNameCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.classSimpleNameCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer htmColumnCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.htmColumnCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer htmRowCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.htmRowCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer htmCellCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.htmCellCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer lengthMinCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.lengthMinCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer lengthMaxCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.lengthMaxCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer maxCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.maxCompanyWebinarGenPage(var);
-    }
-  }
-
-  public static Integer minCompanyWebinarPage(String var) {
-    switch(var) {
-      default:
-        return CompanyWebinarGenPage.minCompanyWebinarGenPage(var);
     }
   }
 }
