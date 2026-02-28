@@ -2,6 +2,7 @@ package org.computate.site.model.product;
 
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.web.Router;
 import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.ext.web.api.service.ServiceResponse;
 import io.vertx.ext.web.client.WebClient;
@@ -13,6 +14,7 @@ import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpResponseExpectation;
 import io.vertx.core.json.JsonArray;
@@ -22,22 +24,33 @@ import io.vertx.pgclient.PgPool;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLEncoder;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
+import org.computate.site.user.SiteUserEnUSApiServiceImpl;
 import org.computate.vertx.api.ApiRequest;
+import org.computate.vertx.api.BaseApiServiceImpl;
 import org.computate.vertx.config.ComputateConfigKeys;
+import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.request.ComputateSiteRequest;
+import org.computate.vertx.result.base.ComputateBaseResult;
 import org.computate.vertx.search.list.SearchList;
+import org.computate.vertx.verticle.EmailVerticle;
 
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.ArrayOfLineItem;
@@ -309,25 +322,28 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
       JsonObject createTransactionRequest = requestBody.getJsonObject("createTransactionRequest");
 
       String state = requestBody.getString("state");
-      BigDecimal totalPrice = o.getPrice().setScale(2, RoundingMode.HALF_UP);
+      BigDecimal total = o.getPrice().setScale(2, RoundingMode.HALF_UP);
+      BigDecimal netAmountDue = total;
       BigDecimal itemPrice;
+      BigDecimal totalTax;
       if(StringUtils.equalsIgnoreCase(state, "Utah") || StringUtils.equalsIgnoreCase(state, "UT")) {
         BigDecimal calculatedTaxRate = new BigDecimal(0.0725).setScale(4, RoundingMode.HALF_UP);
-        BigDecimal calculatedTaxAmount = totalPrice.subtract(totalPrice.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
+        totalTax = total.subtract(total.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
         responseBody.put("calculatedTaxRate", calculatedTaxRate.toString());
-        responseBody.put("calculatedTaxAmount", calculatedTaxAmount.toString());
+        responseBody.put("calculatedTaxAmount", totalTax.toString());
         responseBody.put("taxExempt", false);
-        itemPrice = totalPrice.subtract(calculatedTaxAmount);
+        itemPrice = total.subtract(totalTax);
       } else {
+        totalTax = BigDecimal.ZERO.setScale(2);
         responseBody.put("taxExempt", true);
-        itemPrice = totalPrice;
+        itemPrice = total;
       }
 
       if(createTransactionRequest != null) {
         JsonObject transactionRequest = createTransactionRequest.getJsonObject("transactionRequest");
         BigDecimal requestAmount = new BigDecimal(transactionRequest.getString("amount")).setScale(2, RoundingMode.HALF_UP);
-        if(!totalPrice.equals(requestAmount)) {
-          throw new RuntimeException(String.format("%s product price %s does not match request price %s", o.getName(), totalPrice, requestAmount));
+        if(!total.equals(requestAmount)) {
+          throw new RuntimeException(String.format("%s product price %s does not match request price %s", o.getName(), total, requestAmount));
         } else {
           responseBody = new JsonObject();
           JsonObject createTransactionRequest2 = new JsonObject();
@@ -344,7 +360,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
           lineItemResponse.put("unitPrice", lineItemRequest.getString("unitPrice"));
           createTransactionRequest2.put("transactionRequest", new JsonObject()
             .put("transactionType", "authCaptureTransaction")
-            .put("amount", totalPrice.toString())
+            .put("amount", total.toString())
             .put("payment", transactionRequest.getJsonObject("payment"))
             .put("lineItems", new JsonObject().put("lineItem", lineItemResponse))
             .put("billTo", transactionRequest.getJsonObject("billTo"))
@@ -362,11 +378,20 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
               .expecting(HttpResponseExpectation.SC_OK)
               .onSuccess(authorizeResponse -> {
             try {
-              JsonObject authorizeResponseBody = authorizeResponse.bodyAsJsonObject();
-              if("Error".equals(Optional.ofNullable(authorizeResponseBody.getJsonObject("messages")).map(m -> m.getString("resultCode")).orElse(null))) {
-                throw new RuntimeException(String.format("The createTransactionRequest to authorize.net failed: %s", authorizeResponseBody));
+              JsonObject transactionResponseBody = authorizeResponse.bodyAsJsonObject();
+              if("Error".equals(Optional.ofNullable(transactionResponseBody.getJsonObject("messages")).map(m -> m.getString("resultCode")).orElse(null))) {
+                throw new RuntimeException(String.format("The createTransactionRequest to authorize.net failed: %s", transactionResponseBody));
               } else {
-                promise.complete(authorizeResponseBody);
+                String userName = siteRequest.getUserName();
+                String pageId = o.getPageId();
+                JsonObject transactionResponse = transactionResponseBody.getJsonObject("transactionResponse");
+                String transactionId = transactionResponse.getString("transId");
+                processAuthorizeItem(total, totalTax, netAmountDue, userName, pageId, vertx, config, webClient, transactionId, lineItemResponse).onSuccess(a -> {
+                  promise.complete(transactionResponseBody);
+                }).onFailure(ex -> {
+                  LOG.error(String.format("Failed to process authorize.net item. "), ex);
+                  promise.tryFail(ex);
+                });
               }
             } catch(Exception ex) {
               LOG.error(String.format("The createTransactionRequest to authorize.net failed. "), ex);
@@ -379,12 +404,228 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
         }
       } else {
         responseBody.put("itemPrice", itemPrice.toString());
-        responseBody.put("totalPrice", totalPrice.toString());
+        responseBody.put("totalPrice", total.toString());
         promise.complete(responseBody);
       }
     } catch(Exception ex) {
       LOG.error(String.format("patchpayCompanyProductFuture failed. "), ex);
       promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
+  public static Future<Void> processAuthorizeItem(BigDecimal total, BigDecimal totalTax, BigDecimal netAmountDue, String userName, String pageId, Vertx vertx, JsonObject config, WebClient webClient, String transactionId, JsonObject item) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      if(userName != null) {
+        String itemId = item.getString("itemId");
+        LOG.info(String.format("Processing %s order for userName %s", itemId, userName));
+        String itemName = item.getString("name");
+
+        List<String> publicResources = Arrays.asList("CompanyEvent","CompanyCourse","CompanyProduct","CompanyService");
+        SiteRequest siteRequest = new SiteRequest();
+        siteRequest.setWebClient(webClient);
+        siteRequest.setUserPrincipal(new JsonObject());
+        siteRequest.setUser(null);
+        siteRequest.setConfig(config);
+        siteRequest.setServiceRequest(null);
+        siteRequest.setSiteRequest_(siteRequest);
+        siteRequest.initDeepForClass();
+        siteRequest.setPublicRead(true);
+
+        SearchList<ComputateBaseResult> searchList = new SearchList<ComputateBaseResult>();
+        searchList.setStore(true);
+        searchList.q("*:*");
+        searchList.setSiteRequest_(siteRequest);
+        searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
+        searchList.fq(String.format("pageId_docvalues_string:\"" + itemId + "\""));
+        searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
+          if(searchList.size() > 0) {
+            ComputateBaseResult result = searchList.first();
+            String classSimpleName = (String)result.obtainForClass("classSimpleName");
+            String groupName = String.format("%s-%s-GET", classSimpleName, pageId);
+            String authAdminUsername = config.getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+            String authAdminPassword = config.getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+            Integer authPort = Integer.parseInt(config.getString(ConfigKeys.AUTH_PORT));
+            String authHostName = config.getString(ConfigKeys.AUTH_HOST_NAME);
+            Boolean authSsl = Boolean.valueOf(config.getString(ConfigKeys.AUTH_SSL));
+            String authRealm = config.getString(ConfigKeys.AUTH_REALM);
+            webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+                .sendForm(MultiMap.caseInsensitiveMultiMap()
+                    .add("username", authAdminUsername)
+                    .add("password", authAdminPassword)
+                    .add("grant_type", "password")
+                    .add("client_id", "admin-cli")
+                    )
+                .expecting(HttpResponseExpectation.SC_OK)
+                    .onSuccess(tokenResponse -> {
+              try {
+                String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+                webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                .send()
+                .expecting(HttpResponseExpectation.SC_OK)
+                .onSuccess(groupResponse -> {
+                  try {
+                    JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+                    JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+                    if(group != null) {
+                      String groupId = group.getString("id");
+                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=%s", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                      .send()
+                      .expecting(HttpResponseExpectation.SC_OK)
+                      .onSuccess(userResponse -> {
+                        JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+                        JsonObject user = users.stream().map(o -> (JsonObject)o).filter(o -> userName.equals(o.getString("username"))).findFirst().orElse(null);
+                        if(user != null) {
+                          String userId = user.getString("id");
+                          String userEmail = user.getString("email");
+                          String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+                          JsonArray userGroups = user.getJsonArray("groups");
+                          webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+                              .putHeader("Authorization", String.format("Bearer %s", authToken))
+                              .putHeader("Content-Type", "application/json")
+                              .putHeader("Content-Length", "0")
+                              .send()
+                              .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                              .onSuccess(groupUserResponse -> {
+                            LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
+                            sendProductEmail(total, totalTax, netAmountDue, siteRequest, userName, pageId, vertx, config, transactionId, item, user, result).onSuccess(c -> {
+                              try {
+                                grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
+                                  promise.complete();
+                                }).onFailure(ex -> {
+                                  promise.fail(ex);
+                                });
+                              } catch(Throwable ex) {
+                                LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
+                                promise.fail(ex);
+                              }
+                            }).onFailure(ex -> {
+                              LOG.error("Failed to process authorize.net webook while sending email. ", ex);
+                              promise.fail(ex);
+                            });
+                          }).onFailure(ex -> {
+                            LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
+                            promise.fail(ex);
+                          });
+                        } else {
+                          Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", userName));
+                          LOG.error(ex.getMessage(), ex);
+                          promise.fail(ex);
+                        }
+                      }).onFailure(ex -> {
+                        LOG.error("Failed to process authorize.net webook while querying user. ", ex);
+                        promise.fail(ex);
+                      });
+                    } else {
+                      Throwable ex = new RuntimeException("Failed to find group. ");
+                      LOG.error(ex.getMessage(), ex);
+                      promise.fail(ex);
+                    }
+                  } catch(Throwable ex) {
+                    LOG.error("Failed to process authorize.net webook while querying group. ", ex);
+                    promise.fail(ex);
+                  }
+                }).onFailure(ex -> {
+                  LOG.error("Failed to process authorize.net webook while querying group. ", ex);
+                  promise.fail(ex);
+                });
+              } catch(Throwable ex) {
+                LOG.error("Failed to process authorize.net webook while querying group. ", ex);
+                promise.fail(ex);
+              }
+            }).onFailure(ex -> {
+              LOG.error("Failed to process authorize.net webook. ", ex);
+              promise.fail(ex);
+            });
+          } else {
+            LOG.warn(String.format("Item not found with name %s. ", itemName));
+            promise.complete();
+          }
+        }).onFailure(ex -> {
+          LOG.error("Failed to process authorize.net webook. ", ex);
+          promise.fail(ex);
+        });
+      } else {
+        LOG.warn(String.format("Order %s missing userName", transactionId));
+        promise.complete();
+      }
+    } catch(Exception ex) {
+      LOG.error("The authorize.net item failed to process.");
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
+  public static Future<Void> grantGithubTeamAccess(String githubTeam, String githubUsername, JsonObject config, WebClient webClient) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      String githubOrg = config.getString(ConfigKeys.GITHUB_ORG);
+      String githubUri = String.format("/orgs/%s/teams/%s/memberships/%s", BaseApiServiceImpl.urlEncode(githubOrg), BaseApiServiceImpl.urlEncode(githubTeam), BaseApiServiceImpl.urlEncode(githubUsername));
+      webClient.put(443, "api.github.com", githubUri).ssl(true)
+          .putHeader("Accept", "application/vnd.github+json")
+          .putHeader("X-GitHub-Api-Version", "2022-11-28")
+          .putHeader("Authorization", String.format("Bearer %s", config.getString(ConfigKeys.GITHUB_TEAMS_TOKEN)))
+          .sendJsonObject(new JsonObject().put("role", "member"))
+          .expecting(HttpResponseExpectation.SC_OK)
+          .onSuccess(memberResponse -> {
+        LOG.info(String.format("Successfully granted user %s access to team %s in org %s in GitHub", githubUsername, githubTeam, githubOrg));
+        promise.complete();
+      }).onFailure(ex -> {
+        LOG.error(String.format("Failed to add user %s to team %s in org %s. ", githubUsername, githubTeam, githubOrg), ex);
+        promise.fail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error("The GitHub team access failed. ");
+      promise.fail(ex);
+    }
+    return promise.future();
+  }
+
+  public static Future<Void> sendProductEmail(BigDecimal total, BigDecimal totalTax, BigDecimal netAmountDue, SiteRequest siteRequest, String userName, String pageId, Vertx vertx, JsonObject config, String transactionId, JsonObject item, JsonObject user, ComputateBaseResult result) {
+    Promise<Void> promise = Promise.promise();
+    try {
+      String userEmail = user.getString("email");
+      String customerName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+      String itemName = item.getString("name");
+      DeliveryOptions options = new DeliveryOptions();
+      String siteName = config.getString(ComputateConfigKeys.SITE_NAME);
+      String emailFrom = config.getString(ComputateConfigKeys.EMAIL_FROM);
+      String emailTo = userEmail;
+
+      String subject = String.format("Hello %s! Thank you for ordering the %s from %s! ", customerName, itemName, siteName);
+      String emailTemplate = (String)result.obtainForClass("emailTemplate");
+      options.addHeader(EmailVerticle.MAIL_HEADER_SUBJECT, subject);
+      options.addHeader(EmailVerticle.MAIL_HEADER_FROM, emailFrom);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TO, emailTo);
+      options.addHeader(EmailVerticle.MAIL_HEADER_TEMPLATE, emailTemplate);
+
+      ZoneId zoneId = ZoneId.of(config.getString(ComputateConfigKeys.SITE_ZONE));
+      ZoneId zoneIdSite = ZoneId.of(siteRequest.getConfig().getString(ConfigKeys.SITE_ZONE));
+      ZonedDateTime createdAt = ZonedDateTime.now(zoneIdSite);
+      Locale locale = Locale.forLanguageTag(config.getString(ComputateConfigKeys.SITE_LOCALE));
+      DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE d MMM uuuu h:mm a VV", locale);
+      JsonObject body = new JsonObject();
+      body.put(ComputateConfigKeys.SITE_BASE_URL, config.getString(ComputateConfigKeys.SITE_BASE_URL));
+      body.put("siteName", siteName);
+      body.put("githubUsername", userName);
+      body.put("transactionId", transactionId);
+      body.put("subject", subject);
+      body.put("emailTo", emailTo);
+      body.put("customerName", customerName);
+      body.put("result", JsonObject.mapFrom(result));
+      body.put("totalMoney", NumberFormat.getCurrencyInstance(locale).format(total));
+      body.put("totalTax", NumberFormat.getCurrencyInstance(locale).format(totalTax));
+      body.put("netAmountDue", NumberFormat.getCurrencyInstance(locale).format(netAmountDue));
+
+      String createdAtStr = dateFormat.format(createdAt.withZoneSameInstant(zoneId));
+      body.put("createdAt", createdAtStr);
+
+      vertx.eventBus().send(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options);
+      LOG.info(String.format("Sending email to %s for purchasing %s", userName, pageId));
+    } catch(Exception ex) {
+      LOG.error("The square item failed to process.");
+      promise.fail(ex);
     }
     return promise.future();
   }
