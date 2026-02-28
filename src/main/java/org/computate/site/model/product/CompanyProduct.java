@@ -45,6 +45,8 @@ import io.vertx.pgclient.data.Point;
  *   Search:
  *   GET:
  *   PATCH:
+ *   PATCHPay:
+ *     ApiUri: /en-us/shop/product/{pageId}
  *   POST:
  *   DELETE:
  *   PUTImport:
@@ -105,6 +107,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * HtmRow: 3
    * HtmCell: 3
    * Facet: true
+   * Scale: 2
    */
   protected void _price(Wrap<BigDecimal> w) {
   }

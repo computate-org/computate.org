@@ -611,6 +611,312 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     return promise.future();
   }
 
+  // PATCHPay //
+
+  @Override
+  public void patchpayCompanyProduct(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("patchpayCompanyProduct started. "));
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        String COMPANYPRODUCT = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("COMPANYPRODUCT");
+        List<String> groups = Optional.ofNullable(siteRequest.getGroups()).orElse(new ArrayList<>());
+        MultiMap form = MultiMap.caseInsensitiveMultiMap();
+        form.add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket");
+        form.add("audience", config.getString(ComputateConfigKeys.AUTH_CLIENT));
+        form.add("response_mode", "permissions");
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "POST"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "PATCH"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "GET"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "DELETE"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
+        form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
+        if(pageId != null)
+          form.add("permission", String.format("%s#%s", pageId, "PATCH"));
+        groups.stream().map(group -> {
+              Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
+              return mPermission.find() ? mPermission : null;
+            }).filter(v -> v != null).forEach(mPermission -> {
+              form.add("permission", String.format("%s#%s", mPermission.group(1), mPermission.group(3)));
+            });
+        webClient.post(
+            config.getInteger(ComputateConfigKeys.AUTH_PORT)
+            , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
+            , config.getString(ComputateConfigKeys.AUTH_TOKEN_URI)
+            )
+            .ssl(config.getBoolean(ComputateConfigKeys.AUTH_SSL))
+            .putHeader("Authorization", String.format("Bearer %s", Optional.ofNullable(siteRequest.getUser()).map(u -> u.principal().getString("access_token")).orElse("")))
+            .sendForm(form)
+            .expecting(HttpResponseExpectation.SC_OK)
+        .onComplete(authorizationDecisionResponse -> {
+          try {
+            HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
+            JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
+            JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
+            if(!scopes.contains("PATCH") && !classPublicRead) {
+              //
+              List<String> fqs = new ArrayList<>();
+              authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
+                    Matcher mPermission = Pattern.compile("^(COMPANYPRODUCT-([a-z0-9\\-]+))$").matcher(permission.getString("rsname"));
+                    return permission.getJsonArray("scopes").contains("PATCH")
+                        && mPermission.find();
+                  }).forEach(permission -> {
+                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
+                      if(!scopes.contains(scope))
+                        scopes.add(scope);
+                    });
+                  });
+              JsonObject authParams = siteRequest.getServiceRequest().getParams();
+              JsonObject authQuery = authParams.getJsonObject("query");
+              if(authQuery == null) {
+                authQuery = new JsonObject();
+                authParams.put("query", authQuery);
+              }
+              JsonArray fq = authQuery.getJsonArray("fq");
+              if(fq == null) {
+                fq = new JsonArray();
+                authQuery.put("fq", fq);
+              }
+              if(fqs.size() > 0) {
+                fq.add(fqs.stream().collect(Collectors.joining(" OR ")));
+                if(!scopes.contains("PATCH"))
+                  scopes.add("PATCH");
+                siteRequest.setFilteredScope(true);
+              }
+            }
+            if(authorizationDecisionResponse.failed() || !scopes.contains("PATCH")) {
+              String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
+              eventHandler.handle(Future.succeededFuture(
+                new ServiceResponse(403, "FORBIDDEN",
+                  Buffer.buffer().appendString(
+                    new JsonObject()
+                      .put("errorCode", "403")
+                      .put("errorMessage", msg)
+                      .encodePrettily()
+                    ), MultiMap.caseInsensitiveMultiMap()
+                )
+              ));
+            } else {
+              siteRequest.setScopes(scopes.stream().map(o -> o.toString()).collect(Collectors.toList()));
+              List<String> scopes2 = siteRequest.getScopes();
+              searchCompanyProductList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyProduct -> {
+                try {
+                  ApiRequest apiRequest = new ApiRequest();
+                  apiRequest.setRows(listCompanyProduct.getRequest().getRows());
+                  apiRequest.setNumFound(listCompanyProduct.getResponse().getResponse().getNumFound());
+                  apiRequest.setNumPATCH(0L);
+                  apiRequest.initDeepApiRequest(siteRequest);
+                  siteRequest.setApiRequest_(apiRequest);
+                  if(apiRequest.getNumFound() == 1L)
+                    apiRequest.setOriginal(listCompanyProduct.first());
+                  apiRequest.setId(Optional.ofNullable(listCompanyProduct.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+                  eventBus.publish("websocketCompanyProduct", JsonObject.mapFrom(apiRequest).toString());
+
+                  listPATCHPayCompanyProduct(apiRequest, listCompanyProduct).onSuccess(e -> {
+                    response200PATCHPayCompanyProduct(siteRequest).onSuccess(response -> {
+                      LOG.debug(String.format("patchpayCompanyProduct succeeded. "));
+                      eventHandler.handle(Future.succeededFuture(response));
+                    }).onFailure(ex -> {
+                      LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+                      error(siteRequest, eventHandler, ex);
+                    });
+                  }).onFailure(ex -> {
+                    LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+                    error(siteRequest, eventHandler, ex);
+                  });
+                } catch(Exception ex) {
+                  LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+                  error(siteRequest, eventHandler, ex);
+                }
+              }).onFailure(ex -> {
+                LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+                error(siteRequest, eventHandler, ex);
+              });
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+            error(null, eventHandler, ex);
+          }
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("patchpayCompanyProduct failed. ", ex2));
+          error(null, eventHandler, ex2);
+        }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
+      } else {
+        LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public Future<Void> listPATCHPayCompanyProduct(ApiRequest apiRequest, SearchList<CompanyProduct> listCompanyProduct) {
+    Promise<Void> promise = Promise.promise();
+    List<Future> futures = new ArrayList<>();
+    SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+    listCompanyProduct.getList().forEach(o -> {
+      SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+      siteRequest2.setScopes(siteRequest.getScopes());
+      o.setSiteRequest_(siteRequest2);
+      siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+      JsonObject jsonObject = JsonObject.mapFrom(o);
+      CompanyProduct o2 = jsonObject.mapTo(CompanyProduct.class);
+      o2.setSiteRequest_(siteRequest2);
+      futures.add(Future.future(promise1 -> {
+        patchpayCompanyProductFuture(o2, false).onSuccess(a -> {
+          promise1.complete();
+        }).onFailure(ex -> {
+          LOG.error(String.format("listPATCHPayCompanyProduct failed. "), ex);
+          promise1.tryFail(ex);
+        });
+      }));
+    });
+    CompositeFuture.all(futures).onSuccess( a -> {
+      listCompanyProduct.next().onSuccess(next -> {
+        if(next) {
+          listPATCHPayCompanyProduct(apiRequest, listCompanyProduct).onSuccess(b -> {
+            promise.complete();
+          }).onFailure(ex -> {
+            LOG.error(String.format("listPATCHPayCompanyProduct failed. "), ex);
+            promise.tryFail(ex);
+          });
+        } else {
+          promise.complete();
+        }
+      }).onFailure(ex -> {
+        LOG.error(String.format("listPATCHPayCompanyProduct failed. "), ex);
+        promise.tryFail(ex);
+      });
+    }).onFailure(ex -> {
+      LOG.error(String.format("listPATCHPayCompanyProduct failed. "), ex);
+      promise.tryFail(ex);
+    });
+    return promise.future();
+  }
+
+  @Override
+  public void patchpayCompanyProductFuture(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        siteRequest.setJsonObject(body);
+        serviceRequest.getParams().getJsonObject("query").put("rows", 1);
+        Optional.ofNullable(serviceRequest.getParams().getJsonArray("scopes")).ifPresent(scopes -> {
+          scopes.stream().map(v -> v.toString()).forEach(scope -> {
+            siteRequest.addScopes(scope);
+          });
+        });
+        searchCompanyProductList(siteRequest, false, true, true, "PATCH").onSuccess(listCompanyProduct -> {
+          try {
+            CompanyProduct o = listCompanyProduct.first();
+            ApiRequest apiRequest = new ApiRequest();
+            apiRequest.setRows(1L);
+            apiRequest.setNumFound(1L);
+            apiRequest.setNumPATCH(0L);
+            apiRequest.initDeepApiRequest(siteRequest);
+            siteRequest.setApiRequest_(apiRequest);
+            if(Optional.ofNullable(serviceRequest.getParams()).map(p -> p.getJsonObject("query")).map( q -> q.getJsonArray("var")).orElse(new JsonArray()).stream().filter(s -> "refresh:false".equals(s)).count() > 0L) {
+              siteRequest.getRequestVars().put( "refresh", "false" );
+            }
+            CompanyProduct o2;
+            if(o != null) {
+              if(apiRequest.getNumFound() == 1L)
+                apiRequest.setOriginal(o);
+              apiRequest.setId(Optional.ofNullable(listCompanyProduct.first()).map(o3 -> o3.getPageId().toString()).orElse(null));
+              JsonObject jsonObject = JsonObject.mapFrom(o);
+              o2 = jsonObject.mapTo(CompanyProduct.class);
+              o2.setSiteRequest_(siteRequest);
+              patchpayCompanyProductFuture(o2, false).onSuccess(o3 -> {
+                eventHandler.handle(Future.succeededFuture(ServiceResponse.completedWithJson(Buffer.buffer(new JsonObject().encodePrettily()))));
+              }).onFailure(ex -> {
+                eventHandler.handle(Future.failedFuture(ex));
+              });
+            } else {
+              String m = String.format("%s %s not found", "product", null);
+              eventHandler.handle(Future.failedFuture(m));
+            }
+          } catch(Exception ex) {
+            LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+            error(siteRequest, eventHandler, ex);
+          }
+        }).onFailure(ex -> {
+          LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+          error(siteRequest, eventHandler, ex);
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+      error(null, eventHandler, ex);
+    });
+  }
+
+  public Future<CompanyProduct> patchpayCompanyProductFuture(CompanyProduct o, Boolean inheritPrimaryKey) {
+    SiteRequest siteRequest = o.getSiteRequest_();
+    Promise<CompanyProduct> promise = Promise.promise();
+
+    try {
+      ApiRequest apiRequest = siteRequest.getApiRequest_();
+      persistCompanyProduct(o, true).onSuccess(c -> {
+        indexCompanyProduct(o).onSuccess(e -> {
+          if(apiRequest != null) {
+            apiRequest.setNumPATCH(apiRequest.getNumPATCH() + 1);
+            if(apiRequest.getNumFound() == 1L && Optional.ofNullable(siteRequest.getJsonObject()).map(json -> json.size() > 0).orElse(false)) {
+              o.apiRequestCompanyProduct();
+              if(apiRequest.getVars().size() > 0 && Optional.ofNullable(siteRequest.getRequestVars().get("refresh")).map(refresh -> !refresh.equals("false")).orElse(true))
+                eventBus.publish("websocketCompanyProduct", JsonObject.mapFrom(apiRequest).toString());
+            }
+          }
+          promise.complete(o);
+        }).onFailure(ex -> {
+          promise.tryFail(ex);
+        });
+      }).onFailure(ex -> {
+        promise.tryFail(ex);
+      });
+    } catch(Exception ex) {
+      LOG.error(String.format("patchpayCompanyProductFuture failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
+  public Future<ServiceResponse> response200PATCHPayCompanyProduct(SiteRequest siteRequest) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      JsonObject json = new JsonObject();
+      promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+    } catch(Exception ex) {
+      LOG.error(String.format("response200PATCHPayCompanyProduct failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
   // POST //
 
   @Override
@@ -3047,27 +3353,27 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       o.setSiteRequest_((SiteRequest)siteRequest);
 
       o.persistForClass(CompanyProduct.VAR_name, CompanyProduct.staticSetName(siteRequest2, (String)result.get(CompanyProduct.VAR_name)));
-      o.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
       o.persistForClass(CompanyProduct.VAR_created, CompanyProduct.staticSetCreated(siteRequest2, (String)result.get(CompanyProduct.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
+      o.persistForClass(CompanyProduct.VAR_description, CompanyProduct.staticSetDescription(siteRequest2, (String)result.get(CompanyProduct.VAR_description)));
       o.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
-      o.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
       o.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
+      o.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
       o.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
       o.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
       o.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
       o.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
       o.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
-      o.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
       o.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
+      o.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
       o.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
       o.persistForClass(CompanyProduct.VAR_editPage, CompanyProduct.staticSetEditPage(siteRequest2, (String)result.get(CompanyProduct.VAR_editPage)));
       o.persistForClass(CompanyProduct.VAR_userPage, CompanyProduct.staticSetUserPage(siteRequest2, (String)result.get(CompanyProduct.VAR_userPage)));
-      o.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
       o.persistForClass(CompanyProduct.VAR_download, CompanyProduct.staticSetDownload(siteRequest2, (String)result.get(CompanyProduct.VAR_download)));
+      o.persistForClass(CompanyProduct.VAR_pageImageAlt, CompanyProduct.staticSetPageImageAlt(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageAlt)));
       o.persistForClass(CompanyProduct.VAR_labelsString, CompanyProduct.staticSetLabelsString(siteRequest2, (String)result.get(CompanyProduct.VAR_labelsString)));
       o.persistForClass(CompanyProduct.VAR_labels, CompanyProduct.staticSetLabels(siteRequest2, (String)result.get(CompanyProduct.VAR_labels)));
-      o.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
       o.persistForClass(CompanyProduct.VAR_solrId, CompanyProduct.staticSetSolrId(siteRequest2, (String)result.get(CompanyProduct.VAR_solrId)));
+      o.persistForClass(CompanyProduct.VAR_relatedArticleIds, CompanyProduct.staticSetRelatedArticleIds(siteRequest2, (String)result.get(CompanyProduct.VAR_relatedArticleIds)));
       o.persistForClass(CompanyProduct.VAR_dialogTemplate, CompanyProduct.staticSetDialogTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_dialogTemplate)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {

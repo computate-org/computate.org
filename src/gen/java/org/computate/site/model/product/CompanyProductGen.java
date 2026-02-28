@@ -197,6 +197,9 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public static final String PATCH_enUS_OpenApiUri = "/en-us/api/product";
   public static final String PATCH_enUS_StringFormatUri = "/en-us/api/product";
   public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/product";
+  public static final String PATCHPay_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
+  public static final String PATCHPay_enUS_StringFormatUri = "/en-us/shop/product/%s";
+  public static final String PATCHPay_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
   public static final String POST_enUS_OpenApiUri = "/en-us/api/product";
   public static final String POST_enUS_StringFormatUri = "/en-us/api/product";
   public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/product";
@@ -379,26 +382,29 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public void setPrice(String o) {
     this.price = CompanyProduct.staticSetPrice(siteRequest_, o);
   }
+  public static Integer staticScalePrice() {
+    return 2;
+  }
   public static MathContext staticMathContextPrice() {
-    return new MathContext(2, RoundingMode.valueOf("HALF_UP"));
+    return new MathContext(0, RoundingMode.valueOf("HALF_UP"));
   }
   public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextPrice());
+      return new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice());
     return null;
   }
   @JsonIgnore
   public void setPrice(Double o) {
-    setPrice(new BigDecimal(o, staticMathContextPrice()));
+    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice()));
   }
   @JsonIgnore
   public void setPrice(Integer o) {
-    setPrice(new BigDecimal(o, staticMathContextPrice()));
+    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice()));
   }
   @JsonIgnore
   public void setPrice(Number o) {
-    setPrice(new BigDecimal(o.doubleValue(), staticMathContextPrice()));
+    setPrice(new BigDecimal(o.doubleValue(), staticMathContextPrice()).setScale(staticScalePrice()));
   }
   protected CompanyProduct priceInit() {
     Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
@@ -411,11 +417,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     return (CompanyProduct)this;
   }
 
-  public static Double staticSearchPrice(SiteRequest siteRequest_, BigDecimal o) {
-    return o == null ? null : o.doubleValue();
+  public static String staticSearchPrice(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.toString();
   }
 
-  public static String staticSearchStrPrice(SiteRequest siteRequest_, Double o) {
+  public static String staticSearchStrPrice(SiteRequest siteRequest_, String o) {
     return o == null ? null : o.toString();
   }
 
@@ -1839,7 +1845,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     case "description":
       return CompanyProduct.staticSearchStrDescription(siteRequest_, (String)o);
     case "price":
-      return CompanyProduct.staticSearchStrPrice(siteRequest_, (Double)o);
+      return CompanyProduct.staticSearchStrPrice(siteRequest_, (String)o);
     case "pageId":
       return CompanyProduct.staticSearchStrPageId(siteRequest_, (String)o);
     case "productResource":
@@ -2082,7 +2088,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       }
 
       if(saves.contains("price")) {
-        Double price = (Double)doc.get("price_docvalues_string");
+        String price = (String)doc.get("price_docvalues_string");
         if(price != null)
           oCompanyProduct.setPrice(price);
       }
@@ -2199,6 +2205,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     }
     if(price != null) {
       doc.put("price_docvalues_string", price.toPlainString());
+      doc.put("price_docvalues_double", price.doubleValue());
     }
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);

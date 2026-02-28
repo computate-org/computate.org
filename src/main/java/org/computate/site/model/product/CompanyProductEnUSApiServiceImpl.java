@@ -2,11 +2,18 @@ package org.computate.site.model.product;
 
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.auth.oauth2.OAuth2Auth;
+import io.vertx.ext.web.api.service.ServiceRequest;
+import io.vertx.ext.web.api.service.ServiceResponse;
 import io.vertx.ext.web.client.WebClient;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Future;
+import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Promise;
 import io.vertx.core.Vertx;
 import io.vertx.core.WorkerExecutor;
+import io.vertx.core.buffer.Buffer;
+import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpResponseExpectation;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -27,6 +34,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.computate.site.config.ConfigKeys;
 import org.computate.site.request.SiteRequest;
 import org.computate.site.user.SiteUser;
+import org.computate.vertx.api.ApiRequest;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.search.list.SearchList;
@@ -195,178 +203,365 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
   }
 
   @Override
-  public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
-    try {
-      SiteUser siteUser = page.getSiteRequest_().getSiteUser_();
-      SiteRequest siteRequest = siteUser.getSiteRequest_();
-      CompanyProduct companyProduct = listCompanyProduct.first();
-      String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
-      String authorizeApiLoginId = config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
-      String authorizeTransactionKey = config.getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
-      String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
-      String authorizePublicClientKey = config.getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
-      String authorizeNotificationUrl = config.getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
-      String siteBaseUrl = config.getString(ConfigKeys.SITE_BASE_URL);
-      BigDecimal productPrice = companyProduct.getPrice();
+  public void patchpayCompanyProduct(JsonObject body, ServiceRequest serviceRequest, Handler<AsyncResult<ServiceResponse>> eventHandler) {
+    LOG.debug(String.format("patchpayCompanyProduct started. "));
+    Boolean classPublicRead = true;
+    user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.getClassApiAddress(), "postSiteUserFuture", "patchSiteUserFuture", classPublicRead).onSuccess(siteRequest -> {
+      try {
+        siteRequest.setLang("enUS");
+        String pageId = siteRequest.getServiceRequest().getParams().getJsonObject("path").getString("pageId");
+        searchCompanyProductList(siteRequest, true, false, true, "PATCH").onSuccess(listCompanyProduct -> {
+          try {
+            ApiRequest apiRequest = new ApiRequest();
+            apiRequest.setRows(listCompanyProduct.getRequest().getRows());
+            apiRequest.setNumFound(listCompanyProduct.getResponse().getResponse().getNumFound());
+            apiRequest.setNumPATCH(0L);
+            apiRequest.initDeepApiRequest(siteRequest);
+            siteRequest.setApiRequest_(apiRequest);
+            if(apiRequest.getNumFound() == 1L)
+              apiRequest.setOriginal(listCompanyProduct.first());
+            apiRequest.setId(Optional.ofNullable(listCompanyProduct.first()).map(o2 -> o2.getPageId().toString()).orElse(null));
+            eventBus.publish("websocketCompanyProduct", JsonObject.mapFrom(apiRequest).toString());
 
-      if(siteUser != null && productPrice != null && productPrice.compareTo(BigDecimal.ZERO) > 0) {
-        String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId");
-        if(customerProfileId != null) {
-          MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
-          merchantAuthenticationType.setName(authorizeApiLoginId);
-          merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
-          ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
-
-          GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
-          createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
-          createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
-          ArrayOfSetting customerProfileSettings = new ArrayOfSetting();
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileManageOptions");
-            settingType.setSettingValue("showPayment");
-            customerProfileSettings.getSetting().add(settingType);
+            listPATCHPayCompanyProductModified(apiRequest, listCompanyProduct).onSuccess(response -> {
+              LOG.debug(String.format("patchpayCompanyProduct succeeded. "));
+              eventHandler.handle(Future.succeededFuture(response));
+            }).onFailure(ex -> {
+              LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+              error(siteRequest, eventHandler, ex);
+            });
+          } catch(Exception ex) {
+            LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+            error(siteRequest, eventHandler, ex);
           }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileValidationMode");
-            settingType.setSettingValue("testMode");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileBillingAddressOptions");
-            settingType.setSettingValue("showNone");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          {
-            SettingType settingType = new SettingType();
-            settingType.setSettingName("hostedProfileCardCodeRequired");
-            settingType.setSettingValue("true");
-            customerProfileSettings.getSetting().add(settingType);
-          }
-          createCustomerProfileRequest.setHostedProfileSettings(customerProfileSettings);
-
-          GetHostedProfilePageController hostedProfileController = new GetHostedProfilePageController(createCustomerProfileRequest);
-          GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(authorizeEnvironment));
-          GetHostedProfilePageResponse profilePageResponse = null;
-          hostedProfileController.execute();
-          if(hostedProfileController.getErrorResponse() != null)
-            throw new RuntimeException(hostedProfileController.getResults().toString());
-          else {
-            profilePageResponse = hostedProfileController.getApiResponse();
-            if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
-              Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
-              if(message != null && message.getCode().equals("E00124"))
-                profilePageResponse = null;
-              else {
-                Exception ex = new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getCode(), m.getText(), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
-                LOG.error("Error setting up authorize.net payment", ex);
-              }
-            }
-          }
-
-          if(profilePageResponse != null) {
-            GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
-            hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
-  
-            ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
-            SettingType settingType = new SettingType();
-            JsonObject hostedPaymentReturnOptions = new JsonObject().put("showReceipt", true);
-            // if(!siteBaseUrl.startsWith("http://localhost")) {
-              // hostedPaymentReturnOptions.put("url", companyProduct.getUserPage());
-              // hostedPaymentReturnOptions.put("cancelUrl", companyProduct.getDisplayPage());
-            // }
-            settingType.setSettingName("hostedPaymentReturnOptions");
-            settingType.setSettingValue(hostedPaymentReturnOptions.encode());
-            hostedPaymentSettings.getSetting().add(settingType);
-            hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
-            TransactionRequestType transactionRequest = new TransactionRequestType();
-            // This is the default transaction type. 
-            // When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
-            // Simple Checkout uses AUTH_CAPTURE only. 
-            // The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
-            // With an AUTH_CAPTURE transaction, the process is completely automatic. 
-            // The transaction is submitted to your processor for authorization and, 
-            // if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
-            // The transaction will settle at your next batch. 
-            // Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
-            // See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
-            transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
-
-            BigDecimal itemPrice;
-            if(BooleanUtils.toBoolean(siteRequest.getRequestVars().get("utah"))) {
-              BigDecimal calculatedTaxRate = new BigDecimal(0.0725).setScale(4, RoundingMode.HALF_UP);
-              BigDecimal calculatedTaxAmount = productPrice.subtract(productPrice.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
-              ExtendedAmountType tax = new ExtendedAmountType();
-              tax.setAmount(calculatedTaxAmount);
-              tax.setName("Sales Tax");
-              tax.setDescription("Utah State Sales Tax");
-              transactionRequest.setTax(tax);
-              transactionRequest.setTaxExempt(false);
-              itemPrice = productPrice.subtract(calculatedTaxAmount);
-            } else {
-              transactionRequest.setTaxExempt(true);
-              itemPrice = productPrice;
-            }
-            transactionRequest.setAmount(productPrice);
-  
-            ArrayOfLineItem lineItems = new ArrayOfLineItem();
-            LineItemType lineItem = new LineItemType();
-            lineItem.setItemId(StringUtils.truncate(companyProduct.getPageId(), 31));
-            lineItem.setDescription(StringUtils.truncate(companyProduct.getDescription(), 255));
-            lineItem.setName(StringUtils.truncate(companyProduct.getName(), 31));
-            lineItem.setTotalAmount(itemPrice);
-            lineItem.setQuantity(BigDecimal.ONE);
-            lineItem.setUnitPrice(itemPrice);
-            lineItems.getLineItem().add(lineItem);
-            DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
-            LocalDate now = LocalDate.now();
-            LocalDate chargeEndDate = LocalDate.now();
-            CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
-            profile.setCustomerProfileId(customerProfileId);
-            transactionRequest.setProfile(profile);
-            transactionRequest.setLineItems(lineItems);
-            OrderType order = new OrderType();
-            order.setDescription(StringUtils.truncate(String.format("%s bought %s $%s payment from %s %s on %s", siteUser.getUserName(), companyProduct.getPageId(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
-            transactionRequest.setOrder(order);
-            hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
-  
-            GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
-            GetHostedPaymentPageController.setEnvironment(Environment.valueOf(authorizeEnvironment));
-            GetHostedPaymentPageResponse hostedPaymentResponse = null;
-            hostedPaymentController.execute();
-            if(hostedPaymentController.getErrorResponse() != null) {
-              Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentController.getResults().toString()));
-              LOG.error("Failed to execute hosted payment controller", ex);
-              promise.fail(ex);
-            } else {
-              hostedPaymentResponse = hostedPaymentController.getApiResponse();
-              if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
-                Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. ")));
-                LOG.error("Error response from hosted payment controller", ex);
-                promise.fail(ex);
-              } else {
-                LOG.info(String.format("hostedPaymentResponseToken found for user %s", siteUser.getUserName()));
-                ctx.put("hostedPaymentResponseToken", hostedPaymentResponse.getToken());
-                promise.complete();
-              }
-            }
-          } else {
-            Exception ex = new RuntimeException(String.format("Failed to set up profilePageResponse: %s", profilePageResponse));
-            LOG.error("Failed profile page response", ex);
-            promise.fail(ex);
-          }
-        } else {
-          LOG.warn(String.format("The customerProfileId for user %s was null", siteUser.getUserName()));
-          promise.complete();
+        }).onFailure(ex -> {
+          LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+          error(siteRequest, eventHandler, ex);
+        });
+      } catch(Exception ex) {
+        LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    }).onFailure(ex -> {
+      if("Inactive Token".equals(ex.getMessage()) || StringUtils.startsWith(ex.getMessage(), "invalid_grant:")) {
+        try {
+          eventHandler.handle(Future.succeededFuture(new ServiceResponse(302, "Found", null, MultiMap.caseInsensitiveMultiMap().add(HttpHeaders.LOCATION, "/logout?redirect_uri=" + URLEncoder.encode(serviceRequest.getExtra().getString("uri"), "UTF-8")))));
+        } catch(Exception ex2) {
+          LOG.error(String.format("patchpayCompanyProduct failed. ", ex2));
+          error(null, eventHandler, ex2);
         }
+      } else if(StringUtils.startsWith(ex.getMessage(), "401 UNAUTHORIZED ")) {
+        eventHandler.handle(Future.succeededFuture(
+          new ServiceResponse(401, "UNAUTHORIZED",
+            Buffer.buffer().appendString(
+              new JsonObject()
+                .put("errorCode", "401")
+                .put("errorMessage", "SSO Resource Permission check returned DENY")
+                .encodePrettily()
+              ), MultiMap.caseInsensitiveMultiMap()
+              )
+          ));
       } else {
-        LOG.warn(String.format("No price %s for user %s", productPrice, siteUser.getUserName()));
-        promise.complete();
+        LOG.error(String.format("patchpayCompanyProduct failed. "), ex);
+        error(null, eventHandler, ex);
+      }
+    });
+  }
+
+  public Future<ServiceResponse> listPATCHPayCompanyProductModified(ApiRequest apiRequest, SearchList<CompanyProduct> listCompanyProduct) {
+    Promise<ServiceResponse> promise = Promise.promise();
+    try {
+      SiteRequest siteRequest = listCompanyProduct.getSiteRequest_(SiteRequest.class);
+      if(listCompanyProduct.getSize() > 1) {
+        throw new RuntimeException("Should not be patching more than one result in a PATCHPay request");
+      } else if(listCompanyProduct.getSize() == 0) {
+        throw new RuntimeException("No result found in a PATCHPay request");
+      } else {
+        CompanyProduct o = listCompanyProduct.first();
+        SiteRequest siteRequest2 = generateSiteRequest(siteRequest.getUser(), siteRequest.getUserPrincipal(), siteRequest.getServiceRequest(), siteRequest.getJsonObject(), SiteRequest.class);
+        siteRequest2.setScopes(siteRequest.getScopes());
+        o.setSiteRequest_(siteRequest2);
+        siteRequest2.setApiRequest_(siteRequest.getApiRequest_());
+        JsonObject jsonObject = JsonObject.mapFrom(o);
+        CompanyProduct o2 = jsonObject.mapTo(CompanyProduct.class);
+        o2.setSiteRequest_(siteRequest2);
+        patchpayCompanyProductFutureModified(o2, false).onSuccess(json -> {
+          promise.complete(ServiceResponse.completedWithJson(Buffer.buffer(Optional.ofNullable(json).orElse(new JsonObject()).encodePrettily())));
+        }).onFailure(ex -> {
+          LOG.error(String.format("listPATCHPayCompanyProduct failed. "), ex);
+          promise.tryFail(ex);
+        });
       }
     } catch(Throwable ex) {
-      promise.fail(new RuntimeException("Failed to set up authorize.net payment"));
+      LOG.error("Failed to list PATCHPay request", ex);
+      promise.fail(ex);
     }
+    return promise.future();
   }
+
+  public Future<JsonObject> patchpayCompanyProductFutureModified(CompanyProduct o, Boolean inheritPrimaryKey) {
+    Promise<JsonObject> promise = Promise.promise();
+
+    try {
+      SiteRequest siteRequest = o.getSiteRequest_();
+      JsonObject requestBody = siteRequest.getJsonObject();
+      JsonObject responseBody = new JsonObject();
+      JsonObject createTransactionRequest = requestBody.getJsonObject("createTransactionRequest");
+
+      String state = requestBody.getString("state");
+      BigDecimal totalPrice = o.getPrice().setScale(2, RoundingMode.HALF_UP);
+      BigDecimal itemPrice;
+      if(StringUtils.equalsIgnoreCase(state, "Utah") || StringUtils.equalsIgnoreCase(state, "UT")) {
+        BigDecimal calculatedTaxRate = new BigDecimal(0.0725).setScale(4, RoundingMode.HALF_UP);
+        BigDecimal calculatedTaxAmount = totalPrice.subtract(totalPrice.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
+        responseBody.put("calculatedTaxRate", calculatedTaxRate.toString());
+        responseBody.put("calculatedTaxAmount", calculatedTaxAmount.toString());
+        responseBody.put("taxExempt", false);
+        itemPrice = totalPrice.subtract(calculatedTaxAmount);
+      } else {
+        responseBody.put("taxExempt", true);
+        itemPrice = totalPrice;
+      }
+
+      if(createTransactionRequest != null) {
+        JsonObject transactionRequest = createTransactionRequest.getJsonObject("transactionRequest");
+        BigDecimal requestAmount = new BigDecimal(transactionRequest.getString("amount")).setScale(2, RoundingMode.HALF_UP);
+        if(!totalPrice.equals(requestAmount)) {
+          throw new RuntimeException(String.format("%s product price %s does not match request price %s", o.getName(), totalPrice, requestAmount));
+        } else {
+          responseBody = new JsonObject();
+          JsonObject createTransactionRequest2 = new JsonObject();
+          createTransactionRequest2.put("merchantAuthentication", new JsonObject()
+            .put("name", config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID))
+            .put("transactionKey", config.getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY))
+            );
+          JsonObject lineItemRequest = transactionRequest.getJsonObject("lineItems").getJsonObject("lineItem");
+          JsonObject lineItemResponse = new JsonObject();
+          lineItemResponse.put("itemId", lineItemRequest.getString("itemId"));
+          lineItemResponse.put("name", StringUtils.substring(lineItemRequest.getString("name"), 0, 31));
+          lineItemResponse.put("description", StringUtils.substring(lineItemRequest.getString("description"), 0, 255));
+          lineItemResponse.put("quantity", lineItemRequest.getString("quantity"));
+          lineItemResponse.put("unitPrice", lineItemRequest.getString("unitPrice"));
+          createTransactionRequest2.put("transactionRequest", new JsonObject()
+            .put("transactionType", "authCaptureTransaction")
+            .put("amount", totalPrice.toString())
+            .put("payment", transactionRequest.getJsonObject("payment"))
+            .put("lineItems", new JsonObject().put("lineItem", lineItemResponse))
+            .put("billTo", transactionRequest.getJsonObject("billTo"))
+            );
+          responseBody.put("createTransactionRequest", createTransactionRequest2);
+
+          Integer authorizePort = Integer.parseInt(config.getString(ConfigKeys.AUTHORIZE_NET_API_PORT));
+          String authorizeHostName = config.getString(ConfigKeys.AUTHORIZE_NET_API_HOST_NAME);
+          Boolean authorizeSsl = Boolean.parseBoolean(config.getString(ConfigKeys.AUTHORIZE_NET_API_SSL));
+          String authorizeUri = config.getString(ConfigKeys.AUTHORIZE_NET_API_URI);
+
+          webClient.post(authorizePort, authorizeHostName, authorizeUri).ssl(authorizeSsl)
+              .putHeader("Content-Type", "application/json")
+              .sendJsonObject(responseBody)
+              .expecting(HttpResponseExpectation.SC_OK)
+              .onSuccess(authorizeResponse -> {
+            try {
+              JsonObject authorizeResponseBody = authorizeResponse.bodyAsJsonObject();
+              if("Error".equals(Optional.ofNullable(authorizeResponseBody.getJsonObject("messages")).map(m -> m.getString("resultCode")).orElse(null))) {
+                throw new RuntimeException(String.format("The createTransactionRequest to authorize.net failed: %s", authorizeResponseBody));
+              } else {
+                promise.complete(authorizeResponseBody);
+              }
+            } catch(Exception ex) {
+              LOG.error(String.format("The createTransactionRequest to authorize.net failed. "), ex);
+              promise.tryFail(ex);
+            }
+          }).onFailure(ex -> {
+            LOG.error(String.format("Updating AUTHORIZE_NET_API host failed. "), ex);
+            promise.fail(ex);
+          });
+        }
+      } else {
+        responseBody.put("itemPrice", itemPrice.toString());
+        responseBody.put("totalPrice", totalPrice.toString());
+        promise.complete(responseBody);
+      }
+    } catch(Exception ex) {
+      LOG.error(String.format("patchpayCompanyProductFuture failed. "), ex);
+      promise.tryFail(ex);
+    }
+    return promise.future();
+  }
+
+  // @Override
+  // public void userpageCompanyProductPageInit(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<Void> promise) {
+  //   try {
+  //     SiteUser siteUser = page.getSiteRequest_().getSiteUser_();
+  //     SiteRequest siteRequest = siteUser.getSiteRequest_();
+  //     CompanyProduct companyProduct = listCompanyProduct.first();
+  //     String authorizeEnvironment = config.getString(ConfigKeys.AUTHORIZE_NET_ENVIRONMENT);
+  //     String authorizeApiLoginId = config.getString(ConfigKeys.AUTHORIZE_NET_API_LOGIN_ID);
+  //     String authorizeTransactionKey = config.getString(ConfigKeys.AUTHORIZE_NET_TRANSACTION_KEY);
+  //     String authorizeSignatureKey = config.getString(ConfigKeys.AUTHORIZE_NET_SIGNATURE_KEY);
+  //     String authorizePublicClientKey = config.getString(ConfigKeys.AUTHORIZE_NET_PUBLIC_CLIENT_KEY);
+  //     String authorizeNotificationUrl = config.getString(ConfigKeys.AUTHORIZE_NET_NOTIFICATION_URL);
+  //     String siteBaseUrl = config.getString(ConfigKeys.SITE_BASE_URL);
+  //     BigDecimal productPrice = companyProduct.getPrice();
+
+  //     if(siteUser != null && productPrice != null && productPrice.compareTo(BigDecimal.ZERO) > 0) {
+  //       String customerProfileId = (String)siteUser.obtainSiteUser("customerProfileId");
+  //       if(customerProfileId != null) {
+  //         MerchantAuthenticationType merchantAuthenticationType = new MerchantAuthenticationType();
+  //         merchantAuthenticationType.setName(authorizeApiLoginId);
+  //         merchantAuthenticationType.setTransactionKey(authorizeTransactionKey);
+  //         ApiOperationBase.setMerchantAuthentication(merchantAuthenticationType);
+
+  //         GetHostedProfilePageRequest createCustomerProfileRequest = new GetHostedProfilePageRequest();
+  //         createCustomerProfileRequest.setMerchantAuthentication(merchantAuthenticationType);
+  //         createCustomerProfileRequest.setCustomerProfileId(customerProfileId);
+  //         ArrayOfSetting customerProfileSettings = new ArrayOfSetting();
+  //         {
+  //           SettingType settingType = new SettingType();
+  //           settingType.setSettingName("hostedProfileManageOptions");
+  //           settingType.setSettingValue("showPayment");
+  //           customerProfileSettings.getSetting().add(settingType);
+  //         }
+  //         {
+  //           SettingType settingType = new SettingType();
+  //           settingType.setSettingName("hostedProfileValidationMode");
+  //           settingType.setSettingValue("testMode");
+  //           customerProfileSettings.getSetting().add(settingType);
+  //         }
+  //         {
+  //           SettingType settingType = new SettingType();
+  //           settingType.setSettingName("hostedProfileBillingAddressOptions");
+  //           settingType.setSettingValue("showNone");
+  //           customerProfileSettings.getSetting().add(settingType);
+  //         }
+  //         {
+  //           SettingType settingType = new SettingType();
+  //           settingType.setSettingName("hostedProfileCardCodeRequired");
+  //           settingType.setSettingValue("true");
+  //           customerProfileSettings.getSetting().add(settingType);
+  //         }
+  //         createCustomerProfileRequest.setHostedProfileSettings(customerProfileSettings);
+
+  //         GetHostedProfilePageController hostedProfileController = new GetHostedProfilePageController(createCustomerProfileRequest);
+  //         GetTransactionListForCustomerController.setEnvironment(Environment.valueOf(authorizeEnvironment));
+  //         GetHostedProfilePageResponse profilePageResponse = null;
+  //         hostedProfileController.execute();
+  //         if(hostedProfileController.getErrorResponse() != null)
+  //           throw new RuntimeException(hostedProfileController.getResults().toString());
+  //         else {
+  //           profilePageResponse = hostedProfileController.getApiResponse();
+  //           if(MessageTypeEnum.ERROR.equals(profilePageResponse.getMessages().getResultCode())) {
+  //             Message message = profilePageResponse.getMessages().getMessage().stream().findFirst().orElse(null);
+  //             if(message != null && message.getCode().equals("E00124"))
+  //               profilePageResponse = null;
+  //             else {
+  //               Exception ex = new RuntimeException(Optional.ofNullable(message).map(m -> String.format("%s %s, %s, userName: %s, userFullName: %s", m.getCode(), m.getText(), customerProfileId, siteUser.getUserName(), siteUser.getUserFullName())).orElse("GetHostedProfilePageRequest failed. "));
+  //               LOG.error("Error setting up authorize.net payment", ex);
+  //             }
+  //           }
+  //         }
+
+  //         if(profilePageResponse != null) {
+  //           GetHostedPaymentPageRequest hostedPaymentPageRequest = new GetHostedPaymentPageRequest();
+  //           hostedPaymentPageRequest.setMerchantAuthentication(merchantAuthenticationType);
+  
+  //           ArrayOfSetting hostedPaymentSettings = new ArrayOfSetting();
+  //           SettingType settingType = new SettingType();
+  //           JsonObject hostedPaymentReturnOptions = new JsonObject().put("showReceipt", true);
+  //           // if(!siteBaseUrl.startsWith("http://localhost")) {
+  //             // hostedPaymentReturnOptions.put("url", companyProduct.getUserPage());
+  //             // hostedPaymentReturnOptions.put("cancelUrl", companyProduct.getDisplayPage());
+  //           // }
+  //           settingType.setSettingName("hostedPaymentReturnOptions");
+  //           settingType.setSettingValue(hostedPaymentReturnOptions.encode());
+  //           hostedPaymentSettings.getSetting().add(settingType);
+  //           hostedPaymentPageRequest.setHostedPaymentSettings(hostedPaymentSettings);
+  //           TransactionRequestType transactionRequest = new TransactionRequestType();
+  //           // This is the default transaction type. 
+  //           // When using AIM, if the x_type field is not sent to us, the type will default to AUTH_CAPTURE. 
+  //           // Simple Checkout uses AUTH_CAPTURE only. 
+  //           // The Virtual Terminal defaults to AUTH_CAPTURE unless you select a different transaction type.
+  //           // With an AUTH_CAPTURE transaction, the process is completely automatic. 
+  //           // The transaction is submitted to your processor for authorization and, 
+  //           // if approved, is placed in your Unsettled Transactions with the status Captured Pending Settlement. 
+  //           // The transaction will settle at your next batch. 
+  //           // Settlement occurs every 24 hours, within 24 hours of your Transaction Cut-off Time.
+  //           // See: https://support.authorize.net/s/article/What-Are-the-Transaction-Types-That-Can-Be-Submitted
+  //           transactionRequest.setTransactionType(TransactionTypeEnum.AUTH_CAPTURE_TRANSACTION.value());
+
+  //           BigDecimal itemPrice;
+  //           if(BooleanUtils.toBoolean(siteRequest.getRequestVars().get("utah"))) {
+  //             BigDecimal calculatedTaxRate = new BigDecimal(0.0725).setScale(4, RoundingMode.HALF_UP);
+  //             BigDecimal calculatedTaxAmount = productPrice.subtract(productPrice.divide(calculatedTaxRate.add(BigDecimal.ONE), 2, RoundingMode.HALF_DOWN));
+  //             ExtendedAmountType tax = new ExtendedAmountType();
+  //             tax.setAmount(calculatedTaxAmount);
+  //             tax.setName("Sales Tax");
+  //             tax.setDescription("Utah State Sales Tax");
+  //             transactionRequest.setTax(tax);
+  //             transactionRequest.setTaxExempt(false);
+  //             itemPrice = productPrice.subtract(calculatedTaxAmount);
+  //           } else {
+  //             transactionRequest.setTaxExempt(true);
+  //             itemPrice = productPrice;
+  //           }
+  //           transactionRequest.setAmount(productPrice);
+  
+  //           ArrayOfLineItem lineItems = new ArrayOfLineItem();
+  //           LineItemType lineItem = new LineItemType();
+  //           lineItem.setItemId(StringUtils.truncate(companyProduct.getPageId(), 31));
+  //           lineItem.setDescription(StringUtils.truncate(companyProduct.getDescription(), 255));
+  //           lineItem.setName(StringUtils.truncate(companyProduct.getName(), 31));
+  //           lineItem.setTotalAmount(itemPrice);
+  //           lineItem.setQuantity(BigDecimal.ONE);
+  //           lineItem.setUnitPrice(itemPrice);
+  //           lineItems.getLineItem().add(lineItem);
+  //           DateTimeFormatter fd = DateTimeFormatter.ofPattern("MMM dd, yyyy", Locale.US);
+  //           LocalDate now = LocalDate.now();
+  //           LocalDate chargeEndDate = LocalDate.now();
+  //           CustomerProfilePaymentType profile = new CustomerProfilePaymentType();
+  //           profile.setCustomerProfileId(customerProfileId);
+  //           transactionRequest.setProfile(profile);
+  //           transactionRequest.setLineItems(lineItems);
+  //           OrderType order = new OrderType();
+  //           order.setDescription(StringUtils.truncate(String.format("%s bought %s $%s payment from %s %s on %s", siteUser.getUserName(), companyProduct.getPageId(), companyProduct.getPrice(), siteUser.getUserFullName(), siteUser.getUserEmail(), fd.format(chargeEndDate)), 255));
+  //           transactionRequest.setOrder(order);
+  //           hostedPaymentPageRequest.setTransactionRequest(transactionRequest);
+  
+  //           GetHostedPaymentPageController hostedPaymentController = new GetHostedPaymentPageController(hostedPaymentPageRequest);
+  //           GetHostedPaymentPageController.setEnvironment(Environment.valueOf(authorizeEnvironment));
+  //           GetHostedPaymentPageResponse hostedPaymentResponse = null;
+  //           hostedPaymentController.execute();
+  //           if(hostedPaymentController.getErrorResponse() != null) {
+  //             Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentController.getResults().toString()));
+  //             LOG.error("Failed to execute hosted payment controller", ex);
+  //             promise.fail(ex);
+  //           } else {
+  //             hostedPaymentResponse = hostedPaymentController.getApiResponse();
+  //             if(MessageTypeEnum.ERROR.equals(hostedPaymentResponse.getMessages().getResultCode())) {
+  //               Exception ex = new RuntimeException(String.format("Failed to set up hosted payment controller: %s", hostedPaymentResponse.getMessages().getMessage().stream().findFirst().map(m -> String.format("%s %s", m.getCode(), m.getText())).orElse("GetHostedPaymentPageRequest failed. ")));
+  //               LOG.error("Error response from hosted payment controller", ex);
+  //               promise.fail(ex);
+  //             } else {
+  //               LOG.info(String.format("hostedPaymentResponseToken found for user %s", siteUser.getUserName()));
+  //               ctx.put("hostedPaymentResponseToken", hostedPaymentResponse.getToken());
+  //               promise.complete();
+  //             }
+  //           }
+  //         } else {
+  //           Exception ex = new RuntimeException(String.format("Failed to set up profilePageResponse: %s", profilePageResponse));
+  //           LOG.error("Failed profile page response", ex);
+  //           promise.fail(ex);
+  //         }
+  //       } else {
+  //         LOG.warn(String.format("The customerProfileId for user %s was null", siteUser.getUserName()));
+  //         promise.complete();
+  //       }
+  //     } else {
+  //       LOG.warn(String.format("No price %s for user %s", productPrice, siteUser.getUserName()));
+  //       promise.complete();
+  //     }
+  //   } catch(Throwable ex) {
+  //     promise.fail(new RuntimeException("Failed to set up authorize.net payment"));
+  //   }
+  // }
 }

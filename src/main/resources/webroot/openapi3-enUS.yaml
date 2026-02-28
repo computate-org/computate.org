@@ -6697,6 +6697,82 @@ paths:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyProductResponse'
   /en-us/shop/product/{pageId}:
+    patch:
+      operationId: patchpayCompanyProduct
+      x-vertx-event-bus: computate.org-enUS-CompanyProduct
+      security:
+        - openIdConnect:
+          - openid
+          - profile
+          - customerProfileId
+      description: >+
+      summary: >+
+      tags:
+        - products
+      parameters:
+        - name: vertx-web.session
+          in: cookie
+          schema:
+            type: string
+        - name: sessionIdBefore
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_FONT_SIZE
+          in: cookie
+          schema:
+            type: string
+        - name: SITE_THEME
+          in: cookie
+          schema:
+            type: string
+        - name: WEB_COMPONENTS_THEME
+          in: cookie
+          schema:
+            type: string
+        - in: query
+          name: var
+          description: 'The var parameters are additional optional variables and values to pass into the application. '
+          required: false
+          schema:
+            type: array
+            items:
+                type: string
+        - name: pageId
+          in: path
+          description: >+
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: 'The query parameter defines a query using standard query syntax. This parameter is mandatory.'
+          required: false
+          schema:
+            type: string
+            default: '*:*'
+        - in: query
+          name: fq
+          description: 'The filter query parameter defines a query that can be used to restrict the superset of documents that can be returned, without influencing score. '
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      requestBody:
+        description: >+
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PATCHPayCompanyProductRequest'
+      responses:
+        '200':
+          description: >+
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/PATCHPayCompanyProductResponse'
     get:
       operationId: userpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -8292,7 +8368,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8484,7 +8560,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8554,7 +8630,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8601,7 +8677,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8685,7 +8761,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8751,7 +8827,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8805,7 +8881,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8895,7 +8971,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8993,7 +9069,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -9181,7 +9257,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming articles
+        - SPINE Programming lessons
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -14016,6 +14092,16 @@ components:
         text/html; charset=utf-8:
           schema:
             $ref: '#/components/schemas/SearchPageCompanyProductResponse'
+    PATCHPayCompanyProductRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PATCHPayCompanyProductRequest'
+    PATCHPayCompanyProductResponse:
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/PATCHPayCompanyProductResponse'
     UserPageCompanyProductResponse:
       content:
         text/html; charset=utf-8:
@@ -19537,6 +19623,336 @@ components:
     SearchPageCompanyProductResponse:
       allOf:
         - type: string
+    PATCHPayCompanyProductRequest:
+      allOf:
+        - type: object
+          properties:
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
+              type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
+              type: string
+            setDownloadUrl:
+              type: string
+              nullable: true
+            removeDownloadUrl:
+              type: string
+            removeAllDownloadUrl:
+              type: string
+            setProductNum:
+              type: string
+              nullable: true
+            removeProductNum:
+              type: string
+            removeAllProductNum:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
+              type: string
+    PATCHPayCompanyProductResponse:
+      allOf:
+        - type: object
+          properties:
+            setName:
+              type: string
+              nullable: true
+            removeName:
+              type: string
+            removeAllName:
+              type: string
+            setDescription:
+              type: string
+              nullable: true
+            removeDescription:
+              type: string
+            removeAllDescription:
+              type: string
+            setPrice:
+              type: string
+              nullable: true
+            removePrice:
+              type: string
+            removeAllPrice:
+              type: string
+            setPageId:
+              type: string
+              nullable: true
+            removePageId:
+              type: string
+            removeAllPageId:
+              type: string
+            setProductResource:
+              type: string
+              nullable: true
+            removeProductResource:
+              type: string
+            removeAllProductResource:
+              type: string
+            setEmailTemplate:
+              type: string
+              nullable: true
+            removeEmailTemplate:
+              type: string
+            removeAllEmailTemplate:
+              type: string
+            setStoreUrl:
+              type: string
+              nullable: true
+            removeStoreUrl:
+              type: string
+            removeAllStoreUrl:
+              type: string
+            setDownloadUrl:
+              type: string
+              nullable: true
+            removeDownloadUrl:
+              type: string
+            removeAllDownloadUrl:
+              type: string
+            setProductNum:
+              type: string
+              nullable: true
+            removeProductNum:
+              type: string
+            removeAllProductNum:
+              type: string
+            setPageImageUri:
+              type: string
+              nullable: true
+            removePageImageUri:
+              type: string
+            removeAllPageImageUri:
+              type: string
+            setPageImageWidth:
+              type: string
+              nullable: true
+            removePageImageWidth:
+              type: string
+            removeAllPageImageWidth:
+              type: string
+            setPageImageHeight:
+              type: string
+              nullable: true
+            removePageImageHeight:
+              type: string
+            removeAllPageImageHeight:
+              type: string
+            setPageImageType:
+              type: string
+              nullable: true
+            removePageImageType:
+              type: string
+            removeAllPageImageType:
+              type: string
+            setPageImageAlt:
+              type: string
+              nullable: true
+            removePageImageAlt:
+              type: string
+            removeAllPageImageAlt:
+              type: string
+            setLabelsString:
+              type: string
+              nullable: true
+            removeLabelsString:
+              type: string
+            removeAllLabelsString:
+              type: string
+            setLabels:
+              type: array
+              nullable: true
+              items:
+                type: string
+            removeLabels:
+              type: string
+            removeAllLabels:
+              type: array
+              items:
+                type: string
+            addLabels:
+              type: string
+            addAllLabels:
+              type: array
+              items:
+                type: string
+            setRelatedArticleIds:
+              type: string
+              nullable: true
+            removeRelatedArticleIds:
+              type: string
+            removeAllRelatedArticleIds:
+              type: string
+            setRelatedArticles:
+              type: array
+              nullable: true
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            removeAllRelatedArticles:
+              type: array
+              items:
+                anyOf:
+                  - type: string
+                  - type: number
+                  - type: string
+                  - type: boolean
+            setDialogTemplate:
+              type: string
+              nullable: true
+            removeDialogTemplate:
+              type: string
+            removeAllDialogTemplate:
+              type: string
     UserPageCompanyProductResponse:
       allOf:
         - type: string
