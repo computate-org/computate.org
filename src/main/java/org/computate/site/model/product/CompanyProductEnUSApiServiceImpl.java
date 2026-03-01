@@ -438,7 +438,7 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
         searchList.q("*:*");
         searchList.setSiteRequest_(siteRequest);
         searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
-        searchList.fq(String.format("pageId_docvalues_string:\"" + itemId + "\""));
+        searchList.fq(String.format("pageId_docvalues_string:\"" + pageId + "\""));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
           if(searchList.size() > 0) {
             ComputateBaseResult result = searchList.first();

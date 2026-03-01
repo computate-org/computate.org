@@ -59,7 +59,7 @@ SITE_REPO_HTTPS: "{{ SITE_REPO | replace('git@github.com:', 'https://github.com/
 # The port of the site. 
 SITE_PORT: 10200
 # The host name of the site. 
-SITE_HOST_NAME: "{{ lookup('env', 'SITE_HOST_NAME') | default('localhost', true) }}"
+SITE_HOST_NAME: "{{ lookup('env', 'SITE_HOST_NAME_' + SITE_SHORT_NAME) | default('localhost', true) }}"
 # The base URL of the site. 
 SITE_BASE_URL: "{{ lookup('env', 'SITE_BASE_URL') | default('http://' + SITE_HOST_NAME + ':' + (SITE_PORT | string), true) }}"
 # The public facing URL for the site. 
@@ -337,7 +337,7 @@ DATABASE_PORT: "{{ lookup('env', 'DATABASE_PORT') | default('30432', true) }}"
 # The PostgreSQL database user name of the site. 
 DATABASE_USERNAME: "{{ lookup('env', 'DATABASE_USERNAME_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
 # The database secret containing the user password to connect to the database. 
-DATABASE_SECRET: "local-database"
+DATABASE_SECRET: "{{ lookup('env', 'DATABASE_SECRET_' + SITE_SHORT_NAME) | default('local-database', true) }}"
 # The PostgreSQL database password of the site. 
 DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=DATABASE_SECRET, namespace=SITE_NAMESPACE)[0].data.DATABASE_PASSWORD | b64decode }}"
 # The PostgreSQL database name of the site. 
@@ -370,11 +370,11 @@ AUTH_REALM: "{{ lookup('env', 'AUTH_REALM_' + SITE_SHORT_NAME) | default(SITE_SH
 # The Auth client. 
 AUTH_CLIENT: "{{ lookup('env', 'AUTH_CLIENT_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
 # The Auth openshift secret with the client secret credentials. 
-AUTH_OPENSHIFT_SECRET: "local-auth"
+AUTH_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('local-auth', true) }}"
 # The Auth secret. 
 AUTH_SECRET: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_OPENSHIFT_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTH_SECRET | b64decode }}"
 # The Auth openshift secret with the admin credentials. 
-AUTH_ADMIN_OPENSHIFT_SECRET: "local-auth"
+AUTH_ADMIN_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_ADMIN_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('localhost', true) }}"
 # The Auth admin username. 
 AUTH_ADMIN_USERNAME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_ADMIN_OPENSHIFT_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTH_ADMIN_USERNAME | b64decode | default('admin') }}"
 # The Auth admin password. 
