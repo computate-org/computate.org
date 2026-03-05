@@ -8368,7 +8368,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8560,7 +8560,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8630,7 +8630,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8677,7 +8677,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8761,7 +8761,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8827,7 +8827,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8881,7 +8881,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -8971,7 +8971,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -9069,7 +9069,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -9257,7 +9257,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - SPINE Programming lessons
+        - SPINE Programming theorys
       parameters:
         - name: vertx-web.session
           in: cookie

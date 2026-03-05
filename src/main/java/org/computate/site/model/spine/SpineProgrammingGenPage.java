@@ -518,16 +518,16 @@ public class SpineProgrammingGenPage extends SpineProgrammingGenPageGen<PageLayo
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("SPINE Programming lessons");
+      c.o("SPINE Programming Theory");
     else if(searchListSpineProgramming_ == null || resultCount == 0)
-      c.o("no SPINE Programming lesson found");
+      c.o("no SPINE Programming Theory found");
     else
-      c.o("SPINE Programming lessons");
+      c.o("SPINE Programming Theory");
   }
 
   @Override
   protected void _classAllName(Wrap<String> w) {
-    w.o("all SPINE Programming lessons");
+    w.o("all SPINE Programming Theory");
   }
 
   @Override

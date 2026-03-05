@@ -510,7 +510,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "SPINE Programming lesson", null);
+              String m = String.format("%s %s not found", "SPINE Programming Theory", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {
@@ -2542,8 +2542,8 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         }
       }
       if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-        searchList.sort("courseNum_docvalues_int", "desc");
-        searchList.sort("lessonNum_docvalues_int", "desc");
+        searchList.sort("courseNum_docvalues_int", "asc");
+        searchList.sort("lessonNum_docvalues_int", "asc");
         searchList.setDefaultSort(true);
       }
       String facetRange2 = facetRange;

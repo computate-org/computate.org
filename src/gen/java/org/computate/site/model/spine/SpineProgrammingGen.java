@@ -76,7 +76,7 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: SPINE Programming lessons"</b>, which groups all of the OpenAPIs for SpineProgramming objects under the tag "SPINE Programming lessons". 
+ * <p>This class contains a comment <b>"ApiTag: SPINE Programming Theory"</b>, which groups all of the OpenAPIs for SpineProgramming objects under the tag "SPINE Programming Theory". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/spine-programming</h2>
  * <p>This class contains a comment <b>"ApiUri: /en-us/api/spine-programming"</b>, which defines the base API URI for SpineProgramming objects as "/en-us/api/spine-programming" in the OpenAPI spec. 
@@ -132,8 +132,8 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: a SPINE Programming lesson</h2>
- * <p>This class contains a comment <b>"AName.enUS: a SPINE Programming lesson"</b>, which identifies the language context to describe a SpineProgramming as "a SPINE Programming lesson". 
+ * <h2>AName.enUS: a SPINE Programming Theory</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a SPINE Programming Theory"</b>, which identifies the language context to describe a SpineProgramming as "a SPINE Programming Theory". 
  * </p>
  * <p>
  * Delete the class SpineProgramming in Solr: 
@@ -159,36 +159,36 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(SpineProgramming.class);
 
   public static final String Description_frFR = "Learn how to become a SPINE Programmer building data-driven websites and increase your developer productivity up to 4900%. ";
-  public static final String AName_frFR = "a SPINE Programming lesson";
-  public static final String SingularName_frFR = "SPINE Programming lesson";
-  public static final String PluralName_frFR = "SPINE Programming lessons";
-  public static final String Title_frFR = "SPINE Programming lessons";
-  public static final String ThePluralName_frFR = "les SPINE Programming lessons";
-  public static final String NameAdjectiveSingular_frFR = "SPINE Programming lesson";
-  public static final String NameAdjectivePlural_frFR = "SPINE Programming lessons";
+  public static final String AName_frFR = "a SPINE Programming Theory";
+  public static final String SingularName_frFR = "SPINE Programming Theory";
+  public static final String PluralName_frFR = "SPINE Programming Theory";
+  public static final String Title_frFR = "SPINE Programming Theory";
+  public static final String ThePluralName_frFR = "les SPINE Programming Theory";
+  public static final String NameAdjectiveSingular_frFR = "SPINE Programming Theory";
+  public static final String NameAdjectivePlural_frFR = "SPINE Programming Theory";
 
   public static final String Description_enUS = "Learn how to become a SPINE Programmer building data-driven websites and increase your developer productivity up to 4900%. ";
-  public static final String AName_enUS = "a SPINE Programming lesson";
+  public static final String AName_enUS = "a SPINE Programming Theory";
   public static final String This_enUS = "this ";
-  public static final String ThisName_enUS = "this SPINE Programming lesson";
+  public static final String ThisName_enUS = "this SPINE Programming Theory";
   public static final String A_enUS = "a ";
-  public static final String TheName_enUS = "the SPINE Programming lesson";
-  public static final String SingularName_enUS = "SPINE Programming lesson";
-  public static final String PluralName_enUS = "SPINE Programming lessons";
-  public static final String NameActual_enUS = "current SPINE Programming lesson";
-  public static final String AllName_enUS = "all SPINE Programming lessons";
-  public static final String SearchAllNameBy_enUS = "search SPINE Programming lessons by ";
-  public static final String SearchAllName_enUS = "search SPINE Programming lessons";
-  public static final String Title_enUS = "SPINE Programming lessons";
-  public static final String ThePluralName_enUS = "the SPINE Programming lessons";
-  public static final String NoNameFound_enUS = "no SPINE Programming lesson found";
+  public static final String TheName_enUS = "the SPINE Programming Theory";
+  public static final String SingularName_enUS = "SPINE Programming Theory";
+  public static final String PluralName_enUS = "SPINE Programming Theory";
+  public static final String NameActual_enUS = "current SPINE Programming Theory";
+  public static final String AllName_enUS = "all SPINE Programming Theory";
+  public static final String SearchAllNameBy_enUS = "search SPINE Programming Theory by ";
+  public static final String SearchAllName_enUS = "search SPINE Programming Theory";
+  public static final String Title_enUS = "SPINE Programming Theory";
+  public static final String ThePluralName_enUS = "the SPINE Programming Theory";
+  public static final String NoNameFound_enUS = "no SPINE Programming Theory found";
   public static final String ApiUri_enUS = "/en-us/api/spine-programming";
   public static final String ApiUriSearchPage_enUS = "/en-us/search/spine-programming";
   public static final String ApiUriEditPage_enUS = "/en-us/edit/spine-programming/{pageId}";
-  public static final String OfName_enUS = "of SPINE Programming lesson";
-  public static final String ANameAdjective_enUS = "a SPINE Programming lesson";
-  public static final String NameAdjectiveSingular_enUS = "SPINE Programming lesson";
-  public static final String NameAdjectivePlural_enUS = "SPINE Programming lessons";
+  public static final String OfName_enUS = "of SPINE Programming Theory";
+  public static final String ANameAdjective_enUS = "a SPINE Programming Theory";
+  public static final String NameAdjectiveSingular_enUS = "SPINE Programming Theory";
+  public static final String NameAdjectivePlural_enUS = "SPINE Programming Theory";
   public static final String Search_enUS_OpenApiUri = "/en-us/api/spine-programming";
   public static final String Search_enUS_StringFormatUri = "/en-us/api/spine-programming";
   public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/spine-programming";
@@ -316,26 +316,29 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   public void setImportance(String o) {
     this.importance = SpineProgramming.staticSetImportance(siteRequest_, o);
   }
+  public static Integer staticScaleImportance() {
+    return 2;
+  }
   public static MathContext staticMathContextImportance() {
-    return new MathContext(2, RoundingMode.valueOf("HALF_UP"));
+    return new MathContext(0, RoundingMode.valueOf("HALF_UP"));
   }
   public static BigDecimal staticSetImportance(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextImportance());
+      return new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance());
     return null;
   }
   @JsonIgnore
   public void setImportance(Double o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   @JsonIgnore
   public void setImportance(Integer o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   @JsonIgnore
   public void setImportance(Number o) {
-    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()));
+    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   protected SpineProgramming importanceInit() {
     Wrap<BigDecimal> importanceWrap = new Wrap<BigDecimal>().var("importance");
@@ -348,11 +351,11 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     return (SpineProgramming)this;
   }
 
-  public static Double staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
-    return o == null ? null : o.doubleValue();
+  public static String staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.toString();
   }
 
-  public static String staticSearchStrImportance(SiteRequest siteRequest_, Double o) {
+  public static String staticSearchStrImportance(SiteRequest siteRequest_, String o) {
     return o == null ? null : o.toString();
   }
 
@@ -2118,16 +2121,16 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
           try {
             promise.complete(searchList.getList().stream().findFirst().orElse(null));
           } catch(Throwable ex) {
-            LOG.error("Error while querying the SPINE Programming lesson", ex);
+            LOG.error("Error while querying the SPINE Programming Theory", ex);
             promise.fail(ex);
           }
         }).onFailure(ex -> {
-          LOG.error("Error while querying the SPINE Programming lesson", ex);
+          LOG.error("Error while querying the SPINE Programming Theory", ex);
           promise.fail(ex);
         });
       }
     } catch(Throwable ex) {
-      LOG.error("Error while querying the SPINE Programming lesson", ex);
+      LOG.error("Error while querying the SPINE Programming Theory", ex);
       promise.fail(ex);
     }
     return promise.future();
@@ -2199,7 +2202,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     case "article":
       return SpineProgramming.staticSearchStrArticle(siteRequest_, (Boolean)o);
     case "importance":
-      return SpineProgramming.staticSearchStrImportance(siteRequest_, (Double)o);
+      return SpineProgramming.staticSearchStrImportance(siteRequest_, (String)o);
     case "courseNum":
       return SpineProgramming.staticSearchStrCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -2446,7 +2449,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
     if(saves != null) {
 
       if(saves.contains("importance")) {
-        Double importance = (Double)doc.get("importance_docvalues_string");
+        String importance = (String)doc.get("importance_docvalues_string");
         if(importance != null)
           oSpineProgramming.setImportance(importance);
       }
@@ -2581,6 +2584,7 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   public void indexSpineProgramming(JsonObject doc) {
     if(importance != null) {
       doc.put("importance_docvalues_string", importance.toPlainString());
+      doc.put("importance_docvalues_double", importance.doubleValue());
     }
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);

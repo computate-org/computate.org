@@ -1484,60 +1484,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
     return PageLayout.staticSearchUserFontSize(siteRequest_, PageLayout.staticSetUserFontSize(siteRequest_, o)).toString();
   }
 
-	////////////////////////////
-  // userWebComponentsTheme //
-	////////////////////////////
-
-
-  /**
-   *  The entity userWebComponentsTheme
-   *	 is defined as null before being initialized. 
-   */
-  @JsonProperty
-  @JsonInclude(Include.NON_NULL)
-  protected String userWebComponentsTheme;
-
-  /**
-   * <br> The entity userWebComponentsTheme
-   *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.page.PageLayout&fq=entiteVar_enUS_indexed_string:userWebComponentsTheme">Find the entity userWebComponentsTheme in Solr</a>
-   * <br>
-   * @param w is for wrapping a value to assign to this entity during initialization. 
-   **/
-  protected abstract void _userWebComponentsTheme(Wrap<String> w);
-
-  public String getUserWebComponentsTheme() {
-    return userWebComponentsTheme;
-  }
-  public void setUserWebComponentsTheme(String o) {
-    this.userWebComponentsTheme = PageLayout.staticSetUserWebComponentsTheme(siteRequest_, o);
-  }
-  public static String staticSetUserWebComponentsTheme(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-  protected PageLayout userWebComponentsThemeInit() {
-    Wrap<String> userWebComponentsThemeWrap = new Wrap<String>().var("userWebComponentsTheme");
-    if(userWebComponentsTheme == null) {
-      _userWebComponentsTheme(userWebComponentsThemeWrap);
-      Optional.ofNullable(userWebComponentsThemeWrap.getO()).ifPresent(o -> {
-        setUserWebComponentsTheme(o);
-      });
-    }
-    return (PageLayout)this;
-  }
-
-  public static String staticSearchUserWebComponentsTheme(SiteRequest siteRequest_, String o) {
-    return o;
-  }
-
-  public static String staticSearchStrUserWebComponentsTheme(SiteRequest siteRequest_, String o) {
-    return o == null ? null : o.toString();
-  }
-
-  public static String staticSearchFqUserWebComponentsTheme(SiteRequest siteRequest_, String o) {
-    return PageLayout.staticSearchUserWebComponentsTheme(siteRequest_, PageLayout.staticSetUserWebComponentsTheme(siteRequest_, o)).toString();
-  }
-
 	///////////////////
   // userSiteTheme //
 	///////////////////
@@ -4201,26 +4147,29 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public void setDEFAULT_MAP_ZOOM(String o) {
     this.DEFAULT_MAP_ZOOM = PageLayout.staticSetDEFAULT_MAP_ZOOM(siteRequest_, o);
   }
+  public static Integer staticScaleDEFAULT_MAP_ZOOM() {
+    return 2;
+  }
   public static MathContext staticMathContextDEFAULT_MAP_ZOOM() {
-    return new MathContext(2, RoundingMode.valueOf("HALF_UP"));
+    return new MathContext(0, RoundingMode.valueOf("HALF_UP"));
   }
   public static BigDecimal staticSetDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM());
+      return new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM());
     return null;
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Double o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Integer o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Number o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o.doubleValue(), staticMathContextDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o.doubleValue(), staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
   }
   protected PageLayout DEFAULT_MAP_ZOOMInit() {
     Wrap<BigDecimal> DEFAULT_MAP_ZOOMWrap = new Wrap<BigDecimal>().var("DEFAULT_MAP_ZOOM");
@@ -4233,11 +4182,11 @@ public abstract class PageLayoutGen<DEV> extends Object {
     return (PageLayout)this;
   }
 
-  public static Double staticSearchDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, BigDecimal o) {
-    return o == null ? null : o.doubleValue();
+  public static String staticSearchDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.toString();
   }
 
-  public static String staticSearchStrDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, Double o) {
+  public static String staticSearchStrDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, String o) {
     return o == null ? null : o.toString();
   }
 
@@ -4734,7 +4683,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
         userEmailInit();
         userGroupsInit();
         userFontSizeInit();
-        userWebComponentsThemeInit();
         userSiteThemeInit();
         userAwesomeEffectInit();
         logoutUrlInit();
@@ -4919,8 +4867,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
         return oPageLayout.userGroups;
       case "userFontSize":
         return oPageLayout.userFontSize;
-      case "userWebComponentsTheme":
-        return oPageLayout.userWebComponentsTheme;
       case "userSiteTheme":
         return oPageLayout.userSiteTheme;
       case "userAwesomeEffect":
@@ -5104,8 +5050,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSetUserGroups(siteRequest_, v);
     case "userFontSize":
       return PageLayout.staticSetUserFontSize(siteRequest_, v);
-    case "userWebComponentsTheme":
-      return PageLayout.staticSetUserWebComponentsTheme(siteRequest_, v);
     case "userSiteTheme":
       return PageLayout.staticSetUserSiteTheme(siteRequest_, v);
     case "userAwesomeEffect":
@@ -5248,8 +5192,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchUserGroups(siteRequest_, (String)o);
     case "userFontSize":
       return PageLayout.staticSearchUserFontSize(siteRequest_, (String)o);
-    case "userWebComponentsTheme":
-      return PageLayout.staticSearchUserWebComponentsTheme(siteRequest_, (String)o);
     case "userSiteTheme":
       return PageLayout.staticSearchUserSiteTheme(siteRequest_, (String)o);
     case "userAwesomeEffect":
@@ -5396,8 +5338,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchStrUserGroups(siteRequest_, (String)o);
     case "userFontSize":
       return PageLayout.staticSearchStrUserFontSize(siteRequest_, (String)o);
-    case "userWebComponentsTheme":
-      return PageLayout.staticSearchStrUserWebComponentsTheme(siteRequest_, (String)o);
     case "userSiteTheme":
       return PageLayout.staticSearchStrUserSiteTheme(siteRequest_, (String)o);
     case "userAwesomeEffect":
@@ -5475,7 +5415,7 @@ public abstract class PageLayoutGen<DEV> extends Object {
     case "DEFAULT_MAP_LOCATION":
       return PageLayout.staticSearchStrDEFAULT_MAP_LOCATION(siteRequest_, (String)o);
     case "DEFAULT_MAP_ZOOM":
-      return PageLayout.staticSearchStrDEFAULT_MAP_ZOOM(siteRequest_, (Double)o);
+      return PageLayout.staticSearchStrDEFAULT_MAP_ZOOM(siteRequest_, (String)o);
     case "queryStr":
       return PageLayout.staticSearchStrQueryStr(siteRequest_, (String)o);
     case "pageImageUri":
@@ -5544,8 +5484,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return PageLayout.staticSearchFqUserGroups(siteRequest_, o);
     case "userFontSize":
       return PageLayout.staticSearchFqUserFontSize(siteRequest_, o);
-    case "userWebComponentsTheme":
-      return PageLayout.staticSearchFqUserWebComponentsTheme(siteRequest_, o);
     case "userSiteTheme":
       return PageLayout.staticSearchFqUserSiteTheme(siteRequest_, o);
     case "userAwesomeEffect":
@@ -5705,8 +5643,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public static final String SET_userGroups = "setUserGroups";
   public static final String VAR_userFontSize = "userFontSize";
   public static final String SET_userFontSize = "setUserFontSize";
-  public static final String VAR_userWebComponentsTheme = "userWebComponentsTheme";
-  public static final String SET_userWebComponentsTheme = "setUserWebComponentsTheme";
   public static final String VAR_userSiteTheme = "userSiteTheme";
   public static final String SET_userSiteTheme = "setUserSiteTheme";
   public static final String VAR_userAwesomeEffect = "userAwesomeEffect";
@@ -5837,7 +5773,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public static final String DISPLAY_NAME_userEmail = "";
   public static final String DISPLAY_NAME_userGroups = "";
   public static final String DISPLAY_NAME_userFontSize = "";
-  public static final String DISPLAY_NAME_userWebComponentsTheme = "";
   public static final String DISPLAY_NAME_userSiteTheme = "";
   public static final String DISPLAY_NAME_userAwesomeEffect = "";
   public static final String DISPLAY_NAME_logoutUrl = "";
@@ -5946,8 +5881,6 @@ public abstract class PageLayoutGen<DEV> extends Object {
       return DISPLAY_NAME_userGroups;
     case VAR_userFontSize:
       return DISPLAY_NAME_userFontSize;
-    case VAR_userWebComponentsTheme:
-      return DISPLAY_NAME_userWebComponentsTheme;
     case VAR_userSiteTheme:
       return DISPLAY_NAME_userSiteTheme;
     case VAR_userAwesomeEffect:

@@ -374,7 +374,7 @@ AUTH_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_OPENSHIFT_SECRET_' + SITE_SHORT_N
 # The Auth secret. 
 AUTH_SECRET: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_OPENSHIFT_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTH_SECRET | b64decode }}"
 # The Auth openshift secret with the admin credentials. 
-AUTH_ADMIN_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_ADMIN_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('localhost', true) }}"
+AUTH_ADMIN_OPENSHIFT_SECRET: "{{ lookup('env', 'AUTH_ADMIN_OPENSHIFT_SECRET_' + SITE_SHORT_NAME) | default('local-auth', true) }}"
 # The Auth admin username. 
 AUTH_ADMIN_USERNAME: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=AUTH_ADMIN_OPENSHIFT_SECRET, namespace=SITE_NAMESPACE) | first | default({})).data.AUTH_ADMIN_USERNAME | b64decode | default('admin') }}"
 # The Auth admin password. 
