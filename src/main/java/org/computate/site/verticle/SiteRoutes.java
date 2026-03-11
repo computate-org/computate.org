@@ -65,6 +65,7 @@ import io.vertx.ext.web.api.service.ServiceRequest;
 import io.vertx.ext.web.client.HttpRequest;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.impl.OAuth2AuthHandlerImpl;
 import io.vertx.kafka.client.consumer.KafkaConsumer;
 import net.authorize.Environment;
 import net.authorize.api.contract.v1.CustomerDataType;
@@ -84,6 +85,7 @@ public class SiteRoutes {
   public static void routes(Vertx vertx, Router router, OAuth2Auth oauth2AuthenticationProvider, ComputateOAuth2AuthHandlerImpl oauth2AuthHandler, JsonObject config, WebClient webClient, Jinjava jinjava, SiteUserEnUSApiServiceImpl apiSiteUser) {
 
     router.get("/").handler(eventHandler -> {
+      try {
       ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(eventHandler);
       apiSiteUser.user(serviceRequest, SiteRequest.class, SiteUser.class, SiteUser.CLASS_API_ADDRESS_SiteUser, "postSiteUserFuture", "patchSiteUserFuture", false).onSuccess(siteRequest -> {
         siteRequest.addScopes("GET");
@@ -159,6 +161,10 @@ public class SiteRoutes {
           eventHandler.fail(ex);
         }
       });
+      } catch(Throwable ex) {
+        LOG.error(String.format("searchSiteUser failed. "), ex);
+        eventHandler.fail(ex);
+      }
     });
     router.get("/spine-programming").handler(eventHandler -> {
       ServiceRequest serviceRequest = apiSiteUser.generateServiceRequest(eventHandler);

@@ -72,41 +72,39 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-    <vertx-maven-plugin.version>1.0.28</vertx-maven-plugin.version>
-    <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
-    <exec-maven-plugin.version>3.1.0</exec-maven-plugin.version>
-    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-    <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
-    <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
-    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-    <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
-    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
-    <postgresql.version>42.5.1</postgresql.version>
-    <ongres-scram.version>2.1</ongres-scram.version>
-    <junit.version>5.9.1</junit.version>
-    <junit-platform-launcher.version>1.4.2</junit-platform-launcher.version>
-    <mockito.version>4.10.0</mockito.version>
-    <kafka.version>4.1.0</kafka.version>
+    <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
+    <vertx-maven-plugin.version>2.0.2</vertx-maven-plugin.version>
+    <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
+    <exec-maven-plugin.version>3.6.3</exec-maven-plugin.version>
+    <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+    <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
+    <flatten-maven-plugin.version>1.7.3</flatten-maven-plugin.version>
+    <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+    <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+    <postgresql.version>42.7.10</postgresql.version>
+    <ongres-scram.version>3.2</ongres-scram.version>
+    <junit.version>6.0.3</junit.version>
+    <junit-platform-launcher.version>6.0.3</junit-platform-launcher.version>
+    <mockito.version>5.22.0</mockito.version>
+    <kafka.version>4.2.0</kafka.version>
 
     <rest-assured.version>5.3.2</rest-assured.version>
 
-    <vertx-base.version>4.5.8</vertx-base.version>
+    <vertx-base.version>4.5.24</vertx-base.version>
     <vertx.version>${vertx-base.version}</vertx.version>
 
-    <jinjava.version>2.8.1</jinjava.version>
-    <commons-text.version>1.10.0</commons-text.version>
-    <log4j.version>2.22.0</log4j.version>
-    <slf4j.version>2.0.9</slf4j.version>
-    <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
-    <solr.version>8.11.1</solr.version>
-    <jackson.version>2.14.1</jackson.version>
-    <jackson-databind.version>2.14.1</jackson-databind.version>
-    <commons-lang3.version>3.16.0</commons-lang3.version>
-    <commons-configuration2.version>2.8.0</commons-configuration2.version>
-    <snakeyaml.version>1.33.0.redhat-00001</snakeyaml.version>
-    <cloudevents.version>2.4.0</cloudevents.version>
+    <jinjava.version>2.8.3</jinjava.version>
+    <commons-text.version>1.15.0</commons-text.version>
+    <log4j.version>2.25.3</log4j.version>
+    <slf4j.version>2.0.17</slf4j.version>
+    <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
+    <solr.version>9.10.1</solr.version>
+    <jackson.version>2.21.1</jackson.version>
+    <jackson-databind.version>2.21.1</jackson-databind.version>
+    <commons-lang3.version>3.20.0</commons-lang3.version>
+    <snakeyaml.version>2.6</snakeyaml.version>
     <opentelemetry.version>1.18.0</opentelemetry.version>
     <authorize-net.version>3.0.0</authorize-net.version>
     <geotools.version>34.0</geotools.version>
@@ -178,13 +176,13 @@
 
     <dependency>
       <groupId>com.ongres.scram</groupId>
-      <artifactId>common</artifactId>
+      <artifactId>scram-common</artifactId>
       <version>${ongres-scram.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.ongres.scram</groupId>
-      <artifactId>client</artifactId>
+      <artifactId>scram-client</artifactId>
       <version>${ongres-scram.version}</version>
     </dependency>
 
@@ -227,6 +225,11 @@
     <dependency>
       <groupId>io.vertx</groupId>
       <artifactId>vertx-reactive-streams</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.vertx</groupId>
+      <artifactId>vertx-openapi</artifactId>
     </dependency>
 
     <dependency>
@@ -613,24 +616,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>io.reactiverse</groupId>
-        <artifactId>vertx-maven-plugin</artifactId>
-        <version>${vertx-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>vmp</id>
-            <goals>
-              <goal>initialize</goal>
-              <goal>package</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <redeploy>true</redeploy>
-        </configuration>
       </plugin>
 
       <!-- JaCoCo Code Coverage Plugin -->

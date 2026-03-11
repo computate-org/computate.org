@@ -75,6 +75,7 @@ import io.vertx.amqp.AmqpSender;
 import io.vertx.rabbitmq.RabbitMQClient;
 import io.vertx.rabbitmq.RabbitMQOptions;
 import io.vertx.serviceproxy.ServiceBinder;
+import io.vertx.openapi.validation.RequestUtils;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
@@ -114,7 +115,6 @@ import io.vertx.core.shareddata.SharedData;
 import io.vertx.core.spi.cluster.ClusterManager;
 import io.vertx.core.spi.cluster.NodeInfo;
 import io.opentelemetry.api.trace.Tracer;
-import io.vertx.core.streams.Pump;
 import io.vertx.core.tracing.TracingPolicy;
 import io.vertx.core.tracing.TracingOptions;
 import io.vertx.ext.auth.User;
@@ -136,12 +136,13 @@ import io.vertx.ext.web.api.service.ServiceResponse;
 import io.vertx.ext.web.client.HttpResponse;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
-import io.vertx.ext.web.client.predicate.ResponsePredicate;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.FileSystemAccess;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.vertx.ext.web.handler.SessionHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 import io.vertx.ext.web.handler.TemplateHandler;
+import io.vertx.ext.web.handler.impl.OAuth2AuthHandlerImpl;
 import io.vertx.ext.web.handler.sockjs.SockJSBridgeOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import io.vertx.ext.web.impl.RoutingContextImpl;
@@ -151,6 +152,7 @@ import io.vertx.kafka.client.producer.KafkaProducer;
 import io.vertx.kafka.client.consumer.KafkaConsumer;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.mqtt.MqttClient;
+import io.vertx.openapi.contract.OpenAPIContract;
 import io.vertx.pgclient.PgConnectOptions;
 import io.vertx.pgclient.PgBuilder;
 import io.vertx.spi.cluster.zookeeper.ZookeeperClusterManager;
@@ -161,6 +163,7 @@ import io.vertx.sqlclient.RowStream;
 import io.vertx.sqlclient.Transaction;
 import io.vertx.sqlclient.Tuple;
 import io.vertx.tracing.opentelemetry.OpenTelemetryOptions;
+import io.vertx.tracing.opentelemetry.OpenTelemetryTracingFactory;
 import io.vertx.tracing.opentracing.OpenTracingTracerFactory;
 
 import org.computate.site.config.ConfigKeys;
@@ -233,7 +236,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
   private JsonObject i18n;
 
   /**
-   * A io.vertx.ext.jdbc.JDBCClient for connecting to the relational database PostgreSQL. 
+   * A JDBC client for connecting to the relational database PostgreSQL. 
    **/
   private Pool pgPool;
 
@@ -405,7 +408,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiComputateDeveloper.setVertx(vertx);
       apiComputateDeveloper.setConfig(config);
       apiComputateDeveloper.setWebClient(webClient);
-      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "GETManager", "PATCH", "POST", "SuperAdmin" }).onSuccess(authToken -> {
+      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin", "PUT" }).onSuccess(authToken -> {
         apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
             .compose(q1 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
             .onSuccess(q1 -> {
@@ -448,7 +451,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                                       .compose(q14 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                       .onSuccess(q14 -> {
                                     apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
-                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "GETManager", "DELETE", "Admin" }))
+                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
                                         .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                         .onSuccess(q15 -> {
                                       LOG.info("authorize data complete");
@@ -478,7 +481,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
   /**
    * Configure shared database connections across the cluster for massive scaling of the application. 
    * Return a promise that configures a shared database client connection. 
-   * Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+   * Load the database configuration into a shared JDBC client for a scalable, clustered datasource connection pool. 
    **/
   public static Future<Void> configureDatabaseSchema(Vertx vertx, JsonObject config) {
     Promise<Void> promise = Promise.promise();
@@ -490,9 +493,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
         pgOptions.setDatabase(config.getString(ConfigKeys.DATABASE_DATABASE));
         pgOptions.setUser(config.getString(ConfigKeys.DATABASE_USERNAME));
         pgOptions.setPassword(config.getString(ConfigKeys.DATABASE_PASSWORD));
-        pgOptions.setIdleTimeout(Integer.parseInt(config.getString(ConfigKeys.DATABASE_MAX_IDLE_TIME)));
-        pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
-        pgOptions.setConnectTimeout(Integer.parseInt(config.getString(ConfigKeys.DATABASE_CONNECT_TIMEOUT)));
+        // pgOptions.setIdleTimeout(Integer.parseInt(config.getString(ConfigKeys.DATABASE_MAX_IDLE_TIME)));
+        // pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
+        // pgOptions.setConnectTimeout(Integer.parseInt(config.getString(ConfigKeys.DATABASE_CONNECT_TIMEOUT)));
 
         PoolOptions poolOptions = new PoolOptions();
         poolOptions.setMaxSize(Integer.parseInt(config.getString(ConfigKeys.DATABASE_MAX_POOL_SIZE)));
@@ -718,22 +721,22 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
           SdkTracerProvider.builder().addSpanProcessor(SimpleSpanProcessor.create(OtlpHttpSpanExporter.builder().build())).build() : null;
       SdkMeterProvider sdkMeterProvider = Boolean.valueOf(config.getString(ConfigKeys.ENABLE_OPEN_TELEMETRY)) ? 
           SdkMeterProvider.builder().build() : null;
-      if(Boolean.valueOf(config.getString(ConfigKeys.ENABLE_OPEN_TELEMETRY))) {
-        // Switch oc config current-context to your other cluster to port forward the opentelemetry-collector
-        // oc -n opentelemetry port-forward $(oc -n opentelemetry get pod -l app.kubernetes.io/name=opentelemetry-collector -o name) 4318:4318
-        // Switch oc config current-context back to OpenShift Local
-        OpenTelemetry openTelemetry = OpenTelemetrySdk.builder()
-            .setTracerProvider(sdkTracerProvider)
-            .setMeterProvider(sdkMeterProvider)
-            .setPropagators(ContextPropagators.create(W3CTraceContextPropagator.getInstance()))
-            .buildAndRegisterGlobal();
-        vertxOptions.setTracingOptions(new OpenTelemetryOptions(openTelemetry));
-      }
   
       if(enableZookeeperCluster) {
         VertxBuilder vertxBuilder = Vertx.builder();
         vertxBuilder.with(vertxOptions);
         vertxBuilder.withClusterManager(clusterManager);
+        if(Boolean.valueOf(config.getString(ConfigKeys.ENABLE_OPEN_TELEMETRY))) {
+          // Switch oc config current-context to your other cluster to port forward the opentelemetry-collector
+          // oc -n opentelemetry port-forward $(oc -n opentelemetry get pod -l app.kubernetes.io/name=opentelemetry-collector -o name) 4318:4318
+          // Switch oc config current-context back to OpenShift Local
+          OpenTelemetry openTelemetry = OpenTelemetrySdk.builder()
+              .setTracerProvider(sdkTracerProvider)
+              .setMeterProvider(sdkMeterProvider)
+              .setPropagators(ContextPropagators.create(W3CTraceContextPropagator.getInstance()))
+              .buildAndRegisterGlobal();
+          vertxBuilder.withTracer(new OpenTelemetryTracingFactory(openTelemetry));
+        }
         vertxBuilder.buildClustered().onSuccess(vertx -> {
           runVerticles(vertx, config, sdkTracerProvider, sdkMeterProvider).onSuccess(a -> {
             promise.complete();
@@ -745,6 +748,17 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       } else {
         VertxBuilder vertxBuilder = Vertx.builder();
         vertxBuilder.with(vertxOptions);
+        if(Boolean.valueOf(config.getString(ConfigKeys.ENABLE_OPEN_TELEMETRY))) {
+          // Switch oc config current-context to your other cluster to port forward the opentelemetry-collector
+          // oc -n opentelemetry port-forward $(oc -n opentelemetry get pod -l app.kubernetes.io/name=opentelemetry-collector -o name) 4318:4318
+          // Switch oc config current-context back to OpenShift Local
+          OpenTelemetry openTelemetry = OpenTelemetrySdk.builder()
+              .setTracerProvider(sdkTracerProvider)
+              .setMeterProvider(sdkMeterProvider)
+              .setPropagators(ContextPropagators.create(W3CTraceContextPropagator.getInstance()))
+              .buildAndRegisterGlobal();
+          vertxBuilder.withTracer(new OpenTelemetryTracingFactory(openTelemetry));
+        }
         Vertx vertx = vertxBuilder.build();
         runVerticles(vertx, config, sdkTracerProvider, sdkMeterProvider).onSuccess(a -> {
           promise.complete();
@@ -1079,7 +1093,7 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
   /**
    * Configure shared database connections across the cluster for massive scaling of the application. 
    * Return a promise that configures a shared database client connection. 
-   * Load the database configuration into a shared io.vertx.ext.jdbc.JDBCClient for a scalable, clustered datasource connection pool. 
+   * Load the database configuration into a shared JDBC client for a scalable, clustered datasource connection pool. 
    **/
   public Future<Void> configureData() {
     Promise<Void> promise = Promise.promise();
@@ -1091,9 +1105,9 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
         pgOptions.setDatabase(config().getString(ConfigKeys.DATABASE_DATABASE));
         pgOptions.setUser(config().getString(ConfigKeys.DATABASE_USERNAME));
         pgOptions.setPassword(config().getString(ConfigKeys.DATABASE_PASSWORD));
-        pgOptions.setIdleTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_IDLE_TIME)));
-        pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
-        pgOptions.setConnectTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_CONNECT_TIMEOUT)));
+        // pgOptions.setIdleTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_IDLE_TIME)));
+        // pgOptions.setIdleTimeoutUnit(TimeUnit.SECONDS);
+        // pgOptions.setConnectTimeout(Integer.parseInt(config().getString(ConfigKeys.DATABASE_CONNECT_TIMEOUT)));
 
         PoolOptions poolOptions = new PoolOptions();
         jdbcMaxPoolSize = Integer.parseInt(config().getString(ConfigKeys.DATABASE_MAX_POOL_SIZE));
@@ -1259,35 +1273,40 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
             OAuth2Auth authProvider = authProviders.get(authClientOpenApiId);
 
             authProvider.authenticate(new Oauth2Credentials(config), res -> {
-              if (res.failed()) {
-                LOG.error("Failed to authenticate user. ", res.cause());
-                ctx.fail(res.cause());
-              } else {
-                ctx.setUser(res.result());
-                Session session = ctx.session();
-                if (session != null) {
-                  // the user has upgraded from unauthenticated to authenticated
-                  // session should be upgraded as recommended by owasp
-                  Cookie cookie = Cookie.cookie("sessionIdBefore", session.id());
-                  if(StringUtils.startsWith(siteBaseUrl, "https://"))
-                    cookie.setSecure(true);
-                  ctx.response().addCookie(cookie);
-                  session.regenerateId();
-                  String redirectUri = session.get("redirect_uri");
-                  // we should redirect the UA so this link becomes invalid
-                  ctx.response()
-                      // disable all caching
-                      .putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
-                      .putHeader("Pragma", "no-cache")
-                      .putHeader(HttpHeaders.EXPIRES, "0")
-                      // redirect (when there is no state, redirect to home
-                      .putHeader(HttpHeaders.LOCATION, redirectUri != null ? redirectUri : "/")
-                      .setStatusCode(302)
-                      .end("Redirecting to " + (redirectUri != null ? redirectUri : "/") + ".");
+              try {
+                if (res.failed()) {
+                  LOG.error("Failed to authenticate user. ", res.cause());
+                  ctx.fail(res.cause());
                 } else {
-                  // there is no session object so we cannot keep state
-                  ctx.reroute(state != null ? state : "/");
+                  ctx.setUser(res.result());
+                  Session session = ctx.session();
+                  if (session != null) {
+                    // the user has upgraded from unauthenticated to authenticated
+                    // session should be upgraded as recommended by owasp
+                    Cookie cookie = Cookie.cookie("sessionIdBefore", session.id());
+                    if(StringUtils.startsWith(siteBaseUrl, "https://"))
+                      cookie.setSecure(true);
+                    ctx.response().addCookie(cookie);
+                    session.regenerateId();
+                    String redirectUri = session.get("redirect_uri");
+                    // we should redirect the UA so this link becomes invalid
+                    ctx.response()
+                        // disable all caching
+                        .putHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate")
+                        .putHeader("Pragma", "no-cache")
+                        .putHeader(HttpHeaders.EXPIRES, "0")
+                        // redirect (when there is no state, redirect to home
+                        .putHeader(HttpHeaders.LOCATION, redirectUri != null ? redirectUri : "/")
+                        .setStatusCode(302)
+                        .end("Redirecting to " + (redirectUri != null ? redirectUri : "/") + ".");
+                  } else {
+                    // there is no session object so we cannot keep state
+                    ctx.reroute(state != null ? state : "/");
+                  }
                 }
+              } catch(Throwable ex) {
+                  LOG.error("Failed to authenticate user. ", res.cause());
+                  ctx.fail(res.cause());
               }
             });
   
@@ -1389,7 +1408,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
   public Future<Void> configureHealthChecks() {
     Promise<Void> promise = Promise.promise();
     try {
-      ClusterManager clusterManager = ((VertxImpl)vertx).getClusterManager();
       HealthCheckHandler healthCheckHandler = HealthCheckHandler.create(vertx);
       siteInstances = Optional.ofNullable(System.getenv(ConfigKeys.SITE_INSTANCES)).map(s -> Integer.parseInt(s)).orElse(1);
       workerPoolSize = System.getenv(ConfigKeys.WORKER_POOL_SIZE) == null ? null : Integer.parseInt(System.getenv(ConfigKeys.WORKER_POOL_SIZE));
@@ -1397,17 +1415,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       healthCheckHandler.register("vertx", 2000, a -> {
         a.complete(Status.OK(new JsonObject().put(ConfigKeys.SITE_INSTANCES, siteInstances).put("workerPoolSize", workerPoolSize)));
       });
-      if(clusterManager != null) {
-        healthCheckHandler.register("cluster", 2000, a -> {
-          NodeInfo nodeInfo = clusterManager.getNodeInfo();
-          JsonArray nodeArray = new JsonArray();
-          clusterManager.getNodes().forEach(node -> nodeArray.add(node));
-          a.complete(Status.OK(new JsonObject()
-              .put("nodeId", clusterManager.getNodeId())
-              .put("nodes", nodeArray)
-              ));
-        });
-      }
       router.get("/health").handler(healthCheckHandler);
       LOG.info("The health checks were configured successfully.");
       promise.complete();
@@ -1551,11 +1558,10 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     try {
       String staticPath = config().getString(ConfigKeys.STATIC_PATH);
 
-      StaticHandler staticHandler = StaticHandler.create().setCachingEnabled(false).setFilesReadOnly(false);
+      StaticHandler staticHandler = StaticHandler.create(FileSystemAccess.ROOT, staticPath).setCachingEnabled(false).setFilesReadOnly(false);
       if(staticPath != null) {
-        staticHandler.setAllowRootFileSystemAccess(true);
-        staticHandler.setWebRoot(staticPath);
         staticHandler.setFilesReadOnly(true);
+        staticHandler.setCachingEnabled(true);
       }
       router.route("/static/*").handler(staticHandler);
 
@@ -1576,13 +1582,13 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                 )
                 .ssl(Boolean.valueOf(config().getString(ComputateConfigKeys.AUTH_SSL)))
                 .putHeader("Authorization", String.format("Bearer %s", siteRequest.getUser().principal().getString("access_token")))
-                .expect(ResponsePredicate.status(200))
                 .sendForm(MultiMap.caseInsensitiveMultiMap()
                     .add("grant_type", "urn:ietf:params:oauth:grant-type:uma-ticket")
                     .add("audience", config().getString(ComputateConfigKeys.AUTH_CLIENT))
                     .add("response_mode", "permissions")
                     .add("permission", String.format("%s#%s", uri, "GET"))
-            ).onFailure(ex -> {
+                ).expecting(HttpResponseExpectation.SC_OK)
+                .onFailure(ex -> {
               String msg = String.format("403 FORBIDDEN user %s to %s %s", siteRequest.getUser().attributes().getJsonObject("accessToken").getString("preferred_username"), serviceRequest.getExtra().getString("method"), serviceRequest.getExtra().getString("uri"));
               LOG.error(String.format("Failed to render page %s", originalUri), ex);
               handler.fail(403, ex);
@@ -1730,28 +1736,15 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       String sslPrivateKeyPath = config().getString(ConfigKeys.SSL_KEY_PATH);
       String sslCertPath = config().getString(ConfigKeys.SSL_CERT_PATH);
       HttpServerOptions options = new HttpServerOptions();
-      if(sslPassthrough) {
-        if(sslPrivateKeyPath != null && sslCertPath != null) {
-          options.setPemKeyCertOptions(new PemKeyCertOptions().setKeyPath(sslPrivateKeyPath).setCertPath(sslCertPath));
-          LOG.info(String.format("Configuring SSL: %s", sslPrivateKeyPath));
-          LOG.info(String.format("Configuring SSL: %s", sslCertPath));
-        } else if(sslJksPath != null) {
-          options.setKeyStoreOptions(new JksOptions().setPath(sslJksPath).setPassword(config().getString(ConfigKeys.SSL_JKS_PASSWORD)));
-          LOG.info(String.format("Configuring SSL: %s", sslJksPath));
-        }
-        options.setSsl(true);
-      }
       options.setPort(sitePort);
   
       LOG.info(String.format("HTTP server starting: %s", siteBaseUrl));
-      vertx.createHttpServer(options).requestHandler(router).listen(ar -> {
-        if (ar.succeeded()) {
-          LOG.info(String.format("The HTTP server is running: %s", siteBaseUrl));
-          promise.complete();
-        } else {
-          LOG.error("The server is not configured properly.", ar.cause());
-          promise.fail(ar.cause());
-        }
+      vertx.createHttpServer(options).requestHandler(router).listen().onSuccess(ar -> {
+        LOG.info(String.format("The HTTP server is running: %s", siteBaseUrl));
+        promise.complete();
+      }).onFailure(ex -> {
+        LOG.error("The server is not configured properly.", ex);
+        promise.fail(ex);
       });
     } catch (Exception ex) {
       LOG.error("The server is not configured properly.", ex);

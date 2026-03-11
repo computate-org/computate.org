@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.computate.search.serialize.ComputateLocalDateSerializer;
 import org.computate.search.serialize.ComputateLocalDateDeserializer;
@@ -856,26 +857,29 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public void setImportance(String o) {
     this.importance = SitePage.staticSetImportance(siteRequest_, o);
   }
+  public static Integer staticScaleImportance() {
+    return 2;
+  }
   public static MathContext staticMathContextImportance() {
-    return new MathContext(2, RoundingMode.valueOf("HALF_UP"));
+    return new MathContext(0, RoundingMode.valueOf("HALF_UP"));
   }
   public static BigDecimal staticSetImportance(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextImportance());
+      return new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance());
     return null;
   }
   @JsonIgnore
   public void setImportance(Double o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   @JsonIgnore
   public void setImportance(Integer o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   @JsonIgnore
   public void setImportance(Number o) {
-    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()));
+    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()).setScale(staticScaleImportance()));
   }
   protected SitePage importanceInit() {
     Wrap<BigDecimal> importanceWrap = new Wrap<BigDecimal>().var("importance");
@@ -888,11 +892,11 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     return (SitePage)this;
   }
 
-  public static Double staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
-    return o == null ? null : o.doubleValue();
+  public static String staticSearchImportance(SiteRequest siteRequest_, BigDecimal o) {
+    return o == null ? null : o.toString();
   }
 
-  public static String staticSearchStrImportance(SiteRequest siteRequest_, Double o) {
+  public static String staticSearchStrImportance(SiteRequest siteRequest_, String o) {
     return o == null ? null : o.toString();
   }
 
@@ -2967,7 +2971,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     case "siteBaseUrl":
       return SitePage.staticSearchStrSiteBaseUrl(siteRequest_, (String)o);
     case "importance":
-      return SitePage.staticSearchStrImportance(siteRequest_, (Double)o);
+      return SitePage.staticSearchStrImportance(siteRequest_, (String)o);
     case "courseNum":
       return SitePage.staticSearchStrCourseNum(siteRequest_, (Integer)o);
     case "lessonNum":
@@ -3254,7 +3258,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
     if(saves != null) {
 
       if(saves.contains("importance")) {
-        Double importance = (Double)doc.get("importance_docvalues_string");
+        String importance = (String)doc.get("importance_docvalues_string");
         if(importance != null)
           oSitePage.setImportance(importance);
       }
@@ -3401,6 +3405,7 @@ public abstract class SitePageGen<DEV> extends BaseResult {
   public void indexSitePage(JsonObject doc) {
     if(importance != null) {
       doc.put("importance_docvalues_string", importance.toPlainString());
+      doc.put("importance_docvalues_double", importance.doubleValue());
     }
     if(courseNum != null) {
       doc.put("courseNum_docvalues_int", courseNum);
