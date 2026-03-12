@@ -389,17 +389,20 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
                 processAuthorizeItem(total, totalTax, netAmountDue, userName, pageId, vertx, config, webClient, transactionId, lineItemResponse).onSuccess(a -> {
                   promise.complete(transactionResponseBody);
                 }).onFailure(ex -> {
-                  LOG.error(String.format("Failed to process authorize.net item. "), ex);
-                  promise.tryFail(ex);
+                  RuntimeException ex2 = new RuntimeException(String.format("Processing the %s authorize.net item for user %s failed: %s", o.getName(), siteRequest.getUserName(), ex.getMessage()));
+                  LOG.error(ex2.getMessage(), ex);
+                  promise.fail(ex2);
                 });
               }
             } catch(Exception ex) {
-              LOG.error(String.format("The createTransactionRequest to authorize.net failed. "), ex);
-              promise.tryFail(ex);
+              RuntimeException ex2 = new RuntimeException(String.format("Processing the %s payment response for user %s to Authorize.net resulted in an error: %s", o.getName(), siteRequest.getUserName(), ex.getMessage()));
+              LOG.error(ex2.getMessage(), ex);
+              promise.fail(ex2);
             }
           }).onFailure(ex -> {
-            LOG.error(String.format("Updating AUTHORIZE_NET_API host failed. "), ex);
-            promise.fail(ex);
+            RuntimeException ex2 = new RuntimeException(String.format("The %s payment request for user %s to Authorize.net failed: %s", o.getName(), siteRequest.getUserName(), ex.getMessage()));
+            LOG.error(ex2.getMessage(), ex);
+            promise.fail(ex2);
           });
         }
       } else {
@@ -440,119 +443,135 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
         searchList.fq(String.format("classSimpleName_docvalues_string:" + publicResources.stream().collect(Collectors.joining(" OR ", "(", ")"))));
         searchList.fq(String.format("pageId_docvalues_string:\"" + pageId + "\""));
         searchList.promiseDeepForClass(siteRequest).onSuccess(a -> {
-          if(searchList.size() > 0) {
-            ComputateBaseResult result = searchList.first();
-            String classSimpleName = (String)result.obtainForClass("classSimpleName");
-            String groupName = String.format("%s-%s-GET", classSimpleName, pageId);
-            String authAdminUsername = config.getString(ConfigKeys.AUTH_ADMIN_USERNAME);
-            String authAdminPassword = config.getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
-            Integer authPort = Integer.parseInt(config.getString(ConfigKeys.AUTH_PORT));
-            String authHostName = config.getString(ConfigKeys.AUTH_HOST_NAME);
-            Boolean authSsl = Boolean.valueOf(config.getString(ConfigKeys.AUTH_SSL));
-            String authRealm = config.getString(ConfigKeys.AUTH_REALM);
-            webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
-                .sendForm(MultiMap.caseInsensitiveMultiMap()
-                    .add("username", authAdminUsername)
-                    .add("password", authAdminPassword)
-                    .add("grant_type", "password")
-                    .add("client_id", "admin-cli")
-                    )
-                .expecting(HttpResponseExpectation.SC_OK)
-                    .onSuccess(tokenResponse -> {
-              try {
-                String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
-                webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-                .send()
-                .expecting(HttpResponseExpectation.SC_OK)
-                .onSuccess(groupResponse -> {
-                  try {
-                    JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
-                    JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
-                    if(group != null) {
-                      String groupId = group.getString("id");
-                      webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=%s", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
-                      .send()
-                      .expecting(HttpResponseExpectation.SC_OK)
-                      .onSuccess(userResponse -> {
-                        JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
-                        JsonObject user = users.stream().map(o -> (JsonObject)o).filter(o -> userName.equals(o.getString("username"))).findFirst().orElse(null);
-                        if(user != null) {
-                          String userId = user.getString("id");
-                          String userEmail = user.getString("email");
-                          String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
-                          JsonArray userGroups = user.getJsonArray("groups");
-                          webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
-                              .putHeader("Authorization", String.format("Bearer %s", authToken))
-                              .putHeader("Content-Type", "application/json")
-                              .putHeader("Content-Length", "0")
-                              .send()
-                              .expecting(HttpResponseExpectation.SC_NO_CONTENT)
-                              .onSuccess(groupUserResponse -> {
-                            LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
-                            sendProductEmail(total, totalTax, netAmountDue, siteRequest, userName, pageId, vertx, config, transactionId, item, user, result).onSuccess(c -> {
-                              try {
-                                grantGithubTeamAccess(itemId, userName, config, webClient).onSuccess(b -> {
-                                  promise.complete();
+          try {
+            if(searchList.size() > 0) {
+              ComputateBaseResult result = searchList.first();
+              String classSimpleName = (String)result.obtainForClass("classSimpleName");
+              String groupName = String.format("%s-%s-GET", classSimpleName.toUpperCase(), pageId);
+              String authAdminUsername = config.getString(ConfigKeys.AUTH_ADMIN_USERNAME);
+              String authAdminPassword = config.getString(ConfigKeys.AUTH_ADMIN_PASSWORD);
+              Integer authPort = Integer.parseInt(config.getString(ConfigKeys.AUTH_PORT));
+              String authHostName = config.getString(ConfigKeys.AUTH_HOST_NAME);
+              Boolean authSsl = Boolean.valueOf(config.getString(ConfigKeys.AUTH_SSL));
+              String authRealm = config.getString(ConfigKeys.AUTH_REALM);
+              webClient.post(authPort, authHostName, "/realms/master/protocol/openid-connect/token").ssl(authSsl)
+                  .sendForm(MultiMap.caseInsensitiveMultiMap()
+                      .add("username", authAdminUsername)
+                      .add("password", authAdminPassword)
+                      .add("grant_type", "password")
+                      .add("client_id", "admin-cli")
+                      )
+                  .expecting(HttpResponseExpectation.SC_OK)
+                      .onSuccess(tokenResponse -> {
+                try {
+                  String authToken = tokenResponse.bodyAsJsonObject().getString("access_token");
+                  webClient.get(authPort, authHostName, String.format("/admin/realms/%s/groups?exact=false&global=true&first=0&max=1&search=%s", authRealm, URLEncoder.encode(groupName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                  .send()
+                  .expecting(HttpResponseExpectation.SC_OK)
+                  .onSuccess(groupResponse -> {
+                    try {
+                      JsonArray groups = Optional.ofNullable(groupResponse.bodyAsJsonArray()).orElse(new JsonArray());
+                      JsonObject group = groups.stream().findFirst().map(o -> (JsonObject)o).orElse(null);
+                      if(group != null) {
+                        String groupId = group.getString("id");
+                        webClient.get(authPort, authHostName, String.format("/admin/realms/%s/users?exact=true&username=%s", authRealm, URLEncoder.encode(userName, "UTF-8"))).ssl(authSsl).putHeader("Authorization", String.format("Bearer %s", authToken))
+                        .send()
+                        .expecting(HttpResponseExpectation.SC_OK)
+                        .onSuccess(userResponse -> {
+                          try {
+                            JsonArray users = Optional.ofNullable(userResponse.bodyAsJsonArray()).orElse(new JsonArray());
+                            JsonObject user = users.stream().map(o -> (JsonObject)o).filter(o -> userName.equals(o.getString("username"))).findFirst().orElse(null);
+                            if(user != null) {
+                              String userId = user.getString("id");
+                              String userEmail = user.getString("email");
+                              String userFullName = String.format("%s %s", user.getString("firstName"), user.getString("lastName"));
+                              JsonArray userGroups = user.getJsonArray("groups");
+                              webClient.put(authPort, authHostName, String.format("/admin/realms/%s/users/%s/groups/%s", authRealm, userId, groupId)).ssl(authSsl)
+                                  .putHeader("Authorization", String.format("Bearer %s", authToken))
+                                  .putHeader("Content-Type", "application/json")
+                                  .putHeader("Content-Length", "0")
+                                  .send()
+                                  .expecting(HttpResponseExpectation.SC_NO_CONTENT)
+                                  .onSuccess(groupUserResponse -> {
+                                LOG.info(String.format("Successfully added user %s to the group %s in Keycloak", userName, groupName));
+                                sendProductEmail(total, totalTax, netAmountDue, siteRequest, userName, pageId, vertx, config, transactionId, item, user, result).onSuccess(c -> {
+                                  grantGithubTeamAccess(pageId, userName, config, webClient).onSuccess(b -> {
+                                    promise.complete();
+                                  }).onFailure(ex -> {
+                                    promise.fail(ex);
+                                  });
                                 }).onFailure(ex -> {
                                   promise.fail(ex);
                                 });
-                              } catch(Throwable ex) {
-                                LOG.error("Failed to process authorize.net webook while querying customer. ", ex);
-                                promise.fail(ex);
-                              }
-                            }).onFailure(ex -> {
-                              LOG.error("Failed to process authorize.net webook while sending email. ", ex);
-                              promise.fail(ex);
-                            });
-                          }).onFailure(ex -> {
-                            LOG.error("Failed to process authorize.net webook while adding user to group. ", ex);
-                            promise.fail(ex);
-                          });
-                        } else {
-                          Throwable ex = new RuntimeException(String.format("Failed to find user %s. ", userName));
-                          LOG.error(ex.getMessage(), ex);
-                          promise.fail(ex);
-                        }
-                      }).onFailure(ex -> {
-                        LOG.error("Failed to process authorize.net webook while querying user. ", ex);
-                        promise.fail(ex);
-                      });
-                    } else {
-                      Throwable ex = new RuntimeException("Failed to find group. ");
-                      LOG.error(ex.getMessage(), ex);
-                      promise.fail(ex);
+                              }).onFailure(ex -> {
+                                RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but adding user to group in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                                LOG.error(ex2.getMessage(), ex);
+                                promise.fail(ex2);
+                              });
+                            } else {
+                              RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but adding user to group in Keycloak for %s product for user %s failed: %s", pageId, userName));
+                              LOG.error(ex2.getMessage(), ex2);
+                              promise.fail(ex2);
+                            }
+                          } catch(Throwable ex) {
+                            RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but adding user to group in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                            LOG.error(ex2.getMessage(), ex);
+                            promise.fail(ex2);
+                          }
+                        }).onFailure(ex -> {
+                          RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching users in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                          LOG.error(ex2.getMessage(), ex);
+                          promise.fail(ex2);
+                        });
+                      } else {
+                        RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching users in Keycloak for %s product for user %s failed: %s", pageId, userName));
+                        LOG.error(ex2.getMessage(), ex2);
+                        promise.fail(ex2);
+                      }
+                    } catch(Throwable ex) {
+                      RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching groups in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                      LOG.error(ex2.getMessage(), ex);
+                      promise.fail(ex2);
                     }
-                  } catch(Throwable ex) {
-                    LOG.error("Failed to process authorize.net webook while querying group. ", ex);
-                    promise.fail(ex);
-                  }
-                }).onFailure(ex -> {
-                  LOG.error("Failed to process authorize.net webook while querying group. ", ex);
-                  promise.fail(ex);
-                });
-              } catch(Throwable ex) {
-                LOG.error("Failed to process authorize.net webook while querying group. ", ex);
-                promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              LOG.error("Failed to process authorize.net webook. ", ex);
-              promise.fail(ex);
-            });
-          } else {
-            LOG.warn(String.format("Item not found with name %s. ", itemName));
-            promise.complete();
+                  }).onFailure(ex -> {
+                    RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching groups in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                    LOG.error(ex2.getMessage(), ex);
+                    promise.fail(ex2);
+                  });
+                } catch(Throwable ex) {
+                  RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching groups in Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                  LOG.error(ex2.getMessage(), ex);
+                  promise.fail(ex2);
+                }
+              }).onFailure(ex -> {
+                RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but connecting to Keycloak for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+                LOG.error(ex2.getMessage(), ex);
+                promise.fail(ex2);
+              });
+            } else {
+              RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but item %s not found for user %s", pageId, userName));
+              LOG.error(ex2.getMessage(), ex2);
+              promise.complete();
+            }
+          } catch(Exception ex) {
+            RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but updating keycloak permissions for %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+            LOG.error(ex2.getMessage(), ex);
+            promise.fail(ex2);
           }
         }).onFailure(ex -> {
-          LOG.error("Failed to process authorize.net webook. ", ex);
-          promise.fail(ex);
+          RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching for the %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+          LOG.error(ex2.getMessage(), ex);
+          promise.fail(ex2);
         });
       } else {
-        LOG.warn(String.format("Order %s missing userName", transactionId));
+        RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but transaction %s for product %s missing the username", transactionId, pageId));
+        LOG.error(ex2.getMessage(), ex2);
         promise.complete();
       }
     } catch(Exception ex) {
-      LOG.error("The authorize.net item failed to process.");
-      promise.fail(ex);
+      RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but searching for the %s product for user %s failed: %s", pageId, userName, ex.getMessage()));
+      LOG.error(ex2.getMessage(), ex);
+      promise.fail(ex2);
     }
     return promise.future();
   }
@@ -572,12 +591,14 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
         LOG.info(String.format("Successfully granted user %s access to team %s in org %s in GitHub", githubUsername, githubTeam, githubOrg));
         promise.complete();
       }).onFailure(ex -> {
-        LOG.error(String.format("Failed to add user %s to team %s in org %s. ", githubUsername, githubTeam, githubOrg), ex);
-        promise.fail(ex);
+        RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but granting GitHub access to team for %s product to user %s failed: %s", githubTeam, githubUsername, ex.getMessage()));
+        LOG.error(ex2.getMessage(), ex);
+        promise.fail(ex2);
       });
     } catch(Exception ex) {
-      LOG.error("The GitHub team access failed. ");
-      promise.fail(ex);
+      RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but granting GitHub access to team for %s product to user %s failed: %s", githubTeam, githubUsername, ex.getMessage()));
+      LOG.error(ex2.getMessage(), ex);
+      promise.fail(ex2);
     }
     return promise.future();
   }
@@ -623,9 +644,11 @@ public class CompanyProductEnUSApiServiceImpl extends CompanyProductEnUSGenApiSe
 
       vertx.eventBus().send(EmailVerticle.MAIL_EVENTBUS_ADDRESS, body.encode(), options);
       LOG.info(String.format("Sending email to %s for purchasing %s", userName, pageId));
+      promise.complete();
     } catch(Exception ex) {
-      LOG.error("The square item failed to process.");
-      promise.fail(ex);
+      RuntimeException ex2 = new RuntimeException(String.format("Your payment was successfully processed, but sending product email for %s product to user %s failed: %s", pageId, userName, ex.getMessage()));
+      LOG.error(ex2.getMessage(), ex);
+      promise.fail(ex2);
     }
     return promise.future();
   }
