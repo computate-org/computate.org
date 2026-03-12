@@ -348,7 +348,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("PATCH") && !classPublicRead) {
+            if(!scopes.contains("PATCH")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
@@ -654,7 +654,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("PATCH") && !classPublicRead) {
+            if(!scopes.contains("PATCH")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
@@ -960,7 +960,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("POST") && !classPublicRead) {
+            if(!scopes.contains("POST")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
@@ -1214,7 +1214,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("DELETE") && !classPublicRead) {
+            if(!scopes.contains("DELETE")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
@@ -1502,7 +1502,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("PUT") && !classPublicRead) {
+            if(!scopes.contains("PUT")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
@@ -2664,7 +2664,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
             HttpResponse<Buffer> authorizationDecision = authorizationDecisionResponse.result();
             JsonArray authorizationDecisionBody = authorizationDecisionResponse.failed() ? new JsonArray() : authorizationDecision.bodyAsJsonArray();
             JsonArray scopes = authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(o -> "COMPANYPRODUCT".equals(o.getString("rsname"))).findFirst().map(decision -> ((JsonObject)decision).getJsonArray("scopes")).orElse(new JsonArray());
-            if(!scopes.contains("DELETE") && !classPublicRead) {
+            if(!scopes.contains("DELETE")) {
               //
               List<String> fqs = new ArrayList<>();
               authorizationDecisionBody.stream().map(o -> (JsonObject)o).filter(permission -> {
