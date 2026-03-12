@@ -327,7 +327,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "PATCH"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -633,7 +633,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "PATCH"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -939,7 +939,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "POST"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "POST"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -1193,7 +1193,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -1481,7 +1481,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "PUT"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "PUT"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -2046,7 +2046,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "GET"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -2344,7 +2344,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "GET"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "GET"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;
@@ -2643,7 +2643,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         groups.stream().map(group -> {
               Matcher mPermission = Pattern.compile("^/(.*-?COMPANYPRODUCT-([a-z0-9\\-]+))-(\\w+)$").matcher(group);
               return mPermission.find() ? mPermission : null;

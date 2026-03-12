@@ -392,20 +392,20 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public static BigDecimal staticSetPrice(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice());
+      return new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice(), RoundingMode.valueOf("HALF_UP"));
     return null;
   }
   @JsonIgnore
   public void setPrice(Double o) {
-    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice()));
+    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setPrice(Integer o) {
-    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice()));
+    setPrice(new BigDecimal(o, staticMathContextPrice()).setScale(staticScalePrice(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setPrice(Number o) {
-    setPrice(new BigDecimal(o.doubleValue(), staticMathContextPrice()).setScale(staticScalePrice()));
+    setPrice(new BigDecimal(o.doubleValue(), staticMathContextPrice()).setScale(staticScalePrice(), RoundingMode.valueOf("HALF_UP")));
   }
   protected CompanyProduct priceInit() {
     Wrap<BigDecimal> priceWrap = new Wrap<BigDecimal>().var("price");
