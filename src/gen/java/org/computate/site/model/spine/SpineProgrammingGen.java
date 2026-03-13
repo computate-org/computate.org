@@ -326,20 +326,20 @@ public abstract class SpineProgrammingGen<DEV> extends BaseResult {
   public static BigDecimal staticSetImportance(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance());
+      return new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP"));
     return null;
   }
   @JsonIgnore
   public void setImportance(Double o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setImportance(Integer o) {
-    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance()));
+    setImportance(new BigDecimal(o, staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setImportance(Number o) {
-    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()).setScale(staticScaleImportance()));
+    setImportance(new BigDecimal(o.doubleValue(), staticMathContextImportance()).setScale(staticScaleImportance(), RoundingMode.valueOf("HALF_UP")));
   }
   protected SpineProgramming importanceInit() {
     Wrap<BigDecimal> importanceWrap = new Wrap<BigDecimal>().var("importance");

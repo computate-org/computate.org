@@ -4157,20 +4157,20 @@ public abstract class PageLayoutGen<DEV> extends Object {
   public static BigDecimal staticSetDEFAULT_MAP_ZOOM(SiteRequest siteRequest_, String o) {
     o = StringUtils.removeAll(o, "[^\\d\\.-]");
     if(NumberUtils.isParsable(o))
-      return new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM());
+      return new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM(), RoundingMode.valueOf("HALF_UP"));
     return null;
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Double o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Integer o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o, staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM(), RoundingMode.valueOf("HALF_UP")));
   }
   @JsonIgnore
   public void setDEFAULT_MAP_ZOOM(Number o) {
-    setDEFAULT_MAP_ZOOM(new BigDecimal(o.doubleValue(), staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM()));
+    setDEFAULT_MAP_ZOOM(new BigDecimal(o.doubleValue(), staticMathContextDEFAULT_MAP_ZOOM()).setScale(staticScaleDEFAULT_MAP_ZOOM(), RoundingMode.valueOf("HALF_UP")));
   }
   protected PageLayout DEFAULT_MAP_ZOOMInit() {
     Wrap<BigDecimal> DEFAULT_MAP_ZOOMWrap = new Wrap<BigDecimal>().var("DEFAULT_MAP_ZOOM");

@@ -7,18 +7,21 @@ find \
   ~/.local/src/computate.org/bin/ \
   ~/.local/src/computate.org/src/main/java/org/computate/site/config/ \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/BaseModel.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSGenApiService.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseGenPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiService.java \
@@ -57,7 +60,14 @@ find \
   ~/.local/src/computate.org-static/webawesome/css/ \
   ~/.local/src/computate.org-static/webawesome/fiware/ \
   ~/.local/src/computate.org-static/webawesome/js/ \
-    ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/about/CompanyAboutGenEditPage.htm \
+    ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/spine-programming/SpineProgrammingGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/spine-programming/SpineProgrammingSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/about/CompanyAboutGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/about/CompanyAboutGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/about/CompanyAboutLocation.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/about/CompanyAboutPaginationButtons.htm \
@@ -71,13 +81,6 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSidebar.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/course/CompanyCourseGenEditPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseGenSearchPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseLocation.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCoursePaginationButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchForm.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/article/SitePageGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageLocation.htm \
@@ -85,6 +88,13 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/course/CompanyCourseGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCoursePaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/product/CompanyProductGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductLocation.htm \

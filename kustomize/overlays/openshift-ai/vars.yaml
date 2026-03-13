@@ -16,7 +16,7 @@ VARS_PATH: "{{ SITE_SRC }}/kustomize/overlays/openshift-ai/{{ VARS_FILENAME }}"
 # A shorter name for the application used for database names, collections, and artifact IDs. 
 SITE_SHORT_NAME: "{{ SITE_NAME | replace('-', '') | replace('_', '') | replace('.', '') | lower }}"
 # A pretty version of the site name. 
-SITE_DISPLAY_NAME: Learn that computer
+SITE_DISPLAY_NAME: computate.org
 # A short description of the site. 
 SITE_DESCRIPTION: "Cloud native web development on your own computer"
 # The main locale of this application. 

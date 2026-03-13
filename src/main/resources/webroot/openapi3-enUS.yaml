@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: "Learn that computer"
+  title: "computate.org"
   version: 3.0.0
 paths:
   /en-us/api/about:

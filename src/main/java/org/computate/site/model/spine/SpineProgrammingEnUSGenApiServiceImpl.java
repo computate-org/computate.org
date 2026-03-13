@@ -327,7 +327,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "PATCH"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "PATCH"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -595,7 +595,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "POST"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "POST"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -811,7 +811,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "PUT"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "PUT"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1117,7 +1117,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -1588,7 +1588,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "GET"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "GET"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
               , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)
@@ -2073,7 +2073,7 @@ public class SpineProgrammingEnUSGenApiServiceImpl extends BaseApiServiceImpl im
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "Admin"));
         form.add("permission", String.format("%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin"));
         if(pageId != null)
-          form.add("permission", String.format("%s#%s", pageId, "DELETE"));
+          form.add("permission", String.format("%s-%s#%s", SpineProgramming.CLASS_AUTH_RESOURCE, pageId, "DELETE"));
         webClient.post(
             config.getInteger(ComputateConfigKeys.AUTH_PORT)
             , config.getString(ComputateConfigKeys.AUTH_HOST_NAME)

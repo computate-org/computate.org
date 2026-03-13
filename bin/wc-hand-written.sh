@@ -3,18 +3,21 @@ find \
   ~/.local/src/computate.org/vars.yaml \
   ~/.local/src/computate.org/README.md \
   ~/.local/src/computate.org/src/main/java/org/computate/site/verticle/SiteRoutes.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgramming.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/spine/SpineProgrammingEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAbout.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/about/CompanyAboutEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCase.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCasePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourse.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCoursePage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePagePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourse.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCoursePage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProduct.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSApiServiceImpl.java \

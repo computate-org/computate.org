@@ -34,7 +34,7 @@ data:
     # A shorter name for the application used for database names, collections, and artifact IDs. 
     SITE_SHORT_NAME: "computateorg"
     # A pretty version of the site name. 
-    SITE_DISPLAY_NAME: "Learn that computer"
+    SITE_DISPLAY_NAME: "computate.org"
     # A short description of the site. 
     SITE_DESCRIPTION: "Cloud native web development on your own computer"
     # The site namespace in OpenShift. 
@@ -90,7 +90,7 @@ data:
     # The API version of this site. 
     API_VERSION: "1.0.0"
     # The Site OpenAPI title. 
-    API_TITLE: "Learn that computer"
+    API_TITLE: "computate.org"
     # The API contact email. 
     API_CONTACT_EMAIL: "computate@group.computate.org"
 
