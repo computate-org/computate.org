@@ -601,7 +601,7 @@ IMPORT_DATA_PERIOD_TimeZone: 1 day
 #IMPORT_DATA_PERIOD_CompanyProduct: 20 Seconds
 
 SITE_REDIRECTS: '[ { "src": "/hackathons", "dest": "/en-us/view/article/hackathons" } , { "src": "/websites", "dest": "/en-us/view/article/websites" } ]'
-STATIC_REPOS: '[ { "name": "smart-aquaculture-developer", "src": "https://github.com/computate-org/smart-aquaculture-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer" }, { "name": "ai-telemetry-developer", "src": "https://github.com/computate-org/ai-telemetry-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer" }, { "name": "computate-developer", "src": "https://github.com/computate-org/computate-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer" } ]'
+STATIC_REPOS: '[ { "name": "dcm-developer", "src": "https://github.com/computate-org/dcm-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/dcm-developer" }, { "name": "smart-aquaculture-developer", "src": "https://github.com/computate-org/smart-aquaculture-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer" }, { "name": "ai-telemetry-developer", "src": "https://github.com/computate-org/ai-telemetry-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer" }, { "name": "computate-developer", "src": "https://github.com/computate-org/computate-developer.git", "dest": "/home/default/computate.org-static/webawesome/templates/en-us/computate-developer" } ]'
 
 #########
 # Email #

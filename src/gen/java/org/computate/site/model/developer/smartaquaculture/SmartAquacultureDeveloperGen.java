@@ -93,11 +93,11 @@ import io.vertx.core.json.JsonObject;
  * <p>By adding a class comment "{@inheritDoc}", the SmartAquacultureDeveloper class will inherit the helpful inherited class comments from the super class SmartAquacultureDeveloperGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 11</h2>
- * <p>This class contains a comment <b>"Order: 11"</b>, which means this class will be sorted by the given number 11 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 13</h2>
+ * <p>This class contains a comment <b>"Order: 13"</b>, which means this class will be sorted by the given number 13 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 11</h2>
- * <p>This class contains a comment <b>"SqlOrder: 11"</b>, which means this class will be sorted by the given number 11 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 13</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 13"</b>, which means this class will be sorted by the given number 13 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>

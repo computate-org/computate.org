@@ -46,8 +46,8 @@ import org.computate.vertx.api.BaseApiServiceInterface;
 import org.computate.vertx.config.ComputateConfigKeys;
 import org.computate.vertx.model.base.ComputateBaseModel;
 import org.computate.vertx.model.user.ComputateSiteUser;
-import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.openapi.OpenApi3Generator;
+import org.computate.vertx.openapi.ComputateOAuth2AuthHandlerImpl;
 import org.computate.vertx.request.ComputateSiteRequest;
 import org.computate.vertx.result.base.ComputateBaseResult;
 import org.computate.vertx.search.list.SearchList;
@@ -206,12 +206,15 @@ import org.computate.site.model.research.CompanyResearch;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsite;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSGenApiService;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSApiServiceImpl;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinion;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.computate.ComputateDeveloper;
@@ -272,7 +275,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
   public void setSdkMeterProvider(SdkMeterProvider sdkMeterProvider) {
     this.sdkMeterProvider = sdkMeterProvider;
   }
-
 
   /**
    * The main method for the Vert.x application that runs the Vert.x Runner class
@@ -396,19 +398,23 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       apiCompanyWebsite.setVertx(vertx);
       apiCompanyWebsite.setConfig(config);
       apiCompanyWebsite.setWebClient(webClient);
-      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
-      apiSmartAquacultureDeveloper.setVertx(vertx);
-      apiSmartAquacultureDeveloper.setConfig(config);
-      apiSmartAquacultureDeveloper.setWebClient(webClient);
+      DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
+      apiDeveloperComputerMinion.setVertx(vertx);
+      apiDeveloperComputerMinion.setConfig(config);
+      apiDeveloperComputerMinion.setWebClient(webClient);
       AiTelemetryDeveloperEnUSApiServiceImpl apiAiTelemetryDeveloper = new AiTelemetryDeveloperEnUSApiServiceImpl();
       apiAiTelemetryDeveloper.setVertx(vertx);
       apiAiTelemetryDeveloper.setConfig(config);
       apiAiTelemetryDeveloper.setWebClient(webClient);
+      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+      apiSmartAquacultureDeveloper.setVertx(vertx);
+      apiSmartAquacultureDeveloper.setConfig(config);
+      apiSmartAquacultureDeveloper.setWebClient(webClient);
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       apiComputateDeveloper.setVertx(vertx);
       apiComputateDeveloper.setConfig(config);
       apiComputateDeveloper.setWebClient(webClient);
-      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin", "PUT" }).onSuccess(authToken -> {
+      apiSiteUser.createAuthorizationScopes(new String[] { "Admin", "DELETE", "GET", "PATCH", "POST", "SuperAdmin" }).onSuccess(authToken -> {
         apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
             .compose(q1 -> apiSpineProgramming.authorizeGroupData(authToken, SpineProgramming.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
             .onSuccess(q1 -> {
@@ -442,21 +448,26 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
                               apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" })
                                   .compose(q12 -> apiCompanyWebsite.authorizeGroupData(authToken, CompanyWebsite.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                   .onSuccess(q12 -> {
-                                apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-smart-aquaculture-developer-GET", new String[] { "GET" })
-                                    .compose(q13 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                                    .compose(q13 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-dcm-GET", new String[] { "GET" })
+                                    .compose(q13 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                                    .compose(q13 -> apiDeveloperComputerMinion.authorizeGroupData(authToken, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                     .onSuccess(q13 -> {
                                   apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-ai-telemetry-developer-GET", new String[] { "GET" })
                                       .compose(q14 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
                                       .compose(q14 -> apiAiTelemetryDeveloper.authorizeGroupData(authToken, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                       .onSuccess(q14 -> {
-                                    apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
-                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
-                                        .compose(q15 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                    apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-smart-aquaculture-developer-GET", new String[] { "GET" })
+                                        .compose(q15 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                                        .compose(q15 -> apiSmartAquacultureDeveloper.authorizeGroupData(authToken, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
                                         .onSuccess(q15 -> {
-                                      LOG.info("authorize data complete");
-                                      promise.complete();
-                                    }).onFailure(ex -> promise.fail(ex));
+                                      apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "COMPANYPRODUCT-computate-developer-GET", new String[] { "GET" })
+                                          .compose(q16 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "Admin", new String[] { "POST", "PATCH", "GET", "DELETE", "Admin" }))
+                                          .compose(q16 -> apiComputateDeveloper.authorizeGroupData(authToken, ComputateDeveloper.CLASS_AUTH_RESOURCE, "SuperAdmin", new String[] { "POST", "PATCH", "GET", "DELETE", "SuperAdmin" }))
+                                          .onSuccess(q16 -> {
+                                        LOG.info("authorize data complete");
+                                        promise.complete();
+                                      }).onFailure(ex -> promise.fail(ex));
+                                  }).onFailure(ex -> promise.fail(ex));
                                 }).onFailure(ex -> promise.fail(ex));
                               }).onFailure(ex -> promise.fail(ex));
                             }).onFailure(ex -> promise.fail(ex));
@@ -1444,7 +1455,6 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-
   public <API_IMPL extends BaseApiServiceInterface> void initializeApiService(API_IMPL service) {
     service.setVertx(vertx);
     service.setEventBus(vertx.eventBus());
@@ -1472,8 +1482,8 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
     Promise<Void> promise = Promise.promise();
     try {
       List<Future<?>> futures = new ArrayList<>();
-      List<String> authClassSimpleNames = Arrays.asList("SpineProgramming","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","SmartAquacultureDeveloper","AiTelemetryDeveloper","ComputateDeveloper");
-      List<String> authResources = Arrays.asList("SPINEPROGRAMMING","COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE","SMARTAQUACULTUREDEVELOPER","AITELEMETRYDEVELOPER","COMPUTATEDEVELOPER");
+      List<String> authClassSimpleNames = Arrays.asList("SpineProgramming","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite","DeveloperComputerMinion","AiTelemetryDeveloper","SmartAquacultureDeveloper","ComputateDeveloper");
+      List<String> authResources = Arrays.asList("SPINEPROGRAMMING","COMPANYABOUT","USECASE","COMPANYCOURSE","SITEPAGE","COMPANYPRODUCT","COMPANYEVENT","COMPANYWEBINAR","COMPANYSERVICE","COMPANYRESEARCH","COMPANYWEBSITE","DEVELOPERCOMPUTERMINION","AITELEMETRYDEVELOPER","SMARTAQUACULTUREDEVELOPER","COMPUTATEDEVELOPER");
       List<String> publicClassSimpleNames = Arrays.asList("SpineProgramming","CompanyAbout","UseCase","CompanyCourse","SitePage","CompanyProduct","CompanyEvent","CompanyWebinar","CompanyService","CompanyResearch","CompanyWebsite");
       SiteUserEnUSApiServiceImpl apiSiteUser = new SiteUserEnUSApiServiceImpl();
       initializeApiService(apiSiteUser);
@@ -1525,13 +1535,17 @@ public class MainVerticle extends MainVerticleGen<AbstractVerticle> {
       initializeApiService(apiCompanyWebsite);
       registerApiService(CompanyWebsiteEnUSGenApiService.class, apiCompanyWebsite, CompanyWebsite.getClassApiAddress());
 
-      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
-      initializeApiService(apiSmartAquacultureDeveloper);
-      registerApiService(SmartAquacultureDeveloperEnUSGenApiService.class, apiSmartAquacultureDeveloper, SmartAquacultureDeveloper.getClassApiAddress());
+      DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
+      initializeApiService(apiDeveloperComputerMinion);
+      registerApiService(DeveloperComputerMinionEnUSGenApiService.class, apiDeveloperComputerMinion, DeveloperComputerMinion.getClassApiAddress());
 
       AiTelemetryDeveloperEnUSApiServiceImpl apiAiTelemetryDeveloper = new AiTelemetryDeveloperEnUSApiServiceImpl();
       initializeApiService(apiAiTelemetryDeveloper);
       registerApiService(AiTelemetryDeveloperEnUSGenApiService.class, apiAiTelemetryDeveloper, AiTelemetryDeveloper.getClassApiAddress());
+
+      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiSmartAquacultureDeveloper);
+      registerApiService(SmartAquacultureDeveloperEnUSGenApiService.class, apiSmartAquacultureDeveloper, SmartAquacultureDeveloper.getClassApiAddress());
 
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       initializeApiService(apiComputateDeveloper);

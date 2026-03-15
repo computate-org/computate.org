@@ -41,6 +41,8 @@ spec:
             - '-c'
           imagePullPolicy: Always
           volumeMounts:
+            - name: "dcm-developer"
+              mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/dcm-developer"
             - name: "smart-aquaculture-developer"
               mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
             - name: "ai-telemetry-developer"
@@ -54,6 +56,7 @@ spec:
           image: docker.io/alpine/git
           args:
             - >-
+              git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/dcm-developer.git /home/default/computate.org-static/webawesome/templates/en-us/dcm-developer; 
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/smart-aquaculture-developer.git /home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer; 
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/ai-telemetry-developer.git /home/default/computate.org-static/webawesome/templates/en-us/ai-telemetry-developer; 
               git clone https://computate.org:$GITHUB_DEVELOPERS_TOKEN@github.com/computate-org/computate-developer.git /home/default/computate.org-static/webawesome/templates/en-us/computate-developer; 
@@ -125,6 +128,8 @@ spec:
             ephemeral-storage: 1Gi
             memory: 768Mi
         volumeMounts:
+          - name: "dcm-developer"
+            mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/dcm-developer"
           - name: "smart-aquaculture-developer"
             mountPath: "/home/default/computate.org-static/webawesome/templates/en-us/smart-aquaculture-developer"
           - name: "ai-telemetry-developer"
@@ -135,6 +140,8 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       volumes:
+        - name: "dcm-developer"
+          emptyDir: {}
         - name: "smart-aquaculture-developer"
           emptyDir: {}
         - name: "ai-telemetry-developer"

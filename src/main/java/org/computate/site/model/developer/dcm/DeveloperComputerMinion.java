@@ -1,4 +1,4 @@
-package org.computate.site.model.developer.smartaquaculture;
+package org.computate.site.model.developer.dcm;
 
 import org.computate.search.wrap.Wrap;
 import org.computate.site.result.BaseResult;
@@ -34,16 +34,18 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Order: 13
- * Description: Learn how to become a Smart Aquaculture platform developer — Understanding fish population and ocean health, tracking fishing boat movements, monitoring fish species landed and their weight, tracking processing and delivery times, providing net-zero waste solutions for seafood, promoting SA/IF innovation through community outreach, startup support, and IoT applications. 
- * AName: a Smart Aquaculture Developer
+ * Order: 11
+ * Description: Learn how to use to compile and run fun open source games and useful Linux software on your own Linux computer with self-healing, event-driven automation. 
+ * MenuDetails.enUS: developer resources
+ * MenuDetailsOpen: true
+ * AName: a Developer Computer Minion
  * Icon: <i class="fa-duotone fa-regular fa-fish"></i>
  * Sort.asc: courseNum
  * 
- * SearchPageUri: /en-us/search/smart-aquaculture-developer
- * EditPageUri: /en-us/edit/smart-aquaculture-developer/{pageId}
- * UserPageUri: /en-us/smart-aquaculture-developer/learn/{pageId}
- * ApiUri: /en-us/api/smart-aquaculture-developer
+ * SearchPageUri: /en-us/search/dcm
+ * EditPageUri: /en-us/edit/dcm/{pageId}
+ * UserPageUri: /en-us/dcm-developer/learn/{pageId}
+ * ApiUri: /en-us/api/dcm
  * ApiMethod:
  *   Search:
  *   GET:
@@ -53,7 +55,7 @@ import io.vertx.core.json.JsonObject;
  *   PUTImport:
  * 
  * AuthGroup:
- *   COMPANYPRODUCT-smart-aquaculture-developer-GET:
+ *   COMPANYPRODUCT-dcm-GET:
  *     GET:
  *   Admin:
  *     POST:
@@ -68,7 +70,7 @@ import io.vertx.core.json.JsonObject;
  *     DELETE:
  *     SuperAdmin:
  */
-public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<BaseResult> {
+public class DeveloperComputerMinion extends DeveloperComputerMinionGen<BaseResult> {
 
   /**
    * {@inheritDoc}
@@ -241,11 +243,11 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
   /**
    * Ignore: true
    */
-  protected void _prerequisiteArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
-    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
+  protected void _prerequisiteArticleSearch(Promise<SearchList<DeveloperComputerMinion>> promise) {
+    SearchList<DeveloperComputerMinion> l = new SearchList<>();
     if(prerequisiteArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(prerequisiteArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(SmartAquacultureDeveloper.class);
+      l.setC(DeveloperComputerMinion.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -266,16 +268,16 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
     JsonArray array = new JsonArray();
     prerequisiteArticleSearch.getList().stream().forEach(prerequisiteArticle -> {
         JsonObject obj = JsonObject.mapFrom(prerequisiteArticle);
-        obj.remove(SmartAquacultureDeveloper.VAR_prerequisiteArticles);
-        obj.remove(SmartAquacultureDeveloper.VAR_prerequisiteArticleIds);
+        obj.remove(DeveloperComputerMinion.VAR_prerequisiteArticles);
+        obj.remove(DeveloperComputerMinion.VAR_prerequisiteArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
-        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
-        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
+        obj2.put(DeveloperComputerMinion.VAR_pageId, obj.getString(DeveloperComputerMinion.VAR_pageId));
+        obj2.put(DeveloperComputerMinion.VAR_name, obj.getString(DeveloperComputerMinion.VAR_name));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageUri, obj.getString(DeveloperComputerMinion.VAR_pageImageUri));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageWidth, obj.getString(DeveloperComputerMinion.VAR_pageImageWidth));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageHeight, obj.getString(DeveloperComputerMinion.VAR_pageImageHeight));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageAlt, obj.getString(DeveloperComputerMinion.VAR_pageImageAlt));
+        obj2.put(DeveloperComputerMinion.VAR_displayPage, obj.getString(DeveloperComputerMinion.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
@@ -294,11 +296,11 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
   /**
    * Ignore: true
    */
-  protected void _nextArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
-    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
+  protected void _nextArticleSearch(Promise<SearchList<DeveloperComputerMinion>> promise) {
+    SearchList<DeveloperComputerMinion> l = new SearchList<>();
     if(nextArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(nextArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(SmartAquacultureDeveloper.class);
+      l.setC(DeveloperComputerMinion.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -319,16 +321,16 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
     JsonArray array = new JsonArray();
     nextArticleSearch.getList().stream().forEach(nextArticle -> {
         JsonObject obj = JsonObject.mapFrom(nextArticle);
-        obj.remove(SmartAquacultureDeveloper.VAR_nextArticles);
-        obj.remove(SmartAquacultureDeveloper.VAR_nextArticleIds);
+        obj.remove(DeveloperComputerMinion.VAR_nextArticles);
+        obj.remove(DeveloperComputerMinion.VAR_nextArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
-        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
-        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
+        obj2.put(DeveloperComputerMinion.VAR_pageId, obj.getString(DeveloperComputerMinion.VAR_pageId));
+        obj2.put(DeveloperComputerMinion.VAR_name, obj.getString(DeveloperComputerMinion.VAR_name));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageUri, obj.getString(DeveloperComputerMinion.VAR_pageImageUri));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageWidth, obj.getString(DeveloperComputerMinion.VAR_pageImageWidth));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageHeight, obj.getString(DeveloperComputerMinion.VAR_pageImageHeight));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageAlt, obj.getString(DeveloperComputerMinion.VAR_pageImageAlt));
+        obj2.put(DeveloperComputerMinion.VAR_displayPage, obj.getString(DeveloperComputerMinion.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
@@ -370,11 +372,11 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
   /**
    * Ignore: true
    */
-  protected void _relatedArticleSearch(Promise<SearchList<SmartAquacultureDeveloper>> promise) {
-    SearchList<SmartAquacultureDeveloper> l = new SearchList<>();
+  protected void _relatedArticleSearch(Promise<SearchList<DeveloperComputerMinion>> promise) {
+    SearchList<DeveloperComputerMinion> l = new SearchList<>();
     if(relatedArticleIds != null) {
       List<String> list = Arrays.asList(StringUtils.split(relatedArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
-      l.setC(SmartAquacultureDeveloper.class);
+      l.setC(DeveloperComputerMinion.class);
       l.q("*:*");
       l.fq(String.format("pageId_docvalues_string:" + list.stream()
           .map(id -> SearchTool.escapeQueryChars(id))
@@ -395,16 +397,16 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
     JsonArray array = new JsonArray();
     relatedArticleSearch.getList().stream().forEach(relatedArticle -> {
         JsonObject obj = JsonObject.mapFrom(relatedArticle);
-        obj.remove(SmartAquacultureDeveloper.VAR_relatedArticles);
-        obj.remove(SmartAquacultureDeveloper.VAR_relatedArticleIds);
+        obj.remove(DeveloperComputerMinion.VAR_relatedArticles);
+        obj.remove(DeveloperComputerMinion.VAR_relatedArticleIds);
         JsonObject obj2 = new JsonObject();
-        obj2.put(SmartAquacultureDeveloper.VAR_pageId, obj.getString(SmartAquacultureDeveloper.VAR_pageId));
-        obj2.put(SmartAquacultureDeveloper.VAR_name, obj.getString(SmartAquacultureDeveloper.VAR_name));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageUri, obj.getString(SmartAquacultureDeveloper.VAR_pageImageUri));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageWidth, obj.getString(SmartAquacultureDeveloper.VAR_pageImageWidth));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageHeight, obj.getString(SmartAquacultureDeveloper.VAR_pageImageHeight));
-        obj2.put(SmartAquacultureDeveloper.VAR_pageImageAlt, obj.getString(SmartAquacultureDeveloper.VAR_pageImageAlt));
-        obj2.put(SmartAquacultureDeveloper.VAR_displayPage, obj.getString(SmartAquacultureDeveloper.VAR_displayPage));
+        obj2.put(DeveloperComputerMinion.VAR_pageId, obj.getString(DeveloperComputerMinion.VAR_pageId));
+        obj2.put(DeveloperComputerMinion.VAR_name, obj.getString(DeveloperComputerMinion.VAR_name));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageUri, obj.getString(DeveloperComputerMinion.VAR_pageImageUri));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageWidth, obj.getString(DeveloperComputerMinion.VAR_pageImageWidth));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageHeight, obj.getString(DeveloperComputerMinion.VAR_pageImageHeight));
+        obj2.put(DeveloperComputerMinion.VAR_pageImageAlt, obj.getString(DeveloperComputerMinion.VAR_pageImageAlt));
+        obj2.put(DeveloperComputerMinion.VAR_displayPage, obj.getString(DeveloperComputerMinion.VAR_displayPage));
         array.add(obj2);
     });
     w.o(array);
@@ -412,6 +414,6 @@ public class SmartAquacultureDeveloper extends SmartAquacultureDeveloperGen<Base
 
   @Override
   public String enUSStringFormatUrlDisplayPageForClass() {
-    return "%s/en-us/smart-aquaculture-developer/learn/%s";
+    return "%s/en-us/dcm-developer/learn/%s";
   }
 }

@@ -16,12 +16,12 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSGenApiService.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageGenPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiService.java \
@@ -40,12 +40,15 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsiteGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsiteEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsiteEnUSGenApiService.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperGenPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/smartaquaculture/SmartAquacultureDeveloperEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/computate/ComputateDeveloperEnUSGenApiService.java \
@@ -81,13 +84,6 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/use-case/UseCaseSidebar.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/article/SitePageGenEditPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageGenSearchPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageLocation.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePagePaginationButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchForm.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/course/CompanyCourseGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseLocation.htm \
@@ -95,6 +91,13 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/course/CompanyCourseSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/article/SitePageGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePagePaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/product/CompanyProductGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductLocation.htm \
@@ -137,13 +140,13 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/website/CompanyWebsiteSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/website/CompanyWebsiteSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/website/CompanyWebsiteSidebar.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/smart-aquaculture-developer/SmartAquacultureDeveloperGenEditPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperGenSearchPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperLocation.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperPaginationButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchForm.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/dcm/DeveloperComputerMinionGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/dcm/DeveloperComputerMinionSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/ai-telemetry-developer/AiTelemetryDeveloperGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperLocation.htm \
@@ -151,6 +154,13 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/ai-telemetry-developer/AiTelemetryDeveloperSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/smart-aquaculture-developer/SmartAquacultureDeveloperGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/smart-aquaculture-developer/SmartAquacultureDeveloperSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/computate-developer/ComputateDeveloperGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/computate-developer/ComputateDeveloperLocation.htm \

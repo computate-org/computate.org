@@ -69,12 +69,15 @@ import org.computate.site.model.research.CompanyResearchEnUSGenApiService;
 import org.computate.site.model.website.CompanyWebsite;
 import org.computate.site.model.website.CompanyWebsiteEnUSApiServiceImpl;
 import org.computate.site.model.website.CompanyWebsiteEnUSGenApiService;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
-import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinion;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSApiServiceImpl;
+import org.computate.site.model.developer.dcm.DeveloperComputerMinionEnUSGenApiService;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloper;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.aitelemetry.AiTelemetryDeveloperEnUSGenApiService;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloper;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSApiServiceImpl;
+import org.computate.site.model.developer.smartaquaculture.SmartAquacultureDeveloperEnUSGenApiService;
 import org.computate.site.model.developer.computate.ComputateDeveloper;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSApiServiceImpl;
 import org.computate.site.model.developer.computate.ComputateDeveloperEnUSGenApiService;
@@ -200,10 +203,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     this.sdkMeterProvider = sdkMeterProvider;
   }
 
-  /**	
-   *	This is called by Vert.x when the verticle instance is deployed. 
-   *	Initialize a new site context object for storing information about the entire site in English. 
-   *	Setup the startPromise to handle the configuration steps and starting the server. 
+  /**
+   * This is called by Vert.x when the verticle instance is deployed. 
+   * Initialize a new site context object for storing information about the entire site in English. 
+   * Setup the startPromise to handle the configuration steps and starting the server. 
    **/
   @Override()
   public void start(Promise<Void> startPromise) throws Exception, Exception {
@@ -295,7 +298,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    **/
   private Future<Void> configureWebClient() {
     Promise<Void> promise = Promise.promise();
@@ -312,7 +315,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    * 
    * Val.ConnectionError.enUS: Could not open the database client connection. 
    * Val.ConnectionSuccess.enUS: The database client connection was successful. 
@@ -320,10 +323,10 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
    * Val.InitError.enUS: Could not initialize the database tables. 
    * Val.InitSuccess.enUS: The database was initialized successfully. 
    * 
-   *	Configure shared database connections across the cluster for massive scaling of the application. 
-   *	Return a promise that configures a shared database client connection. 
-   *	Load the database configuration into a shared JDBC client for a scalable, clustered datasource connection pool. 
-   *	Initialize the database tables if not already created for the first time. 
+   * Configure shared database connections across the cluster for massive scaling of the application. 
+   * Return a promise that configures a shared database client connection. 
+   * Load the database configuration into a shared JDBC client for a scalable, clustered datasource connection pool. 
+   * Initialize the database tables if not already created for the first time. 
    **/
   private Future<Void> configureData() {
     Promise<Void> promise = Promise.promise();
@@ -361,12 +364,12 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
     return promise.future();
   }
 
-  /**	
+  /**
    * Val.Fail.enUS: Could not configure the shared worker executor. 
    * Val.Complete.enUS: The shared worker executor "{}" was configured successfully. 
    * 
-   *	Configure a shared worker executor for running blocking tasks in the background. 
-   *	Return a promise that configures the shared worker executor. 
+   * Configure a shared worker executor for running blocking tasks in the background. 
+   * Return a promise that configures the shared worker executor. 
    **/
   private Future<Void> configureSharedWorkerExecutor() {
     Promise<Void> promise = Promise.promise();
@@ -440,7 +443,7 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
    * Description: Import initial data
    * Val.Skip.enUS: The data import is disabled. 
    **/
-  private Future<Void> importData() {
+  public Future<Void> importData() {
     Promise<Void> promise = Promise.promise();
     if(Boolean.valueOf(config().getString(ConfigKeys.ENABLE_IMPORT_DATA))) {
       SiteRequest siteRequest = new SiteRequest();
@@ -472,43 +475,47 @@ public class WorkerVerticle extends WorkerVerticleGen<AbstractVerticle> {
       initializeApiService(apiCompanyResearch);
       CompanyWebsiteEnUSApiServiceImpl apiCompanyWebsite = new CompanyWebsiteEnUSApiServiceImpl();
       initializeApiService(apiCompanyWebsite);
-      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
-      initializeApiService(apiSmartAquacultureDeveloper);
+      DeveloperComputerMinionEnUSApiServiceImpl apiDeveloperComputerMinion = new DeveloperComputerMinionEnUSApiServiceImpl();
+      initializeApiService(apiDeveloperComputerMinion);
       AiTelemetryDeveloperEnUSApiServiceImpl apiAiTelemetryDeveloper = new AiTelemetryDeveloperEnUSApiServiceImpl();
       initializeApiService(apiAiTelemetryDeveloper);
+      SmartAquacultureDeveloperEnUSApiServiceImpl apiSmartAquacultureDeveloper = new SmartAquacultureDeveloperEnUSApiServiceImpl();
+      initializeApiService(apiSmartAquacultureDeveloper);
       ComputateDeveloperEnUSApiServiceImpl apiComputateDeveloper = new ComputateDeveloperEnUSApiServiceImpl();
       initializeApiService(apiComputateDeveloper);
 
-			apiSpineProgramming.importTimer(Paths.get(templatePath, "/en-us/view/spine-programming"), vertx, siteRequest, SpineProgramming.CLASS_CANONICAL_NAME, SpineProgramming.CLASS_SIMPLE_NAME, SpineProgramming.CLASS_API_ADDRESS_SpineProgramming, SpineProgramming.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
-				apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
-					apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
-						apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q4 -> {
-							apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q5 -> {
-								apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q6 -> {
-									apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
-										apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
-											apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
-												apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
-													apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
-														apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
-															apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
-																apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q14 -> {
-																	LOG.info("data import complete");
-																	promise.complete();
-																}).onFailure(ex -> promise.fail(ex));
-															}).onFailure(ex -> promise.fail(ex));
-														}).onFailure(ex -> promise.fail(ex));
-													}).onFailure(ex -> promise.fail(ex));
-												}).onFailure(ex -> promise.fail(ex));
-											}).onFailure(ex -> promise.fail(ex));
-										}).onFailure(ex -> promise.fail(ex));
-									}).onFailure(ex -> promise.fail(ex));
-								}).onFailure(ex -> promise.fail(ex));
-							}).onFailure(ex -> promise.fail(ex));
-						}).onFailure(ex -> promise.fail(ex));
-					}).onFailure(ex -> promise.fail(ex));
-				}).onFailure(ex -> promise.fail(ex));
-			}).onFailure(ex -> promise.fail(ex));
+      apiSpineProgramming.importTimer(Paths.get(templatePath, "/en-us/view/spine-programming"), vertx, siteRequest, SpineProgramming.CLASS_CANONICAL_NAME, SpineProgramming.CLASS_SIMPLE_NAME, SpineProgramming.CLASS_API_ADDRESS_SpineProgramming, SpineProgramming.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q1 -> {
+        apiCompanyAbout.importTimer(Paths.get(templatePath, "/en-us/learn/about"), vertx, siteRequest, CompanyAbout.CLASS_CANONICAL_NAME, CompanyAbout.CLASS_SIMPLE_NAME, CompanyAbout.CLASS_API_ADDRESS_CompanyAbout, CompanyAbout.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q2 -> {
+          apiUseCase.importTimer(Paths.get(templatePath, "/en-us/shop/use-case"), vertx, siteRequest, UseCase.CLASS_CANONICAL_NAME, UseCase.CLASS_SIMPLE_NAME, UseCase.CLASS_API_ADDRESS_UseCase, UseCase.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q3 -> {
+            apiCompanyCourse.importTimer(Paths.get(templatePath, "/en-us/shop/course"), vertx, siteRequest, CompanyCourse.CLASS_CANONICAL_NAME, CompanyCourse.CLASS_SIMPLE_NAME, CompanyCourse.CLASS_API_ADDRESS_CompanyCourse, CompanyCourse.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q4 -> {
+              apiSitePage.importTimer(Paths.get(templatePath, "/en-us/view/article"), vertx, siteRequest, SitePage.CLASS_CANONICAL_NAME, SitePage.CLASS_SIMPLE_NAME, SitePage.CLASS_API_ADDRESS_SitePage, SitePage.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q5 -> {
+                apiCompanyProduct.importTimer(Paths.get(templatePath, "/en-us/shop/product"), vertx, siteRequest, CompanyProduct.CLASS_CANONICAL_NAME, CompanyProduct.CLASS_SIMPLE_NAME, CompanyProduct.CLASS_API_ADDRESS_CompanyProduct, CompanyProduct.CLASS_AUTH_RESOURCE, "pageId", "userPage", "downloadUrl").onSuccess(q6 -> {
+                  apiCompanyEvent.importTimer(Paths.get(templatePath, "/en-us/shop/event"), vertx, siteRequest, CompanyEvent.CLASS_CANONICAL_NAME, CompanyEvent.CLASS_SIMPLE_NAME, CompanyEvent.CLASS_API_ADDRESS_CompanyEvent, CompanyEvent.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q7 -> {
+                    apiCompanyWebinar.importTimer(Paths.get(templatePath, "/en-us/view/webinar"), vertx, siteRequest, CompanyWebinar.CLASS_CANONICAL_NAME, CompanyWebinar.CLASS_SIMPLE_NAME, CompanyWebinar.CLASS_API_ADDRESS_CompanyWebinar, CompanyWebinar.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q8 -> {
+                      apiCompanyService.importTimer(Paths.get(templatePath, "/en-us/shop/service"), vertx, siteRequest, CompanyService.CLASS_CANONICAL_NAME, CompanyService.CLASS_SIMPLE_NAME, CompanyService.CLASS_API_ADDRESS_CompanyService, CompanyService.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q9 -> {
+                        apiCompanyResearch.importTimer(Paths.get(templatePath, "/en-us/view/research"), vertx, siteRequest, CompanyResearch.CLASS_CANONICAL_NAME, CompanyResearch.CLASS_SIMPLE_NAME, CompanyResearch.CLASS_API_ADDRESS_CompanyResearch, CompanyResearch.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q10 -> {
+                          apiCompanyWebsite.importTimer(Paths.get(templatePath, "/en-us/view/website"), vertx, siteRequest, CompanyWebsite.CLASS_CANONICAL_NAME, CompanyWebsite.CLASS_SIMPLE_NAME, CompanyWebsite.CLASS_API_ADDRESS_CompanyWebsite, CompanyWebsite.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q11 -> {
+                            apiDeveloperComputerMinion.importTimer(Paths.get(templatePath, "/en-us/dcm-developer/learn"), vertx, siteRequest, DeveloperComputerMinion.CLASS_CANONICAL_NAME, DeveloperComputerMinion.CLASS_SIMPLE_NAME, DeveloperComputerMinion.CLASS_API_ADDRESS_DeveloperComputerMinion, DeveloperComputerMinion.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q12 -> {
+                              apiAiTelemetryDeveloper.importTimer(Paths.get(templatePath, "/en-us/ai-telemetry-developer/learn"), vertx, siteRequest, AiTelemetryDeveloper.CLASS_CANONICAL_NAME, AiTelemetryDeveloper.CLASS_SIMPLE_NAME, AiTelemetryDeveloper.CLASS_API_ADDRESS_AiTelemetryDeveloper, AiTelemetryDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q13 -> {
+                                apiSmartAquacultureDeveloper.importTimer(Paths.get(templatePath, "/en-us/smart-aquaculture-developer/learn"), vertx, siteRequest, SmartAquacultureDeveloper.CLASS_CANONICAL_NAME, SmartAquacultureDeveloper.CLASS_SIMPLE_NAME, SmartAquacultureDeveloper.CLASS_API_ADDRESS_SmartAquacultureDeveloper, SmartAquacultureDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q14 -> {
+                                  apiComputateDeveloper.importTimer(Paths.get(templatePath, "/en-us/computate-developer/learn"), vertx, siteRequest, ComputateDeveloper.CLASS_CANONICAL_NAME, ComputateDeveloper.CLASS_SIMPLE_NAME, ComputateDeveloper.CLASS_API_ADDRESS_ComputateDeveloper, ComputateDeveloper.CLASS_AUTH_RESOURCE, "pageId", "userPage", "download").onSuccess(q15 -> {
+                                    LOG.info("data import complete");
+                                    promise.complete();
+                                  }).onFailure(ex -> promise.fail(ex));
+                                }).onFailure(ex -> promise.fail(ex));
+                              }).onFailure(ex -> promise.fail(ex));
+                            }).onFailure(ex -> promise.fail(ex));
+                          }).onFailure(ex -> promise.fail(ex));
+                        }).onFailure(ex -> promise.fail(ex));
+                      }).onFailure(ex -> promise.fail(ex));
+                    }).onFailure(ex -> promise.fail(ex));
+                  }).onFailure(ex -> promise.fail(ex));
+                }).onFailure(ex -> promise.fail(ex));
+              }).onFailure(ex -> promise.fail(ex));
+            }).onFailure(ex -> promise.fail(ex));
+          }).onFailure(ex -> promise.fail(ex));
+        }).onFailure(ex -> promise.fail(ex));
+      }).onFailure(ex -> promise.fail(ex));
     }
     else {
       LOG.info(importDataSkip);
