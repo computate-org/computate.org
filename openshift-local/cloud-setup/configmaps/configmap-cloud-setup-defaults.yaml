@@ -322,7 +322,7 @@ data:
     # The database secret containing the user password to connect to the database. 
     DATABASE_SECRET: "postgres-pguser-computateorg"
     # The PostgreSQL database password of the site. 
-    DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE)[0].data.password | b64decode }}"
+    DATABASE_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE) | first | default({})).data.password | default('') | b64decode }}"
     # The PostgreSQL database name of the site. 
     DATABASE_DATABASE: "{{ lookup('env', 'DATABASE_DATABASE_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'cloud', true) }}"
     # The PostgreSQL database max pool size. 
