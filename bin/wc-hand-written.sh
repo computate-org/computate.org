@@ -12,15 +12,15 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCase.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCasePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/usecase/UseCaseEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourse.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCoursePage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePagePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProduct.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourse.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCoursePage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/course/CompanyCourseEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProduct.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEvent.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventEnUSApiServiceImpl.java \
@@ -36,9 +36,6 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsite.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/website/CompanyWebsiteEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinion.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/dcm/DeveloperComputerMinionEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloper.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/developer/aitelemetry/AiTelemetryDeveloperEnUSApiServiceImpl.java \

@@ -245,7 +245,7 @@ data:
     # The name of the cloud provider where the public site is deployed. 
     SITE_POWERED_BY_NAME: "{{ lookup('env', 'SITE_POWERED_BY_NAME') | default('Red Hat OpenShift Local', true) }}"
     # The URL of the cloud provider where the public site is deployed. 
-    SITE_POWERED_BY_URL: "{{ lookup('env', 'SITE_POWERED_BY_URL') | default('https://developers.redhat.com/solutions/openshift-local/overview', true) }}"
+    SITE_POWERED_BY_URL: "{{ lookup('env', 'SITE_POWERED_BY_URL') | default('https://developers.redhat.com/products/openshift-local/overview', true) }}"
     # The static path to the logo of the cloud provider where the public site is deployed. 
     SITE_POWERED_BY_IMAGE: "{{ lookup('env', 'SITE_POWERED_BY_IMAGE') | default('<img class=\"footer-img\" alt=\"' + SITE_POWERED_BY_NAME + '\" src=\"' + STATIC_BASE_URL + '/svg/openshift.svg\"/>', true) }}"
 
@@ -321,8 +321,10 @@ data:
     DATABASE_USERNAME: "{{ lookup('env', 'DATABASE_USERNAME_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
     # The database secret containing the user password to connect to the database. 
     DATABASE_SECRET: "postgres-pguser-computateorg"
+    # The database secret containing the user password to connect to the database. 
+    DATABASE_SECRET_KEY: "{{ lookup('env', 'DATABASE_SECRET_KEY_' + SITE_SHORT_NAME) | default('DATABASE_PASSWORD', true) }}"
     # The PostgreSQL database password of the site. 
-    DATABASE_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE) | first | default({})).data.password | default('') | b64decode }}"
+    DATABASE_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE) | first | default({})).data[DATABASE_SECRET_KEY] | default('') | b64decode }}"
     # The PostgreSQL database name of the site. 
     DATABASE_DATABASE: "{{ lookup('env', 'DATABASE_DATABASE_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'cloud', true) }}"
     # The PostgreSQL database max pool size. 
