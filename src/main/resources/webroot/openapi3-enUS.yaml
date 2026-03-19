@@ -6766,7 +6766,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/UserPageCompanyEventResponse'
-  /en-us/api/product:
+  /en-us/api/solution:
     get:
       operationId: searchCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -7154,7 +7154,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETEFilterCompanyProductResponse'
-  /en-us/api/product-import:
+  /en-us/api/solution-import:
     put:
       operationId: putimportCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -7225,7 +7225,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/PUTImportCompanyProductResponse'
-  /en-us/api/product/{pageId}:
+  /en-us/api/solution/{pageId}:
     get:
       operationId: getCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -7364,7 +7364,7 @@ paths:
             application/json; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/DELETECompanyProductResponse'
-  /en-us/edit/product/{pageId}:
+  /en-us/edit/solution/{pageId}:
     get:
       operationId: editpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -7467,7 +7467,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EditPageCompanyProductResponse'
-  /en-us/search/product:
+  /en-us/search/solution:
     get:
       operationId: searchpageCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct
@@ -7655,7 +7655,7 @@ paths:
             text/html; charset=utf-8:
               schema:
                 $ref: '#/components/schemas/SearchPageCompanyProductResponse'
-  /en-us/shop/product/{pageId}:
+  /en-us/shop/solution/{pageId}:
     patch:
       operationId: patchpayCompanyProduct
       x-vertx-event-bus: computate.org-enUS-CompanyProduct

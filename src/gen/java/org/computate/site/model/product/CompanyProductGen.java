@@ -79,10 +79,10 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: products"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "products". 
+ * <p>This class contains a comment <b>"ApiTag: solutions"</b>, which groups all of the OpenAPIs for CompanyProduct objects under the tag "solutions". 
  * </p>
- * <h2>ApiUri.enUS: /en-us/api/product</h2>
- * <p>This class contains a comment <b>"ApiUri: /en-us/api/product"</b>, which defines the base API URI for CompanyProduct objects as "/en-us/api/product" in the OpenAPI spec. 
+ * <h2>ApiUri.enUS: /en-us/api/solution</h2>
+ * <p>This class contains a comment <b>"ApiUri: /en-us/api/solution"</b>, which defines the base API URI for CompanyProduct objects as "/en-us/api/solution" in the OpenAPI spec. 
  * </p>
  * <h2>Color: null</h2>
  * <h2>Indexed: true</h2>
@@ -132,8 +132,8 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: a product</h2>
- * <p>This class contains a comment <b>"AName.enUS: a product"</b>, which identifies the language context to describe a CompanyProduct as "a product". 
+ * <h2>AName.enUS: a solution</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a solution"</b>, which identifies the language context to describe a CompanyProduct as "a solution". 
  * </p>
  * <p>
  * Delete the class CompanyProduct in Solr: 
@@ -158,70 +158,70 @@ import io.vertx.core.json.JsonObject;
 public abstract class CompanyProductGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(CompanyProduct.class);
 
-  public static final String Description_frFR = "See the computate products that will help you build your own data-driven platforms";
-  public static final String AName_frFR = "a product";
-  public static final String SingularName_frFR = "product";
-  public static final String PluralName_frFR = "products";
-  public static final String Title_frFR = "products";
-  public static final String ThePluralName_frFR = "les products";
-  public static final String NameAdjectiveSingular_frFR = "product";
-  public static final String NameAdjectivePlural_frFR = "products";
+  public static final String Description_frFR = "See the computate solutions that will help you build your own data-driven platforms";
+  public static final String AName_frFR = "a solution";
+  public static final String SingularName_frFR = "solution";
+  public static final String PluralName_frFR = "solutions";
+  public static final String Title_frFR = "solutions";
+  public static final String ThePluralName_frFR = "les solutions";
+  public static final String NameAdjectiveSingular_frFR = "solution";
+  public static final String NameAdjectivePlural_frFR = "solutions";
 
-  public static final String Description_enUS = "See the computate products that will help you build your own data-driven platforms";
-  public static final String AName_enUS = "a product";
+  public static final String Description_enUS = "See the computate solutions that will help you build your own data-driven platforms";
+  public static final String AName_enUS = "a solution";
   public static final String This_enUS = "this ";
-  public static final String ThisName_enUS = "this product";
+  public static final String ThisName_enUS = "this solution";
   public static final String A_enUS = "a ";
-  public static final String TheName_enUS = "the product";
-  public static final String SingularName_enUS = "product";
-  public static final String PluralName_enUS = "products";
-  public static final String NameActual_enUS = "current product";
-  public static final String AllName_enUS = "all products";
-  public static final String SearchAllNameBy_enUS = "search products by ";
-  public static final String SearchAllName_enUS = "search products";
-  public static final String Title_enUS = "products";
-  public static final String ThePluralName_enUS = "the products";
-  public static final String NoNameFound_enUS = "no product found";
-  public static final String ApiUri_enUS = "/en-us/api/product";
-  public static final String ApiUriSearchPage_enUS = "/en-us/search/product";
-  public static final String ApiUriEditPage_enUS = "/en-us/edit/product/{pageId}";
-  public static final String OfName_enUS = "of product";
-  public static final String ANameAdjective_enUS = "a product";
-  public static final String NameAdjectiveSingular_enUS = "product";
-  public static final String NameAdjectivePlural_enUS = "products";
-  public static final String Search_enUS_OpenApiUri = "/en-us/api/product";
-  public static final String Search_enUS_StringFormatUri = "/en-us/api/product";
-  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/product";
-  public static final String GET_enUS_OpenApiUri = "/en-us/api/product/{pageId}";
-  public static final String GET_enUS_StringFormatUri = "/en-us/api/product/%s";
-  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/product/%s";
-  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/product";
-  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/product";
-  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/product";
-  public static final String PATCHPay_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
-  public static final String PATCHPay_enUS_StringFormatUri = "/en-us/shop/product/%s";
-  public static final String PATCHPay_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
-  public static final String POST_enUS_OpenApiUri = "/en-us/api/product";
-  public static final String POST_enUS_StringFormatUri = "/en-us/api/product";
-  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/product";
-  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/product/{pageId}";
-  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/product/%s";
-  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/product/%s";
-  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/product-import";
-  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/product-import";
-  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/product-import";
-  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/product";
-  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/product";
-  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/product";
-  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/product/{pageId}";
-  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/product/%s";
-  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/product/%s";
-  public static final String UserPage_enUS_OpenApiUri = "/en-us/shop/product/{pageId}";
-  public static final String UserPage_enUS_StringFormatUri = "/en-us/shop/product/%s";
-  public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/shop/product/%s";
-  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/product";
-  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/product";
-  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/product";
+  public static final String TheName_enUS = "the solution";
+  public static final String SingularName_enUS = "solution";
+  public static final String PluralName_enUS = "solutions";
+  public static final String NameActual_enUS = "current solution";
+  public static final String AllName_enUS = "all solutions";
+  public static final String SearchAllNameBy_enUS = "search solutions by ";
+  public static final String SearchAllName_enUS = "search solutions";
+  public static final String Title_enUS = "solutions";
+  public static final String ThePluralName_enUS = "the solutions";
+  public static final String NoNameFound_enUS = "no solution found";
+  public static final String ApiUri_enUS = "/en-us/api/solution";
+  public static final String ApiUriSearchPage_enUS = "/en-us/search/solution";
+  public static final String ApiUriEditPage_enUS = "/en-us/edit/solution/{pageId}";
+  public static final String OfName_enUS = "of solution";
+  public static final String ANameAdjective_enUS = "a solution";
+  public static final String NameAdjectiveSingular_enUS = "solution";
+  public static final String NameAdjectivePlural_enUS = "solutions";
+  public static final String Search_enUS_OpenApiUri = "/en-us/api/solution";
+  public static final String Search_enUS_StringFormatUri = "/en-us/api/solution";
+  public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/solution";
+  public static final String GET_enUS_OpenApiUri = "/en-us/api/solution/{pageId}";
+  public static final String GET_enUS_StringFormatUri = "/en-us/api/solution/%s";
+  public static final String GET_enUS_StringFormatUrl = "%s/en-us/api/solution/%s";
+  public static final String PATCH_enUS_OpenApiUri = "/en-us/api/solution";
+  public static final String PATCH_enUS_StringFormatUri = "/en-us/api/solution";
+  public static final String PATCH_enUS_StringFormatUrl = "%s/en-us/api/solution";
+  public static final String PATCHPay_enUS_OpenApiUri = "/en-us/shop/solution/{pageId}";
+  public static final String PATCHPay_enUS_StringFormatUri = "/en-us/shop/solution/%s";
+  public static final String PATCHPay_enUS_StringFormatUrl = "%s/en-us/shop/solution/%s";
+  public static final String POST_enUS_OpenApiUri = "/en-us/api/solution";
+  public static final String POST_enUS_StringFormatUri = "/en-us/api/solution";
+  public static final String POST_enUS_StringFormatUrl = "%s/en-us/api/solution";
+  public static final String DELETE_enUS_OpenApiUri = "/en-us/api/solution/{pageId}";
+  public static final String DELETE_enUS_StringFormatUri = "/en-us/api/solution/%s";
+  public static final String DELETE_enUS_StringFormatUrl = "%s/en-us/api/solution/%s";
+  public static final String PUTImport_enUS_OpenApiUri = "/en-us/api/solution-import";
+  public static final String PUTImport_enUS_StringFormatUri = "/en-us/api/solution-import";
+  public static final String PUTImport_enUS_StringFormatUrl = "%s/en-us/api/solution-import";
+  public static final String SearchPage_enUS_OpenApiUri = "/en-us/search/solution";
+  public static final String SearchPage_enUS_StringFormatUri = "/en-us/search/solution";
+  public static final String SearchPage_enUS_StringFormatUrl = "%s/en-us/search/solution";
+  public static final String EditPage_enUS_OpenApiUri = "/en-us/edit/solution/{pageId}";
+  public static final String EditPage_enUS_StringFormatUri = "/en-us/edit/solution/%s";
+  public static final String EditPage_enUS_StringFormatUrl = "%s/en-us/edit/solution/%s";
+  public static final String UserPage_enUS_OpenApiUri = "/en-us/shop/solution/{pageId}";
+  public static final String UserPage_enUS_StringFormatUri = "/en-us/shop/solution/%s";
+  public static final String UserPage_enUS_StringFormatUrl = "%s/en-us/shop/solution/%s";
+  public static final String DELETEFilter_enUS_OpenApiUri = "/en-us/api/solution";
+  public static final String DELETEFilter_enUS_StringFormatUri = "/en-us/api/solution";
+  public static final String DELETEFilter_enUS_StringFormatUrl = "%s/en-us/api/solution";
 
   public static final String Icon = "<i class=\"fa-duotone fa-regular fa-conveyor-belt\"></i>";
 
@@ -500,66 +500,66 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     return pageId;
   }
 
-	/////////////////////
-  // productResource //
-	/////////////////////
+	//////////////////////
+  // solutionResource //
+	//////////////////////
 
 
   /**
-   *  The entity productResource
+   *  The entity solutionResource
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonInclude(Include.NON_NULL)
-  protected String productResource;
+  protected String solutionResource;
 
   /**
-   * <br> The entity productResource
+   * <br> The entity solutionResource
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:productResource">Find the entity productResource in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:solutionResource">Find the entity solutionResource in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _productResource(Wrap<String> w);
+  protected abstract void _solutionResource(Wrap<String> w);
 
-  public String getProductResource() {
-    return productResource;
+  public String getSolutionResource() {
+    return solutionResource;
   }
-  public void setProductResource(String o) {
-    this.productResource = CompanyProduct.staticSetProductResource(siteRequest_, o);
+  public void setSolutionResource(String o) {
+    this.solutionResource = CompanyProduct.staticSetSolutionResource(siteRequest_, o);
   }
-  public static String staticSetProductResource(SiteRequest siteRequest_, String o) {
+  public static String staticSetSolutionResource(SiteRequest siteRequest_, String o) {
     return o;
   }
-  protected CompanyProduct productResourceInit() {
-    Wrap<String> productResourceWrap = new Wrap<String>().var("productResource");
-    if(productResource == null) {
-      _productResource(productResourceWrap);
-      Optional.ofNullable(productResourceWrap.getO()).ifPresent(o -> {
-        setProductResource(o);
+  protected CompanyProduct solutionResourceInit() {
+    Wrap<String> solutionResourceWrap = new Wrap<String>().var("solutionResource");
+    if(solutionResource == null) {
+      _solutionResource(solutionResourceWrap);
+      Optional.ofNullable(solutionResourceWrap.getO()).ifPresent(o -> {
+        setSolutionResource(o);
       });
     }
     return (CompanyProduct)this;
   }
 
-  public static String staticSearchProductResource(SiteRequest siteRequest_, String o) {
+  public static String staticSearchSolutionResource(SiteRequest siteRequest_, String o) {
     return o;
   }
 
-  public static String staticSearchStrProductResource(SiteRequest siteRequest_, String o) {
+  public static String staticSearchStrSolutionResource(SiteRequest siteRequest_, String o) {
     return o == null ? null : o.toString();
   }
 
-  public static String staticSearchFqProductResource(SiteRequest siteRequest_, String o) {
-    return CompanyProduct.staticSearchProductResource(siteRequest_, CompanyProduct.staticSetProductResource(siteRequest_, o)).toString();
+  public static String staticSearchFqSolutionResource(SiteRequest siteRequest_, String o) {
+    return CompanyProduct.staticSearchSolutionResource(siteRequest_, CompanyProduct.staticSetSolutionResource(siteRequest_, o)).toString();
   }
 
-  public String sqlProductResource() {
-    return productResource;
+  public String sqlSolutionResource() {
+    return solutionResource;
   }
 
-  public static String staticJsonProductResource(String productResource) {
-    return productResource;
+  public static String staticJsonSolutionResource(String solutionResource) {
+    return solutionResource;
   }
 
 	///////////////////
@@ -748,74 +748,74 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     return downloadUrl;
   }
 
-	////////////////
-  // productNum //
-	////////////////
+	/////////////////
+  // solutionNum //
+	/////////////////
 
 
   /**
-   *  The entity productNum
+   *  The entity solutionNum
    *	 is defined as null before being initialized. 
    */
   @JsonProperty
   @JsonSerialize(using = ToStringSerializer.class)
   @JsonInclude(Include.NON_NULL)
-  protected Integer productNum;
+  protected Integer solutionNum;
 
   /**
-   * <br> The entity productNum
+   * <br> The entity solutionNum
    *  is defined as null before being initialized. 
-   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:productNum">Find the entity productNum in Solr</a>
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.product.CompanyProduct&fq=entiteVar_enUS_indexed_string:solutionNum">Find the entity solutionNum in Solr</a>
    * <br>
    * @param w is for wrapping a value to assign to this entity during initialization. 
    **/
-  protected abstract void _productNum(Wrap<Integer> w);
+  protected abstract void _solutionNum(Wrap<Integer> w);
 
-  public Integer getProductNum() {
-    return productNum;
+  public Integer getSolutionNum() {
+    return solutionNum;
   }
 
-  public void setProductNum(Integer productNum) {
-    this.productNum = productNum;
+  public void setSolutionNum(Integer solutionNum) {
+    this.solutionNum = solutionNum;
   }
   @JsonIgnore
-  public void setProductNum(String o) {
-    this.productNum = CompanyProduct.staticSetProductNum(siteRequest_, o);
+  public void setSolutionNum(String o) {
+    this.solutionNum = CompanyProduct.staticSetSolutionNum(siteRequest_, o);
   }
-  public static Integer staticSetProductNum(SiteRequest siteRequest_, String o) {
+  public static Integer staticSetSolutionNum(SiteRequest siteRequest_, String o) {
     if(NumberUtils.isParsable(o))
       return Integer.parseInt(o);
     return null;
   }
-  protected CompanyProduct productNumInit() {
-    Wrap<Integer> productNumWrap = new Wrap<Integer>().var("productNum");
-    if(productNum == null) {
-      _productNum(productNumWrap);
-      Optional.ofNullable(productNumWrap.getO()).ifPresent(o -> {
-        setProductNum(o);
+  protected CompanyProduct solutionNumInit() {
+    Wrap<Integer> solutionNumWrap = new Wrap<Integer>().var("solutionNum");
+    if(solutionNum == null) {
+      _solutionNum(solutionNumWrap);
+      Optional.ofNullable(solutionNumWrap.getO()).ifPresent(o -> {
+        setSolutionNum(o);
       });
     }
     return (CompanyProduct)this;
   }
 
-  public static Integer staticSearchProductNum(SiteRequest siteRequest_, Integer o) {
+  public static Integer staticSearchSolutionNum(SiteRequest siteRequest_, Integer o) {
     return o;
   }
 
-  public static String staticSearchStrProductNum(SiteRequest siteRequest_, Integer o) {
+  public static String staticSearchStrSolutionNum(SiteRequest siteRequest_, Integer o) {
     return o == null ? null : o.toString();
   }
 
-  public static String staticSearchFqProductNum(SiteRequest siteRequest_, String o) {
-    return CompanyProduct.staticSearchProductNum(siteRequest_, CompanyProduct.staticSetProductNum(siteRequest_, o)).toString();
+  public static String staticSearchFqSolutionNum(SiteRequest siteRequest_, String o) {
+    return CompanyProduct.staticSearchSolutionNum(siteRequest_, CompanyProduct.staticSetSolutionNum(siteRequest_, o)).toString();
   }
 
-  public Integer sqlProductNum() {
-    return productNum;
+  public Integer sqlSolutionNum() {
+    return solutionNum;
   }
 
-  public static String staticJsonProductNum(Integer productNum) {
-    return Optional.ofNullable(productNum).map(v -> v.toString()).orElse(null);
+  public static String staticJsonSolutionNum(Integer solutionNum) {
+    return Optional.ofNullable(solutionNum).map(v -> v.toString()).orElse(null);
   }
 
 	//////////////////
@@ -1542,11 +1542,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         descriptionInit();
         priceInit();
         pageIdInit();
-        productResourceInit();
+        solutionResourceInit();
         emailTemplateInit();
         storeUrlInit();
         downloadUrlInit();
-        productNumInit();
+        solutionNumInit();
         pageImageUriInit();
         pageImageWidthInit();
         pageImageHeightInit();
@@ -1636,16 +1636,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return oCompanyProduct.price;
       case "pageId":
         return oCompanyProduct.pageId;
-      case "productResource":
-        return oCompanyProduct.productResource;
+      case "solutionResource":
+        return oCompanyProduct.solutionResource;
       case "emailTemplate":
         return oCompanyProduct.emailTemplate;
       case "storeUrl":
         return oCompanyProduct.storeUrl;
       case "downloadUrl":
         return oCompanyProduct.downloadUrl;
-      case "productNum":
-        return oCompanyProduct.productNum;
+      case "solutionNum":
+        return oCompanyProduct.solutionNum;
       case "pageImageUri":
         return oCompanyProduct.pageImageUri;
       case "pageImageWidth":
@@ -1715,16 +1715,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSetPrice(siteRequest_, v);
     case "pageId":
       return CompanyProduct.staticSetPageId(siteRequest_, v);
-    case "productResource":
-      return CompanyProduct.staticSetProductResource(siteRequest_, v);
+    case "solutionResource":
+      return CompanyProduct.staticSetSolutionResource(siteRequest_, v);
     case "emailTemplate":
       return CompanyProduct.staticSetEmailTemplate(siteRequest_, v);
     case "storeUrl":
       return CompanyProduct.staticSetStoreUrl(siteRequest_, v);
     case "downloadUrl":
       return CompanyProduct.staticSetDownloadUrl(siteRequest_, v);
-    case "productNum":
-      return CompanyProduct.staticSetProductNum(siteRequest_, v);
+    case "solutionNum":
+      return CompanyProduct.staticSetSolutionNum(siteRequest_, v);
     case "pageImageUri":
       return CompanyProduct.staticSetPageImageUri(siteRequest_, v);
     case "pageImageWidth":
@@ -1769,16 +1769,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
           try {
             promise.complete(searchList.getList().stream().findFirst().orElse(null));
           } catch(Throwable ex) {
-            LOG.error("Error while querying the product", ex);
+            LOG.error("Error while querying the solution", ex);
             promise.fail(ex);
           }
         }).onFailure(ex -> {
-          LOG.error("Error while querying the product", ex);
+          LOG.error("Error while querying the solution", ex);
           promise.fail(ex);
         });
       }
     } catch(Throwable ex) {
-      LOG.error("Error while querying the product", ex);
+      LOG.error("Error while querying the solution", ex);
       promise.fail(ex);
     }
     return promise.future();
@@ -1797,16 +1797,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchPrice(siteRequest_, (BigDecimal)o);
     case "pageId":
       return CompanyProduct.staticSearchPageId(siteRequest_, (String)o);
-    case "productResource":
-      return CompanyProduct.staticSearchProductResource(siteRequest_, (String)o);
+    case "solutionResource":
+      return CompanyProduct.staticSearchSolutionResource(siteRequest_, (String)o);
     case "emailTemplate":
       return CompanyProduct.staticSearchEmailTemplate(siteRequest_, (String)o);
     case "storeUrl":
       return CompanyProduct.staticSearchStoreUrl(siteRequest_, (String)o);
     case "downloadUrl":
       return CompanyProduct.staticSearchDownloadUrl(siteRequest_, (String)o);
-    case "productNum":
-      return CompanyProduct.staticSearchProductNum(siteRequest_, (Integer)o);
+    case "solutionNum":
+      return CompanyProduct.staticSearchSolutionNum(siteRequest_, (Integer)o);
     case "pageImageUri":
       return CompanyProduct.staticSearchPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1849,16 +1849,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchStrPrice(siteRequest_, (String)o);
     case "pageId":
       return CompanyProduct.staticSearchStrPageId(siteRequest_, (String)o);
-    case "productResource":
-      return CompanyProduct.staticSearchStrProductResource(siteRequest_, (String)o);
+    case "solutionResource":
+      return CompanyProduct.staticSearchStrSolutionResource(siteRequest_, (String)o);
     case "emailTemplate":
       return CompanyProduct.staticSearchStrEmailTemplate(siteRequest_, (String)o);
     case "storeUrl":
       return CompanyProduct.staticSearchStrStoreUrl(siteRequest_, (String)o);
     case "downloadUrl":
       return CompanyProduct.staticSearchStrDownloadUrl(siteRequest_, (String)o);
-    case "productNum":
-      return CompanyProduct.staticSearchStrProductNum(siteRequest_, (Integer)o);
+    case "solutionNum":
+      return CompanyProduct.staticSearchStrSolutionNum(siteRequest_, (Integer)o);
     case "pageImageUri":
       return CompanyProduct.staticSearchStrPageImageUri(siteRequest_, (String)o);
     case "pageImageWidth":
@@ -1901,16 +1901,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return CompanyProduct.staticSearchFqPrice(siteRequest_, o);
     case "pageId":
       return CompanyProduct.staticSearchFqPageId(siteRequest_, o);
-    case "productResource":
-      return CompanyProduct.staticSearchFqProductResource(siteRequest_, o);
+    case "solutionResource":
+      return CompanyProduct.staticSearchFqSolutionResource(siteRequest_, o);
     case "emailTemplate":
       return CompanyProduct.staticSearchFqEmailTemplate(siteRequest_, o);
     case "storeUrl":
       return CompanyProduct.staticSearchFqStoreUrl(siteRequest_, o);
     case "downloadUrl":
       return CompanyProduct.staticSearchFqDownloadUrl(siteRequest_, o);
-    case "productNum":
-      return CompanyProduct.staticSearchFqProductNum(siteRequest_, o);
+    case "solutionNum":
+      return CompanyProduct.staticSearchFqSolutionNum(siteRequest_, o);
     case "pageImageUri":
       return CompanyProduct.staticSearchFqPageImageUri(siteRequest_, o);
     case "pageImageWidth":
@@ -1985,11 +1985,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         }
         saves.add("pageId");
         return val;
-      } else if("productresource".equals(varLower)) {
+      } else if("solutionresource".equals(varLower)) {
         if(val instanceof String) {
-          setProductResource((String)val);
+          setSolutionResource((String)val);
         }
-        saves.add("productResource");
+        saves.add("solutionResource");
         return val;
       } else if("emailtemplate".equals(varLower)) {
         if(val instanceof String) {
@@ -2009,13 +2009,13 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         }
         saves.add("downloadUrl");
         return val;
-      } else if("productnum".equals(varLower)) {
+      } else if("solutionnum".equals(varLower)) {
         if(val instanceof Integer) {
-          setProductNum((Integer)val);
+          setSolutionNum((Integer)val);
         } else {
-          setProductNum(val == null ? null : val.toString());
+          setSolutionNum(val == null ? null : val.toString());
         }
-        saves.add("productNum");
+        saves.add("solutionNum");
         return val;
       } else if("pageimageuri".equals(varLower)) {
         if(val instanceof String) {
@@ -2100,10 +2100,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
           oCompanyProduct.setPageId(pageId);
       }
 
-      if(saves.contains("productResource")) {
-        String productResource = (String)doc.get("productResource_docvalues_string");
-        if(productResource != null)
-          oCompanyProduct.setProductResource(productResource);
+      if(saves.contains("solutionResource")) {
+        String solutionResource = (String)doc.get("solutionResource_docvalues_string");
+        if(solutionResource != null)
+          oCompanyProduct.setSolutionResource(solutionResource);
       }
 
       if(saves.contains("emailTemplate")) {
@@ -2124,10 +2124,10 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
           oCompanyProduct.setDownloadUrl(downloadUrl);
       }
 
-      if(saves.contains("productNum")) {
-        Integer productNum = (Integer)doc.get("productNum_docvalues_int");
-        if(productNum != null)
-          oCompanyProduct.setProductNum(productNum);
+      if(saves.contains("solutionNum")) {
+        Integer solutionNum = (Integer)doc.get("solutionNum_docvalues_int");
+        if(solutionNum != null)
+          oCompanyProduct.setSolutionNum(solutionNum);
       }
 
       if(saves.contains("pageImageUri")) {
@@ -2211,8 +2211,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
     }
-    if(productResource != null) {
-      doc.put("productResource_docvalues_string", productResource);
+    if(solutionResource != null) {
+      doc.put("solutionResource_docvalues_string", solutionResource);
     }
     if(emailTemplate != null) {
       doc.put("emailTemplate_docvalues_string", emailTemplate);
@@ -2223,8 +2223,8 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     if(downloadUrl != null) {
       doc.put("downloadUrl_docvalues_string", downloadUrl);
     }
-    if(productNum != null) {
-      doc.put("productNum_docvalues_int", productNum);
+    if(solutionNum != null) {
+      doc.put("solutionNum_docvalues_int", solutionNum);
     }
     if(pageImageUri != null) {
       doc.put("pageImageUri_docvalues_string", pageImageUri);
@@ -2274,16 +2274,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "price_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
-      case "productResource":
-        return "productResource_docvalues_string";
+      case "solutionResource":
+        return "solutionResource_docvalues_string";
       case "emailTemplate":
         return "emailTemplate_docvalues_string";
       case "storeUrl":
         return "storeUrl_docvalues_string";
       case "downloadUrl":
         return "downloadUrl_docvalues_string";
-      case "productNum":
-        return "productNum_docvalues_int";
+      case "solutionNum":
+        return "solutionNum_docvalues_int";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2319,16 +2319,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "price_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
-      case "productResource":
-        return "productResource_docvalues_string";
+      case "solutionResource":
+        return "solutionResource_docvalues_string";
       case "emailTemplate":
         return "emailTemplate_docvalues_string";
       case "storeUrl":
         return "storeUrl_docvalues_string";
       case "downloadUrl":
         return "downloadUrl_docvalues_string";
-      case "productNum":
-        return "productNum_docvalues_int";
+      case "solutionNum":
+        return "solutionNum_docvalues_int";
       case "pageImageUri":
         return "pageImageUri_docvalues_string";
       case "pageImageWidth":
@@ -2362,16 +2362,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         return "price";
       case "pageId_docvalues_string":
         return "pageId";
-      case "productResource_docvalues_string":
-        return "productResource";
+      case "solutionResource_docvalues_string":
+        return "solutionResource";
       case "emailTemplate_docvalues_string":
         return "emailTemplate";
       case "storeUrl_docvalues_string":
         return "storeUrl";
       case "downloadUrl_docvalues_string":
         return "downloadUrl";
-      case "productNum_docvalues_int":
-        return "productNum";
+      case "solutionNum_docvalues_int":
+        return "solutionNum";
       case "pageImageUri_docvalues_string":
         return "pageImageUri";
       case "pageImageWidth_docvalues_int":
@@ -2424,11 +2424,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     oCompanyProduct.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPrice(Optional.ofNullable(doc.get("price_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyProduct.setProductResource(Optional.ofNullable(doc.get("productResource_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oCompanyProduct.setSolutionResource(Optional.ofNullable(doc.get("solutionResource_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setEmailTemplate(Optional.ofNullable(doc.get("emailTemplate_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setStoreUrl(Optional.ofNullable(doc.get("storeUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setDownloadUrl(Optional.ofNullable(doc.get("downloadUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
-    oCompanyProduct.setProductNum(Optional.ofNullable(doc.get("productNum_docvalues_int")).map(v -> v.toString()).orElse(null));
+    oCompanyProduct.setSolutionNum(Optional.ofNullable(doc.get("solutionNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageWidth(Optional.ofNullable(doc.get("pageImageWidth_docvalues_int")).map(v -> v.toString()).orElse(null));
     oCompanyProduct.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
@@ -2462,16 +2462,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
         apiRequest.addVars("price");
       if(!Objects.equals(pageId, original.getPageId()))
         apiRequest.addVars("pageId");
-      if(!Objects.equals(productResource, original.getProductResource()))
-        apiRequest.addVars("productResource");
+      if(!Objects.equals(solutionResource, original.getSolutionResource()))
+        apiRequest.addVars("solutionResource");
       if(!Objects.equals(emailTemplate, original.getEmailTemplate()))
         apiRequest.addVars("emailTemplate");
       if(!Objects.equals(storeUrl, original.getStoreUrl()))
         apiRequest.addVars("storeUrl");
       if(!Objects.equals(downloadUrl, original.getDownloadUrl()))
         apiRequest.addVars("downloadUrl");
-      if(!Objects.equals(productNum, original.getProductNum()))
-        apiRequest.addVars("productNum");
+      if(!Objects.equals(solutionNum, original.getSolutionNum()))
+        apiRequest.addVars("solutionNum");
       if(!Objects.equals(pageImageUri, original.getPageImageUri()))
         apiRequest.addVars("pageImageUri");
       if(!Objects.equals(pageImageWidth, original.getPageImageWidth()))
@@ -2507,11 +2507,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(price).map(v -> "price: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
-    sb.append(Optional.ofNullable(productResource).map(v -> "productResource: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(solutionResource).map(v -> "solutionResource: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(emailTemplate).map(v -> "emailTemplate: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(storeUrl).map(v -> "storeUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(downloadUrl).map(v -> "downloadUrl: \"" + v + "\"\n" ).orElse(""));
-    sb.append(Optional.ofNullable(productNum).map(v -> "productNum: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(solutionNum).map(v -> "solutionNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageWidth).map(v -> "pageImageWidth: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
@@ -2540,16 +2540,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   public static final String SET_price = "setPrice";
   public static final String VAR_pageId = "pageId";
   public static final String SET_pageId = "setPageId";
-  public static final String VAR_productResource = "productResource";
-  public static final String SET_productResource = "setProductResource";
+  public static final String VAR_solutionResource = "solutionResource";
+  public static final String SET_solutionResource = "setSolutionResource";
   public static final String VAR_emailTemplate = "emailTemplate";
   public static final String SET_emailTemplate = "setEmailTemplate";
   public static final String VAR_storeUrl = "storeUrl";
   public static final String SET_storeUrl = "setStoreUrl";
   public static final String VAR_downloadUrl = "downloadUrl";
   public static final String SET_downloadUrl = "setDownloadUrl";
-  public static final String VAR_productNum = "productNum";
-  public static final String SET_productNum = "setProductNum";
+  public static final String VAR_solutionNum = "solutionNum";
+  public static final String SET_solutionNum = "setSolutionNum";
   public static final String VAR_pageImageUri = "pageImageUri";
   public static final String SET_pageImageUri = "setPageImageUri";
   public static final String VAR_pageImageWidth = "pageImageWidth";
@@ -2589,11 +2589,11 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     vars.add(VAR_description);
     vars.add(VAR_price);
     vars.add(VAR_pageId);
-    vars.add(VAR_productResource);
+    vars.add(VAR_solutionResource);
     vars.add(VAR_emailTemplate);
     vars.add(VAR_storeUrl);
     vars.add(VAR_downloadUrl);
-    vars.add(VAR_productNum);
+    vars.add(VAR_solutionNum);
     vars.add(VAR_pageImageUri);
     BaseResult.varsFqBaseResult(vars);
     return vars;
@@ -2604,20 +2604,20 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
   }
   public static List<String> varsRangeCompanyProduct(List<String> vars) {
     vars.add(VAR_price);
-    vars.add(VAR_productNum);
+    vars.add(VAR_solutionNum);
     BaseResult.varsRangeBaseResult(vars);
     return vars;
   }
 
-  public static final String DISPLAY_NAME_name = "product name";
-  public static final String DISPLAY_NAME_description = "product description";
+  public static final String DISPLAY_NAME_name = "solution name";
+  public static final String DISPLAY_NAME_description = "solution description";
   public static final String DISPLAY_NAME_price = "price";
   public static final String DISPLAY_NAME_pageId = "Page ID";
-  public static final String DISPLAY_NAME_productResource = "product auth resource";
+  public static final String DISPLAY_NAME_solutionResource = "solution auth resource";
   public static final String DISPLAY_NAME_emailTemplate = "email template";
   public static final String DISPLAY_NAME_storeUrl = "store URL";
   public static final String DISPLAY_NAME_downloadUrl = "download URL";
-  public static final String DISPLAY_NAME_productNum = "Product Number";
+  public static final String DISPLAY_NAME_solutionNum = "Product Number";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
   public static final String DISPLAY_NAME_pageImageWidth = "";
   public static final String DISPLAY_NAME_pageImageHeight = "";
@@ -2657,12 +2657,12 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
 
   @Override
   public String enUSStringFormatUrlEditPageForClass() {
-    return "%s/en-us/edit/product/%s";
+    return "%s/en-us/edit/solution/%s";
   }
 
   @Override
   public String enUSStringFormatUrlUserPageForClass() {
-    return "%s/en-us/shop/product/%s";
+    return "%s/en-us/shop/solution/%s";
   }
 
   public static String varJsonForClass(String var, Boolean patch) {
@@ -2678,16 +2678,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return patch ? SET_price : VAR_price;
     case VAR_pageId:
       return patch ? SET_pageId : VAR_pageId;
-    case VAR_productResource:
-      return patch ? SET_productResource : VAR_productResource;
+    case VAR_solutionResource:
+      return patch ? SET_solutionResource : VAR_solutionResource;
     case VAR_emailTemplate:
       return patch ? SET_emailTemplate : VAR_emailTemplate;
     case VAR_storeUrl:
       return patch ? SET_storeUrl : VAR_storeUrl;
     case VAR_downloadUrl:
       return patch ? SET_downloadUrl : VAR_downloadUrl;
-    case VAR_productNum:
-      return patch ? SET_productNum : VAR_productNum;
+    case VAR_solutionNum:
+      return patch ? SET_solutionNum : VAR_solutionNum;
     case VAR_pageImageUri:
       return patch ? SET_pageImageUri : VAR_pageImageUri;
     case VAR_pageImageWidth:
@@ -2728,16 +2728,16 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return DISPLAY_NAME_price;
     case VAR_pageId:
       return DISPLAY_NAME_pageId;
-    case VAR_productResource:
-      return DISPLAY_NAME_productResource;
+    case VAR_solutionResource:
+      return DISPLAY_NAME_solutionResource;
     case VAR_emailTemplate:
       return DISPLAY_NAME_emailTemplate;
     case VAR_storeUrl:
       return DISPLAY_NAME_storeUrl;
     case VAR_downloadUrl:
       return DISPLAY_NAME_downloadUrl;
-    case VAR_productNum:
-      return DISPLAY_NAME_productNum;
+    case VAR_solutionNum:
+      return DISPLAY_NAME_solutionNum;
     case VAR_pageImageUri:
       return DISPLAY_NAME_pageImageUri;
     case VAR_pageImageWidth:
@@ -2770,23 +2770,23 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return null;
     switch(var) {
     case VAR_name:
-      return "The product name. ";
+      return "The solution name. ";
     case VAR_description:
-      return "The product description. ";
+      return "The solution description. ";
     case VAR_price:
-      return "The price of the product per developer. ";
+      return "The price of the solution per developer. ";
     case VAR_pageId:
       return "The ID for this page. ";
-    case VAR_productResource:
-      return "The unique authorization resource for the company product for multi-tenancy";
+    case VAR_solutionResource:
+      return "The unique authorization resource for the company solution for multi-tenancy";
     case VAR_emailTemplate:
-      return "The HTML email template for this product. ";
+      return "The HTML email template for this solution. ";
     case VAR_storeUrl:
       return "The store URL for this page. ";
     case VAR_downloadUrl:
       return "The download URL for this page. ";
-    case VAR_productNum:
-      return "The product number for this page. ";
+    case VAR_solutionNum:
+      return "The solution number for this page. ";
     case VAR_pageImageUri:
       return "The page image URI";
     case VAR_pageImageWidth:
@@ -2806,7 +2806,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
     case VAR_relatedArticles:
       return "A JSON array of related articles. ";
     case VAR_dialogTemplate:
-      return "The dialog template for this product. ";
+      return "The dialog template for this solution. ";
       default:
         return BaseResult.descriptionBaseResult(var);
     }
@@ -2822,7 +2822,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return "BigDecimal";
     case VAR_pageId:
       return "String";
-    case VAR_productResource:
+    case VAR_solutionResource:
       return "String";
     case VAR_emailTemplate:
       return "String";
@@ -2830,7 +2830,7 @@ public abstract class CompanyProductGen<DEV> extends BaseResult {
       return "String";
     case VAR_downloadUrl:
       return "String";
-    case VAR_productNum:
+    case VAR_solutionNum:
       return "Integer";
     case VAR_pageImageUri:
       return "String";

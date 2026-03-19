@@ -22,9 +22,9 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSGenApiService.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductGenPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSGenApiService.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductGenPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductEnUSGenApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductEnUSGenApiService.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventGenPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventEnUSGenApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventEnUSGenApiService.java \
@@ -98,13 +98,13 @@ find \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchButtons.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSearchForm.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/article/SitePageSidebar.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/product/CompanyProductGenEditPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductGenSearchPage.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductLocation.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductPaginationButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductSearchButtons.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductSearchForm.htm \
-      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/product/CompanyProductSidebar.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/solution/CompanyProductGenEditPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductGenSearchPage.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductLocation.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductPaginationButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductSearchButtons.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductSearchForm.htm \
+      ~/.local/src/computate.org-static/webawesome/templates/en-us/search/solution/CompanyProductSidebar.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/edit/event/CompanyEventGenEditPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/event/CompanyEventGenSearchPage.htm \
       ~/.local/src/computate.org-static/webawesome/templates/en-us/search/event/CompanyEventLocation.htm \

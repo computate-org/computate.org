@@ -31,22 +31,22 @@ import io.vertx.pgclient.data.Point;
 
 /**
  * Order: 5
- * Description: See the computate products that will help you build your own data-driven platforms
- * AName: a product
+ * Description: See the computate solutions that will help you build your own data-driven platforms
+ * AName: a solution
  * Icon: <i class="fa-duotone fa-regular fa-conveyor-belt"></i>
- * Sort.asc: productNum
+ * Sort.asc: solutionNum
  * 
  * PublicRead: true
- * SearchPageUri: /en-us/search/product
- * UserPageUri: /en-us/shop/product/{pageId}
- * EditPageUri: /en-us/edit/product/{pageId}
- * ApiUri: /en-us/api/product
+ * SearchPageUri: /en-us/search/solution
+ * UserPageUri: /en-us/shop/solution/{pageId}
+ * EditPageUri: /en-us/edit/solution/{pageId}
+ * ApiUri: /en-us/api/solution
  * ApiMethod:
  *   Search:
  *   GET:
  *   PATCH:
  *   PATCHPay:
- *     ApiUri: /en-us/shop/product/{pageId}
+ *     ApiUri: /en-us/shop/solution/{pageId}
  *   POST:
  *   DELETE:
  *   PUTImport:
@@ -71,10 +71,10 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: product name
-   * Description: The product name. 
+   * DisplayName: solution name
+   * Description: The solution name. 
    * HtmRow: 3
-   * HtmRowTitleOpen: product details
+   * HtmRowTitleOpen: solution details
    * HtmCell: 1
    * HtmColumn: 0
    * Facet: true
@@ -87,8 +87,8 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: product description
-   * Description: The product description. 
+   * DisplayName: solution description
+   * Description: The solution description. 
    * HtmRow: 3
    * HtmCell: 2
    * HtmColumn: 1
@@ -103,7 +103,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * DocValues: true
    * Persist: true
    * DisplayName: price
-   * Description: The price of the product per developer. 
+   * Description: The price of the solution per developer. 
    * HtmRow: 3
    * HtmCell: 3
    * Facet: true
@@ -132,12 +132,12 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
-   * DisplayName: product auth resource
-   * Description: The unique authorization resource for the company product for multi-tenancy
+   * DisplayName: solution auth resource
+   * Description: The unique authorization resource for the company solution for multi-tenancy
    * Facet: true
    * AuthorizationResource: COMPANYPRODUCT
    **/
-  protected void _productResource(Wrap<String> w) {
+  protected void _solutionResource(Wrap<String> w) {
     w.o(String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId));
   }
 
@@ -147,7 +147,7 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * Persist: true
    * Facet: true
    * DisplayName: email template
-   * Description: The HTML email template for this product. 
+   * Description: The HTML email template for this solution. 
    */
   protected void _emailTemplate(Wrap<String> w) {
   }
@@ -184,9 +184,9 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * Persist: true
    * Facet: true
    * DisplayName: Product Number
-   * Description: The product number for this page. 
+   * Description: The solution number for this page. 
    */
-  protected void _productNum(Wrap<Integer> w) {
+  protected void _solutionNum(Wrap<Integer> w) {
   }
 
   /**
@@ -326,14 +326,14 @@ public class CompanyProduct extends CompanyProductGen<BaseResult> {
    * DocValues: true
    * Persist: true
    * DisplayName: dialog template
-   * Description: The dialog template for this product. 
+   * Description: The dialog template for this solution. 
    */
   protected void _dialogTemplate(Wrap<String> w) {
-    w.o(String.format("en-us/dialog/product/dialog-%s.htm", pageId));
+    w.o(String.format("en-us/dialog/solution/dialog-%s.htm", pageId));
   }
 
   @Override
   public String enUSStringFormatUrlDisplayPageForClass() {
-    return "%s/en-us/search/product?fq=pageId:%s";
+    return "%s/en-us/search/solution?fq=pageId:%s";
   }
 }

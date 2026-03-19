@@ -517,27 +517,27 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("products");
+      c.o("solutions");
     else if(searchListCompanyProduct_ == null || resultCount == 0)
-      c.o("no product found");
+      c.o("no solution found");
     else
-      c.o("products");
+      c.o("solutions");
   }
 
   @Override
   protected void _classAllName(Wrap<String> w) {
-    w.o("all products");
+    w.o("all solutions");
   }
 
   @Override
   protected void _pageUri(Wrap<String> w) {
     if("enUS".equals(lang))
-      w.o("/en-us/search/product");
+      w.o("/en-us/search/solution");
   }
 
   @Override
   protected void _apiUri(Wrap<String> w) {
-    w.o("/en-us/api/product");
+    w.o("/en-us/api/solution");
   }
 
   @Override
@@ -547,12 +547,12 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
 
   @Override
   protected void _pageDescription(Wrap<String> c) {
-      c.o("See the computate products that will help you build your own data-driven platforms");
+      c.o("See the computate solutions that will help you build your own data-driven platforms");
   }
 
   @Override
   protected void _pageImageUri(Wrap<String> c) {
-      c.o("/png/en-us/search/product-999.png");
+      c.o("/png/en-us/search/solution-999.png");
   }
 
   @Override
@@ -561,6 +561,6 @@ public class CompanyProductGenPage extends CompanyProductGenPageGen<PageLayout> 
   }
 
   protected void _pageUriCompanyProduct(Wrap<String> c) {
-      c.o("/en-us/search/product");
+      c.o("/en-us/search/solution");
   }
 }

@@ -18,9 +18,9 @@ find \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePagePage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/page/SitePageEnUSApiServiceImpl.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProduct.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductPage.java \
-  ~/.local/src/computate.org/src/main/java/org/computate/site/model/product/CompanyProductEnUSApiServiceImpl.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProduct.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductPage.java \
+  ~/.local/src/computate.org/src/main/java/org/computate/site/model/solution/CompanyProductEnUSApiServiceImpl.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEvent.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventPage.java \
   ~/.local/src/computate.org/src/main/java/org/computate/site/model/event/CompanyEventEnUSApiServiceImpl.java \

@@ -355,7 +355,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("PATCH")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -546,7 +546,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "product", null);
+              String m = String.format("%s %s not found", "solution", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {
@@ -660,7 +660,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("PATCH")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -851,7 +851,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "product", null);
+              String m = String.format("%s %s not found", "solution", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {
@@ -965,7 +965,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("POST")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -1218,7 +1218,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("DELETE")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -1505,7 +1505,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("PUT")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -1855,8 +1855,8 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
     ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
-    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/solution"));
+    ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/solution"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
@@ -1866,7 +1866,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
   }
 
   public String templateUriSearchPageCompanyProduct(ServiceRequest serviceRequest, CompanyProduct result) {
-    return "en-us/search/product/CompanyProductSearchPage.htm";
+    return "en-us/search/solution/CompanyProductSearchPage.htm";
   }
   public void templateSearchPageCompanyProduct(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<String> promise) {
     try {
@@ -1877,7 +1877,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
       if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/product/CompanyProductSearchPage.htm"), Charset.forName("UTF-8"));
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/search/solution/CompanyProductSearchPage.htm"), Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       } else if(pageTemplateUri.endsWith(".md")) {
@@ -2069,7 +2069,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                     return permission.getJsonArray("scopes").contains("GET")
                         && mPermission.find();
                   }).forEach(permission -> {
-                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                     permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                       if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                         scopes.add(scope);
@@ -2155,7 +2155,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
     ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/solution"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -2166,7 +2166,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
   }
 
   public String templateUriEditPageCompanyProduct(ServiceRequest serviceRequest, CompanyProduct result) {
-    return "en-us/edit/product/CompanyProductEditPage.htm";
+    return "en-us/edit/solution/CompanyProductEditPage.htm";
   }
   public void templateEditPageCompanyProduct(JsonObject ctx, CompanyProductPage page, SearchList<CompanyProduct> listCompanyProduct, Promise<String> promise) {
     try {
@@ -2177,7 +2177,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       String siteTemplatePath = config.getString(ComputateConfigKeys.TEMPLATE_PATH);
       Path resourceTemplatePath = Path.of(siteTemplatePath, pageTemplateUri);
       if(result == null || !Files.exists(resourceTemplatePath)) {
-        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/product/CompanyProductEditPage.htm"), Charset.forName("UTF-8"));
+        String template = Files.readString(Path.of(siteTemplatePath, "en-us/edit/solution/CompanyProductEditPage.htm"), Charset.forName("UTF-8"));
         String renderedTemplate = jinjava.render(template, ctx.getMap());
         promise.complete(renderedTemplate);
       } else if(pageTemplateUri.endsWith(".md")) {
@@ -2369,7 +2369,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                     return permission.getJsonArray("scopes").contains("GET")
                         && mPermission.find();
                   }).forEach(permission -> {
-                    fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                    fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                     permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                       if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                         scopes.add(scope);
@@ -2455,7 +2455,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
     ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
     ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownloadUrl()));
 
-    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/product"));
+    ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/solution"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
     ctx.put("enUSUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
@@ -2670,7 +2670,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
                   return permission.getJsonArray("scopes").contains("DELETE")
                       && mPermission.find();
                 }).forEach(permission -> {
-                  fqs.add(String.format("%s:%s", "productResource", permission.getString("rsname")));
+                  fqs.add(String.format("%s:%s", "solutionResource", permission.getString("rsname")));
                   permission.getJsonArray("scopes").stream().map(s -> (String)s).forEach(scope -> {
                     if(!scopes.contains(scope) && String.format("%s-%s", CompanyProduct.CLASS_AUTH_RESOURCE, pageId).equals(permission.getString("rsname")))
                       scopes.add(scope);
@@ -3147,7 +3147,7 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
         }
       }
       if("*:*".equals(searchList.getQuery()) && searchList.getSorts().size() == 0) {
-        searchList.sort("productNum_docvalues_int", "asc");
+        searchList.sort("solutionNum_docvalues_int", "asc");
         searchList.setDefaultSort(true);
       }
       String facetRange2 = facetRange;
@@ -3355,11 +3355,11 @@ public class CompanyProductEnUSGenApiServiceImpl extends BaseApiServiceImpl impl
       o.persistForClass(CompanyProduct.VAR_price, CompanyProduct.staticSetPrice(siteRequest2, (String)result.get(CompanyProduct.VAR_price)));
       o.persistForClass(CompanyProduct.VAR_archived, CompanyProduct.staticSetArchived(siteRequest2, (String)result.get(CompanyProduct.VAR_archived)));
       o.persistForClass(CompanyProduct.VAR_pageId, CompanyProduct.staticSetPageId(siteRequest2, (String)result.get(CompanyProduct.VAR_pageId)));
-      o.persistForClass(CompanyProduct.VAR_productResource, CompanyProduct.staticSetProductResource(siteRequest2, (String)result.get(CompanyProduct.VAR_productResource)));
+      o.persistForClass(CompanyProduct.VAR_solutionResource, CompanyProduct.staticSetSolutionResource(siteRequest2, (String)result.get(CompanyProduct.VAR_solutionResource)));
       o.persistForClass(CompanyProduct.VAR_emailTemplate, CompanyProduct.staticSetEmailTemplate(siteRequest2, (String)result.get(CompanyProduct.VAR_emailTemplate)));
       o.persistForClass(CompanyProduct.VAR_storeUrl, CompanyProduct.staticSetStoreUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_storeUrl)));
       o.persistForClass(CompanyProduct.VAR_downloadUrl, CompanyProduct.staticSetDownloadUrl(siteRequest2, (String)result.get(CompanyProduct.VAR_downloadUrl)));
-      o.persistForClass(CompanyProduct.VAR_productNum, CompanyProduct.staticSetProductNum(siteRequest2, (String)result.get(CompanyProduct.VAR_productNum)));
+      o.persistForClass(CompanyProduct.VAR_solutionNum, CompanyProduct.staticSetSolutionNum(siteRequest2, (String)result.get(CompanyProduct.VAR_solutionNum)));
       o.persistForClass(CompanyProduct.VAR_objectTitle, CompanyProduct.staticSetObjectTitle(siteRequest2, (String)result.get(CompanyProduct.VAR_objectTitle)));
       o.persistForClass(CompanyProduct.VAR_pageImageUri, CompanyProduct.staticSetPageImageUri(siteRequest2, (String)result.get(CompanyProduct.VAR_pageImageUri)));
       o.persistForClass(CompanyProduct.VAR_displayPage, CompanyProduct.staticSetDisplayPage(siteRequest2, (String)result.get(CompanyProduct.VAR_displayPage)));
