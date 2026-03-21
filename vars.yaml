@@ -338,8 +338,10 @@ DATABASE_PORT: "{{ lookup('env', 'DATABASE_PORT') | default('30432', true) }}"
 DATABASE_USERNAME: "{{ lookup('env', 'DATABASE_USERNAME_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME, true) }}"
 # The database secret containing the user password to connect to the database. 
 DATABASE_SECRET: "{{ lookup('env', 'DATABASE_SECRET_' + SITE_SHORT_NAME) | default('local-database', true) }}"
+# The database secret containing the user password to connect to the database. 
+DATABASE_SECRET_KEY: "{{ lookup('env', 'DATABASE_SECRET_KEY_' + SITE_SHORT_NAME) | default('DATABASE_PASSWORD', true) }}"
 # The PostgreSQL database password of the site. 
-DATABASE_PASSWORD: "{{ query('kubernetes.core.k8s', kind='Secret', resource_name=DATABASE_SECRET, namespace=SITE_NAMESPACE)[0].data.DATABASE_PASSWORD | b64decode }}"
+DATABASE_PASSWORD: "{{ (query('kubernetes.core.k8s', kind='Secret', resource_name=(DATABASE_SECRET), namespace=SITE_NAMESPACE) | first | default({})).data[DATABASE_SECRET_KEY] | default('') | b64decode }}"
 # The PostgreSQL database name of the site. 
 DATABASE_DATABASE: "{{ lookup('env', 'DATABASE_DATABASE_' + SITE_SHORT_NAME) | default(SITE_SHORT_NAME + 'local', true) }}"
 # The PostgreSQL database max pool size. 

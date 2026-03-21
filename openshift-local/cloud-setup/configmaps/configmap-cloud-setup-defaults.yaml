@@ -503,7 +503,6 @@ data:
     RABBITMQ_PASSWORD: "{{ lookup('env', 'RABBITMQ_PASSWORD') | default('password', true) }}"
     # The RabbitMQ virtual host. 
     RABBITMQ_VIRTUAL_HOST: "/"
-
     ################################
     # OpenShift Deployment Details #
     ################################
