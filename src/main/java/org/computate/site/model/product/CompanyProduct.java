@@ -30,7 +30,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 5
+ * MenuDetails.enUS: Build your own data-driven website
+ * MenuDetailsOpen: true
+ * Order: 11
  * Description: See the computate solutions that will help you build your own data-driven platforms
  * AName: a solution
  * Icon: <i class="fa-duotone fa-regular fa-conveyor-belt"></i>

@@ -40,7 +40,7 @@ import io.vertx.pgclient.data.Point;
 import io.vertx.pgclient.data.Polygon;
 
 /**
- * Order: 7
+ * Order: 17
  * Description: Join the Computate community for regular weekly webinars
  * AName: a webinar
  * PluralName: webinars

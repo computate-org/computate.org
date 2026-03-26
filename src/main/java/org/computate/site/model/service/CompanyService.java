@@ -9,7 +9,7 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 8
+ * Order: 18
  * Description: See the services provided by computate that will help you build your own data-driven platforms
  * AName: a service
  * PluralName: services

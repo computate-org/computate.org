@@ -6,7 +6,7 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 3
+ * Order: 13
  * Description: See computate use cases for real organizations. 
  * AName: a use case
  * PluralName: use cases

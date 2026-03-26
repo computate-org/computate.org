@@ -36,9 +36,7 @@ import io.vertx.core.json.JsonObject;
 
 
 /**
- * Order: -1
- * MenuDetails.enUS: SPINE (SPT)
- * MenuDetailsOpen: true
+ * Order: 5
  * Description: Learn how to become a SPINE Programmer building data-driven websites and increase your developer productivity up to 4900%. 
  * AName: a SPINE Programming Theory
  * PluralName: SPINE Programming Theory

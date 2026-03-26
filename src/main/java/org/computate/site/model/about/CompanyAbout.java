@@ -9,7 +9,9 @@ import org.computate.search.wrap.Wrap;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 2
+ * MenuDetails.enUS: More info about SPINE and Computate
+ * MenuDetailsOpen: true
+ * Order: 12
  * Description: Learn about our team, company, culture, and values. 
  * AName: an about page
  * PluralName: about

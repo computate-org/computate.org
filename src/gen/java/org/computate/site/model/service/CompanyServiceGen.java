@@ -90,11 +90,11 @@ import io.vertx.core.json.JsonObject;
  * <p>By adding a class comment "{@inheritDoc}", the CompanyService class will inherit the helpful inherited class comments from the super class CompanyServiceGen. 
  * </p>
  * <h2>Rows: null</h2>
- * <h2>Order: 8</h2>
- * <p>This class contains a comment <b>"Order: 8"</b>, which means this class will be sorted by the given number 8 ascending when code that relates to multiple classes at the same time is generated. 
+ * <h2>Order: 18</h2>
+ * <p>This class contains a comment <b>"Order: 18"</b>, which means this class will be sorted by the given number 18 ascending when code that relates to multiple classes at the same time is generated. 
  * </p>
- * <h2>SqlOrder: 8</h2>
- * <p>This class contains a comment <b>"SqlOrder: 8"</b>, which means this class will be sorted by the given number 8 ascending when SQL code to create and drop the tables is generated. 
+ * <h2>SqlOrder: 18</h2>
+ * <p>This class contains a comment <b>"SqlOrder: 18"</b>, which means this class will be sorted by the given number 18 ascending when SQL code to create and drop the tables is generated. 
  * </p>
  * <h2>Model: true</h2>
  * <h2>Page: true</h2>

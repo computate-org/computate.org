@@ -30,7 +30,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 4
+ * Order: 14
  * Description: Take an exciting hands-on course on your own computer with computate
  * AName: a course
  * Icon: <i class="fa-duotone fa-regular fa-notebook"></i>

@@ -12,7 +12,7 @@ import org.computate.vertx.config.ComputateConfigKeys;
 import io.vertx.pgclient.data.Point;
 
 /**
- * Order: 6
+ * Order: 16
  * Description: See the upcoming computate in-person and online events
  * AName: an event
  * Icon: <i class="fa-duotone fa-regular fa-map-location-dot"></i>
