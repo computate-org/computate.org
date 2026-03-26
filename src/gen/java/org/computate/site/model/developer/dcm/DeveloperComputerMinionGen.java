@@ -79,7 +79,7 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Developer Computer Minions"</b>, which groups all of the OpenAPIs for DeveloperComputerMinion objects under the tag "Developer Computer Minions". 
+ * <p>This class contains a comment <b>"ApiTag: Developer Computer Management"</b>, which groups all of the OpenAPIs for DeveloperComputerMinion objects under the tag "Developer Computer Management". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/dcm</h2>
  * <p>This class contains a comment <b>"ApiUri: /en-us/api/dcm"</b>, which defines the base API URI for DeveloperComputerMinion objects as "/en-us/api/dcm" in the OpenAPI spec. 
@@ -132,8 +132,8 @@ import io.vertx.core.json.JsonObject;
  * <p>
  *   If a super class of this Java class with `Model: true`, then the child class will also inherit `Promise: true`. 
  * </p>
- * <h2>AName.enUS: a Developer Computer Minion</h2>
- * <p>This class contains a comment <b>"AName.enUS: a Developer Computer Minion"</b>, which identifies the language context to describe a DeveloperComputerMinion as "a Developer Computer Minion". 
+ * <h2>AName.enUS: a Developer Computer Management</h2>
+ * <p>This class contains a comment <b>"AName.enUS: a Developer Computer Management"</b>, which identifies the language context to describe a DeveloperComputerMinion as "a Developer Computer Management". 
  * </p>
  * <p>
  * Delete the class DeveloperComputerMinion in Solr: 
@@ -159,36 +159,36 @@ public abstract class DeveloperComputerMinionGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(DeveloperComputerMinion.class);
 
   public static final String Description_frFR = "Learn how to use to compile and run fun open source games and useful Linux software on your own Linux computer with self-healing, event-driven automation. ";
-  public static final String AName_frFR = "a Developer Computer Minion";
-  public static final String SingularName_frFR = "Developer Computer Minion";
-  public static final String PluralName_frFR = "Developer Computer Minions";
-  public static final String Title_frFR = "Developer Computer Minions";
-  public static final String ThePluralName_frFR = "les Developer Computer Minions";
-  public static final String NameAdjectiveSingular_frFR = "Developer Computer Minion";
-  public static final String NameAdjectivePlural_frFR = "Developer Computer Minions";
+  public static final String AName_frFR = "a Developer Computer Management";
+  public static final String SingularName_frFR = "Developer Computer Management";
+  public static final String PluralName_frFR = "Developer Computer Management";
+  public static final String Title_frFR = "Developer Computer Management";
+  public static final String ThePluralName_frFR = "les Developer Computer Management";
+  public static final String NameAdjectiveSingular_frFR = "Developer Computer Management";
+  public static final String NameAdjectivePlural_frFR = "Developer Computer Management";
 
   public static final String Description_enUS = "Learn how to use to compile and run fun open source games and useful Linux software on your own Linux computer with self-healing, event-driven automation. ";
-  public static final String AName_enUS = "a Developer Computer Minion";
+  public static final String AName_enUS = "a Developer Computer Management";
   public static final String This_enUS = "this ";
-  public static final String ThisName_enUS = "this Developer Computer Minion";
+  public static final String ThisName_enUS = "this Developer Computer Management";
   public static final String A_enUS = "a ";
-  public static final String TheName_enUS = "the Developer Computer Minion";
-  public static final String SingularName_enUS = "Developer Computer Minion";
-  public static final String PluralName_enUS = "Developer Computer Minions";
-  public static final String NameActual_enUS = "current Developer Computer Minion";
-  public static final String AllName_enUS = "all Developer Computer Minions";
-  public static final String SearchAllNameBy_enUS = "search Developer Computer Minions by ";
-  public static final String SearchAllName_enUS = "search Developer Computer Minions";
-  public static final String Title_enUS = "Developer Computer Minions";
-  public static final String ThePluralName_enUS = "the Developer Computer Minions";
-  public static final String NoNameFound_enUS = "no Developer Computer Minion found";
+  public static final String TheName_enUS = "the Developer Computer Management";
+  public static final String SingularName_enUS = "Developer Computer Management";
+  public static final String PluralName_enUS = "Developer Computer Management";
+  public static final String NameActual_enUS = "current Developer Computer Management";
+  public static final String AllName_enUS = "all Developer Computer Management";
+  public static final String SearchAllNameBy_enUS = "search Developer Computer Management by ";
+  public static final String SearchAllName_enUS = "search Developer Computer Management";
+  public static final String Title_enUS = "Developer Computer Management";
+  public static final String ThePluralName_enUS = "the Developer Computer Management";
+  public static final String NoNameFound_enUS = "no Developer Computer Management found";
   public static final String ApiUri_enUS = "/en-us/api/dcm";
   public static final String ApiUriSearchPage_enUS = "/en-us/search/dcm";
   public static final String ApiUriEditPage_enUS = "/en-us/edit/dcm/{pageId}";
-  public static final String OfName_enUS = "of Developer Computer Minion";
-  public static final String ANameAdjective_enUS = "a Developer Computer Minion";
-  public static final String NameAdjectiveSingular_enUS = "Developer Computer Minion";
-  public static final String NameAdjectivePlural_enUS = "Developer Computer Minions";
+  public static final String OfName_enUS = "of Developer Computer Management";
+  public static final String ANameAdjective_enUS = "a Developer Computer Management";
+  public static final String NameAdjectiveSingular_enUS = "Developer Computer Management";
+  public static final String NameAdjectivePlural_enUS = "Developer Computer Management";
   public static final String Search_enUS_OpenApiUri = "/en-us/api/dcm";
   public static final String Search_enUS_StringFormatUri = "/en-us/api/dcm";
   public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/dcm";
@@ -2026,16 +2026,16 @@ public abstract class DeveloperComputerMinionGen<DEV> extends BaseResult {
           try {
             promise.complete(searchList.getList().stream().findFirst().orElse(null));
           } catch(Throwable ex) {
-            LOG.error("Error while querying the Developer Computer Minion", ex);
+            LOG.error("Error while querying the Developer Computer Management", ex);
             promise.fail(ex);
           }
         }).onFailure(ex -> {
-          LOG.error("Error while querying the Developer Computer Minion", ex);
+          LOG.error("Error while querying the Developer Computer Management", ex);
           promise.fail(ex);
         });
       }
     } catch(Throwable ex) {
-      LOG.error("Error while querying the Developer Computer Minion", ex);
+      LOG.error("Error while querying the Developer Computer Management", ex);
       promise.fail(ex);
     }
     return promise.future();

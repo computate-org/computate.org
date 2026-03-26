@@ -3866,7 +3866,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4058,7 +4058,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4128,7 +4128,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4175,7 +4175,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4259,7 +4259,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4330,7 +4330,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4384,7 +4384,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4474,7 +4474,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4529,7 +4529,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie
@@ -4632,7 +4632,7 @@ paths:
       description: >+
       summary: >+
       tags:
-        - Developer Computer Minions
+        - Developer Computer Management
       parameters:
         - name: vertx-web.session
           in: cookie

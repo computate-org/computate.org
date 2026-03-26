@@ -38,7 +38,8 @@ import io.vertx.core.json.JsonObject;
  * Description: Learn how to use to compile and run fun open source games and useful Linux software on your own Linux computer with self-healing, event-driven automation. 
  * MenuDetails.enUS: developer resources
  * MenuDetailsOpen: true
- * AName: a Developer Computer Minion
+ * AName: a Developer Computer Management
+ * PluralName: Developer Computer Management
  * Icon: <i class="fa-duotone fa-regular fa-fish"></i>
  * Sort.asc: courseNum
  * 

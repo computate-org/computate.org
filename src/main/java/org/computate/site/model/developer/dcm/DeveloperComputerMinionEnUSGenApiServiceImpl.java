@@ -585,7 +585,7 @@ public class DeveloperComputerMinionEnUSGenApiServiceImpl extends BaseApiService
                 eventHandler.handle(Future.failedFuture(ex));
               });
             } else {
-              String m = String.format("%s %s not found", "Developer Computer Minion", null);
+              String m = String.format("%s %s not found", "Developer Computer Management", null);
               eventHandler.handle(Future.failedFuture(m));
             }
           } catch(Exception ex) {

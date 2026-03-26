@@ -518,16 +518,16 @@ public class DeveloperComputerMinionGenPage extends DeveloperComputerMinionGenPa
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("Developer Computer Minions");
+      c.o("Developer Computer Management");
     else if(searchListDeveloperComputerMinion_ == null || resultCount == 0)
-      c.o("no Developer Computer Minion found");
+      c.o("no Developer Computer Management found");
     else
-      c.o("Developer Computer Minions");
+      c.o("Developer Computer Management");
   }
 
   @Override
   protected void _classAllName(Wrap<String> w) {
-    w.o("all Developer Computer Minions");
+    w.o("all Developer Computer Management");
   }
 
   @Override
