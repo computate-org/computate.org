@@ -1397,11 +1397,6 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void searchpageDeploySpinePageInit(JsonObject ctx, DeploySpinePage page, SearchList<DeploySpine> listDeploySpine, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/deploy-spine"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/deploy-spine"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1502,19 +1497,24 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           searchpageDeploySpinePageInit(ctx, page, listDeploySpine, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageDeploySpine(ctx, page, listDeploySpine, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageDeploySpine failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageDeploySpine(ctx, page, listDeploySpine, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageDeploySpine failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageDeploySpine failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1657,12 +1657,6 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void editpageDeploySpinePageInit(JsonObject ctx, DeploySpinePage page, SearchList<DeploySpine> listDeploySpine, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/deploy-spine"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1763,19 +1757,24 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           editpageDeploySpinePageInit(ctx, page, listDeploySpine, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageDeploySpine(ctx, page, listDeploySpine, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageDeploySpine failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageDeploySpine(ctx, page, listDeploySpine, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageDeploySpine failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageDeploySpine failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1880,12 +1879,6 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void displaypageDeploySpinePageInit(JsonObject ctx, DeploySpinePage page, SearchList<DeploySpine> listDeploySpine, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/deploy-spine"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1986,19 +1979,24 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           displaypageDeploySpinePageInit(ctx, page, listDeploySpine, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateDisplayPageDeploySpine(ctx, page, listDeploySpine, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200DisplayPageDeploySpine failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageDeploySpine(ctx, page, listDeploySpine, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageDeploySpine failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageDeploySpine failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2746,18 +2744,24 @@ public class DeploySpineEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
       o.persistForClass(DeploySpine.VAR_name, DeploySpine.staticSetName(siteRequest2, (String)result.get(DeploySpine.VAR_name)));
       o.persistForClass(DeploySpine.VAR_created, DeploySpine.staticSetCreated(siteRequest2, (String)result.get(DeploySpine.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
       o.persistForClass(DeploySpine.VAR_description, DeploySpine.staticSetDescription(siteRequest2, (String)result.get(DeploySpine.VAR_description)));
-      o.persistForClass(DeploySpine.VAR_pageId, DeploySpine.staticSetPageId(siteRequest2, (String)result.get(DeploySpine.VAR_pageId)));
+      o.persistForClass(DeploySpine.VAR_authorName, DeploySpine.staticSetAuthorName(siteRequest2, (String)result.get(DeploySpine.VAR_authorName)));
       o.persistForClass(DeploySpine.VAR_archived, DeploySpine.staticSetArchived(siteRequest2, (String)result.get(DeploySpine.VAR_archived)));
+      o.persistForClass(DeploySpine.VAR_authorUrl, DeploySpine.staticSetAuthorUrl(siteRequest2, (String)result.get(DeploySpine.VAR_authorUrl)));
+      o.persistForClass(DeploySpine.VAR_pageId, DeploySpine.staticSetPageId(siteRequest2, (String)result.get(DeploySpine.VAR_pageId)));
       o.persistForClass(DeploySpine.VAR_courseNum, DeploySpine.staticSetCourseNum(siteRequest2, (String)result.get(DeploySpine.VAR_courseNum)));
       o.persistForClass(DeploySpine.VAR_pageImageUri, DeploySpine.staticSetPageImageUri(siteRequest2, (String)result.get(DeploySpine.VAR_pageImageUri)));
       o.persistForClass(DeploySpine.VAR_objectTitle, DeploySpine.staticSetObjectTitle(siteRequest2, (String)result.get(DeploySpine.VAR_objectTitle)));
-      o.persistForClass(DeploySpine.VAR_pageImageAlt, DeploySpine.staticSetPageImageAlt(siteRequest2, (String)result.get(DeploySpine.VAR_pageImageAlt)));
       o.persistForClass(DeploySpine.VAR_displayPage, DeploySpine.staticSetDisplayPage(siteRequest2, (String)result.get(DeploySpine.VAR_displayPage)));
-      o.persistForClass(DeploySpine.VAR_relatedArticleIds, DeploySpine.staticSetRelatedArticleIds(siteRequest2, (String)result.get(DeploySpine.VAR_relatedArticleIds)));
       o.persistForClass(DeploySpine.VAR_editPage, DeploySpine.staticSetEditPage(siteRequest2, (String)result.get(DeploySpine.VAR_editPage)));
+      o.persistForClass(DeploySpine.VAR_pageImageAlt, DeploySpine.staticSetPageImageAlt(siteRequest2, (String)result.get(DeploySpine.VAR_pageImageAlt)));
       o.persistForClass(DeploySpine.VAR_userPage, DeploySpine.staticSetUserPage(siteRequest2, (String)result.get(DeploySpine.VAR_userPage)));
+      o.persistForClass(DeploySpine.VAR_prerequisiteArticleIds, DeploySpine.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(DeploySpine.VAR_prerequisiteArticleIds)));
       o.persistForClass(DeploySpine.VAR_download, DeploySpine.staticSetDownload(siteRequest2, (String)result.get(DeploySpine.VAR_download)));
+      o.persistForClass(DeploySpine.VAR_nextArticleIds, DeploySpine.staticSetNextArticleIds(siteRequest2, (String)result.get(DeploySpine.VAR_nextArticleIds)));
       o.persistForClass(DeploySpine.VAR_solrId, DeploySpine.staticSetSolrId(siteRequest2, (String)result.get(DeploySpine.VAR_solrId)));
+      o.persistForClass(DeploySpine.VAR_labelsString, DeploySpine.staticSetLabelsString(siteRequest2, (String)result.get(DeploySpine.VAR_labelsString)));
+      o.persistForClass(DeploySpine.VAR_labels, DeploySpine.staticSetLabels(siteRequest2, (String)result.get(DeploySpine.VAR_labels)));
+      o.persistForClass(DeploySpine.VAR_relatedArticleIds, DeploySpine.staticSetRelatedArticleIds(siteRequest2, (String)result.get(DeploySpine.VAR_relatedArticleIds)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {

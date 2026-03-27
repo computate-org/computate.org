@@ -1397,11 +1397,6 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void searchpageLearnSkillsPageInit(JsonObject ctx, LearnSkillsPage page, SearchList<LearnSkills> listLearnSkills, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/skills"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/skills"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1502,19 +1497,24 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           searchpageLearnSkillsPageInit(ctx, page, listLearnSkills, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageLearnSkills(ctx, page, listLearnSkills, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageLearnSkills failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageLearnSkills(ctx, page, listLearnSkills, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageLearnSkills failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageLearnSkills failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1657,12 +1657,6 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void editpageLearnSkillsPageInit(JsonObject ctx, LearnSkillsPage page, SearchList<LearnSkills> listLearnSkills, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/skills"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1763,19 +1757,24 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           editpageLearnSkillsPageInit(ctx, page, listLearnSkills, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageLearnSkills(ctx, page, listLearnSkills, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageLearnSkills failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageLearnSkills(ctx, page, listLearnSkills, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageLearnSkills failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageLearnSkills failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1880,12 +1879,6 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
   public void displaypageLearnSkillsPageInit(JsonObject ctx, LearnSkillsPage page, SearchList<LearnSkills> listLearnSkills, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/skills"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1986,19 +1979,24 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
           Promise<Void> promise1 = Promise.promise();
           displaypageLearnSkillsPageInit(ctx, page, listLearnSkills, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateDisplayPageLearnSkills(ctx, page, listLearnSkills, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200DisplayPageLearnSkills failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageLearnSkills(ctx, page, listLearnSkills, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageLearnSkills failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageLearnSkills failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2746,18 +2744,24 @@ public class LearnSkillsEnUSGenApiServiceImpl extends BaseApiServiceImpl impleme
       o.persistForClass(LearnSkills.VAR_name, LearnSkills.staticSetName(siteRequest2, (String)result.get(LearnSkills.VAR_name)));
       o.persistForClass(LearnSkills.VAR_created, LearnSkills.staticSetCreated(siteRequest2, (String)result.get(LearnSkills.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
       o.persistForClass(LearnSkills.VAR_description, LearnSkills.staticSetDescription(siteRequest2, (String)result.get(LearnSkills.VAR_description)));
-      o.persistForClass(LearnSkills.VAR_pageId, LearnSkills.staticSetPageId(siteRequest2, (String)result.get(LearnSkills.VAR_pageId)));
+      o.persistForClass(LearnSkills.VAR_authorName, LearnSkills.staticSetAuthorName(siteRequest2, (String)result.get(LearnSkills.VAR_authorName)));
       o.persistForClass(LearnSkills.VAR_archived, LearnSkills.staticSetArchived(siteRequest2, (String)result.get(LearnSkills.VAR_archived)));
+      o.persistForClass(LearnSkills.VAR_authorUrl, LearnSkills.staticSetAuthorUrl(siteRequest2, (String)result.get(LearnSkills.VAR_authorUrl)));
+      o.persistForClass(LearnSkills.VAR_pageId, LearnSkills.staticSetPageId(siteRequest2, (String)result.get(LearnSkills.VAR_pageId)));
       o.persistForClass(LearnSkills.VAR_courseNum, LearnSkills.staticSetCourseNum(siteRequest2, (String)result.get(LearnSkills.VAR_courseNum)));
       o.persistForClass(LearnSkills.VAR_pageImageUri, LearnSkills.staticSetPageImageUri(siteRequest2, (String)result.get(LearnSkills.VAR_pageImageUri)));
       o.persistForClass(LearnSkills.VAR_objectTitle, LearnSkills.staticSetObjectTitle(siteRequest2, (String)result.get(LearnSkills.VAR_objectTitle)));
-      o.persistForClass(LearnSkills.VAR_pageImageAlt, LearnSkills.staticSetPageImageAlt(siteRequest2, (String)result.get(LearnSkills.VAR_pageImageAlt)));
       o.persistForClass(LearnSkills.VAR_displayPage, LearnSkills.staticSetDisplayPage(siteRequest2, (String)result.get(LearnSkills.VAR_displayPage)));
-      o.persistForClass(LearnSkills.VAR_relatedArticleIds, LearnSkills.staticSetRelatedArticleIds(siteRequest2, (String)result.get(LearnSkills.VAR_relatedArticleIds)));
       o.persistForClass(LearnSkills.VAR_editPage, LearnSkills.staticSetEditPage(siteRequest2, (String)result.get(LearnSkills.VAR_editPage)));
+      o.persistForClass(LearnSkills.VAR_pageImageAlt, LearnSkills.staticSetPageImageAlt(siteRequest2, (String)result.get(LearnSkills.VAR_pageImageAlt)));
       o.persistForClass(LearnSkills.VAR_userPage, LearnSkills.staticSetUserPage(siteRequest2, (String)result.get(LearnSkills.VAR_userPage)));
+      o.persistForClass(LearnSkills.VAR_prerequisiteArticleIds, LearnSkills.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(LearnSkills.VAR_prerequisiteArticleIds)));
       o.persistForClass(LearnSkills.VAR_download, LearnSkills.staticSetDownload(siteRequest2, (String)result.get(LearnSkills.VAR_download)));
+      o.persistForClass(LearnSkills.VAR_nextArticleIds, LearnSkills.staticSetNextArticleIds(siteRequest2, (String)result.get(LearnSkills.VAR_nextArticleIds)));
       o.persistForClass(LearnSkills.VAR_solrId, LearnSkills.staticSetSolrId(siteRequest2, (String)result.get(LearnSkills.VAR_solrId)));
+      o.persistForClass(LearnSkills.VAR_labelsString, LearnSkills.staticSetLabelsString(siteRequest2, (String)result.get(LearnSkills.VAR_labelsString)));
+      o.persistForClass(LearnSkills.VAR_labels, LearnSkills.staticSetLabels(siteRequest2, (String)result.get(LearnSkills.VAR_labels)));
+      o.persistForClass(LearnSkills.VAR_relatedArticleIds, LearnSkills.staticSetRelatedArticleIds(siteRequest2, (String)result.get(LearnSkills.VAR_relatedArticleIds)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {

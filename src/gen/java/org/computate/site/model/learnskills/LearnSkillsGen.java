@@ -37,9 +37,10 @@ import java.util.Map;
 import java.lang.String;
 import java.lang.Integer;
 import org.computate.vertx.search.list.SearchList;
-import org.computate.site.page.SitePage;
+import org.computate.site.model.learnskills.LearnSkills;
 import io.vertx.core.json.JsonArray;
 import org.computate.vertx.serialize.vertx.JsonArrayDeserializer;
+import org.computate.site.page.SitePage;
 import org.computate.search.wrap.Wrap;
 import io.vertx.core.Promise;
 import io.vertx.core.Future;
@@ -156,15 +157,6 @@ import io.vertx.core.json.JsonObject;
  **/
 public abstract class LearnSkillsGen<DEV> extends BaseResult {
   protected static final Logger LOG = LoggerFactory.getLogger(LearnSkills.class);
-
-  public static final String Description_frFR = "Learn how to manage SPINE apps in OpenShift Local to manage cloud secrets, pods, GitOps, and more. ";
-  public static final String AName_frFR = "a Learn cloud developer skills";
-  public static final String SingularName_frFR = "Learn cloud developer skills";
-  public static final String PluralName_frFR = "Learn cloud developer skills";
-  public static final String Title_frFR = "Learn cloud developer skills";
-  public static final String ThePluralName_frFR = "les Learn cloud developer skills";
-  public static final String NameAdjectiveSingular_frFR = "Learn cloud developer skills";
-  public static final String NameAdjectivePlural_frFR = "Learn cloud developer skills";
 
   public static final String Description_enUS = "Learn how to manage SPINE apps in OpenShift Local to manage cloud secrets, pods, GitOps, and more. ";
   public static final String AName_enUS = "a Learn cloud developer skills";
@@ -343,6 +335,130 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
   public static String staticJsonDescription(String description) {
     return description;
+  }
+
+	////////////////
+  // authorName //
+	////////////////
+
+
+  /**
+   *  The entity authorName
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorName;
+
+  /**
+   * <br> The entity authorName
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:authorName">Find the entity authorName in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorName(Wrap<String> w);
+
+  public String getAuthorName() {
+    return authorName;
+  }
+  public void setAuthorName(String o) {
+    this.authorName = LearnSkills.staticSetAuthorName(siteRequest_, o);
+  }
+  public static String staticSetAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected LearnSkills authorNameInit() {
+    Wrap<String> authorNameWrap = new Wrap<String>().var("authorName");
+    if(authorName == null) {
+      _authorName(authorNameWrap);
+      Optional.ofNullable(authorNameWrap.getO()).ifPresent(o -> {
+        setAuthorName(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchAuthorName(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorName(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorName(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchAuthorName(siteRequest_, LearnSkills.staticSetAuthorName(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorName() {
+    return authorName;
+  }
+
+  public static String staticJsonAuthorName(String authorName) {
+    return authorName;
+  }
+
+	///////////////
+  // authorUrl //
+	///////////////
+
+
+  /**
+   *  The entity authorUrl
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String authorUrl;
+
+  /**
+   * <br> The entity authorUrl
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:authorUrl">Find the entity authorUrl in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _authorUrl(Wrap<String> w);
+
+  public String getAuthorUrl() {
+    return authorUrl;
+  }
+  public void setAuthorUrl(String o) {
+    this.authorUrl = LearnSkills.staticSetAuthorUrl(siteRequest_, o);
+  }
+  public static String staticSetAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected LearnSkills authorUrlInit() {
+    Wrap<String> authorUrlWrap = new Wrap<String>().var("authorUrl");
+    if(authorUrl == null) {
+      _authorUrl(authorUrlWrap);
+      Optional.ofNullable(authorUrlWrap.getO()).ifPresent(o -> {
+        setAuthorUrl(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrAuthorUrl(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqAuthorUrl(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchAuthorUrl(siteRequest_, LearnSkills.staticSetAuthorUrl(siteRequest_, o)).toString();
+  }
+
+  public String sqlAuthorUrl() {
+    return authorUrl;
+  }
+
+  public static String staticJsonAuthorUrl(String authorUrl) {
+    return authorUrl;
   }
 
 	////////////
@@ -779,6 +895,511 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     return pageImageAlt;
   }
 
+	////////////////////////////
+  // prerequisiteArticleIds //
+	////////////////////////////
+
+
+  /**
+   *  The entity prerequisiteArticleIds
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String prerequisiteArticleIds;
+
+  /**
+   * <br> The entity prerequisiteArticleIds
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticleIds">Find the entity prerequisiteArticleIds in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _prerequisiteArticleIds(Wrap<String> w);
+
+  public String getPrerequisiteArticleIds() {
+    return prerequisiteArticleIds;
+  }
+  public void setPrerequisiteArticleIds(String o) {
+    this.prerequisiteArticleIds = LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, o);
+  }
+  public static String staticSetPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected LearnSkills prerequisiteArticleIdsInit() {
+    Wrap<String> prerequisiteArticleIdsWrap = new Wrap<String>().var("prerequisiteArticleIds");
+    if(prerequisiteArticleIds == null) {
+      _prerequisiteArticleIds(prerequisiteArticleIdsWrap);
+      Optional.ofNullable(prerequisiteArticleIdsWrap.getO()).ifPresent(o -> {
+        setPrerequisiteArticleIds(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPrerequisiteArticleIds(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchPrerequisiteArticleIds(siteRequest_, LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, o)).toString();
+  }
+
+  public String sqlPrerequisiteArticleIds() {
+    return prerequisiteArticleIds;
+  }
+
+  public static String staticJsonPrerequisiteArticleIds(String prerequisiteArticleIds) {
+    return prerequisiteArticleIds;
+  }
+
+	///////////////////////////////
+  // prerequisiteArticleSearch //
+	///////////////////////////////
+
+
+  /**
+   *  The entity prerequisiteArticleSearch
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<LearnSkills> prerequisiteArticleSearch;
+
+  /**
+   * <br> The entity prerequisiteArticleSearch
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticleSearch">Find the entity prerequisiteArticleSearch in Solr</a>
+   * <br>
+   * @param promise is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _prerequisiteArticleSearch(Promise<SearchList<LearnSkills>> promise);
+
+  public SearchList<LearnSkills> getPrerequisiteArticleSearch() {
+    return prerequisiteArticleSearch;
+  }
+
+  public void setPrerequisiteArticleSearch(SearchList<LearnSkills> prerequisiteArticleSearch) {
+    this.prerequisiteArticleSearch = prerequisiteArticleSearch;
+  }
+  public static SearchList<LearnSkills> staticSetPrerequisiteArticleSearch(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected Future<SearchList<LearnSkills>> prerequisiteArticleSearchPromise() {
+    Promise<SearchList<LearnSkills>> promise = Promise.promise();
+    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
+    _prerequisiteArticleSearch(promise2);
+    promise2.future().onSuccess(o -> {
+      if(o != null && prerequisiteArticleSearch == null) {
+        o.promiseDeepForClass(siteRequest_).onSuccess(a -> {
+          setPrerequisiteArticleSearch(o);
+          promise.complete(o);
+        }).onFailure(ex -> {
+          promise.fail(ex);
+        });
+      } else {
+        promise.complete(o);
+      }
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
+
+	//////////////////////////
+  // prerequisiteArticles //
+	//////////////////////////
+
+
+  /**
+   *  The entity prerequisiteArticles
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray prerequisiteArticles;
+
+  /**
+   * <br> The entity prerequisiteArticles
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:prerequisiteArticles">Find the entity prerequisiteArticles in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _prerequisiteArticles(Wrap<JsonArray> w);
+
+  public JsonArray getPrerequisiteArticles() {
+    return prerequisiteArticles;
+  }
+
+  public void setPrerequisiteArticles(JsonArray prerequisiteArticles) {
+    this.prerequisiteArticles = prerequisiteArticles;
+  }
+  @JsonIgnore
+  public void setPrerequisiteArticles(String o) {
+    this.prerequisiteArticles = LearnSkills.staticSetPrerequisiteArticles(siteRequest_, o);
+  }
+  public static JsonArray staticSetPrerequisiteArticles(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected LearnSkills prerequisiteArticlesInit() {
+    Wrap<JsonArray> prerequisiteArticlesWrap = new Wrap<JsonArray>().var("prerequisiteArticles");
+    if(prerequisiteArticles == null) {
+      _prerequisiteArticles(prerequisiteArticlesWrap);
+      Optional.ofNullable(prerequisiteArticlesWrap.getO()).ifPresent(o -> {
+        setPrerequisiteArticles(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchPrerequisiteArticles(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
+
+  public static String staticSearchStrPrerequisiteArticles(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqPrerequisiteArticles(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchPrerequisiteArticles(siteRequest_, LearnSkills.staticSetPrerequisiteArticles(siteRequest_, o)).toString();
+  }
+
+	////////////////////
+  // nextArticleIds //
+	////////////////////
+
+
+  /**
+   *  The entity nextArticleIds
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String nextArticleIds;
+
+  /**
+   * <br> The entity nextArticleIds
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticleIds">Find the entity nextArticleIds in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _nextArticleIds(Wrap<String> w);
+
+  public String getNextArticleIds() {
+    return nextArticleIds;
+  }
+  public void setNextArticleIds(String o) {
+    this.nextArticleIds = LearnSkills.staticSetNextArticleIds(siteRequest_, o);
+  }
+  public static String staticSetNextArticleIds(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected LearnSkills nextArticleIdsInit() {
+    Wrap<String> nextArticleIdsWrap = new Wrap<String>().var("nextArticleIds");
+    if(nextArticleIds == null) {
+      _nextArticleIds(nextArticleIdsWrap);
+      Optional.ofNullable(nextArticleIdsWrap.getO()).ifPresent(o -> {
+        setNextArticleIds(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchNextArticleIds(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrNextArticleIds(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqNextArticleIds(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchNextArticleIds(siteRequest_, LearnSkills.staticSetNextArticleIds(siteRequest_, o)).toString();
+  }
+
+  public String sqlNextArticleIds() {
+    return nextArticleIds;
+  }
+
+  public static String staticJsonNextArticleIds(String nextArticleIds) {
+    return nextArticleIds;
+  }
+
+	///////////////////////
+  // nextArticleSearch //
+	///////////////////////
+
+
+  /**
+   *  The entity nextArticleSearch
+   *	 is defined as null before being initialized. 
+   */
+  @JsonIgnore
+  @JsonInclude(Include.NON_NULL)
+  protected SearchList<LearnSkills> nextArticleSearch;
+
+  /**
+   * <br> The entity nextArticleSearch
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticleSearch">Find the entity nextArticleSearch in Solr</a>
+   * <br>
+   * @param promise is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _nextArticleSearch(Promise<SearchList<LearnSkills>> promise);
+
+  public SearchList<LearnSkills> getNextArticleSearch() {
+    return nextArticleSearch;
+  }
+
+  public void setNextArticleSearch(SearchList<LearnSkills> nextArticleSearch) {
+    this.nextArticleSearch = nextArticleSearch;
+  }
+  public static SearchList<LearnSkills> staticSetNextArticleSearch(SiteRequest siteRequest_, String o) {
+    return null;
+  }
+  protected Future<SearchList<LearnSkills>> nextArticleSearchPromise() {
+    Promise<SearchList<LearnSkills>> promise = Promise.promise();
+    Promise<SearchList<LearnSkills>> promise2 = Promise.promise();
+    _nextArticleSearch(promise2);
+    promise2.future().onSuccess(o -> {
+      if(o != null && nextArticleSearch == null) {
+        o.promiseDeepForClass(siteRequest_).onSuccess(a -> {
+          setNextArticleSearch(o);
+          promise.complete(o);
+        }).onFailure(ex -> {
+          promise.fail(ex);
+        });
+      } else {
+        promise.complete(o);
+      }
+    }).onFailure(ex -> {
+      promise.fail(ex);
+    });
+    return promise.future();
+  }
+
+	//////////////////
+  // nextArticles //
+	//////////////////
+
+
+  /**
+   *  The entity nextArticles
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonDeserialize(using = JsonArrayDeserializer.class)
+  @JsonInclude(Include.NON_NULL)
+  protected JsonArray nextArticles;
+
+  /**
+   * <br> The entity nextArticles
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:nextArticles">Find the entity nextArticles in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _nextArticles(Wrap<JsonArray> w);
+
+  public JsonArray getNextArticles() {
+    return nextArticles;
+  }
+
+  public void setNextArticles(JsonArray nextArticles) {
+    this.nextArticles = nextArticles;
+  }
+  @JsonIgnore
+  public void setNextArticles(String o) {
+    this.nextArticles = LearnSkills.staticSetNextArticles(siteRequest_, o);
+  }
+  public static JsonArray staticSetNextArticles(SiteRequest siteRequest_, String o) {
+    if(o != null) {
+        return new JsonArray(o);
+    }
+    return null;
+  }
+  protected LearnSkills nextArticlesInit() {
+    Wrap<JsonArray> nextArticlesWrap = new Wrap<JsonArray>().var("nextArticles");
+    if(nextArticles == null) {
+      _nextArticles(nextArticlesWrap);
+      Optional.ofNullable(nextArticlesWrap.getO()).ifPresent(o -> {
+        setNextArticles(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchNextArticles(SiteRequest siteRequest_, JsonArray o) {
+    return o.toString();
+  }
+
+  public static String staticSearchStrNextArticles(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqNextArticles(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchNextArticles(siteRequest_, LearnSkills.staticSetNextArticles(siteRequest_, o)).toString();
+  }
+
+	//////////////////
+  // labelsString //
+	//////////////////
+
+
+  /**
+   *  The entity labelsString
+   *	 is defined as null before being initialized. 
+   */
+  @JsonProperty
+  @JsonInclude(Include.NON_NULL)
+  protected String labelsString;
+
+  /**
+   * <br> The entity labelsString
+   *  is defined as null before being initialized. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:labelsString">Find the entity labelsString in Solr</a>
+   * <br>
+   * @param w is for wrapping a value to assign to this entity during initialization. 
+   **/
+  protected abstract void _labelsString(Wrap<String> w);
+
+  public String getLabelsString() {
+    return labelsString;
+  }
+  public void setLabelsString(String o) {
+    this.labelsString = LearnSkills.staticSetLabelsString(siteRequest_, o);
+  }
+  public static String staticSetLabelsString(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  protected LearnSkills labelsStringInit() {
+    Wrap<String> labelsStringWrap = new Wrap<String>().var("labelsString");
+    if(labelsString == null) {
+      _labelsString(labelsStringWrap);
+      Optional.ofNullable(labelsStringWrap.getO()).ifPresent(o -> {
+        setLabelsString(o);
+      });
+    }
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchLabelsString(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrLabelsString(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLabelsString(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchLabelsString(siteRequest_, LearnSkills.staticSetLabelsString(siteRequest_, o)).toString();
+  }
+
+  public String sqlLabelsString() {
+    return labelsString;
+  }
+
+  public static String staticJsonLabelsString(String labelsString) {
+    return labelsString;
+  }
+
+	////////////
+  // labels //
+	////////////
+
+
+  /**
+   *  The entity labels
+   *	 It is constructed before being initialized with the constructor by default. 
+   */
+  @JsonProperty
+  @JsonFormat(shape = JsonFormat.Shape.ARRAY)
+  @JsonInclude(Include.NON_NULL)
+  protected List<String> labels = new ArrayList<String>();
+
+  /**
+   * <br> The entity labels
+   *  It is constructed before being initialized with the constructor by default. 
+   * <br><a href="https://solr.apps-crc.testing/solr/#/computate/query?q=*:*&fq=partEstEntite_indexed_boolean:true&fq=classeNomCanonique_enUS_indexed_string:org.computate.site.model.learnskills.LearnSkills&fq=entiteVar_enUS_indexed_string:labels">Find the entity labels in Solr</a>
+   * <br>
+   * @param l is the entity already constructed. 
+   **/
+  protected abstract void _labels(List<String> l);
+
+  public List<String> getLabels() {
+    return labels;
+  }
+
+  public void setLabels(List<String> labels) {
+    this.labels = labels;
+  }
+  @JsonIgnore
+  public void setLabels(String o) {
+    String l = LearnSkills.staticSetLabels(siteRequest_, o);
+    if(l != null)
+      addLabels(l);
+  }
+  public static String staticSetLabels(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+  public LearnSkills addLabels(String...objects) {
+    for(String o : objects) {
+      addLabels(o);
+    }
+    return (LearnSkills)this;
+  }
+  public LearnSkills addLabels(String o) {
+    if(o != null)
+      this.labels.add(o);
+    return (LearnSkills)this;
+  }
+  @JsonIgnore
+  public void setLabels(JsonArray objects) {
+    labels.clear();
+    if(objects == null)
+      return;
+    for(int i = 0; i < objects.size(); i++) {
+      String o = objects.getString(i);
+      addLabels(o);
+    }
+  }
+  protected LearnSkills labelsInit() {
+    _labels(labels);
+    return (LearnSkills)this;
+  }
+
+  public static String staticSearchLabels(SiteRequest siteRequest_, String o) {
+    return o;
+  }
+
+  public static String staticSearchStrLabels(SiteRequest siteRequest_, String o) {
+    return o == null ? null : o.toString();
+  }
+
+  public static String staticSearchFqLabels(SiteRequest siteRequest_, String o) {
+    return LearnSkills.staticSearchLabels(siteRequest_, LearnSkills.staticSetLabels(siteRequest_, o)).toString();
+  }
+
+  public String[] sqlLabels() {
+    return labels.stream().map(v -> (String)v).toArray(String[]::new);
+  }
+
+  public static JsonArray staticJsonLabels(List<String> labels) {
+    JsonArray a = new JsonArray();
+    labels.stream().forEach(v -> a.add(v.toString()));
+    return a;
+  }
+
 	///////////////////////
   // relatedArticleIds //
 	///////////////////////
@@ -988,6 +1609,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       try {
         nameInit();
         descriptionInit();
+        authorNameInit();
+        authorUrlInit();
         pageIdInit();
         courseNumInit();
         pageImageUriInit();
@@ -995,6 +1618,44 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         pageImageHeightInit();
         pageImageTypeInit();
         pageImageAltInit();
+        prerequisiteArticleIdsInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      prerequisiteArticleSearchPromise().onSuccess(prerequisiteArticleSearch -> {
+        promise2.complete();
+      }).onFailure(ex -> {
+        promise2.fail(ex);
+      });
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        prerequisiteArticlesInit();
+        nextArticleIdsInit();
+        promise2.complete();
+      } catch(Exception ex) {
+        promise2.fail(ex);
+      }
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      nextArticleSearchPromise().onSuccess(nextArticleSearch -> {
+        promise2.complete();
+      }).onFailure(ex -> {
+        promise2.fail(ex);
+      });
+      return promise2.future();
+    }).compose(a -> {
+      Promise<Void> promise2 = Promise.promise();
+      try {
+        nextArticlesInit();
+        labelsStringInit();
+        labelsInit();
         relatedArticleIdsInit();
         promise2.complete();
       } catch(Exception ex) {
@@ -1036,6 +1697,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
   public void siteRequestLearnSkills(SiteRequest siteRequest_) {
       super.siteRequestBaseResult(siteRequest_);
+    if(prerequisiteArticleSearch != null)
+      prerequisiteArticleSearch.setSiteRequest_(siteRequest_);
+    if(nextArticleSearch != null)
+      nextArticleSearch.setSiteRequest_(siteRequest_);
     if(relatedArticleSearch != null)
       relatedArticleSearch.setSiteRequest_(siteRequest_);
   }
@@ -1072,6 +1737,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return oLearnSkills.name;
       case "description":
         return oLearnSkills.description;
+      case "authorName":
+        return oLearnSkills.authorName;
+      case "authorUrl":
+        return oLearnSkills.authorUrl;
       case "pageId":
         return oLearnSkills.pageId;
       case "courseNum":
@@ -1086,6 +1755,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return oLearnSkills.pageImageType;
       case "pageImageAlt":
         return oLearnSkills.pageImageAlt;
+      case "prerequisiteArticleIds":
+        return oLearnSkills.prerequisiteArticleIds;
+      case "prerequisiteArticleSearch":
+        return oLearnSkills.prerequisiteArticleSearch;
+      case "prerequisiteArticles":
+        return oLearnSkills.prerequisiteArticles;
+      case "nextArticleIds":
+        return oLearnSkills.nextArticleIds;
+      case "nextArticleSearch":
+        return oLearnSkills.nextArticleSearch;
+      case "nextArticles":
+        return oLearnSkills.nextArticles;
+      case "labelsString":
+        return oLearnSkills.labelsString;
+      case "labels":
+        return oLearnSkills.labels;
       case "relatedArticleIds":
         return oLearnSkills.relatedArticleIds;
       case "relatedArticleSearch":
@@ -1135,6 +1820,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSetName(siteRequest_, v);
     case "description":
       return LearnSkills.staticSetDescription(siteRequest_, v);
+    case "authorName":
+      return LearnSkills.staticSetAuthorName(siteRequest_, v);
+    case "authorUrl":
+      return LearnSkills.staticSetAuthorUrl(siteRequest_, v);
     case "pageId":
       return LearnSkills.staticSetPageId(siteRequest_, v);
     case "courseNum":
@@ -1149,6 +1838,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSetPageImageType(siteRequest_, v);
     case "pageImageAlt":
       return LearnSkills.staticSetPageImageAlt(siteRequest_, v);
+    case "prerequisiteArticleIds":
+      return LearnSkills.staticSetPrerequisiteArticleIds(siteRequest_, v);
+    case "prerequisiteArticles":
+      return LearnSkills.staticSetPrerequisiteArticles(siteRequest_, v);
+    case "nextArticleIds":
+      return LearnSkills.staticSetNextArticleIds(siteRequest_, v);
+    case "nextArticles":
+      return LearnSkills.staticSetNextArticles(siteRequest_, v);
+    case "labelsString":
+      return LearnSkills.staticSetLabelsString(siteRequest_, v);
+    case "labels":
+      return LearnSkills.staticSetLabels(siteRequest_, v);
     case "relatedArticleIds":
       return LearnSkills.staticSetRelatedArticleIds(siteRequest_, v);
     case "relatedArticles":
@@ -1201,6 +1902,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchName(siteRequest_, (String)o);
     case "description":
       return LearnSkills.staticSearchDescription(siteRequest_, (String)o);
+    case "authorName":
+      return LearnSkills.staticSearchAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return LearnSkills.staticSearchAuthorUrl(siteRequest_, (String)o);
     case "pageId":
       return LearnSkills.staticSearchPageId(siteRequest_, (String)o);
     case "courseNum":
@@ -1215,6 +1920,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
       return LearnSkills.staticSearchPageImageAlt(siteRequest_, (String)o);
+    case "prerequisiteArticleIds":
+      return LearnSkills.staticSearchPrerequisiteArticleIds(siteRequest_, (String)o);
+    case "prerequisiteArticles":
+      return LearnSkills.staticSearchPrerequisiteArticles(siteRequest_, (JsonArray)o);
+    case "nextArticleIds":
+      return LearnSkills.staticSearchNextArticleIds(siteRequest_, (String)o);
+    case "nextArticles":
+      return LearnSkills.staticSearchNextArticles(siteRequest_, (JsonArray)o);
+    case "labelsString":
+      return LearnSkills.staticSearchLabelsString(siteRequest_, (String)o);
+    case "labels":
+      return LearnSkills.staticSearchLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
       return LearnSkills.staticSearchRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
@@ -1237,6 +1954,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchStrName(siteRequest_, (String)o);
     case "description":
       return LearnSkills.staticSearchStrDescription(siteRequest_, (String)o);
+    case "authorName":
+      return LearnSkills.staticSearchStrAuthorName(siteRequest_, (String)o);
+    case "authorUrl":
+      return LearnSkills.staticSearchStrAuthorUrl(siteRequest_, (String)o);
     case "pageId":
       return LearnSkills.staticSearchStrPageId(siteRequest_, (String)o);
     case "courseNum":
@@ -1251,6 +1972,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchStrPageImageType(siteRequest_, (String)o);
     case "pageImageAlt":
       return LearnSkills.staticSearchStrPageImageAlt(siteRequest_, (String)o);
+    case "prerequisiteArticleIds":
+      return LearnSkills.staticSearchStrPrerequisiteArticleIds(siteRequest_, (String)o);
+    case "prerequisiteArticles":
+      return LearnSkills.staticSearchStrPrerequisiteArticles(siteRequest_, (String)o);
+    case "nextArticleIds":
+      return LearnSkills.staticSearchStrNextArticleIds(siteRequest_, (String)o);
+    case "nextArticles":
+      return LearnSkills.staticSearchStrNextArticles(siteRequest_, (String)o);
+    case "labelsString":
+      return LearnSkills.staticSearchStrLabelsString(siteRequest_, (String)o);
+    case "labels":
+      return LearnSkills.staticSearchStrLabels(siteRequest_, (String)o);
     case "relatedArticleIds":
       return LearnSkills.staticSearchStrRelatedArticleIds(siteRequest_, (String)o);
     case "relatedArticles":
@@ -1273,6 +2006,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchFqName(siteRequest_, o);
     case "description":
       return LearnSkills.staticSearchFqDescription(siteRequest_, o);
+    case "authorName":
+      return LearnSkills.staticSearchFqAuthorName(siteRequest_, o);
+    case "authorUrl":
+      return LearnSkills.staticSearchFqAuthorUrl(siteRequest_, o);
     case "pageId":
       return LearnSkills.staticSearchFqPageId(siteRequest_, o);
     case "courseNum":
@@ -1287,6 +2024,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return LearnSkills.staticSearchFqPageImageType(siteRequest_, o);
     case "pageImageAlt":
       return LearnSkills.staticSearchFqPageImageAlt(siteRequest_, o);
+    case "prerequisiteArticleIds":
+      return LearnSkills.staticSearchFqPrerequisiteArticleIds(siteRequest_, o);
+    case "prerequisiteArticles":
+      return LearnSkills.staticSearchFqPrerequisiteArticles(siteRequest_, o);
+    case "nextArticleIds":
+      return LearnSkills.staticSearchFqNextArticleIds(siteRequest_, o);
+    case "nextArticles":
+      return LearnSkills.staticSearchFqNextArticles(siteRequest_, o);
+    case "labelsString":
+      return LearnSkills.staticSearchFqLabelsString(siteRequest_, o);
+    case "labels":
+      return LearnSkills.staticSearchFqLabels(siteRequest_, o);
     case "relatedArticleIds":
       return LearnSkills.staticSearchFqRelatedArticleIds(siteRequest_, o);
     case "relatedArticles":
@@ -1329,6 +2078,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         }
         saves.add("description");
         return val;
+      } else if("authorname".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorName((String)val);
+        }
+        saves.add("authorName");
+        return val;
+      } else if("authorurl".equals(varLower)) {
+        if(val instanceof String) {
+          setAuthorUrl((String)val);
+        }
+        saves.add("authorUrl");
+        return val;
       } else if("pageid".equals(varLower)) {
         if(val instanceof String) {
           setPageId((String)val);
@@ -1354,6 +2115,36 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
           setPageImageAlt((String)val);
         }
         saves.add("pageImageAlt");
+        return val;
+      } else if("prerequisitearticleids".equals(varLower)) {
+        if(val instanceof String) {
+          setPrerequisiteArticleIds((String)val);
+        }
+        saves.add("prerequisiteArticleIds");
+        return val;
+      } else if("nextarticleids".equals(varLower)) {
+        if(val instanceof String) {
+          setNextArticleIds((String)val);
+        }
+        saves.add("nextArticleIds");
+        return val;
+      } else if("labelsstring".equals(varLower)) {
+        if(val instanceof String) {
+          setLabelsString((String)val);
+        }
+        saves.add("labelsString");
+        return val;
+      } else if("labels".equals(varLower)) {
+        if(val instanceof List<?>) {
+          ((List<String>)val).stream().forEach(v -> addLabels(v));
+        } else if(val instanceof String[]) {
+          Arrays.asList((String[])val).stream().forEach(v -> addLabels((String)v));
+        } else if(val instanceof JsonArray) {
+          ((JsonArray)val).stream().forEach(v -> addLabels(staticSetLabels(siteRequest_, v.toString())));
+        }
+        if(!saves.contains("labels")) {
+          saves.add("labels");
+        }
         return val;
       } else if("relatedarticleids".equals(varLower)) {
         if(val instanceof String) {
@@ -1388,6 +2179,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         String description = (String)doc.get("description_docvalues_string");
         if(description != null)
           oLearnSkills.setDescription(description);
+      }
+
+      if(saves.contains("authorName")) {
+        String authorName = (String)doc.get("authorName_docvalues_string");
+        if(authorName != null)
+          oLearnSkills.setAuthorName(authorName);
+      }
+
+      if(saves.contains("authorUrl")) {
+        String authorUrl = (String)doc.get("authorUrl_docvalues_string");
+        if(authorUrl != null)
+          oLearnSkills.setAuthorUrl(authorUrl);
       }
 
       if(saves.contains("pageId")) {
@@ -1432,6 +2235,45 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
           oLearnSkills.setPageImageAlt(pageImageAlt);
       }
 
+      if(saves.contains("prerequisiteArticleIds")) {
+        String prerequisiteArticleIds = (String)doc.get("prerequisiteArticleIds_docvalues_string");
+        if(prerequisiteArticleIds != null)
+          oLearnSkills.setPrerequisiteArticleIds(prerequisiteArticleIds);
+      }
+
+      if(saves.contains("prerequisiteArticles")) {
+        String prerequisiteArticles = (String)doc.get("prerequisiteArticles_stored_string");
+        if(prerequisiteArticles != null)
+          oLearnSkills.setPrerequisiteArticles(prerequisiteArticles);
+      }
+
+      if(saves.contains("nextArticleIds")) {
+        String nextArticleIds = (String)doc.get("nextArticleIds_docvalues_string");
+        if(nextArticleIds != null)
+          oLearnSkills.setNextArticleIds(nextArticleIds);
+      }
+
+      if(saves.contains("nextArticles")) {
+        String nextArticles = (String)doc.get("nextArticles_stored_string");
+        if(nextArticles != null)
+          oLearnSkills.setNextArticles(nextArticles);
+      }
+
+      if(saves.contains("labelsString")) {
+        String labelsString = (String)doc.get("labelsString_docvalues_string");
+        if(labelsString != null)
+          oLearnSkills.setLabelsString(labelsString);
+      }
+
+      if(saves.contains("labels")) {
+        List<String> labels = (List<String>)doc.get("labels_docvalues_strings");
+        if(labels != null) {
+          labels.stream().forEach( v -> {
+            oLearnSkills.labels.add(LearnSkills.staticSetLabels(siteRequest_, v));
+          });
+        }
+      }
+
       if(saves.contains("relatedArticleIds")) {
         String relatedArticleIds = (String)doc.get("relatedArticleIds_docvalues_string");
         if(relatedArticleIds != null)
@@ -1455,6 +2297,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     if(description != null) {
       doc.put("description_docvalues_string", description);
     }
+    if(authorName != null) {
+      doc.put("authorName_docvalues_string", authorName);
+    }
+    if(authorUrl != null) {
+      doc.put("authorUrl_docvalues_string", authorUrl);
+    }
     if(pageId != null) {
       doc.put("pageId_docvalues_string", pageId);
     }
@@ -1476,6 +2324,28 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     if(pageImageAlt != null) {
       doc.put("pageImageAlt_docvalues_string", pageImageAlt);
     }
+    if(prerequisiteArticleIds != null) {
+      doc.put("prerequisiteArticleIds_docvalues_string", prerequisiteArticleIds);
+    }
+    if(prerequisiteArticles != null) {
+      doc.put("prerequisiteArticles_stored_string", prerequisiteArticles.toString());
+    }
+    if(nextArticleIds != null) {
+      doc.put("nextArticleIds_docvalues_string", nextArticleIds);
+    }
+    if(nextArticles != null) {
+      doc.put("nextArticles_stored_string", nextArticles.toString());
+    }
+    if(labelsString != null) {
+      doc.put("labelsString_docvalues_string", labelsString);
+    }
+    if(labels != null) {
+      JsonArray l = new JsonArray();
+      doc.put("labels_docvalues_strings", l);
+      for(String o : labels) {
+        l.add(LearnSkills.staticSearchLabels(siteRequest_, o));
+      }
+    }
     if(relatedArticleIds != null) {
       doc.put("relatedArticleIds_docvalues_string", relatedArticleIds);
     }
@@ -1492,6 +2362,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "courseNum":
@@ -1506,6 +2380,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "pageImageType_docvalues_string";
       case "pageImageAlt":
         return "pageImageAlt_docvalues_string";
+      case "prerequisiteArticleIds":
+        return "prerequisiteArticleIds_docvalues_string";
+      case "prerequisiteArticles":
+        return "prerequisiteArticles_stored_string";
+      case "nextArticleIds":
+        return "nextArticleIds_docvalues_string";
+      case "nextArticles":
+        return "nextArticles_stored_string";
+      case "labelsString":
+        return "labelsString_docvalues_string";
+      case "labels":
+        return "labels_docvalues_strings";
       case "relatedArticleIds":
         return "relatedArticleIds_docvalues_string";
       case "relatedArticles":
@@ -1521,6 +2407,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "name_docvalues_string";
       case "description":
         return "description_docvalues_string";
+      case "authorName":
+        return "authorName_docvalues_string";
+      case "authorUrl":
+        return "authorUrl_docvalues_string";
       case "pageId":
         return "pageId_docvalues_string";
       case "courseNum":
@@ -1535,6 +2425,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "pageImageType_docvalues_string";
       case "pageImageAlt":
         return "pageImageAlt_docvalues_string";
+      case "prerequisiteArticleIds":
+        return "prerequisiteArticleIds_docvalues_string";
+      case "nextArticleIds":
+        return "nextArticleIds_docvalues_string";
+      case "labelsString":
+        return "labelsString_docvalues_string";
+      case "labels":
+        return "labels_docvalues_strings";
       case "relatedArticleIds":
         return "relatedArticleIds_docvalues_string";
       default:
@@ -1548,6 +2446,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "name";
       case "description_docvalues_string":
         return "description";
+      case "authorName_docvalues_string":
+        return "authorName";
+      case "authorUrl_docvalues_string":
+        return "authorUrl";
       case "pageId_docvalues_string":
         return "pageId";
       case "courseNum_docvalues_int":
@@ -1562,6 +2464,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         return "pageImageType";
       case "pageImageAlt_docvalues_string":
         return "pageImageAlt";
+      case "prerequisiteArticleIds_docvalues_string":
+        return "prerequisiteArticleIds";
+      case "nextArticleIds_docvalues_string":
+        return "nextArticleIds";
+      case "labelsString_docvalues_string":
+        return "labelsString";
+      case "labels_docvalues_strings":
+        return "labels";
       case "relatedArticleIds_docvalues_string":
         return "relatedArticleIds";
       default:
@@ -1596,6 +2506,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
     oLearnSkills.setName(Optional.ofNullable(doc.get("name_docvalues_string")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setDescription(Optional.ofNullable(doc.get("description_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setAuthorName(Optional.ofNullable(doc.get("authorName_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setAuthorUrl(Optional.ofNullable(doc.get("authorUrl_docvalues_string")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setPageId(Optional.ofNullable(doc.get("pageId_docvalues_string")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setCourseNum(Optional.ofNullable(doc.get("courseNum_docvalues_int")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setPageImageUri(Optional.ofNullable(doc.get("pageImageUri_docvalues_string")).map(v -> v.toString()).orElse(null));
@@ -1603,6 +2515,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     oLearnSkills.setPageImageHeight(Optional.ofNullable(doc.get("pageImageHeight_docvalues_int")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setPageImageType(Optional.ofNullable(doc.get("pageImageType_docvalues_string")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setPageImageAlt(Optional.ofNullable(doc.get("pageImageAlt_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setPrerequisiteArticleIds(Optional.ofNullable(doc.get("prerequisiteArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setPrerequisiteArticles(Optional.ofNullable(doc.get("prerequisiteArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setNextArticleIds(Optional.ofNullable(doc.get("nextArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setNextArticles(Optional.ofNullable(doc.get("nextArticles_stored_string")).map(v -> v.toString()).orElse(null));
+    oLearnSkills.setLabelsString(Optional.ofNullable(doc.get("labelsString_docvalues_string")).map(v -> v.toString()).orElse(null));
+    Optional.ofNullable((List<?>)doc.get("labels_docvalues_strings")).orElse(Arrays.asList()).stream().filter(v -> v != null).forEach(v -> {
+      oLearnSkills.addLabels(LearnSkills.staticSetLabels(siteRequest, v.toString()));
+    });
     oLearnSkills.setRelatedArticleIds(Optional.ofNullable(doc.get("relatedArticleIds_docvalues_string")).map(v -> v.toString()).orElse(null));
     oLearnSkills.setRelatedArticles(Optional.ofNullable(doc.get("relatedArticles_stored_string")).map(v -> v.toString()).orElse(null));
 
@@ -1622,6 +2542,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         apiRequest.addVars("name");
       if(!Objects.equals(description, original.getDescription()))
         apiRequest.addVars("description");
+      if(!Objects.equals(authorName, original.getAuthorName()))
+        apiRequest.addVars("authorName");
+      if(!Objects.equals(authorUrl, original.getAuthorUrl()))
+        apiRequest.addVars("authorUrl");
       if(!Objects.equals(pageId, original.getPageId()))
         apiRequest.addVars("pageId");
       if(!Objects.equals(courseNum, original.getCourseNum()))
@@ -1636,6 +2560,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
         apiRequest.addVars("pageImageType");
       if(!Objects.equals(pageImageAlt, original.getPageImageAlt()))
         apiRequest.addVars("pageImageAlt");
+      if(!Objects.equals(prerequisiteArticleIds, original.getPrerequisiteArticleIds()))
+        apiRequest.addVars("prerequisiteArticleIds");
+      if(!Objects.equals(prerequisiteArticles, original.getPrerequisiteArticles()))
+        apiRequest.addVars("prerequisiteArticles");
+      if(!Objects.equals(nextArticleIds, original.getNextArticleIds()))
+        apiRequest.addVars("nextArticleIds");
+      if(!Objects.equals(nextArticles, original.getNextArticles()))
+        apiRequest.addVars("nextArticles");
+      if(!Objects.equals(labelsString, original.getLabelsString()))
+        apiRequest.addVars("labelsString");
+      if(!Objects.equals(labels, original.getLabels()))
+        apiRequest.addVars("labels");
       if(!Objects.equals(relatedArticleIds, original.getRelatedArticleIds()))
         apiRequest.addVars("relatedArticleIds");
       if(!Objects.equals(relatedArticles, original.getRelatedArticles()))
@@ -1653,6 +2589,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     sb.append(super.toString());
     sb.append(Optional.ofNullable(name).map(v -> "name: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(description).map(v -> "description: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(authorName).map(v -> "authorName: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(authorUrl).map(v -> "authorUrl: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageId).map(v -> "pageId: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(courseNum).map(v -> "courseNum: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageUri).map(v -> "pageImageUri: \"" + v + "\"\n" ).orElse(""));
@@ -1660,6 +2598,12 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
     sb.append(Optional.ofNullable(pageImageHeight).map(v -> "pageImageHeight: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(pageImageType).map(v -> "pageImageType: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(pageImageAlt).map(v -> "pageImageAlt: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(prerequisiteArticleIds).map(v -> "prerequisiteArticleIds: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(prerequisiteArticles).map(v -> "prerequisiteArticles: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(nextArticleIds).map(v -> "nextArticleIds: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(nextArticles).map(v -> "nextArticles: " + v + "\n").orElse(""));
+    sb.append(Optional.ofNullable(labelsString).map(v -> "labelsString: \"" + v + "\"\n" ).orElse(""));
+    sb.append(Optional.ofNullable(labels).map(v -> "labels: " + v + "\n").orElse(""));
     sb.append(Optional.ofNullable(relatedArticleIds).map(v -> "relatedArticleIds: \"" + v + "\"\n" ).orElse(""));
     sb.append(Optional.ofNullable(relatedArticles).map(v -> "relatedArticles: " + v + "\n").orElse(""));
     return sb.toString();
@@ -1676,6 +2620,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static final String SET_name = "setName";
   public static final String VAR_description = "description";
   public static final String SET_description = "setDescription";
+  public static final String VAR_authorName = "authorName";
+  public static final String SET_authorName = "setAuthorName";
+  public static final String VAR_authorUrl = "authorUrl";
+  public static final String SET_authorUrl = "setAuthorUrl";
   public static final String VAR_pageId = "pageId";
   public static final String SET_pageId = "setPageId";
   public static final String VAR_courseNum = "courseNum";
@@ -1690,6 +2638,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static final String SET_pageImageType = "setPageImageType";
   public static final String VAR_pageImageAlt = "pageImageAlt";
   public static final String SET_pageImageAlt = "setPageImageAlt";
+  public static final String VAR_prerequisiteArticleIds = "prerequisiteArticleIds";
+  public static final String SET_prerequisiteArticleIds = "setPrerequisiteArticleIds";
+  public static final String VAR_prerequisiteArticleSearch = "prerequisiteArticleSearch";
+  public static final String SET_prerequisiteArticleSearch = "setPrerequisiteArticleSearch";
+  public static final String VAR_prerequisiteArticles = "prerequisiteArticles";
+  public static final String SET_prerequisiteArticles = "setPrerequisiteArticles";
+  public static final String VAR_nextArticleIds = "nextArticleIds";
+  public static final String SET_nextArticleIds = "setNextArticleIds";
+  public static final String VAR_nextArticleSearch = "nextArticleSearch";
+  public static final String SET_nextArticleSearch = "setNextArticleSearch";
+  public static final String VAR_nextArticles = "nextArticles";
+  public static final String SET_nextArticles = "setNextArticles";
+  public static final String VAR_labelsString = "labelsString";
+  public static final String SET_labelsString = "setLabelsString";
+  public static final String VAR_labels = "labels";
+  public static final String SET_labels = "setLabels";
   public static final String VAR_relatedArticleIds = "relatedArticleIds";
   public static final String SET_relatedArticleIds = "setRelatedArticleIds";
   public static final String VAR_relatedArticleSearch = "relatedArticleSearch";
@@ -1711,6 +2675,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static List<String> varsFqLearnSkills(List<String> vars) {
     vars.add(VAR_name);
     vars.add(VAR_description);
+    vars.add(VAR_authorName);
+    vars.add(VAR_authorUrl);
     vars.add(VAR_pageId);
     vars.add(VAR_courseNum);
     vars.add(VAR_pageImageUri);
@@ -1729,6 +2695,8 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
 
   public static final String DISPLAY_NAME_name = "course name";
   public static final String DISPLAY_NAME_description = "course description";
+  public static final String DISPLAY_NAME_authorName = "author name";
+  public static final String DISPLAY_NAME_authorUrl = "author URL";
   public static final String DISPLAY_NAME_pageId = "Page ID";
   public static final String DISPLAY_NAME_courseNum = "Course Number";
   public static final String DISPLAY_NAME_pageImageUri = "imageUri";
@@ -1736,6 +2704,14 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
   public static final String DISPLAY_NAME_pageImageHeight = "";
   public static final String DISPLAY_NAME_pageImageType = "";
   public static final String DISPLAY_NAME_pageImageAlt = "";
+  public static final String DISPLAY_NAME_prerequisiteArticleIds = "prerequisite article IDs";
+  public static final String DISPLAY_NAME_prerequisiteArticleSearch = "";
+  public static final String DISPLAY_NAME_prerequisiteArticles = "prerequisite articles";
+  public static final String DISPLAY_NAME_nextArticleIds = "next article IDs";
+  public static final String DISPLAY_NAME_nextArticleSearch = "";
+  public static final String DISPLAY_NAME_nextArticles = "next articles";
+  public static final String DISPLAY_NAME_labelsString = "labels string";
+  public static final String DISPLAY_NAME_labels = "labels";
   public static final String DISPLAY_NAME_relatedArticleIds = "related article IDs";
   public static final String DISPLAY_NAME_relatedArticleSearch = "";
   public static final String DISPLAY_NAME_relatedArticles = "related articles";
@@ -1779,6 +2755,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return patch ? SET_name : VAR_name;
     case VAR_description:
       return patch ? SET_description : VAR_description;
+    case VAR_authorName:
+      return patch ? SET_authorName : VAR_authorName;
+    case VAR_authorUrl:
+      return patch ? SET_authorUrl : VAR_authorUrl;
     case VAR_pageId:
       return patch ? SET_pageId : VAR_pageId;
     case VAR_courseNum:
@@ -1793,6 +2773,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return patch ? SET_pageImageType : VAR_pageImageType;
     case VAR_pageImageAlt:
       return patch ? SET_pageImageAlt : VAR_pageImageAlt;
+    case VAR_prerequisiteArticleIds:
+      return patch ? SET_prerequisiteArticleIds : VAR_prerequisiteArticleIds;
+    case VAR_prerequisiteArticleSearch:
+      return patch ? SET_prerequisiteArticleSearch : VAR_prerequisiteArticleSearch;
+    case VAR_prerequisiteArticles:
+      return patch ? SET_prerequisiteArticles : VAR_prerequisiteArticles;
+    case VAR_nextArticleIds:
+      return patch ? SET_nextArticleIds : VAR_nextArticleIds;
+    case VAR_nextArticleSearch:
+      return patch ? SET_nextArticleSearch : VAR_nextArticleSearch;
+    case VAR_nextArticles:
+      return patch ? SET_nextArticles : VAR_nextArticles;
+    case VAR_labelsString:
+      return patch ? SET_labelsString : VAR_labelsString;
+    case VAR_labels:
+      return patch ? SET_labels : VAR_labels;
     case VAR_relatedArticleIds:
       return patch ? SET_relatedArticleIds : VAR_relatedArticleIds;
     case VAR_relatedArticleSearch:
@@ -1813,6 +2809,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return DISPLAY_NAME_name;
     case VAR_description:
       return DISPLAY_NAME_description;
+    case VAR_authorName:
+      return DISPLAY_NAME_authorName;
+    case VAR_authorUrl:
+      return DISPLAY_NAME_authorUrl;
     case VAR_pageId:
       return DISPLAY_NAME_pageId;
     case VAR_courseNum:
@@ -1827,6 +2827,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return DISPLAY_NAME_pageImageType;
     case VAR_pageImageAlt:
       return DISPLAY_NAME_pageImageAlt;
+    case VAR_prerequisiteArticleIds:
+      return DISPLAY_NAME_prerequisiteArticleIds;
+    case VAR_prerequisiteArticleSearch:
+      return DISPLAY_NAME_prerequisiteArticleSearch;
+    case VAR_prerequisiteArticles:
+      return DISPLAY_NAME_prerequisiteArticles;
+    case VAR_nextArticleIds:
+      return DISPLAY_NAME_nextArticleIds;
+    case VAR_nextArticleSearch:
+      return DISPLAY_NAME_nextArticleSearch;
+    case VAR_nextArticles:
+      return DISPLAY_NAME_nextArticles;
+    case VAR_labelsString:
+      return DISPLAY_NAME_labelsString;
+    case VAR_labels:
+      return DISPLAY_NAME_labels;
     case VAR_relatedArticleIds:
       return DISPLAY_NAME_relatedArticleIds;
     case VAR_relatedArticleSearch:
@@ -1846,6 +2862,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return "The course name. ";
     case VAR_description:
       return "The course description. ";
+    case VAR_authorName:
+      return "The author name";
+    case VAR_authorUrl:
+      return "The author URL";
     case VAR_pageId:
       return "The ID for this page. ";
     case VAR_courseNum:
@@ -1860,6 +2880,18 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return "The image height";
     case VAR_pageImageAlt:
       return "The image accessibility text. ";
+    case VAR_prerequisiteArticleIds:
+      return "The prerequisite article IDs comma-separated. ";
+    case VAR_prerequisiteArticles:
+      return "A JSON array of prerequisite articles. ";
+    case VAR_nextArticleIds:
+      return "The next article IDs comma-separated. ";
+    case VAR_nextArticles:
+      return "A JSON array of next articles. ";
+    case VAR_labelsString:
+      return "The labels String for this article comma-separated. ";
+    case VAR_labels:
+      return "The labels for this article. ";
     case VAR_relatedArticleIds:
       return "The related article IDs comma-separated. ";
     case VAR_relatedArticles:
@@ -1875,6 +2907,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return "String";
     case VAR_description:
       return "String";
+    case VAR_authorName:
+      return "String";
+    case VAR_authorUrl:
+      return "String";
     case VAR_pageId:
       return "String";
     case VAR_courseNum:
@@ -1889,6 +2925,22 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return "String";
     case VAR_pageImageAlt:
       return "String";
+    case VAR_prerequisiteArticleIds:
+      return "String";
+    case VAR_prerequisiteArticleSearch:
+      return "SearchList";
+    case VAR_prerequisiteArticles:
+      return "JsonArray";
+    case VAR_nextArticleIds:
+      return "String";
+    case VAR_nextArticleSearch:
+      return "SearchList";
+    case VAR_nextArticles:
+      return "JsonArray";
+    case VAR_labelsString:
+      return "String";
+    case VAR_labels:
+      return "List";
     case VAR_relatedArticleIds:
       return "String";
     case VAR_relatedArticleSearch:
@@ -1917,6 +2969,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return 3;
     case VAR_description:
       return 3;
+    case VAR_authorName:
+      return 3;
+    case VAR_authorUrl:
+      return 3;
     case VAR_pageId:
       return 99;
     case VAR_pageImageUri:
@@ -1932,6 +2988,10 @@ public abstract class LearnSkillsGen<DEV> extends BaseResult {
       return 1;
     case VAR_description:
       return 2;
+    case VAR_authorName:
+      return 3;
+    case VAR_authorUrl:
+      return 3;
     case VAR_pageId:
       return 1;
     case VAR_pageImageUri:

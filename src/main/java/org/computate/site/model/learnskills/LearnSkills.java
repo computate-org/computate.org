@@ -99,6 +99,32 @@ public class LearnSkills extends LearnSkillsGen<BaseResult> {
    * {@inheritDoc}
    * DocValues: true
    * Persist: true
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   * DisplayName: author name
+   * Description: The author name
+   */
+  protected void _authorName(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * HtmRow: 3
+   * HtmCell: 3
+   * Facet: true
+   * DisplayName: author URL
+   * Description: The author URL
+   */
+  protected void _authorUrl(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
    * HtmRowTitleOpen: Useful URLs
    * HtmRow: 99
    * HtmCell: 1
@@ -186,6 +212,135 @@ public class LearnSkills extends LearnSkillsGen<BaseResult> {
    * Description: The image accessibility text. 
    */
   protected void _pageImageAlt(Wrap<String> c) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: prerequisite article IDs
+   * Description: The prerequisite article IDs comma-separated. 
+   */
+  protected void _prerequisiteArticleIds(Wrap<String> w) {
+  }
+
+  /**
+   * Ignore: true
+   */
+  protected void _prerequisiteArticleSearch(Promise<SearchList<LearnSkills>> promise) {
+    SearchList<LearnSkills> l = new SearchList<>();
+    if(prerequisiteArticleIds != null) {
+      List<String> list = Arrays.asList(StringUtils.split(prerequisiteArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+      l.setC(LearnSkills.class);
+      l.q("*:*");
+      l.fq(String.format("pageId_docvalues_string:" + list.stream()
+          .map(id -> SearchTool.escapeQueryChars(id))
+          .collect(Collectors.joining(" OR ", "(", ")"))
+          ));
+      l.setStore(true);
+    }
+    promise.complete(l);
+  }
+
+  /**
+   * {@inheritDoc}
+   * Stored: true
+   * DisplayName: prerequisite articles
+   * Description: A JSON array of prerequisite articles. 
+   */
+  protected void _prerequisiteArticles(Wrap<JsonArray> w) {
+    JsonArray array = new JsonArray();
+    prerequisiteArticleSearch.getList().stream().forEach(prerequisiteArticle -> {
+        JsonObject obj = JsonObject.mapFrom(prerequisiteArticle);
+        obj.remove(LearnSkills.VAR_prerequisiteArticles);
+        obj.remove(LearnSkills.VAR_prerequisiteArticleIds);
+        JsonObject obj2 = new JsonObject();
+        obj2.put(LearnSkills.VAR_pageId, obj.getString(LearnSkills.VAR_pageId));
+        obj2.put(LearnSkills.VAR_name, obj.getString(LearnSkills.VAR_name));
+        obj2.put(LearnSkills.VAR_pageImageUri, obj.getString(LearnSkills.VAR_pageImageUri));
+        obj2.put(LearnSkills.VAR_pageImageWidth, obj.getString(LearnSkills.VAR_pageImageWidth));
+        obj2.put(LearnSkills.VAR_pageImageHeight, obj.getString(LearnSkills.VAR_pageImageHeight));
+        obj2.put(LearnSkills.VAR_pageImageAlt, obj.getString(LearnSkills.VAR_pageImageAlt));
+        obj2.put(LearnSkills.VAR_displayPage, obj.getString(LearnSkills.VAR_displayPage));
+        array.add(obj2);
+    });
+    w.o(array);
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: next article IDs
+   * Description: The next article IDs comma-separated. 
+   */
+  protected void _nextArticleIds(Wrap<String> w) {
+  }
+
+  /**
+   * Ignore: true
+   */
+  protected void _nextArticleSearch(Promise<SearchList<LearnSkills>> promise) {
+    SearchList<LearnSkills> l = new SearchList<>();
+    if(nextArticleIds != null) {
+      List<String> list = Arrays.asList(StringUtils.split(nextArticleIds, ",")).stream().map(id -> id.trim()).collect(Collectors.toList());
+      l.setC(LearnSkills.class);
+      l.q("*:*");
+      l.fq(String.format("pageId_docvalues_string:" + list.stream()
+          .map(id -> SearchTool.escapeQueryChars(id))
+          .collect(Collectors.joining(" OR ", "(", ")"))
+          ));
+      l.setStore(true);
+    }
+    promise.complete(l);
+  }
+
+  /**
+   * {@inheritDoc}
+   * Stored: true
+   * DisplayName: next articles
+   * Description: A JSON array of next articles. 
+   */
+  protected void _nextArticles(Wrap<JsonArray> w) {
+    JsonArray array = new JsonArray();
+    nextArticleSearch.getList().stream().forEach(nextArticle -> {
+        JsonObject obj = JsonObject.mapFrom(nextArticle);
+        obj.remove(LearnSkills.VAR_nextArticles);
+        obj.remove(LearnSkills.VAR_nextArticleIds);
+        JsonObject obj2 = new JsonObject();
+        obj2.put(LearnSkills.VAR_pageId, obj.getString(LearnSkills.VAR_pageId));
+        obj2.put(LearnSkills.VAR_name, obj.getString(LearnSkills.VAR_name));
+        obj2.put(LearnSkills.VAR_pageImageUri, obj.getString(LearnSkills.VAR_pageImageUri));
+        obj2.put(LearnSkills.VAR_pageImageWidth, obj.getString(LearnSkills.VAR_pageImageWidth));
+        obj2.put(LearnSkills.VAR_pageImageHeight, obj.getString(LearnSkills.VAR_pageImageHeight));
+        obj2.put(LearnSkills.VAR_pageImageAlt, obj.getString(LearnSkills.VAR_pageImageAlt));
+        obj2.put(LearnSkills.VAR_displayPage, obj.getString(LearnSkills.VAR_displayPage));
+        array.add(obj2);
+    });
+    w.o(array);
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: labels string
+   * Description: The labels String for this article comma-separated. 
+   */
+  protected void _labelsString(Wrap<String> w) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * DocValues: true
+   * Persist: true
+   * DisplayName: labels
+   * Description: The labels for this article. 
+   */
+  protected void _labels(List<String> l) {
+    if(labelsString != null) {
+      l.addAll(Arrays.asList(StringUtils.split(labelsString, ",")).stream().map(id -> id.trim()).collect(Collectors.toList()));
+    }
   }
 
   /**
