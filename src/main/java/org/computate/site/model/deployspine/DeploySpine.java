@@ -29,7 +29,7 @@ import io.vertx.core.json.JsonObject;
  * Order: 3
  * Description: Learn how to deploy SPINE apps to OpenShift Local to run community driven open source cloud applications built with SPINE Programming Theory in OpenShift Local on your own computer. 
  * AName: a Deploy SPINE apps to OpenShift Local
- * PluralName: Deploy SPINE apps to OpenShift Local
+ * PluralName: Deploy apps to OpenShift Local
  * Icon: <i class="fa-kit fa-openshift"></i>
  * Sort.asc: courseNum
  * 

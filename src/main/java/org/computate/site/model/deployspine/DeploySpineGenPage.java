@@ -518,16 +518,16 @@ public class DeploySpineGenPage extends DeploySpineGenPageGen<PageLayout> {
     if(result != null && result.getObjectTitle() != null)
       c.o(result.getObjectTitle());
     else if(result != null)
-      c.o("Deploy SPINE apps to OpenShift Local");
+      c.o("Deploy apps to OpenShift Local");
     else if(searchListDeploySpine_ == null || resultCount == 0)
       c.o("no Deploy SPINE apps to OpenShift Local found");
     else
-      c.o("Deploy SPINE apps to OpenShift Local");
+      c.o("Deploy apps to OpenShift Local");
   }
 
   @Override
   protected void _classAllName(Wrap<String> w) {
-    w.o("all Deploy SPINE apps to OpenShift Local");
+    w.o("all Deploy apps to OpenShift Local");
   }
 
   @Override

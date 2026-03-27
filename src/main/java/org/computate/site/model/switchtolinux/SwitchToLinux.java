@@ -26,9 +26,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * MenuDetails.enUS: Free learning
- * MenuDetailsOpen: true
- * Order: 2
+ * Order: 4
  * Description: Learn how to switch to Linux to run and develop open source cloud applications in OpenShift Local on your own computer. 
  * AName: a Switch to Linux
  * PluralName: Switch to Linux

@@ -34,13 +34,13 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Order: 6
+ * Order: 7
  * Description: Learn how to use to compile and run fun open source games and useful Linux software on your own Linux computer with self-healing, event-driven automation. 
  * MenuDetails.enUS: Develop SPINE community websites
  * MenuDetailsOpen: true
  * AName: a Developer Computer Management
  * PluralName: Developer Computer Management
- * Icon: <i class="fa-duotone fa-regular fa-fish"></i>
+ * Icon: <i class="{{ FONTAWESOME_STYLE }} fa-computer"></i>
  * Sort.asc: courseNum
  * 
  * SearchPageUri: /en-us/search/dcm

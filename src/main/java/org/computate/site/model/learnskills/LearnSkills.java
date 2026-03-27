@@ -26,7 +26,9 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
 /**
- * Order: 4
+ * MenuDetails.enUS: Free learning
+ * MenuDetailsOpen: true
+ * Order: 2
  * Description: Learn how to manage SPINE apps in OpenShift Local to manage cloud secrets, pods, GitOps, and more. 
  * AName: a Learn cloud developer skills
  * PluralName: Learn cloud developer skills

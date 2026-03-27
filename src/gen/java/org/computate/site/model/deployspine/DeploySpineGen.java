@@ -78,7 +78,7 @@ import io.vertx.core.json.JsonObject;
  * <p>This class contains a comment <b>"Api: true"</b>, which means this class will have Java Vert.x API backend code generated for these objects. 
  * </p>
  * <h2>ApiTag.enUS: true</h2>
- * <p>This class contains a comment <b>"ApiTag: Deploy SPINE apps to OpenShift Local"</b>, which groups all of the OpenAPIs for DeploySpine objects under the tag "Deploy SPINE apps to OpenShift Local". 
+ * <p>This class contains a comment <b>"ApiTag: Deploy apps to OpenShift Local"</b>, which groups all of the OpenAPIs for DeploySpine objects under the tag "Deploy apps to OpenShift Local". 
  * </p>
  * <h2>ApiUri.enUS: /en-us/api/deploy-spine</h2>
  * <p>This class contains a comment <b>"ApiUri: /en-us/api/deploy-spine"</b>, which defines the base API URI for DeploySpine objects as "/en-us/api/deploy-spine" in the OpenAPI spec. 
@@ -160,11 +160,11 @@ public abstract class DeploySpineGen<DEV> extends BaseResult {
   public static final String Description_frFR = "Learn how to deploy SPINE apps to OpenShift Local to run community driven open source cloud applications built with SPINE Programming Theory in OpenShift Local on your own computer. ";
   public static final String AName_frFR = "a Deploy SPINE apps to OpenShift Local";
   public static final String SingularName_frFR = "Deploy SPINE apps to OpenShift Local";
-  public static final String PluralName_frFR = "Deploy SPINE apps to OpenShift Local";
-  public static final String Title_frFR = "Deploy SPINE apps to OpenShift Local";
-  public static final String ThePluralName_frFR = "les Deploy SPINE apps to OpenShift Local";
+  public static final String PluralName_frFR = "Deploy apps to OpenShift Local";
+  public static final String Title_frFR = "Deploy apps to OpenShift Local";
+  public static final String ThePluralName_frFR = "les Deploy apps to OpenShift Local";
   public static final String NameAdjectiveSingular_frFR = "Deploy SPINE apps to OpenShift Local";
-  public static final String NameAdjectivePlural_frFR = "Deploy SPINE apps to OpenShift Local";
+  public static final String NameAdjectivePlural_frFR = "Deploy apps to OpenShift Local";
 
   public static final String Description_enUS = "Learn how to deploy SPINE apps to OpenShift Local to run community driven open source cloud applications built with SPINE Programming Theory in OpenShift Local on your own computer. ";
   public static final String AName_enUS = "a Deploy SPINE apps to OpenShift Local";
@@ -173,13 +173,13 @@ public abstract class DeploySpineGen<DEV> extends BaseResult {
   public static final String A_enUS = "a ";
   public static final String TheName_enUS = "the Deploy SPINE apps to OpenShift Local";
   public static final String SingularName_enUS = "Deploy SPINE apps to OpenShift Local";
-  public static final String PluralName_enUS = "Deploy SPINE apps to OpenShift Local";
+  public static final String PluralName_enUS = "Deploy apps to OpenShift Local";
   public static final String NameActual_enUS = "current Deploy SPINE apps to OpenShift Local";
-  public static final String AllName_enUS = "all Deploy SPINE apps to OpenShift Local";
-  public static final String SearchAllNameBy_enUS = "search Deploy SPINE apps to OpenShift Local by ";
-  public static final String SearchAllName_enUS = "search Deploy SPINE apps to OpenShift Local";
-  public static final String Title_enUS = "Deploy SPINE apps to OpenShift Local";
-  public static final String ThePluralName_enUS = "the Deploy SPINE apps to OpenShift Local";
+  public static final String AllName_enUS = "all Deploy apps to OpenShift Local";
+  public static final String SearchAllNameBy_enUS = "search Deploy apps to OpenShift Local by ";
+  public static final String SearchAllName_enUS = "search Deploy apps to OpenShift Local";
+  public static final String Title_enUS = "Deploy apps to OpenShift Local";
+  public static final String ThePluralName_enUS = "the Deploy apps to OpenShift Local";
   public static final String NoNameFound_enUS = "no Deploy SPINE apps to OpenShift Local found";
   public static final String ApiUri_enUS = "/en-us/api/deploy-spine";
   public static final String ApiUriSearchPage_enUS = "/en-us/search/deploy-spine";
@@ -187,7 +187,7 @@ public abstract class DeploySpineGen<DEV> extends BaseResult {
   public static final String OfName_enUS = "of Deploy SPINE apps to OpenShift Local";
   public static final String ANameAdjective_enUS = "a Deploy SPINE apps to OpenShift Local";
   public static final String NameAdjectiveSingular_enUS = "Deploy SPINE apps to OpenShift Local";
-  public static final String NameAdjectivePlural_enUS = "Deploy SPINE apps to OpenShift Local";
+  public static final String NameAdjectivePlural_enUS = "Deploy apps to OpenShift Local";
   public static final String Search_enUS_OpenApiUri = "/en-us/api/deploy-spine";
   public static final String Search_enUS_StringFormatUri = "/en-us/api/deploy-spine";
   public static final String Search_enUS_StringFormatUrl = "%s/en-us/api/deploy-spine";
