@@ -1397,11 +1397,6 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void searchpageSwitchToLinuxPageInit(JsonObject ctx, SwitchToLinuxPage page, SearchList<SwitchToLinux> listSwitchToLinux, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/switch-to-linux"));
     ctx.put("enUSUrlPage", String.format("%s%s", siteBaseUrl, "/en-us/search/switch-to-linux"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1502,19 +1497,24 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           searchpageSwitchToLinuxPageInit(ctx, page, listSwitchToLinux, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateSearchPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200SearchPageSwitchToLinux failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateSearchPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200SearchPageSwitchToLinux failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200SearchPageSwitchToLinux failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1657,12 +1657,6 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void editpageSwitchToLinuxPageInit(JsonObject ctx, SwitchToLinuxPage page, SearchList<SwitchToLinux> listSwitchToLinux, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/switch-to-linux"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
@@ -1763,19 +1757,24 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           editpageSwitchToLinuxPageInit(ctx, page, listSwitchToLinux, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateEditPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200EditPageSwitchToLinux failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateEditPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200EditPageSwitchToLinux failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200EditPageSwitchToLinux failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -1880,12 +1879,6 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
   public void displaypageSwitchToLinuxPageInit(JsonObject ctx, SwitchToLinuxPage page, SearchList<SwitchToLinux> listSwitchToLinux, Promise<Void> promise) {
     String siteBaseUrl = config.getString(ComputateConfigKeys.SITE_BASE_URL);
 
-    ctx.put("frFRUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
-    ctx.put("frFRUrlEditPage", Optional.ofNullable(page.getResult()).map(o -> o.getEditPage()));
-    ctx.put("frFRUrlUserPage", Optional.ofNullable(page.getResult()).map(o -> o.getUserPage()));
-    ctx.put("frFRUrlDownload", Optional.ofNullable(page.getResult()).map(o -> o.getDownload()));
-
     ctx.put("enUSUrlSearchPage", String.format("%s%s", siteBaseUrl, "/en-us/search/switch-to-linux"));
     ctx.put("enUSUrlDisplayPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
     ctx.put("enUSUrlPage", Optional.ofNullable(page.getResult()).map(o -> o.getDisplayPage()));
@@ -1986,19 +1979,24 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
           Promise<Void> promise1 = Promise.promise();
           displaypageSwitchToLinuxPageInit(ctx, page, listSwitchToLinux, promise1);
           promise1.future().onSuccess(b -> {
-            Promise<String> promise2 = Promise.promise();
-            templateDisplayPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
-            promise2.future().onSuccess(renderedTemplate -> {
-              try {
-                Buffer buffer = Buffer.buffer(renderedTemplate);
-                promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
-              } catch(Throwable ex) {
-                LOG.error(String.format("response200DisplayPageSwitchToLinux failed. "), ex);
+            try {
+              Promise<String> promise2 = Promise.promise();
+              templateDisplayPageSwitchToLinux(ctx, page, listSwitchToLinux, promise2);
+              promise2.future().onSuccess(renderedTemplate -> {
+                try {
+                  Buffer buffer = Buffer.buffer(renderedTemplate);
+                  promise.complete(new ServiceResponse(200, "OK", buffer, requestHeaders));
+                } catch(Throwable ex) {
+                  LOG.error(String.format("response200DisplayPageSwitchToLinux failed. "), ex);
+                  promise.fail(ex);
+                }
+              }).onFailure(ex -> {
                 promise.fail(ex);
-              }
-            }).onFailure(ex -> {
-              promise.fail(ex);
-            });
+              });
+            } catch(Throwable ex) {
+              LOG.error(String.format("response200DisplayPageSwitchToLinux failed. "), ex);
+              promise.tryFail(ex);
+            }
           }).onFailure(ex -> {
             promise.tryFail(ex);
           });
@@ -2746,18 +2744,24 @@ public class SwitchToLinuxEnUSGenApiServiceImpl extends BaseApiServiceImpl imple
       o.persistForClass(SwitchToLinux.VAR_name, SwitchToLinux.staticSetName(siteRequest2, (String)result.get(SwitchToLinux.VAR_name)));
       o.persistForClass(SwitchToLinux.VAR_created, SwitchToLinux.staticSetCreated(siteRequest2, (String)result.get(SwitchToLinux.VAR_created), Optional.ofNullable(siteRequest).map(r -> r.getConfig()).map(config -> config.getString(ConfigKeys.SITE_ZONE)).map(z -> ZoneId.of(z)).orElse(ZoneId.of("UTC"))));
       o.persistForClass(SwitchToLinux.VAR_description, SwitchToLinux.staticSetDescription(siteRequest2, (String)result.get(SwitchToLinux.VAR_description)));
-      o.persistForClass(SwitchToLinux.VAR_pageId, SwitchToLinux.staticSetPageId(siteRequest2, (String)result.get(SwitchToLinux.VAR_pageId)));
+      o.persistForClass(SwitchToLinux.VAR_authorName, SwitchToLinux.staticSetAuthorName(siteRequest2, (String)result.get(SwitchToLinux.VAR_authorName)));
       o.persistForClass(SwitchToLinux.VAR_archived, SwitchToLinux.staticSetArchived(siteRequest2, (String)result.get(SwitchToLinux.VAR_archived)));
+      o.persistForClass(SwitchToLinux.VAR_authorUrl, SwitchToLinux.staticSetAuthorUrl(siteRequest2, (String)result.get(SwitchToLinux.VAR_authorUrl)));
+      o.persistForClass(SwitchToLinux.VAR_pageId, SwitchToLinux.staticSetPageId(siteRequest2, (String)result.get(SwitchToLinux.VAR_pageId)));
       o.persistForClass(SwitchToLinux.VAR_courseNum, SwitchToLinux.staticSetCourseNum(siteRequest2, (String)result.get(SwitchToLinux.VAR_courseNum)));
       o.persistForClass(SwitchToLinux.VAR_pageImageUri, SwitchToLinux.staticSetPageImageUri(siteRequest2, (String)result.get(SwitchToLinux.VAR_pageImageUri)));
       o.persistForClass(SwitchToLinux.VAR_objectTitle, SwitchToLinux.staticSetObjectTitle(siteRequest2, (String)result.get(SwitchToLinux.VAR_objectTitle)));
-      o.persistForClass(SwitchToLinux.VAR_pageImageAlt, SwitchToLinux.staticSetPageImageAlt(siteRequest2, (String)result.get(SwitchToLinux.VAR_pageImageAlt)));
       o.persistForClass(SwitchToLinux.VAR_displayPage, SwitchToLinux.staticSetDisplayPage(siteRequest2, (String)result.get(SwitchToLinux.VAR_displayPage)));
-      o.persistForClass(SwitchToLinux.VAR_relatedArticleIds, SwitchToLinux.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SwitchToLinux.VAR_relatedArticleIds)));
       o.persistForClass(SwitchToLinux.VAR_editPage, SwitchToLinux.staticSetEditPage(siteRequest2, (String)result.get(SwitchToLinux.VAR_editPage)));
+      o.persistForClass(SwitchToLinux.VAR_pageImageAlt, SwitchToLinux.staticSetPageImageAlt(siteRequest2, (String)result.get(SwitchToLinux.VAR_pageImageAlt)));
       o.persistForClass(SwitchToLinux.VAR_userPage, SwitchToLinux.staticSetUserPage(siteRequest2, (String)result.get(SwitchToLinux.VAR_userPage)));
+      o.persistForClass(SwitchToLinux.VAR_prerequisiteArticleIds, SwitchToLinux.staticSetPrerequisiteArticleIds(siteRequest2, (String)result.get(SwitchToLinux.VAR_prerequisiteArticleIds)));
       o.persistForClass(SwitchToLinux.VAR_download, SwitchToLinux.staticSetDownload(siteRequest2, (String)result.get(SwitchToLinux.VAR_download)));
+      o.persistForClass(SwitchToLinux.VAR_nextArticleIds, SwitchToLinux.staticSetNextArticleIds(siteRequest2, (String)result.get(SwitchToLinux.VAR_nextArticleIds)));
       o.persistForClass(SwitchToLinux.VAR_solrId, SwitchToLinux.staticSetSolrId(siteRequest2, (String)result.get(SwitchToLinux.VAR_solrId)));
+      o.persistForClass(SwitchToLinux.VAR_labelsString, SwitchToLinux.staticSetLabelsString(siteRequest2, (String)result.get(SwitchToLinux.VAR_labelsString)));
+      o.persistForClass(SwitchToLinux.VAR_labels, SwitchToLinux.staticSetLabels(siteRequest2, (String)result.get(SwitchToLinux.VAR_labels)));
+      o.persistForClass(SwitchToLinux.VAR_relatedArticleIds, SwitchToLinux.staticSetRelatedArticleIds(siteRequest2, (String)result.get(SwitchToLinux.VAR_relatedArticleIds)));
 
       o.promiseDeepForClass((SiteRequest)siteRequest).onSuccess(o2 -> {
         try {
